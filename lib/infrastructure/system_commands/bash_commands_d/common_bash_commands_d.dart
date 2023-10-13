@@ -8,7 +8,7 @@ import 'package:network_tools/injectable.dart';
 
 class CommonBashCommandsD implements SystemCommandsBaseClassD {
   Future<void> asyncConstractor() async {
-    getIt<SystemCommandsManager>();
+    SystemCommandsManager.instance;
   }
 
   @override

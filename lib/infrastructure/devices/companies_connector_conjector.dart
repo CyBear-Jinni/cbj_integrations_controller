@@ -97,7 +97,7 @@ class CompaniesConnectorConjector {
     DeviceEntityAbstract deviceEntity,
   ) {
     final DeviceEntityAbstract deviceEntityGotSaved =
-        getIt<ISavedDevicesRepo>().addOrUpdateDevice(deviceEntity);
+        ISavedDevicesRepo.instance.addOrUpdateDevice(deviceEntity);
 
     IMqttServerRepository.instance
         .postSmartDeviceToAppMqtt(entityFromTheHub: deviceEntityGotSaved);
@@ -152,7 +152,7 @@ class CompaniesConnectorConjector {
             if (mdnsSrvTarget == null) {
               continue;
             }
-            final String? deviceIp = await getIt<SystemCommandsManager>()
+            final String? deviceIp = await SystemCommandsManager.instance
                 .getIpFromMdnsName(mdnsSrvTarget);
             if (deviceIp == null) {
               continue;

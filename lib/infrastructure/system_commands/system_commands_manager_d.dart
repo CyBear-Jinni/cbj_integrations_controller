@@ -5,11 +5,10 @@ import 'package:cbj_integrations_controller/infrastructure/system_commands/bash_
 import 'package:cbj_integrations_controller/infrastructure/system_commands/batch_commands_d/common_batch_commands_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_base_class_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class SystemCommandsManager {
   SystemCommandsManager() {
+    SystemCommandsManager.instance = this;
     if (Platform.isLinux) {
       logger.t('Linux platform detected in SystemCommandsManager');
       systemCommandsBaseClassD = CommonBashCommandsD();
@@ -26,6 +25,8 @@ class SystemCommandsManager {
       throw '${Platform.operatingSystem} os is not supported';
     }
   }
+
+  static late SystemCommandsManager instance;
 
   SystemCommandsBaseClassD? systemCommandsBaseClassD;
 

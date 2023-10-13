@@ -18,10 +18,9 @@ Future initializeIntegrationsController({
 
   try {
     if (arguments.length > 1) {
-      await getItCbj<SharedVariables>().asyncConstractor(arguments[0]);
+      await SharedVariables.instance.asyncConstractor(arguments[0]);
     } else {
-      await getItCbj<SharedVariables>()
-          .asyncConstractor(Directory.current.path);
+      await SharedVariables.instance.asyncConstractor(Directory.current.path);
     }
   } catch (error) {
     logger.e('Path/argument 1 is not specified\n$error');
@@ -30,17 +29,16 @@ Future initializeIntegrationsController({
   //  Setting device model and checking if configuration for this model exist
   await DevicePinListManager().setPhysicalDeviceType();
 
-  await getItCbj<ILocalDbRepository>().initializeDb();
+  await ILocalDbRepository.instance.initializeDb();
 
   logger.t('');
 }
 
 Future setupIntegrationsController() async {
   // Return all saved devices
-  final ISavedDevicesRepo savedDevicesRepo = getItCbj<ISavedDevicesRepo>();
 
   final Map<String, DeviceEntityAbstract> allDevices =
-      await savedDevicesRepo.getAllDevices();
+      await ISavedDevicesRepo.instance.getAllDevices();
 
   CompaniesConnectorConjector.addAllDevicesToItsRepos(allDevices);
 

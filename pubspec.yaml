@@ -55,7 +55,8 @@ dependencies:
   # Helps you discover open ports, devices on subnet and more.
   network_tools: ^4.0.1
   # Interact directly with NodeRED API
-  nodered: ^1.0.1+1
+  nodered:
+    git: 'https://github.com/guyluz11/nodered.git'
   # Provides runtime support for a Dart implementation of protobufs.
   protobuf: ^3.1.0
   # Communicate with Shelly smart devices
@@ -63,6 +64,8 @@ dependencies:
   # # Python Environment Manager and Executor for dart and flutter
   # python_shell:
   #   git: 'https://github.com/guyluz11/python_shell.dart.git'
+  # Extends the capabilities of Dart Streams and StreamControllers.
+  rxdart: ^0.27.7
   # Control Switcher smart home accessories
   switcher_dart: ^1.0.0
   # Simple, fast generation of RFC4122 UUIDs.

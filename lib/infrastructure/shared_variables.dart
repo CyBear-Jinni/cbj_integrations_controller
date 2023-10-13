@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class SharedVariables {
+  SharedVariables() {
+    SharedVariables.instance = this;
+  }
+
+  static late SharedVariables instance;
+
   Future<void> asyncConstractor(String projectRootDirectoryPath) async {
     _projectRootDirectoryPath = projectRootDirectoryPath;
     logger.t('PATH: $_projectRootDirectoryPath');
