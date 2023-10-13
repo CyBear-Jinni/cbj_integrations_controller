@@ -74,12 +74,12 @@ class HpPrinterEntity extends GenericPrinterDE {
     // logger.i('Currently printer does not support any action');
     // entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
     //
-    // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+    // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
     //   entityFromTheHub: this,
     // );
 
     // entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
-    // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+    // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
     //   entityFromTheHub: this,
     // );
 

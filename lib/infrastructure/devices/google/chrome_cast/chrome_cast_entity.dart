@@ -9,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_value_objects.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
-import 'package:network_tools/injectable.dart';
 import 'package:nodered/nodered.dart';
 
 class ChromeCastEntity extends GenericSmartTvDE {
@@ -94,9 +93,9 @@ class ChromeCastEntity extends GenericSmartTvDE {
     // chromecastNodeRedApi = ChromecastNodeRedApi(
     //   repository: getIt<NodeRedRepository>(),
     //   nodeRedApiBaseTopic:
-    //       getIt<IMqttServerRepository>().getNodeRedApiBaseTopic(),
+    //       IMqttServerRepository.instance.getNodeRedApiBaseTopic(),
     //   nodeRedDevicesTopic:
-    //       getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName(),
+    //       IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName(),
     //   nodeRedMqttBrokerNodeName: 'Cbj NodeRed plugs Api Broker',
     // );
 
@@ -147,13 +146,13 @@ class ChromeCastEntity extends GenericSmartTvDE {
       }
 
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
-      // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
       entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
-      // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
 
@@ -182,10 +181,10 @@ class ChromeCastEntity extends GenericSmartTvDE {
     try {
       openUrl = GenericSmartTvOpenUrl(newUrl);
       final String nodeRedApiBaseTopic =
-          getIt<IMqttServerRepository>().getNodeRedApiBaseTopic();
+          IMqttServerRepository.instance.getNodeRedApiBaseTopic();
 
       final String nodeRedDevicesTopic =
-          getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName();
+          IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName();
 
       final String topic =
           '$nodeRedApiBaseTopic/$nodeRedDevicesTopic/${uniqueId.getOrCrash()}/${chromecastNodeRedApi.youtubeVideoTopicProperty}/${chromecastNodeRedApi.playingVideoTopicProperty}';
@@ -209,7 +208,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
           valueOfAndIndexEqual,
         );
       }
-      getIt<IMqttServerRepository>().publishMessage(topic, validYoutubeVidId);
+      IMqttServerRepository.instance.publishMessage(topic, validYoutubeVidId);
     } catch (e) {
       return left(const CoreFailure.unexpected());
     }
@@ -243,15 +242,15 @@ class ChromeCastEntity extends GenericSmartTvDE {
           GenericSmartTvPausePlayState(EntityActions.pause.toString());
 
       final String nodeRedApiBaseTopic =
-          getIt<IMqttServerRepository>().getNodeRedApiBaseTopic();
+          IMqttServerRepository.instance.getNodeRedApiBaseTopic();
 
       final String nodeRedDevicesTopic =
-          getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName();
+          IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName();
 
       final String topic =
           '$nodeRedApiBaseTopic/$nodeRedDevicesTopic/${uniqueId.getOrCrash()}/${chromecastNodeRedApi.youtubeVideoTopicProperty}/${chromecastNodeRedApi.pauseVideoTopicProperty}';
 
-      getIt<IMqttServerRepository>()
+      IMqttServerRepository.instance
           .publishMessage(topic, 'Media Command Pause');
     } catch (e) {
       return left(const CoreFailure.unexpected());
@@ -266,15 +265,15 @@ class ChromeCastEntity extends GenericSmartTvDE {
           GenericSmartTvPausePlayState(EntityActions.play.toString());
 
       final String nodeRedApiBaseTopic =
-          getIt<IMqttServerRepository>().getNodeRedApiBaseTopic();
+          IMqttServerRepository.instance.getNodeRedApiBaseTopic();
 
       final String nodeRedDevicesTopic =
-          getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName();
+          IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName();
 
       final String topic =
           '$nodeRedApiBaseTopic/$nodeRedDevicesTopic/${uniqueId.getOrCrash()}/${chromecastNodeRedApi.youtubeVideoTopicProperty}/${chromecastNodeRedApi.playVideoTopicProperty}';
 
-      getIt<IMqttServerRepository>()
+      IMqttServerRepository.instance
           .publishMessage(topic, 'Media Command Play');
     } catch (e) {
       return left(const CoreFailure.unexpected());
@@ -289,15 +288,15 @@ class ChromeCastEntity extends GenericSmartTvDE {
           GenericSmartTvPausePlayState(EntityActions.stop.toString());
 
       final String nodeRedApiBaseTopic =
-          getIt<IMqttServerRepository>().getNodeRedApiBaseTopic();
+          IMqttServerRepository.instance.getNodeRedApiBaseTopic();
 
       final String nodeRedDevicesTopic =
-          getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName();
+          IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName();
 
       final String topic =
           '$nodeRedApiBaseTopic/$nodeRedDevicesTopic/${uniqueId.getOrCrash()}/${chromecastNodeRedApi.youtubeVideoTopicProperty}/${chromecastNodeRedApi.stopVideoTopicProperty}';
 
-      getIt<IMqttServerRepository>()
+      IMqttServerRepository.instance
           .publishMessage(topic, 'Media Command Stop');
     } catch (e) {
       return left(const CoreFailure.unexpected());
@@ -313,15 +312,15 @@ class ChromeCastEntity extends GenericSmartTvDE {
       );
 
       final String nodeRedApiBaseTopic =
-          getIt<IMqttServerRepository>().getNodeRedApiBaseTopic();
+          IMqttServerRepository.instance.getNodeRedApiBaseTopic();
 
       final String nodeRedDevicesTopic =
-          getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName();
+          IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName();
 
       final String topic =
           '$nodeRedApiBaseTopic/$nodeRedDevicesTopic/${uniqueId.getOrCrash()}/${chromecastNodeRedApi.youtubeVideoTopicProperty}/${chromecastNodeRedApi.queuePrevVideoTopicProperty}';
 
-      getIt<IMqttServerRepository>()
+      IMqttServerRepository.instance
           .publishMessage(topic, 'Media Command Prev Queue');
     } catch (e) {
       return left(const CoreFailure.unexpected());
@@ -336,15 +335,15 @@ class ChromeCastEntity extends GenericSmartTvDE {
           GenericSmartTvPausePlayState(EntityActions.skipNextVid.toString());
 
       final String nodeRedApiBaseTopic =
-          getIt<IMqttServerRepository>().getNodeRedApiBaseTopic();
+          IMqttServerRepository.instance.getNodeRedApiBaseTopic();
 
       final String nodeRedDevicesTopic =
-          getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName();
+          IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName();
 
       final String topic =
           '$nodeRedApiBaseTopic/$nodeRedDevicesTopic/${uniqueId.getOrCrash()}/${chromecastNodeRedApi.youtubeVideoTopicProperty}/${chromecastNodeRedApi.queueNextVideoTopicProperty}';
 
-      getIt<IMqttServerRepository>()
+      IMqttServerRepository.instance
           .publishMessage(topic, 'Media Command Next Queue');
     } catch (e) {
       return left(const CoreFailure.unexpected());
@@ -359,15 +358,15 @@ class ChromeCastEntity extends GenericSmartTvDE {
           GenericSmartTvPausePlayState(EntityActions.close.toString());
 
       final String nodeRedApiBaseTopic =
-          getIt<IMqttServerRepository>().getNodeRedApiBaseTopic();
+          IMqttServerRepository.instance.getNodeRedApiBaseTopic();
 
       final String nodeRedDevicesTopic =
-          getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName();
+          IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName();
 
       final String topic =
           '$nodeRedApiBaseTopic/$nodeRedDevicesTopic/${uniqueId.getOrCrash()}/${chromecastNodeRedApi.youtubeVideoTopicProperty}/${chromecastNodeRedApi.closeAppTopicProperty}';
 
-      getIt<IMqttServerRepository>()
+      IMqttServerRepository.instance
           .publishMessage(topic, 'Media Command Next Queue');
     } catch (e) {
       return left(const CoreFailure.unexpected());

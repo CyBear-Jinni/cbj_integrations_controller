@@ -8,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
-import 'package:network_tools/injectable.dart';
 import 'package:nodered/nodered.dart';
 
 class EspHomeSwitchEntity extends GenericSwitchDE {
@@ -108,14 +107,14 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
         }
       }
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
-      // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
       entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
       //
-      // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
 
@@ -128,14 +127,14 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
     switchState = GenericSwitchSwitchState(EntityActions.on.toString());
     try {
       final String nodeRedApiBaseTopic =
-          getIt<IMqttServerRepository>().getNodeRedApiBaseTopic();
+          IMqttServerRepository.instance.getNodeRedApiBaseTopic();
 
       final String nodeRedDevicesTopic =
-          getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName();
+          IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName();
       final String topic =
           '$nodeRedApiBaseTopic/$nodeRedDevicesTopic/${entityKey.getOrCrash()}/${EspHomeNodeRedApi.deviceStateProperty}/${EspHomeNodeRedApi.inputDeviceProperty}';
 
-      getIt<IMqttServerRepository>()
+      IMqttServerRepository.instance
           .publishMessage(topic, """{"state":true}""");
     } catch (e) {
       return left(const CoreFailure.unexpected());
@@ -149,14 +148,14 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
 
     try {
       final String nodeRedApiBaseTopic =
-          getIt<IMqttServerRepository>().getNodeRedApiBaseTopic();
+          IMqttServerRepository.instance.getNodeRedApiBaseTopic();
 
       final String nodeRedDevicesTopic =
-          getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName();
+          IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName();
       final String topic =
           '$nodeRedApiBaseTopic/$nodeRedDevicesTopic/${entityKey.getOrCrash()}/${EspHomeNodeRedApi.deviceStateProperty}/${EspHomeNodeRedApi.inputDeviceProperty}';
 
-      getIt<IMqttServerRepository>()
+      IMqttServerRepository.instance
           .publishMessage(topic, """{"state":false}""");
     } catch (e) {
       return left(const CoreFailure.unexpected());

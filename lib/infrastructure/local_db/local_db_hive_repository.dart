@@ -96,7 +96,7 @@ class HiveRepository extends ILocalDbRepository {
         (l) =>
             logger.w('No Remote Pipes Dns name was found in the local storage'),
         (r) {
-      // getIt<IAppCommunicationRepository>().startRemotePipesConnection(r);
+      // IAppCommunicationRepository.instance.startRemotePipesConnection(r);
 
       logger.i('Remote Pipes DNS name was "$r" found');
     });
@@ -296,7 +296,7 @@ class HiveRepository extends ILocalDbRepository {
     }
 
     // Rooms need to stay first one
-    // await getIt<ISavedRoomsRepo>().setUpAllFromDb();
+    // await ISavedRoomsRepo.instance.setUpAllFromDb();
     // await getIt<ISceneCbjRepository>().setUpAllFromDb();
     // await getIt<IRoutineCbjRepository>().setUpAllFromDb();
     // await getIt<IBindingCbjRepository>().setUpAllFromDb();

@@ -10,7 +10,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_value_objects.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
-import 'package:network_tools/injectable.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherV2Entity extends GenericBoilerDE {
@@ -139,7 +138,7 @@ class SwitcherV2Entity extends GenericBoilerDE {
         }
         entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
 
-        getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+        IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
           entityFromTheHub: this,
         );
       }
@@ -147,7 +146,7 @@ class SwitcherV2Entity extends GenericBoilerDE {
     } catch (e) {
       entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
 
-      getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
         entityFromTheHub: this,
       );
 

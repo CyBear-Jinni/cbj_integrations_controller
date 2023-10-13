@@ -93,13 +93,13 @@ class TuyaSmartPlugEntity extends GenericSmartPlugDE {
         }
       }
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
-      // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
       entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
-      // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return left(const CoreFailure.unexpected());

@@ -10,7 +10,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:injectable/injectable.dart';
-import 'package:network_tools/injectable.dart';
 
 @singleton
 class TasmotaMqttConnectorConjector
@@ -27,7 +26,7 @@ class TasmotaMqttConnectorConjector
   //
   //   /// Make all tasmotaMqtt devices repost themselves under topic discovery
   //   /// in the MQTT broker
-  //   getIt<IMqttServerRepository>()
+  //   IMqttServerRepository.instance
   //       .publishMessage('cmnd/$tasmotaMqttTopic/SetOption19', '0');
   // }
 
@@ -35,7 +34,7 @@ class TasmotaMqttConnectorConjector
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
   Future<void> discoverNewDevices() async {
-    getIt<IMqttServerRepository>()
+    IMqttServerRepository.instance
         .streamOfChosenSubscription('tasmota/discovery/+/config')
         .listen((mqttPublishMessage) async {
       final String messageTopic = mqttPublishMessage[0].topic;

@@ -99,7 +99,7 @@ class CompaniesConnectorConjector {
     final DeviceEntityAbstract deviceEntityGotSaved =
         getIt<ISavedDevicesRepo>().addOrUpdateDevice(deviceEntity);
 
-    getIt<IMqttServerRepository>()
+    IMqttServerRepository.instance
         .postSmartDeviceToAppMqtt(entityFromTheHub: deviceEntityGotSaved);
 
     return deviceEntityGotSaved;

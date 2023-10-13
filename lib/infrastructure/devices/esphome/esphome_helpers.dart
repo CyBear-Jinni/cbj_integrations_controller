@@ -35,9 +35,9 @@ class EspHomeHelpers {
     // final EspHomeNodeRedApi espHomeNodeRedApi = EspHomeNodeRedApi(
     //   repository: getIt<INodeRedRepository>(),
     //   nodeRedApiBaseTopic:
-    //       getIt<IMqttServerRepository>().getNodeRedApiBaseTopic(),
+    //       IMqttServerRepository.instance.getNodeRedApiBaseTopic(),
     //   nodeRedDevicesTopic:
-    //       getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName(),
+    //       IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName(),
     //   nodeRedMqttBrokerNodeName: 'Cbj NodeRed plugs Api Broker',
     // );
     //
@@ -112,9 +112,9 @@ class EspHomeHelpers {
     // final EspHomeNodeRedApi espHomeNodeRedApi = EspHomeNodeRedApi(
     //   repository: getIt<NodeRedRepository>(),
     //   nodeRedApiBaseTopic:
-    //       getIt<IMqttServerRepository>().getNodeRedApiBaseTopic(),
+    //       IMqttServerRepository.instance.getNodeRedApiBaseTopic(),
     //   nodeRedDevicesTopic:
-    //       getIt<IMqttServerRepository>().getNodeRedDevicesTopicTypeName(),
+    //       IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName(),
     //   nodeRedMqttBrokerNodeName: 'Cbj NodeRed plugs Api Broker',
     // );
 
