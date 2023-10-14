@@ -12,7 +12,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:injectable/injectable.dart';
-import 'package:network_tools/injectable.dart';
 
 @singleton
 class EspHomeConnectorConjector implements AbstractCompanyConnectorConjector {
@@ -72,7 +71,7 @@ class EspHomeConnectorConjector implements AbstractCompanyConnectorConjector {
     }
     // Save state locally so that nodeRED flows will not get created again
     // after restart
-    getIt<ISavedDevicesRepo>().saveAndActivateSmartDevicesToDb();
+    ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
   }
 
   @override

@@ -10,7 +10,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_value_objects.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
-import 'package:network_tools/injectable.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
@@ -141,7 +140,7 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
         }
         entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
 
-        getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+        IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
           entityFromTheHub: this,
         );
       }
@@ -149,7 +148,7 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
     } catch (e) {
       entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
 
-      getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
         entityFromTheHub: this,
       );
 

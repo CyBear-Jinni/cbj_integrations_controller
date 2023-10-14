@@ -10,7 +10,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
 import 'package:injectable/injectable.dart';
-import 'package:network_tools/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 
 @singleton
@@ -105,7 +104,7 @@ class EwelinkConnectorConjector implements AbstractCompanyConnectorConjector {
         );
       }
     }
-    getIt<ISavedDevicesRepo>().saveAndActivateSmartDevicesToDb();
+    ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
   }
 
   @override

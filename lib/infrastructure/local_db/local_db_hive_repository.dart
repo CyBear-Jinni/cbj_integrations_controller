@@ -1,6 +1,20 @@
+import 'dart:convert';
+
+import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.dart';
+import 'package:cbj_integrations_controller/domain/binding/i_binding_cbj_repository.dart';
+import 'package:cbj_integrations_controller/domain/binding/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
+import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
+import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
+import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
+import 'package:cbj_integrations_controller/domain/routine/i_routine_cbj_repository.dart';
+import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
+import 'package:cbj_integrations_controller/domain/routine/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
+import 'package:cbj_integrations_controller/domain/scene/i_scene_cbj_repository.dart';
+import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
+import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
 import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_value_objects.dart';
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
@@ -13,6 +27,7 @@ import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tu
 import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tuya_login_value_objects.dart';
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/bindings/binding_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
@@ -30,19 +45,22 @@ import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/scenes_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/tuya_vendor_credentials_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/xiaomi_mi_vendor_credentials_hive_model.dart';
+import 'package:cbj_integrations_controller/infrastructure/room/room_entity_dtos.dart';
+import 'package:cbj_integrations_controller/infrastructure/routines/routine_cbj_dtos.dart';
+import 'package:cbj_integrations_controller/infrastructure/scenes/scene_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
-import 'package:injectable/injectable.dart';
-import 'package:network_tools/injectable.dart';
 
 /// Only ISavedDevicesRepo need to call functions here
-@LazySingleton(as: ILocalDbRepository)
 class HiveRepository extends ILocalDbRepository {
+  HiveRepository() {
+    ILocalDbRepository.instance = this;
+  }
   @override
   Future<void> initializeDb() async {
-    String? localDbPath = await getIt<SystemCommandsManager>().getLocalDbPath();
+    String? localDbPath = await SystemCommandsManager.instance.getLocalDbPath();
 
     if (localDbPath[localDbPath.length - 1] == '/') {
       localDbPath = localDbPath.substring(0, localDbPath.length - 1);
@@ -96,6 +114,7 @@ class HiveRepository extends ILocalDbRepository {
         (l) =>
             logger.w('No Remote Pipes Dns name was found in the local storage'),
         (r) {
+      // TODO: Fix after new cbj_integrations_controller
       // getIt<IAppCommunicationRepository>().startRemotePipesConnection(r);
 
       logger.i('Remote Pipes DNS name was "$r" found');
@@ -296,47 +315,47 @@ class HiveRepository extends ILocalDbRepository {
     }
 
     // Rooms need to stay first one
-    // await getIt<ISavedRoomsRepo>().setUpAllFromDb();
-    // await getIt<ISceneCbjRepository>().setUpAllFromDb();
-    // await getIt<IRoutineCbjRepository>().setUpAllFromDb();
-    // await getIt<IBindingCbjRepository>().setUpAllFromDb();
-    await getIt<ISavedDevicesRepo>().setUpAllFromDb();
+    await ISavedRoomsRepo.instance.setUpAllFromDb();
+    await ISceneCbjRepository.instance.setUpAllFromDb();
+    await IRoutineCbjRepository.instance.setUpAllFromDb();
+    await IBindingCbjRepository.instance.setUpAllFromDb();
+    await ISavedDevicesRepo.instance.setUpAllFromDb();
   }
 
-  // @override
-  // Future<Either<LocalDbFailures, List<RoomEntity>>> getRoomsFromDb() async {
-  //   final List<RoomEntity> rooms = <RoomEntity>[];
-  //
-  //   try {
-  //     await roomsBox?.close();
-  //     roomsBox = await Hive.openBox<RoomsHiveModel>(roomsBoxName);
-  //     final List<RoomsHiveModel> roomsHiveModelFromDb =
-  //         roomsBox!.values.toList().cast<RoomsHiveModel>();
-  //
-  //     await roomsBox?.close();
-  //     for (final RoomsHiveModel roomHive in roomsHiveModelFromDb) {
-  //       final RoomEntity roomEntity = RoomEntity(
-  //         uniqueId: RoomUniqueId.fromUniqueString(roomHive.roomUniqueId),
-  //         cbjEntityName: RoomDefaultName(roomHive.roomDefaultName),
-  //         background: RoomBackground(roomHive.roomBackground),
-  //         roomTypes: RoomTypes(roomHive.roomTypes),
-  //         roomDevicesId: RoomDevicesId(roomHive.roomDevicesId),
-  //         roomScenesId: RoomScenesId(roomHive.roomScenesId),
-  //         roomRoutinesId: RoomRoutinesId(roomHive.roomRoutinesId),
-  //         roomBindingsId: RoomBindingsId(roomHive.roomBindingsId),
-  //         roomMostUsedBy: RoomMostUsedBy(roomHive.roomMostUsedBy),
-  //         roomPermissions: RoomPermissions(roomHive.roomPermissions),
-  //       );
-  //       rooms.add(roomEntity);
-  //     }
-  //   } catch (e) {
-  //     logger.e('Local DB hive error while getting rooms: $e');
-  //     // TODO: Check why hive crash stop this from working
-  //     await deleteAllSavedRooms();
-  //   }
-  //
-  //   return right(rooms);
-  // }
+  @override
+  Future<Either<LocalDbFailures, List<RoomEntity>>> getRoomsFromDb() async {
+    final List<RoomEntity> rooms = <RoomEntity>[];
+
+    try {
+      await roomsBox?.close();
+      roomsBox = await Hive.openBox<RoomsHiveModel>(roomsBoxName);
+      final List<RoomsHiveModel> roomsHiveModelFromDb =
+          roomsBox!.values.toList().cast<RoomsHiveModel>();
+
+      await roomsBox?.close();
+      for (final RoomsHiveModel roomHive in roomsHiveModelFromDb) {
+        final RoomEntity roomEntity = RoomEntity(
+          uniqueId: RoomUniqueId.fromUniqueString(roomHive.roomUniqueId),
+          cbjEntityName: RoomDefaultName(roomHive.roomDefaultName),
+          background: RoomBackground(roomHive.roomBackground),
+          roomTypes: RoomTypes(roomHive.roomTypes),
+          roomDevicesId: RoomDevicesId(roomHive.roomDevicesId),
+          roomScenesId: RoomScenesId(roomHive.roomScenesId),
+          roomRoutinesId: RoomRoutinesId(roomHive.roomRoutinesId),
+          roomBindingsId: RoomBindingsId(roomHive.roomBindingsId),
+          roomMostUsedBy: RoomMostUsedBy(roomHive.roomMostUsedBy),
+          roomPermissions: RoomPermissions(roomHive.roomPermissions),
+        );
+        rooms.add(roomEntity);
+      }
+    } catch (e) {
+      logger.e('Local DB hive error while getting rooms: $e');
+      // TODO: Check why hive crash stop this from working
+      await deleteAllSavedRooms();
+    }
+
+    return right(rooms);
+  }
 
   @override
   Future<Either<LocalDbFailures, List<DeviceEntityAbstract>>>
@@ -367,24 +386,6 @@ class HiveRepository extends ILocalDbRepository {
       logger.e('Local DB hive error while getting devices: $e');
     }
     return left(const LocalDbFailures.unexpected());
-  }
-
-  @override
-  Future<Either<LocalDbFailures, String>> getHubEntityLastKnownIp() async {
-    // TODO: implement getHubEntityLastKnownIp
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<LocalDbFailures, String>> getHubEntityNetworkBssid() async {
-    // TODO: implement getHubEntityNetworkBssid
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<LocalDbFailures, String>> getHubEntityNetworkName() async {
-    // TODO: implement getHubEntityNetworkName
-    throw UnimplementedError();
   }
 
   @override
@@ -605,89 +606,88 @@ class HiveRepository extends ILocalDbRepository {
     return left(const LocalDbFailures.unexpected());
   }
 
-  // TODO: Fix after new cbj_integrations_controller
-  // @override
-  // Future<Either<LocalDbFailures, Unit>> saveSmartDevices({
-  //   required List<DeviceEntityAbstract> deviceList,
-  // }) async {
-  //   try {
-  //     final List<DevicesHiveModel> devicesHiveList = [];
-  //
-  //     final List<String> devicesListStringJson = List<String>.from(
-  //       deviceList.map((e) => DeviceHelper.convertDomainToJsonString(e)),
-  //     );
-  //
-  //     for (final String devicesEntityDtosJsonString in devicesListStringJson) {
-  //       final DevicesHiveModel devicesHiveModel = DevicesHiveModel()
-  //         ..deviceStringJson = devicesEntityDtosJsonString;
-  //       devicesHiveList.add(devicesHiveModel);
-  //     }
-  //
-  //     await devicesBox?.close();
-  //     devicesBox = await Hive.openBox<DevicesHiveModel>(devicesBoxName);
-  //     await devicesBox?.clear();
-  //     await devicesBox?.addAll(devicesHiveList);
-  //
-  //     await devicesBox?.close();
-  //     logger.i('Devices got saved to local storage');
-  //   } catch (e) {
-  //     logger.e('Error saving Devices to local storage\n$e');
-  //     return left(const LocalDbFailures.unexpected());
-  //   }
-  //
-  //   return right(unit);
-  // }
+  @override
+  Future<Either<LocalDbFailures, Unit>> saveSmartDevices({
+    required List<DeviceEntityAbstract> deviceList,
+  }) async {
+    try {
+      final List<DevicesHiveModel> devicesHiveList = [];
 
-  // @override
-  // Future<Either<LocalDbFailures, Unit>> saveRoomsToDb({
-  //   required List<RoomEntity> roomsList,
-  // }) async {
-  //   try {
-  //     final List<RoomsHiveModel> rommsHiveList = [];
-  //
-  //     final List<RoomEntityDtos> roomsListDto =
-  //         List<RoomEntityDtos>.from(roomsList.map((e) => e.toInfrastructure()));
-  //
-  //     for (final RoomEntityDtos roomEntityDtos in roomsListDto) {
-  //       final RoomsHiveModel roomsHiveModel = RoomsHiveModel()
-  //         ..roomUniqueId = roomEntityDtos.uniqueId
-  //         ..roomDefaultName = roomEntityDtos.cbjEntityName
-  //         ..roomBackground = roomEntityDtos.background
-  //         ..roomDevicesId = roomEntityDtos.roomDevicesId
-  //         ..roomScenesId = roomEntityDtos.roomScenesId
-  //         ..roomRoutinesId = roomEntityDtos.roomRoutinesId
-  //         ..roomBindingsId = roomEntityDtos.roomBindingsId
-  //         ..roomMostUsedBy = roomEntityDtos.roomMostUsedBy
-  //         ..roomPermissions = roomEntityDtos.roomPermissions
-  //         ..roomTypes = roomEntityDtos.roomTypes;
-  //       rommsHiveList.add(roomsHiveModel);
-  //     }
-  //
-  //     await roomsBox?.close();
-  //     roomsBox = await Hive.openBox<RoomsHiveModel>(roomsBoxName);
-  //
-  //     await roomsBox?.clear();
-  //     await roomsBox?.addAll(rommsHiveList);
-  //
-  //     await roomsBox?.close();
-  //     logger.i('Rooms got saved to local storage');
-  //   } catch (e) {
-  //     logger.e('Error saving Rooms to local storage\n$e');
-  //     return left(const LocalDbFailures.unexpected());
-  //   }
-  //
-  //   return right(unit);
-  // }
+      final List<String> devicesListStringJson = List<String>.from(
+        deviceList.map((e) => DeviceHelper.convertDomainToJsonString(e)),
+      );
+
+      for (final String devicesEntityDtosJsonString in devicesListStringJson) {
+        final DevicesHiveModel devicesHiveModel = DevicesHiveModel()
+          ..deviceStringJson = devicesEntityDtosJsonString;
+        devicesHiveList.add(devicesHiveModel);
+      }
+
+      await devicesBox?.close();
+      devicesBox = await Hive.openBox<DevicesHiveModel>(devicesBoxName);
+      await devicesBox?.clear();
+      await devicesBox?.addAll(devicesHiveList);
+
+      await devicesBox?.close();
+      logger.i('Devices got saved to local storage');
+    } catch (e) {
+      logger.e('Error saving Devices to local storage\n$e');
+      return left(const LocalDbFailures.unexpected());
+    }
+
+    return right(unit);
+  }
 
   @override
-  Future<Either<LocalDbFailures, Unit>> saveHubEntity({
-    required String hubNetworkBssid,
-    required String networkName,
-    required String lastKnownIp,
+  Future<Either<LocalDbFailures, Unit>> saveRoomsToDb({
+    required List<RoomEntity> roomsList,
   }) async {
-    // TODO: implement saveHubEntity
-    throw UnimplementedError();
+    try {
+      final List<RoomsHiveModel> rommsHiveList = [];
+
+      final List<RoomEntityDtos> roomsListDto =
+          List<RoomEntityDtos>.from(roomsList.map((e) => e.toInfrastructure()));
+
+      for (final RoomEntityDtos roomEntityDtos in roomsListDto) {
+        final RoomsHiveModel roomsHiveModel = RoomsHiveModel()
+          ..roomUniqueId = roomEntityDtos.uniqueId
+          ..roomDefaultName = roomEntityDtos.cbjEntityName
+          ..roomBackground = roomEntityDtos.background
+          ..roomDevicesId = roomEntityDtos.roomDevicesId
+          ..roomScenesId = roomEntityDtos.roomScenesId
+          ..roomRoutinesId = roomEntityDtos.roomRoutinesId
+          ..roomBindingsId = roomEntityDtos.roomBindingsId
+          ..roomMostUsedBy = roomEntityDtos.roomMostUsedBy
+          ..roomPermissions = roomEntityDtos.roomPermissions
+          ..roomTypes = roomEntityDtos.roomTypes;
+        rommsHiveList.add(roomsHiveModel);
+      }
+
+      await roomsBox?.close();
+      roomsBox = await Hive.openBox<RoomsHiveModel>(roomsBoxName);
+
+      await roomsBox?.clear();
+      await roomsBox?.addAll(rommsHiveList);
+
+      await roomsBox?.close();
+      logger.i('Rooms got saved to local storage');
+    } catch (e) {
+      logger.e('Error saving Rooms to local storage\n$e');
+      return left(const LocalDbFailures.unexpected());
+    }
+
+    return right(unit);
   }
+
+  // @override
+  // Future<Either<LocalDbFailures, Unit>> saveHubEntity({
+  //   required String hubNetworkBssid,
+  //   required String networkName,
+  //   required String lastKnownIp,
+  // }) async {
+  //   // TODO: implement saveHubEntity
+  //   throw UnimplementedError();
+  // }
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveVendorLoginCredentials({
@@ -954,212 +954,230 @@ class HiveRepository extends ILocalDbRepository {
     return right(unit);
   }
 
-  // Future<void> deleteAllSavedRooms() async {
-  //   await saveRoomsToDb(roomsList: []);
-  // }
+  Future<void> deleteAllSavedRooms() async {
+    await saveRoomsToDb(roomsList: []);
+  }
+
+  @override
+  Future<Either<LocalDbFailures, List<SceneCbjEntity>>>
+      getScenesFromDb() async {
+    final List<SceneCbjEntity> scenes = <SceneCbjEntity>[];
+
+    try {
+      await scenesBox?.close();
+
+      scenesBox = await Hive.openBox<ScenesHiveModel>(scenesBoxName);
+
+      final List<ScenesHiveModel> scenesHiveModelFromDb =
+          scenesBox!.values.toList().cast<ScenesHiveModel>();
+
+      await scenesBox?.close();
+
+      for (final ScenesHiveModel sceneHive in scenesHiveModelFromDb) {
+        final SceneCbjEntity sceneEntity = SceneCbjDtos.fromJson(
+          jsonDecode(sceneHive.scenesStringJson) as Map<String, dynamic>,
+        ).toDomain();
+
+        scenes.add(
+          sceneEntity.copyWith(
+            entityStateGRPC: SceneCbjDeviceStateGRPC(
+              EntityStateGRPC.waitingInComp.toString(),
+            ),
+          ),
+        );
+      }
+      return right(scenes);
+    } catch (e) {
+      logger.e('Local DB hive error while getting scenes: $e');
+    }
+    return left(const LocalDbFailures.unexpected());
+  }
+
+  @override
+  Future<Either<LocalDbFailures, List<RoutineCbjEntity>>>
+      getRoutinesFromDb() async {
+    final List<RoutineCbjEntity> routines = <RoutineCbjEntity>[];
+
+    try {
+      await routinesBox?.close();
+      routinesBox = await Hive.openBox<RoutinesHiveModel>(routinesBoxName);
+
+      final List<RoutinesHiveModel> routinesHiveModelFromDb =
+          routinesBox!.values.toList().cast<RoutinesHiveModel>();
+
+      await routinesBox?.close();
+
+      for (final RoutinesHiveModel routineHive in routinesHiveModelFromDb) {
+        final RoutineCbjEntity routineEntity = RoutineCbjDtos.fromJson(
+          jsonDecode(routineHive.routinesStringJson) as Map<String, dynamic>,
+        ).toDomain();
+
+        routines.add(
+          routineEntity.copyWith(
+            entityStateGRPC: RoutineCbjDeviceStateGRPC(
+              EntityStateGRPC.waitingInComp.toString(),
+            ),
+          ),
+        );
+      }
+      return right(routines);
+    } catch (e) {
+      logger.e('Local DB hive error while getting routines: $e');
+    }
+    return left(const LocalDbFailures.unexpected());
+  }
+
+  @override
+  Future<Either<LocalDbFailures, List<BindingCbjEntity>>>
+      getBindingsFromDb() async {
+    final List<BindingCbjEntity> bindings = <BindingCbjEntity>[];
+
+    try {
+      await bindingsBox?.close();
+      bindingsBox = await Hive.openBox<BindingsHiveModel>(bindingsBoxName);
+
+      final List<BindingsHiveModel> bindingsHiveModelFromDb =
+          bindingsBox!.values.toList().cast<BindingsHiveModel>();
+
+      await bindingsBox?.close();
+
+      for (final BindingsHiveModel bindingHive in bindingsHiveModelFromDb) {
+        final BindingCbjEntity bindingEntity = BindingCbjDtos.fromJson(
+          jsonDecode(bindingHive.bindingsStringJson) as Map<String, dynamic>,
+        ).toDomain();
+
+        bindings.add(
+          bindingEntity.copyWith(
+            entityStateGRPC: BindingCbjDeviceStateGRPC(
+              EntityStateGRPC.waitingInComp.toString(),
+            ),
+          ),
+        );
+      }
+      return right(bindings);
+    } catch (e) {
+      logger.e('Local DB hive error while getting bindings: $e');
+    }
+    return left(const LocalDbFailures.unexpected());
+  }
+
+  @override
+  Future<Either<LocalDbFailures, Unit>> saveScenes({
+    required List<SceneCbjEntity> sceneList,
+  }) async {
+    try {
+      final List<ScenesHiveModel> scenesHiveList = [];
+
+      final List<String> scenesListStringJson = List<String>.from(
+        sceneList.map((e) => jsonEncode(e.toInfrastructure().toJson())),
+      );
+
+      for (final String scenesEntityDtosJsonString in scenesListStringJson) {
+        final ScenesHiveModel scenesHiveModel = ScenesHiveModel()
+          ..scenesStringJson = scenesEntityDtosJsonString;
+        scenesHiveList.add(scenesHiveModel);
+      }
+
+      await scenesBox?.close();
+      scenesBox = await Hive.openBox<ScenesHiveModel>(scenesBoxName);
+
+      await scenesBox?.clear();
+      await scenesBox?.addAll(scenesHiveList);
+
+      await scenesBox?.close();
+      logger.i('Scenes got saved to local storage');
+    } catch (e) {
+      logger.e('Error saving Scenes to local storage\n$e');
+      return left(const LocalDbFailures.unexpected());
+    }
+
+    return right(unit);
+  }
+
+  @override
+  Future<Either<LocalDbFailures, Unit>> saveRoutines({
+    required List<RoutineCbjEntity> routineList,
+  }) async {
+    try {
+      final List<RoutinesHiveModel> routinesHiveList = [];
+
+      final List<String> routinesListStringJson = List<String>.from(
+        routineList.map((e) => jsonEncode(e.toInfrastructure().toJson())),
+      );
+
+      for (final String routinesEntityDtosJsonString
+          in routinesListStringJson) {
+        final RoutinesHiveModel routinesHiveModel = RoutinesHiveModel()
+          ..routinesStringJson = routinesEntityDtosJsonString;
+        routinesHiveList.add(routinesHiveModel);
+      }
+
+      await routinesBox?.close();
+      routinesBox = await Hive.openBox<RoutinesHiveModel>(routinesBoxName);
+
+      await routinesBox?.clear();
+      await routinesBox?.addAll(routinesHiveList);
+
+      await routinesBox?.close();
+      logger.i('Routines got saved to local storage');
+    } catch (e) {
+      logger.e('Error saving Routines to local storage\n$e');
+      return left(const LocalDbFailures.unexpected());
+    }
+
+    return right(unit);
+  }
+
+  @override
+  Future<Either<LocalDbFailures, Unit>> saveBindings({
+    required List<BindingCbjEntity> bindingList,
+  }) async {
+    try {
+      final List<BindingsHiveModel> bindingsHiveList = [];
+
+      final List<String> bindingsListStringJson = List<String>.from(
+        bindingList.map((e) => jsonEncode(e.toInfrastructure().toJson())),
+      );
+
+      for (final String bindingsEntityDtosJsonString
+          in bindingsListStringJson) {
+        final BindingsHiveModel bindingsHiveModel = BindingsHiveModel()
+          ..bindingsStringJson = bindingsEntityDtosJsonString;
+        bindingsHiveList.add(bindingsHiveModel);
+      }
+
+      await bindingsBox?.close();
+
+      bindingsBox = await Hive.openBox<BindingsHiveModel>(bindingsBoxName);
+
+      await bindingsBox?.clear();
+      await bindingsBox?.addAll(bindingsHiveList);
+
+      await bindingsBox?.close();
+      logger.i('Bindings got saved to local storage');
+    } catch (e) {
+      logger.e('Error saving Bindings to local storage\n$e');
+      return left(const LocalDbFailures.unexpected());
+    }
+
+    return right(unit);
+  }
 
   // @override
-  // Future<Either<LocalDbFailures, List<SceneCbjEntity>>>
-  //     getScenesFromDb() async {
-  //   final List<SceneCbjEntity> scenes = <SceneCbjEntity>[];
+  // Future<String> getHomeId() async {
+  //   final List<HomeEntityIsarModel> homeEntityIsarModelList =
+  //       await isar.homeEntityIsarModels.where().findAll();
   //
-  //   try {
-  //     await scenesBox?.close();
-  //
-  //     scenesBox = await Hive.openBox<ScenesHiveModel>(scenesBoxName);
-  //
-  //     final List<ScenesHiveModel> scenesHiveModelFromDb =
-  //         scenesBox!.values.toList().cast<ScenesHiveModel>();
-  //
-  //     await scenesBox?.close();
-  //
-  //     for (final ScenesHiveModel sceneHive in scenesHiveModelFromDb) {
-  //       final SceneCbjEntity sceneEntity = SceneCbjDtos.fromJson(
-  //         jsonDecode(sceneHive.scenesStringJson) as Map<String, dynamic>,
-  //       ).toDomain();
-  //
-  //       scenes.add(
-  //         sceneEntity.copyWith(
-  //           entityStateGRPC: SceneCbjDeviceStateGRPC(
-  //             EntityStateGRPC.waitingInComp.toString(),
-  //           ),
-  //         ),
-  //       );
-  //     }
-  //     return right(scenes);
-  //   } catch (e) {
-  //     logger.e('Local DB hive error while getting scenes: $e');
-  //   }
-  //   return left(const LocalDbFailures.unexpected());
-  // }
-
-  // @override
-  // Future<Either<LocalDbFailures, List<RoutineCbjEntity>>>
-  //     getRoutinesFromDb() async {
-  //   final List<RoutineCbjEntity> routines = <RoutineCbjEntity>[];
-  //
-  //   try {
-  //     await routinesBox?.close();
-  //     routinesBox = await Hive.openBox<RoutinesHiveModel>(routinesBoxName);
-  //
-  //     final List<RoutinesHiveModel> routinesHiveModelFromDb =
-  //         routinesBox!.values.toList().cast<RoutinesHiveModel>();
-  //
-  //     await routinesBox?.close();
-  //
-  //     for (final RoutinesHiveModel routineHive in routinesHiveModelFromDb) {
-  //       final RoutineCbjEntity routineEntity = RoutineCbjDtos.fromJson(
-  //         jsonDecode(routineHive.routinesStringJson) as Map<String, dynamic>,
-  //       ).toDomain();
-  //
-  //       routines.add(
-  //         routineEntity.copyWith(
-  //           entityStateGRPC: RoutineCbjDeviceStateGRPC(
-  //             EntityStateGRPC.waitingInComp.toString(),
-  //           ),
-  //         ),
-  //       );
-  //     }
-  //     return right(routines);
-  //   } catch (e) {
-  //     logger.e('Local DB hive error while getting routines: $e');
-  //   }
-  //   return left(const LocalDbFailures.unexpected());
-  // }
-
-  // @override
-  // Future<Either<LocalDbFailures, List<BindingCbjEntity>>>
-  //     getBindingsFromDb() async {
-  //   final List<BindingCbjEntity> bindings = <BindingCbjEntity>[];
-  //
-  //   try {
-  //     await bindingsBox?.close();
-  //     bindingsBox = await Hive.openBox<BindingsHiveModel>(bindingsBoxName);
-  //
-  //     final List<BindingsHiveModel> bindingsHiveModelFromDb =
-  //         bindingsBox!.values.toList().cast<BindingsHiveModel>();
-  //
-  //     await bindingsBox?.close();
-  //
-  //     for (final BindingsHiveModel bindingHive in bindingsHiveModelFromDb) {
-  //       final BindingCbjEntity bindingEntity = BindingCbjDtos.fromJson(
-  //         jsonDecode(bindingHive.bindingsStringJson) as Map<String, dynamic>,
-  //       ).toDomain();
-  //
-  //       bindings.add(
-  //         bindingEntity.copyWith(
-  //           entityStateGRPC: BindingCbjDeviceStateGRPC(
-  //             EntityStateGRPC.waitingInComp.toString(),
-  //           ),
-  //         ),
-  //       );
-  //     }
-  //     return right(bindings);
-  //   } catch (e) {
-  //     logger.e('Local DB hive error while getting bindings: $e');
-  //   }
-  //   return left(const LocalDbFailures.unexpected());
-  // }
-
-  // @override
-  // Future<Either<LocalDbFailures, Unit>> saveScenes({
-  //   required List<SceneCbjEntity> sceneList,
-  // }) async {
-  //   try {
-  //     final List<ScenesHiveModel> scenesHiveList = [];
-  //
-  //     final List<String> scenesListStringJson = List<String>.from(
-  //       sceneList.map((e) => jsonEncode(e.toInfrastructure().toJson())),
-  //     );
-  //
-  //     for (final String scenesEntityDtosJsonString in scenesListStringJson) {
-  //       final ScenesHiveModel scenesHiveModel = ScenesHiveModel()
-  //         ..scenesStringJson = scenesEntityDtosJsonString;
-  //       scenesHiveList.add(scenesHiveModel);
-  //     }
-  //
-  //     await scenesBox?.close();
-  //     scenesBox = await Hive.openBox<ScenesHiveModel>(scenesBoxName);
-  //
-  //     await scenesBox?.clear();
-  //     await scenesBox?.addAll(scenesHiveList);
-  //
-  //     await scenesBox?.close();
-  //     logger.i('Scenes got saved to local storage');
-  //   } catch (e) {
-  //     logger.e('Error saving Scenes to local storage\n$e');
-  //     return left(const LocalDbFailures.unexpected());
-  //   }
-  //
-  //   return right(unit);
-  // }
-
-  // @override
-  // Future<Either<LocalDbFailures, Unit>> saveRoutines({
-  //   required List<RoutineCbjEntity> routineList,
-  // }) async {
-  //   try {
-  //     final List<RoutinesHiveModel> routinesHiveList = [];
-  //
-  //     final List<String> routinesListStringJson = List<String>.from(
-  //       routineList.map((e) => jsonEncode(e.toInfrastructure().toJson())),
-  //     );
-  //
-  //     for (final String routinesEntityDtosJsonString
-  //         in routinesListStringJson) {
-  //       final RoutinesHiveModel routinesHiveModel = RoutinesHiveModel()
-  //         ..routinesStringJson = routinesEntityDtosJsonString;
-  //       routinesHiveList.add(routinesHiveModel);
-  //     }
-  //
-  //     await routinesBox?.close();
-  //     routinesBox = await Hive.openBox<RoutinesHiveModel>(routinesBoxName);
-  //
-  //     await routinesBox?.clear();
-  //     await routinesBox?.addAll(routinesHiveList);
-  //
-  //     await routinesBox?.close();
-  //     logger.i('Routines got saved to local storage');
-  //   } catch (e) {
-  //     logger.e('Error saving Routines to local storage\n$e');
-  //     return left(const LocalDbFailures.unexpected());
-  //   }
-  //
-  //   return right(unit);
+  //   return homeEntityIsarModelList[0].homeId;
   // }
   //
   // @override
-  // Future<Either<LocalDbFailures, Unit>> saveBindings({
-  //   required List<BindingCbjEntity> bindingList,
-  // }) async {
-  //   try {
-  //     final List<BindingsHiveModel> bindingsHiveList = [];
-  //
-  //     final List<String> bindingsListStringJson = List<String>.from(
-  //       bindingList.map((e) => jsonEncode(e.toInfrastructure().toJson())),
-  //     );
-  //
-  //     for (final String bindingsEntityDtosJsonString
-  //         in bindingsListStringJson) {
-  //       final BindingsHiveModel bindingsHiveModel = BindingsHiveModel()
-  //         ..bindingsStringJson = bindingsEntityDtosJsonString;
-  //       bindingsHiveList.add(bindingsHiveModel);
-  //     }
-  //
-  //     await bindingsBox?.close();
-  //
-  //     bindingsBox = await Hive.openBox<BindingsHiveModel>(bindingsBoxName);
-  //
-  //     await bindingsBox?.clear();
-  //     await bindingsBox?.addAll(bindingsHiveList);
-  //
-  //     await bindingsBox?.close();
-  //     logger.i('Bindings got saved to local storage');
-  //   } catch (e) {
-  //     logger.e('Error saving Bindings to local storage\n$e');
-  //     return left(const LocalDbFailures.unexpected());
-  //   }
-  //
-  //   return right(unit);
+  // Future<void> setHomeId(String homeId) async {
+  //   final HomeEntityIsarModel homeEntityIsarModel = HomeEntityIsarModel()
+  //     ..homeId = homeId;
+  //   await isar.writeTxn(() async {
+  //     await isar.homeEntityIsarModels.clear();
+  //     await isar.homeEntityIsarModels.put(homeEntityIsarModel);
+  //   });
   // }
 }

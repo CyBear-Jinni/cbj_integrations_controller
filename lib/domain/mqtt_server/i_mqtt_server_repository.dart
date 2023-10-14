@@ -5,6 +5,8 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:mqtt_client/src/observable/src/records.dart';
 
 abstract class IMqttServerRepository {
+  static late IMqttServerRepository instance;
+
   // static const String hubBaseTopic = 'CBJ_Hub_Topic';
   //
   // static const String devicesTopicTypeName = 'Devices';

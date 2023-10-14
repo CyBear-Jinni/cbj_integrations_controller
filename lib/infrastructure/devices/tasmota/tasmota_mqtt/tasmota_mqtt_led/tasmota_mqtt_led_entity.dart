@@ -9,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_value_objects.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
-import 'package:network_tools/injectable.dart';
 
 class TasmotaMqttLedEntity extends GenericLightDE {
   TasmotaMqttLedEntity({
@@ -90,13 +89,13 @@ class TasmotaMqttLedEntity extends GenericLightDE {
         }
       }
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
-      // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
       entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
-      // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return left(const CoreFailure.unexpected());
@@ -108,7 +107,7 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     lightSwitchState = GenericLightSwitchState(EntityActions.on.toString());
 
     try {
-      getIt<IMqttServerRepository>().publishMessage(
+      IMqttServerRepository.instance.publishMessage(
         'cmnd/${tasmotaMqttDeviceTopicName.getOrCrash()}/Power',
         'ON',
       );
@@ -123,7 +122,7 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     lightSwitchState = GenericLightSwitchState(EntityActions.off.toString());
 
     try {
-      getIt<IMqttServerRepository>().publishMessage(
+      IMqttServerRepository.instance.publishMessage(
         'cmnd/${tasmotaMqttDeviceTopicName.getOrCrash()}/Power',
         'OFF',
       );

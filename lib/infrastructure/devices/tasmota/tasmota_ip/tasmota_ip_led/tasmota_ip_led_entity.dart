@@ -8,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_value_objects.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
-import 'package:network_tools/injectable.dart';
 
 // TODO: Make the commends work, currently this object does not work
 // Toggle device on/off, the o is the number of output to toggle o=2 is the second
@@ -127,13 +126,13 @@ class TasmotaIpLedEntity extends GenericLightDE {
         }
       }
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
-      // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
       entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
-      // getIt<IMqttServerRepository>().postSmartDeviceToAppMqtt(
+      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return left(const CoreFailure.unexpected());
@@ -145,7 +144,7 @@ class TasmotaIpLedEntity extends GenericLightDE {
     lightSwitchState = GenericLightSwitchState(EntityActions.on.toString());
 
     try {
-      getIt<IMqttServerRepository>().publishMessage(
+      IMqttServerRepository.instance.publishMessage(
         'cmnd/${deviceHostName.getOrCrash()}/Power',
         'ON',
       );
@@ -160,7 +159,7 @@ class TasmotaIpLedEntity extends GenericLightDE {
     lightSwitchState = GenericLightSwitchState(EntityActions.off.toString());
 
     try {
-      getIt<IMqttServerRepository>().publishMessage(
+      IMqttServerRepository.instance.publishMessage(
         'cmnd/${deviceHostName.getOrCrash()}/Power',
         'OFF',
       );

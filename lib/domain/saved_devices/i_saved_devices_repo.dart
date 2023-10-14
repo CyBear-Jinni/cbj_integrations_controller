@@ -4,6 +4,8 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:dartz/dartz.dart';
 
 abstract class ISavedDevicesRepo {
+  static late ISavedDevicesRepo instance;
+
   /// Setting up all devices from db
   Future<void> setUpAllFromDb();
 
