@@ -1,7 +1,7 @@
 name: cbj_integrations_controller
 description: A sample command-line application.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+version: 1.0.1
+# repository: https://github.com/CyBear-Jinni/cbj_integrations_controller
 
 environment:
   sdk: ^3.1.3
