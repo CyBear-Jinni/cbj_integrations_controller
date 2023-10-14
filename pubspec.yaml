@@ -36,6 +36,8 @@ dependencies:
       url: 'https://github.com/guyluz11/hue_dart.git'
   # Convenient code generator for get_it
   injectable: ^2.3.1
+  # Extremely fast, easy to use, and fully async NoSQL database for Flutter.
+  isar: ^3.1.0+1
   # Utility library that checks for an Active Internet connection
   internet_connection_checker: ^1.0.0+1
   # Defines the annotations used by json_serializable to create code for JSON serialization and deserialization.

@@ -1,5 +1,9 @@
+import 'dart:convert';
+
+import 'package:cbj_integrations_controller/domain/core/value_objects.dart';
 import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
+import 'package:cbj_integrations_controller/domain/matirial_colors/colors.dart';
 import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
 import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
 import 'package:cbj_integrations_controller/domain/routine/i_routine_cbj_repository.dart';
@@ -7,8 +11,15 @@ import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.da
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_failures.dart';
 import 'package:cbj_integrations_controller/domain/routine/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pb.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_converter.dart';
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:kt_dart/collection.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:rxdart/src/subjects/behavior_subject.dart';
 
 class RoutineCbjRepository implements IRoutineCbjRepository {
   RoutineCbjRepository() {
@@ -117,5 +128,135 @@ class RoutineCbjRepository implements IRoutineCbjRepository {
     RoutineCbjEntity routineEntity,
   ) {
     return _allRoutines[routineEntity.uniqueId.getOrCrash()];
+  }
+
+  @override
+  Future<Either<RoutineCbjFailure, Unit>> activateRoutines(
+    KtList<RoutineCbjEntity> routinesList,
+  ) async {
+    for (final RoutineCbjEntity routineCbjEntity in routinesList.asList()) {
+      addOrUpdateNewRoutineInHub(
+        routineCbjEntity.copyWith(
+          entityStateGRPC: RoutineCbjDeviceStateGRPC(
+            CbjDeviceStateGRPC.waitingInComp.toString(),
+          ),
+        ),
+      );
+    }
+    return right(unit);
+  }
+
+  @override
+  void addOrUpdateNewRoutineInApp(RoutineCbjEntity routineCbj) {
+    _allRoutines[routineCbj.uniqueId.getOrCrash()] = routineCbj;
+
+    routinesResponseFromTheHubStreamController.sink
+        .add(_allRoutines.values.toImmutableList());
+  }
+
+  @override
+  Future<void> initiateHubConnection() async {}
+
+  @override
+  Stream<Either<RoutineCbjFailure, KtList<RoutineCbjEntity>>>
+      watchAllRoutines() async* {
+    yield* routinesResponseFromTheHubStreamController.stream
+        .map((event) => right(event));
+  }
+
+  @override
+  BehaviorSubject<KtList<RoutineCbjEntity>>
+      routinesResponseFromTheHubStreamController =
+      BehaviorSubject<KtList<RoutineCbjEntity>>();
+
+  @override
+  Future<Either<RoutineCbjFailure, RoutineCbjEntity>>
+      addOrUpdateNewRoutineInHub(
+    RoutineCbjEntity routineCbjEntity,
+  ) async {
+    _allRoutines[routineCbjEntity.uniqueId.getOrCrash()] = routineCbjEntity;
+
+    final ClientStatusRequests clientStatusRequests = ClientStatusRequests(
+      allRemoteCommands:
+          jsonEncode(routineCbjEntity.toInfrastructure().toJson()),
+      sendingType: SendingType.routineType,
+    );
+
+    // TODO: Fix after new cbj_integrations_controller
+    // AppRequestsToHub.appRequestsToHubStreamController.add(clientStatusRequests);
+
+    return right(routineCbjEntity);
+  }
+
+  @override
+  Future<Either<RoutineCbjFailure, RoutineCbjEntity>>
+      addOrUpdateNewRoutineInHubFromDevicesPropertyActionList(
+    String routineName,
+    List<MapEntry<DeviceEntityAbstract, MapEntry<String?, String?>>>
+        smartDevicesWithActionToAdd,
+    RoutineCbjRepeatDateDays daysToRepeat,
+    RoutineCbjRepeatDateHour hourToRepeat,
+    RoutineCbjRepeatDateMinute minutesToRepeat,
+  ) async {
+    final RoutineCbjEntity newCbjRoutine =
+        NodeRedConverter.convertToRoutineNodes(
+      nodeName: routineName,
+      devicesPropertyAction: smartDevicesWithActionToAdd,
+      daysToRepeat: daysToRepeat,
+      hourToRepeat: hourToRepeat,
+      minutesToRepeat: minutesToRepeat,
+      routineColor: Colors.blueAccent.value,
+    );
+    return addOrUpdateNewRoutineInHub(newCbjRoutine);
+  }
+
+  @override
+  Future<Either<RoutineCbjFailure, RoutineCbjEntity>> getRoutine() async {
+    //
+    // final RoutineCbj routine = RoutineCbj(
+    //   uniqueId: UniqueId(),
+    //   name: 'Turn on all lights out side',
+    //   routinesActionsToExecute: [
+    //     'Turn on all lights',
+    //     ' Turn on all lights',
+    //   ].toImmutableList(),
+    // );
+    //
+    //
+    // final KtList<String> routinesActionsList = [
+    //   'Gut Calling',
+    //   'Out Side North',
+    // ].toImmutableList();
+
+    try {
+      return right(
+        RoutineCbjEntity(
+          uniqueId: UniqueId(),
+          name: RoutineCbjName('Go to sleep ----------- 😴'),
+          backgroundColor:
+              RoutineCbjBackgroundColor(Colors.blue.value.toString()),
+          iconCodePoint: RoutineCbjIconCodePoint(null
+              // FontAwesomeIcons.school.codePoint.toString(),
+              ),
+          image: RoutineCbjBackgroundImage(null),
+          automationString: RoutineCbjAutomationString(null),
+          nodeRedFlowId: RoutineCbjNodeRedFlowId(null),
+          firstNodeId: RoutineCbjFirstNodeId(null),
+          lastDateOfExecute: RoutineCbjLastDateOfExecute(null),
+          entityStateGRPC: RoutineCbjDeviceStateGRPC(null),
+          senderDeviceModel: RoutineCbjSenderDeviceModel(null),
+          senderDeviceOs: RoutineCbjSenderDeviceOs(null),
+          senderId: RoutineCbjSenderId(null),
+          compUuid: RoutineCbjCompUuid(null),
+          stateMassage: RoutineCbjStateMassage(null),
+          repeateType: RoutineCbjRepeatType(null),
+          repeateDateDays: RoutineCbjRepeatDateDays(null),
+          repeateDateHour: RoutineCbjRepeatDateHour(null),
+          repeateDateMinute: RoutineCbjRepeatDateMinute(null),
+        ),
+      );
+    } catch (e) {
+      return left(const RoutineCbjFailure.unexpected());
+    }
   }
 }

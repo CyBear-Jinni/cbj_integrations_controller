@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
 import 'package:cbj_integrations_controller/domain/room/room_failures.dart';
+import 'package:color/color.dart';
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class IRoomRepository {
+  static late IRoomRepository instance;
+
   void addOrUpdateRoom(RoomEntity roomEntity);
 
   void addOrUpdateRoomAndStateToWaiting(RoomEntity roomEntity);
@@ -60,7 +63,7 @@ abstract class IRoomRepository {
 
   Future<Either<RoomFailure, Unit>> changeHsvColorRooms({
     required List<String>? roomsId,
-    required HSVColor hsvColorToChange,
+    required HsvColor hsvColorToChange,
   });
 
   Future<Either<RoomFailure, Unit>> changeBrightnessRooms({

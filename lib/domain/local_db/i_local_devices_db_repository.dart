@@ -71,6 +71,8 @@ abstract class ILocalDbRepository {
   /// Will load all the local database content into the program
   Future<void> loadFromDb();
 
+  String hubEntityBoxName = 'hubEntityBox';
+
   Future<Either<LocalDbFailures, String>> getRemotePipesDnsName();
 
   /// Get all saved devices from local db
@@ -90,11 +92,11 @@ abstract class ILocalDbRepository {
   /// without any devices
   Future<Either<LocalDbFailures, List<RoomEntity>>> getRoomsFromDb();
 
-  Future<Either<LocalDbFailures, String>> getHubEntityNetworkBssid();
+  // Future<Either<LocalDbFailures, String>> getHubEntityNetworkBssid();
 
-  Future<Either<LocalDbFailures, String>> getHubEntityNetworkName();
+  // Future<Either<LocalDbFailures, String>> getHubEntityNetworkName();
 
-  Future<Either<LocalDbFailures, String>> getHubEntityLastKnownIp();
+  // Future<Either<LocalDbFailures, String>> getHubEntityLastKnownIp();
 
   Future<Either<LocalDbFailures, Unit>> saveRemotePipes({
     required String remotePipesDomainName,
@@ -155,9 +157,9 @@ abstract class ILocalDbRepository {
     required LoginEntityAbstract loginEntityAbstract,
   });
 
-  Future<Either<LocalDbFailures, Unit>> saveHubEntity({
-    required String hubNetworkBssid,
-    required String networkName,
-    required String lastKnownIp,
-  });
+  // Future<Either<LocalDbFailures, Unit>> saveHubEntity({
+  //   required String hubNetworkBssid,
+  //   required String networkName,
+  //   required String lastKnownIp,
+  // });
 }

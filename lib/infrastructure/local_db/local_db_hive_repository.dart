@@ -389,24 +389,6 @@ class HiveRepository extends ILocalDbRepository {
   }
 
   @override
-  Future<Either<LocalDbFailures, String>> getHubEntityLastKnownIp() async {
-    // TODO: implement getHubEntityLastKnownIp
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<LocalDbFailures, String>> getHubEntityNetworkBssid() async {
-    // TODO: implement getHubEntityNetworkBssid
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<LocalDbFailures, String>> getHubEntityNetworkName() async {
-    // TODO: implement getHubEntityNetworkName
-    throw UnimplementedError();
-  }
-
-  @override
   Future<Either<LocalDbFailures, GenericTuyaLoginDE>>
       getTuyaVendorLoginCredentials({
     required List<TuyaVendorCredentialsHiveModel>
@@ -697,15 +679,15 @@ class HiveRepository extends ILocalDbRepository {
     return right(unit);
   }
 
-  @override
-  Future<Either<LocalDbFailures, Unit>> saveHubEntity({
-    required String hubNetworkBssid,
-    required String networkName,
-    required String lastKnownIp,
-  }) async {
-    // TODO: implement saveHubEntity
-    throw UnimplementedError();
-  }
+  // @override
+  // Future<Either<LocalDbFailures, Unit>> saveHubEntity({
+  //   required String hubNetworkBssid,
+  //   required String networkName,
+  //   required String lastKnownIp,
+  // }) async {
+  //   // TODO: implement saveHubEntity
+  //   throw UnimplementedError();
+  // }
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveVendorLoginCredentials({
@@ -1180,4 +1162,22 @@ class HiveRepository extends ILocalDbRepository {
 
     return right(unit);
   }
+
+  // @override
+  // Future<String> getHomeId() async {
+  //   final List<HomeEntityIsarModel> homeEntityIsarModelList =
+  //       await isar.homeEntityIsarModels.where().findAll();
+  //
+  //   return homeEntityIsarModelList[0].homeId;
+  // }
+  //
+  // @override
+  // Future<void> setHomeId(String homeId) async {
+  //   final HomeEntityIsarModel homeEntityIsarModel = HomeEntityIsarModel()
+  //     ..homeId = homeId;
+  //   await isar.writeTxn(() async {
+  //     await isar.homeEntityIsarModels.clear();
+  //     await isar.homeEntityIsarModels.put(homeEntityIsarModel);
+  //   });
+  // }
 }
