@@ -92,12 +92,6 @@ abstract class ILocalDbRepository {
   /// without any devices
   Future<Either<LocalDbFailures, List<RoomEntity>>> getRoomsFromDb();
 
-  // Future<Either<LocalDbFailures, String>> getHubEntityNetworkBssid();
-
-  // Future<Either<LocalDbFailures, String>> getHubEntityNetworkName();
-
-  // Future<Either<LocalDbFailures, String>> getHubEntityLastKnownIp();
-
   Future<Either<LocalDbFailures, Unit>> saveRemotePipes({
     required String remotePipesDomainName,
   });
@@ -156,10 +150,4 @@ abstract class ILocalDbRepository {
   Future<Either<LocalDbFailures, Unit>> saveVendorLoginCredentials({
     required LoginEntityAbstract loginEntityAbstract,
   });
-
-  // Future<Either<LocalDbFailures, Unit>> saveHubEntity({
-  //   required String hubNetworkBssid,
-  //   required String networkName,
-  //   required String lastKnownIp,
-  // });
 }
