@@ -20,7 +20,7 @@ class ShellyConnectorConjector implements AbstractCompanyConnectorConjector {
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
   /// Add new devices to [companyDevices] if not exist
-  Future<void> addNewDeviceByMdnsName({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
     required String mDnsName,
     required String ip,
     required String port,
@@ -31,7 +31,7 @@ class ShellyConnectorConjector implements AbstractCompanyConnectorConjector {
       if ((device is ShellyColorLightEntity ||
               device is ShellyRelaySwitchEntity) &&
           mDnsName == device.entityUniqueId.getOrCrash()) {
-        return;
+        return [];
       } else if ((device is GenericRgbwLightDE || device is GenericSwitchDE) &&
           mDnsName == device.entityUniqueId.getOrCrash()) {
         /// Device exist as generic and needs to get converted to non generic type for this vendor
@@ -41,7 +41,7 @@ class ShellyConnectorConjector implements AbstractCompanyConnectorConjector {
         logger.w(
           'Shelly device type supported but implementation is missing here',
         );
-        return;
+        return [];
       }
     }
 
@@ -54,7 +54,7 @@ class ShellyConnectorConjector implements AbstractCompanyConnectorConjector {
     );
 
     if (shellyDevice.isEmpty) {
-      return;
+      return [];
     }
 
     for (final DeviceEntityAbstract entityAsDevice in shellyDevice) {
@@ -67,6 +67,7 @@ class ShellyConnectorConjector implements AbstractCompanyConnectorConjector {
       companyDevices.addEntries([deviceAsEntry]);
     }
     logger.t('New shelly devices name:$mDnsName');
+    return shellyDevice;
   }
 
   @override

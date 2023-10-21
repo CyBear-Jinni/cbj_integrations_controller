@@ -18,7 +18,7 @@ class HpConnectorConjector implements AbstractCompanyConnectorConjector {
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
   /// Add new devices to [companyDevices] if not exist
-  Future<void> addNewDeviceByMdnsName({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
     required String mDnsName,
     required String ip,
     required String port,
@@ -29,12 +29,12 @@ class HpConnectorConjector implements AbstractCompanyConnectorConjector {
       if (device is HpPrinterEntity &&
           (mDnsName == device.entityUniqueId.getOrCrash() ||
               ip == device.deviceLastKnownIp.getOrCrash())) {
-        return;
+        return [];
       } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
         logger.w(
           'HP device type supported but implementation is missing here',
         );
-        return;
+        return [];
       }
     }
 
@@ -46,7 +46,7 @@ class HpConnectorConjector implements AbstractCompanyConnectorConjector {
     );
 
     if (hpDevice.isEmpty) {
-      return;
+      return [];
     }
 
     for (final DeviceEntityAbstract entityAsDevice in hpDevice) {
@@ -59,6 +59,7 @@ class HpConnectorConjector implements AbstractCompanyConnectorConjector {
       companyDevices.addEntries([deviceAsEntry]);
     }
     logger.i('New HP device got added');
+    return hpDevice;
   }
 
   @override

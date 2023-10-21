@@ -20,7 +20,7 @@ class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<void> addOnlyNewSwitcherDevice(
+  Future<List<DeviceEntityAbstract>> addOnlyNewSwitcherDevice(
     SwitcherApiObject switcherApiObject,
   ) async {
     CoreUniqueId? tempCoreUniqueId;
@@ -31,7 +31,7 @@ class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
               savedDevice is SwitcherSmartPlugEntity) &&
           switcherApiObject.deviceId ==
               savedDevice.entityUniqueId.getOrCrash()) {
-        return;
+        return [];
       } else if (savedDevice is GenericBoilerDE ||
           savedDevice is GenericBlindsDE &&
               switcherApiObject.deviceId ==
@@ -53,7 +53,7 @@ class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
       uniqueDeviceId: tempCoreUniqueId,
     );
     if (addDevice == null) {
-      return;
+      return [];
     }
 
     final DeviceEntityAbstract deviceToAdd =
@@ -65,6 +65,7 @@ class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
     companyDevices.addEntries([deviceAsEntry]);
 
     // logger.t('New switcher devices name:${switcherApiObject.switcherName}');
+    return [deviceAsEntry.value];
   }
 
   @override

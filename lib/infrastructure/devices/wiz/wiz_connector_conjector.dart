@@ -19,7 +19,7 @@ class WizConnectorConjector implements AbstractCompanyConnectorConjector {
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<void> addNewDeviceByHostInfo({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
     required ActiveHost activeHost,
   }) async {
     logger.w('Wiz device got discovered but missing implementation');
@@ -66,6 +66,7 @@ class WizConnectorConjector implements AbstractCompanyConnectorConjector {
     //     'New Wiz Ip device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
     //   );
     // }
+    return [];
   }
 
   // static WizClient? wizClient;

@@ -23,33 +23,35 @@ class YeelightConnectorConjector implements AbstractCompanyConnectorConjector {
   /// Make sure that it will activate discoverNewDevices only once
   bool searchStarted = false;
 
-  Future<void> addNewDeviceByMdnsName({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
     required String mDnsName,
     required String ip,
     required String port,
   }) async {
-    addNewDevice(ip: ip, mDnsName: mDnsName);
+    return addNewDevice(ip: ip, mDnsName: mDnsName);
   }
 
-  Future<void> addNewDeviceByHostInfo({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
     required ActiveHost activeHost,
   }) async {
-    addNewDevice(ip: activeHost.address);
+    return addNewDevice(ip: activeHost.address);
   }
 
-  Future<void> addNewDevice({
+  Future<List<DeviceEntityAbstract>> addNewDevice({
     required String ip,
     String? mDnsName,
   }) async {
+    final List<DeviceEntityAbstract> devicesGotAdded = [];
+
     try {
       final responses = await Yeelight.discover();
       if (responses.isEmpty) {
-        return;
+        return [];
       }
 
       for (final DiscoveryResponse yeelightDevice in responses) {
         if (companyDevices.containsKey(yeelightDevice.id.toString())) {
-          return;
+          return [];
         }
 
         DeviceEntityAbstract? addDevice;
@@ -77,10 +79,12 @@ class YeelightConnectorConjector implements AbstractCompanyConnectorConjector {
         companyDevices.addEntries([deviceAsEntry]);
 
         logger.i('New Yeelight device got added');
+        devicesGotAdded.add(addDevice);
       }
     } catch (e) {
       logger.e('Error discover in Yeelight\n$e');
     }
+    return devicesGotAdded;
   }
 
   @override

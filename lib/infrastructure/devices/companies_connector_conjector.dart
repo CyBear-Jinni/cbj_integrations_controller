@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
@@ -140,38 +141,48 @@ class CompaniesConnectorConjector {
               ' search mdns in the network');
           await Future.delayed(const Duration(minutes: 2));
         }
-        for (ActiveHost activeHost in await MdnsScanner.searchMdnsDevices(
-          forceUseOfSavedSrvRecordList: true,
-        )) {
-          // In some cases for some reason we get empty result when trying to
-          // resolve mdns name to ip, the only way we found to fix that is to
-          // use resolve it using avahi-resolve-host-name
-          if (activeHost.address == '0.0.0.0') {
-            final String? mdnsSrvTarget =
-                (await activeHost.mdnsInfo)?.mdnsSrvTarget;
-            if (mdnsSrvTarget == null) {
-              continue;
-            }
-            final String? deviceIp = await SystemCommandsManager.instance
-                .getIpFromMdnsName(mdnsSrvTarget);
-            if (deviceIp == null) {
-              continue;
-            }
-            activeHost = activeHost
-              ..internetAddress = InternetAddress(deviceIp);
-          }
-
-          final MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
-
-          if (mdnsInfo != null) {
-            setMdnsDeviceByCompany(activeHost);
-          }
+        List<ActiveHost> activeHostList = await searchMdnsDevices();
+        for (ActiveHost activeHost in activeHostList) {
+          setMdnsDeviceByCompany(activeHost);
         }
+
         await Future.delayed(const Duration(minutes: 2));
       }
     } catch (e) {
       logger.e('Mdns search error\n$e');
     }
+  }
+
+  static Future<List<ActiveHost>> searchMdnsDevices() async {
+    List<ActiveHost> activeHostList = [];
+
+    for (ActiveHost activeHost in await MdnsScanner.searchMdnsDevices(
+      forceUseOfSavedSrvRecordList: true,
+    )) {
+      // In some cases for some reason we get empty result when trying to
+      // resolve mdns name to ip, the only way we found to fix that is to
+      // use resolve it using avahi-resolve-host-name
+      if (activeHost.address == '0.0.0.0') {
+        final String? mdnsSrvTarget =
+            (await activeHost.mdnsInfo)?.mdnsSrvTarget;
+        if (mdnsSrvTarget == null) {
+          continue;
+        }
+        final String? deviceIp = await SystemCommandsManager.instance
+            .getIpFromMdnsName(mdnsSrvTarget);
+        if (deviceIp == null) {
+          continue;
+        }
+        activeHost = activeHost..internetAddress = InternetAddress(deviceIp);
+      }
+
+      final MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
+
+      if (mdnsInfo != null) {
+        activeHostList.add(activeHost);
+      }
+    }
+    return activeHostList;
   }
 
   /// Getting ActiveHost that contain MdnsInfo property and activate it inside
@@ -269,49 +280,56 @@ class CompaniesConnectorConjector {
   /// Get all the host names in the connected networks and try to add the device
   static Future<void> searchPingableDevicesAndSetThemUpByHostName() async {
     while (true) {
-      final List<NetworkInterface> networkInterfaceList =
-          await NetworkInterface.list();
+      List<ActiveHost> pingableDevices = await searchPingableDevices();
 
-      for (final NetworkInterface networkInterface in networkInterfaceList) {
-        for (final InternetAddress address in networkInterface.addresses) {
-          final String ip = address.address;
-          if (!ip.contains('.')) {
-            continue;
-          }
-          final String subnet = ip.substring(0, ip.lastIndexOf('.'));
-
-          await for (final ActiveHost activeHost
-              in HostScanner.getAllPingableDevices(
-            subnet,
-            lastHostId: 126,
-          )) {
-            try {
-              setHostNameDeviceByCompany(
-                activeHost: activeHost,
-              );
-            } catch (e) {
-              continue;
-            }
-          }
-
-          // Spits to 2 requests to fix error in snap https://github.com/CyBear-Jinni-user/CBJ_Hub_Snap/issues/2
-          await for (final ActiveHost activeHost
-              in HostScanner.getAllPingableDevices(
-            subnet,
-            firstHostId: 127,
-          )) {
-            try {
-              setHostNameDeviceByCompany(
-                activeHost: activeHost,
-              );
-            } catch (e) {
-              continue;
-            }
-          }
+      for (ActiveHost activeHost in pingableDevices) {
+        try {
+          setHostNameDeviceByCompany(
+            activeHost: activeHost,
+          );
+        } catch (e) {
+          continue;
         }
       }
+
       await Future.delayed(const Duration(minutes: 5));
     }
+  }
+
+  static Future<List<ActiveHost>> searchPingableDevices() async {
+    List<ActiveHost> activeList = [];
+
+    final List<NetworkInterface> networkInterfaceList =
+        await NetworkInterface.list();
+
+    for (final NetworkInterface networkInterface in networkInterfaceList) {
+      for (final InternetAddress address in networkInterface.addresses) {
+        final String ip = address.address;
+        if (!ip.contains('.')) {
+          continue;
+        }
+        final String subnet = ip.substring(0, ip.lastIndexOf('.'));
+
+        await for (final ActiveHost activeHost
+            in HostScanner.getAllPingableDevices(
+          subnet,
+          lastHostId: 126,
+        )) {
+          activeList.add(activeHost);
+        }
+
+        // Spits to 2 requests to fix error in snap https://github.com/CyBear-Jinni-user/CBJ_Hub_Snap/issues/2
+        await for (final ActiveHost activeHost
+            in HostScanner.getAllPingableDevices(
+          subnet,
+          firstHostId: 127,
+        )) {
+          activeList.add(activeHost);
+        }
+      }
+    }
+
+    return activeList;
   }
 
   static Future<void> setHostNameDeviceByCompany({
@@ -351,14 +369,22 @@ class CompaniesConnectorConjector {
   /// Searching devices by binding to sockets, used for devices with
   /// udp ports which can't be discovered by regular open (tcp) port scan
   static Future<void> searchDevicesByBindingIntoSockets() async {
-    SwitcherDiscover.discover20002Devices().listen((switcherApiObject) {
-      getIt<SwitcherConnectorConjector>()
-          .addOnlyNewSwitcherDevice(switcherApiObject);
-    });
-    SwitcherDiscover.discover20003Devices().listen((switcherApiObject) {
-      getIt<SwitcherConnectorConjector>()
-          .addOnlyNewSwitcherDevice(switcherApiObject);
-    });
+    List<Stream<dynamic>> socketBindingsList =
+        findDevicesByBindingIntoSockets();
+    for (Stream<dynamic> socketBinding in socketBindingsList) {
+      socketBinding.listen((switcherApiObject) {
+        getIt<SwitcherConnectorConjector>()
+            .addOnlyNewSwitcherDevice(switcherApiObject);
+      });
+    }
+  }
+
+  static List<Stream<dynamic>> findDevicesByBindingIntoSockets() {
+    List<Stream<dynamic>> bindingStream = [];
+    bindingStream.add(SwitcherDiscover.discover20002Devices());
+    bindingStream.add(SwitcherDiscover.discover20003Devices());
+
+    return bindingStream;
   }
 
   /// Searching for mqtt devices

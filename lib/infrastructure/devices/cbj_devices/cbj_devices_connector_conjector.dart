@@ -18,14 +18,14 @@ class CbjDevicesConnectorConjector
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<void> addNewDeviceByHostInfo({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
     required ActiveHost activeHost,
   }) async {
     for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
       if ((savedDevice is CbjSmartComputerEntity) &&
           await activeHost.hostName ==
               savedDevice.entityUniqueId.getOrCrash()) {
-        return;
+        return [];
       } else if (await activeHost.hostName ==
           savedDevice.entityUniqueId.getOrCrash()) {
         logger.w(
@@ -42,7 +42,7 @@ class CbjDevicesConnectorConjector
       deviceAddress: activeHost.address,
     );
     if (devicesList.isEmpty) {
-      return;
+      return [];
     }
 
     for (final DeviceEntityAbstract entityAsDevice in devicesList) {
@@ -58,6 +58,7 @@ class CbjDevicesConnectorConjector
         'New Cbj Smart Device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
+    return devicesList;
   }
 
   @override

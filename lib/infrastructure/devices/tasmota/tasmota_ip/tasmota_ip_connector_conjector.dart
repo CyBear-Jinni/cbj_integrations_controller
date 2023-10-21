@@ -24,7 +24,7 @@ class TasmotaIpConnectorConjector implements AbstractCompanyConnectorConjector {
   // http://ip/cm?cmnd=SetOption19%200
   // http://ip/cm?cmnd=MqttHost%200
 
-  Future<void> addNewDeviceByHostInfo({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
     required ActiveHost activeHost,
   }) async {
     final List<CoreUniqueId?> tempCoreUniqueId = [];
@@ -33,7 +33,7 @@ class TasmotaIpConnectorConjector implements AbstractCompanyConnectorConjector {
       if ((savedDevice is TasmotaIpSwitchEntity) &&
           await activeHost.hostName ==
               savedDevice.entityUniqueId.getOrCrash()) {
-        return;
+        return [];
       } else if (savedDevice is GenericLightDE &&
           await activeHost.hostName ==
               savedDevice.entityUniqueId.getOrCrash()) {
@@ -60,7 +60,7 @@ class TasmotaIpConnectorConjector implements AbstractCompanyConnectorConjector {
     );
 
     if (tasmotaIpDevices.isEmpty) {
-      return;
+      return [];
     }
 
     for (final DeviceEntityAbstract entityAsDevice in tasmotaIpDevices) {
@@ -76,6 +76,7 @@ class TasmotaIpConnectorConjector implements AbstractCompanyConnectorConjector {
         'New Tasmota Ip device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
+    return tasmotaIpDevices;
   }
 
   @override

@@ -21,7 +21,7 @@ class LgConnectorConjector implements AbstractCompanyConnectorConjector {
   ];
 
   /// Add new devices to [companyDevices] if not exist
-  Future<void> addNewDeviceByMdnsName({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
     required String mDnsName,
     required String ip,
     required String port,
@@ -32,7 +32,7 @@ class LgConnectorConjector implements AbstractCompanyConnectorConjector {
       if (device is LgWebosTvEntity &&
           (mDnsName == device.entityUniqueId.getOrCrash() ||
               ip == device.deviceLastKnownIp.getOrCrash())) {
-        return;
+        return [];
       }
       // Same tv can have multiple mDns names so we can't compere it without ip in the object
       // else if (device is GenericSmartTvDE &&
@@ -44,7 +44,7 @@ class LgConnectorConjector implements AbstractCompanyConnectorConjector {
         logger.w(
           'LG device type supported but implementation is missing here',
         );
-        return;
+        return [];
       }
     }
 
@@ -56,7 +56,7 @@ class LgConnectorConjector implements AbstractCompanyConnectorConjector {
     );
 
     if (lgDevice.isEmpty) {
-      return;
+      return [];
     }
 
     for (final DeviceEntityAbstract entityAsDevice in lgDevice) {
@@ -71,6 +71,7 @@ class LgConnectorConjector implements AbstractCompanyConnectorConjector {
         'New LG device got added ${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
+    return lgDevice;
   }
 
   @override
