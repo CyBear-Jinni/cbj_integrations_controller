@@ -74,15 +74,18 @@ class SystemCommandsManager {
   }
 
   Future<String?> getSnapLocationEnvironmentVariable() {
-    return Future.value(SharedVariables.getSnapLocationEnvironmentVariable());
+    return Future.value(
+        SharedVariables.instance.getSnapLocationEnvironmentVariable());
   }
 
   Future<String?> getSnapCommonEnvironmentVariable() {
-    return Future.value(SharedVariables.getSnapCommonEnvironmentVariable());
+    return Future.value(
+        SharedVariables.instance.getSnapCommonEnvironmentVariable());
   }
 
   Future<String?> getSnapUserCommonEnvironmentVariable() {
-    return Future.value(SharedVariables.getSnapUserCommonEnvironmentVariable());
+    return Future.value(
+        SharedVariables.instance.getSnapUserCommonEnvironmentVariable());
   }
 
   String getOs() {
