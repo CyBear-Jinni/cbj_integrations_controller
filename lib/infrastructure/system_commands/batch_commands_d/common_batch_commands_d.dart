@@ -138,4 +138,16 @@ class CommonBatchCommandsD implements SystemCommandsBaseClassD {
     // TODO: implement getIpFromMdnsName
     throw UnimplementedError();
   }
+
+  @override
+  Future<String?> suspendComputer() {
+    // TODO: implement goToSleep
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String?> shutdownComputer() {
+    // TODO: implement shutdownComputer
+    throw UnimplementedError();
+  }
 }

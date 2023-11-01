@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:cbj_integrations_controller/utils.dart';
 
 class SharedVariables {
-  SharedVariables() {
+  SharedVariables(String? projectRootDirectoryPath) {
+    _projectRootDirectoryPath = projectRootDirectoryPath;
+    logger.i('PATH: $_projectRootDirectoryPath');
     SharedVariables.instance = this;
   }
 
@@ -15,29 +17,31 @@ class SharedVariables {
   }
 
   ///  Save the location of all the files that were created during the snapcraft
-  late String _projectRootDirectoryPath;
+  static String? _projectRootDirectoryPath;
 
-  String getProjectRootDirectoryPath() => _projectRootDirectoryPath;
+  static String? getProjectRootDirectoryPath() => _projectRootDirectoryPath;
 
   /// Getting snap location environment variable value of $SNAP
-  String? getSnapLocationEnvironmentVariable() {
-    if (!_projectRootDirectoryPath.contains('/snap/')) {
+  static String? getSnapLocationEnvironmentVariable() {
+    if (_projectRootDirectoryPath == null ||
+        !_projectRootDirectoryPath!.contains('/snap/')) {
       return null;
     }
     return '/snap/cbj-hub/current';
   }
 
   /// Getting snap common environment variable value of SNAP_COMMON
-  String? getSnapCommonEnvironmentVariable() {
-    if (!_projectRootDirectoryPath.contains('/snap/')) {
+  static String? getSnapCommonEnvironmentVariable() {
+    if (_projectRootDirectoryPath == null ||
+        !_projectRootDirectoryPath!.contains('/snap/')) {
       return null;
     }
     return '/var/snap/cbj-hub/common';
   }
 
   /// Getting snap user common environment variable, value of $SNAP_USER_COMMON
-  String? getSnapUserCommonEnvironmentVariable() {
-    if (!_projectRootDirectoryPath.contains('/snap/')) {
+  static String? getSnapUserCommonEnvironmentVariable() {
+    if (!_projectRootDirectoryPath!.contains('/snap/')) {
       return null;
     }
     return '/root/snap/cbj-hub/common';

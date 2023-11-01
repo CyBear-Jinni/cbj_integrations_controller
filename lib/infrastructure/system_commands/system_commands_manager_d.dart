@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/bash_commands_d/bash_commands_for_raspberry_pi_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/bash_commands_d/common_bash_commands_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/batch_commands_d/common_batch_commands_d.dart';
@@ -70,5 +71,33 @@ class SystemCommandsManager {
 
   Future<String?> getIpFromMdnsName(String mdnsName) {
     return systemCommandsBaseClassD!.getIpFromMdnsName(mdnsName);
+  }
+
+  Future<String?> getSnapLocationEnvironmentVariable() {
+    return Future.value(SharedVariables.getSnapLocationEnvironmentVariable());
+  }
+
+  Future<String?> getSnapCommonEnvironmentVariable() {
+    return Future.value(SharedVariables.getSnapCommonEnvironmentVariable());
+  }
+
+  Future<String?> getSnapUserCommonEnvironmentVariable() {
+    return Future.value(SharedVariables.getSnapUserCommonEnvironmentVariable());
+  }
+
+  String getOs() {
+    return Platform.operatingSystem;
+  }
+
+  String getOsVersion() {
+    return Platform.operatingSystemVersion;
+  }
+
+  Future<String?> suspendComputer() async {
+    return systemCommandsBaseClassD!.suspendComputer();
+  }
+
+  Future<String?> shutdownComputer() async {
+    return systemCommandsBaseClassD!.shutdownComputer();
   }
 }
