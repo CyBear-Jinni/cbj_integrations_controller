@@ -7,12 +7,19 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 import 'package:yeedart/yeedart.dart';
 
-@singleton
 class YeelightConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory YeelightConnectorConjector() {
+    return _instance;
+  }
+
+  YeelightConnectorConjector._singletonContractor();
+
+  static final YeelightConnectorConjector _instance =
+      YeelightConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 

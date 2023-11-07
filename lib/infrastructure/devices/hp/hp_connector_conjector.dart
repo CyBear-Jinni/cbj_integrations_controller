@@ -8,10 +8,17 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_printer_device/generic_printer_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class HpConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory HpConnectorConjector() {
+    return _instance;
+  }
+
+  HpConnectorConjector._singletonContractor();
+
+  static final HpConnectorConjector _instance =
+      HpConnectorConjector._singletonContractor();
+
   static const List<String> mdnsTypes = ['_hplib._tcp'];
 
   @override

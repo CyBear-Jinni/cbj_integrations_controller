@@ -5,11 +5,18 @@ import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_white
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 
-@singleton
 class WizConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory WizConnectorConjector() {
+    return _instance;
+  }
+
+  WizConnectorConjector._singletonContractor();
+
+  static final WizConnectorConjector _instance =
+      WizConnectorConjector._singletonContractor();
+
   Future<String> accountLogin(GenericWizLoginDE genericWizLoginDE) async {
     // wizClient = WizClient(genericWizLoginDE.wizApiKey.getOrCrash());
     _discoverNewDevices();

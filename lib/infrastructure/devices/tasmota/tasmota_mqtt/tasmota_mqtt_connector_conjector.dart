@@ -9,11 +9,18 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class TasmotaMqttConnectorConjector
     implements AbstractCompanyConnectorConjector {
+  factory TasmotaMqttConnectorConjector() {
+    return _instance;
+  }
+
+  TasmotaMqttConnectorConjector._singletonContractor();
+
+  static final TasmotaMqttConnectorConjector _instance =
+      TasmotaMqttConnectorConjector._singletonContractor();
+
   // Future<void> addNewDeviceByHostInfo({
   //   required ActiveHost activeHost,
   // }) async {

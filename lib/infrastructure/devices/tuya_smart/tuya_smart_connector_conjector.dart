@@ -16,10 +16,17 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class TuyaSmartConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory TuyaSmartConnectorConjector() {
+    return _instance;
+  }
+
+  TuyaSmartConnectorConjector._singletonContractor();
+
+  static final TuyaSmartConnectorConjector _instance =
+      TuyaSmartConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 

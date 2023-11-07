@@ -7,10 +7,17 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class LgConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory LgConnectorConjector() {
+    return _instance;
+  }
+
+  LgConnectorConjector._singletonContractor();
+
+  static final LgConnectorConjector _instance =
+      LgConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 

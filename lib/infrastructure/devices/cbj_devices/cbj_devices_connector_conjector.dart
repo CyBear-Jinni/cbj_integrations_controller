@@ -9,12 +9,19 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 
-@singleton
 class CbjDevicesConnectorConjector
     implements AbstractCompanyConnectorConjector {
+  factory CbjDevicesConnectorConjector() {
+    return _instance;
+  }
+
+  CbjDevicesConnectorConjector._singletonContractor();
+
+  static final CbjDevicesConnectorConjector _instance =
+      CbjDevicesConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 

@@ -9,11 +9,18 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
-import 'package:injectable/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 
-@singleton
 class EwelinkConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory EwelinkConnectorConjector() {
+    return _instance;
+  }
+
+  EwelinkConnectorConjector._singletonContractor();
+
+  static final EwelinkConnectorConjector _instance =
+      EwelinkConnectorConjector._singletonContractor();
+
   static const List<String> mdnsTypes = ['_ewelink._tcp'];
 
   Ewelink? ewelink;

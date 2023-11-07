@@ -12,11 +12,18 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
-@singleton
 class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory SwitcherConnectorConjector() {
+    return _instance;
+  }
+
+  SwitcherConnectorConjector._singletonContractor();
+
+  static final SwitcherConnectorConjector _instance =
+      SwitcherConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 

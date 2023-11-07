@@ -8,10 +8,17 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class GoogleConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory GoogleConnectorConjector() {
+    return _instance;
+  }
+
+  GoogleConnectorConjector._singletonContractor();
+
+  static final GoogleConnectorConjector _instance =
+      GoogleConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 

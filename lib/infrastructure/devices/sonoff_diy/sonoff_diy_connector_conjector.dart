@@ -8,10 +8,17 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class SonoffDiyConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory SonoffDiyConnectorConjector() {
+    return _instance;
+  }
+
+  SonoffDiyConnectorConjector._singletonContractor();
+
+  static final SonoffDiyConnectorConjector _instance =
+      SonoffDiyConnectorConjector._singletonContractor();
+
   static const List<String> mdnsTypes = ['_ewelink._tcp'];
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};

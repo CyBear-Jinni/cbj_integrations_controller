@@ -8,11 +8,18 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class PhilipsHueConnectorConjector
     implements AbstractCompanyConnectorConjector {
+  factory PhilipsHueConnectorConjector() {
+    return _instance;
+  }
+
+  PhilipsHueConnectorConjector._singletonContractor();
+
+  static final PhilipsHueConnectorConjector _instance =
+      PhilipsHueConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 

@@ -33,7 +33,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:network_tools/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
@@ -108,15 +107,15 @@ class CompaniesConnectorConjector {
 
   static void setVendorLoginCredentials(LoginEntityAbstract loginEntity) {
     if (loginEntity is GenericLifxLoginDE) {
-      getIt<LifxConnectorConjector>().accountLogin(loginEntity);
+      LifxConnectorConjector().accountLogin(loginEntity);
     } else if (loginEntity is GenericEspHomeLoginDE) {
-      getIt<EspHomeConnectorConjector>().accountLogin(loginEntity);
+      EspHomeConnectorConjector().accountLogin(loginEntity);
     } else if (loginEntity is GenericTuyaLoginDE) {
-      getIt<TuyaSmartConnectorConjector>().accountLogin(loginEntity);
+      TuyaSmartConnectorConjector().accountLogin(loginEntity);
     } else if (loginEntity is GenericXiaomiMiLoginDE) {
-      getIt<XiaomiIoConnectorConjector>().accountLogin(loginEntity);
+      XiaomiIoConnectorConjector().accountLogin(loginEntity);
     } else if (loginEntity is GenericEwelinkLoginDE) {
-      getIt<EwelinkConnectorConjector>().accountLogin(loginEntity);
+      EwelinkConnectorConjector().accountLogin(loginEntity);
     } else {
       logger.w('Vendor login type ${loginEntity.runtimeType} is not supported');
     }
@@ -207,7 +206,7 @@ class CompaniesConnectorConjector {
 
     if (EspHomeConnectorConjector.mdnsTypes
         .contains(hostMdnsInfo.mdnsServiceType)) {
-      getIt<EspHomeConnectorConjector>().addNewDeviceByMdnsName(
+      EspHomeConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -219,21 +218,20 @@ class CompaniesConnectorConjector {
             .getOnlyTheStartOfMdnsName()
             .toLowerCase()
             .contains('shelly')) {
-      getIt<ShellyConnectorConjector>().addNewDeviceByMdnsName(
+      ShellyConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
       );
     } else if (EwelinkConnectorConjector.mdnsTypes
         .contains(hostMdnsInfo.mdnsServiceType)) {
-      getIt<EwelinkConnectorConjector>()
-          .discoverNewDevices(activeHost: activeHost);
+      EwelinkConnectorConjector().discoverNewDevices(activeHost: activeHost);
     } else if (GoogleConnectorConjector.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsNameLower.contains('google') ||
             startOfMdnsNameLower.contains('android') ||
             startOfMdnsNameLower.contains('chrome'))) {
-      getIt<GoogleConnectorConjector>().addNewDeviceByMdnsName(
+      GoogleConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -242,7 +240,7 @@ class CompaniesConnectorConjector {
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsNameLower.contains('lg') ||
             startOfMdnsNameLower.contains('webos'))) {
-      getIt<LgConnectorConjector>().addNewDeviceByMdnsName(
+      LgConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -250,7 +248,7 @@ class CompaniesConnectorConjector {
     } else if (HpPrinterEntity.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsNameLower.contains('hp'))) {
-      getIt<HpConnectorConjector>().addNewDeviceByMdnsName(
+      HpConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -258,14 +256,14 @@ class CompaniesConnectorConjector {
     } else if (YeelightConnectorConjector.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsName.startsWith('YL'))) {
-      getIt<YeelightConnectorConjector>().addNewDeviceByMdnsName(
+      YeelightConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
       );
     } else if (PhilipsHueConnectorConjector.mdnsTypes
         .contains(hostMdnsInfo.mdnsServiceType)) {
-      getIt<PhilipsHueConnectorConjector>().addNewDeviceByMdnsName(
+      PhilipsHueConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -341,24 +339,22 @@ class CompaniesConnectorConjector {
       return;
     }
     if (deviceHostNameLowerCase.contains('tasmota')) {
-      getIt<TasmotaIpConnectorConjector>().addNewDeviceByHostInfo(
+      TasmotaIpConnectorConjector().addNewDeviceByHostInfo(
         activeHost: activeHost,
       );
     } else if (deviceHostNameLowerCase.contains('xiaomi') ||
         deviceHostNameLowerCase.contains('yeelink') ||
         deviceHostNameLowerCase.contains('xiao')) {
-      getIt<XiaomiIoConnectorConjector>()
-          .discoverNewDevices(activeHost: activeHost);
+      XiaomiIoConnectorConjector().discoverNewDevices(activeHost: activeHost);
     } else if (deviceHostNameLowerCase.startsWith('wiz')) {
-      getIt<WizConnectorConjector>()
-          .addNewDeviceByHostInfo(activeHost: activeHost);
+      WizConnectorConjector().addNewDeviceByHostInfo(activeHost: activeHost);
     } else {
       final ActiveHost? cbjSmartDeviceHost =
           await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice(
         activeHost.address,
       );
       if (cbjSmartDeviceHost != null) {
-        getIt<CbjDevicesConnectorConjector>()
+        CbjDevicesConnectorConjector()
             .addNewDeviceByHostInfo(activeHost: cbjSmartDeviceHost);
         return;
       }
@@ -373,7 +369,7 @@ class CompaniesConnectorConjector {
         findDevicesByBindingIntoSockets();
     for (Stream<dynamic> socketBinding in socketBindingsList) {
       socketBinding.listen((switcherApiObject) {
-        getIt<SwitcherConnectorConjector>()
+        SwitcherConnectorConjector()
             .addOnlyNewSwitcherDevice(switcherApiObject);
       });
     }
@@ -398,7 +394,7 @@ class CompaniesConnectorConjector {
   /// and since putting it in the constructor of singleton will be called
   /// before all of our program.
   static Future<void> notImplementedDevicesSearch() async {
-    // getIt<YeelightConnectorConjector>().discoverNewDevices();
+    // YeelightConnectorConjector().discoverNewDevices();
   }
 
   static AbstractCompanyConnectorConjector?
@@ -408,34 +404,34 @@ class CompaniesConnectorConjector {
     //TODO: convert vendorName to type and then use switch case
 
     if (vendorName == VendorsAndServices.espHome.toString()) {
-      return getIt<EspHomeConnectorConjector>();
+      return EspHomeConnectorConjector();
     } else if (vendorName == VendorsAndServices.switcherSmartHome.toString()) {
-      return getIt<SwitcherConnectorConjector>();
+      return SwitcherConnectorConjector();
     } else if (vendorName == VendorsAndServices.lifx.toString()) {
-      return getIt<LifxConnectorConjector>();
+      return LifxConnectorConjector();
     } else if (vendorName == VendorsAndServices.yeelight.toString()) {
-      return getIt<YeelightConnectorConjector>();
+      return YeelightConnectorConjector();
     } else if (vendorName == VendorsAndServices.philipsHue.toString()) {
-      return getIt<PhilipsHueConnectorConjector>();
+      return PhilipsHueConnectorConjector();
     } else if (vendorName == VendorsAndServices.tuyaSmart.toString()) {
-      return getIt<TuyaSmartConnectorConjector>();
+      return TuyaSmartConnectorConjector();
     } else if (vendorName == VendorsAndServices.sonoffDiy.toString()) {
-      return getIt<SonoffDiyConnectorConjector>();
+      return SonoffDiyConnectorConjector();
     } else if (vendorName == VendorsAndServices.google.toString()) {
-      return getIt<GoogleConnectorConjector>();
+      return GoogleConnectorConjector();
     } else if (vendorName ==
         VendorsAndServices.cbjDeviceSmartEntity.toString()) {
-      return getIt<CbjDevicesConnectorConjector>();
+      return CbjDevicesConnectorConjector();
     } else if (vendorName == VendorsAndServices.shelly.toString()) {
-      return getIt<ShellyConnectorConjector>();
+      return ShellyConnectorConjector();
     } else if (vendorName == VendorsAndServices.hp.toString()) {
-      return getIt<HpConnectorConjector>();
+      return HpConnectorConjector();
     } else if (vendorName == VendorsAndServices.miHome.toString()) {
-      return getIt<XiaomiIoConnectorConjector>();
+      return XiaomiIoConnectorConjector();
     } else if (vendorName == VendorsAndServices.tasmota.toString()) {
-      return getIt<TasmotaIpConnectorConjector>();
+      return TasmotaIpConnectorConjector();
     } else if (vendorName == VendorsAndServices.sonoffEweLink.toString()) {
-      return getIt<EwelinkConnectorConjector>();
+      return EwelinkConnectorConjector();
     }
 
     logger.w(

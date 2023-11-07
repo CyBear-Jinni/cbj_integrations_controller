@@ -11,10 +11,17 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class EspHomeConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory EspHomeConnectorConjector() {
+    return _instance;
+  }
+
+  EspHomeConnectorConjector._singletonContractor();
+
+  static final EspHomeConnectorConjector _instance =
+      EspHomeConnectorConjector._singletonContractor();
+
   static const List<String> mdnsTypes = ['_esphomelib._tcp'];
 
   @override

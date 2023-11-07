@@ -8,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
-import 'package:network_tools/injectable.dart';
 
 class EwelinkSwitchEntity extends GenericSwitchDE {
   EwelinkSwitchEntity({
@@ -127,7 +126,7 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
   Future<Either<CoreFailure, Unit>> turnOnSwitch() async {
     switchState = GenericSwitchSwitchState(EntityActions.on.toString());
     try {
-      await getIt<EwelinkConnectorConjector>().ewelink?.setDevicePowerState(
+      await EwelinkConnectorConjector().ewelink?.setDevicePowerState(
             deviceId: deviceUniqueId.getOrCrash(),
             state: 'on',
             // TODO: Bug in api, channel 1 get changed no matter the input
@@ -144,7 +143,7 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
   Future<Either<CoreFailure, Unit>> turnOffSwitch() async {
     switchState = GenericSwitchSwitchState(EntityActions.off.toString());
     try {
-      await getIt<EwelinkConnectorConjector>().ewelink?.setDevicePowerState(
+      await EwelinkConnectorConjector().ewelink?.setDevicePowerState(
             deviceId: deviceUniqueId.getOrCrash(),
             state: 'off',
             // TODO: Bug in api, channel 1 get changed no matter the input
