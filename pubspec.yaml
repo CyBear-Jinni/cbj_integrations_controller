@@ -1,6 +1,6 @@
 name: cbj_integrations_controller
 description: A sample command-line application.
-version: 1.0.2
+version: 1.0.3
 # repository: https://github.com/CyBear-Jinni/cbj_integrations_controller
 
 environment:
@@ -55,7 +55,7 @@ dependencies:
   # Server and browser based MQTT client
   mqtt_client: ^10.0.0
   # Helps you discover open ports, devices on subnet and more.
-  network_tools: ^4.0.1
+  network_tools: ^3.2.1
   # Interact directly with NodeRED API
   nodered:
     git: 'https://github.com/guyluz11/nodered.git'
