@@ -11,14 +11,14 @@ import 'package:cbj_integrations_controller/injection.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
 Future initializeIntegrationsController({
-  required List<String> arguments,
+  required String? projectRootDirectoryPath,
   required String env,
 }) async {
   configureInjection(env);
 
   try {
-    if (arguments.length > 1) {
-      await SharedVariables.instance.asyncConstractor(arguments[0]);
+    if (projectRootDirectoryPath != null) {
+      await SharedVariables.instance.asyncConstractor(projectRootDirectoryPath);
     } else {
       await SharedVariables.instance.asyncConstractor(Directory.current.path);
     }
