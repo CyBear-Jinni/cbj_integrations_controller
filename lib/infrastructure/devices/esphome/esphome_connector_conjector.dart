@@ -11,10 +11,17 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class EspHomeConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory EspHomeConnectorConjector() {
+    return _instance;
+  }
+
+  EspHomeConnectorConjector._singletonContractor();
+
+  static final EspHomeConnectorConjector _instance =
+      EspHomeConnectorConjector._singletonContractor();
+
   static const List<String> mdnsTypes = ['_esphomelib._tcp'];
 
   @override
@@ -36,7 +43,7 @@ class EspHomeConnectorConjector implements AbstractCompanyConnectorConjector {
   }
 
   /// Add new devices to [companyDevices] if not exist
-  Future<void> addNewDeviceByMdnsName({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
     required String mDnsName,
     required String ip,
     required String port,
@@ -45,7 +52,7 @@ class EspHomeConnectorConjector implements AbstractCompanyConnectorConjector {
     if (espHomeDevicePass == null) {
       logger.w('ESPHome device got found but missing a password, please add '
           'password for it in the app');
-      return;
+      return [];
     }
 
     final List<DeviceEntityAbstract> espDevice =
@@ -72,6 +79,7 @@ class EspHomeConnectorConjector implements AbstractCompanyConnectorConjector {
     // Save state locally so that nodeRED flows will not get created again
     // after restart
     ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
+    return espDevice;
   }
 
   @override

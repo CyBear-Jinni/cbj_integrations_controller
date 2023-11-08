@@ -7,7 +7,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
-import 'package:network_tools/injectable.dart';
 import 'package:nodered/nodered.dart';
 
 class EspHomeHelpers {
@@ -23,7 +22,7 @@ class EspHomeHelpers {
       /// Try to find entity that already got added that contains the same
       /// mDNS (multiple entities can exist on the device)
       for (final DeviceEntityAbstract deviceE
-          in getIt<EspHomeConnectorConjector>().getAllCompanyDevices.values) {
+          in EspHomeConnectorConjector().getAllCompanyDevices.values) {
         if (deviceE.deviceMdns.getOrCrash() == mDnsName) {
           return deviceE.deviceCbjUniqueId.getOrCrash();
         }
@@ -74,7 +73,7 @@ class EspHomeHelpers {
     final List<EspHomeDeviceEntityObject> tempAllEntities = [];
 
     for (final EspHomeDeviceEntityObject entity in allEntities) {
-      if (!getIt<EspHomeConnectorConjector>()
+      if (!EspHomeConnectorConjector()
           .getAllCompanyDevices
           .containsKey(entity.config['uniqueId'])) {
         tempAllEntities.add(entity);

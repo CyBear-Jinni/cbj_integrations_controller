@@ -4,7 +4,6 @@ import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_base_class_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:network_tools/injectable.dart';
 
 class CommonBashCommandsD implements SystemCommandsBaseClassD {
   Future<void> asyncConstractor() async {
@@ -161,5 +160,44 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
       logger.w("Can't get device IP from mdns $mdnsName\n$e");
     }
     return null;
+  }
+
+  @override
+  Future<String?> suspendComputer() async {
+    // systemctl suspend does not work inside the snap
+    // https://forum.snapcraft.io/t/error-executing-systemctl-suspend-inside-the-snap/32186/2
+
+    final String commandResult = await Process.run('systemctl', ['suspend'])
+        .then((ProcessResult result) {
+      logger.i(
+        'Suspend exit code ${result.exitCode}\nstddout:${result.stdout}\nstderr:${result.stderr}',
+      );
+      return result.stdout.toString();
+    });
+
+    if (commandResult == '') {
+      return null;
+    }
+    return commandResult;
+  }
+
+  @override
+  Future<String?> shutdownComputer() async {
+    final String commandResult =
+        await Process.run('poweroff', []).then((ProcessResult result) {
+      // shutdown does not work inside the snap, testing power off
+      // await Process.run('shutdown', ['now']).then((ProcessResult result) {
+      // https://forum.snapcraft.io/t/error-executing-systemctl-suspend-inside-the-snap/32186/2
+      // final String commandResult = await Process.run('sudo', ['shutdown'])
+      logger.i(
+        'Suspend exit code ${result.exitCode}\nstddout:${result.stdout}\nstderr:${result.stderr}',
+      );
+      return result.stdout.toString();
+    });
+
+    if (commandResult == '') {
+      return null;
+    }
+    return commandResult;
   }
 }

@@ -8,10 +8,17 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class GoogleConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory GoogleConnectorConjector() {
+    return _instance;
+  }
+
+  GoogleConnectorConjector._singletonContractor();
+
+  static final GoogleConnectorConjector _instance =
+      GoogleConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
@@ -22,7 +29,7 @@ class GoogleConnectorConjector implements AbstractCompanyConnectorConjector {
   ];
 
   /// Add new devices to [companyDevices] if not exist
-  Future<void> addNewDeviceByMdnsName({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
     required String mDnsName,
     required String ip,
     required String port,
@@ -33,7 +40,7 @@ class GoogleConnectorConjector implements AbstractCompanyConnectorConjector {
       if (device is ChromeCastEntity &&
           (mDnsName == device.entityUniqueId.getOrCrash() ||
               ip == device.lastKnownIp!.getOrCrash())) {
-        return;
+        return [];
       } // Same tv can have multiple mDns names so we can't compere it without ip in the object
       // else if (device is GenericSmartTvDE &&
       //     (mDnsName == device.entityUniqueId.getOrCrash() ||
@@ -44,7 +51,7 @@ class GoogleConnectorConjector implements AbstractCompanyConnectorConjector {
         logger.w(
           'Google device type supported but implementation is missing here',
         );
-        return;
+        return [];
       }
     }
 
@@ -57,7 +64,7 @@ class GoogleConnectorConjector implements AbstractCompanyConnectorConjector {
     );
 
     if (googleDevice.isEmpty) {
-      return;
+      return [];
     }
 
     for (final DeviceEntityAbstract entityAsDevice in googleDevice) {
@@ -70,6 +77,7 @@ class GoogleConnectorConjector implements AbstractCompanyConnectorConjector {
       companyDevices.addEntries([deviceAsEntry]);
     }
     logger.i('New Chromecast device got added');
+    return googleDevice;
   }
 
   @override

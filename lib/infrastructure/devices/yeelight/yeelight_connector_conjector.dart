@@ -7,12 +7,19 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 import 'package:yeedart/yeedart.dart';
 
-@singleton
 class YeelightConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory YeelightConnectorConjector() {
+    return _instance;
+  }
+
+  YeelightConnectorConjector._singletonContractor();
+
+  static final YeelightConnectorConjector _instance =
+      YeelightConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
@@ -23,33 +30,35 @@ class YeelightConnectorConjector implements AbstractCompanyConnectorConjector {
   /// Make sure that it will activate discoverNewDevices only once
   bool searchStarted = false;
 
-  Future<void> addNewDeviceByMdnsName({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
     required String mDnsName,
     required String ip,
     required String port,
   }) async {
-    addNewDevice(ip: ip, mDnsName: mDnsName);
+    return addNewDevice(ip: ip, mDnsName: mDnsName);
   }
 
-  Future<void> addNewDeviceByHostInfo({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
     required ActiveHost activeHost,
   }) async {
-    addNewDevice(ip: activeHost.address);
+    return addNewDevice(ip: activeHost.address);
   }
 
-  Future<void> addNewDevice({
+  Future<List<DeviceEntityAbstract>> addNewDevice({
     required String ip,
     String? mDnsName,
   }) async {
+    final List<DeviceEntityAbstract> devicesGotAdded = [];
+
     try {
       final responses = await Yeelight.discover();
       if (responses.isEmpty) {
-        return;
+        return [];
       }
 
       for (final DiscoveryResponse yeelightDevice in responses) {
         if (companyDevices.containsKey(yeelightDevice.id.toString())) {
-          return;
+          return [];
         }
 
         DeviceEntityAbstract? addDevice;
@@ -77,10 +86,12 @@ class YeelightConnectorConjector implements AbstractCompanyConnectorConjector {
         companyDevices.addEntries([deviceAsEntry]);
 
         logger.i('New Yeelight device got added');
+        devicesGotAdded.add(addDevice);
       }
     } catch (e) {
       logger.e('Error discover in Yeelight\n$e');
     }
+    return devicesGotAdded;
   }
 
   @override

@@ -8,16 +8,23 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class SonoffDiyConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory SonoffDiyConnectorConjector() {
+    return _instance;
+  }
+
+  SonoffDiyConnectorConjector._singletonContractor();
+
+  static final SonoffDiyConnectorConjector _instance =
+      SonoffDiyConnectorConjector._singletonContractor();
+
   static const List<String> mdnsTypes = ['_ewelink._tcp'];
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
   /// Add new devices to [companyDevices] if not exist
-  Future<void> addNewDeviceByMdnsName({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
     required String mDnsName,
     required String ip,
     required String port,
@@ -27,7 +34,7 @@ class SonoffDiyConnectorConjector implements AbstractCompanyConnectorConjector {
     for (final DeviceEntityAbstract device in companyDevices.values) {
       if (device is SonoffDiyRelaySwitchEntity &&
           mDnsName == device.entityUniqueId.getOrCrash()) {
-        return;
+        return [];
       } else if (device is GenericSwitchDE &&
           mDnsName == device.entityUniqueId.getOrCrash()) {
         /// Device exist as generic and needs to get converted to non generic type for this vendor
@@ -37,7 +44,7 @@ class SonoffDiyConnectorConjector implements AbstractCompanyConnectorConjector {
         logger.w(
           'Sonoff device type supported but implementation is missing here',
         );
-        return;
+        return [];
       }
     }
 
@@ -50,7 +57,7 @@ class SonoffDiyConnectorConjector implements AbstractCompanyConnectorConjector {
     );
 
     if (sonoffDevices.isEmpty) {
-      return;
+      return [];
     }
 
     for (final DeviceEntityAbstract entityAsDevice in sonoffDevices) {
@@ -63,6 +70,7 @@ class SonoffDiyConnectorConjector implements AbstractCompanyConnectorConjector {
       companyDevices.addEntries([deviceAsEntry]);
     }
     logger.t('New Sonoff diy devices name:$mDnsName');
+    return sonoffDevices;
   }
 
   @override

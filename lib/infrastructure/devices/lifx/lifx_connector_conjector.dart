@@ -10,11 +10,18 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
-@singleton
 class LifxConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory LifxConnectorConjector() {
+    return _instance;
+  }
+
+  LifxConnectorConjector._singletonContractor();
+
+  static final LifxConnectorConjector _instance =
+      LifxConnectorConjector._singletonContractor();
+
   Future<String> accountLogin(GenericLifxLoginDE genericLifxLoginDE) async {
     lifxClient = LIFXClient(genericLifxLoginDE.lifxApiKey.getOrCrash());
     _discoverNewDevices();

@@ -4,7 +4,6 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:grpc/grpc.dart';
-import 'package:network_tools/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 
 class CbjSmartDeviceClient {

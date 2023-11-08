@@ -8,11 +8,18 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 
-@singleton
 class PhilipsHueConnectorConjector
     implements AbstractCompanyConnectorConjector {
+  factory PhilipsHueConnectorConjector() {
+    return _instance;
+  }
+
+  PhilipsHueConnectorConjector._singletonContractor();
+
+  static final PhilipsHueConnectorConjector _instance =
+      PhilipsHueConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
@@ -23,14 +30,14 @@ class PhilipsHueConnectorConjector
   static bool gotHueHubIp = false;
 
   /// Add new devices to [companyDevices] if not exist
-  Future<void> addNewDeviceByMdnsName({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
     required String mDnsName,
     required String ip,
     required String port,
   }) async {
     /// There can only be one Philips Hub in the same network
     if (gotHueHubIp) {
-      return;
+      return [];
     }
     CoreUniqueId? tempCoreUniqueId;
 
@@ -38,12 +45,12 @@ class PhilipsHueConnectorConjector
       if (device is PhilipsHueE26Entity &&
           (mDnsName == device.entityUniqueId.getOrCrash() ||
               ip == device.deviceLastKnownIp.getOrCrash())) {
-        return;
+        return [];
       } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
         logger.w(
           'HP device type supported but implementation is missing here',
         );
-        return;
+        return [];
       }
     }
     gotHueHubIp = true;
@@ -57,7 +64,7 @@ class PhilipsHueConnectorConjector
     );
 
     if (phillipsDevice.isEmpty) {
-      return;
+      return [];
     }
 
     for (final DeviceEntityAbstract entityAsDevice in phillipsDevice) {
@@ -70,6 +77,7 @@ class PhilipsHueConnectorConjector
       companyDevices.addEntries([deviceAsEntry]);
     }
     logger.i('New Philips Hue device got added');
+    return phillipsDevice;
   }
 
   @override

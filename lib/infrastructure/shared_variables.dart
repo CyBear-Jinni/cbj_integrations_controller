@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:cbj_integrations_controller/utils.dart';
 
 class SharedVariables {
-  SharedVariables() {
+  SharedVariables(this._projectRootDirectoryPath) {
+    logger.i('PATH: $_projectRootDirectoryPath');
     SharedVariables.instance = this;
   }
 
@@ -15,7 +16,7 @@ class SharedVariables {
   }
 
   ///  Save the location of all the files that were created during the snapcraft
-  late String _projectRootDirectoryPath;
+  String _projectRootDirectoryPath;
 
   String getProjectRootDirectoryPath() => _projectRootDirectoryPath;
 

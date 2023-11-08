@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
@@ -32,7 +33,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:network_tools/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
@@ -107,15 +107,15 @@ class CompaniesConnectorConjector {
 
   static void setVendorLoginCredentials(LoginEntityAbstract loginEntity) {
     if (loginEntity is GenericLifxLoginDE) {
-      getIt<LifxConnectorConjector>().accountLogin(loginEntity);
+      LifxConnectorConjector().accountLogin(loginEntity);
     } else if (loginEntity is GenericEspHomeLoginDE) {
-      getIt<EspHomeConnectorConjector>().accountLogin(loginEntity);
+      EspHomeConnectorConjector().accountLogin(loginEntity);
     } else if (loginEntity is GenericTuyaLoginDE) {
-      getIt<TuyaSmartConnectorConjector>().accountLogin(loginEntity);
+      TuyaSmartConnectorConjector().accountLogin(loginEntity);
     } else if (loginEntity is GenericXiaomiMiLoginDE) {
-      getIt<XiaomiIoConnectorConjector>().accountLogin(loginEntity);
+      XiaomiIoConnectorConjector().accountLogin(loginEntity);
     } else if (loginEntity is GenericEwelinkLoginDE) {
-      getIt<EwelinkConnectorConjector>().accountLogin(loginEntity);
+      EwelinkConnectorConjector().accountLogin(loginEntity);
     } else {
       logger.w('Vendor login type ${loginEntity.runtimeType} is not supported');
     }
@@ -140,38 +140,48 @@ class CompaniesConnectorConjector {
               ' search mdns in the network');
           await Future.delayed(const Duration(minutes: 2));
         }
-        for (ActiveHost activeHost in await MdnsScanner.searchMdnsDevices(
-          forceUseOfSavedSrvRecordList: true,
-        )) {
-          // In some cases for some reason we get empty result when trying to
-          // resolve mdns name to ip, the only way we found to fix that is to
-          // use resolve it using avahi-resolve-host-name
-          if (activeHost.address == '0.0.0.0') {
-            final String? mdnsSrvTarget =
-                (await activeHost.mdnsInfo)?.mdnsSrvTarget;
-            if (mdnsSrvTarget == null) {
-              continue;
-            }
-            final String? deviceIp = await SystemCommandsManager.instance
-                .getIpFromMdnsName(mdnsSrvTarget);
-            if (deviceIp == null) {
-              continue;
-            }
-            activeHost = activeHost
-              ..internetAddress = InternetAddress(deviceIp);
-          }
-
-          final MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
-
-          if (mdnsInfo != null) {
-            setMdnsDeviceByCompany(activeHost);
-          }
+        List<ActiveHost> activeHostList = await searchMdnsDevices();
+        for (ActiveHost activeHost in activeHostList) {
+          setMdnsDeviceByCompany(activeHost);
         }
+
         await Future.delayed(const Duration(minutes: 2));
       }
     } catch (e) {
       logger.e('Mdns search error\n$e');
     }
+  }
+
+  static Future<List<ActiveHost>> searchMdnsDevices() async {
+    List<ActiveHost> activeHostList = [];
+
+    for (ActiveHost activeHost in await MdnsScanner.searchMdnsDevices(
+      forceUseOfSavedSrvRecordList: true,
+    )) {
+      // In some cases for some reason we get empty result when trying to
+      // resolve mdns name to ip, the only way we found to fix that is to
+      // use resolve it using avahi-resolve-host-name
+      if (activeHost.address == '0.0.0.0') {
+        final String? mdnsSrvTarget =
+            (await activeHost.mdnsInfo)?.mdnsSrvTarget;
+        if (mdnsSrvTarget == null) {
+          continue;
+        }
+        final String? deviceIp = await SystemCommandsManager.instance
+            .getIpFromMdnsName(mdnsSrvTarget);
+        if (deviceIp == null) {
+          continue;
+        }
+        activeHost = activeHost..internetAddress = InternetAddress(deviceIp);
+      }
+
+      final MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
+
+      if (mdnsInfo != null) {
+        activeHostList.add(activeHost);
+      }
+    }
+    return activeHostList;
   }
 
   /// Getting ActiveHost that contain MdnsInfo property and activate it inside
@@ -196,7 +206,7 @@ class CompaniesConnectorConjector {
 
     if (EspHomeConnectorConjector.mdnsTypes
         .contains(hostMdnsInfo.mdnsServiceType)) {
-      getIt<EspHomeConnectorConjector>().addNewDeviceByMdnsName(
+      EspHomeConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -208,21 +218,20 @@ class CompaniesConnectorConjector {
             .getOnlyTheStartOfMdnsName()
             .toLowerCase()
             .contains('shelly')) {
-      getIt<ShellyConnectorConjector>().addNewDeviceByMdnsName(
+      ShellyConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
       );
     } else if (EwelinkConnectorConjector.mdnsTypes
         .contains(hostMdnsInfo.mdnsServiceType)) {
-      getIt<EwelinkConnectorConjector>()
-          .discoverNewDevices(activeHost: activeHost);
+      EwelinkConnectorConjector().discoverNewDevices(activeHost: activeHost);
     } else if (GoogleConnectorConjector.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsNameLower.contains('google') ||
             startOfMdnsNameLower.contains('android') ||
             startOfMdnsNameLower.contains('chrome'))) {
-      getIt<GoogleConnectorConjector>().addNewDeviceByMdnsName(
+      GoogleConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -231,7 +240,7 @@ class CompaniesConnectorConjector {
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsNameLower.contains('lg') ||
             startOfMdnsNameLower.contains('webos'))) {
-      getIt<LgConnectorConjector>().addNewDeviceByMdnsName(
+      LgConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -239,7 +248,7 @@ class CompaniesConnectorConjector {
     } else if (HpPrinterEntity.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsNameLower.contains('hp'))) {
-      getIt<HpConnectorConjector>().addNewDeviceByMdnsName(
+      HpConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -247,14 +256,14 @@ class CompaniesConnectorConjector {
     } else if (YeelightConnectorConjector.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsName.startsWith('YL'))) {
-      getIt<YeelightConnectorConjector>().addNewDeviceByMdnsName(
+      YeelightConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
       );
     } else if (PhilipsHueConnectorConjector.mdnsTypes
         .contains(hostMdnsInfo.mdnsServiceType)) {
-      getIt<PhilipsHueConnectorConjector>().addNewDeviceByMdnsName(
+      PhilipsHueConnectorConjector().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -269,49 +278,56 @@ class CompaniesConnectorConjector {
   /// Get all the host names in the connected networks and try to add the device
   static Future<void> searchPingableDevicesAndSetThemUpByHostName() async {
     while (true) {
-      final List<NetworkInterface> networkInterfaceList =
-          await NetworkInterface.list();
+      List<ActiveHost> pingableDevices = await searchPingableDevices();
 
-      for (final NetworkInterface networkInterface in networkInterfaceList) {
-        for (final InternetAddress address in networkInterface.addresses) {
-          final String ip = address.address;
-          if (!ip.contains('.')) {
-            continue;
-          }
-          final String subnet = ip.substring(0, ip.lastIndexOf('.'));
-
-          await for (final ActiveHost activeHost
-              in HostScanner.getAllPingableDevices(
-            subnet,
-            lastHostId: 126,
-          )) {
-            try {
-              setHostNameDeviceByCompany(
-                activeHost: activeHost,
-              );
-            } catch (e) {
-              continue;
-            }
-          }
-
-          // Spits to 2 requests to fix error in snap https://github.com/CyBear-Jinni-user/CBJ_Hub_Snap/issues/2
-          await for (final ActiveHost activeHost
-              in HostScanner.getAllPingableDevices(
-            subnet,
-            firstHostId: 127,
-          )) {
-            try {
-              setHostNameDeviceByCompany(
-                activeHost: activeHost,
-              );
-            } catch (e) {
-              continue;
-            }
-          }
+      for (ActiveHost activeHost in pingableDevices) {
+        try {
+          setHostNameDeviceByCompany(
+            activeHost: activeHost,
+          );
+        } catch (e) {
+          continue;
         }
       }
+
       await Future.delayed(const Duration(minutes: 5));
     }
+  }
+
+  static Future<List<ActiveHost>> searchPingableDevices() async {
+    List<ActiveHost> activeList = [];
+
+    final List<NetworkInterface> networkInterfaceList =
+        await NetworkInterface.list();
+
+    for (final NetworkInterface networkInterface in networkInterfaceList) {
+      for (final InternetAddress address in networkInterface.addresses) {
+        final String ip = address.address;
+        if (!ip.contains('.')) {
+          continue;
+        }
+        final String subnet = ip.substring(0, ip.lastIndexOf('.'));
+
+        await for (final ActiveHost activeHost
+            in HostScanner.getAllPingableDevices(
+          subnet,
+          lastHostId: 126,
+        )) {
+          activeList.add(activeHost);
+        }
+
+        // Spits to 2 requests to fix error in snap https://github.com/CyBear-Jinni-user/CBJ_Hub_Snap/issues/2
+        await for (final ActiveHost activeHost
+            in HostScanner.getAllPingableDevices(
+          subnet,
+          firstHostId: 127,
+        )) {
+          activeList.add(activeHost);
+        }
+      }
+    }
+
+    return activeList;
   }
 
   static Future<void> setHostNameDeviceByCompany({
@@ -323,24 +339,22 @@ class CompaniesConnectorConjector {
       return;
     }
     if (deviceHostNameLowerCase.contains('tasmota')) {
-      getIt<TasmotaIpConnectorConjector>().addNewDeviceByHostInfo(
+      TasmotaIpConnectorConjector().addNewDeviceByHostInfo(
         activeHost: activeHost,
       );
     } else if (deviceHostNameLowerCase.contains('xiaomi') ||
         deviceHostNameLowerCase.contains('yeelink') ||
         deviceHostNameLowerCase.contains('xiao')) {
-      getIt<XiaomiIoConnectorConjector>()
-          .discoverNewDevices(activeHost: activeHost);
+      XiaomiIoConnectorConjector().discoverNewDevices(activeHost: activeHost);
     } else if (deviceHostNameLowerCase.startsWith('wiz')) {
-      getIt<WizConnectorConjector>()
-          .addNewDeviceByHostInfo(activeHost: activeHost);
+      WizConnectorConjector().addNewDeviceByHostInfo(activeHost: activeHost);
     } else {
       final ActiveHost? cbjSmartDeviceHost =
           await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice(
         activeHost.address,
       );
       if (cbjSmartDeviceHost != null) {
-        getIt<CbjDevicesConnectorConjector>()
+        CbjDevicesConnectorConjector()
             .addNewDeviceByHostInfo(activeHost: cbjSmartDeviceHost);
         return;
       }
@@ -351,14 +365,22 @@ class CompaniesConnectorConjector {
   /// Searching devices by binding to sockets, used for devices with
   /// udp ports which can't be discovered by regular open (tcp) port scan
   static Future<void> searchDevicesByBindingIntoSockets() async {
-    SwitcherDiscover.discover20002Devices().listen((switcherApiObject) {
-      getIt<SwitcherConnectorConjector>()
-          .addOnlyNewSwitcherDevice(switcherApiObject);
-    });
-    SwitcherDiscover.discover20003Devices().listen((switcherApiObject) {
-      getIt<SwitcherConnectorConjector>()
-          .addOnlyNewSwitcherDevice(switcherApiObject);
-    });
+    List<Stream<dynamic>> socketBindingsList =
+        findDevicesByBindingIntoSockets();
+    for (Stream<dynamic> socketBinding in socketBindingsList) {
+      socketBinding.listen((switcherApiObject) {
+        SwitcherConnectorConjector()
+            .addOnlyNewSwitcherDevice(switcherApiObject);
+      });
+    }
+  }
+
+  static List<Stream<dynamic>> findDevicesByBindingIntoSockets() {
+    List<Stream<dynamic>> bindingStream = [];
+    bindingStream.add(SwitcherDiscover.discover20002Devices());
+    bindingStream.add(SwitcherDiscover.discover20003Devices());
+
+    return bindingStream;
   }
 
   /// Searching for mqtt devices
@@ -372,7 +394,7 @@ class CompaniesConnectorConjector {
   /// and since putting it in the constructor of singleton will be called
   /// before all of our program.
   static Future<void> notImplementedDevicesSearch() async {
-    // getIt<YeelightConnectorConjector>().discoverNewDevices();
+    // YeelightConnectorConjector().discoverNewDevices();
   }
 
   static AbstractCompanyConnectorConjector?
@@ -382,34 +404,34 @@ class CompaniesConnectorConjector {
     //TODO: convert vendorName to type and then use switch case
 
     if (vendorName == VendorsAndServices.espHome.toString()) {
-      return getIt<EspHomeConnectorConjector>();
+      return EspHomeConnectorConjector();
     } else if (vendorName == VendorsAndServices.switcherSmartHome.toString()) {
-      return getIt<SwitcherConnectorConjector>();
+      return SwitcherConnectorConjector();
     } else if (vendorName == VendorsAndServices.lifx.toString()) {
-      return getIt<LifxConnectorConjector>();
+      return LifxConnectorConjector();
     } else if (vendorName == VendorsAndServices.yeelight.toString()) {
-      return getIt<YeelightConnectorConjector>();
+      return YeelightConnectorConjector();
     } else if (vendorName == VendorsAndServices.philipsHue.toString()) {
-      return getIt<PhilipsHueConnectorConjector>();
+      return PhilipsHueConnectorConjector();
     } else if (vendorName == VendorsAndServices.tuyaSmart.toString()) {
-      return getIt<TuyaSmartConnectorConjector>();
+      return TuyaSmartConnectorConjector();
     } else if (vendorName == VendorsAndServices.sonoffDiy.toString()) {
-      return getIt<SonoffDiyConnectorConjector>();
+      return SonoffDiyConnectorConjector();
     } else if (vendorName == VendorsAndServices.google.toString()) {
-      return getIt<GoogleConnectorConjector>();
+      return GoogleConnectorConjector();
     } else if (vendorName ==
         VendorsAndServices.cbjDeviceSmartEntity.toString()) {
-      return getIt<CbjDevicesConnectorConjector>();
+      return CbjDevicesConnectorConjector();
     } else if (vendorName == VendorsAndServices.shelly.toString()) {
-      return getIt<ShellyConnectorConjector>();
+      return ShellyConnectorConjector();
     } else if (vendorName == VendorsAndServices.hp.toString()) {
-      return getIt<HpConnectorConjector>();
+      return HpConnectorConjector();
     } else if (vendorName == VendorsAndServices.miHome.toString()) {
-      return getIt<XiaomiIoConnectorConjector>();
+      return XiaomiIoConnectorConjector();
     } else if (vendorName == VendorsAndServices.tasmota.toString()) {
-      return getIt<TasmotaIpConnectorConjector>();
+      return TasmotaIpConnectorConjector();
     } else if (vendorName == VendorsAndServices.sonoffEweLink.toString()) {
-      return getIt<EwelinkConnectorConjector>();
+      return EwelinkConnectorConjector();
     }
 
     logger.w(

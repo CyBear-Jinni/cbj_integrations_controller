@@ -12,11 +12,18 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:http/http.dart';
-import 'package:injectable/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 
-@singleton
 class TasmotaIpConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory TasmotaIpConnectorConjector() {
+    return _instance;
+  }
+
+  TasmotaIpConnectorConjector._singletonContractor();
+
+  static final TasmotaIpConnectorConjector _instance =
+      TasmotaIpConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
@@ -24,7 +31,7 @@ class TasmotaIpConnectorConjector implements AbstractCompanyConnectorConjector {
   // http://ip/cm?cmnd=SetOption19%200
   // http://ip/cm?cmnd=MqttHost%200
 
-  Future<void> addNewDeviceByHostInfo({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
     required ActiveHost activeHost,
   }) async {
     final List<CoreUniqueId?> tempCoreUniqueId = [];
@@ -33,7 +40,7 @@ class TasmotaIpConnectorConjector implements AbstractCompanyConnectorConjector {
       if ((savedDevice is TasmotaIpSwitchEntity) &&
           await activeHost.hostName ==
               savedDevice.entityUniqueId.getOrCrash()) {
-        return;
+        return [];
       } else if (savedDevice is GenericLightDE &&
           await activeHost.hostName ==
               savedDevice.entityUniqueId.getOrCrash()) {
@@ -60,7 +67,7 @@ class TasmotaIpConnectorConjector implements AbstractCompanyConnectorConjector {
     );
 
     if (tasmotaIpDevices.isEmpty) {
-      return;
+      return [];
     }
 
     for (final DeviceEntityAbstract entityAsDevice in tasmotaIpDevices) {
@@ -76,6 +83,7 @@ class TasmotaIpConnectorConjector implements AbstractCompanyConnectorConjector {
         'New Tasmota Ip device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
+    return tasmotaIpDevices;
   }
 
   @override

@@ -12,15 +12,22 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
-@singleton
 class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory SwitcherConnectorConjector() {
+    return _instance;
+  }
+
+  SwitcherConnectorConjector._singletonContractor();
+
+  static final SwitcherConnectorConjector _instance =
+      SwitcherConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<void> addOnlyNewSwitcherDevice(
+  Future<List<DeviceEntityAbstract>> addOnlyNewSwitcherDevice(
     SwitcherApiObject switcherApiObject,
   ) async {
     CoreUniqueId? tempCoreUniqueId;
@@ -31,7 +38,7 @@ class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
               savedDevice is SwitcherSmartPlugEntity) &&
           switcherApiObject.deviceId ==
               savedDevice.entityUniqueId.getOrCrash()) {
-        return;
+        return [];
       } else if (savedDevice is GenericBoilerDE ||
           savedDevice is GenericBlindsDE &&
               switcherApiObject.deviceId ==
@@ -53,7 +60,7 @@ class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
       uniqueDeviceId: tempCoreUniqueId,
     );
     if (addDevice == null) {
-      return;
+      return [];
     }
 
     final DeviceEntityAbstract deviceToAdd =
@@ -65,6 +72,7 @@ class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
     companyDevices.addEntries([deviceAsEntry]);
 
     // logger.t('New switcher devices name:${switcherApiObject.switcherName}');
+    return [deviceAsEntry.value];
   }
 
   @override

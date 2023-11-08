@@ -6,12 +6,20 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 import 'package:mi_iot_token/mi_iot_token.dart';
 import 'package:network_tools/network_tools.dart';
 
-@singleton
+
 class XiaomiIoConnectorConjector implements AbstractCompanyConnectorConjector {
+  factory XiaomiIoConnectorConjector() {
+    return _instance;
+  }
+
+  XiaomiIoConnectorConjector._singletonContractor();
+
+  static final XiaomiIoConnectorConjector _instance =
+      XiaomiIoConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 

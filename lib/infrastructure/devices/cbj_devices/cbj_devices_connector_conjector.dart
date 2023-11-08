@@ -9,23 +9,30 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:injectable/injectable.dart';
 import 'package:network_tools/network_tools.dart';
 
-@singleton
 class CbjDevicesConnectorConjector
     implements AbstractCompanyConnectorConjector {
+  factory CbjDevicesConnectorConjector() {
+    return _instance;
+  }
+
+  CbjDevicesConnectorConjector._singletonContractor();
+
+  static final CbjDevicesConnectorConjector _instance =
+      CbjDevicesConnectorConjector._singletonContractor();
+
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<void> addNewDeviceByHostInfo({
+  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
     required ActiveHost activeHost,
   }) async {
     for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
       if ((savedDevice is CbjSmartComputerEntity) &&
           await activeHost.hostName ==
               savedDevice.entityUniqueId.getOrCrash()) {
-        return;
+        return [];
       } else if (await activeHost.hostName ==
           savedDevice.entityUniqueId.getOrCrash()) {
         logger.w(
@@ -42,7 +49,7 @@ class CbjDevicesConnectorConjector
       deviceAddress: activeHost.address,
     );
     if (devicesList.isEmpty) {
-      return;
+      return [];
     }
 
     for (final DeviceEntityAbstract entityAsDevice in devicesList) {
@@ -58,6 +65,7 @@ class CbjDevicesConnectorConjector
         'New Cbj Smart Device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
+    return devicesList;
   }
 
   @override
