@@ -1,17 +1,21 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: aioesphomeapi/api.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
 
-// ignore_for_file: UNDEFINED_SHOWN_NAME
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+
 import 'dart:core' as $core;
+
 import 'package:protobuf/protobuf.dart' as $pb;
 
 class LegacyCoverState extends $pb.ProtobufEnum {
-  static const LegacyCoverState LEGACY_COVER_STATE_OPEN = LegacyCoverState._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEGACY_COVER_STATE_OPEN');
-  static const LegacyCoverState LEGACY_COVER_STATE_CLOSED = LegacyCoverState._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEGACY_COVER_STATE_CLOSED');
+  static const LegacyCoverState LEGACY_COVER_STATE_OPEN = LegacyCoverState._(0, _omitEnumNames ? '' : 'LEGACY_COVER_STATE_OPEN');
+  static const LegacyCoverState LEGACY_COVER_STATE_CLOSED = LegacyCoverState._(1, _omitEnumNames ? '' : 'LEGACY_COVER_STATE_CLOSED');
 
   static const $core.List<LegacyCoverState> values = <LegacyCoverState> [
     LEGACY_COVER_STATE_OPEN,
@@ -25,9 +29,9 @@ class LegacyCoverState extends $pb.ProtobufEnum {
 }
 
 class CoverOperation extends $pb.ProtobufEnum {
-  static const CoverOperation COVER_OPERATION_IDLE = CoverOperation._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COVER_OPERATION_IDLE');
-  static const CoverOperation COVER_OPERATION_IS_OPENING = CoverOperation._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COVER_OPERATION_IS_OPENING');
-  static const CoverOperation COVER_OPERATION_IS_CLOSING = CoverOperation._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'COVER_OPERATION_IS_CLOSING');
+  static const CoverOperation COVER_OPERATION_IDLE = CoverOperation._(0, _omitEnumNames ? '' : 'COVER_OPERATION_IDLE');
+  static const CoverOperation COVER_OPERATION_IS_OPENING = CoverOperation._(1, _omitEnumNames ? '' : 'COVER_OPERATION_IS_OPENING');
+  static const CoverOperation COVER_OPERATION_IS_CLOSING = CoverOperation._(2, _omitEnumNames ? '' : 'COVER_OPERATION_IS_CLOSING');
 
   static const $core.List<CoverOperation> values = <CoverOperation> [
     COVER_OPERATION_IDLE,
@@ -42,9 +46,9 @@ class CoverOperation extends $pb.ProtobufEnum {
 }
 
 class LegacyCoverCommand extends $pb.ProtobufEnum {
-  static const LegacyCoverCommand LEGACY_COVER_COMMAND_OPEN = LegacyCoverCommand._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEGACY_COVER_COMMAND_OPEN');
-  static const LegacyCoverCommand LEGACY_COVER_COMMAND_CLOSE = LegacyCoverCommand._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEGACY_COVER_COMMAND_CLOSE');
-  static const LegacyCoverCommand LEGACY_COVER_COMMAND_STOP = LegacyCoverCommand._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LEGACY_COVER_COMMAND_STOP');
+  static const LegacyCoverCommand LEGACY_COVER_COMMAND_OPEN = LegacyCoverCommand._(0, _omitEnumNames ? '' : 'LEGACY_COVER_COMMAND_OPEN');
+  static const LegacyCoverCommand LEGACY_COVER_COMMAND_CLOSE = LegacyCoverCommand._(1, _omitEnumNames ? '' : 'LEGACY_COVER_COMMAND_CLOSE');
+  static const LegacyCoverCommand LEGACY_COVER_COMMAND_STOP = LegacyCoverCommand._(2, _omitEnumNames ? '' : 'LEGACY_COVER_COMMAND_STOP');
 
   static const $core.List<LegacyCoverCommand> values = <LegacyCoverCommand> [
     LEGACY_COVER_COMMAND_OPEN,
@@ -59,9 +63,9 @@ class LegacyCoverCommand extends $pb.ProtobufEnum {
 }
 
 class FanSpeed extends $pb.ProtobufEnum {
-  static const FanSpeed FAN_SPEED_LOW = FanSpeed._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FAN_SPEED_LOW');
-  static const FanSpeed FAN_SPEED_MEDIUM = FanSpeed._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FAN_SPEED_MEDIUM');
-  static const FanSpeed FAN_SPEED_HIGH = FanSpeed._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FAN_SPEED_HIGH');
+  static const FanSpeed FAN_SPEED_LOW = FanSpeed._(0, _omitEnumNames ? '' : 'FAN_SPEED_LOW');
+  static const FanSpeed FAN_SPEED_MEDIUM = FanSpeed._(1, _omitEnumNames ? '' : 'FAN_SPEED_MEDIUM');
+  static const FanSpeed FAN_SPEED_HIGH = FanSpeed._(2, _omitEnumNames ? '' : 'FAN_SPEED_HIGH');
 
   static const $core.List<FanSpeed> values = <FanSpeed> [
     FAN_SPEED_LOW,
@@ -76,8 +80,8 @@ class FanSpeed extends $pb.ProtobufEnum {
 }
 
 class FanDirection extends $pb.ProtobufEnum {
-  static const FanDirection FAN_DIRECTION_FORWARD = FanDirection._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FAN_DIRECTION_FORWARD');
-  static const FanDirection FAN_DIRECTION_REVERSE = FanDirection._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'FAN_DIRECTION_REVERSE');
+  static const FanDirection FAN_DIRECTION_FORWARD = FanDirection._(0, _omitEnumNames ? '' : 'FAN_DIRECTION_FORWARD');
+  static const FanDirection FAN_DIRECTION_REVERSE = FanDirection._(1, _omitEnumNames ? '' : 'FAN_DIRECTION_REVERSE');
 
   static const $core.List<FanDirection> values = <FanDirection> [
     FAN_DIRECTION_FORWARD,
@@ -90,9 +94,10 @@ class FanDirection extends $pb.ProtobufEnum {
   const FanDirection._($core.int v, $core.String n) : super(v, n);
 }
 
+/// ==================== SENSOR ====================
 class SensorStateClass extends $pb.ProtobufEnum {
-  static const SensorStateClass STATE_CLASS_NONE = SensorStateClass._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STATE_CLASS_NONE');
-  static const SensorStateClass STATE_CLASS_MEASUREMENT = SensorStateClass._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'STATE_CLASS_MEASUREMENT');
+  static const SensorStateClass STATE_CLASS_NONE = SensorStateClass._(0, _omitEnumNames ? '' : 'STATE_CLASS_NONE');
+  static const SensorStateClass STATE_CLASS_MEASUREMENT = SensorStateClass._(1, _omitEnumNames ? '' : 'STATE_CLASS_MEASUREMENT');
 
   static const $core.List<SensorStateClass> values = <SensorStateClass> [
     STATE_CLASS_NONE,
@@ -105,14 +110,15 @@ class SensorStateClass extends $pb.ProtobufEnum {
   const SensorStateClass._($core.int v, $core.String n) : super(v, n);
 }
 
+/// ==================== SUBSCRIBE LOGS ====================
 class LogLevel extends $pb.ProtobufEnum {
-  static const LogLevel LOG_LEVEL_NONE = LogLevel._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOG_LEVEL_NONE');
-  static const LogLevel LOG_LEVEL_ERROR = LogLevel._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOG_LEVEL_ERROR');
-  static const LogLevel LOG_LEVEL_WARN = LogLevel._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOG_LEVEL_WARN');
-  static const LogLevel LOG_LEVEL_INFO = LogLevel._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOG_LEVEL_INFO');
-  static const LogLevel LOG_LEVEL_DEBUG = LogLevel._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOG_LEVEL_DEBUG');
-  static const LogLevel LOG_LEVEL_VERBOSE = LogLevel._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOG_LEVEL_VERBOSE');
-  static const LogLevel LOG_LEVEL_VERY_VERBOSE = LogLevel._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'LOG_LEVEL_VERY_VERBOSE');
+  static const LogLevel LOG_LEVEL_NONE = LogLevel._(0, _omitEnumNames ? '' : 'LOG_LEVEL_NONE');
+  static const LogLevel LOG_LEVEL_ERROR = LogLevel._(1, _omitEnumNames ? '' : 'LOG_LEVEL_ERROR');
+  static const LogLevel LOG_LEVEL_WARN = LogLevel._(2, _omitEnumNames ? '' : 'LOG_LEVEL_WARN');
+  static const LogLevel LOG_LEVEL_INFO = LogLevel._(3, _omitEnumNames ? '' : 'LOG_LEVEL_INFO');
+  static const LogLevel LOG_LEVEL_DEBUG = LogLevel._(4, _omitEnumNames ? '' : 'LOG_LEVEL_DEBUG');
+  static const LogLevel LOG_LEVEL_VERBOSE = LogLevel._(5, _omitEnumNames ? '' : 'LOG_LEVEL_VERBOSE');
+  static const LogLevel LOG_LEVEL_VERY_VERBOSE = LogLevel._(6, _omitEnumNames ? '' : 'LOG_LEVEL_VERY_VERBOSE');
 
   static const $core.List<LogLevel> values = <LogLevel> [
     LOG_LEVEL_NONE,
@@ -130,15 +136,16 @@ class LogLevel extends $pb.ProtobufEnum {
   const LogLevel._($core.int v, $core.String n) : super(v, n);
 }
 
+/// ==================== USER-DEFINES SERVICES ====================
 class ServiceArgType extends $pb.ProtobufEnum {
-  static const ServiceArgType SERVICE_ARG_TYPE_BOOL = ServiceArgType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SERVICE_ARG_TYPE_BOOL');
-  static const ServiceArgType SERVICE_ARG_TYPE_INT = ServiceArgType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SERVICE_ARG_TYPE_INT');
-  static const ServiceArgType SERVICE_ARG_TYPE_FLOAT = ServiceArgType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SERVICE_ARG_TYPE_FLOAT');
-  static const ServiceArgType SERVICE_ARG_TYPE_STRING = ServiceArgType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SERVICE_ARG_TYPE_STRING');
-  static const ServiceArgType SERVICE_ARG_TYPE_BOOL_ARRAY = ServiceArgType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SERVICE_ARG_TYPE_BOOL_ARRAY');
-  static const ServiceArgType SERVICE_ARG_TYPE_INT_ARRAY = ServiceArgType._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SERVICE_ARG_TYPE_INT_ARRAY');
-  static const ServiceArgType SERVICE_ARG_TYPE_FLOAT_ARRAY = ServiceArgType._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SERVICE_ARG_TYPE_FLOAT_ARRAY');
-  static const ServiceArgType SERVICE_ARG_TYPE_STRING_ARRAY = ServiceArgType._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'SERVICE_ARG_TYPE_STRING_ARRAY');
+  static const ServiceArgType SERVICE_ARG_TYPE_BOOL = ServiceArgType._(0, _omitEnumNames ? '' : 'SERVICE_ARG_TYPE_BOOL');
+  static const ServiceArgType SERVICE_ARG_TYPE_INT = ServiceArgType._(1, _omitEnumNames ? '' : 'SERVICE_ARG_TYPE_INT');
+  static const ServiceArgType SERVICE_ARG_TYPE_FLOAT = ServiceArgType._(2, _omitEnumNames ? '' : 'SERVICE_ARG_TYPE_FLOAT');
+  static const ServiceArgType SERVICE_ARG_TYPE_STRING = ServiceArgType._(3, _omitEnumNames ? '' : 'SERVICE_ARG_TYPE_STRING');
+  static const ServiceArgType SERVICE_ARG_TYPE_BOOL_ARRAY = ServiceArgType._(4, _omitEnumNames ? '' : 'SERVICE_ARG_TYPE_BOOL_ARRAY');
+  static const ServiceArgType SERVICE_ARG_TYPE_INT_ARRAY = ServiceArgType._(5, _omitEnumNames ? '' : 'SERVICE_ARG_TYPE_INT_ARRAY');
+  static const ServiceArgType SERVICE_ARG_TYPE_FLOAT_ARRAY = ServiceArgType._(6, _omitEnumNames ? '' : 'SERVICE_ARG_TYPE_FLOAT_ARRAY');
+  static const ServiceArgType SERVICE_ARG_TYPE_STRING_ARRAY = ServiceArgType._(7, _omitEnumNames ? '' : 'SERVICE_ARG_TYPE_STRING_ARRAY');
 
   static const $core.List<ServiceArgType> values = <ServiceArgType> [
     SERVICE_ARG_TYPE_BOOL,
@@ -157,14 +164,15 @@ class ServiceArgType extends $pb.ProtobufEnum {
   const ServiceArgType._($core.int v, $core.String n) : super(v, n);
 }
 
+/// ==================== CLIMATE ====================
 class ClimateMode extends $pb.ProtobufEnum {
-  static const ClimateMode CLIMATE_MODE_OFF = ClimateMode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_MODE_OFF');
-  static const ClimateMode CLIMATE_MODE_HEAT_COOL = ClimateMode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_MODE_HEAT_COOL');
-  static const ClimateMode CLIMATE_MODE_COOL = ClimateMode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_MODE_COOL');
-  static const ClimateMode CLIMATE_MODE_HEAT = ClimateMode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_MODE_HEAT');
-  static const ClimateMode CLIMATE_MODE_FAN_ONLY = ClimateMode._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_MODE_FAN_ONLY');
-  static const ClimateMode CLIMATE_MODE_DRY = ClimateMode._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_MODE_DRY');
-  static const ClimateMode CLIMATE_MODE_AUTO = ClimateMode._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_MODE_AUTO');
+  static const ClimateMode CLIMATE_MODE_OFF = ClimateMode._(0, _omitEnumNames ? '' : 'CLIMATE_MODE_OFF');
+  static const ClimateMode CLIMATE_MODE_HEAT_COOL = ClimateMode._(1, _omitEnumNames ? '' : 'CLIMATE_MODE_HEAT_COOL');
+  static const ClimateMode CLIMATE_MODE_COOL = ClimateMode._(2, _omitEnumNames ? '' : 'CLIMATE_MODE_COOL');
+  static const ClimateMode CLIMATE_MODE_HEAT = ClimateMode._(3, _omitEnumNames ? '' : 'CLIMATE_MODE_HEAT');
+  static const ClimateMode CLIMATE_MODE_FAN_ONLY = ClimateMode._(4, _omitEnumNames ? '' : 'CLIMATE_MODE_FAN_ONLY');
+  static const ClimateMode CLIMATE_MODE_DRY = ClimateMode._(5, _omitEnumNames ? '' : 'CLIMATE_MODE_DRY');
+  static const ClimateMode CLIMATE_MODE_AUTO = ClimateMode._(6, _omitEnumNames ? '' : 'CLIMATE_MODE_AUTO');
 
   static const $core.List<ClimateMode> values = <ClimateMode> [
     CLIMATE_MODE_OFF,
@@ -183,15 +191,15 @@ class ClimateMode extends $pb.ProtobufEnum {
 }
 
 class ClimateFanMode extends $pb.ProtobufEnum {
-  static const ClimateFanMode CLIMATE_FAN_ON = ClimateFanMode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_FAN_ON');
-  static const ClimateFanMode CLIMATE_FAN_OFF = ClimateFanMode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_FAN_OFF');
-  static const ClimateFanMode CLIMATE_FAN_AUTO = ClimateFanMode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_FAN_AUTO');
-  static const ClimateFanMode CLIMATE_FAN_LOW = ClimateFanMode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_FAN_LOW');
-  static const ClimateFanMode CLIMATE_FAN_MEDIUM = ClimateFanMode._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_FAN_MEDIUM');
-  static const ClimateFanMode CLIMATE_FAN_HIGH = ClimateFanMode._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_FAN_HIGH');
-  static const ClimateFanMode CLIMATE_FAN_MIDDLE = ClimateFanMode._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_FAN_MIDDLE');
-  static const ClimateFanMode CLIMATE_FAN_FOCUS = ClimateFanMode._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_FAN_FOCUS');
-  static const ClimateFanMode CLIMATE_FAN_DIFFUSE = ClimateFanMode._(8, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_FAN_DIFFUSE');
+  static const ClimateFanMode CLIMATE_FAN_ON = ClimateFanMode._(0, _omitEnumNames ? '' : 'CLIMATE_FAN_ON');
+  static const ClimateFanMode CLIMATE_FAN_OFF = ClimateFanMode._(1, _omitEnumNames ? '' : 'CLIMATE_FAN_OFF');
+  static const ClimateFanMode CLIMATE_FAN_AUTO = ClimateFanMode._(2, _omitEnumNames ? '' : 'CLIMATE_FAN_AUTO');
+  static const ClimateFanMode CLIMATE_FAN_LOW = ClimateFanMode._(3, _omitEnumNames ? '' : 'CLIMATE_FAN_LOW');
+  static const ClimateFanMode CLIMATE_FAN_MEDIUM = ClimateFanMode._(4, _omitEnumNames ? '' : 'CLIMATE_FAN_MEDIUM');
+  static const ClimateFanMode CLIMATE_FAN_HIGH = ClimateFanMode._(5, _omitEnumNames ? '' : 'CLIMATE_FAN_HIGH');
+  static const ClimateFanMode CLIMATE_FAN_MIDDLE = ClimateFanMode._(6, _omitEnumNames ? '' : 'CLIMATE_FAN_MIDDLE');
+  static const ClimateFanMode CLIMATE_FAN_FOCUS = ClimateFanMode._(7, _omitEnumNames ? '' : 'CLIMATE_FAN_FOCUS');
+  static const ClimateFanMode CLIMATE_FAN_DIFFUSE = ClimateFanMode._(8, _omitEnumNames ? '' : 'CLIMATE_FAN_DIFFUSE');
 
   static const $core.List<ClimateFanMode> values = <ClimateFanMode> [
     CLIMATE_FAN_ON,
@@ -212,10 +220,10 @@ class ClimateFanMode extends $pb.ProtobufEnum {
 }
 
 class ClimateSwingMode extends $pb.ProtobufEnum {
-  static const ClimateSwingMode CLIMATE_SWING_OFF = ClimateSwingMode._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_SWING_OFF');
-  static const ClimateSwingMode CLIMATE_SWING_BOTH = ClimateSwingMode._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_SWING_BOTH');
-  static const ClimateSwingMode CLIMATE_SWING_VERTICAL = ClimateSwingMode._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_SWING_VERTICAL');
-  static const ClimateSwingMode CLIMATE_SWING_HORIZONTAL = ClimateSwingMode._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_SWING_HORIZONTAL');
+  static const ClimateSwingMode CLIMATE_SWING_OFF = ClimateSwingMode._(0, _omitEnumNames ? '' : 'CLIMATE_SWING_OFF');
+  static const ClimateSwingMode CLIMATE_SWING_BOTH = ClimateSwingMode._(1, _omitEnumNames ? '' : 'CLIMATE_SWING_BOTH');
+  static const ClimateSwingMode CLIMATE_SWING_VERTICAL = ClimateSwingMode._(2, _omitEnumNames ? '' : 'CLIMATE_SWING_VERTICAL');
+  static const ClimateSwingMode CLIMATE_SWING_HORIZONTAL = ClimateSwingMode._(3, _omitEnumNames ? '' : 'CLIMATE_SWING_HORIZONTAL');
 
   static const $core.List<ClimateSwingMode> values = <ClimateSwingMode> [
     CLIMATE_SWING_OFF,
@@ -231,12 +239,12 @@ class ClimateSwingMode extends $pb.ProtobufEnum {
 }
 
 class ClimateAction extends $pb.ProtobufEnum {
-  static const ClimateAction CLIMATE_ACTION_OFF = ClimateAction._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_ACTION_OFF');
-  static const ClimateAction CLIMATE_ACTION_COOLING = ClimateAction._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_ACTION_COOLING');
-  static const ClimateAction CLIMATE_ACTION_HEATING = ClimateAction._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_ACTION_HEATING');
-  static const ClimateAction CLIMATE_ACTION_IDLE = ClimateAction._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_ACTION_IDLE');
-  static const ClimateAction CLIMATE_ACTION_DRYING = ClimateAction._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_ACTION_DRYING');
-  static const ClimateAction CLIMATE_ACTION_FAN = ClimateAction._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_ACTION_FAN');
+  static const ClimateAction CLIMATE_ACTION_OFF = ClimateAction._(0, _omitEnumNames ? '' : 'CLIMATE_ACTION_OFF');
+  static const ClimateAction CLIMATE_ACTION_COOLING = ClimateAction._(2, _omitEnumNames ? '' : 'CLIMATE_ACTION_COOLING');
+  static const ClimateAction CLIMATE_ACTION_HEATING = ClimateAction._(3, _omitEnumNames ? '' : 'CLIMATE_ACTION_HEATING');
+  static const ClimateAction CLIMATE_ACTION_IDLE = ClimateAction._(4, _omitEnumNames ? '' : 'CLIMATE_ACTION_IDLE');
+  static const ClimateAction CLIMATE_ACTION_DRYING = ClimateAction._(5, _omitEnumNames ? '' : 'CLIMATE_ACTION_DRYING');
+  static const ClimateAction CLIMATE_ACTION_FAN = ClimateAction._(6, _omitEnumNames ? '' : 'CLIMATE_ACTION_FAN');
 
   static const $core.List<ClimateAction> values = <ClimateAction> [
     CLIMATE_ACTION_OFF,
@@ -254,14 +262,14 @@ class ClimateAction extends $pb.ProtobufEnum {
 }
 
 class ClimatePreset extends $pb.ProtobufEnum {
-  static const ClimatePreset CLIMATE_PRESET_NONE = ClimatePreset._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_PRESET_NONE');
-  static const ClimatePreset CLIMATE_PRESET_HOME = ClimatePreset._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_PRESET_HOME');
-  static const ClimatePreset CLIMATE_PRESET_AWAY = ClimatePreset._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_PRESET_AWAY');
-  static const ClimatePreset CLIMATE_PRESET_BOOST = ClimatePreset._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_PRESET_BOOST');
-  static const ClimatePreset CLIMATE_PRESET_COMFORT = ClimatePreset._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_PRESET_COMFORT');
-  static const ClimatePreset CLIMATE_PRESET_ECO = ClimatePreset._(5, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_PRESET_ECO');
-  static const ClimatePreset CLIMATE_PRESET_SLEEP = ClimatePreset._(6, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_PRESET_SLEEP');
-  static const ClimatePreset CLIMATE_PRESET_ACTIVITY = ClimatePreset._(7, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CLIMATE_PRESET_ACTIVITY');
+  static const ClimatePreset CLIMATE_PRESET_NONE = ClimatePreset._(0, _omitEnumNames ? '' : 'CLIMATE_PRESET_NONE');
+  static const ClimatePreset CLIMATE_PRESET_HOME = ClimatePreset._(1, _omitEnumNames ? '' : 'CLIMATE_PRESET_HOME');
+  static const ClimatePreset CLIMATE_PRESET_AWAY = ClimatePreset._(2, _omitEnumNames ? '' : 'CLIMATE_PRESET_AWAY');
+  static const ClimatePreset CLIMATE_PRESET_BOOST = ClimatePreset._(3, _omitEnumNames ? '' : 'CLIMATE_PRESET_BOOST');
+  static const ClimatePreset CLIMATE_PRESET_COMFORT = ClimatePreset._(4, _omitEnumNames ? '' : 'CLIMATE_PRESET_COMFORT');
+  static const ClimatePreset CLIMATE_PRESET_ECO = ClimatePreset._(5, _omitEnumNames ? '' : 'CLIMATE_PRESET_ECO');
+  static const ClimatePreset CLIMATE_PRESET_SLEEP = ClimatePreset._(6, _omitEnumNames ? '' : 'CLIMATE_PRESET_SLEEP');
+  static const ClimatePreset CLIMATE_PRESET_ACTIVITY = ClimatePreset._(7, _omitEnumNames ? '' : 'CLIMATE_PRESET_ACTIVITY');
 
   static const $core.List<ClimatePreset> values = <ClimatePreset> [
     CLIMATE_PRESET_NONE,
@@ -280,3 +288,5 @@ class ClimatePreset extends $pb.ProtobufEnum {
   const ClimatePreset._($core.int v, $core.String n) : super(v, n);
 }
 
+
+const _omitEnumNames = $core.bool.fromEnvironment('protobuf.omit_enum_names');

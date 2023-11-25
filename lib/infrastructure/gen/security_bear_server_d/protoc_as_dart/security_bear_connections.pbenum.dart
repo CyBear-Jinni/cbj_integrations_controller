@@ -1,6 +1,6 @@
 //
 //  Generated code. Do not modify.
-//  source: cbj_app_connections.proto
+//  source: security_bear_connections.proto
 //
 // @dart = 2.12
 

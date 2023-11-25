@@ -1,9 +1,13 @@
-///
+//
 //  Generated code. Do not modify.
 //  source: cbj_hub_server.proto
 //
 // @dart = 2.12
-// ignore_for_file: annotate_overrides,camel_case_types,constant_identifier_names,directives_ordering,library_prefixes,non_constant_identifier_names,prefer_final_fields,return_of_invalid_type,unnecessary_const,unnecessary_import,unnecessary_this,unused_import,unused_shown_name
+
+// ignore_for_file: annotate_overrides, camel_case_types, comment_references
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:core' as $core;
 
@@ -14,28 +18,29 @@ import 'cbj_hub_server.pbenum.dart';
 export 'cbj_hub_server.pbenum.dart';
 
 class ClientStatusRequests extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'ClientStatusRequests', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..e<SendingType>(41, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sendingType', $pb.PbFieldType.OE, protoName: 'sendingType', defaultOrMaker: SendingType.undefinedType, valueOf: SendingType.valueOf, enumValues: SendingType.values)
-    ..aOS(42, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allRemoteCommands', protoName: 'allRemoteCommands')
-    ..hasRequiredFields = false
-  ;
-
-  ClientStatusRequests._() : super();
   factory ClientStatusRequests({
     SendingType? sendingType,
     $core.String? allRemoteCommands,
   }) {
-    final _result = create();
+    final $result = create();
     if (sendingType != null) {
-      _result.sendingType = sendingType;
+      $result.sendingType = sendingType;
     }
     if (allRemoteCommands != null) {
-      _result.allRemoteCommands = allRemoteCommands;
+      $result.allRemoteCommands = allRemoteCommands;
     }
-    return _result;
+    return $result;
   }
+  ClientStatusRequests._() : super();
   factory ClientStatusRequests.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory ClientStatusRequests.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ClientStatusRequests', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..e<SendingType>(41, _omitFieldNames ? '' : 'sendingType', $pb.PbFieldType.OE, protoName: 'sendingType', defaultOrMaker: SendingType.undefinedType, valueOf: SendingType.valueOf, enumValues: SendingType.values)
+    ..aOS(42, _omitFieldNames ? '' : 'allRemoteCommands', protoName: 'allRemoteCommands')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -45,8 +50,10 @@ class ClientStatusRequests extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  ClientStatusRequests copyWith(void Function(ClientStatusRequests) updates) => super.copyWith((message) => updates(message as ClientStatusRequests)) as ClientStatusRequests; // ignore: deprecated_member_use
+  ClientStatusRequests copyWith(void Function(ClientStatusRequests) updates) => super.copyWith((message) => updates(message as ClientStatusRequests)) as ClientStatusRequests;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static ClientStatusRequests create() => ClientStatusRequests._();
   ClientStatusRequests createEmptyInstance() => create();
@@ -75,28 +82,29 @@ class ClientStatusRequests extends $pb.GeneratedMessage {
 }
 
 class RequestsAndStatusFromHub extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RequestsAndStatusFromHub', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..e<SendingType>(43, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sendingType', $pb.PbFieldType.OE, protoName: 'sendingType', defaultOrMaker: SendingType.undefinedType, valueOf: SendingType.valueOf, enumValues: SendingType.values)
-    ..aOS(44, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'allRemoteCommands', protoName: 'allRemoteCommands')
-    ..hasRequiredFields = false
-  ;
-
-  RequestsAndStatusFromHub._() : super();
   factory RequestsAndStatusFromHub({
     SendingType? sendingType,
     $core.String? allRemoteCommands,
   }) {
-    final _result = create();
+    final $result = create();
     if (sendingType != null) {
-      _result.sendingType = sendingType;
+      $result.sendingType = sendingType;
     }
     if (allRemoteCommands != null) {
-      _result.allRemoteCommands = allRemoteCommands;
+      $result.allRemoteCommands = allRemoteCommands;
     }
-    return _result;
+    return $result;
   }
+  RequestsAndStatusFromHub._() : super();
   factory RequestsAndStatusFromHub.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory RequestsAndStatusFromHub.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'RequestsAndStatusFromHub', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..e<SendingType>(43, _omitFieldNames ? '' : 'sendingType', $pb.PbFieldType.OE, protoName: 'sendingType', defaultOrMaker: SendingType.undefinedType, valueOf: SendingType.valueOf, enumValues: SendingType.values)
+    ..aOS(44, _omitFieldNames ? '' : 'allRemoteCommands', protoName: 'allRemoteCommands')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -106,8 +114,10 @@ class RequestsAndStatusFromHub extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  RequestsAndStatusFromHub copyWith(void Function(RequestsAndStatusFromHub) updates) => super.copyWith((message) => updates(message as RequestsAndStatusFromHub)) as RequestsAndStatusFromHub; // ignore: deprecated_member_use
+  RequestsAndStatusFromHub copyWith(void Function(RequestsAndStatusFromHub) updates) => super.copyWith((message) => updates(message as RequestsAndStatusFromHub)) as RequestsAndStatusFromHub;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static RequestsAndStatusFromHub create() => RequestsAndStatusFromHub._();
   RequestsAndStatusFromHub createEmptyInstance() => create();
@@ -136,23 +146,24 @@ class RequestsAndStatusFromHub extends $pb.GeneratedMessage {
 }
 
 class AllRemoteCommands extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'AllRemoteCommands', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOM<SmartEntityInfo>(40, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'smartEntityInfo', protoName: 'smartEntityInfo', subBuilder: SmartEntityInfo.create)
-    ..hasRequiredFields = false
-  ;
-
-  AllRemoteCommands._() : super();
   factory AllRemoteCommands({
     SmartEntityInfo? smartEntityInfo,
   }) {
-    final _result = create();
+    final $result = create();
     if (smartEntityInfo != null) {
-      _result.smartEntityInfo = smartEntityInfo;
+      $result.smartEntityInfo = smartEntityInfo;
     }
-    return _result;
+    return $result;
   }
+  AllRemoteCommands._() : super();
   factory AllRemoteCommands.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory AllRemoteCommands.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AllRemoteCommands', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOM<SmartEntityInfo>(40, _omitFieldNames ? '' : 'smartEntityInfo', protoName: 'smartEntityInfo', subBuilder: SmartEntityInfo.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -162,8 +173,10 @@ class AllRemoteCommands extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  AllRemoteCommands copyWith(void Function(AllRemoteCommands) updates) => super.copyWith((message) => updates(message as AllRemoteCommands)) as AllRemoteCommands; // ignore: deprecated_member_use
+  AllRemoteCommands copyWith(void Function(AllRemoteCommands) updates) => super.copyWith((message) => updates(message as AllRemoteCommands)) as AllRemoteCommands;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static AllRemoteCommands create() => AllRemoteCommands._();
   AllRemoteCommands createEmptyInstance() => create();
@@ -185,28 +198,29 @@ class AllRemoteCommands extends $pb.GeneratedMessage {
 }
 
 class FirstSetupMessage extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'FirstSetupMessage', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOM<CompHubInfo>(38, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compInfo', protoName: 'compInfo', subBuilder: CompHubInfo.create)
-    ..aOM<CloudAccountInformation>(39, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cloudAccountInformation', protoName: 'cloudAccountInformation', subBuilder: CloudAccountInformation.create)
-    ..hasRequiredFields = false
-  ;
-
-  FirstSetupMessage._() : super();
   factory FirstSetupMessage({
     CompHubInfo? compInfo,
     CloudAccountInformation? cloudAccountInformation,
   }) {
-    final _result = create();
+    final $result = create();
     if (compInfo != null) {
-      _result.compInfo = compInfo;
+      $result.compInfo = compInfo;
     }
     if (cloudAccountInformation != null) {
-      _result.cloudAccountInformation = cloudAccountInformation;
+      $result.cloudAccountInformation = cloudAccountInformation;
     }
-    return _result;
+    return $result;
   }
+  FirstSetupMessage._() : super();
   factory FirstSetupMessage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory FirstSetupMessage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'FirstSetupMessage', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOM<CompHubInfo>(38, _omitFieldNames ? '' : 'compInfo', protoName: 'compInfo', subBuilder: CompHubInfo.create)
+    ..aOM<CloudAccountInformation>(39, _omitFieldNames ? '' : 'cloudAccountInformation', protoName: 'cloudAccountInformation', subBuilder: CloudAccountInformation.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -216,8 +230,10 @@ class FirstSetupMessage extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  FirstSetupMessage copyWith(void Function(FirstSetupMessage) updates) => super.copyWith((message) => updates(message as FirstSetupMessage)) as FirstSetupMessage; // ignore: deprecated_member_use
+  FirstSetupMessage copyWith(void Function(FirstSetupMessage) updates) => super.copyWith((message) => updates(message as FirstSetupMessage)) as FirstSetupMessage;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static FirstSetupMessage create() => FirstSetupMessage._();
   FirstSetupMessage createEmptyInstance() => create();
@@ -250,28 +266,29 @@ class FirstSetupMessage extends $pb.GeneratedMessage {
 }
 
 class CompHubInfo extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CompHubInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOM<CompHubSpecs>(21, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compSpecs', protoName: 'compSpecs', subBuilder: CompHubSpecs.create)
-    ..aOM<CbjHubIno>(47, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cbjInfo', protoName: 'cbjInfo', subBuilder: CbjHubIno.create)
-    ..hasRequiredFields = false
-  ;
-
-  CompHubInfo._() : super();
   factory CompHubInfo({
     CompHubSpecs? compSpecs,
     CbjHubIno? cbjInfo,
   }) {
-    final _result = create();
+    final $result = create();
     if (compSpecs != null) {
-      _result.compSpecs = compSpecs;
+      $result.compSpecs = compSpecs;
     }
     if (cbjInfo != null) {
-      _result.cbjInfo = cbjInfo;
+      $result.cbjInfo = cbjInfo;
     }
-    return _result;
+    return $result;
   }
+  CompHubInfo._() : super();
   factory CompHubInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CompHubInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CompHubInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOM<CompHubSpecs>(21, _omitFieldNames ? '' : 'compSpecs', protoName: 'compSpecs', subBuilder: CompHubSpecs.create)
+    ..aOM<CbjHubIno>(47, _omitFieldNames ? '' : 'cbjInfo', protoName: 'cbjInfo', subBuilder: CbjHubIno.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -281,8 +298,10 @@ class CompHubInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CompHubInfo copyWith(void Function(CompHubInfo) updates) => super.copyWith((message) => updates(message as CompHubInfo)) as CompHubInfo; // ignore: deprecated_member_use
+  CompHubInfo copyWith(void Function(CompHubInfo) updates) => super.copyWith((message) => updates(message as CompHubInfo)) as CompHubInfo;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static CompHubInfo create() => CompHubInfo._();
   CompHubInfo createEmptyInstance() => create();
@@ -315,16 +334,6 @@ class CompHubInfo extends $pb.GeneratedMessage {
 }
 
 class CbjHubIno extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHubIno', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOS(27, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pubspecYamlVersion', protoName: 'pubspecYamlVersion')
-    ..aOS(48, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entityName', protoName: 'entityName')
-    ..aOS(49, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'protoLastGenDate', protoName: 'protoLastGenDate')
-    ..aOS(51, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'pubspecYamlBuildNumber', protoName: 'pubspecYamlBuildNumber')
-    ..aOS(52, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dartSdkVersion', protoName: 'dartSdkVersion')
-    ..hasRequiredFields = false
-  ;
-
-  CbjHubIno._() : super();
   factory CbjHubIno({
     $core.String? pubspecYamlVersion,
     $core.String? entityName,
@@ -332,26 +341,37 @@ class CbjHubIno extends $pb.GeneratedMessage {
     $core.String? pubspecYamlBuildNumber,
     $core.String? dartSdkVersion,
   }) {
-    final _result = create();
+    final $result = create();
     if (pubspecYamlVersion != null) {
-      _result.pubspecYamlVersion = pubspecYamlVersion;
+      $result.pubspecYamlVersion = pubspecYamlVersion;
     }
     if (entityName != null) {
-      _result.entityName = entityName;
+      $result.entityName = entityName;
     }
     if (protoLastGenDate != null) {
-      _result.protoLastGenDate = protoLastGenDate;
+      $result.protoLastGenDate = protoLastGenDate;
     }
     if (pubspecYamlBuildNumber != null) {
-      _result.pubspecYamlBuildNumber = pubspecYamlBuildNumber;
+      $result.pubspecYamlBuildNumber = pubspecYamlBuildNumber;
     }
     if (dartSdkVersion != null) {
-      _result.dartSdkVersion = dartSdkVersion;
+      $result.dartSdkVersion = dartSdkVersion;
     }
-    return _result;
+    return $result;
   }
+  CbjHubIno._() : super();
   factory CbjHubIno.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CbjHubIno.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CbjHubIno', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOS(27, _omitFieldNames ? '' : 'pubspecYamlVersion', protoName: 'pubspecYamlVersion')
+    ..aOS(48, _omitFieldNames ? '' : 'entityName', protoName: 'entityName')
+    ..aOS(49, _omitFieldNames ? '' : 'protoLastGenDate', protoName: 'protoLastGenDate')
+    ..aOS(51, _omitFieldNames ? '' : 'pubspecYamlBuildNumber', protoName: 'pubspecYamlBuildNumber')
+    ..aOS(52, _omitFieldNames ? '' : 'dartSdkVersion', protoName: 'dartSdkVersion')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -361,8 +381,10 @@ class CbjHubIno extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CbjHubIno copyWith(void Function(CbjHubIno) updates) => super.copyWith((message) => updates(message as CbjHubIno)) as CbjHubIno; // ignore: deprecated_member_use
+  CbjHubIno copyWith(void Function(CbjHubIno) updates) => super.copyWith((message) => updates(message as CbjHubIno)) as CbjHubIno;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static CbjHubIno create() => CbjHubIno._();
   CbjHubIno createEmptyInstance() => create();
@@ -418,17 +440,6 @@ class CbjHubIno extends $pb.GeneratedMessage {
 }
 
 class CompHubSpecs extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CompHubSpecs', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOS(22, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compId', protoName: 'compId')
-    ..aOS(23, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compUuid', protoName: 'compUuid')
-    ..aOS(24, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compOs', protoName: 'compOs')
-    ..aOS(25, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compModel', protoName: 'compModel')
-    ..aOS(26, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compType', protoName: 'compType')
-    ..aOS(50, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compIp', protoName: 'compIp')
-    ..hasRequiredFields = false
-  ;
-
-  CompHubSpecs._() : super();
   factory CompHubSpecs({
     $core.String? compId,
     $core.String? compUuid,
@@ -437,29 +448,41 @@ class CompHubSpecs extends $pb.GeneratedMessage {
     $core.String? compType,
     $core.String? compIp,
   }) {
-    final _result = create();
+    final $result = create();
     if (compId != null) {
-      _result.compId = compId;
+      $result.compId = compId;
     }
     if (compUuid != null) {
-      _result.compUuid = compUuid;
+      $result.compUuid = compUuid;
     }
     if (compOs != null) {
-      _result.compOs = compOs;
+      $result.compOs = compOs;
     }
     if (compModel != null) {
-      _result.compModel = compModel;
+      $result.compModel = compModel;
     }
     if (compType != null) {
-      _result.compType = compType;
+      $result.compType = compType;
     }
     if (compIp != null) {
-      _result.compIp = compIp;
+      $result.compIp = compIp;
     }
-    return _result;
+    return $result;
   }
+  CompHubSpecs._() : super();
   factory CompHubSpecs.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CompHubSpecs.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CompHubSpecs', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOS(22, _omitFieldNames ? '' : 'compId', protoName: 'compId')
+    ..aOS(23, _omitFieldNames ? '' : 'compUuid', protoName: 'compUuid')
+    ..aOS(24, _omitFieldNames ? '' : 'compOs', protoName: 'compOs')
+    ..aOS(25, _omitFieldNames ? '' : 'compModel', protoName: 'compModel')
+    ..aOS(26, _omitFieldNames ? '' : 'compType', protoName: 'compType')
+    ..aOS(50, _omitFieldNames ? '' : 'compIp', protoName: 'compIp')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -469,8 +492,10 @@ class CompHubSpecs extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CompHubSpecs copyWith(void Function(CompHubSpecs) updates) => super.copyWith((message) => updates(message as CompHubSpecs)) as CompHubSpecs; // ignore: deprecated_member_use
+  CompHubSpecs copyWith(void Function(CompHubSpecs) updates) => super.copyWith((message) => updates(message as CompHubSpecs)) as CompHubSpecs;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static CompHubSpecs create() => CompHubSpecs._();
   CompHubSpecs createEmptyInstance() => create();
@@ -535,33 +560,34 @@ class CompHubSpecs extends $pb.GeneratedMessage {
 }
 
 class MicrocontrollerSpecs extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MicrocontrollerSpecs', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOS(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'microcontrollerModel', protoName: 'microcontrollerModel')
-    ..aOS(32, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'microcontrollerType', protoName: 'microcontrollerType')
-    ..aOS(33, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'softwareVersion', protoName: 'softwareVersion')
-    ..hasRequiredFields = false
-  ;
-
-  MicrocontrollerSpecs._() : super();
   factory MicrocontrollerSpecs({
     $core.String? microcontrollerModel,
     $core.String? microcontrollerType,
     $core.String? softwareVersion,
   }) {
-    final _result = create();
+    final $result = create();
     if (microcontrollerModel != null) {
-      _result.microcontrollerModel = microcontrollerModel;
+      $result.microcontrollerModel = microcontrollerModel;
     }
     if (microcontrollerType != null) {
-      _result.microcontrollerType = microcontrollerType;
+      $result.microcontrollerType = microcontrollerType;
     }
     if (softwareVersion != null) {
-      _result.softwareVersion = softwareVersion;
+      $result.softwareVersion = softwareVersion;
     }
-    return _result;
+    return $result;
   }
+  MicrocontrollerSpecs._() : super();
   factory MicrocontrollerSpecs.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MicrocontrollerSpecs.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MicrocontrollerSpecs', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOS(31, _omitFieldNames ? '' : 'microcontrollerModel', protoName: 'microcontrollerModel')
+    ..aOS(32, _omitFieldNames ? '' : 'microcontrollerType', protoName: 'microcontrollerType')
+    ..aOS(33, _omitFieldNames ? '' : 'softwareVersion', protoName: 'softwareVersion')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -571,8 +597,10 @@ class MicrocontrollerSpecs extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MicrocontrollerSpecs copyWith(void Function(MicrocontrollerSpecs) updates) => super.copyWith((message) => updates(message as MicrocontrollerSpecs)) as MicrocontrollerSpecs; // ignore: deprecated_member_use
+  MicrocontrollerSpecs copyWith(void Function(MicrocontrollerSpecs) updates) => super.copyWith((message) => updates(message as MicrocontrollerSpecs)) as MicrocontrollerSpecs;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MicrocontrollerSpecs create() => MicrocontrollerSpecs._();
   MicrocontrollerSpecs createEmptyInstance() => create();
@@ -609,26 +637,8 @@ class MicrocontrollerSpecs extends $pb.GeneratedMessage {
   void clearSoftwareVersion() => clearField(33);
 }
 
+/// / The request message containing the user's name.
 class SmartEntityInfo extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SmartEntityInfo', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'state')
-    ..aOS(14, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'defaultName', protoName: 'defaultName')
-    ..aOS(15, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId', protoName: 'roomId')
-    ..aOS(16, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'senderDeviceModel', protoName: 'senderDeviceModel')
-    ..aOS(17, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'senderDeviceOs', protoName: 'senderDeviceOs')
-    ..aOS(18, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'senderId', protoName: 'senderId')
-    ..aOS(19, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'serverTimeStamp', protoName: 'serverTimeStamp')
-    ..aOS(20, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'stateMassage', protoName: 'stateMassage')
-    ..aOB(29, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isComputer', protoName: 'isComputer')
-    ..aOM<CompHubSpecs>(30, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'compSpecs', protoName: 'compSpecs', subBuilder: CompHubSpecs.create)
-    ..aOM<MicrocontrollerSpecs>(31, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'microcontrollerSpecsSpecs', protoName: 'microcontrollerSpecsSpecs', subBuilder: MicrocontrollerSpecs.create)
-    ..aOM<EntityTypesActions>(34, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entityTypesActions', protoName: 'entityTypesActions', subBuilder: EntityTypesActions.create)
-    ..aOM<MqttMassage>(43, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqttMassage', protoName: 'mqttMassage', subBuilder: MqttMassage.create)
-    ..hasRequiredFields = false
-  ;
-
-  SmartEntityInfo._() : super();
   factory SmartEntityInfo({
     $core.String? id,
     $core.String? state,
@@ -645,53 +655,73 @@ class SmartEntityInfo extends $pb.GeneratedMessage {
     EntityTypesActions? entityTypesActions,
     MqttMassage? mqttMassage,
   }) {
-    final _result = create();
+    final $result = create();
     if (id != null) {
-      _result.id = id;
+      $result.id = id;
     }
     if (state != null) {
-      _result.state = state;
+      $result.state = state;
     }
     if (defaultName != null) {
-      _result.defaultName = defaultName;
+      $result.defaultName = defaultName;
     }
     if (roomId != null) {
-      _result.roomId = roomId;
+      $result.roomId = roomId;
     }
     if (senderDeviceModel != null) {
-      _result.senderDeviceModel = senderDeviceModel;
+      $result.senderDeviceModel = senderDeviceModel;
     }
     if (senderDeviceOs != null) {
-      _result.senderDeviceOs = senderDeviceOs;
+      $result.senderDeviceOs = senderDeviceOs;
     }
     if (senderId != null) {
-      _result.senderId = senderId;
+      $result.senderId = senderId;
     }
     if (serverTimeStamp != null) {
-      _result.serverTimeStamp = serverTimeStamp;
+      $result.serverTimeStamp = serverTimeStamp;
     }
     if (stateMassage != null) {
-      _result.stateMassage = stateMassage;
+      $result.stateMassage = stateMassage;
     }
     if (isComputer != null) {
-      _result.isComputer = isComputer;
+      $result.isComputer = isComputer;
     }
     if (compSpecs != null) {
-      _result.compSpecs = compSpecs;
+      $result.compSpecs = compSpecs;
     }
     if (microcontrollerSpecsSpecs != null) {
-      _result.microcontrollerSpecsSpecs = microcontrollerSpecsSpecs;
+      $result.microcontrollerSpecsSpecs = microcontrollerSpecsSpecs;
     }
     if (entityTypesActions != null) {
-      _result.entityTypesActions = entityTypesActions;
+      $result.entityTypesActions = entityTypesActions;
     }
     if (mqttMassage != null) {
-      _result.mqttMassage = mqttMassage;
+      $result.mqttMassage = mqttMassage;
     }
-    return _result;
+    return $result;
   }
+  SmartEntityInfo._() : super();
   factory SmartEntityInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SmartEntityInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SmartEntityInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(3, _omitFieldNames ? '' : 'state')
+    ..aOS(14, _omitFieldNames ? '' : 'defaultName', protoName: 'defaultName')
+    ..aOS(15, _omitFieldNames ? '' : 'roomId', protoName: 'roomId')
+    ..aOS(16, _omitFieldNames ? '' : 'senderDeviceModel', protoName: 'senderDeviceModel')
+    ..aOS(17, _omitFieldNames ? '' : 'senderDeviceOs', protoName: 'senderDeviceOs')
+    ..aOS(18, _omitFieldNames ? '' : 'senderId', protoName: 'senderId')
+    ..aOS(19, _omitFieldNames ? '' : 'serverTimeStamp', protoName: 'serverTimeStamp')
+    ..aOS(20, _omitFieldNames ? '' : 'stateMassage', protoName: 'stateMassage')
+    ..aOB(29, _omitFieldNames ? '' : 'isComputer', protoName: 'isComputer')
+    ..aOM<CompHubSpecs>(30, _omitFieldNames ? '' : 'compSpecs', protoName: 'compSpecs', subBuilder: CompHubSpecs.create)
+    ..aOM<MicrocontrollerSpecs>(31, _omitFieldNames ? '' : 'microcontrollerSpecsSpecs', protoName: 'microcontrollerSpecsSpecs', subBuilder: MicrocontrollerSpecs.create)
+    ..aOM<EntityTypesActions>(34, _omitFieldNames ? '' : 'entityTypesActions', protoName: 'entityTypesActions', subBuilder: EntityTypesActions.create)
+    ..aOM<MqttMassage>(43, _omitFieldNames ? '' : 'mqttMassage', protoName: 'mqttMassage', subBuilder: MqttMassage.create)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -701,8 +731,10 @@ class SmartEntityInfo extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SmartEntityInfo copyWith(void Function(SmartEntityInfo) updates) => super.copyWith((message) => updates(message as SmartEntityInfo)) as SmartEntityInfo; // ignore: deprecated_member_use
+  SmartEntityInfo copyWith(void Function(SmartEntityInfo) updates) => super.copyWith((message) => updates(message as SmartEntityInfo)) as SmartEntityInfo;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SmartEntityInfo create() => SmartEntityInfo._();
   SmartEntityInfo createEmptyInstance() => create();
@@ -846,24 +878,26 @@ class SmartEntityInfo extends $pb.GeneratedMessage {
   MqttMassage ensureMqttMassage() => $_ensure(13);
 }
 
+/// / The response message containing the greetings
 class SmartEntityStatus extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SmartEntityStatus', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOB(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'onOffState', protoName: 'onOffState')
-    ..hasRequiredFields = false
-  ;
-
-  SmartEntityStatus._() : super();
   factory SmartEntityStatus({
     $core.bool? onOffState,
   }) {
-    final _result = create();
+    final $result = create();
     if (onOffState != null) {
-      _result.onOffState = onOffState;
+      $result.onOffState = onOffState;
     }
-    return _result;
+    return $result;
   }
+  SmartEntityStatus._() : super();
   factory SmartEntityStatus.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SmartEntityStatus.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SmartEntityStatus', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOB(4, _omitFieldNames ? '' : 'onOffState', protoName: 'onOffState')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -873,8 +907,10 @@ class SmartEntityStatus extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SmartEntityStatus copyWith(void Function(SmartEntityStatus) updates) => super.copyWith((message) => updates(message as SmartEntityStatus)) as SmartEntityStatus; // ignore: deprecated_member_use
+  SmartEntityStatus copyWith(void Function(SmartEntityStatus) updates) => super.copyWith((message) => updates(message as SmartEntityStatus)) as SmartEntityStatus;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SmartEntityStatus create() => SmartEntityStatus._();
   SmartEntityStatus createEmptyInstance() => create();
@@ -894,28 +930,29 @@ class SmartEntityStatus extends $pb.GeneratedMessage {
 }
 
 class MqttMassage extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MqttMassage', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOS(44, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqttTopic', protoName: 'mqttTopic')
-    ..aOS(45, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'mqttMassage', protoName: 'mqttMassage')
-    ..hasRequiredFields = false
-  ;
-
-  MqttMassage._() : super();
   factory MqttMassage({
     $core.String? mqttTopic,
     $core.String? mqttMassage,
   }) {
-    final _result = create();
+    final $result = create();
     if (mqttTopic != null) {
-      _result.mqttTopic = mqttTopic;
+      $result.mqttTopic = mqttTopic;
     }
     if (mqttMassage != null) {
-      _result.mqttMassage = mqttMassage;
+      $result.mqttMassage = mqttMassage;
     }
-    return _result;
+    return $result;
   }
+  MqttMassage._() : super();
   factory MqttMassage.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory MqttMassage.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'MqttMassage', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOS(44, _omitFieldNames ? '' : 'mqttTopic', protoName: 'mqttTopic')
+    ..aOS(45, _omitFieldNames ? '' : 'mqttMassage', protoName: 'mqttMassage')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -925,8 +962,10 @@ class MqttMassage extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  MqttMassage copyWith(void Function(MqttMassage) updates) => super.copyWith((message) => updates(message as MqttMassage)) as MqttMassage; // ignore: deprecated_member_use
+  MqttMassage copyWith(void Function(MqttMassage) updates) => super.copyWith((message) => updates(message as MqttMassage)) as MqttMassage;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static MqttMassage create() => MqttMassage._();
   MqttMassage createEmptyInstance() => create();
@@ -954,24 +993,26 @@ class MqttMassage extends $pb.GeneratedMessage {
   void clearMqttMassage() => clearField(45);
 }
 
+/// / Did the commend succeeded (true) or not (false)
 class CommendStatus extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CommendStatus', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOB(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'success')
-    ..hasRequiredFields = false
-  ;
-
-  CommendStatus._() : super();
   factory CommendStatus({
     $core.bool? success,
   }) {
-    final _result = create();
+    final $result = create();
     if (success != null) {
-      _result.success = success;
+      $result.success = success;
     }
-    return _result;
+    return $result;
   }
+  CommendStatus._() : super();
   factory CommendStatus.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CommendStatus.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CommendStatus', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOB(5, _omitFieldNames ? '' : 'success')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -981,8 +1022,10 @@ class CommendStatus extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CommendStatus copyWith(void Function(CommendStatus) updates) => super.copyWith((message) => updates(message as CommendStatus)) as CommendStatus; // ignore: deprecated_member_use
+  CommendStatus copyWith(void Function(CommendStatus) updates) => super.copyWith((message) => updates(message as CommendStatus)) as CommendStatus;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static CommendStatus create() => CommendStatus._();
   CommendStatus createEmptyInstance() => create();
@@ -1002,28 +1045,29 @@ class CommendStatus extends $pb.GeneratedMessage {
 }
 
 class SmartEntitiesUpdateDetails extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'SmartEntitiesUpdateDetails', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOM<SmartEntityInfo>(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'smartEntity', protoName: 'smartEntity', subBuilder: SmartEntityInfo.create)
-    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'newName', protoName: 'newName')
-    ..hasRequiredFields = false
-  ;
-
-  SmartEntitiesUpdateDetails._() : super();
   factory SmartEntitiesUpdateDetails({
     SmartEntityInfo? smartEntity,
     $core.String? newName,
   }) {
-    final _result = create();
+    final $result = create();
     if (smartEntity != null) {
-      _result.smartEntity = smartEntity;
+      $result.smartEntity = smartEntity;
     }
     if (newName != null) {
-      _result.newName = newName;
+      $result.newName = newName;
     }
-    return _result;
+    return $result;
   }
+  SmartEntitiesUpdateDetails._() : super();
   factory SmartEntitiesUpdateDetails.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory SmartEntitiesUpdateDetails.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SmartEntitiesUpdateDetails', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOM<SmartEntityInfo>(6, _omitFieldNames ? '' : 'smartEntity', protoName: 'smartEntity', subBuilder: SmartEntityInfo.create)
+    ..aOS(7, _omitFieldNames ? '' : 'newName', protoName: 'newName')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1033,8 +1077,10 @@ class SmartEntitiesUpdateDetails extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SmartEntitiesUpdateDetails copyWith(void Function(SmartEntitiesUpdateDetails) updates) => super.copyWith((message) => updates(message as SmartEntitiesUpdateDetails)) as SmartEntitiesUpdateDetails; // ignore: deprecated_member_use
+  SmartEntitiesUpdateDetails copyWith(void Function(SmartEntitiesUpdateDetails) updates) => super.copyWith((message) => updates(message as SmartEntitiesUpdateDetails)) as SmartEntitiesUpdateDetails;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static SmartEntitiesUpdateDetails create() => SmartEntitiesUpdateDetails._();
   SmartEntitiesUpdateDetails createEmptyInstance() => create();
@@ -1065,16 +1111,6 @@ class SmartEntitiesUpdateDetails extends $pb.GeneratedMessage {
 }
 
 class CloudAccountInformation extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CloudAccountInformation', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..aOS(8, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cloudProjectId', protoName: 'cloudProjectId')
-    ..aOS(9, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'cloudApiKey', protoName: 'cloudApiKey')
-    ..aOS(10, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userEmail', protoName: 'userEmail')
-    ..aOS(11, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userPassword', protoName: 'userPassword')
-    ..aOS(12, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'homeId', protoName: 'homeId')
-    ..hasRequiredFields = false
-  ;
-
-  CloudAccountInformation._() : super();
   factory CloudAccountInformation({
     $core.String? cloudProjectId,
     $core.String? cloudApiKey,
@@ -1082,26 +1118,37 @@ class CloudAccountInformation extends $pb.GeneratedMessage {
     $core.String? userPassword,
     $core.String? homeId,
   }) {
-    final _result = create();
+    final $result = create();
     if (cloudProjectId != null) {
-      _result.cloudProjectId = cloudProjectId;
+      $result.cloudProjectId = cloudProjectId;
     }
     if (cloudApiKey != null) {
-      _result.cloudApiKey = cloudApiKey;
+      $result.cloudApiKey = cloudApiKey;
     }
     if (userEmail != null) {
-      _result.userEmail = userEmail;
+      $result.userEmail = userEmail;
     }
     if (userPassword != null) {
-      _result.userPassword = userPassword;
+      $result.userPassword = userPassword;
     }
     if (homeId != null) {
-      _result.homeId = homeId;
+      $result.homeId = homeId;
     }
-    return _result;
+    return $result;
   }
+  CloudAccountInformation._() : super();
   factory CloudAccountInformation.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory CloudAccountInformation.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CloudAccountInformation', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..aOS(8, _omitFieldNames ? '' : 'cloudProjectId', protoName: 'cloudProjectId')
+    ..aOS(9, _omitFieldNames ? '' : 'cloudApiKey', protoName: 'cloudApiKey')
+    ..aOS(10, _omitFieldNames ? '' : 'userEmail', protoName: 'userEmail')
+    ..aOS(11, _omitFieldNames ? '' : 'userPassword', protoName: 'userPassword')
+    ..aOS(12, _omitFieldNames ? '' : 'homeId', protoName: 'homeId')
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1111,8 +1158,10 @@ class CloudAccountInformation extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  CloudAccountInformation copyWith(void Function(CloudAccountInformation) updates) => super.copyWith((message) => updates(message as CloudAccountInformation)) as CloudAccountInformation; // ignore: deprecated_member_use
+  CloudAccountInformation copyWith(void Function(CloudAccountInformation) updates) => super.copyWith((message) => updates(message as CloudAccountInformation)) as CloudAccountInformation;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static CloudAccountInformation create() => CloudAccountInformation._();
   CloudAccountInformation createEmptyInstance() => create();
@@ -1168,38 +1217,39 @@ class CloudAccountInformation extends $pb.GeneratedMessage {
 }
 
 class EntityTypesActions extends $pb.GeneratedMessage {
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'EntityTypesActions', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..e<EntityTypes>(35, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entityType', $pb.PbFieldType.OE, protoName: 'entityType', defaultOrMaker: EntityTypes.smartTypeNotSupported, valueOf: EntityTypes.valueOf, enumValues: EntityTypes.values)
-    ..e<EntityActions>(36, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entityAction', $pb.PbFieldType.OE, protoName: 'entityAction', defaultOrMaker: EntityActions.actionNotSupported, valueOf: EntityActions.valueOf, enumValues: EntityActions.values)
-    ..e<EntityStateGRPC>(37, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'entityStateGRPC', $pb.PbFieldType.OE, protoName: 'entityStateGRPC', defaultOrMaker: EntityStateGRPC.stateNotSupported, valueOf: EntityStateGRPC.valueOf, enumValues: EntityStateGRPC.values)
-    ..e<VendorsAndServices>(46, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'vendorsAndServices', $pb.PbFieldType.OE, protoName: 'vendorsAndServices', defaultOrMaker: VendorsAndServices.vendorsAndServicesNotSupported, valueOf: VendorsAndServices.valueOf, enumValues: VendorsAndServices.values)
-    ..hasRequiredFields = false
-  ;
-
-  EntityTypesActions._() : super();
   factory EntityTypesActions({
     EntityTypes? entityType,
     EntityActions? entityAction,
     EntityStateGRPC? entityStateGRPC,
     VendorsAndServices? vendorsAndServices,
   }) {
-    final _result = create();
+    final $result = create();
     if (entityType != null) {
-      _result.entityType = entityType;
+      $result.entityType = entityType;
     }
     if (entityAction != null) {
-      _result.entityAction = entityAction;
+      $result.entityAction = entityAction;
     }
     if (entityStateGRPC != null) {
-      _result.entityStateGRPC = entityStateGRPC;
+      $result.entityStateGRPC = entityStateGRPC;
     }
     if (vendorsAndServices != null) {
-      _result.vendorsAndServices = vendorsAndServices;
+      $result.vendorsAndServices = vendorsAndServices;
     }
-    return _result;
+    return $result;
   }
+  EntityTypesActions._() : super();
   factory EntityTypesActions.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory EntityTypesActions.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'EntityTypesActions', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
+    ..e<EntityTypes>(35, _omitFieldNames ? '' : 'entityType', $pb.PbFieldType.OE, protoName: 'entityType', defaultOrMaker: EntityTypes.smartTypeNotSupported, valueOf: EntityTypes.valueOf, enumValues: EntityTypes.values)
+    ..e<EntityActions>(36, _omitFieldNames ? '' : 'entityAction', $pb.PbFieldType.OE, protoName: 'entityAction', defaultOrMaker: EntityActions.actionNotSupported, valueOf: EntityActions.valueOf, enumValues: EntityActions.values)
+    ..e<EntityStateGRPC>(37, _omitFieldNames ? '' : 'entityStateGRPC', $pb.PbFieldType.OE, protoName: 'entityStateGRPC', defaultOrMaker: EntityStateGRPC.stateNotSupported, valueOf: EntityStateGRPC.valueOf, enumValues: EntityStateGRPC.values)
+    ..e<VendorsAndServices>(46, _omitFieldNames ? '' : 'vendorsAndServices', $pb.PbFieldType.OE, protoName: 'vendorsAndServices', defaultOrMaker: VendorsAndServices.vendorsAndServicesNotSupported, valueOf: VendorsAndServices.valueOf, enumValues: VendorsAndServices.values)
+    ..hasRequiredFields = false
+  ;
+
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
@@ -1209,8 +1259,10 @@ class EntityTypesActions extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  EntityTypesActions copyWith(void Function(EntityTypesActions) updates) => super.copyWith((message) => updates(message as EntityTypesActions)) as EntityTypesActions; // ignore: deprecated_member_use
+  EntityTypesActions copyWith(void Function(EntityTypesActions) updates) => super.copyWith((message) => updates(message as EntityTypesActions)) as EntityTypesActions;
+
   $pb.BuilderInfo get info_ => _i;
+
   @$core.pragma('dart2js:noInline')
   static EntityTypesActions create() => EntityTypesActions._();
   EntityTypesActions createEmptyInstance() => create();
@@ -1256,3 +1308,6 @@ class EntityTypesActions extends $pb.GeneratedMessage {
   void clearVendorsAndServices() => clearField(46);
 }
 
+
+const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');
