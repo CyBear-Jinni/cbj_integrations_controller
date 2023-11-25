@@ -161,14 +161,18 @@ class CompaniesConnectorConjector {
       // In some cases for some reason we get empty result when trying to
       // resolve mdns name to ip, the only way we found to fix that is to
       // use resolve it using avahi-resolve-host-name
+      // TODO: Check if this part can be deleted after pr https://github.com/osociety/network_tools/pull/165#issuecomment-1826405925
+
       if (activeHost.address == '0.0.0.0') {
-        final String? mdnsSrvTarget =
-            (await activeHost.mdnsInfo)?.mdnsSrvTarget;
+        MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
+
+        final String? mdnsSrvTarget = mdnsInfo?.mdnsSrvTarget;
         if (mdnsSrvTarget == null) {
           continue;
         }
+
         final String? deviceIp = await SystemCommandsManager.instance
-            .getIpFromMdnsName(mdnsSrvTarget);
+            .getIpFromMdnsName(mdnsSrvTarget, mdnsInfo!.mdnsServiceType);
         if (deviceIp == null) {
           continue;
         }

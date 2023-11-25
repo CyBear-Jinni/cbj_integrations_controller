@@ -71,6 +71,8 @@ dependencies:
   uuid: ^4.2.1
   # Dart library for controlling Yeelight products over LAN.
   yeedart: ^0.3.2
+  collection: ^1.17.2
+  multicast_dns: ^0.3.2+5
 
 dev_dependencies:
   # A build system for Dart code generation and modular compilation.

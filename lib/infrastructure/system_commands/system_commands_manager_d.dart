@@ -7,6 +7,7 @@ import 'package:cbj_integrations_controller/infrastructure/system_commands/batch
 import 'package:cbj_integrations_controller/infrastructure/system_commands/phone_commands_d/common_batch_commands_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_base_class_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
+import 'package:multicast_dns/multicast_dns.dart';
 
 class SystemCommandsManager {
   SystemCommandsManager() {
@@ -73,8 +74,26 @@ class SystemCommandsManager {
     return BashCommandsForRaspberryPi.getRaspberryPiDeviceVersion();
   }
 
-  Future<String?> getIpFromMdnsName(String mdnsName) {
-    return systemCommandsBaseClassD!.getIpFromMdnsName(mdnsName);
+  Future<String?> getIpFromMdnsName(
+      String mdnsName, String mdnsServiceType) async {
+    try {
+      final MDnsClient client = MDnsClient();
+      await client.start();
+
+      await for (final PtrResourceRecord ptr
+          in client.lookup<PtrResourceRecord>(
+              ResourceRecordQuery.serverPointer(mdnsServiceType))) {
+        await for (final IPAddressResourceRecord ip
+            in client.lookup<IPAddressResourceRecord>(
+                ResourceRecordQuery.addressIPv4(mdnsName))) {
+          return ip.address.toString();
+        }
+      }
+      client.stop();
+    } catch (e) {
+      logger.e('Error mdns lookup $e');
+    }
+    return null;
   }
 
   Future<String?> getSnapLocationEnvironmentVariable() {

@@ -148,21 +148,6 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
   }
 
   @override
-  Future<String?> getIpFromMdnsName(String mdnsName) async {
-    try {
-      final String fileContent =
-          await Process.run('avahi-resolve-host-name', <String>[mdnsName])
-              .then((ProcessResult result) {
-        return result.stdout.toString();
-      });
-      return fileContent.substring(fileContent.indexOf('\t') + 1).trim();
-    } catch (e) {
-      logger.w("Can't get device IP from mdns $mdnsName\n$e");
-    }
-    return null;
-  }
-
-  @override
   Future<String?> suspendComputer() async {
     // systemctl suspend does not work inside the snap
     // https://forum.snapcraft.io/t/error-executing-systemctl-suspend-inside-the-snap/32186/2
