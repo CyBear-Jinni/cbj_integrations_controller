@@ -1,4 +1,5 @@
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
+import 'package:cbj_integrations_controller/domain/remote_pipes/remote_pipes_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/saved_devices/saved_devices_repo.dart';
@@ -22,9 +23,9 @@ abstract class ISavedDevicesRepo {
   // /// Will save the remote pipes entity to the local storage and will activate
   // /// connection to remote pipes with that info
   // /// Will return true if complete success
-  // Future<Either<LocalDbFailures, Unit>> saveAndActivateRemotePipesDomainToDb({
-  //   required RemotePipesEntity remotePipes,
-  // });
+  Future<Either<LocalDbFailures, Unit>> saveAndActivateRemotePipesDomainToDb({
+    required RemotePipesEntity remotePipes,
+  });
 
   Future<Either<LocalDbFailures, Unit>> saveAndActivateSmartDevicesToDb();
 
