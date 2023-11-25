@@ -15,11 +15,16 @@ import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/lifx_vendor_credentials_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/tuya_vendor_credentials_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/xiaomi_mi_vendor_credentials_hive_model.dart';
+import 'package:cbj_integrations_controller/infrastructure/local_db/local_db_hive_repository.dart';
 import 'package:dartz/dartz.dart';
 
 /// Only ISavedDevicesRepo need to call functions here
 abstract class ILocalDbRepository {
-  static late ILocalDbRepository instance;
+  static ILocalDbRepository? _instance;
+
+  static ILocalDbRepository get instance {
+    return _instance ??= HiveRepository();
+  }
 
   /// Name of the box that stores Remote Pipes credentials
   String remotePipesBoxName = 'remotePipesBox';

@@ -21,10 +21,6 @@ import 'package:kt_dart/kt.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BindingCbjRepository implements IBindingCbjRepository {
-  BindingCbjRepository() {
-    IBindingCbjRepository.instance = this;
-  }
-
   final Map<String, BindingCbjEntity> _allBindings = {};
 
   @override

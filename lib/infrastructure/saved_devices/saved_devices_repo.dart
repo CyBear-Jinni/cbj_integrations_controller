@@ -11,10 +11,6 @@ import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 
 class SavedDevicesRepo extends ISavedDevicesRepo {
-  SavedDevicesRepo() {
-    ISavedDevicesRepo.instance = this;
-  }
-
   static final HashMap<String, DeviceEntityAbstract> _allDevices =
       HashMap<String, DeviceEntityAbstract>();
 

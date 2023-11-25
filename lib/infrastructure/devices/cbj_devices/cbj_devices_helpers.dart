@@ -66,7 +66,11 @@ class CbjDevicesHelpers {
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
           deviceCbjUniqueId: CoreUniqueId(),
         );
-      } else {
+      }
+      // TOODO: Add cbj security type
+      // else if (deviceType == CbjDeviceTypes.s) {
+      // }
+      else {
         logger.w('Cbj Smart Device type is not supported ${deviceType.name}');
         continue;
       }

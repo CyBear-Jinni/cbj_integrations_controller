@@ -3,12 +3,17 @@ import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.da
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_failures.dart';
 import 'package:cbj_integrations_controller/domain/routine/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/routines/routine_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class IRoutineCbjRepository {
-  static late IRoutineCbjRepository instance;
+  static IRoutineCbjRepository? _instance;
+
+  static IRoutineCbjRepository get instance {
+    return _instance ??= RoutineCbjRepository();
+  }
 
   /// Setting up all routines from db
   Future<void> setUpAllFromDb();

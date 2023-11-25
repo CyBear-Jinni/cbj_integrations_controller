@@ -22,10 +22,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/src/subjects/behavior_subject.dart';
 
 class RoutineCbjRepository implements IRoutineCbjRepository {
-  RoutineCbjRepository() {
-    IRoutineCbjRepository.instance = this;
-  }
-
   final Map<String, RoutineCbjEntity> _allRoutines = {};
 
   @override

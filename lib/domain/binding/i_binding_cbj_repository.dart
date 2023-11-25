@@ -1,13 +1,18 @@
 import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/binding/binding_cbj_failures.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/bindings/binding_repository.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class IBindingCbjRepository {
-  static late IBindingCbjRepository instance;
+  static IBindingCbjRepository? _instance;
+
+  static IBindingCbjRepository get instance {
+    return _instance ??= BindingCbjRepository();
+  }
 
   /// Setting up all bindings from db
   Future<void> setUpAllFromDb();

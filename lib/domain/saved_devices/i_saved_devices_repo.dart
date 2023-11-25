@@ -1,10 +1,15 @@
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/saved_devices/saved_devices_repo.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class ISavedDevicesRepo {
-  static late ISavedDevicesRepo instance;
+  static ISavedDevicesRepo? _instance;
+
+  static ISavedDevicesRepo get instance {
+    return _instance ??= SavedDevicesRepo();
+  }
 
   /// Setting up all devices from db
   Future<void> setUpAllFromDb();
