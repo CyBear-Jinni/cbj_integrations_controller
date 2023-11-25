@@ -52,7 +52,7 @@ dependencies:
   # Server and browser based MQTT client
   mqtt_client: ^10.0.0
   # Helps you discover open ports, devices on subnet and more.
-  network_tools: ^4.0.1
+  network_tools: ^4.0.2
   # Interact directly with NodeRED API
   nodered:
     git: 'https://github.com/guyluz11/nodered.git'
