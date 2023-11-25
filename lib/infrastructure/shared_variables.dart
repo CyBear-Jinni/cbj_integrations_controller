@@ -3,26 +3,35 @@ import 'dart:io';
 import 'package:cbj_integrations_controller/utils.dart';
 
 class SharedVariables {
-  SharedVariables(this._projectRootDirectoryPath) {
-    logger.i('PATH: $_projectRootDirectoryPath');
-    SharedVariables.instance = this;
+  factory SharedVariables() {
+    return _instance;
   }
 
-  static late SharedVariables instance;
+  SharedVariables._singletonConstractor() {
+    logger.i('PATH: $_projectRootDirectoryPath');
+  }
+
+  static final SharedVariables _instance =
+      SharedVariables._singletonConstractor();
+
+  ///  Save the location of all the files that were created during the snapcraft
+  String? _projectRootDirectoryPath;
+
+  set projectRootDirectoryPath(value) {
+    _projectRootDirectoryPath = value;
+  }
 
   Future<void> asyncConstractor(String projectRootDirectoryPath) async {
     _projectRootDirectoryPath = projectRootDirectoryPath;
     logger.t('PATH: $_projectRootDirectoryPath');
   }
 
-  ///  Save the location of all the files that were created during the snapcraft
-  String _projectRootDirectoryPath;
-
-  String getProjectRootDirectoryPath() => _projectRootDirectoryPath;
+  String? getProjectRootDirectoryPath() => _projectRootDirectoryPath;
 
   /// Getting snap location environment variable value of $SNAP
   String? getSnapLocationEnvironmentVariable() {
-    if (!_projectRootDirectoryPath.contains('/snap/')) {
+    if (_projectRootDirectoryPath == null ||
+        !_projectRootDirectoryPath!.contains('/snap/')) {
       return null;
     }
     return '/snap/cbj-hub/current';
@@ -30,7 +39,8 @@ class SharedVariables {
 
   /// Getting snap common environment variable value of SNAP_COMMON
   String? getSnapCommonEnvironmentVariable() {
-    if (!_projectRootDirectoryPath.contains('/snap/')) {
+    if (_projectRootDirectoryPath == null ||
+        !_projectRootDirectoryPath!.contains('/snap/')) {
       return null;
     }
     return '/var/snap/cbj-hub/common';
@@ -38,7 +48,8 @@ class SharedVariables {
 
   /// Getting snap user common environment variable, value of $SNAP_USER_COMMON
   String? getSnapUserCommonEnvironmentVariable() {
-    if (!_projectRootDirectoryPath.contains('/snap/')) {
+    if (_projectRootDirectoryPath == null ||
+        !_projectRootDirectoryPath!.contains('/snap/')) {
       return null;
     }
     return '/root/snap/cbj-hub/common';

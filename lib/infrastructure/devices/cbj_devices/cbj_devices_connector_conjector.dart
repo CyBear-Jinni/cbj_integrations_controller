@@ -98,7 +98,6 @@ class CbjDevicesConnectorConjector
   Future<List<CbjSmartDeviceInfo?>> getAllComponentsOfDevice(
     ActiveHost activeHost,
   ) async {
-    activeHost.address;
     final List<CbjSmartDeviceInfo?> devicesInfo =
         await CbjSmartDeviceClient.getCbjSmartDeviceHostDevicesInfo(activeHost);
     return devicesInfo;

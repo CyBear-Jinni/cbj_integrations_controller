@@ -18,10 +18,6 @@ import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 
 class SavedRoomsRepo extends ISavedRoomsRepo {
-  SavedRoomsRepo() {
-    ISavedRoomsRepo.instance = this;
-  }
-
   static final HashMap<String, RoomEntity> _allRooms =
       HashMap<String, RoomEntity>();
 

@@ -126,7 +126,7 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
     String localDbFolderPath;
 
     final String? snapCommonEnvironmentVariable =
-        SharedVariables.instance.getSnapCommonEnvironmentVariable();
+        SharedVariables().getSnapCommonEnvironmentVariable();
     if (snapCommonEnvironmentVariable == null) {
       localDbFolderPath = '/home/${await currentUserName}/';
     } else {
@@ -139,7 +139,7 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
   @override
   Future<String> getProjectFilesLocation() async {
     final String? snapLocation =
-        SharedVariables.instance.getSnapLocationEnvironmentVariable();
+        SharedVariables().getSnapLocationEnvironmentVariable();
     if (snapLocation == null) {
       return Directory.current.path;
     }

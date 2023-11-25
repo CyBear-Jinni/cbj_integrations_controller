@@ -365,17 +365,57 @@ class CompaniesConnectorConjector {
   /// Searching devices by binding to sockets, used for devices with
   /// udp ports which can't be discovered by regular open (tcp) port scan
   static Future<void> searchDevicesByBindingIntoSockets() async {
-    List<Stream<dynamic>> socketBindingsList =
-        findDevicesByBindingIntoSockets();
-    for (Stream<dynamic> socketBinding in socketBindingsList) {
+    List<Stream<dynamic>> switcherBindingsList =
+        findSwitcherDevicesByBindingIntoSockets();
+    for (Stream<dynamic> socketBinding in switcherBindingsList) {
       socketBinding.listen((switcherApiObject) {
         SwitcherConnectorConjector()
             .addOnlyNewSwitcherDevice(switcherApiObject);
       });
     }
+
+    List<Stream<ActiveHost>> devicesWithPort =
+        await findCbjDevicesByBindingIntoSockets();
+    try {
+      for (Stream<ActiveHost> socketBinding in devicesWithPort) {
+        socketBinding.listen((activeHost) {
+          logger.i('Found CBJ Smart security camera: ${activeHost.address}');
+
+          CbjDevicesConnectorConjector()
+              .addNewDeviceByHostInfo(activeHost: activeHost);
+        });
+      }
+    } catch (e) {
+      logger.w('Exception searchForHub\n$e');
+    }
   }
 
-  static List<Stream<dynamic>> findDevicesByBindingIntoSockets() {
+  static Future<List<Stream<ActiveHost>>>
+      findCbjDevicesByBindingIntoSockets() async {
+    List<Stream<ActiveHost>> bindingStream = [];
+
+    final List<NetworkInterface> networkInterfaceList =
+        await NetworkInterface.list();
+
+    for (final NetworkInterface networkInterface in networkInterfaceList) {
+      for (final InternetAddress address in networkInterface.addresses) {
+        final String ip = address.address;
+        if (!ip.contains('.')) {
+          continue;
+        }
+
+        final String subnet = ip.substring(0, ip.lastIndexOf('.'));
+
+        bindingStream.add(HostScanner.scanDevicesForSinglePort(
+          subnet,
+          50054,
+        ));
+      }
+    }
+    return bindingStream;
+  }
+
+  static List<Stream<dynamic>> findSwitcherDevicesByBindingIntoSockets() {
     List<Stream<dynamic>> bindingStream = [];
     bindingStream.add(SwitcherDiscover.discover20002Devices());
     bindingStream.add(SwitcherDiscover.discover20003Devices());

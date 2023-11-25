@@ -18,9 +18,9 @@ Future initializeIntegrationsController({
 
   try {
     if (projectRootDirectoryPath != null) {
-      await SharedVariables.instance.asyncConstractor(projectRootDirectoryPath);
+      await SharedVariables().asyncConstractor(projectRootDirectoryPath);
     } else {
-      await SharedVariables.instance.asyncConstractor(Directory.current.path);
+      await SharedVariables().asyncConstractor(Directory.current.path);
     }
   } catch (error) {
     logger.e('Path/argument 1 is not specified\n$error');

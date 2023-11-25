@@ -4,10 +4,15 @@ import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/room/saved_rooms_repo.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class ISavedRoomsRepo {
-  static late ISavedRoomsRepo instance;
+  static ISavedRoomsRepo? _instance;
+
+  static ISavedRoomsRepo get instance {
+    return _instance ??= SavedRoomsRepo();
+  }
 
   /// Setting up all rooms from db
   Future<void> setUpAllFromDb();

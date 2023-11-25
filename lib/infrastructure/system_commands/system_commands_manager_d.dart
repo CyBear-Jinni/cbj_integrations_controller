@@ -4,13 +4,17 @@ import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart
 import 'package:cbj_integrations_controller/infrastructure/system_commands/bash_commands_d/bash_commands_for_raspberry_pi_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/bash_commands_d/common_bash_commands_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/batch_commands_d/common_batch_commands_d.dart';
+import 'package:cbj_integrations_controller/infrastructure/system_commands/phone_commands_d/common_batch_commands_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_base_class_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
 class SystemCommandsManager {
   SystemCommandsManager() {
     SystemCommandsManager.instance = this;
-    if (Platform.isLinux) {
+    if (Platform.isAndroid || Platform.isIOS) {
+      logger.t('Mobile platform detected in SystemCommandsManager');
+      systemCommandsBaseClassD = IPhoneCommandsD.instance;
+    } else if (Platform.isLinux) {
       logger.t('Linux platform detected in SystemCommandsManager');
       systemCommandsBaseClassD = CommonBashCommandsD();
     } else if (Platform.isWindows) {
@@ -74,18 +78,16 @@ class SystemCommandsManager {
   }
 
   Future<String?> getSnapLocationEnvironmentVariable() {
-    return Future.value(
-        SharedVariables.instance.getSnapLocationEnvironmentVariable());
+    return Future.value(SharedVariables().getSnapLocationEnvironmentVariable());
   }
 
   Future<String?> getSnapCommonEnvironmentVariable() {
-    return Future.value(
-        SharedVariables.instance.getSnapCommonEnvironmentVariable());
+    return Future.value(SharedVariables().getSnapCommonEnvironmentVariable());
   }
 
   Future<String?> getSnapUserCommonEnvironmentVariable() {
     return Future.value(
-        SharedVariables.instance.getSnapUserCommonEnvironmentVariable());
+        SharedVariables().getSnapUserCommonEnvironmentVariable());
   }
 
   String getOs() {
