@@ -171,7 +171,7 @@ class CompaniesConnectorConjector {
           continue;
         }
 
-        final String? deviceIp = await SystemCommandsManager.instance
+        final String? deviceIp = await SystemCommandsManager()
             .getIpFromMdnsName(mdnsSrvTarget, mdnsInfo!.mdnsServiceType);
         if (deviceIp == null) {
           continue;

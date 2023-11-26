@@ -16,7 +16,7 @@ class NodeRedRepository extends INodeRedRepository {
   // TODO: Need to get deleted
   static get instance => INodeRedRepository.instance;
 
-  static NodeRedAPI nodeRedApi = NodeRedAPI();
+  NodeRedAPI nodeRedApi = NodeRedAPI();
 
   // /// List of all the scenes JSONs in Node-RED
   // List<String> scenesList = [];

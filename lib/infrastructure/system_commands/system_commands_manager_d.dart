@@ -10,8 +10,11 @@ import 'package:cbj_integrations_controller/utils.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 
 class SystemCommandsManager {
-  SystemCommandsManager() {
-    SystemCommandsManager.instance = this;
+  factory SystemCommandsManager() {
+    return _instance;
+  }
+
+  SystemCommandsManager._singletonContractor() {
     if (Platform.isAndroid || Platform.isIOS) {
       logger.t('Mobile platform detected in SystemCommandsManager');
       systemCommandsBaseClassD = IPhoneCommandsD.instance;
@@ -32,7 +35,8 @@ class SystemCommandsManager {
     }
   }
 
-  static late SystemCommandsManager instance;
+  static final SystemCommandsManager _instance =
+      SystemCommandsManager._singletonContractor();
 
   SystemCommandsBaseClassD? systemCommandsBaseClassD;
 

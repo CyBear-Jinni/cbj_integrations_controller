@@ -34,8 +34,7 @@ class DevicePinListManager extends DevicePinListManagerAbstract {
     // TODO: check if this can be done using
     // https://pub.dev/packages/flutter_gpiod or by using
     // https://pub.dev/packages/linux_system_info
-    final SystemCommandsManager systemCommandsManager =
-        SystemCommandsManager.instance;
+    final SystemCommandsManager systemCommandsManager = SystemCommandsManager();
     final String etcReleaseOutput =
         await systemCommandsManager.getAllEtcReleaseFilesText();
 

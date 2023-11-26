@@ -75,7 +75,7 @@
 //   }
 //
 //   Future<bool> asyncConstractorHelper() async {
-//     await SystemCommandsManager.instance.getLocalDbPath();
+//     await SystemCommandsManager().getLocalDbPath();
 //
 //     logger.i('Isar db location\n${isar.path}');
 //

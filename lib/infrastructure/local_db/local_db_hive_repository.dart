@@ -57,7 +57,7 @@ import 'package:hive/hive.dart';
 class HiveRepository extends ILocalDbRepository {
   @override
   Future<void> initializeDb() async {
-    String? localDbPath = await SystemCommandsManager.instance.getLocalDbPath();
+    String? localDbPath = await SystemCommandsManager().getLocalDbPath();
 
     if (localDbPath[localDbPath.length - 1] == '/') {
       localDbPath = localDbPath.substring(0, localDbPath.length - 1);
