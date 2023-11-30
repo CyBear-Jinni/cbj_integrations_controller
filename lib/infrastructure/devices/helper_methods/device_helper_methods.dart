@@ -16,11 +16,11 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_dto_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_login_abstract/login_entity_dto_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/vendor_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/remote_pipes/remote_pipes_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/room/room_entity_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/routines/routine_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/scene_cbj_dtos.dart';
+import 'package:cbj_integrations_controller/infrastructure/vendors/vendor_helper.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
 class DeviceHelperMethods {
