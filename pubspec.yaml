@@ -1,6 +1,6 @@
 name: cbj_integrations_controller
 description: A sample command-line application.
-version: 1.0.6
+version: 1.0.7
 # repository: https://github.com/CyBear-Jinni/cbj_integrations_controller
 
 environment:
@@ -52,7 +52,7 @@ dependencies:
   # Server and browser based MQTT client
   mqtt_client: ^10.0.0
   # Helps you discover open ports, devices on subnet and more.
-  network_tools: ^4.0.1
+  network_tools: ^4.0.2
   # Interact directly with NodeRED API
   nodered:
     git: 'https://github.com/guyluz11/nodered.git'
@@ -71,6 +71,9 @@ dependencies:
   uuid: ^4.2.1
   # Dart library for controlling Yeelight products over LAN.
   yeedart: ^0.3.2
+  collection: ^1.17.2
+  multicast_dns: ^0.3.2+5
+  meta: ^1.9.0
 
 dev_dependencies:
   # A build system for Dart code generation and modular compilation.

@@ -4,13 +4,21 @@ import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart
 import 'package:cbj_integrations_controller/infrastructure/system_commands/bash_commands_d/bash_commands_for_raspberry_pi_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/bash_commands_d/common_bash_commands_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/batch_commands_d/common_batch_commands_d.dart';
+import 'package:cbj_integrations_controller/infrastructure/system_commands/phone_commands_d/common_batch_commands_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_base_class_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
+import 'package:multicast_dns/multicast_dns.dart';
 
 class SystemCommandsManager {
-  SystemCommandsManager() {
-    SystemCommandsManager.instance = this;
-    if (Platform.isLinux) {
+  factory SystemCommandsManager() {
+    return _instance;
+  }
+
+  SystemCommandsManager._singletonContractor() {
+    if (Platform.isAndroid || Platform.isIOS) {
+      logger.t('Mobile platform detected in SystemCommandsManager');
+      systemCommandsBaseClassD = IPhoneCommandsD.instance;
+    } else if (Platform.isLinux) {
       logger.t('Linux platform detected in SystemCommandsManager');
       systemCommandsBaseClassD = CommonBashCommandsD();
     } else if (Platform.isWindows) {
@@ -27,7 +35,8 @@ class SystemCommandsManager {
     }
   }
 
-  static late SystemCommandsManager instance;
+  static final SystemCommandsManager _instance =
+      SystemCommandsManager._singletonContractor();
 
   SystemCommandsBaseClassD? systemCommandsBaseClassD;
 
@@ -69,23 +78,39 @@ class SystemCommandsManager {
     return BashCommandsForRaspberryPi.getRaspberryPiDeviceVersion();
   }
 
-  Future<String?> getIpFromMdnsName(String mdnsName) {
-    return systemCommandsBaseClassD!.getIpFromMdnsName(mdnsName);
+  Future<String?> getIpFromMdnsName(
+      String mdnsName, String mdnsServiceType) async {
+    try {
+      final MDnsClient client = MDnsClient();
+      await client.start();
+
+      await for (final PtrResourceRecord ptr
+          in client.lookup<PtrResourceRecord>(
+              ResourceRecordQuery.serverPointer(mdnsServiceType))) {
+        await for (final IPAddressResourceRecord ip
+            in client.lookup<IPAddressResourceRecord>(
+                ResourceRecordQuery.addressIPv4(mdnsName))) {
+          return ip.address.toString();
+        }
+      }
+      client.stop();
+    } catch (e) {
+      logger.e('Error mdns lookup $e');
+    }
+    return null;
   }
 
   Future<String?> getSnapLocationEnvironmentVariable() {
-    return Future.value(
-        SharedVariables.instance.getSnapLocationEnvironmentVariable());
+    return Future.value(SharedVariables().getSnapLocationEnvironmentVariable());
   }
 
   Future<String?> getSnapCommonEnvironmentVariable() {
-    return Future.value(
-        SharedVariables.instance.getSnapCommonEnvironmentVariable());
+    return Future.value(SharedVariables().getSnapCommonEnvironmentVariable());
   }
 
   Future<String?> getSnapUserCommonEnvironmentVariable() {
     return Future.value(
-        SharedVariables.instance.getSnapUserCommonEnvironmentVariable());
+        SharedVariables().getSnapUserCommonEnvironmentVariable());
   }
 
   String getOs() {

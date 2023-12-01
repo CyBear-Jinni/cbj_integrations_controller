@@ -55,12 +55,9 @@ import 'package:hive/hive.dart';
 
 /// Only ISavedDevicesRepo need to call functions here
 class HiveRepository extends ILocalDbRepository {
-  HiveRepository() {
-    ILocalDbRepository.instance = this;
-  }
   @override
   Future<void> initializeDb() async {
-    String? localDbPath = await SystemCommandsManager.instance.getLocalDbPath();
+    String? localDbPath = await SystemCommandsManager().getLocalDbPath();
 
     if (localDbPath[localDbPath.length - 1] == '/') {
       localDbPath = localDbPath.substring(0, localDbPath.length - 1);

@@ -78,7 +78,7 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
   /// Brightness 0-100%
   GenericDimmableLightBrightness lightBrightness;
 
-  int sendNewBrightnessEachMiliseconds = 200;
+  int sendNewBrightnessEachMilliseconds = 200;
   bool doesWaitingToSendBrightnessRequest = false;
 
   // /// Will return failure if any of the fields failed or return unit if fields

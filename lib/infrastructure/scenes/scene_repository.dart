@@ -22,10 +22,6 @@ import 'package:kt_dart/kt.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SceneCbjRepository implements ISceneCbjRepository {
-  SceneCbjRepository() {
-    ISceneCbjRepository.instance = this;
-  }
-
   final HashMap<String, SceneCbjEntity> _allScenes = HashMap();
 
   @override

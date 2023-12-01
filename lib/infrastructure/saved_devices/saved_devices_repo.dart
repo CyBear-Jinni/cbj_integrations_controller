@@ -1,20 +1,20 @@
 import 'dart:collection';
 
+import 'package:cbj_integrations_controller/domain/app_communication/i_app_communication_repository.dart';
 import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
+import 'package:cbj_integrations_controller/domain/remote_pipes/remote_pipes_entity.dart';
 import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
 import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/remote_pipes/remote_pipes_dtos.dart';
+import 'package:cbj_integrations_controller/injection.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 
 class SavedDevicesRepo extends ISavedDevicesRepo {
-  SavedDevicesRepo() {
-    ISavedDevicesRepo.instance = this;
-  }
-
   static final HashMap<String, DeviceEntityAbstract> _allDevices =
       HashMap<String, DeviceEntityAbstract>();
 
@@ -69,9 +69,6 @@ class SavedDevicesRepo extends ISavedDevicesRepo {
 
     ISavedRoomsRepo.instance.addDeviceToRoomDiscoveredIfNotExist(deviceEntity);
 
-    return deviceEntity;
-
-    // TODO: Fix after new cbj_integrations_controller
     // ConnectorStreamToMqtt.toMqttController.sink.add(
     //   MapEntry<String, DeviceEntityAbstract>(
     //     entityId,
@@ -84,23 +81,23 @@ class SavedDevicesRepo extends ISavedDevicesRepo {
     //     allRooms[discoveredRoomId]!,
     //   ),
     // );
+    return deviceEntity;
   }
 
-  // TODO: Fix after new cbj_integrations_controller
-  // @override
-  // Future<Either<LocalDbFailures, Unit>> saveAndActivateRemotePipesDomainToDb({
-  //   required RemotePipesEntity remotePipes,
-  // }) async {
-  //   final RemotePipesDtos remotePipesDtos = remotePipes.toInfrastructure();
-  //
-  //   final String rpDomainName = remotePipesDtos.domainName;
-  //
-  //   getItCbj<IAppCommunicationRepository>()
-  //       .startRemotePipesConnection(rpDomainName);
-  //
-  //   return ILocalDbRepository.instance
-  //       .saveRemotePipes(remotePipesDomainName: rpDomainName);
-  // }
+  @override
+  Future<Either<LocalDbFailures, Unit>> saveAndActivateRemotePipesDomainToDb({
+    required RemotePipesEntity remotePipes,
+  }) async {
+    final RemotePipesDtos remotePipesDtos = remotePipes.toInfrastructure();
+
+    final String rpDomainName = remotePipesDtos.domainName;
+
+    getItCbj<IAppCommunicationRepository>()
+        .startRemotePipesConnection(rpDomainName);
+
+    return ILocalDbRepository.instance
+        .saveRemotePipes(remotePipesDomainName: rpDomainName);
+  }
 
   @override
   Future<Either<LocalDbFailures, Unit>>

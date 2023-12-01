@@ -14,6 +14,7 @@ import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pb.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/hub_client/hub_client.dart';
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_converter.dart';
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -22,10 +23,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/src/subjects/behavior_subject.dart';
 
 class RoutineCbjRepository implements IRoutineCbjRepository {
-  RoutineCbjRepository() {
-    IRoutineCbjRepository.instance = this;
-  }
-
   final Map<String, RoutineCbjEntity> _allRoutines = {};
 
   @override
@@ -182,8 +179,7 @@ class RoutineCbjRepository implements IRoutineCbjRepository {
       sendingType: SendingType.routineType,
     );
 
-    // TODO: Fix after new cbj_integrations_controller
-    // AppRequestsToHub.appRequestsToHubStreamController.add(clientStatusRequests);
+    AppRequestsToHub.appRequestsToHubStreamController.add(clientStatusRequests);
 
     return right(routineCbjEntity);
   }

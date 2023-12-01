@@ -7,7 +7,7 @@ import 'package:cbj_integrations_controller/utils.dart';
 
 class CommonBashCommandsD implements SystemCommandsBaseClassD {
   Future<void> asyncConstractor() async {
-    SystemCommandsManager.instance;
+    SystemCommandsManager();
   }
 
   @override
@@ -126,7 +126,7 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
     String localDbFolderPath;
 
     final String? snapCommonEnvironmentVariable =
-        SharedVariables.instance.getSnapCommonEnvironmentVariable();
+        SharedVariables().getSnapCommonEnvironmentVariable();
     if (snapCommonEnvironmentVariable == null) {
       localDbFolderPath = '/home/${await currentUserName}/';
     } else {
@@ -139,27 +139,12 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
   @override
   Future<String> getProjectFilesLocation() async {
     final String? snapLocation =
-        SharedVariables.instance.getSnapLocationEnvironmentVariable();
+        SharedVariables().getSnapLocationEnvironmentVariable();
     if (snapLocation == null) {
       return Directory.current.path;
     }
 
     return snapLocation;
-  }
-
-  @override
-  Future<String?> getIpFromMdnsName(String mdnsName) async {
-    try {
-      final String fileContent =
-          await Process.run('avahi-resolve-host-name', <String>[mdnsName])
-              .then((ProcessResult result) {
-        return result.stdout.toString();
-      });
-      return fileContent.substring(fileContent.indexOf('\t') + 1).trim();
-    } catch (e) {
-      logger.w("Can't get device IP from mdns $mdnsName\n$e");
-    }
-    return null;
   }
 
   @override

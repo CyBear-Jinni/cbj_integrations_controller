@@ -15,8 +15,6 @@ abstract class SystemCommandsBaseClassD {
 
   Future<String> getProjectFilesLocation();
 
-  Future<String?> getIpFromMdnsName(String mdnsName);
-
   Future<String?> suspendComputer();
 
   Future<String?> shutdownComputer();
