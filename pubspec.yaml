@@ -1,6 +1,6 @@
 name: cbj_integrations_controller
 description: A sample command-line application.
-version: 1.0.6
+version: 1.0.7
 # repository: https://github.com/CyBear-Jinni/cbj_integrations_controller
 
 environment:
