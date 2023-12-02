@@ -1,25 +1,25 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_led/tasmota_mqtt_led_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
-class TasmotaMqttConnectorConjector
-    implements AbstractCompanyConnectorConjector {
-  factory TasmotaMqttConnectorConjector() {
+class TasmotaMqttConnectorConjecture
+    implements AbstractCompanyConnectorConjecture {
+  factory TasmotaMqttConnectorConjecture() {
     return _instance;
   }
 
-  TasmotaMqttConnectorConjector._singletonContractor();
+  TasmotaMqttConnectorConjecture._singletonContractor();
 
-  static final TasmotaMqttConnectorConjector _instance =
-      TasmotaMqttConnectorConjector._singletonContractor();
+  static final TasmotaMqttConnectorConjecture _instance =
+      TasmotaMqttConnectorConjecture._singletonContractor();
 
   // Future<void> addNewDeviceByHostInfo({
   //   required ActiveHost activeHost,
@@ -75,7 +75,7 @@ class TasmotaMqttConnectorConjector
       }
 
       final DeviceEntityAbstract? addDevice =
-          TasmotaMqttHelpers.addDiscoverdDevice(
+          TasmotaMqttHelpers.addDiscoveredDevice(
         deviceChangeFromMqtt:
             MapEntry(messageTopic, mqttPublishMessage[0].payload),
         uniqueDeviceId: tempCoreUniqueId,
@@ -86,7 +86,7 @@ class TasmotaMqttConnectorConjector
       }
 
       final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjector.addDiscoverdDeviceToHub(addDevice);
+          CompaniesConnectorConjecture().addDiscoveredDeviceToHub(addDevice);
 
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
           MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);

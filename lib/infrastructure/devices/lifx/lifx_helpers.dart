@@ -6,7 +6,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:lifx_http_api/lifx_http_api.dart';
 
 class LifxHelpers {
-  static DeviceEntityAbstract? addDiscoverdDevice({
+  static DeviceEntityAbstract? addDiscoveredDevice({
     required LIFXBulb lifxDevice,
     required CoreUniqueId? uniqueDeviceId,
   }) {

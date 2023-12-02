@@ -14,7 +14,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/utils.dart';
 
 class TuyaSmartHelpers {
-  static DeviceEntityAbstract? addDiscoverdDevice({
+  static DeviceEntityAbstract? addDiscoveredDevice({
     required TuyaDeviceAbstract tuyaSmartDevice,
     required CloudTuya cloudTuyaOrSmartLifeOrJinvooSmart,
     required CoreUniqueId? uniqueDeviceId,

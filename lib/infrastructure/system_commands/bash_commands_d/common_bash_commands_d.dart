@@ -6,7 +6,7 @@ import 'package:cbj_integrations_controller/infrastructure/system_commands/syste
 import 'package:cbj_integrations_controller/utils.dart';
 
 class CommonBashCommandsD implements SystemCommandsBaseClassD {
-  Future<void> asyncConstractor() async {
+  Future<void> asyncConstructor() async {
     SystemCommandsManager();
   }
 

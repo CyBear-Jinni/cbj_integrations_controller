@@ -2,24 +2,24 @@ import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_switch/ewelink_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
 import 'package:network_tools/network_tools.dart';
 
-class EwelinkConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory EwelinkConnectorConjector() {
+class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
+  factory EwelinkConnectorConjecture() {
     return _instance;
   }
 
-  EwelinkConnectorConjector._singletonContractor();
+  EwelinkConnectorConjecture._singletonContractor();
 
-  static final EwelinkConnectorConjector _instance =
-      EwelinkConnectorConjector._singletonContractor();
+  static final EwelinkConnectorConjecture _instance =
+      EwelinkConnectorConjecture._singletonContractor();
 
   static const List<String> mdnsTypes = ['_ewelink._tcp'];
 
@@ -85,7 +85,7 @@ class EwelinkConnectorConjector implements AbstractCompanyConnectorConjector {
           await ewelink!.getDevice(deviceId: ewelinkDevice.deviceid);
 
       final List<DeviceEntityAbstract> entityList =
-          EwelinkHelpers.addDiscoverdDevice(ewelinkDeviceWithTag);
+          EwelinkHelpers.addDiscoveredDevice(ewelinkDeviceWithTag);
 
       for (final DeviceEntityAbstract deviceEntityAbstract in entityList) {
         if (companyDevices[
@@ -95,7 +95,7 @@ class EwelinkConnectorConjector implements AbstractCompanyConnectorConjector {
         }
 
         final DeviceEntityAbstract deviceToAdd =
-            CompaniesConnectorConjector.addDiscoverdDeviceToHub(
+            CompaniesConnectorConjecture().addDiscoveredDeviceToHub(
           deviceEntityAbstract,
         );
 

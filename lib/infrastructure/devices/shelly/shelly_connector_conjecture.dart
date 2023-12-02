@@ -1,25 +1,25 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_light/shelly_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_relay_switch/shelly_relay_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
-class ShellyConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory ShellyConnectorConjector() {
+class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
+  factory ShellyConnectorConjecture() {
     return _instance;
   }
 
-  ShellyConnectorConjector._singletonContractor();
+  ShellyConnectorConjecture._singletonContractor();
 
-  static final ShellyConnectorConjector _instance =
-      ShellyConnectorConjector._singletonContractor();
+  static final ShellyConnectorConjecture _instance =
+      ShellyConnectorConjecture._singletonContractor();
 
   static const List<String> mdnsTypes = ['_http._tcp'];
 
@@ -53,7 +53,7 @@ class ShellyConnectorConjector implements AbstractCompanyConnectorConjector {
     }
 
     final List<DeviceEntityAbstract> shellyDevice =
-        await ShellyHelpers.addDiscoverdDevice(
+        await ShellyHelpers.addDiscoveredDevice(
       mDnsName: mDnsName,
       ip: ip,
       port: port,
@@ -65,8 +65,8 @@ class ShellyConnectorConjector implements AbstractCompanyConnectorConjector {
     }
 
     for (final DeviceEntityAbstract entityAsDevice in shellyDevice) {
-      final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjector.addDiscoverdDeviceToHub(entityAsDevice);
+      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
+          .addDiscoveredDeviceToHub(entityAsDevice);
 
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
           MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);

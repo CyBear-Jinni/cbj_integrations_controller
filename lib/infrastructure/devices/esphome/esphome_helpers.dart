@@ -1,5 +1,5 @@
 import 'package:cbj_integrations_controller/domain/core/value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_light/esphome_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_switch/esphome_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
@@ -22,7 +22,7 @@ class EspHomeHelpers {
       /// Try to find entity that already got added that contains the same
       /// mDNS (multiple entities can exist on the device)
       for (final DeviceEntityAbstract deviceE
-          in EspHomeConnectorConjector().getAllCompanyDevices.values) {
+          in EspHomeConnectorConjecture().getAllCompanyDevices.values) {
         if (deviceE.deviceMdns.getOrCrash() == mDnsName) {
           return deviceE.deviceCbjUniqueId.getOrCrash();
         }
@@ -73,7 +73,7 @@ class EspHomeHelpers {
     final List<EspHomeDeviceEntityObject> tempAllEntities = [];
 
     for (final EspHomeDeviceEntityObject entity in allEntities) {
-      if (!EspHomeConnectorConjector()
+      if (!EspHomeConnectorConjecture()
           .getAllCompanyDevices
           .containsKey(entity.config['uniqueId'])) {
         tempAllEntities.add(entity);
@@ -82,7 +82,7 @@ class EspHomeHelpers {
     return tempAllEntities;
   }
 
-  static Future<List<DeviceEntityAbstract>> addDiscoverdEntities({
+  static Future<List<DeviceEntityAbstract>> addDiscoveredEntities({
     required String address,
     required String mDnsName,
     required String devicePassword,

@@ -29,7 +29,7 @@ abstract class IMqttServerRepository {
   Future<MqttServerClient> connect();
 
   /// Make sure that mqtt is connected state before continuing
-  Future<void> asyncConstractor();
+  Future<void> asyncConstructor();
 
   /// Stream all subscription changes
   Stream<List<MqttReceivedMessage<MqttMessage?>>> streamOfAllSubscriptions();

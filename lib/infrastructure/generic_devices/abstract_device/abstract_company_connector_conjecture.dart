@@ -1,6 +1,6 @@
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 
-abstract class AbstractCompanyConnectorConjector {
+abstract class AbstractCompanyConnectorConjecture {
   /// Stores all devices for the each vendor, devices will be stored as the
   /// vendor implementation and not as generic devices
   ///

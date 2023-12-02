@@ -7,7 +7,7 @@ import 'package:cbj_integrations_controller/domain/remote_pipes/remote_pipes_ent
 import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
 import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/remote_pipes/remote_pipes_dtos.dart';
 import 'package:cbj_integrations_controller/injection.dart';
@@ -104,7 +104,7 @@ class SavedDevicesRepo extends ISavedDevicesRepo {
       saveAndActivateVendorLoginCredentialsDomainToDb({
     required LoginEntityAbstract loginEntity,
   }) async {
-    CompaniesConnectorConjector.setVendorLoginCredentials(loginEntity);
+    CompaniesConnectorConjecture().setVendorLoginCredentials(loginEntity);
 
     return ILocalDbRepository.instance
         .saveVendorLoginCredentials(loginEntityAbstract: loginEntity);

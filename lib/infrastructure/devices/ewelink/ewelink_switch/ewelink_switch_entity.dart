@@ -1,4 +1,4 @@
-import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -126,7 +126,7 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
   Future<Either<CoreFailure, Unit>> turnOnSwitch() async {
     switchState = GenericSwitchSwitchState(EntityActions.on.toString());
     try {
-      await EwelinkConnectorConjector().ewelink?.setDevicePowerState(
+      await EwelinkConnectorConjecture().ewelink?.setDevicePowerState(
             deviceId: deviceUniqueId.getOrCrash(),
             state: 'on',
             // TODO: Bug in api, channel 1 get changed no matter the input
@@ -143,7 +143,7 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
   Future<Either<CoreFailure, Unit>> turnOffSwitch() async {
     switchState = GenericSwitchSwitchState(EntityActions.off.toString());
     try {
-      await EwelinkConnectorConjector().ewelink?.setDevicePowerState(
+      await EwelinkConnectorConjecture().ewelink?.setDevicePowerState(
             deviceId: deviceUniqueId.getOrCrash(),
             state: 'off',
             // TODO: Bug in api, channel 1 get changed no matter the input

@@ -1,22 +1,22 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_webos_tv/lg_webos_tv_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
-class LgConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory LgConnectorConjector() {
+class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
+  factory LgConnectorConjecture() {
     return _instance;
   }
 
-  LgConnectorConjector._singletonContractor();
+  LgConnectorConjecture._singletonContractor();
 
-  static final LgConnectorConjector _instance =
-      LgConnectorConjector._singletonContractor();
+  static final LgConnectorConjecture _instance =
+      LgConnectorConjecture._singletonContractor();
 
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
@@ -55,7 +55,7 @@ class LgConnectorConjector implements AbstractCompanyConnectorConjector {
       }
     }
 
-    final List<DeviceEntityAbstract> lgDevice = LgHelpers.addDiscoverdDevice(
+    final List<DeviceEntityAbstract> lgDevice = LgHelpers.addDiscoveredDevice(
       mDnsName: mDnsName,
       ip: ip,
       port: port,
@@ -67,8 +67,8 @@ class LgConnectorConjector implements AbstractCompanyConnectorConjector {
     }
 
     for (final DeviceEntityAbstract entityAsDevice in lgDevice) {
-      final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjector.addDiscoverdDeviceToHub(entityAsDevice);
+      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
+          .addDiscoveredDeviceToHub(entityAsDevice);
 
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
           MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);

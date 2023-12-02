@@ -13,7 +13,6 @@ abstract class ValueObjectScenesCbj<T> {
 
   /// Throws [UnexpectedValueError] containing the [AuthValueFailure]
   T getOrCrash() {
-    // id = identity - same as writing (right) => right
     return value.fold((f) => throw SceneCbjUnexpectedValueError(f), id);
   }
 

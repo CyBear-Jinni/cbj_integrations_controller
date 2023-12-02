@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tuya_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tuya_smart/tuya_smart_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tuya_smart/tuya_smart_jbt_a70_rgbcw_wf/tuya_smart_jbt_a70_rgbcw_wf_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tuya_smart/tuya_smart_plug/tuya_smart_switch_entity.dart';
@@ -9,7 +9,7 @@ import 'package:cbj_integrations_controller/infrastructure/devices/tuya_smart/tu
 import 'package:cbj_integrations_controller/infrastructure/devices/tuya_smart/tuya_smart_remote_api/tuya_device_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tuya_smart/tuya_smart_switch/tuya_smart_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
@@ -17,15 +17,16 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
-class TuyaSmartConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory TuyaSmartConnectorConjector() {
+class TuyaSmartConnectorConjecture
+    implements AbstractCompanyConnectorConjecture {
+  factory TuyaSmartConnectorConjecture() {
     return _instance;
   }
 
-  TuyaSmartConnectorConjector._singletonContractor();
+  TuyaSmartConnectorConjecture._singletonContractor();
 
-  static final TuyaSmartConnectorConjector _instance =
-      TuyaSmartConnectorConjector._singletonContractor();
+  static final TuyaSmartConnectorConjecture _instance =
+      TuyaSmartConnectorConjecture._singletonContractor();
 
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
@@ -111,7 +112,7 @@ class TuyaSmartConnectorConjector implements AbstractCompanyConnectorConjector {
           }
           if (!deviceExist) {
             final DeviceEntityAbstract? addDevice =
-                TuyaSmartHelpers.addDiscoverdDevice(
+                TuyaSmartHelpers.addDiscoveredDevice(
               tuyaSmartDevice: tuyaDevice,
               cloudTuyaOrSmartLifeOrJinvooSmart:
                   cloudTuyaOrSmartLifeOrJinvooSmart,
@@ -121,7 +122,8 @@ class TuyaSmartConnectorConjector implements AbstractCompanyConnectorConjector {
               continue;
             }
             final DeviceEntityAbstract deviceToAdd =
-                CompaniesConnectorConjector.addDiscoverdDeviceToHub(addDevice);
+                CompaniesConnectorConjecture()
+                    .addDiscoveredDeviceToHub(addDevice);
 
             final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
                 MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);

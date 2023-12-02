@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_runner/switcher_runner_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_smart_plug/switcher_smart_plug_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_v2/switcher_v2_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_entity.dart';
@@ -14,15 +14,16 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
-class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory SwitcherConnectorConjector() {
+class SwitcherConnectorConjecture
+    implements AbstractCompanyConnectorConjecture {
+  factory SwitcherConnectorConjecture() {
     return _instance;
   }
 
-  SwitcherConnectorConjector._singletonContractor();
+  SwitcherConnectorConjecture._singletonContractor();
 
-  static final SwitcherConnectorConjector _instance =
-      SwitcherConnectorConjector._singletonContractor();
+  static final SwitcherConnectorConjecture _instance =
+      SwitcherConnectorConjecture._singletonContractor();
 
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
@@ -55,7 +56,7 @@ class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
       }
     }
 
-    final DeviceEntityAbstract? addDevice = SwitcherHelpers.addDiscoverdDevice(
+    final DeviceEntityAbstract? addDevice = SwitcherHelpers.addDiscoveredDevice(
       switcherDevice: switcherApiObject,
       uniqueDeviceId: tempCoreUniqueId,
     );
@@ -64,7 +65,7 @@ class SwitcherConnectorConjector implements AbstractCompanyConnectorConjector {
     }
 
     final DeviceEntityAbstract deviceToAdd =
-        CompaniesConnectorConjector.addDiscoverdDeviceToHub(addDevice);
+        CompaniesConnectorConjecture().addDiscoveredDeviceToHub(addDevice);
 
     final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
         MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);

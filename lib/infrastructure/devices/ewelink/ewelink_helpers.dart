@@ -6,7 +6,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
 
 class EwelinkHelpers {
-  static List<DeviceEntityAbstract> addDiscoverdDevice(
+  static List<DeviceEntityAbstract> addDiscoveredDevice(
     EwelinkDevice ewelinkDevice,
   ) {
     final List<DeviceEntityAbstract> deviceEntityAbstractList = [];

@@ -6,7 +6,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/utils.dart';
 
 class SonoffDiyHelpers {
-  static List<DeviceEntityAbstract> addDiscoverdDevice({
+  static List<DeviceEntityAbstract> addDiscoveredDevice({
     required String mDnsName,
     required String? port,
     required String ip,

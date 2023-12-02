@@ -28,7 +28,7 @@ import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tu
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/bindings/binding_cbj_dtos.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -136,7 +136,7 @@ class HiveRepository extends ILocalDbRepository {
         vendorBoxName: tuyaVendorCredentialsBoxName,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjector.setVendorLoginCredentials(r);
+        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
 
         logger.i(
           'Tuya login credentials user name ${r.tuyaUserName.getOrCrash()} found',
@@ -163,7 +163,7 @@ class HiveRepository extends ILocalDbRepository {
         vendorBoxName: smartLifeVendorCredentialsBoxName,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjector.setVendorLoginCredentials(r);
+        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
 
         logger.i(
           'Smart Life login credentials user name ${r.tuyaUserName.getOrCrash()} found',
@@ -191,7 +191,7 @@ class HiveRepository extends ILocalDbRepository {
         vendorBoxName: jinvooSmartVendorCredentialsBoxName,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjector.setVendorLoginCredentials(r);
+        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
 
         logger.i(
           'Jinvoo Smart login credentials user name ${r.tuyaUserName.getOrCrash()} found',
@@ -217,7 +217,7 @@ class HiveRepository extends ILocalDbRepository {
         lifxVendorCredentialsModelFromDb: lifxVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjector.setVendorLoginCredentials(r);
+        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
 
         logger.i(
           'Lifx login credentials got found in DB',
@@ -245,7 +245,7 @@ class HiveRepository extends ILocalDbRepository {
             espHomeVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjector.setVendorLoginCredentials(r);
+        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
 
         logger.i(
           'ESPHome device password got found in DB',
@@ -274,7 +274,7 @@ class HiveRepository extends ILocalDbRepository {
             xiaomiMiVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjector.setVendorLoginCredentials(r);
+        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
 
         logger.i(
           'Xiaomi Mi device password got found in DB',
@@ -303,7 +303,7 @@ class HiveRepository extends ILocalDbRepository {
             ewelinkVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjector.setVendorLoginCredentials(r);
+        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
 
         logger.i(
           'EweLink account email and password got found in DB',

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
 import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
 import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/device_pin_manager.dart';
@@ -18,9 +18,9 @@ Future initializeIntegrationsController({
 
   try {
     if (projectRootDirectoryPath != null) {
-      await SharedVariables().asyncConstractor(projectRootDirectoryPath);
+      await SharedVariables().asyncConstructor(projectRootDirectoryPath);
     } else {
-      await SharedVariables().asyncConstractor(Directory.current.path);
+      await SharedVariables().asyncConstructor(Directory.current.path);
     }
   } catch (error) {
     logger.e('Path/argument 1 is not specified\n$error');
@@ -40,16 +40,16 @@ Future setupIntegrationsController() async {
   final Map<String, DeviceEntityAbstract> allDevices =
       await ISavedDevicesRepo.instance.getAllDevices();
 
-  CompaniesConnectorConjector.addAllDevicesToItsRepos(allDevices);
+  CompaniesConnectorConjecture().addAllDevicesToItsRepos(allDevices);
 
-  CompaniesConnectorConjector.searchAllMdnsDevicesAndSetThemUp();
+  CompaniesConnectorConjecture().searchAllMdnsDevicesAndSetThemUp();
 
-  CompaniesConnectorConjector.searchPingableDevicesAndSetThemUpByHostName();
+  CompaniesConnectorConjecture().searchPingableDevicesAndSetThemUpByHostName();
 
-  CompaniesConnectorConjector.searchDevicesByBindingIntoSockets();
+  CompaniesConnectorConjecture().searchDevicesByBindingIntoSockets();
 
-  CompaniesConnectorConjector.searchDevicesByMqttPath();
+  CompaniesConnectorConjecture().searchDevicesByMqttPath();
 
-  CompaniesConnectorConjector.notImplementedDevicesSearch();
-  await IMqttServerRepository.instance.asyncConstractor();
+  CompaniesConnectorConjecture().notImplementedDevicesSearch();
+  await IMqttServerRepository.instance.asyncConstructor();
 }

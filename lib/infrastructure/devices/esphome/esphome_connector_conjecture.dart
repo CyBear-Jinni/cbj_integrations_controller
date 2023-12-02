@@ -2,25 +2,25 @@ import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_light/esphome_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_switch/esphome_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
-class EspHomeConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory EspHomeConnectorConjector() {
+class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
+  factory EspHomeConnectorConjecture() {
     return _instance;
   }
 
-  EspHomeConnectorConjector._singletonContractor();
+  EspHomeConnectorConjecture._singletonContractor();
 
-  static final EspHomeConnectorConjector _instance =
-      EspHomeConnectorConjector._singletonContractor();
+  static final EspHomeConnectorConjecture _instance =
+      EspHomeConnectorConjecture._singletonContractor();
 
   static const List<String> mdnsTypes = ['_esphomelib._tcp'];
 
@@ -56,7 +56,7 @@ class EspHomeConnectorConjector implements AbstractCompanyConnectorConjector {
     }
 
     final List<DeviceEntityAbstract> espDevice =
-        await EspHomeHelpers.addDiscoverdEntities(
+        await EspHomeHelpers.addDiscoveredEntities(
       mDnsName: mDnsName,
       port: port,
       address: address,
@@ -64,8 +64,8 @@ class EspHomeConnectorConjector implements AbstractCompanyConnectorConjector {
     );
 
     for (final DeviceEntityAbstract entityAsDevice in espDevice) {
-      final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjector.addDiscoverdDeviceToHub(entityAsDevice);
+      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
+          .addDiscoveredDeviceToHub(entityAsDevice);
 
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
           MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);

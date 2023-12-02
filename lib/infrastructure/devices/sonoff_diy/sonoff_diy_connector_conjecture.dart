@@ -1,23 +1,24 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff__diy_wall_switch/sonoff_diy_mod_wall_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff_diy_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
-class SonoffDiyConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory SonoffDiyConnectorConjector() {
+class SonoffDiyConnectorConjecture
+    implements AbstractCompanyConnectorConjecture {
+  factory SonoffDiyConnectorConjecture() {
     return _instance;
   }
 
-  SonoffDiyConnectorConjector._singletonContractor();
+  SonoffDiyConnectorConjecture._singletonContractor();
 
-  static final SonoffDiyConnectorConjector _instance =
-      SonoffDiyConnectorConjector._singletonContractor();
+  static final SonoffDiyConnectorConjecture _instance =
+      SonoffDiyConnectorConjecture._singletonContractor();
 
   static const List<String> mdnsTypes = ['_ewelink._tcp'];
   @override
@@ -49,7 +50,7 @@ class SonoffDiyConnectorConjector implements AbstractCompanyConnectorConjector {
     }
 
     final List<DeviceEntityAbstract> sonoffDevices =
-        SonoffDiyHelpers.addDiscoverdDevice(
+        SonoffDiyHelpers.addDiscoveredDevice(
       mDnsName: mDnsName,
       ip: ip,
       port: port,
@@ -61,8 +62,8 @@ class SonoffDiyConnectorConjector implements AbstractCompanyConnectorConjector {
     }
 
     for (final DeviceEntityAbstract entityAsDevice in sonoffDevices) {
-      final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjector.addDiscoverdDeviceToHub(entityAsDevice);
+      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
+          .addDiscoveredDeviceToHub(entityAsDevice);
 
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
           MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
