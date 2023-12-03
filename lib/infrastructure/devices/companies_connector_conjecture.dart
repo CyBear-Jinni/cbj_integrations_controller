@@ -49,24 +49,20 @@ class CompaniesConnectorConjecture {
   void updateAllDevicesReposWithDeviceChanges(
     Stream<dynamic> allDevices,
   ) {
-    allDevices.listen((deviceEntityAbstract) {
-      if (deviceEntityAbstract is DeviceEntityAbstract) {
-        final String deviceVendor =
-            deviceEntityAbstract.deviceVendor.getOrCrash();
+    allDevices.listen((entity) {
+      if (entity is DeviceEntityAbstract) {
+        final String deviceVendor = entity.deviceVendor.getOrCrash();
 
         final AbstractCompanyConnectorConjecture? companyConnectorConjecture =
             vendorStringToCompanyConnectorConjecture(deviceVendor);
 
         if (companyConnectorConjecture != null) {
-          companyConnectorConjecture
-              .manageHubRequestsForDevice(deviceEntityAbstract);
+          companyConnectorConjecture.manageHubRequestsForDevice(entity);
         } else {
           logger.w(
             'Cannot send device changes to its repo, company not supported $deviceVendor',
           );
         }
-      } else {
-        logger.w('Connector conjecture got other type');
       }
     });
   }

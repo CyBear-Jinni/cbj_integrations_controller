@@ -38,7 +38,7 @@ Future setupIntegrationsController() async {
   // Return all saved devices
 
   final Map<String, DeviceEntityAbstract> allDevices =
-      await ISavedDevicesRepo.instance.getAllDevices();
+      await ISavedDevicesRepo.instance.getAllDevicesAfterInitialize();
 
   CompaniesConnectorConjecture().addAllDevicesToItsRepos(allDevices);
 

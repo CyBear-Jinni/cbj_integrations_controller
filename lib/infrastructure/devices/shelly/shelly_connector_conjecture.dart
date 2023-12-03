@@ -38,7 +38,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
       if ((device is ShellyColorLightEntity ||
               device is ShellyRelaySwitchEntity) &&
           mDnsName == device.entityUniqueId.getOrCrash()) {
-        return [];
+        return List<DeviceEntityAbstract>.empty();
       } else if ((device is GenericRgbwLightDE || device is GenericSwitchDE) &&
           mDnsName == device.entityUniqueId.getOrCrash()) {
         /// Device exist as generic and needs to get converted to non generic type for this vendor
@@ -61,7 +61,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
     );
 
     if (shellyDevice.isEmpty) {
-      return [];
+      return List<DeviceEntityAbstract>.empty();
     }
 
     for (final DeviceEntityAbstract entityAsDevice in shellyDevice) {

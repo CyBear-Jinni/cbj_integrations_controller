@@ -1,60 +1,7 @@
-import 'dart:convert';
-
-import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.dart';
-import 'package:cbj_integrations_controller/domain/binding/i_binding_cbj_repository.dart';
-import 'package:cbj_integrations_controller/domain/binding/value_objects_routine_cbj.dart';
-import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
-import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
-import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
-import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
-import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
-import 'package:cbj_integrations_controller/domain/routine/i_routine_cbj_repository.dart';
-import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
-import 'package:cbj_integrations_controller/domain/routine/value_objects_routine_cbj.dart';
-import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
-import 'package:cbj_integrations_controller/domain/scene/i_scene_cbj_repository.dart';
-import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
-import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
-import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
-import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_value_objects.dart';
-import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
-import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_value_objects.dart';
-import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
-import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_value_objects.dart';
-import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
-import 'package:cbj_integrations_controller/domain/vendors/login_abstract/value_login_objects_core.dart';
-import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tuya_login_entity.dart';
-import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tuya_login_value_objects.dart';
-import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
-import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/bindings/binding_cbj_dtos.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
-import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/bindings_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/devices_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/esphome_vendor_credentials_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/ewelink_vendor_credentials_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/hub_entity_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/lifx_vendor_credentials_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/remote_pipes_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/rooms_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/routines_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/scenes_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/tuya_vendor_credentials_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/xiaomi_mi_vendor_credentials_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/room/room_entity_dtos.dart';
-import 'package:cbj_integrations_controller/infrastructure/routines/routine_cbj_dtos.dart';
-import 'package:cbj_integrations_controller/infrastructure/scenes/scene_cbj_dtos.dart';
-import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
-import 'package:cbj_integrations_controller/utils.dart';
-import 'package:dartz/dartz.dart';
-import 'package:hive/hive.dart';
+part of 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
 
 /// Only ISavedDevicesRepo need to call functions here
-class HiveRepository extends ILocalDbRepository {
+class _HiveRepository extends ILocalDbRepository {
   @override
   Future<void> initializeDb() async {
     String? localDbPath = await SystemCommandsManager().getLocalDbPath();

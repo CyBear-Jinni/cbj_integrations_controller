@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 // ignore: implementation_imports
 import 'package:mqtt_client/src/observable/src/records.dart';
+import 'package:rxdart/rxdart.dart';
 
 abstract class IMqttServerRepository {
   static late IMqttServerRepository instance;
@@ -89,4 +92,20 @@ abstract class IMqttServerRepository {
   Future<void> postSmartDeviceToAppMqtt({
     required DeviceEntityAbstract entityFromTheHub,
   });
+}
+
+/// Connect all streams from the internet devices into one stream that will be
+/// send to mqtt broker to update devices states
+class ConnectorStreamToMqtt {
+  static StreamController<MapEntry<String, dynamic>> toMqttController =
+      StreamController();
+
+  static Stream<MapEntry<String, dynamic>> get toMqttStream =>
+      toMqttController.stream.asBroadcastStream();
+}
+
+/// Connect all streams from the mqtt devices changes into one stream that will
+/// be sent to whoever need to be notify of changes
+class ConnectorDevicesStreamFromMqtt {
+  static BehaviorSubject<dynamic> fromMqttStream = BehaviorSubject<dynamic>();
 }

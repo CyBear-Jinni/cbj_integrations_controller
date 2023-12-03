@@ -31,20 +31,6 @@ class EspHomeHelpers {
     final String tempEspHomeNodeDeviceId =
         espHomeNodeDeviceId ?? UniqueId().getOrCrash();
 
-    // final EspHomeNodeRedApi espHomeNodeRedApi = EspHomeNodeRedApi(
-    //   repository: getIt<INodeRedRepository>(),
-    //   nodeRedApiBaseTopic:
-    //       IMqttServerRepository.instance.getNodeRedApiBaseTopic(),
-    //   nodeRedDevicesTopic:
-    //       IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName(),
-    //   nodeRedMqttBrokerNodeName: 'Cbj NodeRed plugs Api Broker',
-    // );
-    //
-    // await espHomeNodeRedApi.setNewGlobalEspHomeDeviceNode(
-    //   deviceMdnsName: mDnsName,
-    //   password: devicePassword,
-    //   espHomeDeviceId: tempEspHomeNodeDeviceId,
-    // );
     await Future.delayed(const Duration(milliseconds: 800));
 
     return tempEspHomeNodeDeviceId;

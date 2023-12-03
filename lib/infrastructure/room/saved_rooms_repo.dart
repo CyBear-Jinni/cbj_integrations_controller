@@ -1,25 +1,7 @@
-import 'dart:collection';
-import 'dart:math';
+part of 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
 
-import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.dart';
-import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
-import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
-import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
-import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
-import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
-import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
-import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
-import 'package:cbj_integrations_controller/domain/scene/i_scene_cbj_repository.dart';
-import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
-import 'package:cbj_integrations_controller/domain/scene/scene_cbj_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/utils.dart';
-import 'package:dartz/dartz.dart';
-
-class SavedRoomsRepo extends ISavedRoomsRepo {
-  static final HashMap<String, RoomEntity> _allRooms =
-      HashMap<String, RoomEntity>();
+class _SavedRoomsRepo extends ISavedRoomsRepo {
+  final HashMap<String, RoomEntity> _allRooms = HashMap<String, RoomEntity>();
 
   @override
   Future<void> setUpAllFromDb() async {
@@ -42,7 +24,7 @@ class SavedRoomsRepo extends ISavedRoomsRepo {
   }
 
   @override
-  Future<Map<String, RoomEntity>> getAllRooms() async {
+  Map<String, RoomEntity> getAllRooms() {
     return _allRooms;
   }
 
@@ -323,7 +305,7 @@ class SavedRoomsRepo extends ISavedRoomsRepo {
         final AreaPurposesTypes areaPurposeType =
             AreaPurposesTypes.values[int.parse(roomTypeNumber)];
 
-        final String areaNameEdited = areaNameCapsWithSpces(areaPurposeType);
+        final String areaNameEdited = areaNameCapsWithSpaces(areaPurposeType);
 
         final Either<SceneCbjFailure, SceneCbjEntity> sceneOrFailure =
             await ISceneCbjRepository.instance
@@ -403,7 +385,7 @@ class SavedRoomsRepo extends ISavedRoomsRepo {
     return tempList;
   }
 
-  static String areaNameCapsWithSpces(AreaPurposesTypes areaPurposeType) {
+  String areaNameCapsWithSpaces(AreaPurposesTypes areaPurposeType) {
     final String tempAreaName =
         areaPurposeType.name.substring(1, areaPurposeType.name.length);
     String areaNameEdited = areaPurposeType.name.substring(0, 1).toUpperCase();
@@ -417,7 +399,8 @@ class SavedRoomsRepo extends ISavedRoomsRepo {
     return areaNameEdited;
   }
 
-  static AreaPurposesTypes? getAreaTypeFromNameCapsWithSpcaes(
+  @override
+  AreaPurposesTypes? getAreaTypeFromNameCapsWithSpaces(
     String areaNameCapsAndSpaces,
   ) {
     String tempString = areaNameCapsAndSpaces.replaceAll(' ', '');
@@ -430,7 +413,7 @@ class SavedRoomsRepo extends ISavedRoomsRepo {
     return areaPTemp;
   }
 
-  static String pickRoomImage() {
+  String pickRoomImage() {
     final List<String> roomImages = [
       'https://live.staticflickr.com/5220/5486044345_f67abff3e9_h.jpg',
       'https://live.staticflickr.com/7850/31597166847_486557e555_h.jpg',
@@ -450,7 +433,7 @@ class SavedRoomsRepo extends ISavedRoomsRepo {
   }
 
   /// Create discovered room if not exist and returns it.
-  static RoomEntity createRoomDiscoverIfNotExist() {
+  RoomEntity createRoomDiscoverIfNotExist() {
     final String discoveredRoomId =
         RoomUniqueId.discoveredRoomId().getOrCrash();
 

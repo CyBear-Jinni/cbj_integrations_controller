@@ -24,7 +24,16 @@ import 'package:cbj_integrations_controller/infrastructure/vendors/vendor_helper
 import 'package:cbj_integrations_controller/utils.dart';
 
 class DeviceHelperMethods {
-  static RequestsAndStatusFromHub dynamicToRequestsAndStatusFromHub(
+  factory DeviceHelperMethods() {
+    return _instance;
+  }
+
+  DeviceHelperMethods._singletonContractor();
+
+  static final DeviceHelperMethods _instance =
+      DeviceHelperMethods._singletonContractor();
+
+  RequestsAndStatusFromHub dynamicToRequestsAndStatusFromHub(
       dynamic entityDto) {
     if (entityDto is DeviceEntityDtoAbstract) {
       return RequestsAndStatusFromHub(
@@ -55,12 +64,10 @@ class DeviceHelperMethods {
     }
   }
 
-  static dynamic clientStatusRequestsToItsDtosType(
+  dynamic clientStatusRequestsToItsDtoType(
       ClientStatusRequests clientStatusRequests) {
-    clientStatusRequests.sendingType;
-
     if (clientStatusRequests.sendingType == SendingType.entityType) {
-      return DeviceHelper.convertJsonStringToDomain(
+      return DeviceHelper.convertJsonStringToDto(
           clientStatusRequests.allRemoteCommands);
     } else if (clientStatusRequests.sendingType == SendingType.roomType) {
       return RoomEntityDtos.fromJson(
@@ -69,7 +76,7 @@ class DeviceHelperMethods {
       );
     } else if (clientStatusRequests.sendingType ==
         SendingType.vendorLoginType) {
-      return VendorHelper.convertJsonStringToDomain(
+      return VendorHelper.convertJsonStringToDto(
           clientStatusRequests.allRemoteCommands);
     } else if (clientStatusRequests.sendingType ==
         SendingType.remotePipesInformation) {
@@ -97,15 +104,14 @@ class DeviceHelperMethods {
     return null;
   }
 
-  static Future handleClientStatusRequests(
+  Future handleClientStatusRequests(
       ClientStatusRequests clientStatusRequests) async {
     logger.i('Got From App');
 
-    dynamic dtosEntity =
-        clientStatusRequestsToItsDtosType(clientStatusRequests);
+    dynamic dtoEntity = clientStatusRequestsToItsDtoType(clientStatusRequests);
 
-    if (dtosEntity is DeviceEntityDtoAbstract) {
-      DeviceEntityAbstract deviceEntityAbstract = dtosEntity.toDomain();
+    if (dtoEntity is DeviceEntityDtoAbstract) {
+      DeviceEntityAbstract deviceEntityAbstract = dtoEntity.toDomain();
       deviceEntityAbstract.entityStateGRPC =
           EntityState(EntityStateGRPC.waitingInComp.toString());
 
@@ -113,19 +119,19 @@ class DeviceHelperMethods {
         entityFromTheApp: deviceEntityAbstract,
         gotFromApp: true,
       );
-    } else if (dtosEntity is RoomEntityDtos) {
+    } else if (dtoEntity is RoomEntityDtos) {
       ISavedRoomsRepo.instance.saveAndActiveRoomToDb(
-        roomEntity: dtosEntity.toDomain(),
+        roomEntity: dtoEntity.toDomain(),
       );
 
       IMqttServerRepository.instance.postToHubMqtt(
-        entityFromTheApp: dtosEntity,
+        entityFromTheApp: dtoEntity,
         gotFromApp: true,
       );
-    } else if (dtosEntity is LoginEntityDtoAbstract) {
+    } else if (dtoEntity is LoginEntityDtoAbstract) {
       ISavedDevicesRepo.instance
           .saveAndActivateVendorLoginCredentialsDomainToDb(
-        loginEntity: dtosEntity.toDomain(),
+        loginEntity: dtoEntity.toDomain(),
       );
     } else if (clientStatusRequests.sendingType ==
         SendingType.firstConnection) {
@@ -133,40 +139,39 @@ class DeviceHelperMethods {
       IAppCommunicationRepository.instance
           .sendAllDevicesFromHubRequestsStream();
       IAppCommunicationRepository.instance.sendAllScenesFromHubRequestsStream();
-    } else if (dtosEntity is RemotePipesDtos) {
+    } else if (dtoEntity is RemotePipesDtos) {
       ISavedDevicesRepo.instance.saveAndActivateRemotePipesDomainToDb(
-          remotePipes: dtosEntity.toDomain());
-    } else if (dtosEntity is SceneCbjDtos) {
-      final SceneCbjEntity sceneCbj = dtosEntity.toDomain();
+          remotePipes: dtoEntity.toDomain());
+    } else if (dtoEntity is SceneCbjDtos) {
+      final SceneCbjEntity sceneCbj = dtoEntity.toDomain();
 
       final String sceneStateGrpcTemp = sceneCbj.entityStateGRPC.getOrCrash()!;
 
-      sceneCbj.copyWith(
+      SceneCbjEntity sceneCopy = sceneCbj.copyWith(
         entityStateGRPC: SceneCbjDeviceStateGRPC(
           EntityStateGRPC.waitingInComp.toString(),
         ),
       );
 
       if (sceneStateGrpcTemp == EntityStateGRPC.addingNewScene.toString()) {
-        ISceneCbjRepository.instance.addNewSceneAndSaveInDb(sceneCbj);
+        ISceneCbjRepository.instance.addNewSceneAndSaveInDb(sceneCopy);
       } else {
-        ISceneCbjRepository.instance.activateScene(sceneCbj);
+        ISceneCbjRepository.instance.activateScene(sceneCopy);
       }
-    } else if (dtosEntity is RoutineCbjDtos) {
-      final RoutineCbjEntity routineCbj = dtosEntity.toDomain();
+    } else if (dtoEntity is RoutineCbjDtos) {
+      final RoutineCbjEntity routineCbj = dtoEntity.toDomain();
 
       final String routineStateGrpcTemp =
           routineCbj.entityStateGRPC.getOrCrash()!;
 
-      routineCbj.copyWith(
-        entityStateGRPC: RoutineCbjDeviceStateGRPC(
-          EntityStateGRPC.waitingInComp.toString(),
-        ),
-      );
-
       if (routineStateGrpcTemp == EntityStateGRPC.addingNewRoutine.toString()) {
-        IRoutineCbjRepository.instance
-            .addNewRoutineAndSaveItToLocalDb(routineCbj);
+        IRoutineCbjRepository.instance.addNewRoutineAndSaveItToLocalDb(
+          routineCbj.copyWith(
+            entityStateGRPC: RoutineCbjDeviceStateGRPC(
+              EntityStateGRPC.waitingInComp.toString(),
+            ),
+          ),
+        );
       } else {
         // For a way to active it manually
         // IRoutineCbjRepository.instance.activateRoutine(routineCbj);

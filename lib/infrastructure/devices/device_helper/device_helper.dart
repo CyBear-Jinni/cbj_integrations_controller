@@ -42,6 +42,10 @@ class DeviceHelper {
 
   // Extras methods
 
+  static DeviceEntityDtoAbstract convertJsonStringToDto(String jsonString) {
+    return convertJsonToDto(convertJsonStringToJson(jsonString));
+  }
+
   static String convertDtoToJsonString(
     DeviceEntityDtoAbstract deviceEntityDto,
   ) {
@@ -49,9 +53,7 @@ class DeviceHelper {
   }
 
   static DeviceEntityAbstract convertJsonStringToDomain(String jsonString) {
-    return convertDtoToDomain(
-      convertJsonToDto(convertJsonStringToJson(jsonString)),
-    );
+    return convertDtoToDomain(convertJsonStringToDto(jsonString));
   }
 
   static String convertDomainToJsonString(DeviceEntityAbstract deviceEntity) {

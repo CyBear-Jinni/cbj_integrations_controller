@@ -42,6 +42,10 @@ class VendorHelper {
 
   // Extras methods
 
+  static LoginEntityDtoAbstract convertJsonStringToDto(String jsonString) {
+    return convertJsonToDto(convertJsonStringToJson(jsonString));
+  }
+
   static String convertDtoToJsonString(
     LoginEntityDtoAbstract loginEntityDto,
   ) {
@@ -49,9 +53,7 @@ class VendorHelper {
   }
 
   static LoginEntityAbstract convertJsonStringToDomain(String jsonString) {
-    return convertDtoToDomain(
-      convertJsonToDto(convertJsonStringToJson(jsonString)),
-    );
+    return convertDtoToDomain(convertJsonStringToDto(jsonString));
   }
 
   static String convertDomainToJsonString(LoginEntityAbstract loginEntity) {
