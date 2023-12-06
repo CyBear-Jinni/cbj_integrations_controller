@@ -5,7 +5,9 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ILocalDbRepository.instance.getRoutinesFromDb().then((value) {
+    await ICbjIntegrationsControllerDbRepository.instance
+        .getRoutinesFromDb()
+        .then((value) {
       value.fold((l) => null, (r) async {
         for (final element in r) {
           await addNewRoutine(element);
@@ -26,7 +28,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveAndActivateRoutineToDb() async {
-    return ILocalDbRepository.instance.saveRoutines(
+    return ICbjIntegrationsControllerDbRepository.instance.saveRoutines(
       routineList: List<RoutineCbjEntity>.from(_allRoutines.values),
     );
   }

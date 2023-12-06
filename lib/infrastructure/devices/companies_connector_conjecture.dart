@@ -7,7 +7,6 @@ import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
-import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tuya_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
@@ -23,7 +22,6 @@ import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff_diy_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/tuya_smart/tuya_smart_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xiaomi_io_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_connector_conjecture.dart';
@@ -115,8 +113,6 @@ class CompaniesConnectorConjecture {
       LifxConnectorConjecture().accountLogin(loginEntity);
     } else if (loginEntity is GenericEspHomeLoginDE) {
       EspHomeConnectorConjecture().accountLogin(loginEntity);
-    } else if (loginEntity is GenericTuyaLoginDE) {
-      TuyaSmartConnectorConjecture().accountLogin(loginEntity);
     } else if (loginEntity is GenericXiaomiMiLoginDE) {
       XiaomiIoConnectorConjecture().accountLogin(loginEntity);
     } else if (loginEntity is GenericEwelinkLoginDE) {
@@ -460,8 +456,6 @@ class CompaniesConnectorConjecture {
       return YeelightConnectorConjecture();
     } else if (vendorName == VendorsAndServices.philipsHue.toString()) {
       return PhilipsHueConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.tuyaSmart.toString()) {
-      return TuyaSmartConnectorConjecture();
     } else if (vendorName == VendorsAndServices.sonoffDiy.toString()) {
       return SonoffDiyConnectorConjecture();
     } else if (vendorName == VendorsAndServices.google.toString()) {

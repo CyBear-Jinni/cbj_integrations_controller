@@ -3,7 +3,6 @@ import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/core_login_failures.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
-import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tuya_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/vendor_data.dart';
 import 'package:cbj_integrations_controller/domain/vendors/vendor_failures.dart';
 import 'package:cbj_integrations_controller/domain/vendors/vendor_value_objects.dart';
@@ -35,10 +34,6 @@ abstract class IVendorsRepository {
 
   Future<Either<CoreLoginFailure, Unit>> loginWithLifx(
     GenericLifxLoginDE login,
-  );
-
-  Future<Either<CoreLoginFailure, Unit>> loginWithTuya(
-    GenericTuyaLoginDE login,
   );
 
   Future<Either<CoreLoginFailure, Unit>> loginWithEwelink(

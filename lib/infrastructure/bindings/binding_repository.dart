@@ -5,7 +5,9 @@ class _BindingCbjRepository implements IBindingCbjRepository {
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ILocalDbRepository.instance.getBindingsFromDb().then((value) {
+    await ICbjIntegrationsControllerDbRepository.instance
+        .getBindingsFromDb()
+        .then((value) {
       value.fold((l) => null, (r) async {
         for (final element in r) {
           await addNewBinding(element);
@@ -26,7 +28,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveAndActivateBindingToDb() async {
-    return ILocalDbRepository.instance.saveBindings(
+    return ICbjIntegrationsControllerDbRepository.instance.saveBindings(
       bindingList: List<BindingCbjEntity>.from(_allBindings.values),
     );
   }

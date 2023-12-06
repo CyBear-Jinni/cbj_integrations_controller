@@ -18,7 +18,7 @@ class _RemotePipesRepository implements IRemotePipesRepository {
       AppRequestsToHub.appRequestsToHubStreamController
           .add(clientStatusRequests);
 
-      ILocalDbRepository.instance
+      ICbjIntegrationsControllerDbRepository.instance
           .saveRemotePipes(remotePipesDomainName: remotePipesDtos.domainName);
 
       return right(unit);

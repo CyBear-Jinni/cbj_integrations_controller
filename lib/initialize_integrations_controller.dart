@@ -29,7 +29,7 @@ Future initializeIntegrationsController({
   //  Setting device model and checking if configuration for this model exist
   await DevicePinListManager().setPhysicalDeviceType();
 
-  await ILocalDbRepository.instance.initializeDb();
+  await ICbjIntegrationsControllerDbRepository.instance.initializeDb();
 
   logger.t('');
 }

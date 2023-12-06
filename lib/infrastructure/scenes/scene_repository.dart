@@ -5,7 +5,9 @@ class _SceneCbjRepository implements ISceneCbjRepository {
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ILocalDbRepository.instance.getScenesFromDb().then((value) {
+    await ICbjIntegrationsControllerDbRepository.instance
+        .getScenesFromDb()
+        .then((value) {
       value.fold((l) => null, (r) {
         for (final element in r) {
           addNewScene(element);
@@ -29,7 +31,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       saveAndActivateScenesAndSmartDevicesToDb() async {
     await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
 
-    return ILocalDbRepository.instance.saveScenes(
+    return ICbjIntegrationsControllerDbRepository.instance.saveScenes(
       sceneList: List<SceneCbjEntity>.from(_allScenes.values),
     );
   }

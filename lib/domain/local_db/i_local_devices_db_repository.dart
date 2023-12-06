@@ -22,8 +22,6 @@ import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_li
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_value_objects.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/value_login_objects_core.dart';
-import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tuya_login_entity.dart';
-import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tuya_login_value_objects.dart';
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/bindings/binding_cbj_dtos.dart';
@@ -42,7 +40,6 @@ import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/rooms_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/routines_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/scenes_hive_model.dart';
-import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/tuya_vendor_credentials_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/xiaomi_mi_vendor_credentials_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/room/room_entity_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/routines/routine_cbj_dtos.dart';
@@ -55,64 +52,18 @@ import 'package:hive/hive.dart';
 part 'package:cbj_integrations_controller/infrastructure/local_db/local_db_hive_repository.dart';
 
 /// Only ISavedDevicesRepo need to call functions here
-abstract class ILocalDbRepository {
-  static ILocalDbRepository? _instance;
+abstract class ICbjIntegrationsControllerDbRepository {
+  static ICbjIntegrationsControllerDbRepository? _instance;
 
-  static ILocalDbRepository get instance {
+  static ICbjIntegrationsControllerDbRepository get instance {
     return _instance ??= _HiveRepository();
   }
-
-  /// Name of the box that stores Remote Pipes credentials
-  String remotePipesBoxName = 'remotePipesBox';
-
-  /// Name of the box that stores all the rooms
-  String roomsBoxName = 'roomsBox';
-
-  /// Name of the box that stores all the devices in form of string json
-  String devicesBoxName = 'devicesBox';
-
-  /// Name of the box that stores all the scenes in form of string json
-  String scenesBoxName = 'scenesBox';
-
-  /// Name of the box that stores all the routines in form of string json
-  String routinesBoxName = 'routinesBox';
-
-  /// Name of the box that stores all the bindings in form of string json
-  String bindingsBoxName = 'bindingsBox';
-
-  /// Name of the box that stores Tuya login credentials
-  String tuyaVendorCredentialsBoxName = 'tuyaVendorCredentialsBoxName';
-
-  /// Name of the box that stores Smart Life login credentials
-  String smartLifeVendorCredentialsBoxName =
-      'smartLifeVendorCredentialsBoxName';
-
-  /// Name of the box that stores Jinvoo Smart login credentials
-  String jinvooSmartVendorCredentialsBoxName =
-      'jinvooSmartVendorCredentialsBoxName';
-
-  /// Name of the box that stores Lifx login credentials
-  String lifxVendorCredentialsBoxName = 'lifxVendorCredentialsBoxName';
-
-  /// Name of the box that stores ESPHome device password
-  String espHomeVendorCredentialsBoxName = 'espHomeVendorCredentialsBoxName';
-
-  /// Name of the box that stores Xiaomi Mi account email ans password
-  String xiaomiMiVendorCredentialsBoxName = 'xiaomiMiVendorCredentialsBoxName';
-
-  /// Name of the box that stores eWeLink account email ans password
-  String ewelinkVendorCredentialsBoxName = 'ewelinkVendorCredentialsBoxName';
-
-  /// Name of the box that stores Hub devices info
-  String hubDevicesBox = 'hubDevicesBox';
 
   /// Loading once all the data from the database
   Future<void> initializeDb();
 
   /// Will load all the local database content into the program
   Future<void> loadFromDb();
-
-  String hubEntityBoxName = 'hubEntityBox';
 
   Future<Either<LocalDbFailures, String>> getRemotePipesDnsName();
 
@@ -135,13 +86,6 @@ abstract class ILocalDbRepository {
 
   Future<Either<LocalDbFailures, Unit>> saveRemotePipes({
     required String remotePipesDomainName,
-  });
-
-  Future<Either<LocalDbFailures, GenericTuyaLoginDE>>
-      getTuyaVendorLoginCredentials({
-    required List<TuyaVendorCredentialsHiveModel>
-        tuyaVendorCredentialsModelFromDb,
-    required String vendorBoxName,
   });
 
   Future<Either<LocalDbFailures, GenericLifxLoginDE>>

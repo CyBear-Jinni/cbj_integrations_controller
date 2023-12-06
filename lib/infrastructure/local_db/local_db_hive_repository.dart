@@ -1,7 +1,51 @@
 part of 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
 
 /// Only ISavedDevicesRepo need to call functions here
-class _HiveRepository extends ILocalDbRepository {
+class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
+  /// Name of the box that stores Remote Pipes credentials
+  String remotePipesBoxName = 'remotePipesBox';
+
+  /// Name of the box that stores all the rooms
+  String roomsBoxName = 'roomsBox';
+
+  /// Name of the box that stores all the devices in form of string json
+  String devicesBoxName = 'devicesBox';
+
+  /// Name of the box that stores all the scenes in form of string json
+  String scenesBoxName = 'scenesBox';
+
+  /// Name of the box that stores all the routines in form of string json
+  String routinesBoxName = 'routinesBox';
+
+  /// Name of the box that stores all the bindings in form of string json
+  String bindingsBoxName = 'bindingsBox';
+
+  /// Name of the box that stores Tuya login credentials
+  String tuyaVendorCredentialsBoxName = 'tuyaVendorCredentialsBoxName';
+
+  /// Name of the box that stores Smart Life login credentials
+  String smartLifeVendorCredentialsBoxName =
+      'smartLifeVendorCredentialsBoxName';
+
+  /// Name of the box that stores Jinvoo Smart login credentials
+  String jinvooSmartVendorCredentialsBoxName =
+      'jinvooSmartVendorCredentialsBoxName';
+
+  /// Name of the box that stores Lifx login credentials
+  String lifxVendorCredentialsBoxName = 'lifxVendorCredentialsBoxName';
+
+  /// Name of the box that stores ESPHome device password
+  String espHomeVendorCredentialsBoxName = 'espHomeVendorCredentialsBoxName';
+
+  /// Name of the box that stores Xiaomi Mi account email ans password
+  String xiaomiMiVendorCredentialsBoxName = 'xiaomiMiVendorCredentialsBoxName';
+
+  /// Name of the box that stores eWeLink account email ans password
+  String ewelinkVendorCredentialsBoxName = 'ewelinkVendorCredentialsBoxName';
+
+  /// Name of the box that stores Hub devices info
+  String hubDevicesBox = 'hubDevicesBox';
+
   @override
   Future<void> initializeDb() async {
     String? localDbPath = await SystemCommandsManager().getLocalDbPath();
@@ -22,7 +66,6 @@ class _HiveRepository extends ILocalDbRepository {
     Hive.registerAdapter(RoutinesHiveModelAdapter());
     Hive.registerAdapter(BindingsHiveModelAdapter());
     Hive.registerAdapter(HubEntityHiveModelAdapter());
-    Hive.registerAdapter(TuyaVendorCredentialsHiveModelAdapter());
     Hive.registerAdapter(LifxVendorCredentialsHiveModelAdapter());
     Hive.registerAdapter(EspHomeVendorCredentialsHiveModelAdapter());
     Hive.registerAdapter(XiaomiMiVendorCredentialsHiveModelAdapter());
@@ -44,9 +87,6 @@ class _HiveRepository extends ILocalDbRepository {
   Box<ScenesHiveModel>? scenesBox;
   Box<RoutinesHiveModel>? routinesBox;
   Box<BindingsHiveModel>? bindingsBox;
-  Box<TuyaVendorCredentialsHiveModel>? tuyaVendorCredentialsBox;
-  Box<TuyaVendorCredentialsHiveModel>? smartLifeVendorCredentialsBox;
-  Box<TuyaVendorCredentialsHiveModel>? jinvooSmartVendorCredentialsBox;
   Box<LifxVendorCredentialsHiveModel>? lifxVendorCredentialsBox;
   Box<EspHomeVendorCredentialsHiveModel>? espHomeVendorCredentialsBox;
   Box<XiaomiMiVendorCredentialsHiveModel>? xiaomiMiVendorCredentialsBox;
@@ -63,88 +103,6 @@ class _HiveRepository extends ILocalDbRepository {
 
       logger.i('Remote Pipes DNS name was "$r" found');
     });
-
-    {
-      await tuyaVendorCredentialsBox?.close();
-
-      tuyaVendorCredentialsBox =
-          await Hive.openBox<TuyaVendorCredentialsHiveModel>(
-        tuyaVendorCredentialsBoxName,
-      );
-
-      final List<TuyaVendorCredentialsHiveModel>
-          tuyaVendorCredentialsModelFromDb = tuyaVendorCredentialsBox!.values
-              .toList()
-              .cast<TuyaVendorCredentialsHiveModel>();
-      await tuyaVendorCredentialsBox?.close();
-
-      (await getTuyaVendorLoginCredentials(
-        tuyaVendorCredentialsModelFromDb: tuyaVendorCredentialsModelFromDb,
-        vendorBoxName: tuyaVendorCredentialsBoxName,
-      ))
-          .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
-
-        logger.i(
-          'Tuya login credentials user name ${r.tuyaUserName.getOrCrash()} found',
-        );
-      });
-    }
-
-    {
-      await smartLifeVendorCredentialsBox?.close();
-
-      smartLifeVendorCredentialsBox =
-          await Hive.openBox<TuyaVendorCredentialsHiveModel>(
-        smartLifeVendorCredentialsBoxName,
-      );
-
-      final List<TuyaVendorCredentialsHiveModel>
-          tuyaVendorCredentialsModelFromDb = smartLifeVendorCredentialsBox!
-              .values
-              .toList()
-              .cast<TuyaVendorCredentialsHiveModel>();
-      await smartLifeVendorCredentialsBox?.close();
-      (await getTuyaVendorLoginCredentials(
-        tuyaVendorCredentialsModelFromDb: tuyaVendorCredentialsModelFromDb,
-        vendorBoxName: smartLifeVendorCredentialsBoxName,
-      ))
-          .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
-
-        logger.i(
-          'Smart Life login credentials user name ${r.tuyaUserName.getOrCrash()} found',
-        );
-      });
-    }
-
-    {
-      await jinvooSmartVendorCredentialsBox?.close();
-
-      jinvooSmartVendorCredentialsBox =
-          await Hive.openBox<TuyaVendorCredentialsHiveModel>(
-        jinvooSmartVendorCredentialsBoxName,
-      );
-
-      final List<TuyaVendorCredentialsHiveModel>
-          tuyaVendorCredentialsModelFromDb = jinvooSmartVendorCredentialsBox!
-              .values
-              .toList()
-              .cast<TuyaVendorCredentialsHiveModel>();
-      await jinvooSmartVendorCredentialsBox?.close();
-
-      (await getTuyaVendorLoginCredentials(
-        tuyaVendorCredentialsModelFromDb: tuyaVendorCredentialsModelFromDb,
-        vendorBoxName: jinvooSmartVendorCredentialsBoxName,
-      ))
-          .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
-
-        logger.i(
-          'Jinvoo Smart login credentials user name ${r.tuyaUserName.getOrCrash()} found',
-        );
-      });
-    }
 
     {
       await lifxVendorCredentialsBox?.close();
@@ -328,51 +286,6 @@ class _HiveRepository extends ILocalDbRepository {
       return right(devices);
     } catch (e) {
       logger.e('Local DB hive error while getting devices: $e');
-    }
-    return left(const LocalDbFailures.unexpected());
-  }
-
-  @override
-  Future<Either<LocalDbFailures, GenericTuyaLoginDE>>
-      getTuyaVendorLoginCredentials({
-    required List<TuyaVendorCredentialsHiveModel>
-        tuyaVendorCredentialsModelFromDb,
-    required String vendorBoxName,
-  }) async {
-    try {
-      if (tuyaVendorCredentialsModelFromDb.isNotEmpty) {
-        final TuyaVendorCredentialsHiveModel firstTuyaVendorFromDB =
-            tuyaVendorCredentialsModelFromDb[0];
-
-        final String? senderUniqueId = firstTuyaVendorFromDB.senderUniqueId;
-        final String tuyaUserName = firstTuyaVendorFromDB.tuyaUserName;
-        final String tuyaUserPassword = firstTuyaVendorFromDB.tuyaUserPassword;
-        final String tuyaCountryCode = firstTuyaVendorFromDB.tuyaCountryCode;
-        final String tuyaBizType = firstTuyaVendorFromDB.tuyaBizType;
-        final String tuyaRegion = firstTuyaVendorFromDB.tuyaRegion;
-        final String loginVendor = firstTuyaVendorFromDB.loginVendor;
-
-        final GenericTuyaLoginDE genericTuyaLoginDE = GenericTuyaLoginDE(
-          senderUniqueId: CoreLoginSenderId.fromUniqueString(senderUniqueId),
-          loginVendor: CoreLoginVendor(loginVendor),
-          tuyaUserName: GenericTuyaLoginUserName(tuyaUserName),
-          tuyaUserPassword: GenericTuyaLoginUserPassword(tuyaUserPassword),
-          tuyaCountryCode: GenericTuyaLoginCountryCode(tuyaCountryCode),
-          tuyaBizType: GenericTuyaLoginBizType(tuyaBizType),
-          tuyaRegion: GenericTuyaLoginRegion(tuyaRegion),
-        );
-
-        logger.i(
-          'Tuya user name is: '
-          '$tuyaUserName',
-        );
-        return right(genericTuyaLoginDE);
-      }
-      // logger.i(
-      //   "Didn't find any Tuya in the local DB",
-      // );
-    } catch (e) {
-      logger.e('Local DB hive error while getting Tuya vendor: $e');
     }
     return left(const LocalDbFailures.unexpected());
   }
@@ -637,26 +550,7 @@ class _HiveRepository extends ILocalDbRepository {
   Future<Either<LocalDbFailures, Unit>> saveVendorLoginCredentials({
     required LoginEntityAbstract loginEntityAbstract,
   }) async {
-    if (loginEntityAbstract is GenericTuyaLoginDE) {
-      if (loginEntityAbstract.loginVendor.getOrCrash() ==
-          VendorsAndServices.smartLife.name) {
-        saveTuyaVendorCredentials(
-          tuyaLoginDE: loginEntityAbstract,
-          vendorCredentialsBoxName: smartLifeVendorCredentialsBoxName,
-        );
-      } else if (loginEntityAbstract.loginVendor.getOrCrash() ==
-          VendorsAndServices.jinvooSmart.name) {
-        saveTuyaVendorCredentials(
-          tuyaLoginDE: loginEntityAbstract,
-          vendorCredentialsBoxName: jinvooSmartVendorCredentialsBoxName,
-        );
-      } else {
-        saveTuyaVendorCredentials(
-          tuyaLoginDE: loginEntityAbstract,
-          vendorCredentialsBoxName: tuyaVendorCredentialsBoxName,
-        );
-      }
-    } else if (loginEntityAbstract is GenericLifxLoginDE) {
+    if (loginEntityAbstract is GenericLifxLoginDE) {
       saveLifxVendorCredentials(
         lifxLoginDE: loginEntityAbstract,
         vendorCredentialsBoxName: lifxVendorCredentialsBoxName,
@@ -713,44 +607,6 @@ class _HiveRepository extends ILocalDbRepository {
       return left(const LocalDbFailures.unexpected());
     }
 
-    return right(unit);
-  }
-
-  Future<Either<LocalDbFailures, Unit>> saveTuyaVendorCredentials({
-    required GenericTuyaLoginDE tuyaLoginDE,
-    required String vendorCredentialsBoxName,
-  }) async {
-    try {
-      final Box<TuyaVendorCredentialsHiveModel> tuyaVendorCredentialsBox =
-          await Hive.openBox<TuyaVendorCredentialsHiveModel>(
-        vendorCredentialsBoxName,
-      );
-
-      final TuyaVendorCredentialsHiveModel tuyaVendorCredentialsModel =
-          TuyaVendorCredentialsHiveModel()
-            ..senderUniqueId = tuyaLoginDE.senderUniqueId.getOrCrash()
-            ..tuyaUserName = tuyaLoginDE.tuyaUserName.getOrCrash()
-            ..tuyaUserPassword = tuyaLoginDE.tuyaUserPassword.getOrCrash()
-            ..tuyaCountryCode = tuyaLoginDE.tuyaCountryCode.getOrCrash()
-            ..tuyaBizType = tuyaLoginDE.tuyaBizType.getOrCrash()
-            ..tuyaRegion = tuyaLoginDE.tuyaRegion.getOrCrash()
-            ..loginVendor = tuyaLoginDE.loginVendor.getOrCrash();
-
-      if (tuyaVendorCredentialsBox.isNotEmpty) {
-        await tuyaVendorCredentialsBox.putAt(0, tuyaVendorCredentialsModel);
-      } else {
-        tuyaVendorCredentialsBox.add(tuyaVendorCredentialsModel);
-      }
-
-      await tuyaVendorCredentialsBox.close();
-      logger.i(
-        'Tuya vendor credentials saved to local storage with the user name: '
-        '${tuyaLoginDE.tuyaUserName.getOrCrash()}',
-      );
-    } catch (e) {
-      logger.e('Error saving Tuya vendor credentials to local storage');
-      return left(const LocalDbFailures.unexpected());
-    }
     return right(unit);
   }
 

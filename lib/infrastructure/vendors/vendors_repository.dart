@@ -97,13 +97,6 @@ class _VendorsRepository implements IVendorsRepository {
     return loginWithVendor(login);
   }
 
-  @override
-  Future<Either<CoreLoginFailure, Unit>> loginWithTuya(
-    GenericTuyaLoginDE login,
-  ) async {
-    return loginWithVendor(login);
-  }
-
   Future<Either<CoreLoginFailure, Unit>> loginWithVendor(
     LoginEntityAbstract login,
   ) async {

@@ -5,7 +5,9 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ILocalDbRepository.instance.getRoomsFromDb().then((value) {
+    await ICbjIntegrationsControllerDbRepository.instance
+        .getRoomsFromDb()
+        .then((value) {
       value.fold((l) => null, (rooms) {
         /// Gets all rooms from db, if there are non it will create and return
         /// only a discovered room
@@ -252,7 +254,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
       areaTypes: _allRooms[roomId]!.roomTypes.getOrCrash(),
     );
     final Future<Either<LocalDbFailures, Unit>> saveRoomToDbResponse =
-        ILocalDbRepository.instance.saveRoomsToDb(
+        ICbjIntegrationsControllerDbRepository.instance.saveRoomsToDb(
       roomsList: List<RoomEntity>.from(_allRooms.values),
     );
 
