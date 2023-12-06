@@ -177,7 +177,11 @@ class CompaniesConnectorConjecture {
         if (deviceIp == null) {
           continue;
         }
-        activeHost = activeHost..internetAddress = InternetAddress(deviceIp);
+        try {
+          activeHost = activeHost..internetAddress = InternetAddress(deviceIp);
+        } catch (e) {
+          logger.e('Error setting internet address $e');
+        }
       }
 
       final MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;

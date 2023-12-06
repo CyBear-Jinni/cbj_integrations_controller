@@ -29,7 +29,8 @@ Future initializeIntegrationsController({
   //  Setting device model and checking if configuration for this model exist
   await DevicePinListManager().setPhysicalDeviceType();
 
-  await ICbjIntegrationsControllerDbRepository.instance.initializeDb();
+  await ICbjIntegrationsControllerDbRepository.instance
+      .initializeDb(isFlutter: false);
 
   logger.t('');
 }

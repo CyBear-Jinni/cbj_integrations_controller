@@ -47,18 +47,21 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
   String hubDevicesBox = 'hubDevicesBox';
 
   @override
-  Future<void> initializeDb() async {
-    String? localDbPath = await SystemCommandsManager().getLocalDbPath();
+  Future<void> initializeDb({required bool isFlutter}) async {
+    if (!isFlutter) {
+      String? localDbPath = await SystemCommandsManager().getLocalDbPath();
 
-    if (localDbPath[localDbPath.length - 1] == '/') {
-      localDbPath = localDbPath.substring(0, localDbPath.length - 1);
+      if (localDbPath[localDbPath.length - 1] == '/') {
+        localDbPath = localDbPath.substring(0, localDbPath.length - 1);
+      }
+      localDbPath += '/hive';
+
+      logger.i('Hive db location\n$localDbPath');
+
+      Hive.init(localDbPath);
+      await Future.delayed(const Duration(milliseconds: 500));
     }
-    localDbPath += '/hive';
 
-    logger.i('Hive db location\n$localDbPath');
-
-    Hive.init(localDbPath);
-    await Future.delayed(const Duration(milliseconds: 500));
     Hive.registerAdapter(RemotePipesHiveModelAdapter());
     Hive.registerAdapter(RoomsHiveModelAdapter());
     Hive.registerAdapter(DevicesHiveModelAdapter());

@@ -60,7 +60,7 @@ abstract class ICbjIntegrationsControllerDbRepository {
   }
 
   /// Loading once all the data from the database
-  Future<void> initializeDb();
+  Future<void> initializeDb({required bool isFlutter});
 
   /// Will load all the local database content into the program
   Future<void> loadFromDb();

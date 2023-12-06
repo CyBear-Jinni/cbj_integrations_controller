@@ -2,14 +2,9 @@ import 'dart:io';
 
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_base_class_d.dart';
-import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
 class CommonBashCommandsD implements SystemCommandsBaseClassD {
-  Future<void> asyncConstructor() async {
-    SystemCommandsManager();
-  }
-
   @override
   Future<String> getCurrentUserName() async {
     final String whoami =
