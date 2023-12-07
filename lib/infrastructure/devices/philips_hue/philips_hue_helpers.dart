@@ -11,7 +11,7 @@ import 'package:hue_dart/src/light/light.dart';
 import 'package:hue_dart/src/light/light_state.dart';
 
 class PhilipsHueHelpers {
-  static Future<List<DeviceEntityAbstract>> addDiscoverdDevice({
+  static Future<List<DeviceEntityAbstract>> addDiscoveredDevice({
     required String mDnsName,
     required String? port,
     required String ip,

@@ -12,7 +12,7 @@ import 'package:color/color.dart';
 import 'package:shelly/shelly.dart';
 
 class ShellyHelpers {
-  static Future<List<DeviceEntityAbstract>> addDiscoverdDevice({
+  static Future<List<DeviceEntityAbstract>> addDiscoveredDevice({
     required String mDnsName,
     required String? port,
     required String ip,

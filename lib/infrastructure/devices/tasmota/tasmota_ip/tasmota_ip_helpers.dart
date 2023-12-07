@@ -8,7 +8,7 @@ import 'package:cbj_integrations_controller/utils.dart';
 import 'package:network_tools/network_tools.dart';
 
 class TasmotaIpHelpers {
-  static Future<List<DeviceEntityAbstract>> addDiscoverdDevice({
+  static Future<List<DeviceEntityAbstract>> addDiscoveredDevice({
     required ActiveHost activeHost,
     required List<CoreUniqueId?> uniqueDeviceIdList,
     required List<String> componentInDeviceNumberLabelList,

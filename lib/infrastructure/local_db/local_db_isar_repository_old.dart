@@ -30,7 +30,7 @@
 // import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
 // import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_value_objects.dart';
 // import 'package:cbj_integrations_controller/infrastructure/bindings/binding_cbj_dtos.dart';
-// import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+// import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 // import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 // import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 // import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/esphome_vendor_credentials_hive_model.dart';
@@ -67,15 +67,15 @@
 //   @override
 //   Future<void> initializeDb() async {
 //     if (didDbInitialzed == null) {
-//       didDbInitialzed = asyncConstractorHelper();
+//       didDbInitialzed = asyncConstructorHelper();
 //       await loadFromDb();
 //     } else {
 //       await didDbInitialzed;
 //     }
 //   }
 //
-//   Future<bool> asyncConstractorHelper() async {
-//     await SystemCommandsManager.instance.getLocalDbPath();
+//   Future<bool> asyncConstructorHelper() async {
+//     await SystemCommandsManager().getLocalDbPath();
 //
 //     logger.i('Isar db location\n${isar.path}');
 //
@@ -108,7 +108,7 @@
 //       tuyaVendorCredentialsModelFromDb: [],
 //     ))
 //         .fold((l) {}, (r) {
-//       CompaniesConnectorConjector.setVendorLoginCredentials(r);
+//       CompaniesConnectorConjecture().setVendorLoginCredentials(r);
 //
 //       logger.i(
 //         'Tuya login credentials user name ${r.tuyaUserName.getOrCrash()} found',
@@ -119,7 +119,7 @@
 //       tuyaVendorCredentialsModelFromDb: [],
 //     ))
 //         .fold((l) {}, (r) {
-//       CompaniesConnectorConjector.setVendorLoginCredentials(r);
+//       CompaniesConnectorConjecture().setVendorLoginCredentials(r);
 //
 //       logger.i(
 //         'Smart Life login credentials user name ${r.tuyaUserName.getOrCrash()} found',
@@ -130,7 +130,7 @@
 //       tuyaVendorCredentialsModelFromDb: [],
 //     ))
 //         .fold((l) {}, (r) {
-//       CompaniesConnectorConjector.setVendorLoginCredentials(r);
+//       CompaniesConnectorConjecture().setVendorLoginCredentials(r);
 //
 //       logger.i(
 //         'Jinvoo Smart login credentials user name ${r.tuyaUserName.getOrCrash()} found',

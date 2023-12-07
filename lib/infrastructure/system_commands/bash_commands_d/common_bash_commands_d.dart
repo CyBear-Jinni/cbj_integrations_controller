@@ -2,14 +2,9 @@ import 'dart:io';
 
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_base_class_d.dart';
-import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
 class CommonBashCommandsD implements SystemCommandsBaseClassD {
-  Future<void> asyncConstractor() async {
-    SystemCommandsManager.instance;
-  }
-
   @override
   Future<String> getCurrentUserName() async {
     final String whoami =
@@ -145,21 +140,6 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
     }
 
     return snapLocation;
-  }
-
-  @override
-  Future<String?> getIpFromMdnsName(String mdnsName) async {
-    try {
-      final String fileContent =
-          await Process.run('avahi-resolve-host-name', <String>[mdnsName])
-              .then((ProcessResult result) {
-        return result.stdout.toString();
-      });
-      return fileContent.substring(fileContent.indexOf('\t') + 1).trim();
-    } catch (e) {
-      logger.w("Can't get device IP from mdns $mdnsName\n$e");
-    }
-    return null;
   }
 
   @override

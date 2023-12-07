@@ -7,7 +7,7 @@ import 'package:cbj_integrations_controller/utils.dart';
 import 'package:yeedart/yeedart.dart';
 
 class YeelightHelpers {
-  static DeviceEntityAbstract? addDiscoverdDevice({
+  static DeviceEntityAbstract? addDiscoveredDevice({
     required DiscoveryResponse yeelightDevice,
     String? mDnsName,
   }) {

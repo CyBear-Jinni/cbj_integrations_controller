@@ -11,7 +11,7 @@ import 'package:cbj_integrations_controller/utils.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherHelpers {
-  static DeviceEntityAbstract? addDiscoverdDevice({
+  static DeviceEntityAbstract? addDiscoveredDevice({
     required SwitcherApiObject switcherDevice,
     required CoreUniqueId? uniqueDeviceId,
   }) {

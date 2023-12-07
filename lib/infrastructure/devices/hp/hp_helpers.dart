@@ -5,7 +5,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_printer_device/generic_printer_value_objects.dart';
 
 class HpHelpers {
-  static List<DeviceEntityAbstract> addDiscoverdDevice({
+  static List<DeviceEntityAbstract> addDiscoveredDevice({
     required String mDnsName,
     required String ip,
     required String port,

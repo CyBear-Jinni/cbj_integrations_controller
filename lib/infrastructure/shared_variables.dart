@@ -7,12 +7,12 @@ class SharedVariables {
     return _instance;
   }
 
-  SharedVariables._singletonConstractor() {
+  SharedVariables._singletonConstructor() {
     logger.i('PATH: $_projectRootDirectoryPath');
   }
 
   static final SharedVariables _instance =
-      SharedVariables._singletonConstractor();
+      SharedVariables._singletonConstructor();
 
   ///  Save the location of all the files that were created during the snapcraft
   String? _projectRootDirectoryPath;
@@ -21,7 +21,7 @@ class SharedVariables {
     _projectRootDirectoryPath = value;
   }
 
-  Future<void> asyncConstractor(String projectRootDirectoryPath) async {
+  Future<void> asyncConstructor(String projectRootDirectoryPath) async {
     _projectRootDirectoryPath = projectRootDirectoryPath;
     logger.t('PATH: $_projectRootDirectoryPath');
   }

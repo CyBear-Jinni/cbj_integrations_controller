@@ -1,32 +1,13 @@
-import 'dart:collection';
-import 'dart:convert';
+part of 'package:cbj_integrations_controller/domain/scene/i_scene_cbj_repository.dart';
 
-import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
-import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
-import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
-import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
-import 'package:cbj_integrations_controller/domain/scene/i_scene_cbj_repository.dart';
-import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
-import 'package:cbj_integrations_controller/domain/scene/scene_cbj_failures.dart';
-import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
-import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_converter.dart';
-import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_repository.dart';
-import 'package:cbj_integrations_controller/infrastructure/room/saved_rooms_repo.dart';
-import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/area_type_with_device_type_preset.dart';
-import 'package:cbj_integrations_controller/utils.dart';
-import 'package:dartz/dartz.dart';
-import 'package:kt_dart/kt.dart';
-import 'package:rxdart/rxdart.dart';
-
-class SceneCbjRepository implements ISceneCbjRepository {
+class _SceneCbjRepository implements ISceneCbjRepository {
   final HashMap<String, SceneCbjEntity> _allScenes = HashMap();
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ILocalDbRepository.instance.getScenesFromDb().then((value) {
+    await ICbjIntegrationsControllerDbRepository.instance
+        .getScenesFromDb()
+        .then((value) {
       value.fold((l) => null, (r) {
         for (final element in r) {
           addNewScene(element);
@@ -50,7 +31,7 @@ class SceneCbjRepository implements ISceneCbjRepository {
       saveAndActivateScenesAndSmartDevicesToDb() async {
     await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
 
-    return ILocalDbRepository.instance.saveScenes(
+    return ICbjIntegrationsControllerDbRepository.instance.saveScenes(
       sceneList: List<SceneCbjEntity>.from(_allScenes.values),
     );
   }
@@ -253,7 +234,7 @@ class SceneCbjRepository implements ISceneCbjRepository {
       final SceneCbjEntity sceneCbjEntity = _allScenes[sceneId]!;
 
       final AreaPurposesTypes? areaTypeForScene =
-          SavedRoomsRepo.getAreaTypeFromNameCapsWithSpcaes(
+          ISavedRoomsRepo.instance.getAreaTypeFromNameCapsWithSpaces(
         sceneCbjEntity.name.getOrCrash(),
       );
 
