@@ -7,28 +7,26 @@ import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
-import 'package:cbj_integrations_controller/domain/vendors/tuya_login/generic_tuya_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/google/google_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/google/google_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_printer/hp_printer_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff_diy_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/tuya_smart/tuya_smart_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xiaomi_io_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff_diy_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xiaomi_io_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/utils.dart';
@@ -36,33 +34,38 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:network_tools/network_tools.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
-class CompaniesConnectorConjector {
-  static void updateAllDevicesReposWithDeviceChanges(
+class CompaniesConnectorConjecture {
+  factory CompaniesConnectorConjecture() {
+    return _instance;
+  }
+
+  CompaniesConnectorConjecture._singletonConstructor();
+
+  static final CompaniesConnectorConjecture _instance =
+      CompaniesConnectorConjecture._singletonConstructor();
+
+  void updateAllDevicesReposWithDeviceChanges(
     Stream<dynamic> allDevices,
   ) {
-    allDevices.listen((deviceEntityAbstract) {
-      if (deviceEntityAbstract is DeviceEntityAbstract) {
-        final String deviceVendor =
-            deviceEntityAbstract.deviceVendor.getOrCrash();
+    allDevices.listen((entity) {
+      if (entity is DeviceEntityAbstract) {
+        final String deviceVendor = entity.deviceVendor.getOrCrash();
 
-        final AbstractCompanyConnectorConjector? companyConnectorConjector =
-            vendorStringToCompanyConnectorConjector(deviceVendor);
+        final AbstractCompanyConnectorConjecture? companyConnectorConjecture =
+            vendorStringToCompanyConnectorConjecture(deviceVendor);
 
-        if (companyConnectorConjector != null) {
-          companyConnectorConjector
-              .manageHubRequestsForDevice(deviceEntityAbstract);
+        if (companyConnectorConjecture != null) {
+          companyConnectorConjecture.manageHubRequestsForDevice(entity);
         } else {
           logger.w(
             'Cannot send device changes to its repo, company not supported $deviceVendor',
           );
         }
-      } else {
-        logger.w('Connector conjector got other type');
       }
     });
   }
 
-  static void addAllDevicesToItsRepos(
+  void addAllDevicesToItsRepos(
     Map<String, DeviceEntityAbstract> allDevices,
   ) {
     for (final MapEntry<String, DeviceEntityAbstract> deviceId
@@ -71,7 +74,7 @@ class CompaniesConnectorConjector {
     }
   }
 
-  static void addDeviceToItsRepo(
+  void addDeviceToItsRepo(
     MapEntry<String, DeviceEntityAbstract> deviceEntityAbstract,
   ) {
     final MapEntry<String, DeviceEntityAbstract> devicesEntry =
@@ -83,17 +86,17 @@ class CompaniesConnectorConjector {
     final String deviceVendor =
         deviceEntityAbstract.value.deviceVendor.getOrCrash();
 
-    final AbstractCompanyConnectorConjector? companyConnectorConjector =
-        vendorStringToCompanyConnectorConjector(deviceVendor);
+    final AbstractCompanyConnectorConjecture? companyConnectorConjecture =
+        vendorStringToCompanyConnectorConjecture(deviceVendor);
 
-    if (companyConnectorConjector != null) {
-      companyConnectorConjector.setUpDeviceFromDb(devicesEntry.value);
+    if (companyConnectorConjecture != null) {
+      companyConnectorConjecture.setUpDeviceFromDb(devicesEntry.value);
     } else {
       logger.w('Cannot add device entity to its repo, type not supported');
     }
   }
 
-  static DeviceEntityAbstract addDiscoverdDeviceToHub(
+  DeviceEntityAbstract addDiscoveredDeviceToHub(
     DeviceEntityAbstract deviceEntity,
   ) {
     final DeviceEntityAbstract deviceEntityGotSaved =
@@ -105,23 +108,21 @@ class CompaniesConnectorConjector {
     return deviceEntityGotSaved;
   }
 
-  static void setVendorLoginCredentials(LoginEntityAbstract loginEntity) {
+  void setVendorLoginCredentials(LoginEntityAbstract loginEntity) {
     if (loginEntity is GenericLifxLoginDE) {
-      LifxConnectorConjector().accountLogin(loginEntity);
+      LifxConnectorConjecture().accountLogin(loginEntity);
     } else if (loginEntity is GenericEspHomeLoginDE) {
-      EspHomeConnectorConjector().accountLogin(loginEntity);
-    } else if (loginEntity is GenericTuyaLoginDE) {
-      TuyaSmartConnectorConjector().accountLogin(loginEntity);
+      EspHomeConnectorConjecture().accountLogin(loginEntity);
     } else if (loginEntity is GenericXiaomiMiLoginDE) {
-      XiaomiIoConnectorConjector().accountLogin(loginEntity);
+      XiaomiIoConnectorConjecture().accountLogin(loginEntity);
     } else if (loginEntity is GenericEwelinkLoginDE) {
-      EwelinkConnectorConjector().accountLogin(loginEntity);
+      EwelinkConnectorConjecture().accountLogin(loginEntity);
     } else {
       logger.w('Vendor login type ${loginEntity.runtimeType} is not supported');
     }
   }
 
-  static Future<void> searchAllMdnsDevicesAndSetThemUp() async {
+  Future<void> searchAllMdnsDevicesAndSetThemUp() async {
     try {
       while (true) {
         while (true) {
@@ -152,7 +153,7 @@ class CompaniesConnectorConjector {
     }
   }
 
-  static Future<List<ActiveHost>> searchMdnsDevices() async {
+  Future<List<ActiveHost>> searchMdnsDevices() async {
     List<ActiveHost> activeHostList = [];
 
     for (ActiveHost activeHost in await MdnsScanner.searchMdnsDevices(
@@ -176,7 +177,11 @@ class CompaniesConnectorConjector {
         if (deviceIp == null) {
           continue;
         }
-        activeHost = activeHost..internetAddress = InternetAddress(deviceIp);
+        try {
+          activeHost = activeHost..internetAddress = InternetAddress(deviceIp);
+        } catch (e) {
+          logger.e('Error setting internet address $e');
+        }
       }
 
       final MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
@@ -190,7 +195,7 @@ class CompaniesConnectorConjector {
 
   /// Getting ActiveHost that contain MdnsInfo property and activate it inside
   /// The correct company.
-  static Future<void> setMdnsDeviceByCompany(ActiveHost activeHost) async {
+  Future<void> setMdnsDeviceByCompany(ActiveHost activeHost) async {
     final MdnsInfo? hostMdnsInfo = await activeHost.mdnsInfo;
 
     if (hostMdnsInfo == null) {
@@ -208,43 +213,43 @@ class CompaniesConnectorConjector {
 
     final String mdnsPort = hostMdnsInfo.mdnsPort.toString();
 
-    if (EspHomeConnectorConjector.mdnsTypes
+    if (EspHomeConnectorConjecture.mdnsTypes
         .contains(hostMdnsInfo.mdnsServiceType)) {
-      EspHomeConnectorConjector().addNewDeviceByMdnsName(
+      EspHomeConnectorConjecture().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
         address: mdnsDeviceIp,
       );
-    } else if (ShellyConnectorConjector.mdnsTypes
+    } else if (ShellyConnectorConjecture.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         hostMdnsInfo
             .getOnlyTheStartOfMdnsName()
             .toLowerCase()
             .contains('shelly')) {
-      ShellyConnectorConjector().addNewDeviceByMdnsName(
+      ShellyConnectorConjecture().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
       );
-    } else if (EwelinkConnectorConjector.mdnsTypes
+    } else if (EwelinkConnectorConjecture.mdnsTypes
         .contains(hostMdnsInfo.mdnsServiceType)) {
-      EwelinkConnectorConjector().discoverNewDevices(activeHost: activeHost);
-    } else if (GoogleConnectorConjector.mdnsTypes
+      EwelinkConnectorConjecture().discoverNewDevices(activeHost: activeHost);
+    } else if (GoogleConnectorConjecture.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsNameLower.contains('google') ||
             startOfMdnsNameLower.contains('android') ||
             startOfMdnsNameLower.contains('chrome'))) {
-      GoogleConnectorConjector().addNewDeviceByMdnsName(
+      GoogleConnectorConjecture().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
       );
-    } else if (LgConnectorConjector.mdnsTypes
+    } else if (LgConnectorConjecture.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsNameLower.contains('lg') ||
             startOfMdnsNameLower.contains('webos'))) {
-      LgConnectorConjector().addNewDeviceByMdnsName(
+      LgConnectorConjecture().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -252,22 +257,22 @@ class CompaniesConnectorConjector {
     } else if (HpPrinterEntity.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsNameLower.contains('hp'))) {
-      HpConnectorConjector().addNewDeviceByMdnsName(
+      HpConnectorConjecture().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
       );
-    } else if (YeelightConnectorConjector.mdnsTypes
+    } else if (YeelightConnectorConjecture.mdnsTypes
             .contains(hostMdnsInfo.mdnsServiceType) &&
         (startOfMdnsName.startsWith('YL'))) {
-      YeelightConnectorConjector().addNewDeviceByMdnsName(
+      YeelightConnectorConjecture().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
       );
-    } else if (PhilipsHueConnectorConjector.mdnsTypes
+    } else if (PhilipsHueConnectorConjecture.mdnsTypes
         .contains(hostMdnsInfo.mdnsServiceType)) {
-      PhilipsHueConnectorConjector().addNewDeviceByMdnsName(
+      PhilipsHueConnectorConjecture().addNewDeviceByMdnsName(
         mDnsName: startOfMdnsName,
         ip: mdnsDeviceIp,
         port: mdnsPort,
@@ -280,7 +285,7 @@ class CompaniesConnectorConjector {
   }
 
   /// Get all the host names in the connected networks and try to add the device
-  static Future<void> searchPingableDevicesAndSetThemUpByHostName() async {
+  Future<void> searchPingableDevicesAndSetThemUpByHostName() async {
     while (true) {
       List<ActiveHost> pingableDevices = await searchPingableDevices();
 
@@ -298,7 +303,7 @@ class CompaniesConnectorConjector {
     }
   }
 
-  static Future<List<ActiveHost>> searchPingableDevices() async {
+  Future<List<ActiveHost>> searchPingableDevices() async {
     List<ActiveHost> activeList = [];
 
     final List<NetworkInterface> networkInterfaceList =
@@ -334,7 +339,7 @@ class CompaniesConnectorConjector {
     return activeList;
   }
 
-  static Future<void> setHostNameDeviceByCompany({
+  Future<void> setHostNameDeviceByCompany({
     required ActiveHost activeHost,
   }) async {
     final String? deviceHostNameLowerCase =
@@ -343,22 +348,22 @@ class CompaniesConnectorConjector {
       return;
     }
     if (deviceHostNameLowerCase.contains('tasmota')) {
-      TasmotaIpConnectorConjector().addNewDeviceByHostInfo(
+      TasmotaIpConnectorConjecture().addNewDeviceByHostInfo(
         activeHost: activeHost,
       );
     } else if (deviceHostNameLowerCase.contains('xiaomi') ||
         deviceHostNameLowerCase.contains('yeelink') ||
         deviceHostNameLowerCase.contains('xiao')) {
-      XiaomiIoConnectorConjector().discoverNewDevices(activeHost: activeHost);
+      XiaomiIoConnectorConjecture().discoverNewDevices(activeHost: activeHost);
     } else if (deviceHostNameLowerCase.startsWith('wiz')) {
-      WizConnectorConjector().addNewDeviceByHostInfo(activeHost: activeHost);
+      WizConnectorConjecture().addNewDeviceByHostInfo(activeHost: activeHost);
     } else {
       final ActiveHost? cbjSmartDeviceHost =
           await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice(
         activeHost.address,
       );
       if (cbjSmartDeviceHost != null) {
-        CbjDevicesConnectorConjector()
+        CbjDevicesConnectorConjecture()
             .addNewDeviceByHostInfo(activeHost: cbjSmartDeviceHost);
         return;
       }
@@ -368,12 +373,12 @@ class CompaniesConnectorConjector {
 
   /// Searching devices by binding to sockets, used for devices with
   /// udp ports which can't be discovered by regular open (tcp) port scan
-  static Future<void> searchDevicesByBindingIntoSockets() async {
+  Future<void> searchDevicesByBindingIntoSockets() async {
     List<Stream<dynamic>> switcherBindingsList =
         findSwitcherDevicesByBindingIntoSockets();
     for (Stream<dynamic> socketBinding in switcherBindingsList) {
       socketBinding.listen((switcherApiObject) {
-        SwitcherConnectorConjector()
+        SwitcherConnectorConjecture()
             .addOnlyNewSwitcherDevice(switcherApiObject);
       });
     }
@@ -385,7 +390,7 @@ class CompaniesConnectorConjector {
         socketBinding.listen((activeHost) {
           logger.i('Found CBJ Smart security camera: ${activeHost.address}');
 
-          CbjDevicesConnectorConjector()
+          CbjDevicesConnectorConjecture()
               .addNewDeviceByHostInfo(activeHost: activeHost);
         });
       }
@@ -394,8 +399,7 @@ class CompaniesConnectorConjector {
     }
   }
 
-  static Future<List<Stream<ActiveHost>>>
-      findCbjDevicesByBindingIntoSockets() async {
+  Future<List<Stream<ActiveHost>>> findCbjDevicesByBindingIntoSockets() async {
     List<Stream<ActiveHost>> bindingStream = [];
 
     final List<NetworkInterface> networkInterfaceList =
@@ -419,7 +423,7 @@ class CompaniesConnectorConjector {
     return bindingStream;
   }
 
-  static List<Stream<dynamic>> findSwitcherDevicesByBindingIntoSockets() {
+  List<Stream<dynamic>> findSwitcherDevicesByBindingIntoSockets() {
     List<Stream<dynamic>> bindingStream = [];
     bindingStream.add(SwitcherDiscover.discover20002Devices());
     bindingStream.add(SwitcherDiscover.discover20003Devices());
@@ -428,8 +432,8 @@ class CompaniesConnectorConjector {
   }
 
   /// Searching for mqtt devices
-  static Future<void> searchDevicesByMqttPath() async {
-    // getIt<TasmotaMqttConnectorConjector>().discoverNewDevices();
+  Future<void> searchDevicesByMqttPath() async {
+    // getIt<TasmotaMqttConnectorConjecture>().discoverNewDevices();
   }
 
   /// Devices that we need to insert in to the other search options but didn't
@@ -437,49 +441,46 @@ class CompaniesConnectorConjector {
   /// We do implement here the start of the search for convince organization
   /// and since putting it in the constructor of singleton will be called
   /// before all of our program.
-  static Future<void> notImplementedDevicesSearch() async {
-    // YeelightConnectorConjector().discoverNewDevices();
+  Future<void> notImplementedDevicesSearch() async {
+    // YeelightConnectorConjecture().discoverNewDevices();
   }
 
-  static AbstractCompanyConnectorConjector?
-      vendorStringToCompanyConnectorConjector(
+  AbstractCompanyConnectorConjecture? vendorStringToCompanyConnectorConjecture(
     String vendorName,
   ) {
     //TODO: convert vendorName to type and then use switch case
 
     if (vendorName == VendorsAndServices.espHome.toString()) {
-      return EspHomeConnectorConjector();
+      return EspHomeConnectorConjecture();
     } else if (vendorName == VendorsAndServices.switcherSmartHome.toString()) {
-      return SwitcherConnectorConjector();
+      return SwitcherConnectorConjecture();
     } else if (vendorName == VendorsAndServices.lifx.toString()) {
-      return LifxConnectorConjector();
+      return LifxConnectorConjecture();
     } else if (vendorName == VendorsAndServices.yeelight.toString()) {
-      return YeelightConnectorConjector();
+      return YeelightConnectorConjecture();
     } else if (vendorName == VendorsAndServices.philipsHue.toString()) {
-      return PhilipsHueConnectorConjector();
-    } else if (vendorName == VendorsAndServices.tuyaSmart.toString()) {
-      return TuyaSmartConnectorConjector();
+      return PhilipsHueConnectorConjecture();
     } else if (vendorName == VendorsAndServices.sonoffDiy.toString()) {
-      return SonoffDiyConnectorConjector();
+      return SonoffDiyConnectorConjecture();
     } else if (vendorName == VendorsAndServices.google.toString()) {
-      return GoogleConnectorConjector();
+      return GoogleConnectorConjecture();
     } else if (vendorName ==
         VendorsAndServices.cbjDeviceSmartEntity.toString()) {
-      return CbjDevicesConnectorConjector();
+      return CbjDevicesConnectorConjecture();
     } else if (vendorName == VendorsAndServices.shelly.toString()) {
-      return ShellyConnectorConjector();
+      return ShellyConnectorConjecture();
     } else if (vendorName == VendorsAndServices.hp.toString()) {
-      return HpConnectorConjector();
+      return HpConnectorConjecture();
     } else if (vendorName == VendorsAndServices.miHome.toString()) {
-      return XiaomiIoConnectorConjector();
+      return XiaomiIoConnectorConjecture();
     } else if (vendorName == VendorsAndServices.tasmota.toString()) {
-      return TasmotaIpConnectorConjector();
+      return TasmotaIpConnectorConjecture();
     } else if (vendorName == VendorsAndServices.sonoffEweLink.toString()) {
-      return EwelinkConnectorConjector();
+      return EwelinkConnectorConjecture();
     }
 
     logger.w(
-      'Please add vendor to support string $vendorName to connector conjector',
+      'Please add vendor to support string $vendorName to connector conjecture',
     );
 
     return null;

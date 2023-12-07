@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -145,7 +145,7 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
         GenericDimmableLightSwitchState(EntityActions.on.toString());
     try {
       final setStateBodyResponse =
-          await LifxConnectorConjector().lifxClient?.setState(
+          await LifxConnectorConjecture().lifxClient?.setState(
                 Selector.id(entityUniqueId.getOrCrash()),
                 power: 'on',
                 fast: true,
@@ -170,7 +170,7 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
 
     try {
       final setStateBodyResponse =
-          await LifxConnectorConjector().lifxClient?.setState(
+          await LifxConnectorConjecture().lifxClient?.setState(
                 Selector.id(entityUniqueId.getOrCrash()),
                 power: 'off',
                 fast: true,
@@ -193,7 +193,7 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
 
     try {
       final setStateBodyResponse =
-          await LifxConnectorConjector().lifxClient?.setState(
+          await LifxConnectorConjecture().lifxClient?.setState(
                 Selector.id(entityUniqueId.getOrCrash()),
                 fast: true,
                 brightness: lightBrightness.backToDecimalPointBrightness(),

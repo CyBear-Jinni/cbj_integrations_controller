@@ -1,18 +1,32 @@
+import 'dart:collection';
+import 'dart:convert';
+
+import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
+import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
+import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_failures.dart';
+import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/scenes/scene_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_converter.dart';
+import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/area_type_with_device_type_preset.dart';
+import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/collection.dart';
+import 'package:kt_dart/kt.dart';
 import 'package:rxdart/rxdart.dart';
+
+part 'package:cbj_integrations_controller/infrastructure/scenes/scene_repository.dart';
 
 abstract class ISceneCbjRepository {
   static ISceneCbjRepository? _instance;
 
   static ISceneCbjRepository get instance {
-    return _instance ??= SceneCbjRepository();
+    return _instance ??= _SceneCbjRepository();
   }
 
   /// Setting up all scenes from db

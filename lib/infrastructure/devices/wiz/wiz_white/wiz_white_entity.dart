@@ -101,7 +101,7 @@ class WizWhiteEntity extends GenericLightDE {
     lightSwitchState = GenericLightSwitchState(EntityActions.on.toString());
     try {
       // final setStateBodyResponse =
-      //     await WizConnectorConjector.wizClient?.setState(
+      //     await WizConnectorConjecture.wizClient?.setState(
       //   // Selector.id(entityUniqueId.getOrCrash()),
       //   power: 'on',
       //   fast: true,
@@ -125,7 +125,7 @@ class WizWhiteEntity extends GenericLightDE {
 
     try {
       // final setStateBodyResponse =
-      //     await WizConnectorConjector.wizClient?.setState(
+      //     await WizConnectorConjecture.wizClient?.setState(
       // Selector.id(entityUniqueId.getOrCrash()),
       //   power: 'off',
       //   fast: true,

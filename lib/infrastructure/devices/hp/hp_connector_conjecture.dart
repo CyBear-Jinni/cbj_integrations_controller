@@ -1,23 +1,23 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_printer/hp_printer_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_printer_device/generic_printer_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
-class HpConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory HpConnectorConjector() {
+class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
+  factory HpConnectorConjecture() {
     return _instance;
   }
 
-  HpConnectorConjector._singletonContractor();
+  HpConnectorConjecture._singletonContractor();
 
-  static final HpConnectorConjector _instance =
-      HpConnectorConjector._singletonContractor();
+  static final HpConnectorConjecture _instance =
+      HpConnectorConjecture._singletonContractor();
 
   static const List<String> mdnsTypes = ['_hplib._tcp'];
 
@@ -45,7 +45,7 @@ class HpConnectorConjector implements AbstractCompanyConnectorConjector {
       }
     }
 
-    final List<DeviceEntityAbstract> hpDevice = HpHelpers.addDiscoverdDevice(
+    final List<DeviceEntityAbstract> hpDevice = HpHelpers.addDiscoveredDevice(
       mDnsName: mDnsName,
       ip: ip,
       port: port,
@@ -57,8 +57,8 @@ class HpConnectorConjector implements AbstractCompanyConnectorConjector {
     }
 
     for (final DeviceEntityAbstract entityAsDevice in hpDevice) {
-      final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjector.addDiscoverdDeviceToHub(entityAsDevice);
+      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
+          .addDiscoveredDeviceToHub(entityAsDevice);
 
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
           MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);

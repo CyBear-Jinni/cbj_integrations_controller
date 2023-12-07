@@ -9,7 +9,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/utils.dart';
 
 class CbjDevicesHelpers {
-  static List<DeviceEntityAbstract> addDiscoverdDevice({
+  static List<DeviceEntityAbstract> addDiscoveredDevice({
     required List<CbjSmartDeviceInfo?> componentsInDevice,
     required String deviceAddress,
   }) {

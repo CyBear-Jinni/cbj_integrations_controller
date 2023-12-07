@@ -1,17 +1,28 @@
+import 'dart:collection';
+import 'dart:math';
+
 import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.dart';
+import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
 import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
+import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
+import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
+import 'package:cbj_integrations_controller/domain/scene/i_scene_cbj_repository.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
+import 'package:cbj_integrations_controller/domain/scene/scene_cbj_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/room/saved_rooms_repo.dart';
+import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
+
+part 'package:cbj_integrations_controller/infrastructure/room/saved_rooms_repo.dart';
 
 abstract class ISavedRoomsRepo {
   static ISavedRoomsRepo? _instance;
 
   static ISavedRoomsRepo get instance {
-    return _instance ??= SavedRoomsRepo();
+    return _instance ??= _SavedRoomsRepo();
   }
 
   /// Setting up all rooms from db
@@ -36,6 +47,9 @@ abstract class ISavedRoomsRepo {
   /// Discovered room
   void addBindingToRoomDiscoveredIfNotExist(BindingCbjEntity bindingCbjEntity);
 
+  AreaPurposesTypes? getAreaTypeFromNameCapsWithSpaces(
+      String areaNameCapsAndSpaces);
+
   Future<Either<LocalDbFailures, Unit>> saveAndActiveRoomToDb({
     required RoomEntity roomEntity,
   });
@@ -46,5 +60,5 @@ abstract class ISavedRoomsRepo {
   });
 
   /// Get all saved rooms
-  Future<Map<String, RoomEntity>> getAllRooms();
+  Map<String, RoomEntity> getAllRooms();
 }

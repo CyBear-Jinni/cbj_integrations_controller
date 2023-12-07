@@ -1,23 +1,23 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/chrome_cast/chrome_cast_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/google_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
-class GoogleConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory GoogleConnectorConjector() {
+class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
+  factory GoogleConnectorConjecture() {
     return _instance;
   }
 
-  GoogleConnectorConjector._singletonContractor();
+  GoogleConnectorConjecture._singletonContractor();
 
-  static final GoogleConnectorConjector _instance =
-      GoogleConnectorConjector._singletonContractor();
+  static final GoogleConnectorConjecture _instance =
+      GoogleConnectorConjecture._singletonContractor();
 
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
@@ -56,7 +56,7 @@ class GoogleConnectorConjector implements AbstractCompanyConnectorConjector {
     }
 
     final List<DeviceEntityAbstract> googleDevice =
-        GoogleHelpers.addDiscoverdDevice(
+        GoogleHelpers.addDiscoveredDevice(
       mDnsName: mDnsName,
       ip: ip,
       port: port,
@@ -68,8 +68,8 @@ class GoogleConnectorConjector implements AbstractCompanyConnectorConjector {
     }
 
     for (final DeviceEntityAbstract entityAsDevice in googleDevice) {
-      final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjector.addDiscoverdDeviceToHub(entityAsDevice);
+      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
+          .addDiscoveredDeviceToHub(entityAsDevice);
 
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
           MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);

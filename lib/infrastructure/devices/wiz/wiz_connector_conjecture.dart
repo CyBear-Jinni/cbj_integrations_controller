@@ -2,20 +2,20 @@ import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/vendors/wiz_login/generic_wiz_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_white/wiz_white_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:network_tools/network_tools.dart';
 
-class WizConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory WizConnectorConjector() {
+class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
+  factory WizConnectorConjecture() {
     return _instance;
   }
 
-  WizConnectorConjector._singletonContractor();
+  WizConnectorConjecture._singletonContractor();
 
-  static final WizConnectorConjector _instance =
-      WizConnectorConjector._singletonContractor();
+  static final WizConnectorConjecture _instance =
+      WizConnectorConjecture._singletonContractor();
 
   Future<String> accountLogin(GenericWizLoginDE genericWizLoginDE) async {
     // wizClient = WizClient(genericWizLoginDE.wizApiKey.getOrCrash());
@@ -50,7 +50,7 @@ class WizConnectorConjector implements AbstractCompanyConnectorConjector {
     //     await getAllComponentsOfDevice(activeHost);
     //
     // final List<DeviceEntityAbstract> wizIpDevices =
-    //     await WizIpHelpers.addDiscoverdDevice(
+    //     await WizIpHelpers.addDiscoveredDevice(
     //   activeHost: activeHost,
     //   uniqueDeviceIdList: tempCoreUniqueId,
     //   componentInDeviceNumberLabelList: componentsInDevice,
@@ -62,7 +62,7 @@ class WizConnectorConjector implements AbstractCompanyConnectorConjector {
     //
     // for (final DeviceEntityAbstract entityAsDevice in wizIpDevices) {
     //   final DeviceEntityAbstract deviceToAdd =
-    //       CompaniesConnectorConjector.addDiscoverdDeviceToHub(entityAsDevice);
+    //       CompaniesConnectorConjecture().addDiscoveredDeviceToHub(entityAsDevice);
     //
     //   final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
     //       MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
@@ -107,7 +107,7 @@ class WizConnectorConjector implements AbstractCompanyConnectorConjector {
         //   }
         //   if (!deviceExist) {
         //     final DeviceEntityAbstract? addDevice =
-        //         WizHelpers.addDiscoverdDevice(
+        //         WizHelpers.addDiscoveredDevice(
         //       wizDevice: wizDevice,
         //       uniqueDeviceId: tempCoreUniqueId,
         //     );
@@ -117,7 +117,7 @@ class WizConnectorConjector implements AbstractCompanyConnectorConjector {
         //     }
         //
         //     final DeviceEntityAbstract deviceToAdd =
-        //         CompaniesConnectorConjector.addDiscoverdDeviceToHub(addDevice);
+        //         CompaniesConnectorConjecture().addDiscoveredDeviceToHub(addDevice);
         //
         //     final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
         //         MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);

@@ -2,7 +2,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 
 class LgHelpers {
-  static List<DeviceEntityAbstract> addDiscoverdDevice({
+  static List<DeviceEntityAbstract> addDiscoveredDevice({
     required String mDnsName,
     required String ip,
     required String port,

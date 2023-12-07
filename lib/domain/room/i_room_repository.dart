@@ -1,14 +1,25 @@
 import 'dart:async';
+import 'dart:collection';
+import 'dart:convert';
 
 import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
 import 'package:cbj_integrations_controller/domain/room/room_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
+import 'package:cbj_integrations_controller/infrastructure/hub_client/hub_client.dart';
+import 'package:cbj_integrations_controller/utils.dart';
 import 'package:color/color.dart';
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:rxdart/rxdart.dart';
 
+part 'package:cbj_integrations_controller/infrastructure/room/room_repository.dart';
+
 abstract class IRoomRepository {
-  static late IRoomRepository instance;
+  static IRoomRepository? _instance;
+
+  static IRoomRepository get instance {
+    return _instance ??= _RoomRepository();
+  }
 
   void addOrUpdateRoom(RoomEntity roomEntity);
 
@@ -16,7 +27,7 @@ abstract class IRoomRepository {
 
   Future<void> initiateHubConnection();
 
-  Future<Either<RoomFailure, KtList<RoomEntity>>> getAllRooms();
+  Either<RoomFailure, KtList<RoomEntity>> getAllRooms();
 
   Stream<Either<dynamic, KtList<dynamic>>> watchAll();
 

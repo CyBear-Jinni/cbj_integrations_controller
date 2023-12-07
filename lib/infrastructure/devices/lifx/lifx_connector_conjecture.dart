@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_white/lifx_white_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
@@ -12,15 +12,15 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
-class LifxConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory LifxConnectorConjector() {
+class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
+  factory LifxConnectorConjecture() {
     return _instance;
   }
 
-  LifxConnectorConjector._singletonContractor();
+  LifxConnectorConjecture._singletonContractor();
 
-  static final LifxConnectorConjector _instance =
-      LifxConnectorConjector._singletonContractor();
+  static final LifxConnectorConjecture _instance =
+      LifxConnectorConjecture._singletonContractor();
 
   Future<String> accountLogin(GenericLifxLoginDE genericLifxLoginDE) async {
     lifxClient = LIFXClient(genericLifxLoginDE.lifxApiKey.getOrCrash());
@@ -62,7 +62,7 @@ class LifxConnectorConjector implements AbstractCompanyConnectorConjector {
           }
           if (!deviceExist) {
             final DeviceEntityAbstract? addDevice =
-                LifxHelpers.addDiscoverdDevice(
+                LifxHelpers.addDiscoveredDevice(
               lifxDevice: lifxDevice,
               uniqueDeviceId: tempCoreUniqueId,
             );
@@ -72,7 +72,8 @@ class LifxConnectorConjector implements AbstractCompanyConnectorConjector {
             }
 
             final DeviceEntityAbstract deviceToAdd =
-                CompaniesConnectorConjector.addDiscoverdDeviceToHub(addDevice);
+                CompaniesConnectorConjecture()
+                    .addDiscoveredDeviceToHub(addDevice);
 
             final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
                 MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);

@@ -6,7 +6,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:yeedart/yeedart.dart';
 
 class XiaomiIoHelpers {
-  static DeviceEntityAbstract? addDiscoverdDevice({
+  static DeviceEntityAbstract? addDiscoveredDevice({
     required DiscoveryResponse xiaomiIoDevice,
     required CoreUniqueId? uniqueDeviceId,
   }) {

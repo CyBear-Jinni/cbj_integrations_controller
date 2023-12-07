@@ -1,24 +1,25 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_1se/yeelight_1se_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:network_tools/network_tools.dart';
 import 'package:yeedart/yeedart.dart';
 
-class YeelightConnectorConjector implements AbstractCompanyConnectorConjector {
-  factory YeelightConnectorConjector() {
+class YeelightConnectorConjecture
+    implements AbstractCompanyConnectorConjecture {
+  factory YeelightConnectorConjecture() {
     return _instance;
   }
 
-  YeelightConnectorConjector._singletonContractor();
+  YeelightConnectorConjecture._singletonContractor();
 
-  static final YeelightConnectorConjector _instance =
-      YeelightConnectorConjector._singletonContractor();
+  static final YeelightConnectorConjecture _instance =
+      YeelightConnectorConjecture._singletonContractor();
 
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
@@ -63,12 +64,12 @@ class YeelightConnectorConjector implements AbstractCompanyConnectorConjector {
 
         DeviceEntityAbstract? addDevice;
         if (yeelightDevice.address.address == ip) {
-          addDevice = YeelightHelpers.addDiscoverdDevice(
+          addDevice = YeelightHelpers.addDiscoveredDevice(
             yeelightDevice: yeelightDevice,
             mDnsName: mDnsName,
           );
         } else {
-          addDevice = YeelightHelpers.addDiscoverdDevice(
+          addDevice = YeelightHelpers.addDiscoveredDevice(
             yeelightDevice: yeelightDevice,
           );
         }
@@ -78,7 +79,7 @@ class YeelightConnectorConjector implements AbstractCompanyConnectorConjector {
         }
 
         final DeviceEntityAbstract deviceToAdd =
-            CompaniesConnectorConjector.addDiscoverdDeviceToHub(addDevice);
+            CompaniesConnectorConjecture().addDiscoveredDeviceToHub(addDevice);
 
         final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
             MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);

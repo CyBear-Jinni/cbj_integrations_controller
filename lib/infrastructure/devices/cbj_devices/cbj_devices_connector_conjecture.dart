@@ -3,24 +3,24 @@ import 'dart:async';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_device_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:network_tools/network_tools.dart';
 
-class CbjDevicesConnectorConjector
-    implements AbstractCompanyConnectorConjector {
-  factory CbjDevicesConnectorConjector() {
+class CbjDevicesConnectorConjecture
+    implements AbstractCompanyConnectorConjecture {
+  factory CbjDevicesConnectorConjecture() {
     return _instance;
   }
 
-  CbjDevicesConnectorConjector._singletonContractor();
+  CbjDevicesConnectorConjecture._singletonContractor();
 
-  static final CbjDevicesConnectorConjector _instance =
-      CbjDevicesConnectorConjector._singletonContractor();
+  static final CbjDevicesConnectorConjecture _instance =
+      CbjDevicesConnectorConjecture._singletonContractor();
 
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
@@ -44,7 +44,7 @@ class CbjDevicesConnectorConjector
     final List<CbjSmartDeviceInfo?> componentsInDevice =
         await getAllComponentsOfDevice(activeHost);
     final List<DeviceEntityAbstract> devicesList =
-        CbjDevicesHelpers.addDiscoverdDevice(
+        CbjDevicesHelpers.addDiscoveredDevice(
       componentsInDevice: componentsInDevice,
       deviceAddress: activeHost.address,
     );
@@ -53,8 +53,8 @@ class CbjDevicesConnectorConjector
     }
 
     for (final DeviceEntityAbstract entityAsDevice in devicesList) {
-      final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjector.addDiscoverdDeviceToHub(entityAsDevice);
+      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
+          .addDiscoveredDeviceToHub(entityAsDevice);
 
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
           MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);

@@ -1,28 +1,16 @@
-import 'dart:collection';
+part of 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
 
-import 'package:cbj_integrations_controller/domain/app_communication/i_app_communication_repository.dart';
-import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
-import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
-import 'package:cbj_integrations_controller/domain/remote_pipes/remote_pipes_entity.dart';
-import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
-import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
-import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/remote_pipes/remote_pipes_dtos.dart';
-import 'package:cbj_integrations_controller/injection.dart';
-import 'package:cbj_integrations_controller/utils.dart';
-import 'package:dartz/dartz.dart';
-
-class SavedDevicesRepo extends ISavedDevicesRepo {
-  static final HashMap<String, DeviceEntityAbstract> _allDevices =
+class _SavedDevicesRepo extends ISavedDevicesRepo {
+  final HashMap<String, DeviceEntityAbstract> _allDevices =
       HashMap<String, DeviceEntityAbstract>();
 
-  static bool setUpAllFromDbAtLestOnce = false;
+  bool setUpAllFromDbAtLestOnce = false;
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ILocalDbRepository.instance.getSmartDevicesFromDb().then((value) {
+    await ICbjIntegrationsControllerDbRepository.instance
+        .getSmartDevicesFromDb()
+        .then((value) {
       value.fold((l) => null, (r) {
         for (final element in r) {
           addOrUpdateDevice(element);
@@ -33,7 +21,8 @@ class SavedDevicesRepo extends ISavedDevicesRepo {
   }
 
   @override
-  Future<Map<String, DeviceEntityAbstract>> getAllDevices() async {
+  Future<Map<String, DeviceEntityAbstract>>
+      getAllDevicesAfterInitialize() async {
     while (!setUpAllFromDbAtLestOnce) {
       await Future.delayed(const Duration(milliseconds: 200));
     }
@@ -69,18 +58,22 @@ class SavedDevicesRepo extends ISavedDevicesRepo {
 
     ISavedRoomsRepo.instance.addDeviceToRoomDiscoveredIfNotExist(deviceEntity);
 
-    // ConnectorStreamToMqtt.toMqttController.sink.add(
-    //   MapEntry<String, DeviceEntityAbstract>(
-    //     entityId,
-    //     allDevices[entityId]!,
-    //   ),
-    // );
-    // ConnectorStreamToMqtt.toMqttController.sink.add(
-    //   MapEntry<String, RoomEntity>(
-    //     discoveredRoomId,
-    //     allRooms[discoveredRoomId]!,
-    //   ),
-    // );
+    ConnectorStreamToMqtt.toMqttController.sink.add(
+      MapEntry<String, DeviceEntityAbstract>(
+        entityId,
+        _allDevices[entityId]!,
+      ),
+    );
+
+    final String discoveredRoomId =
+        RoomUniqueId.discoveredRoomId().getOrCrash();
+
+    ConnectorStreamToMqtt.toMqttController.sink.add(
+      MapEntry<String, RoomEntity>(
+        discoveredRoomId,
+        ISavedRoomsRepo.instance.getAllRooms()[discoveredRoomId]!,
+      ),
+    );
     return deviceEntity;
   }
 
@@ -95,7 +88,7 @@ class SavedDevicesRepo extends ISavedDevicesRepo {
     getItCbj<IAppCommunicationRepository>()
         .startRemotePipesConnection(rpDomainName);
 
-    return ILocalDbRepository.instance
+    return ICbjIntegrationsControllerDbRepository.instance
         .saveRemotePipes(remotePipesDomainName: rpDomainName);
   }
 
@@ -104,9 +97,9 @@ class SavedDevicesRepo extends ISavedDevicesRepo {
       saveAndActivateVendorLoginCredentialsDomainToDb({
     required LoginEntityAbstract loginEntity,
   }) async {
-    CompaniesConnectorConjector.setVendorLoginCredentials(loginEntity);
+    CompaniesConnectorConjecture().setVendorLoginCredentials(loginEntity);
 
-    return ILocalDbRepository.instance
+    return ICbjIntegrationsControllerDbRepository.instance
         .saveVendorLoginCredentials(loginEntityAbstract: loginEntity);
   }
 
@@ -127,7 +120,7 @@ class SavedDevicesRepo extends ISavedDevicesRepo {
   @override
   Future<Either<LocalDbFailures, Unit>>
       saveAndActivateSmartDevicesToDb() async {
-    return ILocalDbRepository.instance.saveSmartDevices(
+    return ICbjIntegrationsControllerDbRepository.instance.saveSmartDevices(
       deviceList: List<DeviceEntityAbstract>.from(_allDevices.values),
     );
   }
@@ -142,4 +135,7 @@ class SavedDevicesRepo extends ISavedDevicesRepo {
     }
     return left(const LocalDbFailures.unexpected());
   }
+
+  @override
+  Map<String, DeviceEntityAbstract> getAllDevices() => _allDevices;
 }

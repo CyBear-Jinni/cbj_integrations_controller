@@ -8,7 +8,7 @@ import 'package:cbj_integrations_controller/utils.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
 class TasmotaMqttHelpers {
-  static DeviceEntityAbstract? addDiscoverdDevice({
+  static DeviceEntityAbstract? addDiscoveredDevice({
     required MapEntry<String, dynamic> deviceChangeFromMqtt,
     required CoreUniqueId? uniqueDeviceId,
   }) {

@@ -1,24 +1,24 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_e26/philips_hue_e26_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjector.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 
-class PhilipsHueConnectorConjector
-    implements AbstractCompanyConnectorConjector {
-  factory PhilipsHueConnectorConjector() {
+class PhilipsHueConnectorConjecture
+    implements AbstractCompanyConnectorConjecture {
+  factory PhilipsHueConnectorConjecture() {
     return _instance;
   }
 
-  PhilipsHueConnectorConjector._singletonContractor();
+  PhilipsHueConnectorConjecture._singletonContractor();
 
-  static final PhilipsHueConnectorConjector _instance =
-      PhilipsHueConnectorConjector._singletonContractor();
+  static final PhilipsHueConnectorConjecture _instance =
+      PhilipsHueConnectorConjecture._singletonContractor();
 
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
@@ -56,7 +56,7 @@ class PhilipsHueConnectorConjector
     gotHueHubIp = true;
 
     final List<DeviceEntityAbstract> phillipsDevice =
-        await PhilipsHueHelpers.addDiscoverdDevice(
+        await PhilipsHueHelpers.addDiscoveredDevice(
       mDnsName: mDnsName,
       ip: ip,
       port: port,
@@ -68,8 +68,8 @@ class PhilipsHueConnectorConjector
     }
 
     for (final DeviceEntityAbstract entityAsDevice in phillipsDevice) {
-      final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjector.addDiscoverdDeviceToHub(entityAsDevice);
+      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
+          .addDiscoveredDeviceToHub(entityAsDevice);
 
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
           MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
