@@ -6,9 +6,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_value_objects.dart';
 import 'package:cbj_integrations_controller/utils.dart';
 import 'package:http/http.dart';
-import 'package:hue_dart/src/core/bridge.dart';
-import 'package:hue_dart/src/light/light.dart';
-import 'package:hue_dart/src/light/light_state.dart';
+import 'package:hue_dart/hue_dart.dart';
 
 class PhilipsHueHelpers {
   static Future<List<DeviceEntityAbstract>> addDiscoveredDevice({

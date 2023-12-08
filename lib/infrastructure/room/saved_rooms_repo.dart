@@ -396,6 +396,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
       if (charFromAreaType[0] == charFromAreaType[0].toUpperCase()) {
         areaNameEdited += ' ';
       }
+      // ignore: use_string_buffers
       areaNameEdited += charFromAreaType;
     }
     return areaNameEdited;

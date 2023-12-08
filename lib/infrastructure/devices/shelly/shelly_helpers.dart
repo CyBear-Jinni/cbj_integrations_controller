@@ -41,30 +41,36 @@ class ShellyHelpers {
         final String status = await shellyApiDeviceAbstract.getStatus();
         final dynamic responseAsJson = json.decode(status);
 
+        // ignore: avoid_dynamic_calls
         final String mac = responseAsJson['mac'] as String;
-
+        // ignore: avoid_dynamic_calls
         final dynamic bulbLightProp = responseAsJson['lights'][0];
-
+        // ignore: avoid_dynamic_calls
         final String bulbMod = bulbLightProp['mode'] as String;
         shellyApiDeviceAbstract.bulbMode =
             bulbMod == 'color' ? ShellyBulbMode.colore : ShellyBulbMode.white;
-
+        // ignore: avoid_dynamic_calls
         final int brightness = bulbLightProp['brightness'] as int;
         final int gain =
+            // ignore: avoid_dynamic_calls
             bulbLightProp['gain'] as int; // Brightness for color mod
         final int currentBrightness =
             shellyApiDeviceAbstract.bulbMode == ShellyBulbMode.colore
                 ? gain
                 : brightness;
+        // ignore: avoid_dynamic_calls
         final int temp = bulbLightProp['temp'] as int;
-
+        // ignore: avoid_dynamic_calls
         final int red = bulbLightProp['red'] as int;
+        // ignore: avoid_dynamic_calls
         final int green = bulbLightProp['green'] as int;
+        // ignore: avoid_dynamic_calls
         final int blue = bulbLightProp['blue'] as int;
 
         final RgbColor rgbColor = RgbColor(red, green, blue);
         final HsvColor hsvColor = rgbColor.toHsvColor();
 
+        // ignore: avoid_dynamic_calls
         final bool isOn = bulbLightProp['ison'] as bool;
 
         final ShellyColorLightEntity shellyColorLightEntity =
@@ -114,18 +120,23 @@ class ShellyHelpers {
         final String status = await shellyApiDeviceAbstract.getStatus();
         final dynamic responseAsJson = json.decode(status);
 
+            // ignore: avoid_dynamic_calls
         final String mac = responseAsJson['mac'] as String;
 
+            // ignore: avoid_dynamic_calls
         final dynamic bulbLightProp = responseAsJson['lights'][0];
 
         shellyApiDeviceAbstract.bulbMode = ShellyBulbMode.white;
 
+            // ignore: avoid_dynamic_calls
         final int brightness = bulbLightProp['brightness'] as int;
 
         final int currentBrightness = brightness;
 
+            // ignore: avoid_dynamic_calls
         final int temp = bulbLightProp['temp'] as int;
 
+            // ignore: avoid_dynamic_calls
         final bool isOn = bulbLightProp['ison'] as bool;
 
         final ShellyColorLightEntity shellyColorLightEntity =

@@ -4,7 +4,7 @@ import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.da
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/utils.dart';
-import 'package:http/src/response.dart';
+import 'package:http/http.dart';
 import 'package:nodered/nodered.dart';
 
 /// Control Node-RED, create scenes and more
@@ -14,7 +14,7 @@ class NodeRedRepository extends INodeRedRepository {
   }
 
   // TODO: Need to get deleted
-  static get instance => INodeRedRepository.instance;
+  static INodeRedRepository get instance => INodeRedRepository.instance;
 
   NodeRedAPI nodeRedApi = NodeRedAPI();
 
@@ -163,6 +163,7 @@ class NodeRedRepository extends INodeRedRepository {
       if (response.statusCode != 200) {
         logger.e('Error sending nodeRED flow request\n${response.body}');
       }
+      // ignore: avoid_dynamic_calls
       final String returnedFlowId = jsonDecode(response.body)['id'] as String;
       return returnedFlowId;
     } catch (e) {

@@ -141,8 +141,8 @@ class CompaniesConnectorConjecture {
               ' search mdns in the network');
           await Future.delayed(const Duration(minutes: 2));
         }
-        List<ActiveHost> activeHostList = await searchMdnsDevices();
-        for (ActiveHost activeHost in activeHostList) {
+        final List<ActiveHost> activeHostList = await searchMdnsDevices();
+        for (final ActiveHost activeHost in activeHostList) {
           setMdnsDeviceByCompany(activeHost);
         }
 
@@ -154,7 +154,7 @@ class CompaniesConnectorConjecture {
   }
 
   Future<List<ActiveHost>> searchMdnsDevices() async {
-    List<ActiveHost> activeHostList = [];
+    final List<ActiveHost> activeHostList = [];
 
     for (ActiveHost activeHost in await MdnsScanner.searchMdnsDevices(
       forceUseOfSavedSrvRecordList: true,
@@ -165,7 +165,7 @@ class CompaniesConnectorConjecture {
       // TODO: Check if this part can be deleted after pr https://github.com/osociety/network_tools/pull/165#issuecomment-1826405925
 
       if (activeHost.address == '0.0.0.0') {
-        MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
+        final MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
 
         final String? mdnsSrvTarget = mdnsInfo?.mdnsSrvTarget;
         if (mdnsSrvTarget == null) {
@@ -287,9 +287,9 @@ class CompaniesConnectorConjecture {
   /// Get all the host names in the connected networks and try to add the device
   Future<void> searchPingableDevicesAndSetThemUpByHostName() async {
     while (true) {
-      List<ActiveHost> pingableDevices = await searchPingableDevices();
+      final List<ActiveHost> pingableDevices = await searchPingableDevices();
 
-      for (ActiveHost activeHost in pingableDevices) {
+      for (final ActiveHost activeHost in pingableDevices) {
         try {
           setHostNameDeviceByCompany(
             activeHost: activeHost,
@@ -304,7 +304,7 @@ class CompaniesConnectorConjecture {
   }
 
   Future<List<ActiveHost>> searchPingableDevices() async {
-    List<ActiveHost> activeList = [];
+    final List<ActiveHost> activeList = [];
 
     final List<NetworkInterface> networkInterfaceList =
         await NetworkInterface.list();
@@ -374,19 +374,22 @@ class CompaniesConnectorConjecture {
   /// Searching devices by binding to sockets, used for devices with
   /// udp ports which can't be discovered by regular open (tcp) port scan
   Future<void> searchDevicesByBindingIntoSockets() async {
-    List<Stream<dynamic>> switcherBindingsList =
+    final List<Stream<dynamic>> switcherBindingsList =
         findSwitcherDevicesByBindingIntoSockets();
-    for (Stream<dynamic> socketBinding in switcherBindingsList) {
+    for (final Stream<dynamic> socketBinding in switcherBindingsList) {
       socketBinding.listen((switcherApiObject) {
+        if(switcherApiObject !is SwitcherApiObject){
+          return;
+        }
         SwitcherConnectorConjecture()
-            .addOnlyNewSwitcherDevice(switcherApiObject);
+            .addOnlyNewSwitcherDevice(switcherApiObject as SwitcherApiObject);
       });
     }
 
-    List<Stream<ActiveHost>> devicesWithPort =
+    final List<Stream<ActiveHost>> devicesWithPort =
         await findCbjDevicesByBindingIntoSockets();
     try {
-      for (Stream<ActiveHost> socketBinding in devicesWithPort) {
+      for (final Stream<ActiveHost> socketBinding in devicesWithPort) {
         socketBinding.listen((activeHost) {
           logger.i('Found CBJ Smart security camera: ${activeHost.address}');
 
@@ -400,7 +403,7 @@ class CompaniesConnectorConjecture {
   }
 
   Future<List<Stream<ActiveHost>>> findCbjDevicesByBindingIntoSockets() async {
-    List<Stream<ActiveHost>> bindingStream = [];
+    final List<Stream<ActiveHost>> bindingStream = [];
 
     final List<NetworkInterface> networkInterfaceList =
         await NetworkInterface.list();
@@ -417,14 +420,14 @@ class CompaniesConnectorConjecture {
         bindingStream.add(HostScanner.scanDevicesForSinglePort(
           subnet,
           50054,
-        ));
+        ),);
       }
     }
     return bindingStream;
   }
 
   List<Stream<dynamic>> findSwitcherDevicesByBindingIntoSockets() {
-    List<Stream<dynamic>> bindingStream = [];
+    final List<Stream<dynamic>> bindingStream = [];
     bindingStream.add(SwitcherDiscover.discover20002Devices());
     bindingStream.add(SwitcherDiscover.discover20003Devices());
 

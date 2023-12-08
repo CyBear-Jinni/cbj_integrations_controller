@@ -53,7 +53,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
       ISavedRoomsRepo.instance
           .addRoutineToRoomDiscoveredIfNotExist(tempRoutineCbj);
 
-      final String routineNodeRedFlowId = await NodeRedRepository.instance
+      final String routineNodeRedFlowId = await (INodeRedRepository.instance as NodeRedRepository)
           .createNewNodeRedRoutine(tempRoutineCbj);
       if (routineNodeRedFlowId.isNotEmpty) {
         tempRoutineCbj = tempRoutineCbj.copyWith(
@@ -210,8 +210,8 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
           uniqueId: UniqueId(),
           name: RoutineCbjName('Go to sleep ----------- 😴'),
           backgroundColor:
-              RoutineCbjBackgroundColor(Colors.blue.value.toString()),
-          iconCodePoint: RoutineCbjIconCodePoint(null
+              RoutineCbjBackgroundColor(Colors.blue.value),
+          iconCodePoint: RoutineCbjIconCodePoint(null,
               // FontAwesomeIcons.school.codePoint.toString(),
               ),
           image: RoutineCbjBackgroundImage(null),

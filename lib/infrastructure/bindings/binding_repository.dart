@@ -53,7 +53,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
       await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
       ISavedRoomsRepo.instance
           .addBindingToRoomDiscoveredIfNotExist(tempBindingCbj);
-      final String bindingNodeRedFlowId = await NodeRedRepository.instance
+      final String bindingNodeRedFlowId = await (INodeRedRepository.instance as NodeRedRepository)
           .createNewNodeRedBinding(tempBindingCbj);
       if (bindingNodeRedFlowId.isNotEmpty) {
         tempBindingCbj = tempBindingCbj.copyWith(
@@ -118,8 +118,8 @@ class _BindingCbjRepository implements IBindingCbjRepository {
           uniqueId: UniqueId(),
           name: BindingCbjName('Go to sleep ----------- 😴'),
           backgroundColor:
-              BindingCbjBackgroundColor(Colors.blue.value.toString()),
-          iconCodePoint: BindingCbjIconCodePoint(null
+              BindingCbjBackgroundColor(Colors.blue.value),
+          iconCodePoint: BindingCbjIconCodePoint(null,
               // FontAwesomeIcons.school.codePoint.toString(),
               ),
           image: BindingCbjBackgroundImage(null),

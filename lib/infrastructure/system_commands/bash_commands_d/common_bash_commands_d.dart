@@ -81,6 +81,7 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
         }
       }
       for (final String releaseContent in etcReleaseFilesNames) {
+        // ignore: use_string_buffers
         etcReleaseFiles += File(releaseContent).readAsStringSync();
       }
     } catch (error) {

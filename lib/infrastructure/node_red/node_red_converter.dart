@@ -297,6 +297,7 @@ class NodeRedConverter {
       if (nodes.isNotEmpty) {
         nodes += ', ';
       }
+      // ignore: use_string_buffers
       nodes += nodeRedStringNode.value;
       allNodeRedIdToConnectTo.add(nodeRedStringNode.key);
     }

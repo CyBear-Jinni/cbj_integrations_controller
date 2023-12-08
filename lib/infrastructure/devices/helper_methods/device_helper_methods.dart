@@ -34,7 +34,7 @@ class DeviceHelperMethods {
       DeviceHelperMethods._singletonContractor();
 
   RequestsAndStatusFromHub dynamicToRequestsAndStatusFromHub(
-      dynamic entityDto) {
+      dynamic entityDto,) {
     if (entityDto is DeviceEntityDtoAbstract) {
       return RequestsAndStatusFromHub(
         sendingType: SendingType.entityType,
@@ -65,10 +65,10 @@ class DeviceHelperMethods {
   }
 
   dynamic clientStatusRequestsToItsDtoType(
-      ClientStatusRequests clientStatusRequests) {
+      ClientStatusRequests clientStatusRequests,) {
     if (clientStatusRequests.sendingType == SendingType.entityType) {
       return DeviceHelper.convertJsonStringToDto(
-          clientStatusRequests.allRemoteCommands);
+          clientStatusRequests.allRemoteCommands,);
     } else if (clientStatusRequests.sendingType == SendingType.roomType) {
       return RoomEntityDtos.fromJson(
         jsonDecode(clientStatusRequests.allRemoteCommands)
@@ -77,7 +77,7 @@ class DeviceHelperMethods {
     } else if (clientStatusRequests.sendingType ==
         SendingType.vendorLoginType) {
       return VendorHelper.convertJsonStringToDto(
-          clientStatusRequests.allRemoteCommands);
+          clientStatusRequests.allRemoteCommands,);
     } else if (clientStatusRequests.sendingType ==
         SendingType.remotePipesInformation) {
       final Map<String, dynamic> jsonDecoded =
@@ -105,13 +105,13 @@ class DeviceHelperMethods {
   }
 
   Future handleClientStatusRequests(
-      ClientStatusRequests clientStatusRequests) async {
+      ClientStatusRequests clientStatusRequests,) async {
     logger.i('Got From App');
 
-    dynamic dtoEntity = clientStatusRequestsToItsDtoType(clientStatusRequests);
+    final dynamic dtoEntity = clientStatusRequestsToItsDtoType(clientStatusRequests);
 
     if (dtoEntity is DeviceEntityDtoAbstract) {
-      DeviceEntityAbstract deviceEntityAbstract = dtoEntity.toDomain();
+      final DeviceEntityAbstract deviceEntityAbstract = dtoEntity.toDomain();
       deviceEntityAbstract.entityStateGRPC =
           EntityState(EntityStateGRPC.waitingInComp.toString());
 
@@ -141,13 +141,13 @@ class DeviceHelperMethods {
       IAppCommunicationRepository.instance.sendAllScenesFromHubRequestsStream();
     } else if (dtoEntity is RemotePipesDtos) {
       ISavedDevicesRepo.instance.saveAndActivateRemotePipesDomainToDb(
-          remotePipes: dtoEntity.toDomain());
+          remotePipes: dtoEntity.toDomain(),);
     } else if (dtoEntity is SceneCbjDtos) {
       final SceneCbjEntity sceneCbj = dtoEntity.toDomain();
 
       final String sceneStateGrpcTemp = sceneCbj.entityStateGRPC.getOrCrash()!;
 
-      SceneCbjEntity sceneCopy = sceneCbj.copyWith(
+      final SceneCbjEntity sceneCopy = sceneCbj.copyWith(
         entityStateGRPC: SceneCbjDeviceStateGRPC(
           EntityStateGRPC.waitingInComp.toString(),
         ),

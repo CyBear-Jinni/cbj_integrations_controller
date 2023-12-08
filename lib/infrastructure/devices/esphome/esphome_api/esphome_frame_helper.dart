@@ -32,9 +32,9 @@ abstract class APIFrameHelper {
 class EspApiPlaintextFrameHelper extends APIFrameHelper {
   dynamic reader;
   dynamic writer;
-  dynamic write_lock;
-  dynamic read_lock;
-  dynamic closed_event;
+  dynamic writeLock;
+  dynamic readLock;
+  dynamic closedEvent;
 
   @override
   Future<void> close() {

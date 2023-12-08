@@ -48,7 +48,7 @@ abstract class ISavedRoomsRepo {
   void addBindingToRoomDiscoveredIfNotExist(BindingCbjEntity bindingCbjEntity);
 
   AreaPurposesTypes? getAreaTypeFromNameCapsWithSpaces(
-      String areaNameCapsAndSpaces);
+      String areaNameCapsAndSpaces,);
 
   Future<Either<LocalDbFailures, Unit>> saveAndActiveRoomToDb({
     required RoomEntity roomEntity,

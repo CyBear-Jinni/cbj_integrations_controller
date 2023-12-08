@@ -79,17 +79,18 @@ class SystemCommandsManager {
   }
 
   Future<String?> getIpFromMdnsName(
-      String mdnsName, String mdnsServiceType) async {
+      String mdnsName, String mdnsServiceType,) async {
     try {
       final MDnsClient client = MDnsClient();
       await client.start();
 
-      await for (final PtrResourceRecord ptr
-          in client.lookup<PtrResourceRecord>(
-              ResourceRecordQuery.serverPointer(mdnsServiceType))) {
+      await for (final PtrResourceRecord _ in client.lookup<PtrResourceRecord>(
+        ResourceRecordQuery.serverPointer(mdnsServiceType),
+      )) {
         await for (final IPAddressResourceRecord ip
             in client.lookup<IPAddressResourceRecord>(
-                ResourceRecordQuery.addressIPv4(mdnsName))) {
+          ResourceRecordQuery.addressIPv4(mdnsName),
+        )) {
           return ip.address.toString();
         }
       }
@@ -110,7 +111,7 @@ class SystemCommandsManager {
 
   Future<String?> getSnapUserCommonEnvironmentVariable() {
     return Future.value(
-        SharedVariables().getSnapUserCommonEnvironmentVariable());
+        SharedVariables().getSnapUserCommonEnvironmentVariable(),);
   }
 
   String getOs() {
