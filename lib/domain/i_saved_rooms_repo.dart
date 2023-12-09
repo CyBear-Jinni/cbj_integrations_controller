@@ -2,12 +2,12 @@ import 'dart:collection';
 import 'dart:math';
 
 import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.dart';
+import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
 import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
 import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
-import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/scene/i_scene_cbj_repository.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_failures.dart';
@@ -48,7 +48,8 @@ abstract class ISavedRoomsRepo {
   void addBindingToRoomDiscoveredIfNotExist(BindingCbjEntity bindingCbjEntity);
 
   AreaPurposesTypes? getAreaTypeFromNameCapsWithSpaces(
-      String areaNameCapsAndSpaces,);
+    String areaNameCapsAndSpaces,
+  );
 
   Future<Either<LocalDbFailures, Unit>> saveAndActiveRoomToDb({
     required RoomEntity roomEntity,

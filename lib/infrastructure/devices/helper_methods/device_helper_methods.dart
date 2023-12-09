@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:cbj_integrations_controller/domain/app_communication/i_app_communication_repository.dart';
-import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
+import 'package:cbj_integrations_controller/domain/i_app_communication_repository.dart';
+import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
+import 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';
 import 'package:cbj_integrations_controller/domain/routine/i_routine_cbj_repository.dart';
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/routine/value_objects_routine_cbj.dart';
-import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/scene/i_scene_cbj_repository.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
@@ -34,7 +34,8 @@ class DeviceHelperMethods {
       DeviceHelperMethods._singletonContractor();
 
   RequestsAndStatusFromHub dynamicToRequestsAndStatusFromHub(
-      dynamic entityDto,) {
+    dynamic entityDto,
+  ) {
     if (entityDto is DeviceEntityDtoAbstract) {
       return RequestsAndStatusFromHub(
         sendingType: SendingType.entityType,
@@ -65,10 +66,12 @@ class DeviceHelperMethods {
   }
 
   dynamic clientStatusRequestsToItsDtoType(
-      ClientStatusRequests clientStatusRequests,) {
+    ClientStatusRequests clientStatusRequests,
+  ) {
     if (clientStatusRequests.sendingType == SendingType.entityType) {
       return DeviceHelper.convertJsonStringToDto(
-          clientStatusRequests.allRemoteCommands,);
+        clientStatusRequests.allRemoteCommands,
+      );
     } else if (clientStatusRequests.sendingType == SendingType.roomType) {
       return RoomEntityDtos.fromJson(
         jsonDecode(clientStatusRequests.allRemoteCommands)
@@ -77,7 +80,8 @@ class DeviceHelperMethods {
     } else if (clientStatusRequests.sendingType ==
         SendingType.vendorLoginType) {
       return VendorHelper.convertJsonStringToDto(
-          clientStatusRequests.allRemoteCommands,);
+        clientStatusRequests.allRemoteCommands,
+      );
     } else if (clientStatusRequests.sendingType ==
         SendingType.remotePipesInformation) {
       final Map<String, dynamic> jsonDecoded =
@@ -105,10 +109,12 @@ class DeviceHelperMethods {
   }
 
   Future handleClientStatusRequests(
-      ClientStatusRequests clientStatusRequests,) async {
+    ClientStatusRequests clientStatusRequests,
+  ) async {
     logger.i('Got From App');
 
-    final dynamic dtoEntity = clientStatusRequestsToItsDtoType(clientStatusRequests);
+    final dynamic dtoEntity =
+        clientStatusRequestsToItsDtoType(clientStatusRequests);
 
     if (dtoEntity is DeviceEntityDtoAbstract) {
       final DeviceEntityAbstract deviceEntityAbstract = dtoEntity.toDomain();
@@ -141,7 +147,8 @@ class DeviceHelperMethods {
       IAppCommunicationRepository.instance.sendAllScenesFromHubRequestsStream();
     } else if (dtoEntity is RemotePipesDtos) {
       ISavedDevicesRepo.instance.saveAndActivateRemotePipesDomainToDb(
-          remotePipes: dtoEntity.toDomain(),);
+        remotePipes: dtoEntity.toDomain(),
+      );
     } else if (dtoEntity is SceneCbjDtos) {
       final SceneCbjEntity sceneCbj = dtoEntity.toDomain();
 

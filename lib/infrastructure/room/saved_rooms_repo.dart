@@ -1,4 +1,4 @@
-part of 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
+part of 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';
 
 class _SavedRoomsRepo extends ISavedRoomsRepo {
   final HashMap<String, RoomEntity> _allRooms = HashMap<String, RoomEntity>();

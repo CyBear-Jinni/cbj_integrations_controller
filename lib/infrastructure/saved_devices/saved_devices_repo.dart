@@ -1,4 +1,4 @@
-part of 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
+part of 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 
 class _SavedDevicesRepo extends ISavedDevicesRepo {
   final HashMap<String, DeviceEntityAbstract> _allDevices =
@@ -57,8 +57,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
     _allDevices[entityId] = deviceEntity;
 
     ISavedRoomsRepo.instance.addDeviceToRoomDiscoveredIfNotExist(deviceEntity);
-
-    ConnectorStreamToMqtt.toMqttController.sink.add(
+    Connector().fromMqtt(
       MapEntry<String, DeviceEntityAbstract>(
         entityId,
         _allDevices[entityId]!,
@@ -67,8 +66,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
 
     final String discoveredRoomId =
         RoomUniqueId.discoveredRoomId().getOrCrash();
-
-    ConnectorStreamToMqtt.toMqttController.sink.add(
+    Connector().fromMqtt(
       MapEntry<String, RoomEntity>(
         discoveredRoomId,
         ISavedRoomsRepo.instance.getAllRooms()[discoveredRoomId]!,

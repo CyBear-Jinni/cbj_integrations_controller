@@ -22,10 +22,10 @@ class HubClient {
       logger.i('gRPC connection state $event');
     });
     stub = CbjHubClient(channel!);
-    ResponseStream<RequestsAndStatusFromHub> response;
 
     try {
-      response = stub!.clientTransferEntities(
+      final ResponseStream<RequestsAndStatusFromHub> response =
+          stub!.clientTransferEntities(
         AppRequestsToHub.appRequestsToHubStreamBroadcast.stream,
       );
 

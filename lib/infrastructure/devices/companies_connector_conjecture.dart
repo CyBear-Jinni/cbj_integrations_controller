@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
+import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
@@ -44,25 +44,22 @@ class CompaniesConnectorConjecture {
   static final CompaniesConnectorConjecture _instance =
       CompaniesConnectorConjecture._singletonConstructor();
 
-  void updateAllDevicesReposWithDeviceChanges(
-    Stream<dynamic> allDevices,
-  ) {
-    allDevices.listen((entity) {
-      if (entity is DeviceEntityAbstract) {
-        final String deviceVendor = entity.deviceVendor.getOrCrash();
+// TODO: Change to dynamic after change
+  void updateAllDevicesReposWithDeviceChanges(dynamic entity) {
+    if (entity is DeviceEntityAbstract) {
+      final String deviceVendor = entity.deviceVendor.getOrCrash();
 
-        final AbstractCompanyConnectorConjecture? companyConnectorConjecture =
-            vendorStringToCompanyConnectorConjecture(deviceVendor);
+      final AbstractCompanyConnectorConjecture? companyConnectorConjecture =
+          vendorStringToCompanyConnectorConjecture(deviceVendor);
 
-        if (companyConnectorConjecture != null) {
-          companyConnectorConjecture.manageHubRequestsForDevice(entity);
-        } else {
-          logger.w(
-            'Cannot send device changes to its repo, company not supported $deviceVendor',
-          );
-        }
+      if (companyConnectorConjecture != null) {
+        companyConnectorConjecture.manageHubRequestsForDevice(entity);
+      } else {
+        logger.w(
+          'Cannot send device changes to its repo, company not supported $deviceVendor',
+        );
       }
-    });
+    }
   }
 
   void addAllDevicesToItsRepos(
@@ -378,7 +375,7 @@ class CompaniesConnectorConjecture {
         findSwitcherDevicesByBindingIntoSockets();
     for (final Stream<dynamic> socketBinding in switcherBindingsList) {
       socketBinding.listen((switcherApiObject) {
-        if(switcherApiObject !is SwitcherApiObject){
+        if (switcherApiObject! is SwitcherApiObject) {
           return;
         }
         SwitcherConnectorConjecture()
@@ -417,10 +414,12 @@ class CompaniesConnectorConjecture {
 
         final String subnet = ip.substring(0, ip.lastIndexOf('.'));
 
-        bindingStream.add(HostScanner.scanDevicesForSinglePort(
-          subnet,
-          50054,
-        ),);
+        bindingStream.add(
+          HostScanner.scanDevicesForSinglePort(
+            subnet,
+            50054,
+          ),
+        );
       }
     }
     return bindingStream;
