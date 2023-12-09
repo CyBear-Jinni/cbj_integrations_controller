@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_1se/yeelight_1se_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:network_tools/network_tools.dart';
 import 'package:yeedart/yeedart.dart';
 
@@ -86,11 +86,11 @@ class YeelightConnectorConjecture
 
         companyDevices.addEntries([deviceAsEntry]);
 
-        logger.i('New Yeelight device got added');
+        icLogger.i('New Yeelight device got added');
         devicesGotAdded.add(addDevice);
       }
     } catch (e) {
-      logger.e('Error discover in Yeelight\n$e');
+      icLogger.e('Error discover in Yeelight\n$e');
     }
     return devicesGotAdded;
   }
@@ -105,7 +105,7 @@ class YeelightConnectorConjecture
     if (device is Yeelight1SeEntity) {
       device.executeDeviceAction(newEntity: entity);
     } else {
-      logger.w('Yeelight device type does not exist');
+      icLogger.w('Yeelight device type does not exist');
     }
   }
 
@@ -118,7 +118,7 @@ class YeelightConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 

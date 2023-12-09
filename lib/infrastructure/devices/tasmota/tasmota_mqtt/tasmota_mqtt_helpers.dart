@@ -1,10 +1,10 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_device_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_led/tasmota_mqtt_led_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
 class TasmotaMqttHelpers {
@@ -78,7 +78,7 @@ class TasmotaMqttHelpers {
       );
     }
 
-    logger.i(
+    icLogger.i(
       'Please add new Tasmota Mqtt device type $topicsSplitted',
     );
     return null;

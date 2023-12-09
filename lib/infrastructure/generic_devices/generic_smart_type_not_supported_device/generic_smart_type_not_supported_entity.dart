@@ -1,10 +1,10 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_dto_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_type_type_not_supported_device/generic_smart_type_not_supported_device_dtos.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericSmartTypeNotSupported that exist inside a computer, the
@@ -136,7 +136,7 @@ class GenericSmartTypeNotSupportedDE extends DeviceEntityAbstract {
   Future<Either<CoreFailure, Unit>> executeDeviceAction({
     required DeviceEntityAbstract newEntity,
   }) async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -146,7 +146,7 @@ class GenericSmartTypeNotSupportedDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> turnOnSmartTypeNotSupported() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -156,7 +156,7 @@ class GenericSmartTypeNotSupportedDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> turnOffSmartTypeNotSupported() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',

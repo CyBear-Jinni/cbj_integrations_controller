@@ -8,7 +8,7 @@ class _RoomRepository implements IRoomRepository {
     try {
       return right(_allRooms.values.toImmutableList());
     } catch (e) {
-      logger.e('Unexpected error while getting all areas');
+      icLogger.e('Unexpected error while getting all areas');
       // log.error(e.toString());
       return left(const RoomFailure.unexpected());
     }

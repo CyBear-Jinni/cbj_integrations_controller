@@ -1,8 +1,8 @@
 import 'dart:io';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_base_class_d.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class CommonBashCommandsD implements SystemCommandsBaseClassD {
   @override
@@ -85,7 +85,7 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
         etcReleaseFiles += File(releaseContent).readAsStringSync();
       }
     } catch (error) {
-      logger.e(
+      icLogger.e(
         'Error getting all files from /etc/ that end with release\n$error',
       );
     }
@@ -150,7 +150,7 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
 
     final String commandResult = await Process.run('systemctl', ['suspend'])
         .then((ProcessResult result) {
-      logger.i(
+      icLogger.i(
         'Suspend exit code ${result.exitCode}\nstddout:${result.stdout}\nstderr:${result.stderr}',
       );
       return result.stdout.toString();
@@ -170,7 +170,7 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
       // await Process.run('shutdown', ['now']).then((ProcessResult result) {
       // https://forum.snapcraft.io/t/error-executing-systemctl-suspend-inside-the-snap/32186/2
       // final String commandResult = await Process.run('sudo', ['shutdown'])
-      logger.i(
+      icLogger.i(
         'Suspend exit code ${result.exitCode}\nstddout:${result.stdout}\nstderr:${result.stderr}',
       );
       return result.stdout.toString();

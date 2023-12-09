@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_device_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
@@ -8,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:network_tools/network_tools.dart';
 
 class CbjDevicesConnectorConjecture
@@ -35,7 +35,7 @@ class CbjDevicesConnectorConjecture
         return [];
       } else if (await activeHost.hostName ==
           savedDevice.entityUniqueId.getOrCrash()) {
-        logger.w(
+        icLogger.w(
           'Cbj device type supported but implementation is missing here',
         );
       }
@@ -61,7 +61,7 @@ class CbjDevicesConnectorConjecture
 
       companyDevices.addEntries([deviceAsEntry]);
 
-      logger.t(
+      icLogger.t(
         'New Cbj Smart Device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
@@ -84,7 +84,7 @@ class CbjDevicesConnectorConjecture
     if (device != null && (device is CbjSmartComputerEntity)) {
       device.executeDeviceAction(newEntity: cbjDevicesDE);
     } else {
-      logger.w('CbjDevices device type ${device.runtimeType} does not exist');
+      icLogger.w('CbjDevices device type ${device.runtimeType} does not exist');
     }
   }
   //
@@ -112,7 +112,7 @@ class CbjDevicesConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_led/tasmota_ip_led_entity.dart';
@@ -10,7 +11,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:http/http.dart';
 import 'package:network_tools/network_tools.dart';
 
@@ -50,7 +50,7 @@ class TasmotaIpConnectorConjecture
         break;
       } else if (await activeHost.hostName ==
           savedDevice.entityUniqueId.getOrCrash()) {
-        logger.w(
+        icLogger.w(
           'Tasmota IP device type supported but implementation is missing here',
         );
       }
@@ -80,7 +80,7 @@ class TasmotaIpConnectorConjecture
 
       companyDevices.addEntries([deviceAsEntry]);
 
-      logger.t(
+      icLogger.t(
         'New Tasmota Ip device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
@@ -97,7 +97,7 @@ class TasmotaIpConnectorConjecture
     if (device is TasmotaIpSwitchEntity) {
       device.executeDeviceAction(newEntity: tasmotaIpDE);
     } else {
-      logger.w('TasmotaIp device type does not exist');
+      icLogger.w('TasmotaIp device type does not exist');
     }
   }
 
@@ -137,7 +137,7 @@ class TasmotaIpConnectorConjecture
         ),
       );
     } catch (e) {
-      logger.e(e);
+      icLogger.e(e);
     }
     if (responseJson == null || responseJson.isEmpty) {
       return [];
@@ -156,7 +156,7 @@ class TasmotaIpConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 

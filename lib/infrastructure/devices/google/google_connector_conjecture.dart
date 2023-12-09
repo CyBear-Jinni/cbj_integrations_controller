@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/chrome_cast/chrome_cast_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/google_helpers.dart';
@@ -7,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
   factory GoogleConnectorConjecture() {
@@ -48,7 +48,7 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
       //   return;
       // }
       else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
+        icLogger.w(
           'Google device type supported but implementation is missing here',
         );
         return [];
@@ -76,7 +76,7 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
       companyDevices.addEntries([deviceAsEntry]);
     }
-    logger.i('New Chromecast device got added');
+    icLogger.i('New Chromecast device got added');
     return googleDevice;
   }
 
@@ -88,7 +88,7 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
     if (device is ChromeCastEntity) {
       device.executeDeviceAction(newEntity: googleDE);
     } else {
-      logger.w(
+      icLogger.w(
         'Google device type does not exist ${device?.entityTypes.getOrCrash()}',
       );
     }
@@ -103,7 +103,7 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     if (nonGenericDevice == null) {
-      logger.w('EspHome device could not get loaded from the server');
+      icLogger.w('EspHome device could not get loaded from the server');
       return;
     }
 

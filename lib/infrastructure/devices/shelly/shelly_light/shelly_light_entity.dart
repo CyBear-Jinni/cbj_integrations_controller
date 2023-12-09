@@ -1,3 +1,4 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -5,7 +6,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:color/color.dart';
 import 'package:dartz/dartz.dart';
 import 'package:shelly/shelly.dart';
@@ -115,20 +115,20 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
 
         if (actionToPreform == EntityActions.on) {
           (await turnOnLight()).fold((l) {
-            logger.e('Error turning Shelly light on');
+            icLogger.e('Error turning Shelly light on');
             throw l;
           }, (r) {
-            logger.i('Shelly light turn on success');
+            icLogger.i('Shelly light turn on success');
           });
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffLight()).fold((l) {
-            logger.e('Error turning Shelly light off');
+            icLogger.e('Error turning Shelly light off');
             throw l;
           }, (r) {
-            logger.i('Shelly light turn off success');
+            icLogger.i('Shelly light turn off success');
           });
         } else {
-          logger.e('actionToPreform is not set correctly Shelly light');
+          icLogger.e('actionToPreform is not set correctly Shelly light');
         }
       }
 
@@ -140,11 +140,11 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
         ))
             .fold(
           (l) {
-            logger.e('Error changing Shelly temperature\n$l');
+            icLogger.e('Error changing Shelly temperature\n$l');
             throw l;
           },
           (r) {
-            logger.i('Shelly changed temperature successfully');
+            icLogger.i('Shelly changed temperature successfully');
           },
         );
       }
@@ -165,11 +165,11 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
         ))
             .fold(
           (l) {
-            logger.e('Error changing Shelly light color\n$l');
+            icLogger.e('Error changing Shelly light color\n$l');
             throw l;
           },
           (r) {
-            logger.i('Shelly changed color successfully');
+            icLogger.i('Shelly changed color successfully');
           },
         );
       }
@@ -178,11 +178,11 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
           lightBrightness.getOrCrash()) {
         (await setBrightness(newEntity.lightBrightness.getOrCrash())).fold(
           (l) {
-            logger.e('Error changing Shelly brightness\n$l');
+            icLogger.e('Error changing Shelly brightness\n$l');
             throw l;
           },
           (r) {
-            logger.i('Shelly changed brightness successfully');
+            icLogger.i('Shelly changed brightness successfully');
           },
         );
       }
@@ -205,7 +205,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
     lightSwitchState = GenericRgbwLightSwitchState(EntityActions.on.toString());
 
     try {
-      logger.t('Turn on Shelly device');
+      icLogger.t('Turn on Shelly device');
       shellyColorBulb.turnOn();
       return right(unit);
     } catch (e) {
@@ -219,7 +219,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
         GenericRgbwLightSwitchState(EntityActions.off.toString());
 
     try {
-      logger.t('Turn off Shelly device');
+      icLogger.t('Turn off Shelly device');
       await shellyColorBulb.turnOff();
       return right(unit);
     } catch (exception) {

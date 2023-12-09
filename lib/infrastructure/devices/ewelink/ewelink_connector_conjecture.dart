@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_switch/ewelink_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
 import 'package:network_tools/network_tools.dart';
 
@@ -40,13 +40,13 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
       await ewelink!.getCredentials();
       discoverNewDevices(activeHost: null);
     } on EwelinkInvalidAccessToken {
-      logger.e('invalid access token');
+      icLogger.e('invalid access token');
       return false;
     } on EwelinkOfflineDeviceException {
-      logger.e('device is offline');
+      icLogger.e('device is offline');
       return false;
     } catch (e) {
-      logger.e('EweLink error: $e');
+      icLogger.e('EweLink error: $e');
       return false;
     }
     return true;
@@ -64,7 +64,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
       didRequestLogin = accountLogin(GenericEwelinkLoginDE.empty());
       if (!await didRequestLogin!) {
         didRequestLogin = null;
-        logger.w(
+        icLogger.w(
             'eWeLink device got found but missing a email and password, please add '
             'it in the app');
         return;
@@ -106,7 +106,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
         companyDevices.addEntries([deviceAsEntry]);
 
-        logger.i(
+        icLogger.i(
           'New EweLink devices name:${deviceEntityAbstract.cbjEntityName.getOrCrash()}',
         );
       }
@@ -128,7 +128,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
     if (device is EwelinkSwitchEntity) {
       device.executeDeviceAction(newEntity: ewelinkDE);
     } else {
-      logger.w('Ewelink device type does not exist');
+      icLogger.w('Ewelink device type does not exist');
     }
   }
 
@@ -143,7 +143,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     if (nonGenericDevice == null) {
-      logger.w('EweLink device could not get loaded from the server');
+      icLogger.w('EweLink device could not get loaded from the server');
       return;
     }
 

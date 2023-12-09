@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -8,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
@@ -115,25 +115,25 @@ class SwitcherV2Entity extends GenericBoilerDE {
           if (actionToPreform == EntityActions.on) {
             (await turnOnBoiler()).fold(
               (l) {
-                logger.e('Error turning boiler on');
+                icLogger.e('Error turning boiler on');
                 throw l;
               },
               (r) {
-                logger.i('Boiler turn on success');
+                icLogger.i('Boiler turn on success');
               },
             );
           } else if (actionToPreform == EntityActions.off) {
             (await turnOffBoiler()).fold(
               (l) {
-                logger.e('Error turning boiler off');
+                icLogger.e('Error turning boiler off');
                 throw l;
               },
               (r) {
-                logger.i('Boiler turn off success');
+                icLogger.i('Boiler turn off success');
               },
             );
           } else {
-            logger.e('actionToPreform is not set correctly on Switcher V2');
+            icLogger.e('actionToPreform is not set correctly on Switcher V2');
           }
         }
         entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());

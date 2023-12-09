@@ -1,12 +1,12 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_webos_tv/lg_webos_tv_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
   factory LgConnectorConjecture() {
@@ -48,7 +48,7 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
       //   return;
       // }
       else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
+        icLogger.w(
           'LG device type supported but implementation is missing here',
         );
         return [];
@@ -74,7 +74,7 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
           MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
 
       companyDevices.addEntries([deviceAsEntry]);
-      logger.i(
+      icLogger.i(
         'New LG device got added ${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
@@ -89,7 +89,7 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
     if (device is LgWebosTvEntity) {
       device.executeDeviceAction(newEntity: lgDE);
     } else {
-      logger.i('Lg device type does not exist');
+      icLogger.i('Lg device type does not exist');
     }
   }
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -7,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:yeedart/yeedart.dart';
 
@@ -113,25 +113,25 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
         if (actionToPreform == EntityActions.on) {
           (await turnOnLight()).fold(
             (l) {
-              logger.e('Error turning XiaomiIO light on');
+              icLogger.e('Error turning XiaomiIO light on');
               throw l;
             },
             (r) {
-              logger.i('XiaomiIO light turn on success');
+              icLogger.i('XiaomiIO light turn on success');
             },
           );
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffLight()).fold(
             (l) {
-              logger.e('Error turning XiaomiIO light off');
+              icLogger.e('Error turning XiaomiIO light off');
               throw l;
             },
             (r) {
-              logger.i('XiaomiIO turn off success');
+              icLogger.i('XiaomiIO turn off success');
             },
           );
         } else {
-          logger.e(
+          icLogger.e(
             'The action to preform is not set correctly on XiaomiIo Gpx4021Gl',
           );
         }
@@ -173,7 +173,7 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
 
   @override
   Future<Either<CoreFailure, Unit>> setBrightness(String brightness) async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -185,7 +185,7 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
   Future<Either<CoreFailure, Unit>> changeColorTemperature({
     required String lightColorTemperatureNewValue,
   }) async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -200,7 +200,7 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
     required String lightColorSaturationNewValue,
     required String lightColorValueNewValue,
   }) async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',

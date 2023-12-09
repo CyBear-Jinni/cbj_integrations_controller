@@ -1,3 +1,4 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_device_dtos.dart';
@@ -13,13 +14,12 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv_device/generic_smart_tv_device_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_type_type_not_supported_device/generic_smart_type_not_supported_device_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_device_dtos.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class DeviceEntityDtoAbstract {
   DeviceEntityDtoAbstract();
 
   factory DeviceEntityDtoAbstract.fromDomain() {
-    logger.t('DeviceEntityDtoAbstract.fromDomain');
+    icLogger.t('DeviceEntityDtoAbstract.fromDomain');
     return DeviceEntityDtoAbstract();
   }
 
@@ -79,12 +79,12 @@ class DeviceEntityDtoAbstract {
   final String deviceDtoClassInstance = (DeviceEntityDtoAbstract).toString();
 
   Map<String, dynamic> toJson() {
-    logger.t('DeviceEntityDtoAbstract to Json');
+    icLogger.t('DeviceEntityDtoAbstract to Json');
     return {};
   }
 
   DeviceEntityAbstract toDomain() {
-    logger.t('ToDomain');
+    icLogger.t('ToDomain');
     return DeviceEntityNotAbstract();
   }
 }

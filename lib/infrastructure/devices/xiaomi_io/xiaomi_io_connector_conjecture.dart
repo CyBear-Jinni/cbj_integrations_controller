@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xiaomi_io_gpx3021gl/xiaomi_io_gpx3021gl_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:mi_iot_token/mi_iot_token.dart';
 import 'package:network_tools/network_tools.dart';
 
@@ -47,7 +47,7 @@ class XiaomiIoConnectorConjecture
     required ActiveHost activeHost,
   }) async {
     if (miCloud == null) {
-      logger.w('Please set Xiaomi Mi credentials in the app');
+      icLogger.w('Please set Xiaomi Mi credentials in the app');
     }
 
     // try {
@@ -116,7 +116,7 @@ class XiaomiIoConnectorConjecture
     if (device is XiaomiIoGpx4021GlEntity) {
       device.executeDeviceAction(newEntity: xiaomiDE);
     } else {
-      logger.w('XiaomiIo device type does not exist');
+      icLogger.w('XiaomiIo device type does not exist');
     }
   }
 
@@ -129,7 +129,7 @@ class XiaomiIoConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Xiaomi mi device could not get loaded from the server');
+      icLogger.w('Xiaomi mi device could not get loaded from the server');
       return;
     }
 

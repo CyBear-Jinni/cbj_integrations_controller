@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -7,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart';
 
@@ -105,25 +105,26 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
         if (actionToPreform == EntityActions.on) {
           (await turnOnSwitch()).fold(
             (l) {
-              logger.e('Error turning TasmotaIp switch on');
+              icLogger.e('Error turning TasmotaIp switch on');
               throw l;
             },
             (r) {
-              logger.i('TasmotaIp switch turn on success');
+              icLogger.i('TasmotaIp switch turn on success');
             },
           );
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffSwitch()).fold(
             (l) {
-              logger.e('Error turning TasmotaIp switch off');
+              icLogger.e('Error turning TasmotaIp switch off');
               throw l;
             },
             (r) {
-              logger.i('TasmotaIp switch turn off success');
+              icLogger.i('TasmotaIp switch turn off success');
             },
           );
         } else {
-          logger.e('actionToPreform is not set correctly on TasmotaIp Switch');
+          icLogger
+              .e('actionToPreform is not set correctly on TasmotaIp Switch');
         }
       }
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());

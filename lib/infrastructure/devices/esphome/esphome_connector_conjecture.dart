@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_light/esphome_light_entity.dart';
@@ -10,7 +11,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
   factory EspHomeConnectorConjecture() {
@@ -50,7 +50,7 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     required String address,
   }) async {
     if (espHomeDevicePass == null) {
-      logger.w('ESPHome device got found but missing a password, please add '
+      icLogger.w('ESPHome device got found but missing a password, please add '
           'password for it in the app');
       return [];
     }
@@ -72,7 +72,7 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
       companyDevices.addEntries([deviceAsEntry]);
 
-      logger.i(
+      icLogger.i(
         'New ESPHome devices name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
@@ -92,7 +92,7 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     if (device != null) {
       device.executeDeviceAction(newEntity: espHomeDE);
     } else {
-      logger.w('ESPHome device type does not exist');
+      icLogger.w('ESPHome device type does not exist');
     }
   }
 
@@ -107,7 +107,7 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     if (nonGenericDevice == null) {
-      logger.w('EspHome device could not get loaded from the server');
+      icLogger.w('EspHome device could not get loaded from the server');
       return;
     }
 

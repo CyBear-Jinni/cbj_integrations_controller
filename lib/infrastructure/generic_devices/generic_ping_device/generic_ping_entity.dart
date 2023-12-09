@@ -1,3 +1,4 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -5,7 +6,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_ping_device/generic_ping_device_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_ping_device/generic_ping_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericPing that exist inside a computer, the
@@ -144,7 +144,7 @@ class GenericPingDE extends DeviceEntityAbstract {
   Future<Either<CoreFailure, Unit>> executeDeviceAction({
     required DeviceEntityAbstract newEntity,
   }) async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -154,7 +154,7 @@ class GenericPingDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> turnOnPing() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -164,7 +164,7 @@ class GenericPingDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> turnOffPing() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',

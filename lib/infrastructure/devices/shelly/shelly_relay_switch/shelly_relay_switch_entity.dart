@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -7,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:shelly/shelly.dart';
 
@@ -71,25 +71,25 @@ class ShellyRelaySwitchEntity extends GenericSwitchDE {
         if (actionToPreform == EntityActions.on) {
           (await turnOnSwitch()).fold(
             (l) {
-              logger.e('Error turning Shelly switch on\n$l');
+              icLogger.e('Error turning Shelly switch on\n$l');
               throw l;
             },
             (r) {
-              logger.i('Shelly switch turn on success');
+              icLogger.i('Shelly switch turn on success');
             },
           );
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffSwitch()).fold(
             (l) {
-              logger.e('Error turning Shelly off\n$l');
+              icLogger.e('Error turning Shelly off\n$l');
               throw l;
             },
             (r) {
-              logger.i('Shelly switch turn off success');
+              icLogger.i('Shelly switch turn off success');
             },
           );
         } else {
-          logger.w(
+          icLogger.w(
             'actionToPreform is not set correctly on Shelly Switch',
           );
         }
@@ -113,7 +113,7 @@ class ShellyRelaySwitchEntity extends GenericSwitchDE {
     switchState = GenericSwitchSwitchState(EntityActions.on.toString());
 
     try {
-      logger.t('Turn on Shelly device');
+      icLogger.t('Turn on Shelly device');
       shellyRelaySwitch.turnOn();
       return right(unit);
     } catch (e) {
@@ -126,7 +126,7 @@ class ShellyRelaySwitchEntity extends GenericSwitchDE {
     switchState = GenericSwitchSwitchState(EntityActions.off.toString());
 
     try {
-      logger.t('Turn off Shelly device');
+      icLogger.t('Turn off Shelly device');
       await shellyRelaySwitch.turnOff();
       return right(unit);
     } catch (exception) {

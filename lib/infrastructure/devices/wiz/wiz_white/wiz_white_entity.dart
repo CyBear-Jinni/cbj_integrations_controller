@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_device_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
@@ -8,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 
 class WizWhiteEntity extends GenericLightDE {
@@ -66,20 +66,20 @@ class WizWhiteEntity extends GenericLightDE {
 
         if (actionToPreform == EntityActions.on) {
           (await turnOnLight()).fold((l) {
-            logger.e('Error turning Wiz light on');
+            icLogger.e('Error turning Wiz light on');
             throw l;
           }, (r) {
-            logger.i('Wiz light turn on success');
+            icLogger.i('Wiz light turn on success');
           });
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffLight()).fold((l) {
-            logger.e('Error turning Wiz light off');
+            icLogger.e('Error turning Wiz light off');
             throw l;
           }, (r) {
-            logger.i('Wiz light turn off success');
+            icLogger.i('Wiz light turn off success');
           });
         } else {
-          logger.w('actionToPreform is not set correctly on Wiz White');
+          icLogger.w('actionToPreform is not set correctly on Wiz White');
         }
       }
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());

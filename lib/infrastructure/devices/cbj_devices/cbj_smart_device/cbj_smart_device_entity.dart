@@ -1,3 +1,4 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
@@ -6,7 +7,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 
 class CbjSmartComputerEntity extends GenericSmartComputerDE {
@@ -95,13 +95,13 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
 
         if (actionToPreform == EntityActions.suspend) {
           (await suspendSmartComputer()).fold((l) {
-            logger.e('Error suspending Cbj Computer');
+            icLogger.e('Error suspending Cbj Computer');
             throw l;
           }, (r) {
-            logger.i('Cbj Computer suspended success');
+            icLogger.i('Cbj Computer suspended success');
           });
         } else {
-          logger.e('actionToPreform is not set correctly Cbj Computer');
+          icLogger.e('actionToPreform is not set correctly Cbj Computer');
         }
       }
 
@@ -113,13 +113,13 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
         );
         if (actionToPreform == EntityActions.shutdown) {
           (await shutDownSmartComputer()).fold((l) {
-            logger.e('Error shutdown Cbj Computer');
+            icLogger.e('Error shutdown Cbj Computer');
             throw l;
           }, (r) {
-            logger.i('Cbj Computer shutdown success');
+            icLogger.i('Cbj Computer shutdown success');
           });
         } else {
-          logger.e('actionToPreform is not set correctly Cbj Computer');
+          icLogger.e('actionToPreform is not set correctly Cbj Computer');
         }
       }
 

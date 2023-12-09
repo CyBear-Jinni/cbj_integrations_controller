@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_api/esphome_objects_as_dart_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/aioesphomeapi/protoc_as_dart/aioesphomeapi/api.pbserver.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 /// Client to interact with ESPHome device
 /// TODO: All the code here need rewrite, manage to turn device on/off
@@ -54,12 +54,12 @@ class EspHomeApiClient {
 
         /// HelloRequest
         if (responseType == 1) {
-          logger.t('responseType is HelloRequest');
+          icLogger.t('responseType is HelloRequest');
         }
 
         /// HelloResponse
         else if (responseType == 2) {
-          logger.t('responseType is HelloResponse');
+          icLogger.t('responseType is HelloResponse');
           final HelloResponse? helloResponseData = bytesToHelloResponse(data);
           if (helloResponseData != null) {
             deviceResponseStream.add(
@@ -70,323 +70,323 @@ class EspHomeApiClient {
               ),
             );
           }
-          logger.t('HelloResponse data: ${helloResponseData?.serverInfo}');
-          logger.t('');
+          icLogger.t('HelloResponse data: ${helloResponseData?.serverInfo}');
+          icLogger.t('');
         }
 
         /// ConnectRequest
         else if (responseType == 3) {
-          logger.t('responseType is ConnectRequest');
+          icLogger.t('responseType is ConnectRequest');
         }
 
         /// ConnectResponse
         else if (responseType == 4) {
-          logger.t('responseType is ConnectResponse');
-          logger.t(
+          icLogger.t('responseType is ConnectResponse');
+          icLogger.t(
             'ConnectResponse data: ${utf8.decode(data.sublist(3), allowMalformed: true)}',
           );
-          logger.t('Data: $data');
+          icLogger.t('Data: $data');
           if (data.length > 3) {
-            logger.t('Password is wrong');
+            icLogger.t('Password is wrong');
             devicePass = null;
           } else {
-            logger.t('Correct password');
+            icLogger.t('Correct password');
           }
-          logger.t('');
+          icLogger.t('');
         }
 
         /// DisconnectRequest
         else if (responseType == 5) {
-          logger.t('responseType is DisconnectRequest');
+          icLogger.t('responseType is DisconnectRequest');
         }
 
         /// DisconnectResponse
         else if (responseType == 6) {
-          logger.t('responseType is DisconnectResponse');
+          icLogger.t('responseType is DisconnectResponse');
         }
 
         /// PingRequest
         else if (responseType == 7) {
-          logger.t('responseType is PingRequest');
-          logger.t('PingRequest data: ${utf8.decode(data.sublist(3))}');
-          logger.t('');
+          icLogger.t('responseType is PingRequest');
+          icLogger.t('PingRequest data: ${utf8.decode(data.sublist(3))}');
+          icLogger.t('');
         }
 
         /// PingResponse
         else if (responseType == 8) {
-          logger.t('responseType is PingResponse');
-          logger.t('PingResponse data: ${utf8.decode(data.sublist(3))}');
-          logger.t('');
+          icLogger.t('responseType is PingResponse');
+          icLogger.t('PingResponse data: ${utf8.decode(data.sublist(3))}');
+          icLogger.t('');
         }
 
         /// DeviceInfoRequest
         else if (responseType == 9) {
-          logger.t('responseType is DeviceInfoRequest');
+          icLogger.t('responseType is DeviceInfoRequest');
         }
 
         /// DeviceInfoResponse
         else if (responseType == 10) {
-          logger.t('responseType is DeviceInfoResponse');
-          logger.t('DeviceInfoResponse data: $data');
-          logger.t('');
+          icLogger.t('responseType is DeviceInfoResponse');
+          icLogger.t('DeviceInfoResponse data: $data');
+          icLogger.t('');
         }
 
         /// ListEntitiesRequest
         else if (responseType == 11) {
-          logger.t('responseType is ListEntitiesRequest');
+          icLogger.t('responseType is ListEntitiesRequest');
         }
 
         /// ListEntitiesBinarySensorResponse
         else if (responseType == 12) {
-          logger.t('responseType is ListEntitiesBinarySensorResponse');
+          icLogger.t('responseType is ListEntitiesBinarySensorResponse');
         }
 
         /// ListEntitiesCoverResponse
         else if (responseType == 13) {
-          logger.t('responseType is ListEntitiesCoverResponse');
+          icLogger.t('responseType is ListEntitiesCoverResponse');
         }
 
         /// ListEntitiesFanResponse
         else if (responseType == 14) {
-          logger.t('responseType is ListEntitiesFanResponse');
+          icLogger.t('responseType is ListEntitiesFanResponse');
         }
 
         /// ListEntitiesLightResponse
         else if (responseType == 15) {
-          logger.t('responseType is ListEntitiesLightResponse');
+          icLogger.t('responseType is ListEntitiesLightResponse');
         }
 
         /// ListEntitiesSensorResponse
         else if (responseType == 16) {
-          logger.t('responseType is ListEntitiesSensorResponse');
+          icLogger.t('responseType is ListEntitiesSensorResponse');
         }
 
         /// ListEntitiesSwitchResponse
         else if (responseType == 17) {
-          logger.t('responseType is ListEntitiesSwitchResponse');
+          icLogger.t('responseType is ListEntitiesSwitchResponse');
           String dataPayload = '';
 
           try {
             dataPayload = data.length > 3 ? utf8.decode(data.sublist(3)) : '';
 
-            logger.t(
+            icLogger.t(
               'ListEntitiesSwitchResponse data payload:'
               ' $dataPayload',
             );
           } catch (e) {
-            logger.t(
+            icLogger.t(
               'ListEntitiesSwitchResponse data bytes:'
               ' $data',
             );
           }
-          logger.t('');
+          icLogger.t('');
         }
 
         /// ListEntitiesTextSensorResponse
         else if (responseType == 18) {
-          logger.t('responseType is ListEntitiesTextSensorResponse');
+          icLogger.t('responseType is ListEntitiesTextSensorResponse');
         }
 
         /// dsaDoneResponse
         else if (responseType == 19) {
-          logger.t('responseType is ListEntitiesDoneResponse');
-          logger.t(
+          icLogger.t('responseType is ListEntitiesDoneResponse');
+          icLogger.t(
             'ListEntitiesDoneResponse data: ${utf8.decode(data.sublist(3))}',
           );
-          logger.t('');
+          icLogger.t('');
         }
 
         /// SubscribeStatesRequest
         else if (responseType == 20) {
-          logger.t('responseType is SubscribeStatesRequest');
+          icLogger.t('responseType is SubscribeStatesRequest');
         }
 
         /// BinarySensorStateResponse
         else if (responseType == 21) {
-          logger.t('responseType is BinarySensorStateResponse');
+          icLogger.t('responseType is BinarySensorStateResponse');
         }
 
         /// CoverStateResponse
         else if (responseType == 22) {
-          logger.t('responseType is CoverStateResponse');
+          icLogger.t('responseType is CoverStateResponse');
         }
 
         /// FanStateResponse
         else if (responseType == 23) {
-          logger.t('responseType is FanStateResponse');
+          icLogger.t('responseType is FanStateResponse');
         }
 
         /// LightStateResponse
         else if (responseType == 24) {
-          logger.t('responseType is LightStateResponse');
+          icLogger.t('responseType is LightStateResponse');
         }
 
         /// SensorStateResponse
         else if (responseType == 25) {
-          logger.t('responseType is SensorStateResponse');
+          icLogger.t('responseType is SensorStateResponse');
         }
 
         /// SwitchStateResponse
         else if (responseType == 26) {
-          logger.t('responseType is SwitchStateResponse');
-          logger.t('SwitchStateResponse data: $data}');
-          logger.t('');
+          icLogger.t('responseType is SwitchStateResponse');
+          icLogger.t('SwitchStateResponse data: $data}');
+          icLogger.t('');
         }
 
         /// TextSensorStateResponse
         else if (responseType == 27) {
-          logger.t('responseType is TextSensorStateResponse');
+          icLogger.t('responseType is TextSensorStateResponse');
         }
 
         /// SubscribeLogsRequest
         else if (responseType == 28) {
-          logger.t('responseType is SubscribeLogsRequest');
+          icLogger.t('responseType is SubscribeLogsRequest');
         }
 
         /// SubscribeLogsResponse
         else if (responseType == 29) {
-          logger.t('responseType is SubscribeLogsResponse');
+          icLogger.t('responseType is SubscribeLogsResponse');
         }
 
         /// CoverCommandRequest
         else if (responseType == 30) {
-          logger.t('responseType is CoverCommandRequest');
+          icLogger.t('responseType is CoverCommandRequest');
         }
 
         /// FanCommandRequest
         else if (responseType == 31) {
-          logger.t('responseType is FanCommandRequest');
+          icLogger.t('responseType is FanCommandRequest');
         }
 
         /// LightCommandRequest
         else if (responseType == 32) {
-          logger.t('responseType is LightCommandRequest');
+          icLogger.t('responseType is LightCommandRequest');
         }
 
         /// SwitchCommandRequest
         else if (responseType == 33) {
-          logger.t('responseType is SwitchCommandRequest');
+          icLogger.t('responseType is SwitchCommandRequest');
         }
 
         /// SubscribeHomeassistantServicesRequest
         else if (responseType == 34) {
-          logger.t('responseType is SubscribeHomeassistantServicesRequest');
+          icLogger.t('responseType is SubscribeHomeassistantServicesRequest');
         }
 
         /// HomeassistantServiceResponse
         else if (responseType == 35) {
-          logger.t('responseType is HomeassistantServiceResponse');
+          icLogger.t('responseType is HomeassistantServiceResponse');
         }
 
         /// GetTimeRequest
         else if (responseType == 36) {
-          logger.t('responseType is GetTimeRequest');
+          icLogger.t('responseType is GetTimeRequest');
         }
 
         /// GetTimeResponse
         else if (responseType == 37) {
-          logger.t('responseType is GetTimeResponse');
+          icLogger.t('responseType is GetTimeResponse');
         }
 
         /// SubscribeHomeAssistantStatesRequest
         else if (responseType == 38) {
-          logger.t('responseType is SubscribeHomeAssistantStatesRequest');
+          icLogger.t('responseType is SubscribeHomeAssistantStatesRequest');
         }
 
         /// SubscribeHomeAssistantStateResponse
         else if (responseType == 39) {
-          logger.t('responseType is SubscribeHomeAssistantStateResponse');
+          icLogger.t('responseType is SubscribeHomeAssistantStateResponse');
         }
 
         /// HomeAssistantStateResponse
         else if (responseType == 40) {
-          logger.t('responseType is HomeAssistantStateResponse');
+          icLogger.t('responseType is HomeAssistantStateResponse');
         }
 
         /// ListEntitiesServicesResponse
         else if (responseType == 41) {
-          logger.t('responseType is ListEntitiesServicesResponse');
+          icLogger.t('responseType is ListEntitiesServicesResponse');
         }
 
         /// ExecuteServiceRequest
         else if (responseType == 42) {
-          logger.t('responseType is ExecuteServiceRequest');
+          icLogger.t('responseType is ExecuteServiceRequest');
         }
 
         /// ListEntitiesCameraResponse
         else if (responseType == 43) {
-          logger.t('responseType is ListEntitiesCameraResponse');
+          icLogger.t('responseType is ListEntitiesCameraResponse');
         }
 
         /// CameraImageResponse
         else if (responseType == 44) {
-          logger.t('responseType is CameraImageResponse');
+          icLogger.t('responseType is CameraImageResponse');
         }
 
         /// CameraImageRequest
         else if (responseType == 45) {
-          logger.t('responseType is CameraImageRequest');
+          icLogger.t('responseType is CameraImageRequest');
         }
 
         /// ListEntitiesClimateResponse
         else if (responseType == 46) {
-          logger.t('responseType is ListEntitiesClimateResponse');
+          icLogger.t('responseType is ListEntitiesClimateResponse');
         }
 
         /// ClimateStateResponse
         else if (responseType == 47) {
-          logger.t('responseType is ClimateStateResponse');
+          icLogger.t('responseType is ClimateStateResponse');
         }
 
         /// ClimateCommandRequest
         else if (responseType == 48) {
-          logger.t('responseType is ClimateCommandRequest');
+          icLogger.t('responseType is ClimateCommandRequest');
         }
 
         /// ListEntitiesNumberResponse
         else if (responseType == 49) {
-          logger.t('responseType is ListEntitiesNumberResponse');
+          icLogger.t('responseType is ListEntitiesNumberResponse');
         }
 
         /// NumberStateResponse
         else if (responseType == 50) {
-          logger.t('responseType is NumberStateResponse');
+          icLogger.t('responseType is NumberStateResponse');
         }
 
         /// NumberCommandRequest
         else if (responseType == 51) {
-          logger.t('responseType is NumberCommandRequest');
+          icLogger.t('responseType is NumberCommandRequest');
         }
 
         /// ListEntitiesSelectResponse
         else if (responseType == 52) {
-          logger.t('responseType is ListEntitiesSelectResponse');
+          icLogger.t('responseType is ListEntitiesSelectResponse');
         }
 
         /// SelectStateResponse
         else if (responseType == 53) {
-          logger.t('responseType is SelectStateResponse');
+          icLogger.t('responseType is SelectStateResponse');
         }
 
         /// SelectCommandRequest
         else if (responseType == 54) {
-          logger.t('responseType is SelectCommandRequest');
+          icLogger.t('responseType is SelectCommandRequest');
         } else {
-          logger.t('responseType is else');
-          logger.t('Listen to data $data');
-          logger.t('');
+          icLogger.t('responseType is else');
+          icLogger.t('Listen to data $data');
+          icLogger.t('');
         }
       },
 
       // handle errors
       onError: (error) {
-        logger.e(error);
+        icLogger.e(error);
         socket.destroy();
       },
 
       // handle server ending connection
       onDone: () {
-        logger.t('Server left.');
+        icLogger.t('Server left.');
         socket.destroy();
       },
     );
@@ -531,7 +531,7 @@ class EspHomeApiClient {
   Future<void> ping() async {
     // connect to the socket server
     final socket = await getSocket();
-    logger.t(
+    icLogger.t(
       'Connected request to: '
       '${socket.remoteAddress.address}:${socket.remotePort}',
     );
@@ -566,7 +566,7 @@ class EspHomeApiClient {
   Future<void> deviceInfoRequestToEsp() async {
     // connect to the socket server
     final socket = await getSocket();
-    logger.t(
+    icLogger.t(
       'Connected request to:'
       ' ${socket.remoteAddress.address}:${socket.remotePort}',
     );
@@ -601,7 +601,7 @@ class EspHomeApiClient {
   Future<void> subscribeStatesRequest() async {
     // connect to the socket server
     final socket = await getSocket();
-    logger.t(
+    icLogger.t(
       'Connected request to:'
       ' ${socket.remoteAddress.address}:${socket.remotePort}',
     );
@@ -635,12 +635,12 @@ class EspHomeApiClient {
 
   Future<void> switchCommandRequest(int deviceKey, bool changeTostate) async {
     if (devicePass == null) {
-      logger.t('Please call sendConnect, password is missing');
+      icLogger.t('Please call sendConnect, password is missing');
       return;
     }
     // connect to the socket server
     final socket = await getSocket();
-    logger.t(
+    icLogger.t(
       'Connected request to:'
       ' ${socket.remoteAddress.address}:${socket.remotePort}',
     );
@@ -673,7 +673,7 @@ class EspHomeApiClient {
 
     final ByteData byteData = ByteData.view(message.buffer);
 
-    logger.t(myHexKeyList);
+    icLogger.t(myHexKeyList);
 
     /// A zero byte.
     byteData.setUint8(0, 0x00);
@@ -691,7 +691,7 @@ class EspHomeApiClient {
       byteData.setUint8(a, myHexKeyList[a - numOfByteBeforeData]);
     }
 
-    logger.t('switchCommandRequest message: $message');
+    icLogger.t('switchCommandRequest message: $message');
 
 //  * The message object encoded as a ProtoBuf message
     socket.add(message);
@@ -700,12 +700,12 @@ class EspHomeApiClient {
 
   Future<void> listEntitiesRequest() async {
     if (devicePass == null) {
-      logger.t('Please call sendConnect, password is missing');
+      icLogger.t('Please call sendConnect, password is missing');
       return;
     }
     // connect to the socket server
     final socket = await getSocket();
-    logger.t(
+    icLogger.t(
       'Connected request to:'
       ' ${socket.remoteAddress.address}:${socket.remotePort}',
     );
@@ -730,7 +730,7 @@ class EspHomeApiClient {
     ///  * VarInt denoting the type of message.
     byteData.setUint8(2, 11);
 
-    logger.t('ListEntitiesRequest message: $message');
+    icLogger.t('ListEntitiesRequest message: $message');
 
 //  * The message object encoded as a ProtoBuf message
     socket.add(message);
@@ -771,7 +771,7 @@ class EspHomeApiClient {
         return deviceIpList[0].address;
       }
     } catch (e) {
-      logger.e(
+      icLogger.e(
         'Crash when searching the IP for device with mDNS\n$e',
       );
     }

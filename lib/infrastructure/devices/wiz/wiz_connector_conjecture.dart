@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/vendors/wiz_login/generic_wiz_login_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_white/wiz_white_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:network_tools/network_tools.dart';
 
 class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
@@ -29,7 +29,7 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
   Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
     required ActiveHost activeHost,
   }) async {
-    logger.w('Wiz device got discovered but missing implementation');
+    icLogger.w('Wiz device got discovered but missing implementation');
     // final List<CoreUniqueId?> tempCoreUniqueId = [];
     //
     // for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
@@ -129,7 +129,7 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
         // }
         await Future.delayed(const Duration(minutes: 3));
       } catch (e) {
-        logger.e('Error discover in Wiz\n$e');
+        icLogger.e('Error discover in Wiz\n$e');
         await Future.delayed(const Duration(minutes: 1));
       }
     }
@@ -145,7 +145,7 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
     if (device is WizWhiteEntity) {
       device.executeDeviceAction(newEntity: wizDE);
     } else {
-      logger.w('Wiz device type does not exist');
+      icLogger.w('Wiz device type does not exist');
     }
   }
 

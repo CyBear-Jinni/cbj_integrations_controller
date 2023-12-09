@@ -1,7 +1,7 @@
 import 'package:cbj_integrations_controller/domain/room/room_failures.dart';
 import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/room/room_entity_dtos.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -51,7 +51,7 @@ abstract class RoomEntity implements _$RoomEntity {
     try {
       roomDevicesId = RoomDevicesId(tempList);
     } catch (e) {
-      logger.e('addDeviceId will not work if list got created with const');
+      icLogger.e('addDeviceId will not work if list got created with const');
     }
   }
 
@@ -63,7 +63,7 @@ abstract class RoomEntity implements _$RoomEntity {
     try {
       roomScenesId = RoomScenesId(tempList);
     } catch (e) {
-      logger.e('addSceneId will not work if list got created with const');
+      icLogger.e('addSceneId will not work if list got created with const');
     }
   }
 
@@ -75,7 +75,7 @@ abstract class RoomEntity implements _$RoomEntity {
     try {
       roomRoutinesId = RoomRoutinesId(tempList);
     } catch (e) {
-      logger.e('addRoutineId will not work if list got created with const');
+      icLogger.e('addRoutineId will not work if list got created with const');
     }
   }
 
@@ -84,7 +84,7 @@ abstract class RoomEntity implements _$RoomEntity {
     try {
       roomBindingsId.getOrCrash().add(newSceneId);
     } catch (e) {
-      logger.e('addBindingId will not work if list got created with const');
+      icLogger.e('addBindingId will not work if list got created with const');
     }
   }
 

@@ -317,7 +317,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
           areaPurposeType,
         );
         sceneOrFailure.fold(
-          (l) => logger.e('Error creating scene from room type'),
+          (l) => icLogger.e('Error creating scene from room type'),
           (r) {
             //Add scene id to room
             roomEntityTemp.addSceneId(r.uniqueId.getOrCrash());
@@ -327,7 +327,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
       }
       return right(_allRooms[roomEntityTemp.uniqueId.getOrCrash()]!);
     } catch (e) {
-      logger.e('Error setting new scene from room type\n$e');
+      icLogger.e('Error setting new scene from room type\n$e');
       return left(const LocalDbFailures.unexpected());
     }
   }

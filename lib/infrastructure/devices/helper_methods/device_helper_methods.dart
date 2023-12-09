@@ -10,6 +10,7 @@ import 'package:cbj_integrations_controller/domain/routine/value_objects_routine
 import 'package:cbj_integrations_controller/domain/scene/i_scene_cbj_repository.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -21,7 +22,6 @@ import 'package:cbj_integrations_controller/infrastructure/room/room_entity_dtos
 import 'package:cbj_integrations_controller/infrastructure/routines/routine_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/scene_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/vendors/vendor_helper.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class DeviceHelperMethods {
   factory DeviceHelperMethods() {
@@ -57,7 +57,7 @@ class DeviceHelperMethods {
         allRemoteCommands: jsonEncode(entityDto.toJson()),
       );
     } else {
-      logger.w('Not sure what type to send');
+      icLogger.w('Not sure what type to send');
       return RequestsAndStatusFromHub(
         sendingType: SendingType.undefinedType,
         allRemoteCommands: '',
@@ -102,7 +102,7 @@ class DeviceHelperMethods {
 
       return RoutineCbjDtos.fromJson(jsonRoutineFromJsonString);
     } else {
-      logger.w('Request from app does not support this sending device type');
+      icLogger.w('Request from app does not support this sending device type');
     }
 
     return null;
@@ -111,7 +111,7 @@ class DeviceHelperMethods {
   Future handleClientStatusRequests(
     ClientStatusRequests clientStatusRequests,
   ) async {
-    logger.i('Got From App');
+    icLogger.i('Got From App');
 
     final dynamic dtoEntity =
         clientStatusRequestsToItsDtoType(clientStatusRequests);
@@ -184,7 +184,7 @@ class DeviceHelperMethods {
         // IRoutineCbjRepository.instance.activateRoutine(routineCbj);
       }
     } else {
-      logger.w('Request from app does not support this sending device type');
+      icLogger.w('Request from app does not support this sending device type');
     }
   }
 }

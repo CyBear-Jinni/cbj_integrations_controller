@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff__diy_wall_switch/sonoff_diy_mod_wall_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff_diy_helpers.dart';
@@ -7,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class SonoffDiyConnectorConjecture
     implements AbstractCompanyConnectorConjecture {
@@ -42,7 +42,7 @@ class SonoffDiyConnectorConjecture
         tempCoreUniqueId = device.uniqueId;
         break;
       } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
+        icLogger.w(
           'Sonoff device type supported but implementation is missing here',
         );
         return [];
@@ -70,7 +70,7 @@ class SonoffDiyConnectorConjecture
 
       companyDevices.addEntries([deviceAsEntry]);
     }
-    logger.t('New Sonoff diy devices name:$mDnsName');
+    icLogger.t('New Sonoff diy devices name:$mDnsName');
     return sonoffDevices;
   }
 
@@ -84,7 +84,7 @@ class SonoffDiyConnectorConjecture
     if (device is SonoffDiyRelaySwitchEntity) {
       device.executeDeviceAction(newEntity: sonoffDiyDE);
     } else {
-      logger.w('Sonoff diy device type does not exist');
+      icLogger.w('Sonoff diy device type does not exist');
     }
   }
 

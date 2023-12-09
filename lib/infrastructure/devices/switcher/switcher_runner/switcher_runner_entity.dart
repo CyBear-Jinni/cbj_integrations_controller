@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -8,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
@@ -111,27 +111,28 @@ class SwitcherRunnerEntity extends GenericBlindsDE {
 
           if (actionToPreform == EntityActions.moveUp) {
             (await moveUpBlinds()).fold((l) {
-              logger.e('Error turning blinds up');
+              icLogger.e('Error turning blinds up');
               throw l;
             }, (r) {
-              logger.i('Blinds up success');
+              icLogger.i('Blinds up success');
             });
           } else if (actionToPreform == EntityActions.stop) {
             (await stopBlinds()).fold((l) {
-              logger.e('Error stopping blinds');
+              icLogger.e('Error stopping blinds');
               throw l;
             }, (r) {
-              logger.i('Blinds stop success');
+              icLogger.i('Blinds stop success');
             });
           } else if (actionToPreform == EntityActions.moveDown) {
             (await moveDownBlinds()).fold((l) {
-              logger.e('Error turning blinds down');
+              icLogger.e('Error turning blinds down');
               throw l;
             }, (r) {
-              logger.i('Blinds down success');
+              icLogger.i('Blinds down success');
             });
           } else {
-            logger.e('actionToPreform is not set correctly on Switcher Runner');
+            icLogger
+                .e('actionToPreform is not set correctly on Switcher Runner');
           }
         }
         entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());

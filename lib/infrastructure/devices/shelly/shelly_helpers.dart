@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_light/shelly_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_relay_switch/shelly_relay_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
@@ -7,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:color/color.dart';
 import 'package:shelly/shelly.dart';
 
@@ -120,23 +120,23 @@ class ShellyHelpers {
         final String status = await shellyApiDeviceAbstract.getStatus();
         final dynamic responseAsJson = json.decode(status);
 
-            // ignore: avoid_dynamic_calls
+        // ignore: avoid_dynamic_calls
         final String mac = responseAsJson['mac'] as String;
 
-            // ignore: avoid_dynamic_calls
+        // ignore: avoid_dynamic_calls
         final dynamic bulbLightProp = responseAsJson['lights'][0];
 
         shellyApiDeviceAbstract.bulbMode = ShellyBulbMode.white;
 
-            // ignore: avoid_dynamic_calls
+        // ignore: avoid_dynamic_calls
         final int brightness = bulbLightProp['brightness'] as int;
 
         final int currentBrightness = brightness;
 
-            // ignore: avoid_dynamic_calls
+        // ignore: avoid_dynamic_calls
         final int temp = bulbLightProp['temp'] as int;
 
-            // ignore: avoid_dynamic_calls
+        // ignore: avoid_dynamic_calls
         final bool isOn = bulbLightProp['ison'] as bool;
 
         final ShellyColorLightEntity shellyColorLightEntity =
@@ -204,10 +204,10 @@ class ShellyHelpers {
         );
         deviceEntityList.add(shellyRelaySwitchEntity);
       } else {
-        logger.i('Shelly device types is not supported');
+        icLogger.i('Shelly device types is not supported');
       }
     } catch (e) {
-      logger.e('Error setting shelly\n$e');
+      icLogger.e('Error setting shelly\n$e');
     }
 
     return deviceEntityList;

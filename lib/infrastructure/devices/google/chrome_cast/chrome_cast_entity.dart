@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:nodered/nodered.dart';
 
@@ -86,7 +86,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
   Future<void> setUpNodeRedApi() async {
     // TODO: add check to add  uniqueId + action as flow in node read only if missing
     if (lastKnownIp == null) {
-      logger.w('Chromecast last known ip is null');
+      icLogger.w('Chromecast last known ip is null');
       return;
     }
 
@@ -124,10 +124,10 @@ class ChromeCastEntity extends GenericSmartTvDE {
               newEntity.entityStateGRPC.getOrCrash() !=
                   EntityStateGRPC.ack.toString())) {
         (await sendUrlToDevice(newEntity.openUrl!.getOrCrash())).fold((l) {
-          logger.e('Error opening url on ChromeCast');
+          icLogger.e('Error opening url on ChromeCast');
           throw l;
         }, (r) {
-          logger.i('ChromeCast opening url success');
+          icLogger.i('ChromeCast opening url success');
         });
       }
 
@@ -138,10 +138,10 @@ class ChromeCastEntity extends GenericSmartTvDE {
                   EntityStateGRPC.ack.toString())) {
         (await togglePausePlay(newEntity.pausePlayState!.getOrCrash())).fold(
             (l) {
-          logger.e('Error toggle pause or play on ChromeCast');
+          icLogger.e('Error toggle pause or play on ChromeCast');
           throw l;
         }, (r) {
-          logger.i('ChromeCast toggle pause or play success');
+          icLogger.i('ChromeCast toggle pause or play success');
         });
       }
 

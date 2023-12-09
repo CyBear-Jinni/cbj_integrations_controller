@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_led/tasmota_mqtt_led_entity.dart';
@@ -8,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class TasmotaMqttConnectorConjecture
     implements AbstractCompanyConnectorConjecture {
@@ -64,7 +64,7 @@ class TasmotaMqttConnectorConjecture
           tempCoreUniqueId = savedDevice.uniqueId;
           break;
         } else if (deviceId == savedDevice.entityUniqueId.getOrCrash()) {
-          logger.e(
+          icLogger.e(
             'Tasmota Mqtt device type supported but implementation is missing here',
           );
           return;
@@ -92,7 +92,7 @@ class TasmotaMqttConnectorConjecture
           MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
 
       companyDevices.addEntries([deviceAsEntry]);
-      logger.t('Adding Tasmota mqtt device');
+      icLogger.t('Adding Tasmota mqtt device');
     });
   }
 
@@ -106,7 +106,7 @@ class TasmotaMqttConnectorConjecture
     if (device is TasmotaMqttLedEntity) {
       device.executeDeviceAction(newEntity: tasmotaMqttDE);
     } else {
-      logger.w('TasmotaMqtt device type does not exist');
+      icLogger.w('TasmotaMqtt device type does not exist');
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_runner/switcher_runner_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_smart_plug/switcher_smart_plug_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_v2/switcher_v2_entity.dart';
@@ -7,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherHelpers {
@@ -148,7 +148,7 @@ class SwitcherHelpers {
       return switcherSmartPlugDe;
     }
 
-    logger.i(
+    icLogger.i(
       'Please add new Switcher device type ${switcherDevice.deviceType}',
     );
     return null;

@@ -1,6 +1,6 @@
 // import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 // import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_python_api/esphome_python_json_objects_type.dart';
-// import 'package:cbj_integrations_controller/utils.dart';
+// import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 // import 'package:python_shell/python_shell.dart';
 //
 // class EspHomePythonApi {

@@ -1,12 +1,12 @@
 import 'dart:io';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/bash_commands_d/bash_commands_for_raspberry_pi_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/bash_commands_d/common_bash_commands_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/batch_commands_d/common_batch_commands_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/phone_commands_d/common_batch_commands_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_base_class_d.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 
 class SystemCommandsManager {
@@ -16,19 +16,19 @@ class SystemCommandsManager {
 
   SystemCommandsManager._singletonContractor() {
     if (Platform.isAndroid || Platform.isIOS) {
-      logger.t('Mobile platform detected in SystemCommandsManager');
+      icLogger.t('Mobile platform detected in SystemCommandsManager');
       systemCommandsBaseClassD = IPhoneCommandsD.instance;
     } else if (Platform.isLinux) {
-      logger.t('Linux platform detected in SystemCommandsManager');
+      icLogger.t('Linux platform detected in SystemCommandsManager');
       systemCommandsBaseClassD = CommonBashCommandsD();
     } else if (Platform.isWindows) {
-      logger.t('Windows platform detected in SystemCommandsManager');
+      icLogger.t('Windows platform detected in SystemCommandsManager');
       systemCommandsBaseClassD = CommonBatchCommandsD();
     } else if (Platform.isMacOS) {
-      logger.w('Mac os is currently not supported in SystemCommandsManager');
+      icLogger.w('Mac os is currently not supported in SystemCommandsManager');
       throw 'Mac os is currently not supported';
     } else {
-      logger.e(
+      icLogger.e(
         '${Platform.operatingSystem} os is not supported in SystemCommandsManager',
       );
       throw '${Platform.operatingSystem} os is not supported';
@@ -79,7 +79,9 @@ class SystemCommandsManager {
   }
 
   Future<String?> getIpFromMdnsName(
-      String mdnsName, String mdnsServiceType,) async {
+    String mdnsName,
+    String mdnsServiceType,
+  ) async {
     try {
       final MDnsClient client = MDnsClient();
       await client.start();
@@ -96,7 +98,7 @@ class SystemCommandsManager {
       }
       client.stop();
     } catch (e) {
-      logger.e('Error mdns lookup $e');
+      icLogger.e('Error mdns lookup $e');
     }
     return null;
   }
@@ -111,7 +113,8 @@ class SystemCommandsManager {
 
   Future<String?> getSnapUserCommonEnvironmentVariable() {
     return Future.value(
-        SharedVariables().getSnapUserCommonEnvironmentVariable(),);
+      SharedVariables().getSnapUserCommonEnvironmentVariable(),
+    );
   }
 
   String getOs() {

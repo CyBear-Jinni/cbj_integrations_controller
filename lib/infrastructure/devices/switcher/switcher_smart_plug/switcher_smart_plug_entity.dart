@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -8,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
@@ -115,25 +115,25 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
           if (actionToPreform == EntityActions.on) {
             (await turnOnSmartPlug()).fold(
               (l) {
-                logger.e('Error turning smart plug on');
+                icLogger.e('Error turning smart plug on');
                 throw l;
               },
               (r) {
-                logger.i('Smart plug turn on success');
+                icLogger.i('Smart plug turn on success');
               },
             );
           } else if (actionToPreform == EntityActions.off) {
             (await turnOffSmartPlug()).fold(
               (l) {
-                logger.e('Error turning smart plug off');
+                icLogger.e('Error turning smart plug off');
                 throw l;
               },
               (r) {
-                logger.i('Smart plug turn off success');
+                icLogger.i('Smart plug turn off success');
               },
             );
           } else {
-            logger.e(
+            icLogger.e(
               'actionToPreform is not set correctly on Switcher Smart Plug',
             );
           }

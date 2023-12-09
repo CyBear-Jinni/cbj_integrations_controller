@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_printer/hp_printer_entity.dart';
@@ -7,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_printer_device/generic_printer_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
   factory HpConnectorConjecture() {
@@ -38,7 +38,7 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
               ip == device.deviceLastKnownIp.getOrCrash())) {
         return [];
       } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
+        icLogger.w(
           'HP device type supported but implementation is missing here',
         );
         return [];
@@ -65,7 +65,7 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
       companyDevices.addEntries([deviceAsEntry]);
     }
-    logger.i('New HP device got added');
+    icLogger.i('New HP device got added');
     return hpDevice;
   }
 
@@ -79,7 +79,7 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
     if (device is HpPrinterEntity) {
       device.executeDeviceAction(newEntity: hpDE);
     } else {
-      logger.w('HP device type does not exist');
+      icLogger.w('HP device type does not exist');
     }
   }
 
@@ -92,7 +92,7 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 

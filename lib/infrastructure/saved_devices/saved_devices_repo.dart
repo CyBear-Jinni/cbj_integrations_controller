@@ -34,7 +34,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
     if (updateFromMqtt is DeviceEntityAbstract) {
       return addOrUpdateDevice(updateFromMqtt);
     } else {
-      logger.w('Add or update type from MQTT not supported');
+      icLogger.w('Add or update type from MQTT not supported');
     }
     return null;
   }

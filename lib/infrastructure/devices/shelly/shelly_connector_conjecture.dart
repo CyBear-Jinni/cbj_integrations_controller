@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_light/shelly_light_entity.dart';
@@ -9,7 +10,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
   factory ShellyConnectorConjecture() {
@@ -45,7 +45,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
         tempCoreUniqueId = device.uniqueId;
         break;
       } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
+        icLogger.w(
           'Shelly device type supported but implementation is missing here',
         );
         return [];
@@ -73,7 +73,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
       companyDevices.addEntries([deviceAsEntry]);
     }
-    logger.t('New shelly devices name:$mDnsName');
+    icLogger.t('New shelly devices name:$mDnsName');
     return shellyDevice;
   }
 
@@ -89,7 +89,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
     } else if (device is ShellyRelaySwitchEntity) {
       device.executeDeviceAction(newEntity: shellyDE);
     } else {
-      logger.w('Shelly device type does not exist');
+      icLogger.w('Shelly device type does not exist');
     }
   }
 
@@ -102,7 +102,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 

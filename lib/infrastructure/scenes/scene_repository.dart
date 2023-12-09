@@ -65,7 +65,8 @@ class _SceneCbjRepository implements ISceneCbjRepository {
         tempSceneCbj.automationString.getOrCrash() !=
             existingScene.automationString.getOrCrash()) {
       sceneNodeRedFlowId =
-          await (INodeRedRepository.instance as NodeRedRepository).createNewNodeRedScene(tempSceneCbj);
+          await (INodeRedRepository.instance as NodeRedRepository)
+              .createNewNodeRedScene(tempSceneCbj);
     }
 
     if (sceneNodeRedFlowId.isNotEmpty) {
@@ -228,7 +229,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
 
     for (final String sceneId in scenesId) {
       if (_allScenes[sceneId] == null) {
-        logger.w('Scene ID does not exist in saved scenes list\n $sceneId');
+        icLogger.w('Scene ID does not exist in saved scenes list\n $sceneId');
         continue;
       }
       final SceneCbjEntity sceneCbjEntity = _allScenes[sceneId]!;
@@ -281,7 +282,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       }
       brokerNodeId = tempValue;
     } catch (e) {
-      logger.e('Error decoding automation string\n$sceneAutomationString');
+      icLogger.e('Error decoding automation string\n$sceneAutomationString');
     }
     final Map<String, String> nodeActionsMap = {};
     final List<String> nodeRedFuncNodesIds = [];
@@ -373,8 +374,8 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       if (tempScene != null) {
         scene = scene.copyWith(nodeRedFlowId: tempScene.nodeRedFlowId);
 
-        nodeRedFlowId =
-            await (INodeRedRepository.instance as NodeRedRepository).createNewNodeRedScene(scene);
+        nodeRedFlowId = await (INodeRedRepository.instance as NodeRedRepository)
+            .createNewNodeRedScene(scene);
 
         scene =
             scene.copyWith(nodeRedFlowId: SceneCbjNodeRedFlowId(nodeRedFlowId));
@@ -405,7 +406,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
         }
       }
     } catch (e) {
-      logger.e('Error decoding automation string\n$sceneAutomationString');
+      icLogger.e('Error decoding automation string\n$sceneAutomationString');
     }
     return null;
   }
@@ -437,7 +438,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
           '$sceneAutomationStringBeforeType$sceneAutomationStringBeforeKey"$keyToChange":  $valueToInsert\n$sceneAutomationStringAfterKey';
       return finalString;
     } catch (e) {
-      logger.e(
+      icLogger.e(
         'Wrong node or key in node $sceneAutomationString $nodeType $keyToChange $valueToInsert\n $e',
       );
     }

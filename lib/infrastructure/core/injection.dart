@@ -1,5 +1,5 @@
-import 'package:cbj_integrations_controller/injection.config.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/injection.config.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
@@ -11,7 +11,7 @@ late String currentEnv;
 @injectableInit
 Future<void> configureInjection(String environment) async {
   currentEnv = environment;
-  logger.i('Current CyBear Jinni Hub environment name: $currentEnv');
+  icLogger.i('Current CyBear Jinni Hub environment name: $currentEnv');
   getItCbj.init(environment: environment);
 }
 

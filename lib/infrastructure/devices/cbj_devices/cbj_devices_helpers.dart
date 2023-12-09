@@ -1,3 +1,4 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_camera_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_device_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
@@ -6,7 +7,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_security_camera_device/generic_security_camera_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class CbjDevicesHelpers {
   static List<DeviceEntityAbstract> addDiscoveredDevice({
@@ -97,7 +97,7 @@ class CbjDevicesHelpers {
           deviceCbjUniqueId: CoreUniqueId(),
         );
       } else {
-        logger.w('Cbj Smart Device type is not supported ${deviceType.name}');
+        icLogger.w('Cbj Smart Device type is not supported ${deviceType.name}');
         continue;
       }
 

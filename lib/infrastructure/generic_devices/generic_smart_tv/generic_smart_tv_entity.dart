@@ -1,3 +1,4 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -5,7 +6,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv_device/generic_smart_tv_device_dtos.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericSmartTv that exist inside a computer, the
@@ -155,7 +155,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
   Future<Either<CoreFailure, Unit>> executeDeviceAction({
     required DeviceEntityAbstract newEntity,
   }) async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -165,7 +165,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> turnOnSmartTv() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -175,7 +175,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> turnOffSmartTv() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -185,7 +185,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> sendUrlToDevice(String newUrl) async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -197,7 +197,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
   Future<Either<CoreFailure, Unit>> togglePausePlay(
     String toggleNewState,
   ) async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -207,7 +207,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> togglePause() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -217,7 +217,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> togglePlay() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -227,7 +227,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> toggleStop() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -237,7 +237,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> queueNext() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -247,7 +247,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> queuePrev() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',
@@ -257,7 +257,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> closeApp() async {
-    logger.w('Please override this method in the non generic implementation');
+    icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
         failedValue: 'Action does not exist',

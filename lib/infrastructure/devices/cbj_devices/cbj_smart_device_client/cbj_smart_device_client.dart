@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:grpc/grpc.dart';
 import 'package:network_tools/network_tools.dart';
 
@@ -39,7 +39,7 @@ class CbjSmartDeviceClient {
           response.smartDevicesInComp;
       return smartDevicesList;
     } catch (e) {
-      logger.e('Caught error while stream with cbj smart device\n$e');
+      icLogger.e('Caught error while stream with cbj smart device\n$e');
       await channel?.shutdown();
     }
     return [];
@@ -93,7 +93,7 @@ class CbjSmartDeviceClient {
 
       return response;
     } catch (e) {
-      logger.e('Caught error while suspending cbj smart device\n$e');
+      icLogger.e('Caught error while suspending cbj smart device\n$e');
       await channel?.shutdown();
     }
     return null;
@@ -115,7 +115,7 @@ class CbjSmartDeviceClient {
 
       return response;
     } catch (e) {
-      logger.e('Caught error while shut down cbj smart device\n$e');
+      icLogger.e('Caught error while shut down cbj smart device\n$e');
       await channel?.shutdown();
     }
     return null;

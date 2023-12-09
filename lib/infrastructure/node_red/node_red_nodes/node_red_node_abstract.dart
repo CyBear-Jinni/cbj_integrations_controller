@@ -1,4 +1,4 @@
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:uuid/uuid.dart';
 
 class NodeRedNodeAbstract {
@@ -18,7 +18,7 @@ class NodeRedNodeAbstract {
 
   @override
   String toString() {
-    logger.e('Abstract class does not support to string');
+    icLogger.e('Abstract class does not support to string');
     throw 'Abstract class does not support to string';
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_e26/philips_hue_e26_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_helpers.dart';
@@ -7,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class PhilipsHueConnectorConjecture
     implements AbstractCompanyConnectorConjecture {
@@ -47,7 +47,7 @@ class PhilipsHueConnectorConjecture
               ip == device.deviceLastKnownIp.getOrCrash())) {
         return [];
       } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
+        icLogger.w(
           'HP device type supported but implementation is missing here',
         );
         return [];
@@ -76,7 +76,7 @@ class PhilipsHueConnectorConjecture
 
       companyDevices.addEntries([deviceAsEntry]);
     }
-    logger.i('New Philips Hue device got added');
+    icLogger.i('New Philips Hue device got added');
     return phillipsDevice;
   }
 
@@ -90,7 +90,7 @@ class PhilipsHueConnectorConjecture
     if (device is PhilipsHueE26Entity) {
       device.executeDeviceAction(newEntity: philipsHueDE);
     } else {
-      logger.w('PhilipsHue device type does not exist');
+      icLogger.w('PhilipsHue device type does not exist');
     }
   }
 
@@ -103,7 +103,7 @@ class PhilipsHueConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 

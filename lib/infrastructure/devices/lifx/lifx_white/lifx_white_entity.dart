@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
@@ -8,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
@@ -96,20 +96,20 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
 
         if (actionToPreform == EntityActions.on) {
           (await turnOnLight()).fold((l) {
-            logger.e('Error turning Lifx light on');
+            icLogger.e('Error turning Lifx light on');
             throw l;
           }, (r) {
-            logger.i('Lifx light turn on success');
+            icLogger.i('Lifx light turn on success');
           });
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffLight()).fold((l) {
-            logger.e('Error turning Lifx light off');
+            icLogger.e('Error turning Lifx light off');
             throw l;
           }, (r) {
-            logger.i('Lifx light turn off success');
+            icLogger.i('Lifx light turn off success');
           });
         } else {
-          logger.w('actionToPreform is not set correctly on Lifx White');
+          icLogger.w('actionToPreform is not set correctly on Lifx White');
         }
       }
 
@@ -117,11 +117,11 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
           lightBrightness.getOrCrash()) {
         (await setBrightness(newEntity.lightBrightness.getOrCrash())).fold(
           (l) {
-            logger.e('Error changing Lifx brightness\n$l');
+            icLogger.e('Error changing Lifx brightness\n$l');
             throw l;
           },
           (r) {
-            logger.i('Lifx changed brightness successfully');
+            icLogger.i('Lifx changed brightness successfully');
           },
         );
       }

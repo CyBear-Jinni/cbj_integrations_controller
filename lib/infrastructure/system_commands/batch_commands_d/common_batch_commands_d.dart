@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_base_class_d.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class CommonBatchCommandsD implements SystemCommandsBaseClassD {
   String? currentUserName;
@@ -80,7 +80,7 @@ class CommonBatchCommandsD implements SystemCommandsBaseClassD {
       fileContent = await getFileContent('$fileFullPath.txt');
     }
     if (fileContent.isEmpty) {
-      logger.w(
+      icLogger.w(
         'Config file does not exist or empty, path searching: $fileFullPath',
       );
       return '';

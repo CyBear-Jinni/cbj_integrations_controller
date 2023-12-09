@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_runner/switcher_runner_entity.dart';
@@ -11,7 +12,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherConnectorConjecture
@@ -49,7 +49,7 @@ class SwitcherConnectorConjecture
         break;
       } else if (switcherApiObject.deviceId ==
           savedDevice.entityUniqueId.getOrCrash()) {
-        logger.w(
+        icLogger.w(
           'Switcher device type supported but implementation is missing here',
         );
         break;
@@ -95,7 +95,7 @@ class SwitcherConnectorConjecture
             device is SwitcherSmartPlugEntity)) {
       device.executeDeviceAction(newEntity: switcherDE);
     } else {
-      logger.w('Switcher device type ${device.runtimeType} does not exist');
+      icLogger.w('Switcher device type ${device.runtimeType} does not exist');
     }
   }
 
@@ -119,7 +119,7 @@ class SwitcherConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 

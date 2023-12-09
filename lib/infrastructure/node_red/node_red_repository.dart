@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:http/http.dart';
 import 'package:nodered/nodered.dart';
 
@@ -48,20 +48,20 @@ class NodeRedRepository extends INodeRedRepository {
         final String flowId = responseBodyJson["id"] as String;
         return flowId;
       } else if (response.statusCode == 400) {
-        logger.w(
+        icLogger.w(
           'Scene probably already exist in node red status code\n${response.statusCode}',
         );
       } else {
-        logger.e(
+        icLogger.e(
           'Error setting scene in node red status code\n${response.statusCode}',
         );
       }
     } catch (e) {
       if (e.toString() ==
           'The remote computer refused the network connection.\r\n') {
-        logger.e('Node-RED is not installed');
+        icLogger.e('Node-RED is not installed');
       } else {
-        logger.e('Node-RED create new scene error:\n$e');
+        icLogger.e('Node-RED create new scene error:\n$e');
       }
     }
     return "";
@@ -87,20 +87,20 @@ class NodeRedRepository extends INodeRedRepository {
         final String flowId = responseBodyJson["id"] as String;
         return flowId;
       } else if (response.statusCode == 400) {
-        logger.w(
+        icLogger.w(
           'Routine probably already exist in node red status code\n${response.statusCode}',
         );
       } else {
-        logger.e(
+        icLogger.e(
           'Error setting routine in node red status code\n${response.statusCode}',
         );
       }
     } catch (e) {
       if (e.toString() ==
           'The remote computer refused the network connection.\r\n') {
-        logger.e('Node-RED is not installed');
+        icLogger.e('Node-RED is not installed');
       } else {
-        logger.e('Node-RED create new routine error:\n$e');
+        icLogger.e('Node-RED create new routine error:\n$e');
       }
     }
     return "";
@@ -123,20 +123,20 @@ class NodeRedRepository extends INodeRedRepository {
         final String flowId = responseBodyJson["id"] as String;
         return flowId;
       } else if (response.statusCode == 400) {
-        logger.w(
+        icLogger.w(
           'Binding probably already exist in node red status code\n${response.statusCode}',
         );
       } else {
-        logger.e(
+        icLogger.e(
           'Error setting binding in node red status code\n${response.statusCode}',
         );
       }
     } catch (e) {
       if (e.toString() ==
           'The remote computer refused the network connection.\r\n') {
-        logger.e('Node-RED is not installed');
+        icLogger.e('Node-RED is not installed');
       } else {
-        logger.e('Node-RED create new Binding error:\n$e');
+        icLogger.e('Node-RED create new Binding error:\n$e');
       }
     }
     return "";
@@ -161,7 +161,7 @@ class NodeRedRepository extends INodeRedRepository {
         flowId: flowId,
       );
       if (response.statusCode != 200) {
-        logger.e('Error sending nodeRED flow request\n${response.body}');
+        icLogger.e('Error sending nodeRED flow request\n${response.body}');
       }
       // ignore: avoid_dynamic_calls
       final String returnedFlowId = jsonDecode(response.body)['id'] as String;
@@ -169,9 +169,9 @@ class NodeRedRepository extends INodeRedRepository {
     } catch (e) {
       if (e.toString() ==
           'The remote computer refused the network connection.\r\n') {
-        logger.e('Node-RED is not installed');
+        icLogger.e('Node-RED is not installed');
       } else {
-        logger.e('Node-RED setting flow with module $moduleToUse\n$e');
+        icLogger.e('Node-RED setting flow with module $moduleToUse\n$e');
       }
     }
     return "";
@@ -191,10 +191,11 @@ class NodeRedRepository extends INodeRedRepository {
         nodes: nodes,
       );
       if (response.statusCode != 200) {
-        logger.e('Error sending nodeRED global node request\n${response.body}');
+        icLogger
+            .e('Error sending nodeRED global node request\n${response.body}');
       }
     } catch (e) {
-      logger.e('Node-RED setting global node with module $moduleToUse\n$e');
+      icLogger.e('Node-RED setting global node with module $moduleToUse\n$e');
       return e.toString();
     }
     return "ok";
@@ -211,10 +212,11 @@ class NodeRedRepository extends INodeRedRepository {
         flowId: flowId,
       );
       if (response.statusCode != 200) {
-        logger.e('Error updating nodeRED flow node request\n${response.body}');
+        icLogger
+            .e('Error updating nodeRED flow node request\n${response.body}');
       }
     } catch (e) {
-      logger.e('Node-RED updating flow\n$e');
+      icLogger.e('Node-RED updating flow\n$e');
     }
     return "";
   }

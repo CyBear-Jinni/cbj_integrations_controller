@@ -8,6 +8,7 @@ import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_connector_conjecture.dart';
@@ -29,7 +30,6 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:network_tools/network_tools.dart';
 import 'package:switcher_dart/switcher_dart.dart';
@@ -55,7 +55,7 @@ class CompaniesConnectorConjecture {
       if (companyConnectorConjecture != null) {
         companyConnectorConjecture.manageHubRequestsForDevice(entity);
       } else {
-        logger.w(
+        icLogger.w(
           'Cannot send device changes to its repo, company not supported $deviceVendor',
         );
       }
@@ -89,7 +89,7 @@ class CompaniesConnectorConjecture {
     if (companyConnectorConjecture != null) {
       companyConnectorConjecture.setUpDeviceFromDb(devicesEntry.value);
     } else {
-      logger.w('Cannot add device entity to its repo, type not supported');
+      icLogger.w('Cannot add device entity to its repo, type not supported');
     }
   }
 
@@ -115,7 +115,8 @@ class CompaniesConnectorConjecture {
     } else if (loginEntity is GenericEwelinkLoginDE) {
       EwelinkConnectorConjecture().accountLogin(loginEntity);
     } else {
-      logger.w('Vendor login type ${loginEntity.runtimeType} is not supported');
+      icLogger
+          .w('Vendor login type ${loginEntity.runtimeType} is not supported');
     }
   }
 
@@ -134,7 +135,7 @@ class CompaniesConnectorConjecture {
           if (result) {
             break;
           }
-          logger.w('No internet connection detected, will try again in 2m to'
+          icLogger.w('No internet connection detected, will try again in 2m to'
               ' search mdns in the network');
           await Future.delayed(const Duration(minutes: 2));
         }
@@ -146,7 +147,7 @@ class CompaniesConnectorConjecture {
         await Future.delayed(const Duration(minutes: 2));
       }
     } catch (e) {
-      logger.e('Mdns search error\n$e');
+      icLogger.e('Mdns search error\n$e');
     }
   }
 
@@ -177,7 +178,7 @@ class CompaniesConnectorConjecture {
         try {
           activeHost = activeHost..internetAddress = InternetAddress(deviceIp);
         } catch (e) {
-          logger.e('Error setting internet address $e');
+          icLogger.e('Error setting internet address $e');
         }
       }
 
@@ -275,7 +276,7 @@ class CompaniesConnectorConjecture {
         port: mdnsPort,
       );
     } else {
-      logger.t(
+      icLogger.t(
         'mDNS service type ${hostMdnsInfo.mdnsServiceType} is not supported\n IP: ${activeHost.address}, Port: ${hostMdnsInfo.mdnsPort}, ServiceType: ${hostMdnsInfo.mdnsServiceType}, MdnsName: ${hostMdnsInfo.getOnlyTheStartOfMdnsName()}',
       );
     }
@@ -388,14 +389,14 @@ class CompaniesConnectorConjecture {
     try {
       for (final Stream<ActiveHost> socketBinding in devicesWithPort) {
         socketBinding.listen((activeHost) {
-          logger.i('Found CBJ Smart security camera: ${activeHost.address}');
+          icLogger.i('Found CBJ Smart security camera: ${activeHost.address}');
 
           CbjDevicesConnectorConjecture()
               .addNewDeviceByHostInfo(activeHost: activeHost);
         });
       }
     } catch (e) {
-      logger.w('Exception searchForHub\n$e');
+      icLogger.w('Exception searchForHub\n$e');
     }
   }
 
@@ -481,7 +482,7 @@ class CompaniesConnectorConjecture {
       return EwelinkConnectorConjecture();
     }
 
-    logger.w(
+    icLogger.w(
       'Please add vendor to support string $vendorName to connector conjecture',
     );
 

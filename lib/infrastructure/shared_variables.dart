@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 
 class SharedVariables {
   factory SharedVariables() {
@@ -8,7 +8,7 @@ class SharedVariables {
   }
 
   SharedVariables._singletonConstructor() {
-    logger.i('PATH: $_projectRootDirectoryPath');
+    icLogger.i('PATH: $_projectRootDirectoryPath');
   }
 
   static final SharedVariables _instance =
@@ -19,7 +19,7 @@ class SharedVariables {
 
   Future<void> asyncConstructor(String projectRootDirectoryPath) async {
     _projectRootDirectoryPath = projectRootDirectoryPath;
-    logger.t('PATH: $_projectRootDirectoryPath');
+    icLogger.t('PATH: $_projectRootDirectoryPath');
   }
 
   String? getProjectRootDirectoryPath() => _projectRootDirectoryPath;
