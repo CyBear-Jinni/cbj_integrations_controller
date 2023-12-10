@@ -2,11 +2,12 @@ import 'dart:io';
 
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
 import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
-import 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
+import 'package:cbj_integrations_controller/domain/local_db/i_local_db_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/injection.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/search_devices.dart';
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/device_pin_manager.dart';
 
@@ -29,8 +30,7 @@ Future initializeIntegrationsController({
   //  Setting device model and checking if configuration for this model exist
   await DevicePinListManager().setPhysicalDeviceType();
 
-  await ICbjIntegrationsControllerDbRepository.instance
-      .initializeDb(isFlutter: false);
+  await IDbRepository.instance.initializeDb(isFlutter: false);
 
   icLogger.t('');
 }
@@ -43,14 +43,7 @@ Future setupIntegrationsController() async {
 
   CompaniesConnectorConjecture().addAllDevicesToItsRepos(allDevices);
 
-  CompaniesConnectorConjecture().searchAllMdnsDevicesAndSetThemUp();
+  SearchDevices().startSearch();
 
-  CompaniesConnectorConjecture().searchPingableDevicesAndSetThemUpByHostName();
-
-  CompaniesConnectorConjecture().searchDevicesByBindingIntoSockets();
-
-  CompaniesConnectorConjecture().searchDevicesByMqttPath();
-
-  CompaniesConnectorConjecture().notImplementedDevicesSearch();
   await IMqttServerRepository.instance.asyncConstructor();
 }

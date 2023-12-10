@@ -2,7 +2,6 @@ import 'package:cbj_integrations_controller/domain/routine/value_objects_routine
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_nodes/node_red_visual_node_abstract.dart';
 
-///
 class NodeRedInjectAtASpecificTimeNode extends NodeRedVisualNodeAbstract {
   NodeRedInjectAtASpecificTimeNode({
     required this.daysToRepeat,

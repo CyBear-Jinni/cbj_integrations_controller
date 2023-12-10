@@ -1,7 +1,7 @@
-part of 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
+part of 'package:cbj_integrations_controller/domain/local_db/i_local_db_repository.dart';
 
 /// Only ISavedDevicesRepo need to call functions here
-class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
+class _HiveRepository extends IDbRepository {
   /// Name of the box that stores Remote Pipes credentials
   String remotePipesBoxName = 'remotePipesBox';
 

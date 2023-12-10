@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_runner/switcher_runner_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_smart_plug/switcher_smart_plug_entity.dart';

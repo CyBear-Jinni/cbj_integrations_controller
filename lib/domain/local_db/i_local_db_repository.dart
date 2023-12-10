@@ -25,8 +25,8 @@ import 'package:cbj_integrations_controller/domain/vendors/login_abstract/value_
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/bindings/binding_cbj_dtos.dart';
+import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -52,10 +52,10 @@ import 'package:hive/hive.dart';
 part 'package:cbj_integrations_controller/infrastructure/local_db/local_db_hive_repository.dart';
 
 /// Only ISavedDevicesRepo need to call functions here
-abstract class ICbjIntegrationsControllerDbRepository {
-  static ICbjIntegrationsControllerDbRepository? _instance;
+abstract class IDbRepository {
+  static IDbRepository? _instance;
 
-  static ICbjIntegrationsControllerDbRepository get instance {
+  static IDbRepository get instance {
     return _instance ??= _HiveRepository();
   }
 

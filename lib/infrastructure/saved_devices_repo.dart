@@ -8,9 +8,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ICbjIntegrationsControllerDbRepository.instance
-        .getSmartDevicesFromDb()
-        .then((value) {
+    await IDbRepository.instance.getSmartDevicesFromDb().then((value) {
       value.fold((l) => null, (r) {
         for (final element in r) {
           addOrUpdateDevice(element);
@@ -86,7 +84,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
     getItCbj<IAppCommunicationRepository>()
         .startRemotePipesConnection(rpDomainName);
 
-    return ICbjIntegrationsControllerDbRepository.instance
+    return IDbRepository.instance
         .saveRemotePipes(remotePipesDomainName: rpDomainName);
   }
 
@@ -97,7 +95,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
   }) async {
     CompaniesConnectorConjecture().setVendorLoginCredentials(loginEntity);
 
-    return ICbjIntegrationsControllerDbRepository.instance
+    return IDbRepository.instance
         .saveVendorLoginCredentials(loginEntityAbstract: loginEntity);
   }
 
@@ -118,7 +116,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
   @override
   Future<Either<LocalDbFailures, Unit>>
       saveAndActivateSmartDevicesToDb() async {
-    return ICbjIntegrationsControllerDbRepository.instance.saveSmartDevices(
+    return IDbRepository.instance.saveSmartDevices(
       deviceList: List<DeviceEntityAbstract>.from(_allDevices.values),
     );
   }
