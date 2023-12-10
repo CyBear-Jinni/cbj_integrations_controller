@@ -2,53 +2,41 @@ import 'package:cbj_integrations_controller/infrastructure/devices/google/chrome
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_value_objects.dart';
 
 class GoogleHelpers {
-  static List<DeviceEntityAbstract> addDiscoveredDevice({
-    required String mDnsName,
-    required String ip,
-    required String port,
-    required CoreUniqueId? uniqueDeviceId,
-  }) {
-    CoreUniqueId uniqueDeviceIdTemp;
-
-    if (uniqueDeviceId != null) {
-      uniqueDeviceIdTemp = uniqueDeviceId;
-    } else {
-      uniqueDeviceIdTemp = CoreUniqueId();
-    }
-
+  static List<DeviceEntityAbstract> addDiscoveredDevice(
+    GenericGenericUnsupportedDE entity,
+  ) {
     final ChromeCastEntity googleDE = ChromeCastEntity(
-      uniqueId: uniqueDeviceIdTemp,
-      entityUniqueId: EntityUniqueId(mDnsName),
-      cbjEntityName: CbjEntityName('Chromecast'),
-      entityOriginalName: EntityOriginalName('Chromecast'),
-      deviceOriginalName: DeviceOriginalName('Chromecast'),
-      entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
-      senderDeviceOs: DeviceSenderDeviceOs('Android'),
-      senderDeviceModel: DeviceSenderDeviceModel('1SE'),
-      senderId: DeviceSenderId(),
-      compUuid: DeviceCompUuid('34asdfrsd23gggg'),
-      deviceMdnsName: DeviceMdns(mDnsName),
-      srvResourceRecord: DeviceSrvResourceRecord(),
-      ptrResourceRecord: DevicePtrResourceRecord(),
-      lastKnownIp: DeviceLastKnownIp(ip),
-      stateMassage: DeviceStateMassage('Hello World'),
-      powerConsumption: DevicePowerConsumption('0'),
+      uniqueId: entity.uniqueId,
+      entityUniqueId: EntityUniqueId(entity.deviceMdns.getOrCrash()),
+      cbjEntityName: entity.cbjEntityName,
+      entityOriginalName: entity.entityOriginalName,
+      deviceOriginalName: entity.deviceOriginalName,
+      entityStateGRPC: entity.entityStateGRPC,
+      senderDeviceOs: entity.senderDeviceOs,
+      senderDeviceModel: entity.senderDeviceModel,
+      senderId: entity.senderId,
+      compUuid: entity.compUuid,
+      deviceMdns: entity.deviceMdns,
+      srvResourceRecord: entity.srvResourceRecord,
+      ptrResourceRecord: entity.ptrResourceRecord,
+      deviceLastKnownIp: entity.deviceLastKnownIp,
+      stateMassage: entity.stateMassage,
+      powerConsumption: entity.powerConsumption,
+      devicePort: entity.devicePort,
+      deviceUniqueId: entity.deviceUniqueId,
+      deviceHostName: entity.deviceHostName,
+      devicesMacAddress: entity.devicesMacAddress,
+      entityKey: entity.entityKey,
+      requestTimeStamp: entity.requestTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
+      deviceCbjUniqueId: entity.deviceCbjUniqueId,
       smartTvSwitchState: GenericSmartTvSwitchState(
         EntityActions.actionNotSupported.toString(),
       ),
-      deviceUniqueId: DeviceUniqueId('0'),
-      devicePort: DevicePort(port),
-      deviceLastKnownIp: DeviceLastKnownIp('0'),
-      deviceHostName: DeviceHostName('0'),
-      deviceMdns: DeviceMdns('0'),
-      devicesMacAddress: DevicesMacAddress('0'),
-      entityKey: EntityKey('0'),
-      requestTimeStamp: RequestTimeStamp('0'),
-      lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-      deviceCbjUniqueId: CoreUniqueId(),
     );
 
     return [googleDE];

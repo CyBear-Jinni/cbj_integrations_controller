@@ -42,8 +42,6 @@ class ChromeCastEntity extends GenericSmartTvDE {
     super.pausePlayState,
     super.skip,
     super.volume,
-    this.deviceMdnsName,
-    this.lastKnownIp,
   }) : super(
           deviceVendor: DeviceVendor(VendorsAndServices.google.toString()),
         ) {
@@ -81,15 +79,11 @@ class ChromeCastEntity extends GenericSmartTvDE {
     );
   }
 
-  DeviceLastKnownIp? lastKnownIp;
-
-  DeviceMdns? deviceMdnsName;
-
   late ChromecastNodeRedApi chromecastNodeRedApi;
 
   Future<void> setUpNodeRedApi() async {
     // TODO: add check to add  uniqueId + action as flow in node read only if missing
-    if (lastKnownIp == null) {
+    if (deviceLastKnownIp.getOrCrash() == null) {
       icLogger.w('Chromecast last known ip is null');
       return;
     }
@@ -105,7 +99,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
 
     chromecastNodeRedApi.setNewYoutubeVideoNodes(
       uniqueId.getOrCrash(),
-      lastKnownIp!.getOrCrash(),
+      deviceLastKnownIp.getOrCrash()!,
     );
   }
 

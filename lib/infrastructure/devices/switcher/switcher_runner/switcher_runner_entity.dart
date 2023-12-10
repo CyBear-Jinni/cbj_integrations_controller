@@ -46,7 +46,7 @@ class SwitcherRunnerEntity extends GenericBlindsDE {
     switcherObject = SwitcherApiObject(
       deviceType: SwitcherDevicesTypes.switcherRunner,
       deviceId: entityUniqueId.getOrCrash(),
-      switcherIp: deviceLastKnownIp.getOrCrash(),
+      switcherIp: deviceLastKnownIp.getOrCrash()!,
       switcherName: cbjEntityName.getOrCrash()!,
       macAddress: devicesMacAddress.getOrCrash(),
       port: int.parse(devicePort.getOrCrash()),

@@ -6,7 +6,7 @@ import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_helpers
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_printer/hp_printer_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_printer_device/generic_printer_entity.dart';
 
 class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
@@ -25,19 +25,22 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
   /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    CoreUniqueId? tempCoreUniqueId;
+  Future addNewDeviceByMdnsName(
+    GenericGenericUnsupportedDE entity,
+  ) async {
+    final String? ip = entity.deviceLastKnownIp.getOrCrash();
+
+    final String? mdnsName = entity.deviceMdns.getOrCrash();
+    if (mdnsName == null) {
+      return;
+    }
 
     for (final DeviceEntityAbstract device in companyDevices.values) {
       if (device is HpPrinterEntity &&
-          (mDnsName == device.entityUniqueId.getOrCrash() ||
-              ip == device.deviceLastKnownIp.getOrCrash())) {
+          (mdnsName == device.entityUniqueId.getOrCrash() ||
+              (ip != null && ip == device.deviceLastKnownIp.getOrCrash()))) {
         return [];
-      } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
+      } else if (mdnsName == device.entityUniqueId.getOrCrash()) {
         icLogger.w(
           'HP device type supported but implementation is missing here',
         );
@@ -46,10 +49,7 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     final List<DeviceEntityAbstract> hpDevice = HpHelpers.addDiscoveredDevice(
-      mDnsName: mDnsName,
-      ip: ip,
-      port: port,
-      uniqueDeviceId: tempCoreUniqueId,
+      entity,
     );
 
     if (hpDevice.isEmpty) {

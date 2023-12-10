@@ -42,7 +42,7 @@ class SonoffDiyRelaySwitchEntity extends GenericSwitchDE {
           deviceVendor: DeviceVendor(VendorsAndServices.sonoffDiy.toString()),
         ) {
     sonoffDiyRelaySwitch = SonoffDiyApiWallSwitch(
-      ipAddress: deviceLastKnownIp.getOrCrash(),
+      ipAddress: deviceLastKnownIp.getOrCrash()!,
       hostName: deviceHostName.getOrCrash(),
       port: int.parse(devicePort.getOrCrash()),
     );

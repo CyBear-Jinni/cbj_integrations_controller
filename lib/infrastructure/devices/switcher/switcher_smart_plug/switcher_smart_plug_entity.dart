@@ -46,7 +46,7 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
     switcherObject = SwitcherApiObject(
       deviceType: SwitcherDevicesTypes.switcherPowerPlug,
       deviceId: entityUniqueId.getOrCrash(),
-      switcherIp: deviceLastKnownIp.getOrCrash(),
+      switcherIp: deviceLastKnownIp.getOrCrash()!,
       switcherName: cbjEntityName.getOrCrash()!,
       macAddress: devicesMacAddress.getOrCrash(),
       powerConsumption: powerConsumption.getOrCrash(),

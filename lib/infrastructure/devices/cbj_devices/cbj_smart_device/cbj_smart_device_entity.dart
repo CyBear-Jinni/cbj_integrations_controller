@@ -157,7 +157,7 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
         GenericSmartComputerSuspendState(EntityActions.itIsFalse.toString());
 
     await CbjSmartDeviceClient.suspendCbjSmartDeviceHostDevice(
-      deviceLastKnownIp.getOrCrash(),
+      deviceLastKnownIp.getOrCrash()!,
       entityUniqueId.getOrCrash(),
     );
 
@@ -175,7 +175,7 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
         GenericSmartComputerShutdownState(EntityActions.itIsFalse.toString());
 
     await CbjSmartDeviceClient.shutDownCbjSmartDeviceHostDevice(
-      deviceLastKnownIp.getOrCrash(),
+      deviceLastKnownIp.getOrCrash()!,
       entityUniqueId.getOrCrash(),
     );
 

@@ -9,6 +9,7 @@ import 'package:cbj_integrations_controller/infrastructure/devices/esphome/espho
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_switch/esphome_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 
@@ -43,12 +44,8 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-    required String address,
-  }) async {
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName(
+      GenericGenericUnsupportedDE entity) async {
     if (espHomeDevicePass == null) {
       icLogger.w('ESPHome device got found but missing a password, please add '
           'password for it in the app');
@@ -57,9 +54,6 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
     final List<DeviceEntityAbstract> espDevice =
         await EspHomeHelpers.addDiscoveredEntities(
-      mDnsName: mDnsName,
-      port: port,
-      address: address,
       devicePassword: espHomeDevicePass!,
     );
 

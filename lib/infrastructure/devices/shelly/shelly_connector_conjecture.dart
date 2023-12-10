@@ -7,7 +7,7 @@ import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_relay_switch/shelly_relay_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 
@@ -27,24 +27,21 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
   /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    CoreUniqueId? tempCoreUniqueId;
+  Future addNewDeviceByMdnsName(GenericGenericUnsupportedDE entity) async {
+    final String? mdnsName = entity.deviceMdns.getOrCrash();
+    if (mdnsName == null) {
+      return;
+    }
 
     for (final DeviceEntityAbstract device in companyDevices.values) {
       if ((device is ShellyColorLightEntity ||
               device is ShellyRelaySwitchEntity) &&
-          mDnsName == device.entityUniqueId.getOrCrash()) {
+          mdnsName == device.entityUniqueId.getOrCrash()) {
         return List<DeviceEntityAbstract>.empty();
       } else if ((device is GenericRgbwLightDE || device is GenericSwitchDE) &&
-          mDnsName == device.entityUniqueId.getOrCrash()) {
-        /// Device exist as generic and needs to get converted to non generic type for this vendor
-        tempCoreUniqueId = device.uniqueId;
+          mdnsName == device.entityUniqueId.getOrCrash()) {
         break;
-      } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
+      } else if (mdnsName == device.entityUniqueId.getOrCrash()) {
         icLogger.w(
           'Shelly device type supported but implementation is missing here',
         );
@@ -53,12 +50,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     final List<DeviceEntityAbstract> shellyDevice =
-        await ShellyHelpers.addDiscoveredDevice(
-      mDnsName: mDnsName,
-      ip: ip,
-      port: port,
-      uniqueDeviceId: tempCoreUniqueId,
-    );
+        await ShellyHelpers.addDiscoveredDevice(entity);
 
     if (shellyDevice.isEmpty) {
       return List<DeviceEntityAbstract>.empty();
@@ -73,7 +65,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
       companyDevices.addEntries([deviceAsEntry]);
     }
-    icLogger.t('New shelly devices name:$mDnsName');
+    icLogger.t('New shelly devices name:$mdnsName');
     return shellyDevice;
   }
 

@@ -7,6 +7,7 @@ import 'package:cbj_integrations_controller/infrastructure/devices/google/google
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_entity.dart';
 
 class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
@@ -29,17 +30,16 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
   ];
 
   /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    CoreUniqueId? tempCoreUniqueId;
-
+  Future addNewDeviceByMdnsName(GenericGenericUnsupportedDE entity) async {
+    final String? mdnsName = entity.deviceMdns.getOrCrash();
+    if (mdnsName == null) {
+      return;
+    }
     for (final DeviceEntityAbstract device in companyDevices.values) {
       if (device is ChromeCastEntity &&
-          (mDnsName == device.entityUniqueId.getOrCrash() ||
-              ip == device.lastKnownIp!.getOrCrash())) {
+          (mdnsName == device.entityUniqueId.getOrCrash() ||
+              entity.deviceLastKnownIp.getOrCrash() ==
+                  device.deviceLastKnownIp.getOrCrash())) {
         return [];
       } // Same tv can have multiple mDns names so we can't compere it without ip in the object
       // else if (device is GenericSmartTvDE &&
@@ -47,7 +47,7 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
       //         ip == device.lastKnownIp!.getOrCrash())) {
       //   return;
       // }
-      else if (mDnsName == device.entityUniqueId.getOrCrash()) {
+      else if (mdnsName == device.entityUniqueId.getOrCrash()) {
         icLogger.w(
           'Google device type supported but implementation is missing here',
         );
@@ -56,12 +56,7 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     final List<DeviceEntityAbstract> googleDevice =
-        GoogleHelpers.addDiscoveredDevice(
-      mDnsName: mDnsName,
-      ip: ip,
-      port: port,
-      uniqueDeviceId: tempCoreUniqueId,
-    );
+        GoogleHelpers.addDiscoveredDevice(entity);
 
     if (googleDevice.isEmpty) {
       return [];

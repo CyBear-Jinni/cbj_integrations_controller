@@ -29,7 +29,7 @@ class CbjSmartDeviceClient {
     await channel?.terminate();
 
     channel = await _createCbjSmartDeviceClient(
-      entity.deviceLastKnownIp.getOrCrash(),
+      entity.deviceLastKnownIp.getOrCrash()!,
       smartDevicePort,
     );
 

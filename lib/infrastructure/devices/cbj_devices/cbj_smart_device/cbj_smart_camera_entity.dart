@@ -135,7 +135,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
         GenericSecurityCameraSuspendState(EntityActions.itIsFalse.toString());
 
     await CbjSmartDeviceClient.suspendCbjSmartDeviceHostDevice(
-      deviceLastKnownIp.getOrCrash(),
+      deviceLastKnownIp.getOrCrash()!,
       entityUniqueId.getOrCrash(),
     );
 
@@ -150,7 +150,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
   @override
   Future<Either<CoreFailure, Unit>> shutDownSecurityCamera() async {
     await CbjSmartDeviceClient.shutDownCbjSmartDeviceHostDevice(
-      deviceLastKnownIp.getOrCrash(),
+      deviceLastKnownIp.getOrCrash()!,
       entityUniqueId.getOrCrash(),
     );
 

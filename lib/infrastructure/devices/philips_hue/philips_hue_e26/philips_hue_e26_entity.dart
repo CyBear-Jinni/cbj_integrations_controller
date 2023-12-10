@@ -83,7 +83,7 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
       /// TODO: Save and pull philips hub generated user name
       /// (created in phillips_hue_helpers.dart)
       philipsHueApiLight: PhilipsHueApiLight(
-        ipAdress: genericDevice.deviceLastKnownIp.getOrCrash(),
+        ipAdress: genericDevice.deviceLastKnownIp.getOrCrash()!,
         username: '',
       ),
     );

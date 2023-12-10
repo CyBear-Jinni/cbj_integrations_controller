@@ -46,7 +46,7 @@ class SwitcherV2Entity extends GenericBoilerDE {
     switcherObject = SwitcherApiObject(
       deviceType: SwitcherDevicesTypes.switcherV2Esp,
       deviceId: entityUniqueId.getOrCrash(),
-      switcherIp: deviceLastKnownIp.getOrCrash(),
+      switcherIp: deviceLastKnownIp.getOrCrash()!,
       switcherName: cbjEntityName.getOrCrash()!,
       macAddress: devicesMacAddress.getOrCrash(),
       powerConsumption: powerConsumption.getOrCrash(),

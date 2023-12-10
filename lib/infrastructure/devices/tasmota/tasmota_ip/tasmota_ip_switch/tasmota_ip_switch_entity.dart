@@ -149,7 +149,7 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
   Future<Either<CoreFailure, Unit>> turnOnSwitch() async {
     switchState = GenericSwitchSwitchState(EntityActions.on.toString());
 
-    final String deviceIp = deviceLastKnownIp.getOrCrash();
+    final String deviceIp = deviceLastKnownIp.getOrCrash()!;
     const String getComponentsCommand = 'cm?cmnd=Power%20ON';
 
     // Map<String, String>? responseJson;
@@ -171,7 +171,7 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
   Future<Either<CoreFailure, Unit>> turnOffSwitch() async {
     switchState = GenericSwitchSwitchState(EntityActions.off.toString());
 
-    final String deviceIp = deviceLastKnownIp.getOrCrash();
+    final String deviceIp = deviceLastKnownIp.getOrCrash()!;
     const String getComponentsCommand = 'cm?cmnd=Power%20OFF';
 
     // Map<String, String>? responseJson;

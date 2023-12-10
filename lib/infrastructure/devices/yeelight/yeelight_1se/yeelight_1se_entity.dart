@@ -338,7 +338,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   Future<Either<CoreFailure, Unit>> _sendTurnOffDevice() async {
     try {
       yeelightPackageObject = Device(
-        address: InternetAddress(deviceLastKnownIp.getOrCrash()),
+        address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
         port: int.parse(devicePort.getOrCrash()),
       );
 
@@ -367,7 +367,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   Future<Either<CoreFailure, Unit>> _sendTurnOnDevice() async {
     try {
       yeelightPackageObject = Device(
-        address: InternetAddress(deviceLastKnownIp.getOrCrash()),
+        address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
         port: int.parse(devicePort.getOrCrash()),
       );
 
@@ -397,7 +397,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     try {
       try {
         yeelightPackageObject = Device(
-          address: InternetAddress(deviceLastKnownIp.getOrCrash()),
+          address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
           port: int.parse(devicePort.getOrCrash()),
         );
 
@@ -448,7 +448,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     try {
       try {
         yeelightPackageObject = Device(
-          address: InternetAddress(deviceLastKnownIp.getOrCrash()),
+          address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
           port: int.parse(devicePort.getOrCrash()),
         );
 
@@ -491,7 +491,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     try {
       try {
         yeelightPackageObject = Device(
-          address: InternetAddress(deviceLastKnownIp.getOrCrash()),
+          address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
           port: int.parse(devicePort.getOrCrash()),
         );
         int saturationValue;

@@ -6,6 +6,7 @@ import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeel
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:yeedart/yeedart.dart';
 
@@ -30,18 +31,15 @@ class YeelightConnectorConjecture
   /// Make sure that it will activate discoverNewDevices only once
   bool searchStarted = false;
 
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    return addNewDevice(ip: ip, mDnsName: mDnsName);
+  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName(
+    GenericGenericUnsupportedDE entity,
+  ) async {
+    return addNewDevice(entity);
   }
 
-  Future<List<DeviceEntityAbstract>> addNewDevice({
-    required String ip,
-    String? mDnsName,
-  }) async {
+  Future<List<DeviceEntityAbstract>> addNewDevice(
+    GenericGenericUnsupportedDE entity,
+  ) async {
     final List<DeviceEntityAbstract> devicesGotAdded = [];
 
     try {
@@ -56,14 +54,16 @@ class YeelightConnectorConjecture
         }
 
         DeviceEntityAbstract? addDevice;
-        if (yeelightDevice.address.address == ip) {
+        if (yeelightDevice.address.address ==
+            entity.deviceLastKnownIp.getOrCrash()) {
           addDevice = YeelightHelpers.addDiscoveredDevice(
             yeelightDevice: yeelightDevice,
-            mDnsName: mDnsName,
+            entity: entity,
           );
         } else {
           addDevice = YeelightHelpers.addDiscoveredDevice(
             yeelightDevice: yeelightDevice,
+            entity: entity,
           );
         }
 

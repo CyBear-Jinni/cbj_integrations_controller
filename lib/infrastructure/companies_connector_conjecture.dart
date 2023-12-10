@@ -118,11 +118,11 @@ class CompaniesConnectorConjecture {
 
   /// Getting ActiveHost that contain MdnsInfo property and activate it inside
   /// The correct company.
-  Future<void> setMdnsDeviceByCompany(
-    GenericGenericUnsupportedDE entity,
-  ) async {
-    final String mdnsDeviceIp = entity.deviceLastKnownIp.getOrCrash();
-
+  Future setMdnsDeviceByCompany(GenericGenericUnsupportedDE entity) async {
+    final String? mdnsDeviceIp = entity.deviceLastKnownIp.getOrCrash();
+    if (mdnsDeviceIp == null) {
+      return;
+    }
     final String? mdnsName = entity.deviceMdns.getOrCrash();
     final String? startOfMdnsName =
         mdnsName?.substring(0, mdnsName.indexOf('.'));
@@ -151,64 +151,35 @@ class CompaniesConnectorConjecture {
     }
 
     if (EspHomeConnectorConjecture.mdnsTypes.contains(serviceType)) {
-      EspHomeConnectorConjecture().addNewDeviceByMdnsName(
-        mDnsName: startOfMdnsName,
-        ip: mdnsDeviceIp,
-        port: port,
-        address: mdnsDeviceIp,
-      );
+      return EspHomeConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (ShellyConnectorConjecture.mdnsTypes.contains(serviceType) &&
         startOfMdnsName.toLowerCase().contains('shelly')) {
-      ShellyConnectorConjecture().addNewDeviceByMdnsName(
-        mDnsName: startOfMdnsName,
-        ip: mdnsDeviceIp,
-        port: port,
-      );
+      return ShellyConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (EwelinkConnectorConjecture.mdnsTypes.contains(serviceType)) {
-      EwelinkConnectorConjecture().discoverNewDevices(entity: entity);
+      return EwelinkConnectorConjecture().discoverNewDevices(entity);
     } else if (GoogleConnectorConjecture.mdnsTypes.contains(serviceType) &&
         (startOfMdnsNameLower.contains('google') ||
             startOfMdnsNameLower.contains('android') ||
             startOfMdnsNameLower.contains('chrome'))) {
-      GoogleConnectorConjecture().addNewDeviceByMdnsName(
-        mDnsName: startOfMdnsName,
-        ip: mdnsDeviceIp,
-        port: port,
-      );
+      return GoogleConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (LgConnectorConjecture.mdnsTypes.contains(serviceType) &&
         (startOfMdnsNameLower.contains('lg') ||
             startOfMdnsNameLower.contains('webos'))) {
-      LgConnectorConjecture().addNewDeviceByMdnsName(
-        mDnsName: startOfMdnsName,
-        ip: mdnsDeviceIp,
-        port: port,
-      );
+      return LgConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (HpPrinterEntity.mdnsTypes.contains(serviceType) &&
         (startOfMdnsNameLower.contains('hp'))) {
-      HpConnectorConjecture().addNewDeviceByMdnsName(
-        mDnsName: startOfMdnsName,
-        ip: mdnsDeviceIp,
-        port: port,
-      );
+      return HpConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (YeelightConnectorConjecture.mdnsTypes.contains(serviceType) &&
         (startOfMdnsName.startsWith('YL'))) {
-      YeelightConnectorConjecture().addNewDeviceByMdnsName(
-        mDnsName: startOfMdnsName,
-        ip: mdnsDeviceIp,
-        port: port,
-      );
+      return YeelightConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (PhilipsHueConnectorConjecture.mdnsTypes.contains(serviceType)) {
-      PhilipsHueConnectorConjecture().addNewDeviceByMdnsName(
-        mDnsName: startOfMdnsName,
-        ip: mdnsDeviceIp,
-        port: port,
-      );
-    } else {
-      final String address = entity.deviceLastKnownIp.getOrCrash();
-      icLogger.t(
-        'mDNS service type $serviceType is not supported\n IP: $address, Port: $port, ServiceType: $serviceType, MdnsName: $startOfMdnsName',
-      );
+      return PhilipsHueConnectorConjecture().addNewDeviceByMdnsName(entity);
     }
+    final String address = entity.deviceLastKnownIp.getOrCrash()!;
+    icLogger.t(
+      'mDNS service type $serviceType is not supported\n IP: $address, Port: $port, ServiceType: $serviceType, MdnsName: $startOfMdnsName',
+    );
+    // TODO: Add unseported device type and save it to local DB
   }
 
   Future<void> setHostNameDeviceByCompany({
@@ -220,27 +191,27 @@ class CompaniesConnectorConjecture {
       return;
     }
     if (deviceHostNameLowerCase.contains('tasmota')) {
-      TasmotaIpConnectorConjecture().addNewDeviceByHostInfo(
-        entity: entity,
-      );
+      TasmotaIpConnectorConjecture().addNewDeviceByHostInfo(entity: entity);
     } else if (deviceHostNameLowerCase.contains('xiaomi') ||
         deviceHostNameLowerCase.contains('yeelink') ||
         deviceHostNameLowerCase.contains('xiao')) {
       XiaomiIoConnectorConjecture().discoverNewDevices(entity: entity);
     } else if (deviceHostNameLowerCase.startsWith('wiz')) {
       WizConnectorConjecture().addNewDeviceByHostInfo(entity: entity);
-    } else {
-      final GenericGenericUnsupportedDE? entityTemp =
-          await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice(
-        entity.devicesMacAddress.getOrCrash(),
-      );
-      if (entityTemp != null) {
-        CbjDevicesConnectorConjecture()
-            .addNewDeviceByHostInfo(entity: entityTemp);
-        return;
-      }
+    }
+    final GenericGenericUnsupportedDE? entityTemp =
+        await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice(
+      entity.devicesMacAddress.getOrCrash(),
+    );
+    if (entityTemp != null) {
+      CbjDevicesConnectorConjecture()
+          .addNewDeviceByHostInfo(entity: entityTemp);
+      return;
+
       // logger.i('Found pingable device $deviceHostNameLowerCase');
     }
+
+    // TODO: Add device as unseported device
   }
 
   AbstractCompanyConnectorConjecture? vendorStringToCompanyConnectorConjecture(

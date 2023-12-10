@@ -275,18 +275,15 @@ class DeviceCompUuid extends ValueObjectCore<String> {
   final Either<CoreFailure<String>, String> value;
 }
 
-class DeviceLastKnownIp extends ValueObjectCore<String> {
+class DeviceLastKnownIp extends ValueObjectCore<String?> {
   factory DeviceLastKnownIp(String? input) {
-    assert(input != null);
-    return DeviceLastKnownIp._(
-      validateLastKnownIpNotEmpty(input!),
-    );
+    return DeviceLastKnownIp._(right(input));
   }
 
   const DeviceLastKnownIp._(this.value);
 
   @override
-  final Either<CoreFailure<String>, String> value;
+  final Either<CoreFailure<String?>, String?> value;
 }
 
 class DevicePowerConsumption extends ValueObjectCore<String> {

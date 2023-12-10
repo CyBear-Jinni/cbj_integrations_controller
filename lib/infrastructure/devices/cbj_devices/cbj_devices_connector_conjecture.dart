@@ -43,7 +43,7 @@ class CbjDevicesConnectorConjecture
 
     final List<CbjSmartDeviceInfo?> componentsInDevice =
         await getAllComponentsOfDevice(entity);
-    final String address = entity.deviceLastKnownIp.getOrCrash();
+    final String address = entity.deviceLastKnownIp.getOrCrash()!;
     final List<DeviceEntityAbstract> devicesList =
         CbjDevicesHelpers.addDiscoveredDevice(
       componentsInDevice: componentsInDevice,

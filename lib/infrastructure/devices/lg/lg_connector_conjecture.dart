@@ -6,7 +6,7 @@ import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_helpers
 import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_webos_tv/lg_webos_tv_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 
 class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
   factory LgConnectorConjecture() {
@@ -28,17 +28,19 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
   ];
 
   /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    CoreUniqueId? tempCoreUniqueId;
+  Future addNewDeviceByMdnsName(
+    GenericGenericUnsupportedDE entity,
+  ) async {
+    final String? mdnsName = entity.deviceMdns.getOrCrash();
+    if (mdnsName == null) {
+      return;
+    }
 
     for (final DeviceEntityAbstract device in companyDevices.values) {
       if (device is LgWebosTvEntity &&
-          (mDnsName == device.entityUniqueId.getOrCrash() ||
-              ip == device.deviceLastKnownIp.getOrCrash())) {
+          (mdnsName == device.entityUniqueId.getOrCrash() ||
+              entity.deviceLastKnownIp.getOrCrash() ==
+                  device.deviceLastKnownIp.getOrCrash())) {
         return [];
       }
       // Same tv can have multiple mDns names so we can't compere it without ip in the object
@@ -47,7 +49,7 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
       //         ip == device.lastKnownIp!.getOrCrash())) {
       //   return;
       // }
-      else if (mDnsName == device.entityUniqueId.getOrCrash()) {
+      else if (mdnsName == device.entityUniqueId.getOrCrash()) {
         icLogger.w(
           'LG device type supported but implementation is missing here',
         );
@@ -55,12 +57,8 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
       }
     }
 
-    final List<DeviceEntityAbstract> lgDevice = LgHelpers.addDiscoveredDevice(
-      mDnsName: mDnsName,
-      ip: ip,
-      port: port,
-      uniqueDeviceId: tempCoreUniqueId,
-    );
+    final List<DeviceEntityAbstract> lgDevice =
+        LgHelpers.addDiscoveredDevice(entity);
 
     if (lgDevice.isEmpty) {
       return [];

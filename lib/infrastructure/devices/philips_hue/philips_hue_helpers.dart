@@ -5,28 +5,18 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:http/http.dart';
 import 'package:hue_dart/hue_dart.dart';
 
 class PhilipsHueHelpers {
-  static Future<List<DeviceEntityAbstract>> addDiscoveredDevice({
-    required String mDnsName,
-    required String? port,
-    required String ip,
-    required CoreUniqueId? uniqueDeviceId,
-  }) async {
-    CoreUniqueId uniqueDeviceIdTemp;
-
-    if (uniqueDeviceId != null) {
-      uniqueDeviceIdTemp = uniqueDeviceId;
-    } else {
-      uniqueDeviceIdTemp = CoreUniqueId();
-    }
-
+  static Future<List<DeviceEntityAbstract>> addDiscoveredDevice(
+    GenericGenericUnsupportedDE entity,
+  ) async {
     final client = Client();
 
     //create bridge
-    final bridge = Bridge(client, ip);
+    final bridge = Bridge(client, entity.deviceLastKnownIp.getOrCrash()!);
 
     /// TODO: save user phillips hub generated user name for cbj
     final String userNameForPhilipsHueHub =
@@ -45,23 +35,31 @@ class PhilipsHueHelpers {
             ? light.name!
             : 'PhilipsHue test 2';
         final PhilipsHueE26Entity philipsHueDE = PhilipsHueE26Entity(
-          uniqueId: uniqueDeviceIdTemp,
+          uniqueId: entity.uniqueId,
           entityUniqueId: EntityUniqueId(light.uniqueId.toString()),
-          cbjEntityName: CbjEntityName(deviceName),
+          cbjEntityName: entity.cbjEntityName,
           entityOriginalName: EntityOriginalName(deviceName),
           deviceOriginalName: DeviceOriginalName(deviceName),
-          entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
-          senderDeviceOs: DeviceSenderDeviceOs('philips_hue'),
+          entityStateGRPC: entity.entityStateGRPC,
+          senderDeviceOs: entity.senderDeviceOs,
           senderDeviceModel: DeviceSenderDeviceModel(light.modelId),
-          senderId: DeviceSenderId(),
-          compUuid: DeviceCompUuid('55asdhd23gggg'),
-          deviceMdns: DeviceMdns(mDnsName),
-      srvResourceRecord: DeviceSrvResourceRecord(),
-      ptrResourceRecord: DevicePtrResourceRecord(),
-          deviceLastKnownIp: DeviceLastKnownIp(ip),
-          stateMassage: DeviceStateMassage('Hello World'),
-          powerConsumption: DevicePowerConsumption('0'),
-          devicePort: DevicePort(port),
+          senderId: entity.senderId,
+          compUuid: entity.compUuid,
+          deviceMdns: entity.deviceMdns,
+          srvResourceRecord: entity.srvResourceRecord,
+          ptrResourceRecord: entity.ptrResourceRecord,
+          deviceLastKnownIp: entity.deviceLastKnownIp,
+          stateMassage: entity.stateMassage,
+          powerConsumption: entity.powerConsumption,
+          devicePort: entity.devicePort,
+          deviceUniqueId: entity.deviceUniqueId,
+          deviceHostName: entity.deviceHostName,
+          devicesMacAddress: entity.devicesMacAddress,
+          entityKey: entity.entityKey,
+          requestTimeStamp: entity.requestTimeStamp,
+          lastResponseFromDeviceTimeStamp:
+              entity.lastResponseFromDeviceTimeStamp,
+          deviceCbjUniqueId: entity.deviceCbjUniqueId,
           lightSwitchState: GenericDimmableLightSwitchState(
             lightState != null && lightState.on != null && lightState.on == true
                 ? EntityActions.on.toString()
@@ -72,15 +70,8 @@ class PhilipsHueHelpers {
           ),
           philipsHueApiLight: PhilipsHueApiLight(
             username: userNameForPhilipsHueHub,
-            ipAdress: ip,
+            ipAdress: entity.deviceLastKnownIp.getOrCrash()!,
           ),
-          deviceUniqueId: DeviceUniqueId('0'),
-          deviceHostName: DeviceHostName('0'),
-          devicesMacAddress: DevicesMacAddress('0'),
-          entityKey: EntityKey('0'),
-          requestTimeStamp: RequestTimeStamp('0'),
-          lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          deviceCbjUniqueId: CoreUniqueId(),
         );
         tempDeviceEntities.add(philipsHueDE);
       } else {

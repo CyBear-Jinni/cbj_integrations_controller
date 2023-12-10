@@ -38,7 +38,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
       );
 
       await ewelink!.getCredentials();
-      discoverNewDevices(entity: null);
+      discoverNewDevices(null);
     } on EwelinkInvalidAccessToken {
       icLogger.e('invalid access token');
       return false;
@@ -53,9 +53,9 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   Future<bool>? didRequestLogin;
-  Future<void> discoverNewDevices({
-    required GenericGenericUnsupportedDE? entity,
-  }) async {
+  Future<void> discoverNewDevices(
+    GenericGenericUnsupportedDE? entity,
+  ) async {
     if (didRequestLogin != null) {
       return;
     }

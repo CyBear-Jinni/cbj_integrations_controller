@@ -42,7 +42,7 @@ class ShellyRelaySwitchEntity extends GenericSwitchDE {
           deviceVendor: DeviceVendor(VendorsAndServices.shelly.toString()),
         ) {
     shellyRelaySwitch = ShellyApiRelaySwitch(
-      lastKnownIp: deviceLastKnownIp.getOrCrash(),
+      lastKnownIp: deviceLastKnownIp.getOrCrash()!,
       mDnsName: deviceMdns.getOrCrash(),
       hostName: deviceHostName.getOrCrash(),
     );

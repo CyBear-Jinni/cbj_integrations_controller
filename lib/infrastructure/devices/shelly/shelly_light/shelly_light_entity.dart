@@ -49,7 +49,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
         ) {
     shellyColorBulb = bulbMode ??
         ShellyApiColorBulb(
-          lastKnownIp: deviceLastKnownIp.getOrCrash(),
+          lastKnownIp: deviceLastKnownIp.getOrCrash()!,
           mDnsName: deviceMdns.getOrCrash(),
           hostName: deviceHostName.getOrCrash(),
         );

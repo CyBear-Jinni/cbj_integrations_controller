@@ -8,6 +8,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 
 class PhilipsHueConnectorConjecture
     implements AbstractCompanyConnectorConjecture {
@@ -30,38 +31,32 @@ class PhilipsHueConnectorConjecture
   static bool gotHueHubIp = false;
 
   /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    /// There can only be one Philips Hub in the same network
-    if (gotHueHubIp) {
-      return [];
+  Future addNewDeviceByMdnsName(
+    GenericGenericUnsupportedDE entity,
+  ) async {
+    final String ip = entity.deviceLastKnownIp.getOrCrash()!;
+
+    final String? mdnsName = entity.deviceMdns.getOrCrash();
+    if (mdnsName == null) {
+      return;
     }
-    CoreUniqueId? tempCoreUniqueId;
 
     for (final DeviceEntityAbstract device in companyDevices.values) {
       if (device is PhilipsHueE26Entity &&
-          (mDnsName == device.entityUniqueId.getOrCrash() ||
+          (mdnsName == device.entityUniqueId.getOrCrash() ||
               ip == device.deviceLastKnownIp.getOrCrash())) {
-        return [];
-      } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
+        return;
+      } else if (mdnsName == device.entityUniqueId.getOrCrash()) {
         icLogger.w(
           'HP device type supported but implementation is missing here',
         );
-        return [];
+        return;
       }
     }
     gotHueHubIp = true;
 
     final List<DeviceEntityAbstract> phillipsDevice =
-        await PhilipsHueHelpers.addDiscoveredDevice(
-      mDnsName: mDnsName,
-      ip: ip,
-      port: port,
-      uniqueDeviceId: tempCoreUniqueId,
-    );
+        await PhilipsHueHelpers.addDiscoveredDevice(entity);
 
     if (phillipsDevice.isEmpty) {
       return [];
