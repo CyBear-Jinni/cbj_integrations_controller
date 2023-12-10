@@ -31,6 +31,8 @@ class GoogleHelpers {
       senderId: DeviceSenderId(),
       compUuid: DeviceCompUuid('34asdfrsd23gggg'),
       deviceMdnsName: DeviceMdns(mDnsName),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       lastKnownIp: DeviceLastKnownIp(ip),
       stateMassage: DeviceStateMassage('Hello World'),
       powerConsumption: DevicePowerConsumption('0'),

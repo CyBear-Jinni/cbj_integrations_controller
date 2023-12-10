@@ -6,9 +6,9 @@ part of 'generic_empty_device_dtos.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$GenericEmptyDeviceDtosImpl _$$GenericEmptyDeviceDtosImplFromJson(
+_$GenericUnsupportedDeviceDtosImpl _$$GenericUnsupportedDeviceDtosImplFromJson(
         Map<String, dynamic> json) =>
-    _$GenericEmptyDeviceDtosImpl(
+    _$GenericUnsupportedDeviceDtosImpl(
       id: json['id'] as String,
       entityUniqueId: json['entityUniqueId'] as String,
       cbjEntityName: json['cbjEntityName'] as String?,
@@ -18,7 +18,6 @@ _$GenericEmptyDeviceDtosImpl _$$GenericEmptyDeviceDtosImplFromJson(
       senderDeviceOs: json['senderDeviceOs'] as String?,
       senderDeviceModel: json['senderDeviceModel'] as String?,
       senderId: json['senderId'] as String?,
-      emptySwitchState: json['emptySwitchState'] as String?,
       entityTypes: json['entityTypes'] as String?,
       compUuid: json['compUuid'] as String?,
       deviceVendor: json['deviceVendor'] as String?,
@@ -28,6 +27,8 @@ _$GenericEmptyDeviceDtosImpl _$$GenericEmptyDeviceDtosImplFromJson(
       deviceLastKnownIp: json['deviceLastKnownIp'] as String?,
       deviceHostName: json['deviceHostName'] as String?,
       deviceMdns: json['deviceMdns'] as String?,
+      srvResourceRecord: json['srvResourceRecord'] as String?,
+      ptrResourceRecord: json['ptrResourceRecord'] as String?,
       devicesMacAddress: json['devicesMacAddress'] as String?,
       entityKey: json['entityKey'] as String?,
       requestTimeStamp: json['requestTimeStamp'] as String?,
@@ -38,8 +39,8 @@ _$GenericEmptyDeviceDtosImpl _$$GenericEmptyDeviceDtosImplFromJson(
       stateMassage: json['stateMassage'] as String?,
     );
 
-Map<String, dynamic> _$$GenericEmptyDeviceDtosImplToJson(
-        _$GenericEmptyDeviceDtosImpl instance) =>
+Map<String, dynamic> _$$GenericUnsupportedDeviceDtosImplToJson(
+        _$GenericUnsupportedDeviceDtosImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'entityUniqueId': instance.entityUniqueId,
@@ -50,7 +51,6 @@ Map<String, dynamic> _$$GenericEmptyDeviceDtosImplToJson(
       'senderDeviceOs': instance.senderDeviceOs,
       'senderDeviceModel': instance.senderDeviceModel,
       'senderId': instance.senderId,
-      'emptySwitchState': instance.emptySwitchState,
       'entityTypes': instance.entityTypes,
       'compUuid': instance.compUuid,
       'deviceVendor': instance.deviceVendor,
@@ -60,6 +60,8 @@ Map<String, dynamic> _$$GenericEmptyDeviceDtosImplToJson(
       'deviceLastKnownIp': instance.deviceLastKnownIp,
       'deviceHostName': instance.deviceHostName,
       'deviceMdns': instance.deviceMdns,
+      'srvResourceRecord': instance.srvResourceRecord,
+      'ptrResourceRecord': instance.ptrResourceRecord,
       'devicesMacAddress': instance.devicesMacAddress,
       'entityKey': instance.entityKey,
       'requestTimeStamp': instance.requestTimeStamp,

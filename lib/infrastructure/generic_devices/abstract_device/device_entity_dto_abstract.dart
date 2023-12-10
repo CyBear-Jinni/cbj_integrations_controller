@@ -59,9 +59,10 @@ class DeviceEntityDtoAbstract {
     } else if (jsonDeviceDtoClass == (GenericPrinterDeviceDtos).toString() ||
         json['entityTypes'] == EntityTypes.printer.toString()) {
       deviceEntityDtoAbstract = GenericPrinterDeviceDtos.fromJson(json);
-    } else if (jsonDeviceDtoClass == (GenericEmptyDeviceDtos).toString() ||
+    } else if (jsonDeviceDtoClass ==
+            (GenericUnsupportedDeviceDtos).toString() ||
         json['entityTypes'] == EntityTypes.emptyEntity.toString()) {
-      deviceEntityDtoAbstract = GenericEmptyDeviceDtos.fromJson(json);
+      deviceEntityDtoAbstract = GenericUnsupportedDeviceDtos.fromJson(json);
     } else if (jsonDeviceDtoClass == (GenericPingDeviceDtos).toString() ||
         json['entityTypes'] == EntityTypes.pingEntity.toString()) {
       deviceEntityDtoAbstract = GenericPingDeviceDtos.fromJson(json);

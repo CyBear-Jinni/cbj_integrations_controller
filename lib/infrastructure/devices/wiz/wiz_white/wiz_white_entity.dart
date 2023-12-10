@@ -30,6 +30,8 @@ class WizWhiteEntity extends GenericLightDE {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,

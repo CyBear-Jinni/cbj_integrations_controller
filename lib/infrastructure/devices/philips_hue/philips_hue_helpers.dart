@@ -56,6 +56,8 @@ class PhilipsHueHelpers {
           senderId: DeviceSenderId(),
           compUuid: DeviceCompUuid('55asdhd23gggg'),
           deviceMdns: DeviceMdns(mDnsName),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
           deviceLastKnownIp: DeviceLastKnownIp(ip),
           stateMassage: DeviceStateMassage('Hello World'),
           powerConsumption: DevicePowerConsumption('0'),

@@ -30,8 +30,10 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
     required super.devicePort,
     required super.deviceLastKnownIp,
     required super.deviceHostName,
-    required super.deviceMdns,
     required super.devicesMacAddress,
+    required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
@@ -63,6 +65,8 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
         deviceLastKnownIp: DeviceLastKnownIp(''),
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         compUuid: DeviceCompUuid(''),
         powerConsumption: DevicePowerConsumption(''),
         devicesMacAddress: DevicesMacAddress(''),
@@ -103,9 +107,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
   // }
 
   @override
-  String getDeviceId() {
-    return uniqueId.getOrCrash();
-  }
+  String getDeviceId() => uniqueId.getOrCrash();
 
   /// Return a list of all valid actions for this device
   @override
@@ -135,6 +137,8 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
       deviceLastKnownIp: deviceLastKnownIp.getOrCrash(),
       deviceHostName: deviceHostName.getOrCrash(),
       deviceMdns: deviceMdns.getOrCrash(),
+      srvResourceRecord: srvResourceRecord.getOrCrash(),
+      ptrResourceRecord: ptrResourceRecord.getOrCrash(),
       devicesMacAddress: devicesMacAddress.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),

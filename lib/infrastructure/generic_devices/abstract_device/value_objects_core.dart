@@ -119,6 +119,28 @@ class DeviceOriginalName extends ValueObjectCore<String?> {
   static const maxLength = 1000;
 }
 
+class DeviceSrvResourceRecord extends ValueObjectCore<String?> {
+  factory DeviceSrvResourceRecord({String? input}) {
+    return DeviceSrvResourceRecord._(right(input));
+  }
+
+  const DeviceSrvResourceRecord._(this.value);
+
+  @override
+  final Either<CoreFailure<String?>, String?> value;
+}
+
+class DevicePtrResourceRecord extends ValueObjectCore<String?> {
+  factory DevicePtrResourceRecord({String? input}) {
+    return DevicePtrResourceRecord._(right(input));
+  }
+
+  const DevicePtrResourceRecord._(this.value);
+
+  @override
+  final Either<CoreFailure<String?>, String?> value;
+}
+
 class EntityState extends ValueObjectCore<String> {
   factory EntityState(String? input) {
     return EntityState._(
@@ -281,18 +303,15 @@ class DevicePowerConsumption extends ValueObjectCore<String> {
   final Either<CoreFailure<String>, String> value;
 }
 
-class DeviceMdns extends ValueObjectCore<String> {
+class DeviceMdns extends ValueObjectCore<String?> {
   factory DeviceMdns(String? input) {
-    assert(input != null);
-    return DeviceMdns._(
-      validateMdnsNameNotEmpty(input!),
-    );
+    return DeviceMdns._(right(input));
   }
 
   const DeviceMdns._(this.value);
 
   @override
-  final Either<CoreFailure<String>, String> value;
+  final Either<CoreFailure<String?>, String?> value;
 }
 
 class DevicePort extends ValueObjectCore<String> {
@@ -379,16 +398,13 @@ class LastResponseFromDeviceTimeStamp extends ValueObjectCore<String> {
   final Either<CoreFailure<String>, String> value;
 }
 
-class DevicesMacAddress extends ValueObjectCore<String> {
+class DevicesMacAddress extends ValueObjectCore<String?> {
   factory DevicesMacAddress(String? input) {
-    assert(input != null);
-    return DevicesMacAddress._(
-      validateNotEmpty(input!),
-    );
+    return DevicesMacAddress._(right(input));
   }
 
   const DevicesMacAddress._(this.value);
 
   @override
-  final Either<CoreFailure<String>, String> value;
+  final Either<CoreFailure<String?>, String?> value;
 }

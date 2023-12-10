@@ -14,13 +14,13 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-GenericEmptyDeviceDtos _$GenericEmptyDeviceDtosFromJson(
+GenericUnsupportedDeviceDtos _$GenericUnsupportedDeviceDtosFromJson(
     Map<String, dynamic> json) {
-  return _GenericEmptyDeviceDtos.fromJson(json);
+  return _GenericUnsupportedDeviceDtos.fromJson(json);
 }
 
 /// @nodoc
-mixin _$GenericEmptyDeviceDtos {
+mixin _$GenericUnsupportedDeviceDtos {
 // @JsonKey(ignore: true)
   String get id => throw _privateConstructorUsedError;
   String get entityUniqueId => throw _privateConstructorUsedError;
@@ -31,7 +31,6 @@ mixin _$GenericEmptyDeviceDtos {
   String? get senderDeviceOs => throw _privateConstructorUsedError;
   String? get senderDeviceModel => throw _privateConstructorUsedError;
   String? get senderId => throw _privateConstructorUsedError;
-  String? get emptySwitchState => throw _privateConstructorUsedError;
   String? get entityTypes => throw _privateConstructorUsedError;
   String? get compUuid => throw _privateConstructorUsedError;
   String? get deviceVendor => throw _privateConstructorUsedError;
@@ -41,6 +40,8 @@ mixin _$GenericEmptyDeviceDtos {
   String? get deviceLastKnownIp => throw _privateConstructorUsedError;
   String? get deviceHostName => throw _privateConstructorUsedError;
   String? get deviceMdns => throw _privateConstructorUsedError;
+  String? get srvResourceRecord => throw _privateConstructorUsedError;
+  String? get ptrResourceRecord => throw _privateConstructorUsedError;
   String? get devicesMacAddress => throw _privateConstructorUsedError;
   String? get entityKey => throw _privateConstructorUsedError;
   String? get requestTimeStamp => throw _privateConstructorUsedError;
@@ -52,15 +53,17 @@ mixin _$GenericEmptyDeviceDtos {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $GenericEmptyDeviceDtosCopyWith<GenericEmptyDeviceDtos> get copyWith =>
-      throw _privateConstructorUsedError;
+  $GenericUnsupportedDeviceDtosCopyWith<GenericUnsupportedDeviceDtos>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $GenericEmptyDeviceDtosCopyWith<$Res> {
-  factory $GenericEmptyDeviceDtosCopyWith(GenericEmptyDeviceDtos value,
-          $Res Function(GenericEmptyDeviceDtos) then) =
-      _$GenericEmptyDeviceDtosCopyWithImpl<$Res, GenericEmptyDeviceDtos>;
+abstract class $GenericUnsupportedDeviceDtosCopyWith<$Res> {
+  factory $GenericUnsupportedDeviceDtosCopyWith(
+          GenericUnsupportedDeviceDtos value,
+          $Res Function(GenericUnsupportedDeviceDtos) then) =
+      _$GenericUnsupportedDeviceDtosCopyWithImpl<$Res,
+          GenericUnsupportedDeviceDtos>;
   @useResult
   $Res call(
       {String id,
@@ -72,7 +75,6 @@ abstract class $GenericEmptyDeviceDtosCopyWith<$Res> {
       String? senderDeviceOs,
       String? senderDeviceModel,
       String? senderId,
-      String? emptySwitchState,
       String? entityTypes,
       String? compUuid,
       String? deviceVendor,
@@ -82,6 +84,8 @@ abstract class $GenericEmptyDeviceDtosCopyWith<$Res> {
       String? deviceLastKnownIp,
       String? deviceHostName,
       String? deviceMdns,
+      String? srvResourceRecord,
+      String? ptrResourceRecord,
       String? devicesMacAddress,
       String? entityKey,
       String? requestTimeStamp,
@@ -92,10 +96,10 @@ abstract class $GenericEmptyDeviceDtosCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GenericEmptyDeviceDtosCopyWithImpl<$Res,
-        $Val extends GenericEmptyDeviceDtos>
-    implements $GenericEmptyDeviceDtosCopyWith<$Res> {
-  _$GenericEmptyDeviceDtosCopyWithImpl(this._value, this._then);
+class _$GenericUnsupportedDeviceDtosCopyWithImpl<$Res,
+        $Val extends GenericUnsupportedDeviceDtos>
+    implements $GenericUnsupportedDeviceDtosCopyWith<$Res> {
+  _$GenericUnsupportedDeviceDtosCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -114,7 +118,6 @@ class _$GenericEmptyDeviceDtosCopyWithImpl<$Res,
     Object? senderDeviceOs = freezed,
     Object? senderDeviceModel = freezed,
     Object? senderId = freezed,
-    Object? emptySwitchState = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
     Object? deviceVendor = freezed,
@@ -124,6 +127,8 @@ class _$GenericEmptyDeviceDtosCopyWithImpl<$Res,
     Object? deviceLastKnownIp = freezed,
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
+    Object? srvResourceRecord = freezed,
+    Object? ptrResourceRecord = freezed,
     Object? devicesMacAddress = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
@@ -169,10 +174,6 @@ class _$GenericEmptyDeviceDtosCopyWithImpl<$Res,
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as String?,
-      emptySwitchState: freezed == emptySwitchState
-          ? _value.emptySwitchState
-          : emptySwitchState // ignore: cast_nullable_to_non_nullable
-              as String?,
       entityTypes: freezed == entityTypes
           ? _value.entityTypes
           : entityTypes // ignore: cast_nullable_to_non_nullable
@@ -209,6 +210,14 @@ class _$GenericEmptyDeviceDtosCopyWithImpl<$Res,
           ? _value.deviceMdns
           : deviceMdns // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvResourceRecord: freezed == srvResourceRecord
+          ? _value.srvResourceRecord
+          : srvResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ptrResourceRecord: freezed == ptrResourceRecord
+          ? _value.ptrResourceRecord
+          : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
       devicesMacAddress: freezed == devicesMacAddress
           ? _value.devicesMacAddress
           : devicesMacAddress // ignore: cast_nullable_to_non_nullable
@@ -243,12 +252,12 @@ class _$GenericEmptyDeviceDtosCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$GenericEmptyDeviceDtosImplCopyWith<$Res>
-    implements $GenericEmptyDeviceDtosCopyWith<$Res> {
-  factory _$$GenericEmptyDeviceDtosImplCopyWith(
-          _$GenericEmptyDeviceDtosImpl value,
-          $Res Function(_$GenericEmptyDeviceDtosImpl) then) =
-      __$$GenericEmptyDeviceDtosImplCopyWithImpl<$Res>;
+abstract class _$$GenericUnsupportedDeviceDtosImplCopyWith<$Res>
+    implements $GenericUnsupportedDeviceDtosCopyWith<$Res> {
+  factory _$$GenericUnsupportedDeviceDtosImplCopyWith(
+          _$GenericUnsupportedDeviceDtosImpl value,
+          $Res Function(_$GenericUnsupportedDeviceDtosImpl) then) =
+      __$$GenericUnsupportedDeviceDtosImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -261,7 +270,6 @@ abstract class _$$GenericEmptyDeviceDtosImplCopyWith<$Res>
       String? senderDeviceOs,
       String? senderDeviceModel,
       String? senderId,
-      String? emptySwitchState,
       String? entityTypes,
       String? compUuid,
       String? deviceVendor,
@@ -271,6 +279,8 @@ abstract class _$$GenericEmptyDeviceDtosImplCopyWith<$Res>
       String? deviceLastKnownIp,
       String? deviceHostName,
       String? deviceMdns,
+      String? srvResourceRecord,
+      String? ptrResourceRecord,
       String? devicesMacAddress,
       String? entityKey,
       String? requestTimeStamp,
@@ -281,13 +291,13 @@ abstract class _$$GenericEmptyDeviceDtosImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$GenericEmptyDeviceDtosImplCopyWithImpl<$Res>
-    extends _$GenericEmptyDeviceDtosCopyWithImpl<$Res,
-        _$GenericEmptyDeviceDtosImpl>
-    implements _$$GenericEmptyDeviceDtosImplCopyWith<$Res> {
-  __$$GenericEmptyDeviceDtosImplCopyWithImpl(
-      _$GenericEmptyDeviceDtosImpl _value,
-      $Res Function(_$GenericEmptyDeviceDtosImpl) _then)
+class __$$GenericUnsupportedDeviceDtosImplCopyWithImpl<$Res>
+    extends _$GenericUnsupportedDeviceDtosCopyWithImpl<$Res,
+        _$GenericUnsupportedDeviceDtosImpl>
+    implements _$$GenericUnsupportedDeviceDtosImplCopyWith<$Res> {
+  __$$GenericUnsupportedDeviceDtosImplCopyWithImpl(
+      _$GenericUnsupportedDeviceDtosImpl _value,
+      $Res Function(_$GenericUnsupportedDeviceDtosImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -302,7 +312,6 @@ class __$$GenericEmptyDeviceDtosImplCopyWithImpl<$Res>
     Object? senderDeviceOs = freezed,
     Object? senderDeviceModel = freezed,
     Object? senderId = freezed,
-    Object? emptySwitchState = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
     Object? deviceVendor = freezed,
@@ -312,6 +321,8 @@ class __$$GenericEmptyDeviceDtosImplCopyWithImpl<$Res>
     Object? deviceLastKnownIp = freezed,
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
+    Object? srvResourceRecord = freezed,
+    Object? ptrResourceRecord = freezed,
     Object? devicesMacAddress = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
@@ -320,7 +331,7 @@ class __$$GenericEmptyDeviceDtosImplCopyWithImpl<$Res>
     Object? deviceDtoClass = freezed,
     Object? stateMassage = freezed,
   }) {
-    return _then(_$GenericEmptyDeviceDtosImpl(
+    return _then(_$GenericUnsupportedDeviceDtosImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -357,10 +368,6 @@ class __$$GenericEmptyDeviceDtosImplCopyWithImpl<$Res>
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as String?,
-      emptySwitchState: freezed == emptySwitchState
-          ? _value.emptySwitchState
-          : emptySwitchState // ignore: cast_nullable_to_non_nullable
-              as String?,
       entityTypes: freezed == entityTypes
           ? _value.entityTypes
           : entityTypes // ignore: cast_nullable_to_non_nullable
@@ -397,6 +404,14 @@ class __$$GenericEmptyDeviceDtosImplCopyWithImpl<$Res>
           ? _value.deviceMdns
           : deviceMdns // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvResourceRecord: freezed == srvResourceRecord
+          ? _value.srvResourceRecord
+          : srvResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ptrResourceRecord: freezed == ptrResourceRecord
+          ? _value.ptrResourceRecord
+          : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
       devicesMacAddress: freezed == devicesMacAddress
           ? _value.devicesMacAddress
           : devicesMacAddress // ignore: cast_nullable_to_non_nullable
@@ -432,8 +447,8 @@ class __$$GenericEmptyDeviceDtosImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
-  _$GenericEmptyDeviceDtosImpl(
+class _$GenericUnsupportedDeviceDtosImpl extends _GenericUnsupportedDeviceDtos {
+  _$GenericUnsupportedDeviceDtosImpl(
       {required this.id,
       required this.entityUniqueId,
       required this.cbjEntityName,
@@ -443,7 +458,6 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
       required this.senderDeviceOs,
       required this.senderDeviceModel,
       required this.senderId,
-      required this.emptySwitchState,
       required this.entityTypes,
       required this.compUuid,
       required this.deviceVendor,
@@ -453,6 +467,8 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
       required this.deviceLastKnownIp,
       required this.deviceHostName,
       required this.deviceMdns,
+      required this.srvResourceRecord,
+      required this.ptrResourceRecord,
       required this.devicesMacAddress,
       required this.entityKey,
       required this.requestTimeStamp,
@@ -462,8 +478,9 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
       this.stateMassage})
       : super._();
 
-  factory _$GenericEmptyDeviceDtosImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GenericEmptyDeviceDtosImplFromJson(json);
+  factory _$GenericUnsupportedDeviceDtosImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$GenericUnsupportedDeviceDtosImplFromJson(json);
 
 // @JsonKey(ignore: true)
   @override
@@ -485,8 +502,6 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
   @override
   final String? senderId;
   @override
-  final String? emptySwitchState;
-  @override
   final String? entityTypes;
   @override
   final String? compUuid;
@@ -505,6 +520,10 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
   @override
   final String? deviceMdns;
   @override
+  final String? srvResourceRecord;
+  @override
+  final String? ptrResourceRecord;
+  @override
   final String? devicesMacAddress;
   @override
   final String? entityKey;
@@ -521,14 +540,14 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
 
   @override
   String toString() {
-    return 'GenericEmptyDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, emptySwitchState: $emptySwitchState, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericUnsupportedDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GenericEmptyDeviceDtosImpl &&
+            other is _$GenericUnsupportedDeviceDtosImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.entityUniqueId, entityUniqueId) ||
                 other.entityUniqueId == entityUniqueId) &&
@@ -546,8 +565,6 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
                 other.senderDeviceModel == senderDeviceModel) &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
-            (identical(other.emptySwitchState, emptySwitchState) ||
-                other.emptySwitchState == emptySwitchState) &&
             (identical(other.entityTypes, entityTypes) ||
                 other.entityTypes == entityTypes) &&
             (identical(other.compUuid, compUuid) ||
@@ -566,6 +583,10 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
                 other.deviceHostName == deviceHostName) &&
             (identical(other.deviceMdns, deviceMdns) ||
                 other.deviceMdns == deviceMdns) &&
+            (identical(other.srvResourceRecord, srvResourceRecord) ||
+                other.srvResourceRecord == srvResourceRecord) &&
+            (identical(other.ptrResourceRecord, ptrResourceRecord) ||
+                other.ptrResourceRecord == ptrResourceRecord) &&
             (identical(other.devicesMacAddress, devicesMacAddress) ||
                 other.devicesMacAddress == devicesMacAddress) &&
             (identical(other.entityKey, entityKey) ||
@@ -597,7 +618,6 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
         senderDeviceOs,
         senderDeviceModel,
         senderId,
-        emptySwitchState,
         entityTypes,
         compUuid,
         deviceVendor,
@@ -607,6 +627,8 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
         deviceLastKnownIp,
         deviceHostName,
         deviceMdns,
+        srvResourceRecord,
+        ptrResourceRecord,
         devicesMacAddress,
         entityKey,
         requestTimeStamp,
@@ -619,20 +641,22 @@ class _$GenericEmptyDeviceDtosImpl extends _GenericEmptyDeviceDtos {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$GenericEmptyDeviceDtosImplCopyWith<_$GenericEmptyDeviceDtosImpl>
-      get copyWith => __$$GenericEmptyDeviceDtosImplCopyWithImpl<
-          _$GenericEmptyDeviceDtosImpl>(this, _$identity);
+  _$$GenericUnsupportedDeviceDtosImplCopyWith<
+          _$GenericUnsupportedDeviceDtosImpl>
+      get copyWith => __$$GenericUnsupportedDeviceDtosImplCopyWithImpl<
+          _$GenericUnsupportedDeviceDtosImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$GenericEmptyDeviceDtosImplToJson(
+    return _$$GenericUnsupportedDeviceDtosImplToJson(
       this,
     );
   }
 }
 
-abstract class _GenericEmptyDeviceDtos extends GenericEmptyDeviceDtos {
-  factory _GenericEmptyDeviceDtos(
+abstract class _GenericUnsupportedDeviceDtos
+    extends GenericUnsupportedDeviceDtos {
+  factory _GenericUnsupportedDeviceDtos(
       {required final String id,
       required final String entityUniqueId,
       required final String? cbjEntityName,
@@ -642,7 +666,6 @@ abstract class _GenericEmptyDeviceDtos extends GenericEmptyDeviceDtos {
       required final String? senderDeviceOs,
       required final String? senderDeviceModel,
       required final String? senderId,
-      required final String? emptySwitchState,
       required final String? entityTypes,
       required final String? compUuid,
       required final String? deviceVendor,
@@ -652,17 +675,19 @@ abstract class _GenericEmptyDeviceDtos extends GenericEmptyDeviceDtos {
       required final String? deviceLastKnownIp,
       required final String? deviceHostName,
       required final String? deviceMdns,
+      required final String? srvResourceRecord,
+      required final String? ptrResourceRecord,
       required final String? devicesMacAddress,
       required final String? entityKey,
       required final String? requestTimeStamp,
       required final String? lastResponseFromDeviceTimeStamp,
       required final String? deviceCbjUniqueId,
       final String? deviceDtoClass,
-      final String? stateMassage}) = _$GenericEmptyDeviceDtosImpl;
-  _GenericEmptyDeviceDtos._() : super._();
+      final String? stateMassage}) = _$GenericUnsupportedDeviceDtosImpl;
+  _GenericUnsupportedDeviceDtos._() : super._();
 
-  factory _GenericEmptyDeviceDtos.fromJson(Map<String, dynamic> json) =
-      _$GenericEmptyDeviceDtosImpl.fromJson;
+  factory _GenericUnsupportedDeviceDtos.fromJson(Map<String, dynamic> json) =
+      _$GenericUnsupportedDeviceDtosImpl.fromJson;
 
   @override // @JsonKey(ignore: true)
   String get id;
@@ -683,8 +708,6 @@ abstract class _GenericEmptyDeviceDtos extends GenericEmptyDeviceDtos {
   @override
   String? get senderId;
   @override
-  String? get emptySwitchState;
-  @override
   String? get entityTypes;
   @override
   String? get compUuid;
@@ -703,6 +726,10 @@ abstract class _GenericEmptyDeviceDtos extends GenericEmptyDeviceDtos {
   @override
   String? get deviceMdns;
   @override
+  String? get srvResourceRecord;
+  @override
+  String? get ptrResourceRecord;
+  @override
   String? get devicesMacAddress;
   @override
   String? get entityKey;
@@ -718,6 +745,7 @@ abstract class _GenericEmptyDeviceDtos extends GenericEmptyDeviceDtos {
   String? get stateMassage;
   @override
   @JsonKey(ignore: true)
-  _$$GenericEmptyDeviceDtosImplCopyWith<_$GenericEmptyDeviceDtosImpl>
+  _$$GenericUnsupportedDeviceDtosImplCopyWith<
+          _$GenericUnsupportedDeviceDtosImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

@@ -41,6 +41,8 @@ mixin _$GenericBoilerDeviceDtos {
   String? get deviceLastKnownIp => throw _privateConstructorUsedError;
   String? get deviceHostName => throw _privateConstructorUsedError;
   String? get deviceMdns => throw _privateConstructorUsedError;
+  String? get srvResourceRecord => throw _privateConstructorUsedError;
+  String? get ptrResourceRecord => throw _privateConstructorUsedError;
   String? get devicesMacAddress => throw _privateConstructorUsedError;
   String? get entityKey => throw _privateConstructorUsedError;
   String? get requestTimeStamp => throw _privateConstructorUsedError;
@@ -82,6 +84,8 @@ abstract class $GenericBoilerDeviceDtosCopyWith<$Res> {
       String? deviceLastKnownIp,
       String? deviceHostName,
       String? deviceMdns,
+      String? srvResourceRecord,
+      String? ptrResourceRecord,
       String? devicesMacAddress,
       String? entityKey,
       String? requestTimeStamp,
@@ -124,6 +128,8 @@ class _$GenericBoilerDeviceDtosCopyWithImpl<$Res,
     Object? deviceLastKnownIp = freezed,
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
+    Object? srvResourceRecord = freezed,
+    Object? ptrResourceRecord = freezed,
     Object? devicesMacAddress = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
@@ -209,6 +215,14 @@ class _$GenericBoilerDeviceDtosCopyWithImpl<$Res,
           ? _value.deviceMdns
           : deviceMdns // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvResourceRecord: freezed == srvResourceRecord
+          ? _value.srvResourceRecord
+          : srvResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ptrResourceRecord: freezed == ptrResourceRecord
+          ? _value.ptrResourceRecord
+          : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
       devicesMacAddress: freezed == devicesMacAddress
           ? _value.devicesMacAddress
           : devicesMacAddress // ignore: cast_nullable_to_non_nullable
@@ -271,6 +285,8 @@ abstract class _$$GenericBoilerDeviceDtosImplCopyWith<$Res>
       String? deviceLastKnownIp,
       String? deviceHostName,
       String? deviceMdns,
+      String? srvResourceRecord,
+      String? ptrResourceRecord,
       String? devicesMacAddress,
       String? entityKey,
       String? requestTimeStamp,
@@ -312,6 +328,8 @@ class __$$GenericBoilerDeviceDtosImplCopyWithImpl<$Res>
     Object? deviceLastKnownIp = freezed,
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
+    Object? srvResourceRecord = freezed,
+    Object? ptrResourceRecord = freezed,
     Object? devicesMacAddress = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
@@ -397,6 +415,14 @@ class __$$GenericBoilerDeviceDtosImplCopyWithImpl<$Res>
           ? _value.deviceMdns
           : deviceMdns // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvResourceRecord: freezed == srvResourceRecord
+          ? _value.srvResourceRecord
+          : srvResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ptrResourceRecord: freezed == ptrResourceRecord
+          ? _value.ptrResourceRecord
+          : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
       devicesMacAddress: freezed == devicesMacAddress
           ? _value.devicesMacAddress
           : devicesMacAddress // ignore: cast_nullable_to_non_nullable
@@ -453,6 +479,8 @@ class _$GenericBoilerDeviceDtosImpl extends _GenericBoilerDeviceDtos {
       required this.deviceLastKnownIp,
       required this.deviceHostName,
       required this.deviceMdns,
+      required this.srvResourceRecord,
+      required this.ptrResourceRecord,
       required this.devicesMacAddress,
       required this.entityKey,
       required this.requestTimeStamp,
@@ -505,6 +533,10 @@ class _$GenericBoilerDeviceDtosImpl extends _GenericBoilerDeviceDtos {
   @override
   final String? deviceMdns;
   @override
+  final String? srvResourceRecord;
+  @override
+  final String? ptrResourceRecord;
+  @override
   final String? devicesMacAddress;
   @override
   final String? entityKey;
@@ -521,7 +553,7 @@ class _$GenericBoilerDeviceDtosImpl extends _GenericBoilerDeviceDtos {
 
   @override
   String toString() {
-    return 'GenericBoilerDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, boilerSwitchState: $boilerSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericBoilerDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, boilerSwitchState: $boilerSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -566,6 +598,10 @@ class _$GenericBoilerDeviceDtosImpl extends _GenericBoilerDeviceDtos {
                 other.deviceHostName == deviceHostName) &&
             (identical(other.deviceMdns, deviceMdns) ||
                 other.deviceMdns == deviceMdns) &&
+            (identical(other.srvResourceRecord, srvResourceRecord) ||
+                other.srvResourceRecord == srvResourceRecord) &&
+            (identical(other.ptrResourceRecord, ptrResourceRecord) ||
+                other.ptrResourceRecord == ptrResourceRecord) &&
             (identical(other.devicesMacAddress, devicesMacAddress) ||
                 other.devicesMacAddress == devicesMacAddress) &&
             (identical(other.entityKey, entityKey) ||
@@ -607,6 +643,8 @@ class _$GenericBoilerDeviceDtosImpl extends _GenericBoilerDeviceDtos {
         deviceLastKnownIp,
         deviceHostName,
         deviceMdns,
+        srvResourceRecord,
+        ptrResourceRecord,
         devicesMacAddress,
         entityKey,
         requestTimeStamp,
@@ -652,6 +690,8 @@ abstract class _GenericBoilerDeviceDtos extends GenericBoilerDeviceDtos {
       required final String? deviceLastKnownIp,
       required final String? deviceHostName,
       required final String? deviceMdns,
+      required final String? srvResourceRecord,
+      required final String? ptrResourceRecord,
       required final String? devicesMacAddress,
       required final String? entityKey,
       required final String? requestTimeStamp,
@@ -702,6 +742,10 @@ abstract class _GenericBoilerDeviceDtos extends GenericBoilerDeviceDtos {
   String? get deviceHostName;
   @override
   String? get deviceMdns;
+  @override
+  String? get srvResourceRecord;
+  @override
+  String? get ptrResourceRecord;
   @override
   String? get devicesMacAddress;
   @override

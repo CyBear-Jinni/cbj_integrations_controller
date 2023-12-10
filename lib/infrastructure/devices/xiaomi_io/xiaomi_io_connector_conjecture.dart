@@ -5,9 +5,9 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xiaomi_io_gpx3021gl/xiaomi_io_gpx3021gl_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:mi_iot_token/mi_iot_token.dart';
-import 'package:network_tools/network_tools.dart';
 
 class XiaomiIoConnectorConjecture
     implements AbstractCompanyConnectorConjecture {
@@ -44,7 +44,7 @@ class XiaomiIoConnectorConjecture
   // Discover from miio package does not work on Linux, but it is better than
   // filtering devices by host names like we do now
   Future<void> discoverNewDevices({
-    required ActiveHost activeHost,
+    required GenericGenericUnsupportedDE entity,
   }) async {
     if (miCloud == null) {
       icLogger.w('Please set Xiaomi Mi credentials in the app');

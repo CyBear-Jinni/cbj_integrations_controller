@@ -31,6 +31,8 @@ class GenericRgbwLightDE extends DeviceEntityAbstract {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -65,6 +67,8 @@ class GenericRgbwLightDE extends DeviceEntityAbstract {
         deviceLastKnownIp: DeviceLastKnownIp(''),
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
         compUuid: DeviceCompUuid(''),
         powerConsumption: DevicePowerConsumption(''),
         devicesMacAddress: DevicesMacAddress(''),
@@ -133,9 +137,7 @@ class GenericRgbwLightDE extends DeviceEntityAbstract {
   // }
 
   @override
-  String getDeviceId() {
-    return uniqueId.getOrCrash();
-  }
+  String getDeviceId() => uniqueId.getOrCrash();
 
   /// Return a list of all valid actions for this device
   @override
@@ -166,7 +168,8 @@ class GenericRgbwLightDE extends DeviceEntityAbstract {
       deviceLastKnownIp: deviceLastKnownIp.getOrCrash(),
       deviceHostName: deviceHostName.getOrCrash(),
       deviceMdns: deviceMdns.getOrCrash(),
-      devicesMacAddress: devicesMacAddress.getOrCrash(),
+      devicesMacAddress: devicesMacAddress.getOrCrash(),        srvResourceRecord: srvResourceRecord.getOrCrash(),
+      ptrResourceRecord: ptrResourceRecord.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:

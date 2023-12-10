@@ -1,6 +1,5 @@
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
-// import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_dto_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:dartz/dartz.dart';
@@ -34,6 +33,8 @@ abstract class DeviceEntityAbstract {
     required this.requestTimeStamp,
     required this.lastResponseFromDeviceTimeStamp,
     required this.deviceCbjUniqueId,
+    required this.srvResourceRecord,
+    required this.ptrResourceRecord,
   });
 
   /// The unique id that CyBear Jinni Hub gave the device
@@ -93,6 +94,10 @@ abstract class DeviceEntityAbstract {
 
   /// Device Mdns
   DeviceMdns deviceMdns;
+
+  DeviceSrvResourceRecord srvResourceRecord;
+
+  DevicePtrResourceRecord ptrResourceRecord;
 
   /// Mac address of the device
   DevicesMacAddress devicesMacAddress;
@@ -192,6 +197,8 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
           deviceLastKnownIp: DeviceLastKnownIp('1.1.1.1'),
           deviceHostName: DeviceHostName('deviceHostName is empty'),
           deviceMdns: DeviceMdns('deviceMdns is empty'),
+          srvResourceRecord: DeviceSrvResourceRecord(),
+          ptrResourceRecord: DevicePtrResourceRecord(),
           devicesMacAddress: DevicesMacAddress('devicesMacAddress is empty'),
           entityKey: EntityKey('entityKey is empty'),
           requestTimeStamp: RequestTimeStamp('requestTimeStamp is empty'),
@@ -236,47 +243,52 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
   }
 }
 
-//
-// part 'device_entity_abstract.freezed.dart';
-//
-// /// Abstract smart device that exist inside a computer, the implementations will
-// /// be actual device like blinds lights and more
-// @freezed
-// abstract class DeviceEntityAbstract implements _$DeviceEntityAbstract {
-//   /// All public field of device entity
-//   const factory DeviceEntityAbstract({
-//     /// The smart device id
-//     required EntityUniqueId? id,
-//
-//     /// The default name of the device
-//     required CbjEntityName? cbjEntityName,
-//   }) = _DeviceEntityAbstract;
-//
-//   const DeviceEntityAbstract._();
-//
-//   /// Empty instance of DeviceEntity
-//   factory DeviceEntityAbstract.empty() => DeviceEntityAbstract(
-//         id: EntityUniqueId(),
-//         cbjEntityName: CbjEntityName(''),
-//       );
-//
-//   /// Will return failure if any of the fields failed or return unit if fields
-//   /// have legit values
-//   Option<DevicesFailure<dynamic>> get failureOption {
-//     return cbjEntityName!.value.fold((f) => some(f), (_) => none());
-//     //
-//     // return body.failureOrUnit
-//     //     .andThen(todos.failureOrUnit)
-//     //     .andThen(
-//     //       todos
-//     //           .getOrCrash()
-//     //           // Getting the failureOption from the TodoItem ENTITY - NOT a failureOrUnit from a VALUE OBJECT
-//     //           .map((todoItem) => todoItem.failureOption)
-//     //           .filter((o) => o.isSome())
-//     //           // If we can't get the 0th element, the list is empty. In such a case, it's valid.
-//     //           .getOrElse(0, (_) => none())
-//     //           .fold(() => right(unit), (f) => left(f)),
-//     //     )
-//     //     .fold((f) => some(f), (_) => none());
+// class GenericGenericUnsupportedDE extends DeviceEntityAbstract {
+//   GenericGenericUnsupportedDE({
+//     required super.uniqueId,
+//     required super.entityUniqueId,
+//     required super.deviceVendor,
+//     required super.entityTypes,
+//     required super.cbjEntityName,
+//     required super.stateMassage,
+//     required super.senderDeviceOs,
+//     required super.senderDeviceModel,
+//     required super.senderId,
+//     required super.compUuid,
+//     required super.entityStateGRPC,
+//     required super.entityOriginalName,
+//     required super.deviceOriginalName,
+//     required super.powerConsumption,
+//     required super.deviceUniqueId,
+//     required super.devicePort,
+//     required super.deviceLastKnownIp,
+//     required super.deviceHostName,
+//     required super.deviceMdns,
+//     required super.srvResourceRecord,
+//     required super.ptrResourceRecord,
+//     required super.devicesMacAddress,
+//     required super.entityKey,
+//     required super.requestTimeStamp,
+//     required super.lastResponseFromDeviceTimeStamp,
+//     required super.deviceCbjUniqueId,
+//   });
+
+//   @override
+//   Future<Either<CoreFailure, Unit>> executeDeviceAction({
+//     required DeviceEntityAbstract newEntity,
+//   }) async {
+//     return right(unit);
 //   }
+
+//   @override
+//   List<String> getAllValidActions() => [];
+
+//   @override
+//   String getDeviceId() => uniqueId.getOrCrash();
+
+//   @override
+//   List<String> getListOfPropertiesToChange() => [];
+
+//   @override
+//   bool replaceActionIfExist(String action) => false;
 // }

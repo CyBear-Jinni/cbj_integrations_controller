@@ -41,6 +41,8 @@ mixin _$GenericSecurityCameraDeviceDtos {
   String? get deviceHostName => throw _privateConstructorUsedError;
   String? get deviceMdns => throw _privateConstructorUsedError;
   String? get devicesMacAddress => throw _privateConstructorUsedError;
+  String? get srvResourceRecord => throw _privateConstructorUsedError;
+  String? get ptrResourceRecord => throw _privateConstructorUsedError;
   String? get entityKey => throw _privateConstructorUsedError;
   String? get requestTimeStamp => throw _privateConstructorUsedError;
   String? get lastResponseFromDeviceTimeStamp =>
@@ -84,6 +86,8 @@ abstract class $GenericSecurityCameraDeviceDtosCopyWith<$Res> {
       String? deviceHostName,
       String? deviceMdns,
       String? devicesMacAddress,
+      String? srvResourceRecord,
+      String? ptrResourceRecord,
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
@@ -126,6 +130,8 @@ class _$GenericSecurityCameraDeviceDtosCopyWithImpl<$Res,
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
     Object? devicesMacAddress = freezed,
+    Object? srvResourceRecord = freezed,
+    Object? ptrResourceRecord = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
@@ -211,6 +217,14 @@ class _$GenericSecurityCameraDeviceDtosCopyWithImpl<$Res,
           ? _value.devicesMacAddress
           : devicesMacAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvResourceRecord: freezed == srvResourceRecord
+          ? _value.srvResourceRecord
+          : srvResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ptrResourceRecord: freezed == ptrResourceRecord
+          ? _value.ptrResourceRecord
+          : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
       entityKey: freezed == entityKey
           ? _value.entityKey
           : entityKey // ignore: cast_nullable_to_non_nullable
@@ -273,6 +287,8 @@ abstract class _$$GenericSecurityCameraDeviceDtosImplCopyWith<$Res>
       String? deviceHostName,
       String? deviceMdns,
       String? devicesMacAddress,
+      String? srvResourceRecord,
+      String? ptrResourceRecord,
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
@@ -314,6 +330,8 @@ class __$$GenericSecurityCameraDeviceDtosImplCopyWithImpl<$Res>
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
     Object? devicesMacAddress = freezed,
+    Object? srvResourceRecord = freezed,
+    Object? ptrResourceRecord = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
@@ -399,6 +417,14 @@ class __$$GenericSecurityCameraDeviceDtosImplCopyWithImpl<$Res>
           ? _value.devicesMacAddress
           : devicesMacAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvResourceRecord: freezed == srvResourceRecord
+          ? _value.srvResourceRecord
+          : srvResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ptrResourceRecord: freezed == ptrResourceRecord
+          ? _value.ptrResourceRecord
+          : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
       entityKey: freezed == entityKey
           ? _value.entityKey
           : entityKey // ignore: cast_nullable_to_non_nullable
@@ -456,6 +482,8 @@ class _$GenericSecurityCameraDeviceDtosImpl
       required this.deviceHostName,
       required this.deviceMdns,
       required this.devicesMacAddress,
+      required this.srvResourceRecord,
+      required this.ptrResourceRecord,
       required this.entityKey,
       required this.requestTimeStamp,
       required this.lastResponseFromDeviceTimeStamp,
@@ -509,6 +537,10 @@ class _$GenericSecurityCameraDeviceDtosImpl
   @override
   final String? devicesMacAddress;
   @override
+  final String? srvResourceRecord;
+  @override
+  final String? ptrResourceRecord;
+  @override
   final String? entityKey;
   @override
   final String? requestTimeStamp;
@@ -525,7 +557,7 @@ class _$GenericSecurityCameraDeviceDtosImpl
 
   @override
   String toString() {
-    return 'GenericSecurityCameraDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, securityCameraSuspendState: $securityCameraSuspendState, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericSecurityCameraDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, securityCameraSuspendState: $securityCameraSuspendState, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -570,6 +602,10 @@ class _$GenericSecurityCameraDeviceDtosImpl
                 other.deviceMdns == deviceMdns) &&
             (identical(other.devicesMacAddress, devicesMacAddress) ||
                 other.devicesMacAddress == devicesMacAddress) &&
+            (identical(other.srvResourceRecord, srvResourceRecord) ||
+                other.srvResourceRecord == srvResourceRecord) &&
+            (identical(other.ptrResourceRecord, ptrResourceRecord) ||
+                other.ptrResourceRecord == ptrResourceRecord) &&
             (identical(other.entityKey, entityKey) ||
                 other.entityKey == entityKey) &&
             (identical(other.requestTimeStamp, requestTimeStamp) ||
@@ -613,6 +649,8 @@ class _$GenericSecurityCameraDeviceDtosImpl
         deviceHostName,
         deviceMdns,
         devicesMacAddress,
+        srvResourceRecord,
+        ptrResourceRecord,
         entityKey,
         requestTimeStamp,
         lastResponseFromDeviceTimeStamp,
@@ -660,6 +698,8 @@ abstract class _GenericSecurityCameraDeviceDtos
       required final String? deviceHostName,
       required final String? deviceMdns,
       required final String? devicesMacAddress,
+      required final String? srvResourceRecord,
+      required final String? ptrResourceRecord,
       required final String? entityKey,
       required final String? requestTimeStamp,
       required final String? lastResponseFromDeviceTimeStamp,
@@ -710,6 +750,10 @@ abstract class _GenericSecurityCameraDeviceDtos
   String? get deviceMdns;
   @override
   String? get devicesMacAddress;
+  @override
+  String? get srvResourceRecord;
+  @override
+  String? get ptrResourceRecord;
   @override
   String? get entityKey;
   @override

@@ -2,16 +2,15 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_dto_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_value_objects.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generic_empty_device_dtos.freezed.dart';
 part 'generic_empty_device_dtos.g.dart';
 
 @freezed
-abstract class GenericEmptyDeviceDtos
-    implements _$GenericEmptyDeviceDtos, DeviceEntityDtoAbstract {
-  factory GenericEmptyDeviceDtos({
+abstract class GenericUnsupportedDeviceDtos
+    implements _$GenericUnsupportedDeviceDtos, DeviceEntityDtoAbstract {
+  factory GenericUnsupportedDeviceDtos({
     // @JsonKey(ignore: true)
     required String id,
     required String entityUniqueId,
@@ -22,7 +21,6 @@ abstract class GenericEmptyDeviceDtos
     required String? senderDeviceOs,
     required String? senderDeviceModel,
     required String? senderId,
-    required String? emptySwitchState,
     required String? entityTypes,
     required String? compUuid,
     required String? deviceVendor,
@@ -32,6 +30,8 @@ abstract class GenericEmptyDeviceDtos
     required String? deviceLastKnownIp,
     required String? deviceHostName,
     required String? deviceMdns,
+    required String? srvResourceRecord,
+    required String? ptrResourceRecord,
     required String? devicesMacAddress,
     required String? entityKey,
     required String? requestTimeStamp,
@@ -41,13 +41,15 @@ abstract class GenericEmptyDeviceDtos
     String? stateMassage,
 
     // required ServerTimestampConverter() FieldValue serverTimeStamp,
-  }) = _GenericEmptyDeviceDtos;
+  }) = _GenericUnsupportedDeviceDtos;
 
-  GenericEmptyDeviceDtos._();
+  GenericUnsupportedDeviceDtos._();
 
-  factory GenericEmptyDeviceDtos.fromDomain(GenericEmptyDE deviceDe) {
-    return GenericEmptyDeviceDtos(
-      deviceDtoClass: (GenericEmptyDeviceDtos).toString(),
+  factory GenericUnsupportedDeviceDtos.fromDomain(
+    GenericGenericUnsupportedDE deviceDe,
+  ) {
+    return GenericUnsupportedDeviceDtos(
+      deviceDtoClass: (GenericUnsupportedDeviceDtos).toString(),
       id: deviceDe.uniqueId.getOrCrash(),
       entityUniqueId: deviceDe.entityUniqueId.getOrCrash(),
       cbjEntityName: deviceDe.cbjEntityName.getOrCrash(),
@@ -58,7 +60,6 @@ abstract class GenericEmptyDeviceDtos
       senderDeviceOs: deviceDe.senderDeviceOs.getOrCrash(),
       senderDeviceModel: deviceDe.senderDeviceModel.getOrCrash(),
       senderId: deviceDe.senderId.getOrCrash(),
-      emptySwitchState: deviceDe.emptySwitchState!.getOrCrash(),
       entityTypes: deviceDe.entityTypes.getOrCrash(),
       compUuid: deviceDe.compUuid.getOrCrash(),
       deviceVendor: deviceDe.deviceVendor.getOrCrash(),
@@ -68,6 +69,8 @@ abstract class GenericEmptyDeviceDtos
       deviceLastKnownIp: deviceDe.deviceLastKnownIp.getOrCrash(),
       deviceHostName: deviceDe.deviceHostName.getOrCrash(),
       deviceMdns: deviceDe.deviceMdns.getOrCrash(),
+      srvResourceRecord: deviceDe.srvResourceRecord.getOrCrash(),
+      ptrResourceRecord: deviceDe.ptrResourceRecord.getOrCrash(),
       devicesMacAddress: deviceDe.devicesMacAddress.getOrCrash(),
       entityKey: deviceDe.entityKey.getOrCrash(),
       requestTimeStamp: deviceDe.requestTimeStamp.getOrCrash(),
@@ -77,15 +80,16 @@ abstract class GenericEmptyDeviceDtos
     );
   }
 
-  factory GenericEmptyDeviceDtos.fromJson(Map<String, dynamic> json) =>
-      _$GenericEmptyDeviceDtosFromJson(json);
+  factory GenericUnsupportedDeviceDtos.fromJson(Map<String, dynamic> json) =>
+      _$GenericUnsupportedDeviceDtosFromJson(json);
 
   @override
-  final String deviceDtoClassInstance = (GenericEmptyDeviceDtos).toString();
+  final String deviceDtoClassInstance =
+      (GenericUnsupportedDeviceDtos).toString();
 
   @override
   DeviceEntityAbstract toDomain() {
-    return GenericEmptyDE(
+    return GenericGenericUnsupportedDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),
       cbjEntityName: CbjEntityName(cbjEntityName),
@@ -98,13 +102,14 @@ abstract class GenericEmptyDeviceDtos
       senderId: DeviceSenderId.fromUniqueString(senderId),
       deviceVendor: DeviceVendor(deviceVendor),
       compUuid: DeviceCompUuid(compUuid),
-      emptySwitchState: GenericEmptySwitchState(emptySwitchState),
       powerConsumption: DevicePowerConsumption(powerConsumption),
       deviceUniqueId: DeviceUniqueId(deviceUniqueId),
       devicePort: DevicePort(devicePort),
       deviceLastKnownIp: DeviceLastKnownIp(deviceLastKnownIp),
       deviceHostName: DeviceHostName(deviceHostName),
       deviceMdns: DeviceMdns(deviceMdns),
+      srvResourceRecord: DeviceSrvResourceRecord(input: srvResourceRecord),
+      ptrResourceRecord: DevicePtrResourceRecord(input: ptrResourceRecord),
       devicesMacAddress: DevicesMacAddress(devicesMacAddress),
       entityKey: EntityKey(entityKey),
       requestTimeStamp: RequestTimeStamp(requestTimeStamp),

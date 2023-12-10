@@ -31,6 +31,8 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -60,6 +62,9 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
         deviceLastKnownIp: DeviceLastKnownIp(''),
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
+
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
         compUuid: DeviceCompUuid(''),
         powerConsumption: DevicePowerConsumption(''),
         devicesMacAddress: DevicesMacAddress(''),
@@ -102,9 +107,7 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
   // }
 
   @override
-  String getDeviceId() {
-    return uniqueId.getOrCrash();
-  }
+  String getDeviceId() => uniqueId.getOrCrash();
 
   /// Return a list of all valid actions for this device
   @override
@@ -134,7 +137,8 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
       devicePort: devicePort.getOrCrash(),
       deviceLastKnownIp: deviceLastKnownIp.getOrCrash(),
       deviceHostName: deviceHostName.getOrCrash(),
-      deviceMdns: deviceMdns.getOrCrash(),
+      deviceMdns: deviceMdns.getOrCrash(),        srvResourceRecord: srvResourceRecord.getOrCrash(),
+      ptrResourceRecord: ptrResourceRecord.getOrCrash(),
       devicesMacAddress: devicesMacAddress.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),

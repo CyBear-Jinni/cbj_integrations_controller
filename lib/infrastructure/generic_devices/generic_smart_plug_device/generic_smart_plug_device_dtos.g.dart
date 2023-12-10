@@ -29,6 +29,8 @@ _$GenericSmartPlugDeviceDtosImpl _$$GenericSmartPlugDeviceDtosImplFromJson(
       deviceHostName: json['deviceHostName'] as String?,
       deviceMdns: json['deviceMdns'] as String?,
       devicesMacAddress: json['devicesMacAddress'] as String?,
+      srvResourceRecord: json['srvResourceRecord'] as String?,
+      ptrResourceRecord: json['ptrResourceRecord'] as String?,
       entityKey: json['entityKey'] as String?,
       requestTimeStamp: json['requestTimeStamp'] as String?,
       lastResponseFromDeviceTimeStamp:
@@ -61,6 +63,8 @@ Map<String, dynamic> _$$GenericSmartPlugDeviceDtosImplToJson(
       'deviceHostName': instance.deviceHostName,
       'deviceMdns': instance.deviceMdns,
       'devicesMacAddress': instance.devicesMacAddress,
+      'srvResourceRecord': instance.srvResourceRecord,
+      'ptrResourceRecord': instance.ptrResourceRecord,
       'entityKey': instance.entityKey,
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':

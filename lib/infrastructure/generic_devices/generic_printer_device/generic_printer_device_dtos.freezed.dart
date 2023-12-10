@@ -42,6 +42,8 @@ mixin _$GenericPrinterDeviceDtos {
   String? get deviceLastKnownIp => throw _privateConstructorUsedError;
   String? get deviceHostName => throw _privateConstructorUsedError;
   String? get deviceMdns => throw _privateConstructorUsedError;
+  String? get srvResourceRecord => throw _privateConstructorUsedError;
+  String? get ptrResourceRecord => throw _privateConstructorUsedError;
   String? get devicesMacAddress => throw _privateConstructorUsedError;
   String? get entityKey => throw _privateConstructorUsedError;
   String? get requestTimeStamp => throw _privateConstructorUsedError;
@@ -84,6 +86,8 @@ abstract class $GenericPrinterDeviceDtosCopyWith<$Res> {
       String? deviceLastKnownIp,
       String? deviceHostName,
       String? deviceMdns,
+      String? srvResourceRecord,
+      String? ptrResourceRecord,
       String? devicesMacAddress,
       String? entityKey,
       String? requestTimeStamp,
@@ -127,6 +131,8 @@ class _$GenericPrinterDeviceDtosCopyWithImpl<$Res,
     Object? deviceLastKnownIp = freezed,
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
+    Object? srvResourceRecord = freezed,
+    Object? ptrResourceRecord = freezed,
     Object? devicesMacAddress = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
@@ -216,6 +222,14 @@ class _$GenericPrinterDeviceDtosCopyWithImpl<$Res,
           ? _value.deviceMdns
           : deviceMdns // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvResourceRecord: freezed == srvResourceRecord
+          ? _value.srvResourceRecord
+          : srvResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ptrResourceRecord: freezed == ptrResourceRecord
+          ? _value.ptrResourceRecord
+          : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
       devicesMacAddress: freezed == devicesMacAddress
           ? _value.devicesMacAddress
           : devicesMacAddress // ignore: cast_nullable_to_non_nullable
@@ -279,6 +293,8 @@ abstract class _$$GenericPrinterDeviceDtosImplCopyWith<$Res>
       String? deviceLastKnownIp,
       String? deviceHostName,
       String? deviceMdns,
+      String? srvResourceRecord,
+      String? ptrResourceRecord,
       String? devicesMacAddress,
       String? entityKey,
       String? requestTimeStamp,
@@ -321,6 +337,8 @@ class __$$GenericPrinterDeviceDtosImplCopyWithImpl<$Res>
     Object? deviceLastKnownIp = freezed,
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
+    Object? srvResourceRecord = freezed,
+    Object? ptrResourceRecord = freezed,
     Object? devicesMacAddress = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
@@ -410,6 +428,14 @@ class __$$GenericPrinterDeviceDtosImplCopyWithImpl<$Res>
           ? _value.deviceMdns
           : deviceMdns // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvResourceRecord: freezed == srvResourceRecord
+          ? _value.srvResourceRecord
+          : srvResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ptrResourceRecord: freezed == ptrResourceRecord
+          ? _value.ptrResourceRecord
+          : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
       devicesMacAddress: freezed == devicesMacAddress
           ? _value.devicesMacAddress
           : devicesMacAddress // ignore: cast_nullable_to_non_nullable
@@ -467,6 +493,8 @@ class _$GenericPrinterDeviceDtosImpl extends _GenericPrinterDeviceDtos {
       required this.deviceLastKnownIp,
       required this.deviceHostName,
       required this.deviceMdns,
+      required this.srvResourceRecord,
+      required this.ptrResourceRecord,
       required this.devicesMacAddress,
       required this.entityKey,
       required this.requestTimeStamp,
@@ -521,6 +549,10 @@ class _$GenericPrinterDeviceDtosImpl extends _GenericPrinterDeviceDtos {
   @override
   final String? deviceMdns;
   @override
+  final String? srvResourceRecord;
+  @override
+  final String? ptrResourceRecord;
+  @override
   final String? devicesMacAddress;
   @override
   final String? entityKey;
@@ -537,7 +569,7 @@ class _$GenericPrinterDeviceDtosImpl extends _GenericPrinterDeviceDtos {
 
   @override
   String toString() {
-    return 'GenericPrinterDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, printerSwitchState: $printerSwitchState, lastKnownIp: $lastKnownIp, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericPrinterDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, printerSwitchState: $printerSwitchState, lastKnownIp: $lastKnownIp, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -584,6 +616,10 @@ class _$GenericPrinterDeviceDtosImpl extends _GenericPrinterDeviceDtos {
                 other.deviceHostName == deviceHostName) &&
             (identical(other.deviceMdns, deviceMdns) ||
                 other.deviceMdns == deviceMdns) &&
+            (identical(other.srvResourceRecord, srvResourceRecord) ||
+                other.srvResourceRecord == srvResourceRecord) &&
+            (identical(other.ptrResourceRecord, ptrResourceRecord) ||
+                other.ptrResourceRecord == ptrResourceRecord) &&
             (identical(other.devicesMacAddress, devicesMacAddress) ||
                 other.devicesMacAddress == devicesMacAddress) &&
             (identical(other.entityKey, entityKey) ||
@@ -626,6 +662,8 @@ class _$GenericPrinterDeviceDtosImpl extends _GenericPrinterDeviceDtos {
         deviceLastKnownIp,
         deviceHostName,
         deviceMdns,
+        srvResourceRecord,
+        ptrResourceRecord,
         devicesMacAddress,
         entityKey,
         requestTimeStamp,
@@ -672,6 +710,8 @@ abstract class _GenericPrinterDeviceDtos extends GenericPrinterDeviceDtos {
       required final String? deviceLastKnownIp,
       required final String? deviceHostName,
       required final String? deviceMdns,
+      required final String? srvResourceRecord,
+      required final String? ptrResourceRecord,
       required final String? devicesMacAddress,
       required final String? entityKey,
       required final String? requestTimeStamp,
@@ -724,6 +764,10 @@ abstract class _GenericPrinterDeviceDtos extends GenericPrinterDeviceDtos {
   String? get deviceHostName;
   @override
   String? get deviceMdns;
+  @override
+  String? get srvResourceRecord;
+  @override
+  String? get ptrResourceRecord;
   @override
   String? get devicesMacAddress;
   @override

@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:cbj_integrations_controller/domain/i_network_utilities.dart';
 import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:network_tools/network_tools.dart';
@@ -51,7 +53,9 @@ class SearchDevices {
         }
         final List<ActiveHost> activeHostList = await _searchMdnsDevices();
         for (final ActiveHost activeHost in activeHostList) {
-          CompaniesConnectorConjecture().setMdnsDeviceByCompany(activeHost);
+          final GenericGenericUnsupportedDE entity =
+              await INetworkUtilities.instance.activeHostToEntity(activeHost);
+          CompaniesConnectorConjecture().setMdnsDeviceByCompany(entity);
         }
 
         await Future.delayed(const Duration(minutes: 2));
@@ -64,12 +68,13 @@ class SearchDevices {
   /// Get all the host names in the connected networks and try to add the device
   Future<void> _searchPingableDevicesAndSetThemUpByHostName() async {
     while (true) {
-      final List<ActiveHost> pingableDevices = await _searchPingableDevices();
+      final List<GenericGenericUnsupportedDE> pingableDevices =
+          await _searchPingableDevices();
 
-      for (final ActiveHost activeHost in pingableDevices) {
+      for (final GenericGenericUnsupportedDE entity in pingableDevices) {
         try {
           CompaniesConnectorConjecture().setHostNameDeviceByCompany(
-            activeHost: activeHost,
+            entity: entity,
           );
         } catch (e) {
           continue;
@@ -120,8 +125,8 @@ class SearchDevices {
     return activeHostList;
   }
 
-  Future<List<ActiveHost>> _searchPingableDevices() async {
-    final List<ActiveHost> activeList = [];
+  Future<List<GenericGenericUnsupportedDE>> _searchPingableDevices() async {
+    final List<Future<GenericGenericUnsupportedDE>> entityList = [];
 
     final List<NetworkInterface> networkInterfaceList =
         await NetworkInterface.list();
@@ -139,7 +144,8 @@ class SearchDevices {
           subnet,
           lastHostId: 126,
         )) {
-          activeList.add(activeHost);
+          entityList
+              .add(INetworkUtilities.instance.activeHostToEntity(activeHost));
         }
 
         // Spits to 2 requests to fix error in snap https://github.com/CyBear-Jinni-user/CBJ_Hub_Snap/issues/2
@@ -148,12 +154,13 @@ class SearchDevices {
           subnet,
           firstHostId: 127,
         )) {
-          activeList.add(activeHost);
+          entityList
+              .add(INetworkUtilities.instance.activeHostToEntity(activeHost));
         }
       }
     }
 
-    return activeList;
+    return Future.wait(entityList);
   }
 
   /// Searching devices by binding to sockets, used for devices with
@@ -175,11 +182,13 @@ class SearchDevices {
         await _findCbjDevicesByBindingIntoSockets();
     try {
       for (final Stream<ActiveHost> socketBinding in devicesWithPort) {
-        socketBinding.listen((activeHost) {
+        socketBinding.listen((activeHost) async {
           icLogger.i('Found CBJ Smart security camera: ${activeHost.address}');
 
+          final GenericGenericUnsupportedDE entity =
+              await INetworkUtilities.instance.activeHostToEntity(activeHost);
           CbjDevicesConnectorConjecture()
-              .addNewDeviceByHostInfo(activeHost: activeHost);
+              .addNewDeviceByHostInfo(entity: entity);
         });
       }
     } catch (e) {

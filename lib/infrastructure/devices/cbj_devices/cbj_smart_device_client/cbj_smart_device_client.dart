@@ -1,10 +1,11 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/domain/i_network_utilities.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:grpc/grpc.dart';
-import 'package:network_tools/network_tools.dart';
 
 class CbjSmartDeviceClient {
   CbjSmartDeviceClient() {
@@ -23,12 +24,14 @@ class CbjSmartDeviceClient {
   static CbjSmartDeviceConnectionsClient? smartDeviceClient;
 
   static Future<List<CbjSmartDeviceInfo?>> getCbjSmartDeviceHostDevicesInfo(
-    ActiveHost activeHost,
+    GenericGenericUnsupportedDE entity,
   ) async {
     await channel?.terminate();
 
-    channel =
-        await _createCbjSmartDeviceClient(activeHost.address, smartDevicePort);
+    channel = await _createCbjSmartDeviceClient(
+      entity.deviceLastKnownIp.getOrCrash(),
+      smartDevicePort,
+    );
 
     smartDeviceClient = CbjSmartDeviceConnectionsClient(channel!);
 
@@ -58,8 +61,8 @@ class CbjSmartDeviceClient {
   }
 
   // TODO: Change in the future that the smart device will publish itself using mdns
-  static Future<ActiveHost?> checkIfDeviceIsCbjSmartDevice(
-    String deviceIp,
+  static Future<GenericGenericUnsupportedDE?> checkIfDeviceIsCbjSmartDevice(
+    String? deviceIp,
   ) async {
     final String? subnet = await SharedVariables().getIps();
 
@@ -67,14 +70,7 @@ class CbjSmartDeviceClient {
       return null;
     }
 
-    final ActiveHost? activeHost = await PortScanner.connectToPort(
-      address: subnet,
-      port: smartDevicePort,
-      // TODO: maybe value can be lower
-      timeout: const Duration(milliseconds: 2000),
-      activeHostsController: StreamController<ActiveHost>(),
-    );
-    return activeHost;
+    return INetworkUtilities.instance.deviceFromPort(subnet, smartDevicePort);
   }
 
   static Future<CbjCommendStatus?> suspendCbjSmartDeviceHostDevice(

@@ -5,14 +5,13 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstr
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_dto_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_device_dtos.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_value_objects.dart';
 import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericEmpty that exist inside a computer, the
 /// implementations will be actual GenericEmpty like blinds emptys and more
-class GenericEmptyDE extends DeviceEntityAbstract {
+class GenericGenericUnsupportedDE extends DeviceEntityAbstract {
   /// All public field of GenericEmpty entity
-  GenericEmptyDE({
+  GenericGenericUnsupportedDE({
     required super.uniqueId,
     required super.entityUniqueId,
     required super.deviceVendor,
@@ -31,18 +30,19 @@ class GenericEmptyDE extends DeviceEntityAbstract {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
     required super.deviceCbjUniqueId,
-    required this.emptySwitchState,
   }) : super(
           entityTypes: EntityType(EntityTypes.emptyEntity.toString()),
         );
 
   /// Empty instance of GenericEmptyEntity
-  factory GenericEmptyDE.empty() => GenericEmptyDE(
+  factory GenericGenericUnsupportedDE.empty() => GenericGenericUnsupportedDE(
         deviceVendor: DeviceVendor(
           VendorsAndServices.vendorsAndServicesNotSupported.toString(),
         ),
@@ -63,16 +63,14 @@ class GenericEmptyDE extends DeviceEntityAbstract {
         deviceLastKnownIp: DeviceLastKnownIp(''),
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         devicesMacAddress: DevicesMacAddress(''),
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
         deviceCbjUniqueId: CoreUniqueId(),
-        emptySwitchState: GenericEmptySwitchState(EntityActions.off.toString()),
       );
-
-  /// State of the empty on/off
-  GenericEmptySwitchState? emptySwitchState;
 
   //
   // /// Will return failure if any of the fields failed or return unit if fields
@@ -96,20 +94,18 @@ class GenericEmptyDE extends DeviceEntityAbstract {
   // }
 
   @override
-  String getDeviceId() {
-    return uniqueId.getOrCrash();
-  }
+  String getDeviceId() => uniqueId.getOrCrash();
 
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {
-    return GenericEmptySwitchState.emptyDeviceValidActions();
+    return [];
   }
 
   @override
   DeviceEntityDtoAbstract toInfrastructure() {
-    return GenericEmptyDeviceDtos(
-      deviceDtoClass: (GenericEmptyDeviceDtos).toString(),
+    return GenericUnsupportedDeviceDtos(
+      deviceDtoClass: (GenericUnsupportedDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
       entityUniqueId: entityUniqueId.getOrCrash(),
       cbjEntityName: cbjEntityName.getOrCrash(),
@@ -129,13 +125,14 @@ class GenericEmptyDE extends DeviceEntityAbstract {
       deviceLastKnownIp: deviceLastKnownIp.getOrCrash(),
       deviceHostName: deviceHostName.getOrCrash(),
       deviceMdns: deviceMdns.getOrCrash(),
+      srvResourceRecord: srvResourceRecord.getOrCrash(),
+      ptrResourceRecord: ptrResourceRecord.getOrCrash(),
       devicesMacAddress: devicesMacAddress.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
       deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
-      emptySwitchState: emptySwitchState!.getOrCrash(),
     );
   }
 
@@ -174,17 +171,11 @@ class GenericEmptyDE extends DeviceEntityAbstract {
 
   @override
   bool replaceActionIfExist(String action) {
-    if (GenericEmptySwitchState.emptyDeviceValidActions().contains(action)) {
-      emptySwitchState = GenericEmptySwitchState(action);
-      return true;
-    }
     return false;
   }
 
   @override
   List<String> getListOfPropertiesToChange() {
-    return [
-      'emptySwitchState',
-    ];
+    return [];
   }
 }

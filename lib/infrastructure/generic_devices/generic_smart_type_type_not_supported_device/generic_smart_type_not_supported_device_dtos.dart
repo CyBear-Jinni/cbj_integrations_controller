@@ -108,6 +108,8 @@ abstract class GenericSmartTypeNotSupportedDeviceDtos
       deviceLastKnownIp: DeviceLastKnownIp(deviceLastKnownIp),
       deviceHostName: DeviceHostName(deviceHostName),
       deviceMdns: DeviceMdns(deviceMdns),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       devicesMacAddress: DevicesMacAddress(devicesMacAddress),
       entityKey: EntityKey(entityKey),
       requestTimeStamp: RequestTimeStamp(requestTimeStamp),

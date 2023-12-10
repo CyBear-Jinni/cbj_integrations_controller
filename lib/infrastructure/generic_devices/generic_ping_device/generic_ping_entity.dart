@@ -31,6 +31,8 @@ class GenericPingDE extends DeviceEntityAbstract {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -63,6 +65,8 @@ class GenericPingDE extends DeviceEntityAbstract {
         deviceLastKnownIp: DeviceLastKnownIp(''),
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
         devicesMacAddress: DevicesMacAddress(''),
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
@@ -96,9 +100,7 @@ class GenericPingDE extends DeviceEntityAbstract {
   // }
 
   @override
-  String getDeviceId() {
-    return uniqueId.getOrCrash();
-  }
+  String getDeviceId() => uniqueId.getOrCrash();
 
   /// Return a list of all valid actions for this device
   @override
@@ -128,7 +130,8 @@ class GenericPingDE extends DeviceEntityAbstract {
       devicePort: devicePort.getOrCrash(),
       deviceLastKnownIp: deviceLastKnownIp.getOrCrash(),
       deviceHostName: deviceHostName.getOrCrash(),
-      deviceMdns: deviceMdns.getOrCrash(),
+      deviceMdns: deviceMdns.getOrCrash(),        srvResourceRecord: srvResourceRecord.getOrCrash(),
+      ptrResourceRecord: ptrResourceRecord.getOrCrash(),
       devicesMacAddress: devicesMacAddress.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),

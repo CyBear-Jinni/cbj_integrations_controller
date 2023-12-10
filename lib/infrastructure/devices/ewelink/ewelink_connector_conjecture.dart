@@ -8,8 +8,8 @@ import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/eweli
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_switch/ewelink_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
-import 'package:network_tools/network_tools.dart';
 
 class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
   factory EwelinkConnectorConjecture() {
@@ -38,7 +38,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
       );
 
       await ewelink!.getCredentials();
-      discoverNewDevices(activeHost: null);
+      discoverNewDevices(entity: null);
     } on EwelinkInvalidAccessToken {
       icLogger.e('invalid access token');
       return false;
@@ -54,7 +54,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
   Future<bool>? didRequestLogin;
   Future<void> discoverNewDevices({
-    required ActiveHost? activeHost,
+    required GenericGenericUnsupportedDE? entity,
   }) async {
     if (didRequestLogin != null) {
       return;

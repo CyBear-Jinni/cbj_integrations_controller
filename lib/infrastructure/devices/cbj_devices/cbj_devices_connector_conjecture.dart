@@ -8,8 +8,8 @@ import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/c
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_entity.dart';
-import 'package:network_tools/network_tools.dart';
 
 class CbjDevicesConnectorConjecture
     implements AbstractCompanyConnectorConjecture {
@@ -26,15 +26,15 @@ class CbjDevicesConnectorConjecture
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
   Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
-    required ActiveHost activeHost,
+    required GenericGenericUnsupportedDE entity,
   }) async {
+    final String hostName = entity.deviceHostName.getOrCrash();
+
     for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
       if ((savedDevice is CbjSmartComputerEntity) &&
-          await activeHost.hostName ==
-              savedDevice.entityUniqueId.getOrCrash()) {
+          hostName == savedDevice.entityUniqueId.getOrCrash()) {
         return [];
-      } else if (await activeHost.hostName ==
-          savedDevice.entityUniqueId.getOrCrash()) {
+      } else if (hostName == savedDevice.entityUniqueId.getOrCrash()) {
         icLogger.w(
           'Cbj device type supported but implementation is missing here',
         );
@@ -42,11 +42,12 @@ class CbjDevicesConnectorConjecture
     }
 
     final List<CbjSmartDeviceInfo?> componentsInDevice =
-        await getAllComponentsOfDevice(activeHost);
+        await getAllComponentsOfDevice(entity);
+    final String address = entity.deviceLastKnownIp.getOrCrash();
     final List<DeviceEntityAbstract> devicesList =
         CbjDevicesHelpers.addDiscoveredDevice(
       componentsInDevice: componentsInDevice,
-      deviceAddress: activeHost.address,
+      deviceAddress: address,
     );
     if (devicesList.isEmpty) {
       return [];
@@ -96,10 +97,10 @@ class CbjDevicesConnectorConjecture
   // // }
 
   Future<List<CbjSmartDeviceInfo?>> getAllComponentsOfDevice(
-    ActiveHost activeHost,
+    GenericGenericUnsupportedDE entity,
   ) async {
     final List<CbjSmartDeviceInfo?> devicesInfo =
-        await CbjSmartDeviceClient.getCbjSmartDeviceHostDevicesInfo(activeHost);
+        await CbjSmartDeviceClient.getCbjSmartDeviceHostDevicesInfo(entity);
     return devicesInfo;
   }
 

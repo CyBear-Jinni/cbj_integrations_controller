@@ -39,6 +39,8 @@ class YeelightHelpers {
         senderId: DeviceSenderId(),
         compUuid: DeviceCompUuid('34asdfrsd23gggg'),
         deviceMdns: DeviceMdns(mDnsName ?? ''),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         deviceLastKnownIp: DeviceLastKnownIp(yeelightDevice.address.address),
         stateMassage: DeviceStateMassage('Hello World'),
         powerConsumption: DevicePowerConsumption('0'),

@@ -34,6 +34,8 @@ class XiaomiIoHelpers {
       senderId: DeviceSenderId(),
       compUuid: DeviceCompUuid('34asdfrsd23gggg'),
       deviceMdns: DeviceMdns('yeelink-light-colora_miap9C52'),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       deviceLastKnownIp: DeviceLastKnownIp(xiaomiIoDevice.address.address),
       stateMassage: DeviceStateMassage('Hello World'),
       powerConsumption: DevicePowerConsumption('0'),

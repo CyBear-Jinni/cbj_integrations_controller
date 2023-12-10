@@ -4,12 +4,12 @@ import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmo
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
-import 'package:network_tools/network_tools.dart';
 
 class TasmotaIpHelpers {
   static Future<List<DeviceEntityAbstract>> addDiscoveredDevice({
-    required ActiveHost activeHost,
+    required GenericGenericUnsupportedDE entity,
     required List<CoreUniqueId?> uniqueDeviceIdList,
     required List<String> componentInDeviceNumberLabelList,
   }) async {
@@ -37,7 +37,7 @@ class TasmotaIpHelpers {
       final DeviceEntityAbstract? deviceEntity = await addDeviceByTasmotaType(
         componentInDeviceNumberLabel: componentInDeviceNumberLabel,
         coreUniqueIdTemp: coreUniqueIdTemp,
-        activeHost: activeHost,
+        entity: entity,
       );
       if (deviceEntity != null) {
         devicesToAddTemp.add(deviceEntity);
@@ -49,11 +49,11 @@ class TasmotaIpHelpers {
 
   static Future<DeviceEntityAbstract?> addDeviceByTasmotaType({
     required String componentInDeviceNumberLabel,
-    required ActiveHost activeHost,
+    required GenericGenericUnsupportedDE entity,
     required CoreUniqueId coreUniqueIdTemp,
   }) async {
-    final String? deviceHostName = await activeHost.hostName;
-    if (deviceHostName == null) {
+    final String deviceHostName = entity.deviceHostName.getOrCrash();
+    if (deviceHostName.isEmpty) {
       return null;
     }
     final int componentInDeviceNumberLabelAsInt =
@@ -107,10 +107,13 @@ class TasmotaIpHelpers {
         powerConsumption: DevicePowerConsumption('0'),
         switchState: GenericSwitchSwitchState(EntityActions.off.toString()),
         deviceHostName: DeviceHostName(deviceHostName),
-        deviceLastKnownIp: DeviceLastKnownIp(activeHost.address),
+        deviceLastKnownIp:
+            DeviceLastKnownIp(entity.devicesMacAddress.getOrCrash()),
         deviceUniqueId: DeviceUniqueId('0'),
         devicePort: DevicePort('0'),
         deviceMdns: DeviceMdns('0'),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         devicesMacAddress: DevicesMacAddress('0'),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),

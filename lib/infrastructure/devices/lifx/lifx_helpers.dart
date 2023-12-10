@@ -41,6 +41,8 @@ class LifxHelpers {
       deviceLastKnownIp: DeviceLastKnownIp('0'),
       deviceHostName: DeviceHostName('0'),
       deviceMdns: DeviceMdns('0'),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       devicesMacAddress: DevicesMacAddress('0'),
       entityKey: EntityKey('0'),
       requestTimeStamp: RequestTimeStamp('0'),

@@ -41,6 +41,8 @@ class SonoffDiyHelpers {
           devicePort: DevicePort(port),
           deviceHostName: DeviceHostName(mDnsName.toLowerCase()),
           deviceMdns: DeviceMdns(mDnsName),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
           deviceLastKnownIp: DeviceLastKnownIp(ip),
           switchState: GenericSwitchSwitchState(false.toString()),
           deviceUniqueId: DeviceUniqueId('0'),
