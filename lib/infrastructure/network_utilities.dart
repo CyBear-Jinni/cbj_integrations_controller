@@ -2,7 +2,7 @@ part of 'package:cbj_integrations_controller/domain/i_network_utilities.dart';
 
 class _NetworkUtilities implements INetworkUtilities {
   @override
-  Future<GenericGenericUnsupportedDE?> deviceFromPort(
+  Future<GenericUnsupportedDE?> deviceFromPort(
     String address,
     int port,
   ) async {
@@ -20,14 +20,14 @@ class _NetworkUtilities implements INetworkUtilities {
   }
 
   @override
-  Future<GenericGenericUnsupportedDE> activeHostToEntity(
+  Future<GenericUnsupportedDE> activeHostToEntity(
     ActiveHost activeHost,
   ) async {
     final ARPData? arpData = await activeHost.arpData;
     final String deviceName = await activeHost.deviceName;
     final MdnsInfo? mdns = await activeHost.mdnsInfo;
 
-    return GenericGenericUnsupportedDE(
+    return GenericUnsupportedDE(
       uniqueId: CoreUniqueId(),
       entityUniqueId: EntityUniqueId(arpData?.macAddress ?? activeHost.hostId),
       deviceVendor:

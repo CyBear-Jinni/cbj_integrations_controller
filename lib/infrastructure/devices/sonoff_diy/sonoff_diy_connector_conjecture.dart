@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff__diy_wall_switch/sonoff_diy_mod_wall_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff_diy_helpers.dart';
@@ -62,11 +61,8 @@ class SonoffDiyConnectorConjecture
     }
 
     for (final DeviceEntityAbstract entityAsDevice in sonoffDevices) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
-
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
+          MapEntry(entityAsDevice.uniqueId.getOrCrash(), entityAsDevice);
 
       companyDevices.addEntries([deviceAsEntry]);
     }

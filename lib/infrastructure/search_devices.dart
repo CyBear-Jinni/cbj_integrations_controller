@@ -53,7 +53,7 @@ class SearchDevices {
         }
         final List<ActiveHost> activeHostList = await _searchMdnsDevices();
         for (final ActiveHost activeHost in activeHostList) {
-          final GenericGenericUnsupportedDE entity =
+          final GenericUnsupportedDE entity =
               await INetworkUtilities.instance.activeHostToEntity(activeHost);
           CompaniesConnectorConjecture().setMdnsDeviceByCompany(entity);
         }
@@ -68,10 +68,10 @@ class SearchDevices {
   /// Get all the host names in the connected networks and try to add the device
   Future<void> _searchPingableDevicesAndSetThemUpByHostName() async {
     while (true) {
-      final List<GenericGenericUnsupportedDE> pingableDevices =
+      final List<GenericUnsupportedDE> pingableDevices =
           await _searchPingableDevices();
 
-      for (final GenericGenericUnsupportedDE entity in pingableDevices) {
+      for (final GenericUnsupportedDE entity in pingableDevices) {
         try {
           CompaniesConnectorConjecture().setHostNameDeviceByCompany(
             entity: entity,
@@ -125,8 +125,8 @@ class SearchDevices {
     return activeHostList;
   }
 
-  Future<List<GenericGenericUnsupportedDE>> _searchPingableDevices() async {
-    final List<Future<GenericGenericUnsupportedDE>> entityList = [];
+  Future<List<GenericUnsupportedDE>> _searchPingableDevices() async {
+    final List<Future<GenericUnsupportedDE>> entityList = [];
 
     final List<NetworkInterface> networkInterfaceList =
         await NetworkInterface.list();
@@ -185,7 +185,7 @@ class SearchDevices {
         socketBinding.listen((activeHost) async {
           icLogger.i('Found CBJ Smart security camera: ${activeHost.address}');
 
-          final GenericGenericUnsupportedDE entity =
+          final GenericUnsupportedDE entity =
               await INetworkUtilities.instance.activeHostToEntity(activeHost);
           CbjDevicesConnectorConjecture()
               .addNewDeviceByHostInfo(entity: entity);

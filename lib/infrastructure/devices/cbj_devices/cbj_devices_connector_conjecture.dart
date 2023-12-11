@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_device_entity.dart';
@@ -26,7 +25,7 @@ class CbjDevicesConnectorConjecture
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
   Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
-    required GenericGenericUnsupportedDE entity,
+    required GenericUnsupportedDE entity,
   }) async {
     final String hostName = entity.deviceHostName.getOrCrash();
 
@@ -54,11 +53,8 @@ class CbjDevicesConnectorConjecture
     }
 
     for (final DeviceEntityAbstract entityAsDevice in devicesList) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
-
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
+          MapEntry(entityAsDevice.uniqueId.getOrCrash(), entityAsDevice);
 
       companyDevices.addEntries([deviceAsEntry]);
 
@@ -97,7 +93,7 @@ class CbjDevicesConnectorConjecture
   // // }
 
   Future<List<CbjSmartDeviceInfo?>> getAllComponentsOfDevice(
-    GenericGenericUnsupportedDE entity,
+    GenericUnsupportedDE entity,
   ) async {
     final List<CbjSmartDeviceInfo?> devicesInfo =
         await CbjSmartDeviceClient.getCbjSmartDeviceHostDevicesInfo(entity);

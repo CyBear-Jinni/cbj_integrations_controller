@@ -14,9 +14,9 @@ abstract class INetworkUtilities {
     return _instance ??= _NetworkUtilities();
   }
 
-  Future<GenericGenericUnsupportedDE> activeHostToEntity(
+  Future<GenericUnsupportedDE> activeHostToEntity(
     ActiveHost activeHost,
   );
 
-  Future<GenericGenericUnsupportedDE?> deviceFromPort(String address, int port);
+  Future<GenericUnsupportedDE?> deviceFromPort(String address, int port);
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_led/tasmota_ip_led_entity.dart';
@@ -33,7 +32,7 @@ class TasmotaIpConnectorConjecture
   // http://ip/cm?cmnd=MqttHost%200
 
   Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
-    required GenericGenericUnsupportedDE entity,
+    required GenericUnsupportedDE entity,
   }) async {
     final List<CoreUniqueId?> tempCoreUniqueId = [];
     final String hostName = entity.deviceHostName.getOrCrash();
@@ -70,11 +69,8 @@ class TasmotaIpConnectorConjecture
     }
 
     for (final DeviceEntityAbstract entityAsDevice in tasmotaIpDevices) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
-
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
+          MapEntry(entityAsDevice.uniqueId.getOrCrash(), entityAsDevice);
 
       companyDevices.addEntries([deviceAsEntry]);
 
@@ -102,7 +98,7 @@ class TasmotaIpConnectorConjecture
   /// Getting all of the components/gpio configuration of the device.
   /// Doc of all components: https://tasmota.github.io/docs/Components/#tasmota
   Future<List<String>> getAllComponentsOfDevice(
-    GenericGenericUnsupportedDE entity,
+    GenericUnsupportedDE entity,
   ) async {
     final String? deviceIp = entity.devicesMacAddress.getOrCrash();
     const String getComponentsCommand = 'cm?cmnd=Gpio';

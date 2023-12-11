@@ -25,7 +25,7 @@ mixin _$GenericDimmableLightDeviceDtos {
   String get id => throw _privateConstructorUsedError;
   String get entityUniqueId => throw _privateConstructorUsedError;
   String? get cbjEntityName => throw _privateConstructorUsedError;
-  String? get entityOriginalName => throw _privateConstructorUsedError;
+  String get entityOriginalName => throw _privateConstructorUsedError;
   String? get deviceOriginalName => throw _privateConstructorUsedError;
   String? get entityStateGRPC => throw _privateConstructorUsedError;
   String? get senderDeviceOs => throw _privateConstructorUsedError;
@@ -71,7 +71,7 @@ abstract class $GenericDimmableLightDeviceDtosCopyWith<$Res> {
       {String id,
       String entityUniqueId,
       String? cbjEntityName,
-      String? entityOriginalName,
+      String entityOriginalName,
       String? deviceOriginalName,
       String? entityStateGRPC,
       String? senderDeviceOs,
@@ -116,7 +116,7 @@ class _$GenericDimmableLightDeviceDtosCopyWithImpl<$Res,
     Object? id = null,
     Object? entityUniqueId = null,
     Object? cbjEntityName = freezed,
-    Object? entityOriginalName = freezed,
+    Object? entityOriginalName = null,
     Object? deviceOriginalName = freezed,
     Object? entityStateGRPC = freezed,
     Object? senderDeviceOs = freezed,
@@ -156,10 +156,10 @@ class _$GenericDimmableLightDeviceDtosCopyWithImpl<$Res,
           ? _value.cbjEntityName
           : cbjEntityName // ignore: cast_nullable_to_non_nullable
               as String?,
-      entityOriginalName: freezed == entityOriginalName
+      entityOriginalName: null == entityOriginalName
           ? _value.entityOriginalName
           : entityOriginalName // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       deviceOriginalName: freezed == deviceOriginalName
           ? _value.deviceOriginalName
           : deviceOriginalName // ignore: cast_nullable_to_non_nullable
@@ -278,7 +278,7 @@ abstract class _$$GenericDimmableLightDeviceDtosImplCopyWith<$Res>
       {String id,
       String entityUniqueId,
       String? cbjEntityName,
-      String? entityOriginalName,
+      String entityOriginalName,
       String? deviceOriginalName,
       String? entityStateGRPC,
       String? senderDeviceOs,
@@ -322,7 +322,7 @@ class __$$GenericDimmableLightDeviceDtosImplCopyWithImpl<$Res>
     Object? id = null,
     Object? entityUniqueId = null,
     Object? cbjEntityName = freezed,
-    Object? entityOriginalName = freezed,
+    Object? entityOriginalName = null,
     Object? deviceOriginalName = freezed,
     Object? entityStateGRPC = freezed,
     Object? senderDeviceOs = freezed,
@@ -362,10 +362,10 @@ class __$$GenericDimmableLightDeviceDtosImplCopyWithImpl<$Res>
           ? _value.cbjEntityName
           : cbjEntityName // ignore: cast_nullable_to_non_nullable
               as String?,
-      entityOriginalName: freezed == entityOriginalName
+      entityOriginalName: null == entityOriginalName
           ? _value.entityOriginalName
           : entityOriginalName // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       deviceOriginalName: freezed == deviceOriginalName
           ? _value.deviceOriginalName
           : deviceOriginalName // ignore: cast_nullable_to_non_nullable
@@ -519,7 +519,7 @@ class _$GenericDimmableLightDeviceDtosImpl
   @override
   final String? cbjEntityName;
   @override
-  final String? entityOriginalName;
+  final String entityOriginalName;
   @override
   final String? deviceOriginalName;
   @override
@@ -699,7 +699,7 @@ abstract class _GenericDimmableLightDeviceDtos
       {required final String id,
       required final String entityUniqueId,
       required final String? cbjEntityName,
-      required final String? entityOriginalName,
+      required final String entityOriginalName,
       required final String? deviceOriginalName,
       required final String? entityStateGRPC,
       required final String? senderDeviceOs,
@@ -737,7 +737,7 @@ abstract class _GenericDimmableLightDeviceDtos
   @override
   String? get cbjEntityName;
   @override
-  String? get entityOriginalName;
+  String get entityOriginalName;
   @override
   String? get deviceOriginalName;
   @override

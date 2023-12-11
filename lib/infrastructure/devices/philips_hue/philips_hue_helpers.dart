@@ -11,7 +11,7 @@ import 'package:hue_dart/hue_dart.dart';
 
 class PhilipsHueHelpers {
   static Future<List<DeviceEntityAbstract>> addDiscoveredDevice(
-    GenericGenericUnsupportedDE entity,
+    GenericUnsupportedDE entity,
   ) async {
     final client = Client();
 
@@ -59,7 +59,8 @@ class PhilipsHueHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: entity.deviceCbjUniqueId,
+          deviceCbjUniqueId:
+              CoreUniqueId.fromUniqueString(light.uniqueId.toString()),
           lightSwitchState: GenericDimmableLightSwitchState(
             lightState != null && lightState.on != null && lightState.on == true
                 ? EntityActions.on.toString()

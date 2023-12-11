@@ -85,19 +85,15 @@ class CbjEntityName extends ValueObjectCore<String?> {
   static const maxLength = 1000;
 }
 
-class EntityOriginalName extends ValueObjectCore<String?> {
-  factory EntityOriginalName(String? input) {
-    assert(input != null);
-    return EntityOriginalName._(
-      validateNotEmpty(input!)
-          .flatMap((a) => validateMaxNameLength(input, maxLength)),
-    );
+class EntityOriginalName extends ValueObjectCore<String> {
+  factory EntityOriginalName(String input) {
+    return EntityOriginalName._(validateMaxNameLength(input, maxLength));
   }
 
   const EntityOriginalName._(this.value);
 
   @override
-  final Either<CoreFailure<String?>, String?> value;
+  final Either<CoreFailure<String>, String> value;
 
   static const maxLength = 1000;
 }

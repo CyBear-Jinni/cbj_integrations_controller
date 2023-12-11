@@ -69,7 +69,7 @@ class EspHomeHelpers {
   }
 
   static Future<List<DeviceEntityAbstract>> addDiscoveredEntities({
-    required GenericGenericUnsupportedDE entity,
+    required GenericUnsupportedDE entity,
     required String devicePassword,
     String port = '6053',
   }) async {

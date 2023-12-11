@@ -7,7 +7,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 
 class GoogleHelpers {
   static List<DeviceEntityAbstract> addDiscoveredDevice(
-    GenericGenericUnsupportedDE entity,
+    GenericUnsupportedDE entity,
   ) {
     final ChromeCastEntity googleDE = ChromeCastEntity(
       uniqueId: entity.uniqueId,
@@ -33,7 +33,9 @@ class GoogleHelpers {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      deviceCbjUniqueId: CoreUniqueId.fromUniqueString(
+        entity.deviceMdns.getOrCrash() ?? CoreUniqueId().getOrCrash(),
+      ),
       smartTvSwitchState: GenericSmartTvSwitchState(
         EntityActions.actionNotSupported.toString(),
       ),

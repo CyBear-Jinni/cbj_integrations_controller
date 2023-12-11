@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_runner/switcher_runner_entity.dart';
@@ -64,11 +63,8 @@ class SwitcherConnectorConjecture
       return [];
     }
 
-    final DeviceEntityAbstract deviceToAdd =
-        CompaniesConnectorConjecture().addDiscoveredDeviceToHub(addDevice);
-
     final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-        MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
+        MapEntry(addDevice.entityUniqueId.getOrCrash(), addDevice);
 
     companyDevices.addEntries([deviceAsEntry]);
 

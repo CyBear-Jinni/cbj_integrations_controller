@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/chrome_cast/chrome_cast_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/google_helpers.dart';
@@ -29,17 +29,19 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
   ];
 
   /// Add new devices to [companyDevices] if not exist
-  Future addNewDeviceByMdnsName(GenericGenericUnsupportedDE entity) async {
+  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
+    GenericUnsupportedDE entity,
+  ) async {
     final String? mdnsName = entity.deviceMdns.getOrCrash();
     if (mdnsName == null) {
-      return;
+      return null;
     }
     for (final DeviceEntityAbstract device in companyDevices.values) {
       if (device is ChromeCastEntity &&
           (mdnsName == device.entityUniqueId.getOrCrash() ||
               entity.deviceLastKnownIp.getOrCrash() ==
                   device.deviceLastKnownIp.getOrCrash())) {
-        return [];
+        return null;
       } // Same tv can have multiple mDns names so we can't compere it without ip in the object
       // else if (device is GenericSmartTvDE &&
       //     (mDnsName == device.entityUniqueId.getOrCrash() ||
@@ -50,7 +52,7 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
         icLogger.w(
           'Google device type supported but implementation is missing here',
         );
-        return [];
+        return null;
       }
     }
 
@@ -58,20 +60,21 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
         GoogleHelpers.addDiscoveredDevice(entity);
 
     if (googleDevice.isEmpty) {
-      return [];
+      return null;
     }
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
     for (final DeviceEntityAbstract entityAsDevice in googleDevice) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
+      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice,
+      );
 
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
-
+      addedDevice.addEntries([deviceAsEntry]);
       companyDevices.addEntries([deviceAsEntry]);
     }
     icLogger.i('New Chromecast device got added');
-    return googleDevice;
+    return addedDevice;
   }
 
   @override

@@ -54,8 +54,8 @@ class CbjDevicesHelpers {
           smartComputerShutDownState: GenericSmartComputerShutdownState(
             EntityActions.itIsFalse.toString(),
           ),
-          entityOriginalName: EntityOriginalName(cbjEntityName),
-          deviceOriginalName: DeviceOriginalName(cbjEntityName),
+          entityOriginalName: EntityOriginalName(''),
+          deviceOriginalName: DeviceOriginalName(''),
           powerConsumption: DevicePowerConsumption('0'),
           deviceUniqueId: DeviceUniqueId('0'),
           devicePort: DevicePort('0'),
@@ -84,8 +84,8 @@ class CbjDevicesHelpers {
           securityCameraSuspendState: GenericSecurityCameraSuspendState(
             EntityActions.itIsFalse.toString(),
           ),
-          entityOriginalName: EntityOriginalName(cbjEntityName),
-          deviceOriginalName: DeviceOriginalName(cbjEntityName),
+          entityOriginalName: EntityOriginalName(''),
+          deviceOriginalName: DeviceOriginalName(''),
           powerConsumption: DevicePowerConsumption('0'),
           deviceUniqueId: DeviceUniqueId('0'),
           devicePort: DevicePort('0'),

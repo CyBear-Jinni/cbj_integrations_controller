@@ -44,7 +44,7 @@ class XiaomiIoConnectorConjecture
   // Discover from miio package does not work on Linux, but it is better than
   // filtering devices by host names like we do now
   Future<void> discoverNewDevices({
-    required GenericGenericUnsupportedDE entity,
+    required GenericUnsupportedDE entity,
   }) async {
     if (miCloud == null) {
       icLogger.w('Please set Xiaomi Mi credentials in the app');

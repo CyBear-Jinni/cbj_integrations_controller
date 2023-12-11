@@ -9,9 +9,9 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericEmpty that exist inside a computer, the
 /// implementations will be actual GenericEmpty like blinds emptys and more
-class GenericGenericUnsupportedDE extends DeviceEntityAbstract {
+class GenericUnsupportedDE extends DeviceEntityAbstract {
   /// All public field of GenericEmpty entity
-  GenericGenericUnsupportedDE({
+  GenericUnsupportedDE({
     required super.uniqueId,
     required super.entityUniqueId,
     required super.deviceVendor,
@@ -42,7 +42,7 @@ class GenericGenericUnsupportedDE extends DeviceEntityAbstract {
         );
 
   /// Empty instance of GenericEmptyEntity
-  factory GenericGenericUnsupportedDE.empty() => GenericGenericUnsupportedDE(
+  factory GenericUnsupportedDE.empty() => GenericUnsupportedDE(
         deviceVendor: DeviceVendor(
           VendorsAndServices.vendorsAndServicesNotSupported.toString(),
         ),

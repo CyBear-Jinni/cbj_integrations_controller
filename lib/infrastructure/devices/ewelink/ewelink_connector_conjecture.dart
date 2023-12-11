@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_switch/ewelink_switch_entity.dart';
@@ -53,11 +53,12 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   Future<bool>? didRequestLogin;
-  Future<void> discoverNewDevices(
-    GenericGenericUnsupportedDE? entity,
+
+  Future<HashMap<String, DeviceEntityAbstract>?> discoverNewDevices(
+    GenericUnsupportedDE? entity,
   ) async {
     if (didRequestLogin != null) {
-      return;
+      return null;
     }
 
     if (ewelink == null) {
@@ -67,7 +68,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
         icLogger.w(
             'eWeLink device got found but missing a email and password, please add '
             'it in the app');
-        return;
+        return null;
       }
     }
     didRequestLogin = null;
@@ -76,8 +77,10 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
     try {
       devices = await ewelink!.getDevices();
     } catch (e) {
-      return;
+      return null;
     }
+
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
     for (final EwelinkDevice ewelinkDevice in devices) {
       // Getting device by id adds additional info in the result
@@ -89,21 +92,17 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
       for (final DeviceEntityAbstract deviceEntityAbstract in entityList) {
         if (companyDevices[
-                '${deviceEntityAbstract.deviceUniqueId.getOrCrash()}-${deviceEntityAbstract.entityUniqueId.getOrCrash()}'] !=
+                deviceEntityAbstract.deviceCbjUniqueId.getOrCrash()] !=
             null) {
           continue;
         }
 
-        final DeviceEntityAbstract deviceToAdd =
-            CompaniesConnectorConjecture().addDiscoveredDeviceToHub(
+        final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+          deviceEntityAbstract.deviceCbjUniqueId.getOrCrash(),
           deviceEntityAbstract,
         );
 
-        final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
-          '${deviceEntityAbstract.deviceUniqueId.getOrCrash()}-${deviceEntityAbstract.entityUniqueId.getOrCrash()}',
-          deviceToAdd,
-        );
-
+        addedDevice.addEntries([deviceAsEntry]);
         companyDevices.addEntries([deviceAsEntry]);
 
         icLogger.i(
@@ -112,6 +111,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
       }
     }
     ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
+    return addedDevice;
   }
 
   @override

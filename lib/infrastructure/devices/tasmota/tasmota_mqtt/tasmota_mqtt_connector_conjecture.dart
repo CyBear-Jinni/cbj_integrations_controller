@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_led/tasmota_mqtt_led_entity.dart';
@@ -85,11 +84,8 @@ class TasmotaMqttConnectorConjecture
         return;
       }
 
-      final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjecture().addDiscoveredDeviceToHub(addDevice);
-
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
+          MapEntry(addDevice.uniqueId.getOrCrash(), addDevice);
 
       companyDevices.addEntries([deviceAsEntry]);
       icLogger.t('Adding Tasmota mqtt device');

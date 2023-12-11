@@ -1,7 +1,6 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
@@ -25,6 +24,7 @@ import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmo
 import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xiaomi_io_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
@@ -89,17 +89,17 @@ class CompaniesConnectorConjecture {
     }
   }
 
-  DeviceEntityAbstract addDiscoveredDeviceToHub(
-    DeviceEntityAbstract deviceEntity,
-  ) {
-    final DeviceEntityAbstract deviceEntityGotSaved =
-        ISavedDevicesRepo.instance.addOrUpdateDevice(deviceEntity);
+  // DeviceEntityAbstract addDiscoveredDeviceToHub(
+  //   DeviceEntityAbstract deviceEntity,
+  // ) {
+  //   final DeviceEntityAbstract deviceEntityGotSaved =
+  //       ISavedDevicesRepo.instance.addOrUpdateDevice(deviceEntity);
 
-    IMqttServerRepository.instance
-        .postSmartDeviceToAppMqtt(entityFromTheHub: deviceEntityGotSaved);
+  //   IMqttServerRepository.instance
+  //       .postSmartDeviceToAppMqtt(entityFromTheHub: deviceEntityGotSaved);
 
-    return deviceEntityGotSaved;
-  }
+  //   return deviceEntityGotSaved;
+  // }
 
   void setVendorLoginCredentials(LoginEntityAbstract loginEntity) {
     if (loginEntity is GenericLifxLoginDE) {
@@ -118,7 +118,7 @@ class CompaniesConnectorConjecture {
 
   /// Getting ActiveHost that contain MdnsInfo property and activate it inside
   /// The correct company.
-  Future setMdnsDeviceByCompany(GenericGenericUnsupportedDE entity) async {
+  Future setMdnsDeviceByCompany(GenericUnsupportedDE entity) async {
     final String? mdnsDeviceIp = entity.deviceLastKnownIp.getOrCrash();
     if (mdnsDeviceIp == null) {
       return;
@@ -150,40 +150,58 @@ class CompaniesConnectorConjecture {
       return;
     }
 
+    HashMap<String, DeviceEntityAbstract>? handeldEntities = HashMap();
+
     if (EspHomeConnectorConjecture.mdnsTypes.contains(serviceType)) {
-      return EspHomeConnectorConjecture().addNewDeviceByMdnsName(entity);
+      handeldEntities =
+          await EspHomeConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (ShellyConnectorConjecture.mdnsTypes.contains(serviceType) &&
         startOfMdnsName.toLowerCase().contains('shelly')) {
-      return ShellyConnectorConjecture().addNewDeviceByMdnsName(entity);
+      handeldEntities =
+          await ShellyConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (EwelinkConnectorConjecture.mdnsTypes.contains(serviceType)) {
-      return EwelinkConnectorConjecture().discoverNewDevices(entity);
+      handeldEntities =
+          await EwelinkConnectorConjecture().discoverNewDevices(entity);
     } else if (GoogleConnectorConjecture.mdnsTypes.contains(serviceType) &&
         (startOfMdnsNameLower.contains('google') ||
             startOfMdnsNameLower.contains('android') ||
             startOfMdnsNameLower.contains('chrome'))) {
-      return GoogleConnectorConjecture().addNewDeviceByMdnsName(entity);
+      handeldEntities =
+          await GoogleConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (LgConnectorConjecture.mdnsTypes.contains(serviceType) &&
         (startOfMdnsNameLower.contains('lg') ||
             startOfMdnsNameLower.contains('webos'))) {
-      return LgConnectorConjecture().addNewDeviceByMdnsName(entity);
+      handeldEntities =
+          await LgConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (HpPrinterEntity.mdnsTypes.contains(serviceType) &&
         (startOfMdnsNameLower.contains('hp'))) {
-      return HpConnectorConjecture().addNewDeviceByMdnsName(entity);
+      handeldEntities =
+          await HpConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (YeelightConnectorConjecture.mdnsTypes.contains(serviceType) &&
         (startOfMdnsName.startsWith('YL'))) {
-      return YeelightConnectorConjecture().addNewDeviceByMdnsName(entity);
+      handeldEntities =
+          await YeelightConnectorConjecture().addNewDeviceByMdnsName(entity);
     } else if (PhilipsHueConnectorConjecture.mdnsTypes.contains(serviceType)) {
-      return PhilipsHueConnectorConjecture().addNewDeviceByMdnsName(entity);
+      handeldEntities =
+          await PhilipsHueConnectorConjecture().addNewDeviceByMdnsName(entity);
+    } else {
+      final String address = entity.deviceLastKnownIp.getOrCrash()!;
+      icLogger.t(
+        'mDNS service type $serviceType is not supported\n IP: $address, Port: $port, ServiceType: $serviceType, MdnsName: $startOfMdnsName',
+      );
+      handeldEntities.addEntries(
+        [MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity)],
+      );
     }
-    final String address = entity.deviceLastKnownIp.getOrCrash()!;
-    icLogger.t(
-      'mDNS service type $serviceType is not supported\n IP: $address, Port: $port, ServiceType: $serviceType, MdnsName: $startOfMdnsName',
-    );
-    // TODO: Add unseported device type and save it to local DB
+    if (handeldEntities == null || handeldEntities.isEmpty) {
+      icLogger.e('Entity failed to load $entity');
+      return;
+    }
+    DevicesService().discovedEntity(handeldEntities);
   }
 
   Future<void> setHostNameDeviceByCompany({
-    required GenericGenericUnsupportedDE entity,
+    required GenericUnsupportedDE entity,
   }) async {
     final String deviceHostNameLowerCase =
         entity.deviceHostName.getOrCrash().toLowerCase();
@@ -199,7 +217,7 @@ class CompaniesConnectorConjecture {
     } else if (deviceHostNameLowerCase.startsWith('wiz')) {
       WizConnectorConjecture().addNewDeviceByHostInfo(entity: entity);
     }
-    final GenericGenericUnsupportedDE? entityTemp =
+    final GenericUnsupportedDE? entityTemp =
         await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice(
       entity.devicesMacAddress.getOrCrash(),
     );

@@ -27,7 +27,7 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
   Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
-    required GenericGenericUnsupportedDE entity,
+    required GenericUnsupportedDE entity,
   }) async {
     icLogger.w('Wiz device got discovered but missing implementation');
     // final List<CoreUniqueId?> tempCoreUniqueId = [];

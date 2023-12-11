@@ -9,7 +9,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 
 class TasmotaIpHelpers {
   static Future<List<DeviceEntityAbstract>> addDiscoveredDevice({
-    required GenericGenericUnsupportedDE entity,
+    required GenericUnsupportedDE entity,
     required List<CoreUniqueId?> uniqueDeviceIdList,
     required List<String> componentInDeviceNumberLabelList,
   }) async {
@@ -49,7 +49,7 @@ class TasmotaIpHelpers {
 
   static Future<DeviceEntityAbstract?> addDeviceByTasmotaType({
     required String componentInDeviceNumberLabel,
-    required GenericGenericUnsupportedDE entity,
+    required GenericUnsupportedDE entity,
     required CoreUniqueId coreUniqueIdTemp,
   }) async {
     final String deviceHostName = entity.deviceHostName.getOrCrash();

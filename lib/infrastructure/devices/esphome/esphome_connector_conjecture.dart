@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_light/esphome_light_entity.dart';
@@ -44,13 +44,15 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName(
-    GenericGenericUnsupportedDE entity,
+  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
+    GenericUnsupportedDE entity,
   ) async {
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
+
     if (espHomeDevicePass == null) {
       icLogger.w('ESPHome device got found but missing a password, please add '
           'password for it in the app');
-      return [];
+      return addedDevice;
     }
 
     final List<DeviceEntityAbstract> espDevice =
@@ -60,12 +62,9 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     );
 
     for (final DeviceEntityAbstract entityAsDevice in espDevice) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
-
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
-
+          MapEntry(entityAsDevice.entityUniqueId.getOrCrash(), entityAsDevice);
+      addedDevice.addEntries([deviceAsEntry]);
       companyDevices.addEntries([deviceAsEntry]);
 
       icLogger.i(
@@ -75,7 +74,7 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     // Save state locally so that nodeRED flows will not get created again
     // after restart
     ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
-    return espDevice;
+    return addedDevice;
   }
 
   @override

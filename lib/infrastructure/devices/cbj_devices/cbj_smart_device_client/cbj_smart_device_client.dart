@@ -24,7 +24,7 @@ class CbjSmartDeviceClient {
   static CbjSmartDeviceConnectionsClient? smartDeviceClient;
 
   static Future<List<CbjSmartDeviceInfo?>> getCbjSmartDeviceHostDevicesInfo(
-    GenericGenericUnsupportedDE entity,
+    GenericUnsupportedDE entity,
   ) async {
     await channel?.terminate();
 
@@ -61,7 +61,7 @@ class CbjSmartDeviceClient {
   }
 
   // TODO: Change in the future that the smart device will publish itself using mdns
-  static Future<GenericGenericUnsupportedDE?> checkIfDeviceIsCbjSmartDevice(
+  static Future<GenericUnsupportedDE?> checkIfDeviceIsCbjSmartDevice(
     String? deviceIp,
   ) async {
     final String? subnet = await SharedVariables().getIps();

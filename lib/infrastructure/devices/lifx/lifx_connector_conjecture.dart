@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_white/lifx_white_entity.dart';
@@ -71,12 +70,8 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
               continue;
             }
 
-            final DeviceEntityAbstract deviceToAdd =
-                CompaniesConnectorConjecture()
-                    .addDiscoveredDeviceToHub(addDevice);
-
             final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-                MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
+                MapEntry(addDevice.entityUniqueId.getOrCrash(), addDevice);
 
             companyDevices.addEntries([deviceAsEntry]);
 

@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_light/shelly_light_entity.dart';
@@ -27,17 +27,19 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
   /// Add new devices to [companyDevices] if not exist
-  Future addNewDeviceByMdnsName(GenericGenericUnsupportedDE entity) async {
+  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
+    GenericUnsupportedDE entity,
+  ) async {
     final String? mdnsName = entity.deviceMdns.getOrCrash();
     if (mdnsName == null) {
-      return;
+      return null;
     }
 
     for (final DeviceEntityAbstract device in companyDevices.values) {
       if ((device is ShellyColorLightEntity ||
               device is ShellyRelaySwitchEntity) &&
           mdnsName == device.entityUniqueId.getOrCrash()) {
-        return List<DeviceEntityAbstract>.empty();
+        return null;
       } else if ((device is GenericRgbwLightDE || device is GenericSwitchDE) &&
           mdnsName == device.entityUniqueId.getOrCrash()) {
         break;
@@ -45,7 +47,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
         icLogger.w(
           'Shelly device type supported but implementation is missing here',
         );
-        return [];
+        return null;
       }
     }
 
@@ -53,20 +55,22 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
         await ShellyHelpers.addDiscoveredDevice(entity);
 
     if (shellyDevice.isEmpty) {
-      return List<DeviceEntityAbstract>.empty();
+      return null;
     }
 
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
+
     for (final DeviceEntityAbstract entityAsDevice in shellyDevice) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
+      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice,
+      );
 
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
-
+      addedDevice.addEntries([deviceAsEntry]);
       companyDevices.addEntries([deviceAsEntry]);
     }
     icLogger.t('New shelly devices name:$mdnsName');
-    return shellyDevice;
+    return addedDevice;
   }
 
   @override

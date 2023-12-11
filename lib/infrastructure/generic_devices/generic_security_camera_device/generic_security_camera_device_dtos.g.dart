@@ -12,7 +12,7 @@ _$GenericSecurityCameraDeviceDtosImpl
           id: json['id'] as String,
           entityUniqueId: json['entityUniqueId'] as String,
           cbjEntityName: json['cbjEntityName'] as String?,
-          entityOriginalName: json['entityOriginalName'] as String?,
+          entityOriginalName: json['entityOriginalName'] as String,
           deviceOriginalName: json['deviceOriginalName'] as String?,
           entityStateGRPC: json['entityStateGRPC'] as String?,
           senderDeviceOs: json['senderDeviceOs'] as String?,

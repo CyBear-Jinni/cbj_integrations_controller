@@ -9,7 +9,7 @@ import 'package:yeedart/yeedart.dart';
 class YeelightHelpers {
   static DeviceEntityAbstract? addDiscoveredDevice({
     required DiscoveryResponse yeelightDevice,
-    required GenericGenericUnsupportedDE entity,
+    required GenericUnsupportedDE entity,
   }) {
     String deviceName;
     if (yeelightDevice.name != null && yeelightDevice.name != '') {
@@ -51,7 +51,8 @@ class YeelightHelpers {
         entityKey: entity.entityKey,
         requestTimeStamp: entity.requestTimeStamp,
         lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-        deviceCbjUniqueId: entity.deviceCbjUniqueId,
+        deviceCbjUniqueId:
+            CoreUniqueId.fromUniqueString(yeelightDevice.id.toString()),
         lightSwitchState:
             GenericRgbwLightSwitchState(yeelightDevice.powered.toString()),
         lightColorTemperature: GenericRgbwLightColorTemperature(

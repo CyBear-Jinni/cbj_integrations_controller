@@ -15,7 +15,7 @@ abstract class GenericUnsupportedDeviceDtos
     required String id,
     required String entityUniqueId,
     required String? cbjEntityName,
-    required String? entityOriginalName,
+    required String entityOriginalName,
     required String? deviceOriginalName,
     required String? entityStateGRPC,
     required String? senderDeviceOs,
@@ -46,7 +46,7 @@ abstract class GenericUnsupportedDeviceDtos
   GenericUnsupportedDeviceDtos._();
 
   factory GenericUnsupportedDeviceDtos.fromDomain(
-    GenericGenericUnsupportedDE deviceDe,
+    GenericUnsupportedDE deviceDe,
   ) {
     return GenericUnsupportedDeviceDtos(
       deviceDtoClass: (GenericUnsupportedDeviceDtos).toString(),
@@ -89,12 +89,12 @@ abstract class GenericUnsupportedDeviceDtos
 
   @override
   DeviceEntityAbstract toDomain() {
-    return GenericGenericUnsupportedDE(
+    return GenericUnsupportedDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),
       cbjEntityName: CbjEntityName(cbjEntityName),
-      entityOriginalName: EntityOriginalName(cbjEntityName),
-      deviceOriginalName: DeviceOriginalName(cbjEntityName),
+      entityOriginalName: EntityOriginalName(entityOriginalName),
+      deviceOriginalName: DeviceOriginalName(deviceOriginalName),
       entityStateGRPC: EntityState(entityStateGRPC),
       stateMassage: DeviceStateMassage(stateMassage),
       senderDeviceOs: DeviceSenderDeviceOs(senderDeviceOs),

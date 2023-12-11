@@ -3,7 +3,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 
 class LgHelpers {
   static List<DeviceEntityAbstract> addDiscoveredDevice(
-    GenericGenericUnsupportedDE entity,
+    GenericUnsupportedDE entity,
   ) {
     return [];
     // TODO: Add minimal LG TV api

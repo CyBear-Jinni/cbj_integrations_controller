@@ -28,8 +28,8 @@ class EwelinkHelpers {
           deviceLastKnownIp: DeviceLastKnownIp(''),
           deviceHostName: DeviceHostName('0'),
           deviceMdns: DeviceMdns('0'),
-      srvResourceRecord: DeviceSrvResourceRecord(),
-      ptrResourceRecord: DevicePtrResourceRecord(),
+          srvResourceRecord: DeviceSrvResourceRecord(),
+          ptrResourceRecord: DevicePtrResourceRecord(),
           compUuid: DeviceCompUuid('empty'),
           powerConsumption: DevicePowerConsumption('0'),
           devicesMacAddress: DevicesMacAddress('0'),
@@ -37,7 +37,9 @@ class EwelinkHelpers {
           entityKey: EntityKey('1'),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          deviceCbjUniqueId: CoreUniqueId(),
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(
+            '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}',
+          ),
           switchState: GenericSwitchSwitchState('off'),
           entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         ),
@@ -98,8 +100,8 @@ class EwelinkHelpers {
             deviceLastKnownIp: DeviceLastKnownIp(''),
             deviceHostName: DeviceHostName('0'),
             deviceMdns: DeviceMdns('0'),
-      srvResourceRecord: DeviceSrvResourceRecord(),
-      ptrResourceRecord: DevicePtrResourceRecord(),
+            srvResourceRecord: DeviceSrvResourceRecord(),
+            ptrResourceRecord: DevicePtrResourceRecord(),
             compUuid: DeviceCompUuid('empty'),
             powerConsumption: DevicePowerConsumption('0'),
             devicesMacAddress: DevicesMacAddress('0'),
@@ -108,7 +110,9 @@ class EwelinkHelpers {
             requestTimeStamp: RequestTimeStamp('0'),
             lastResponseFromDeviceTimeStamp:
                 LastResponseFromDeviceTimeStamp('0'),
-            deviceCbjUniqueId: CoreUniqueId(),
+            deviceCbjUniqueId: CoreUniqueId.fromUniqueString(
+              '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}-$outletNumber',
+            ),
             switchState:
                 GenericSwitchSwitchState(switchParam['switch'] as String),
             entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),

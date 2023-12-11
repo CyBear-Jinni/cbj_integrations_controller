@@ -13,7 +13,7 @@ import 'package:shelly/shelly.dart';
 
 class ShellyHelpers {
   static Future<List<DeviceEntityAbstract>> addDiscoveredDevice(
-    GenericGenericUnsupportedDE entity,
+    GenericUnsupportedDE entity,
   ) async {
     final List<DeviceEntityAbstract> deviceEntityList = [];
     final String ip = entity.deviceLastKnownIp.getOrCrash()!;
@@ -92,7 +92,7 @@ class ShellyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: entity.deviceCbjUniqueId,
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(mDnsName),
           lightSwitchState: GenericRgbwLightSwitchState(isOn ? 'on' : 'off'),
           lightColorTemperature:
               GenericRgbwLightColorTemperature(temp.toString()),
@@ -161,7 +161,7 @@ class ShellyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: entity.deviceCbjUniqueId,
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(mDnsName),
           lightSwitchState: GenericRgbwLightSwitchState(isOn ? 'on' : 'off'),
           lightColorTemperature:
               GenericRgbwLightColorTemperature(temp.toString()),
@@ -213,7 +213,7 @@ class ShellyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: entity.deviceCbjUniqueId,
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(mDnsName),
           switchState: GenericSwitchSwitchState(false.toString()),
         );
         deviceEntityList.add(shellyRelaySwitchEntity);

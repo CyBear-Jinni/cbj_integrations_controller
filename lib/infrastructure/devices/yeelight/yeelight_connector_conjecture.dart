@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_1se/yeelight_1se_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_helpers.dart';
@@ -31,26 +31,26 @@ class YeelightConnectorConjecture
   /// Make sure that it will activate discoverNewDevices only once
   bool searchStarted = false;
 
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName(
-    GenericGenericUnsupportedDE entity,
+  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
+    GenericUnsupportedDE entity,
   ) async {
     return addNewDevice(entity);
   }
 
-  Future<List<DeviceEntityAbstract>> addNewDevice(
-    GenericGenericUnsupportedDE entity,
+  Future<HashMap<String, DeviceEntityAbstract>?> addNewDevice(
+    GenericUnsupportedDE entity,
   ) async {
-    final List<DeviceEntityAbstract> devicesGotAdded = [];
-
     try {
       final responses = await Yeelight.discover();
       if (responses.isEmpty) {
-        return [];
+        return null;
       }
+
+      final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
       for (final DiscoveryResponse yeelightDevice in responses) {
         if (companyDevices.containsKey(yeelightDevice.id.toString())) {
-          return [];
+          return null;
         }
 
         DeviceEntityAbstract? addDevice;
@@ -71,21 +71,19 @@ class YeelightConnectorConjecture
           continue;
         }
 
-        final DeviceEntityAbstract deviceToAdd =
-            CompaniesConnectorConjecture().addDiscoveredDeviceToHub(addDevice);
-
         final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-            MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
+            MapEntry(addDevice.deviceCbjUniqueId.getOrCrash(), addDevice);
 
+        addedDevice.addEntries([deviceAsEntry]);
         companyDevices.addEntries([deviceAsEntry]);
 
         icLogger.i('New Yeelight device got added');
-        devicesGotAdded.add(addDevice);
       }
+      return addedDevice;
     } catch (e) {
       icLogger.e('Error discover in Yeelight\n$e');
     }
-    return devicesGotAdded;
+    return null;
   }
 
   @override
