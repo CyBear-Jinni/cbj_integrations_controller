@@ -52,8 +52,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
       ISavedRoomsRepo.instance
           .addBindingToRoomDiscoveredIfNotExist(tempBindingCbj);
       final String bindingNodeRedFlowId =
-          await (INodeRedRepository.instance as NodeRedRepository)
-              .createNewNodeRedBinding(tempBindingCbj);
+          await NodeRedRepository().createNewNodeRedBinding(tempBindingCbj);
       if (bindingNodeRedFlowId.isNotEmpty) {
         tempBindingCbj = tempBindingCbj.copyWith(
           nodeRedFlowId: BindingCbjNodeRedFlowId(bindingNodeRedFlowId),

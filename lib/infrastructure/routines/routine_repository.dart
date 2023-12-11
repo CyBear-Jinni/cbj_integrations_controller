@@ -52,8 +52,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
           .addRoutineToRoomDiscoveredIfNotExist(tempRoutineCbj);
 
       final String routineNodeRedFlowId =
-          await (INodeRedRepository.instance as NodeRedRepository)
-              .createNewNodeRedRoutine(tempRoutineCbj);
+          await NodeRedRepository().createNewNodeRedRoutine(tempRoutineCbj);
       if (routineNodeRedFlowId.isNotEmpty) {
         tempRoutineCbj = tempRoutineCbj.copyWith(
           nodeRedFlowId: RoutineCbjNodeRedFlowId(routineNodeRedFlowId),

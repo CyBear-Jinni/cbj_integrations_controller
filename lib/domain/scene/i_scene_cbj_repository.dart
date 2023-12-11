@@ -18,7 +18,6 @@ import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_sci
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/collection.dart';
 import 'package:kt_dart/kt.dart';
-import 'package:nodered/nodered.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'package:cbj_integrations_controller/infrastructure/scenes/scene_repository.dart';

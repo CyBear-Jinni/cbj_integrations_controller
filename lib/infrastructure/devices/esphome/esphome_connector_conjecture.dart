@@ -45,7 +45,8 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
   /// Add new devices to [companyDevices] if not exist
   Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName(
-      GenericGenericUnsupportedDE entity) async {
+    GenericGenericUnsupportedDE entity,
+  ) async {
     if (espHomeDevicePass == null) {
       icLogger.w('ESPHome device got found but missing a password, please add '
           'password for it in the app');
@@ -54,6 +55,7 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
     final List<DeviceEntityAbstract> espDevice =
         await EspHomeHelpers.addDiscoveredEntities(
+      entity: entity,
       devicePassword: espHomeDevicePass!,
     );
 

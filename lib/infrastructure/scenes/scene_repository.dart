@@ -63,8 +63,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
         tempSceneCbj.automationString.getOrCrash() !=
             existingScene.automationString.getOrCrash()) {
       sceneNodeRedFlowId =
-          await (INodeRedRepository.instance as NodeRedRepository)
-              .createNewNodeRedScene(tempSceneCbj);
+          await NodeRedRepository().createNewNodeRedScene(tempSceneCbj);
     }
 
     if (sceneNodeRedFlowId.isNotEmpty) {
@@ -138,8 +137,8 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       if (tempScene != null) {
         sceneCbjEntityTemp =
             sceneCbjEntityTemp.copyWith(nodeRedFlowId: tempScene.nodeRedFlowId);
-        nodeRedFlowId = await (INodeRedRepository.instance as NodeRedRepository)
-            .createNewNodeRedScene(sceneCbjEntityTemp);
+        nodeRedFlowId =
+            await NodeRedRepository().createNewNodeRedScene(sceneCbjEntityTemp);
 
         sceneCbjEntityTemp = sceneCbjEntityTemp.copyWith(
           nodeRedFlowId: SceneCbjNodeRedFlowId(nodeRedFlowId),
@@ -372,8 +371,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       if (tempScene != null) {
         scene = scene.copyWith(nodeRedFlowId: tempScene.nodeRedFlowId);
 
-        nodeRedFlowId = await (INodeRedRepository.instance as NodeRedRepository)
-            .createNewNodeRedScene(scene);
+        nodeRedFlowId = await NodeRedRepository().createNewNodeRedScene(scene);
 
         scene =
             scene.copyWith(nodeRedFlowId: SceneCbjNodeRedFlowId(nodeRedFlowId));

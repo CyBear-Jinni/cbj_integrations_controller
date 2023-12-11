@@ -156,7 +156,7 @@ class ShellyHelpers {
           devicePort: entity.devicePort,
           deviceUniqueId: entity.deviceUniqueId,
           deviceHostName: entity.deviceHostName,
-          devicesMacAddress: entity.devicesMacAddress,
+          devicesMacAddress: DevicesMacAddress(mac),
           entityKey: entity.entityKey,
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
@@ -175,6 +175,18 @@ class ShellyHelpers {
         );
         deviceEntityList.add(shellyColorLightEntity);
       } else if (mDnsName.contains('shelly1-C45BBE78005D')) {
+        final ShellyApiRelaySwitch shellyApiDeviceAbstract =
+            ShellyApiRelaySwitch(
+          lastKnownIp: ip,
+          mDnsName: mDnsName,
+          hostName: hostName,
+        );
+        final String status = await shellyApiDeviceAbstract.getStatus();
+        final dynamic responseAsJson = json.decode(status);
+
+        // ignore: avoid_dynamic_calls
+        final String mac = responseAsJson['mac'] as String;
+
         final ShellyRelaySwitchEntity shellyRelaySwitchEntity =
             ShellyRelaySwitchEntity(
           uniqueId: entity.uniqueId,
@@ -196,7 +208,7 @@ class ShellyHelpers {
           devicePort: entity.devicePort,
           deviceUniqueId: entity.deviceUniqueId,
           deviceHostName: entity.deviceHostName,
-          devicesMacAddress: entity.devicesMacAddress,
+          devicesMacAddress: DevicesMacAddress(mac),
           entityKey: entity.entityKey,
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:

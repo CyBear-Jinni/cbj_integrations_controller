@@ -19,7 +19,6 @@ import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_rep
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/collection.dart';
 import 'package:kt_dart/kt.dart';
-import 'package:nodered/nodered.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'package:cbj_integrations_controller/infrastructure/routines/routine_repository.dart';

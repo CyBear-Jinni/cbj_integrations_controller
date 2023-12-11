@@ -8,15 +8,19 @@ import 'package:http/http.dart';
 import 'package:nodered/nodered.dart';
 
 /// Control Node-RED, create scenes and more
-class NodeRedRepository extends INodeRedRepository {
-  NodeRedRepository() {
-    INodeRedRepository.instance = this;
+class NodeRedRepository {
+  factory NodeRedRepository() {
+    return _instance;
   }
 
-  // TODO: Need to get deleted
-  static INodeRedRepository get instance => INodeRedRepository.instance;
+  NodeRedRepository._singletonConstractor() {
+    nodeRedRepositoryService = NodeRedService();
+  }
 
-  NodeRedAPI nodeRedApi = NodeRedAPI();
+  static final NodeRedRepository _instance =
+      NodeRedRepository._singletonConstractor();
+
+  late NodeRedService nodeRedRepositoryService;
 
   // /// List of all the scenes JSONs in Node-RED
   // List<String> scenesList = [];
@@ -33,11 +37,11 @@ class NodeRedRepository extends INodeRedRepository {
 
     try {
       if (sceneCbj.nodeRedFlowId.getOrCrash() != null) {
-        await nodeRedApi.deleteFlowById(
-          id: sceneCbj.nodeRedFlowId.getOrCrash()!,
+        await nodeRedRepositoryService.deleteFlowById(
+          sceneCbj.nodeRedFlowId.getOrCrash()!,
         );
       }
-      final Response response = await nodeRedApi.postFlow(
+      final Response response = await nodeRedRepositoryService.postFlow(
         label: sceneCbj.name.getOrCrash(),
         nodes: sceneCbj.automationString.getOrCrash()!,
         flowId: sceneCbj.uniqueId.getOrCrash(),
@@ -76,7 +80,7 @@ class NodeRedRepository extends INodeRedRepository {
       // if (routinesList.contains(routineCbj.uniqueId.getOrCrash())) {
       //   await nodeRedApi.deleteFlowById(id: flowId);
       // }
-      final Response response = await nodeRedApi.postFlow(
+      final Response response = await nodeRedRepositoryService.postFlow(
         label: routineCbj.name.getOrCrash(),
         nodes: routineCbj.automationString.getOrCrash()!,
         flowId: routineCbj.uniqueId.getOrCrash(),
@@ -112,7 +116,7 @@ class NodeRedRepository extends INodeRedRepository {
       // if (bindingsList.contains(bindingCbj.uniqueId.getOrCrash())) {
       //   await nodeRedApi.deleteFlowById(id: flowId);
       // }
-      final Response response = await nodeRedApi.postFlow(
+      final Response response = await nodeRedRepositoryService.postFlow(
         label: bindingCbj.name.getOrCrash(),
         nodes: bindingCbj.automationString.getOrCrash()!,
         flowId: bindingCbj.uniqueId.getOrCrash(),
@@ -138,85 +142,6 @@ class NodeRedRepository extends INodeRedRepository {
       } else {
         icLogger.e('Node-RED create new Binding error:\n$e');
       }
-    }
-    return "";
-  }
-
-  @override
-  Future<String> setFlowWithModule({
-    required String moduleToUse,
-    required String label,
-    required String nodes,
-    required String flowId,
-  }) async {
-    // TODO: check if hub crash when trying to download new node inside node red without internet connection
-
-    try {
-      /// Install the new node module
-      await nodeRedApi.postNodes(module: moduleToUse);
-
-      final Response response = await nodeRedApi.postFlow(
-        label: label,
-        nodes: nodes,
-        flowId: flowId,
-      );
-      if (response.statusCode != 200) {
-        icLogger.e('Error sending nodeRED flow request\n${response.body}');
-      }
-      // ignore: avoid_dynamic_calls
-      final String returnedFlowId = jsonDecode(response.body)['id'] as String;
-      return returnedFlowId;
-    } catch (e) {
-      if (e.toString() ==
-          'The remote computer refused the network connection.\r\n') {
-        icLogger.e('Node-RED is not installed');
-      } else {
-        icLogger.e('Node-RED setting flow with module $moduleToUse\n$e');
-      }
-    }
-    return "";
-  }
-
-  @override
-  Future<String> setGlobalNodes({
-    required String? moduleToUse,
-    required String nodes,
-  }) async {
-    try {
-      /// Install the new node module
-      if (moduleToUse != null) {
-        await nodeRedApi.postNodes(module: moduleToUse);
-      }
-      final Response response = await nodeRedApi.postGlobalNode(
-        nodes: nodes,
-      );
-      if (response.statusCode != 200) {
-        icLogger
-            .e('Error sending nodeRED global node request\n${response.body}');
-      }
-    } catch (e) {
-      icLogger.e('Node-RED setting global node with module $moduleToUse\n$e');
-      return e.toString();
-    }
-    return "ok";
-  }
-
-  @override
-  Future<String> updateFlowNodes({
-    required String nodes,
-    required String flowId,
-  }) async {
-    try {
-      final Response response = await nodeRedApi.putFlowById(
-        nodes: nodes,
-        flowId: flowId,
-      );
-      if (response.statusCode != 200) {
-        icLogger
-            .e('Error updating nodeRED flow node request\n${response.body}');
-      }
-    } catch (e) {
-      icLogger.e('Node-RED updating flow\n$e');
     }
     return "";
   }

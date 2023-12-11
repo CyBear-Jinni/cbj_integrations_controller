@@ -18,7 +18,6 @@ import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_con
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/kt.dart';
-import 'package:nodered/nodered.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'package:cbj_integrations_controller/infrastructure/bindings/binding_repository.dart';
