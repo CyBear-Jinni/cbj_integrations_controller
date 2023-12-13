@@ -30,6 +30,8 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -51,7 +53,8 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.tasmota.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.tasmota.toString()),
         );
 
   factory TasmotaIpSwitchEntity.fromGeneric(GenericSwitchDE genericDevice) {
@@ -61,6 +64,8 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

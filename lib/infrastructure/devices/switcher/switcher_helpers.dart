@@ -36,6 +36,8 @@ class SwitcherHelpers {
         deviceOriginalName: DeviceOriginalName(switcherDevice.switcherName),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('switcher'),
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel:
             DeviceSenderDeviceModel(switcherDevice.deviceType.toString()),
         senderId: DeviceSenderId(),
@@ -81,6 +83,8 @@ class SwitcherHelpers {
         deviceOriginalName: DeviceOriginalName(switcherDevice.switcherName),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('switcher'),
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel:
             DeviceSenderDeviceModel(switcherDevice.deviceType.toString()),
         senderId: DeviceSenderId(),
@@ -122,6 +126,8 @@ class SwitcherHelpers {
         deviceOriginalName: DeviceOriginalName(switcherDevice.switcherName),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('switcher'),
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel:
             DeviceSenderDeviceModel(switcherDevice.deviceType.toString()),
         senderId: DeviceSenderId(),

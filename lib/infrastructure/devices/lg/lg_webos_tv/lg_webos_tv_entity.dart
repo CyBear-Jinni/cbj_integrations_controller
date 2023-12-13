@@ -17,6 +17,8 @@ class LgWebosTvEntity extends GenericSmartTvDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -42,7 +44,7 @@ class LgWebosTvEntity extends GenericSmartTvDE {
     super.skip,
     super.volume,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.lg.toString()),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lg.toString()),
         );
 
   /// Please override the following methods

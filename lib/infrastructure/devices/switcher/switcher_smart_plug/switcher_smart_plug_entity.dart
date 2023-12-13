@@ -19,6 +19,8 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -40,8 +42,8 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
     required super.deviceCbjUniqueId,
     required super.smartPlugState,
   }) : super(
-          deviceVendor:
-              DeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
         ) {
     switcherObject = SwitcherApiObject(
       deviceType: SwitcherDevicesTypes.switcherPowerPlug,
@@ -62,6 +64,8 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

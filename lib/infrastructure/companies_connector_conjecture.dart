@@ -40,7 +40,7 @@ class CompaniesConnectorConjecture {
       CompaniesConnectorConjecture._singletonConstructor();
 
   void updateAllDevicesReposWithDeviceChanges(DeviceEntityAbstract entity) {
-    final String deviceVendor = entity.deviceVendor.getOrCrash();
+    final String deviceVendor = entity.cbjDeviceVendor.getOrCrash();
 
     final AbstractCompanyConnectorConjecture? companyConnectorConjecture =
         vendorStringToCompanyConnectorConjecture(deviceVendor);
@@ -73,7 +73,7 @@ class CompaniesConnectorConjecture {
     );
 
     final String deviceVendor =
-        deviceEntityAbstract.value.deviceVendor.getOrCrash();
+        deviceEntityAbstract.value.cbjDeviceVendor.getOrCrash();
 
     final AbstractCompanyConnectorConjecture? companyConnectorConjecture =
         vendorStringToCompanyConnectorConjecture(deviceVendor);
@@ -189,10 +189,14 @@ class CompaniesConnectorConjecture {
         [MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity)],
       );
     }
-    if (handeldEntities == null || handeldEntities.isEmpty) {
+    if (handeldEntities == null) {
       icLogger.e(
         'Entity failed to load mdns device ${entity.deviceMdns.getOrCrash()}',
       );
+      return;
+    }
+    if (handeldEntities.isEmpty) {
+      /// Device exists
       return;
     }
     DevicesService().discovedEntity(handeldEntities);
@@ -238,10 +242,12 @@ class CompaniesConnectorConjecture {
         );
       }
     }
-    if (handeldEntities == null || handeldEntities.isEmpty) {
+    if (handeldEntities == null) {
       icLogger.e(
         'Entity failed to load company name device $deviceHostNameLowerCase',
       );
+      return;
+    } else if (handeldEntities.isEmpty) {
       return;
     }
     DevicesService().discovedEntity(handeldEntities);
@@ -253,7 +259,7 @@ class CompaniesConnectorConjecture {
   Future<void> foundBindingDevice(DeviceEntityAbstract entity) async {
     HashMap<String, DeviceEntityAbstract>? handeldEntities;
 
-    final String deviceVendor = entity.deviceVendor.getOrCrash();
+    final String deviceVendor = entity.cbjDeviceVendor.getOrCrash();
     final AbstractCompanyConnectorConjecture? companyConnectorConjecture =
         vendorStringToCompanyConnectorConjecture(deviceVendor);
 
@@ -265,8 +271,10 @@ class CompaniesConnectorConjecture {
       );
     }
 
-    if (handeldEntities == null || handeldEntities.isEmpty) {
+    if (handeldEntities == null) {
       icLogger.i('Found unseported socket device $entity');
+      return;
+    } else if (handeldEntities.isEmpty) {
       return;
     }
     DevicesService().discovedEntity(handeldEntities);

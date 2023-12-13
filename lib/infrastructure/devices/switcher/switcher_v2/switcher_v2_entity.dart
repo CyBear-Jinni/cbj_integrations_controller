@@ -19,6 +19,8 @@ class SwitcherV2Entity extends GenericBoilerDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.entityStateGRPC,
     required super.stateMassage,
     required super.senderDeviceOs,
@@ -40,8 +42,8 @@ class SwitcherV2Entity extends GenericBoilerDE {
     required super.deviceCbjUniqueId,
     required super.boilerSwitchState,
   }) : super(
-          deviceVendor:
-              DeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
         ) {
     switcherObject = SwitcherApiObject(
       deviceType: SwitcherDevicesTypes.switcherV2Esp,
@@ -60,6 +62,8 @@ class SwitcherV2Entity extends GenericBoilerDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

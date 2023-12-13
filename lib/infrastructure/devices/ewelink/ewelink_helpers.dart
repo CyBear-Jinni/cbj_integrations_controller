@@ -21,6 +21,8 @@ class EwelinkHelpers {
           deviceOriginalName: DeviceOriginalName(ewelinkDevice.name),
           stateMassage: DeviceStateMassage('ok'),
           senderDeviceOs: DeviceSenderDeviceOs('EweLink'),
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
           senderDeviceModel: DeviceSenderDeviceModel(ewelinkDevice.type),
           senderId: DeviceSenderId(),
           deviceUniqueId: DeviceUniqueId(ewelinkDevice.deviceid),
@@ -93,6 +95,9 @@ class EwelinkHelpers {
             deviceOriginalName: DeviceOriginalName(ewelinkDevice.name),
             stateMassage: DeviceStateMassage('ok'),
             senderDeviceOs: DeviceSenderDeviceOs('EweLink'),
+
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
             senderDeviceModel: DeviceSenderDeviceModel(ewelinkDevice.type),
             senderId: DeviceSenderId(),
             deviceUniqueId: DeviceUniqueId(ewelinkDevice.deviceid),

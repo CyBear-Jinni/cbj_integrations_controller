@@ -33,7 +33,9 @@ mixin _$GenericSecurityCameraDeviceDtos {
   String? get senderId => throw _privateConstructorUsedError;
   String? get entityTypes => throw _privateConstructorUsedError;
   String? get compUuid => throw _privateConstructorUsedError;
+  String? get cbjDeviceVendor => throw _privateConstructorUsedError;
   String? get deviceVendor => throw _privateConstructorUsedError;
+  String? get deviceNetworkLastUpdate => throw _privateConstructorUsedError;
   String? get powerConsumption => throw _privateConstructorUsedError;
   String? get deviceUniqueId => throw _privateConstructorUsedError;
   String? get devicePort => throw _privateConstructorUsedError;
@@ -78,7 +80,9 @@ abstract class $GenericSecurityCameraDeviceDtosCopyWith<$Res> {
       String? senderId,
       String? entityTypes,
       String? compUuid,
+      String? cbjDeviceVendor,
       String? deviceVendor,
+      String? deviceNetworkLastUpdate,
       String? powerConsumption,
       String? deviceUniqueId,
       String? devicePort,
@@ -122,7 +126,9 @@ class _$GenericSecurityCameraDeviceDtosCopyWithImpl<$Res,
     Object? senderId = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
+    Object? cbjDeviceVendor = freezed,
     Object? deviceVendor = freezed,
+    Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
     Object? deviceUniqueId = freezed,
     Object? devicePort = freezed,
@@ -185,9 +191,17 @@ class _$GenericSecurityCameraDeviceDtosCopyWithImpl<$Res,
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      cbjDeviceVendor: freezed == cbjDeviceVendor
+          ? _value.cbjDeviceVendor
+          : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deviceNetworkLastUpdate: freezed == deviceNetworkLastUpdate
+          ? _value.deviceNetworkLastUpdate
+          : deviceNetworkLastUpdate // ignore: cast_nullable_to_non_nullable
               as String?,
       powerConsumption: freezed == powerConsumption
           ? _value.powerConsumption
@@ -279,7 +293,9 @@ abstract class _$$GenericSecurityCameraDeviceDtosImplCopyWith<$Res>
       String? senderId,
       String? entityTypes,
       String? compUuid,
+      String? cbjDeviceVendor,
       String? deviceVendor,
+      String? deviceNetworkLastUpdate,
       String? powerConsumption,
       String? deviceUniqueId,
       String? devicePort,
@@ -322,7 +338,9 @@ class __$$GenericSecurityCameraDeviceDtosImplCopyWithImpl<$Res>
     Object? senderId = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
+    Object? cbjDeviceVendor = freezed,
     Object? deviceVendor = freezed,
+    Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
     Object? deviceUniqueId = freezed,
     Object? devicePort = freezed,
@@ -385,9 +403,17 @@ class __$$GenericSecurityCameraDeviceDtosImplCopyWithImpl<$Res>
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      cbjDeviceVendor: freezed == cbjDeviceVendor
+          ? _value.cbjDeviceVendor
+          : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deviceNetworkLastUpdate: freezed == deviceNetworkLastUpdate
+          ? _value.deviceNetworkLastUpdate
+          : deviceNetworkLastUpdate // ignore: cast_nullable_to_non_nullable
               as String?,
       powerConsumption: freezed == powerConsumption
           ? _value.powerConsumption
@@ -474,7 +500,9 @@ class _$GenericSecurityCameraDeviceDtosImpl
       required this.senderId,
       required this.entityTypes,
       required this.compUuid,
+      required this.cbjDeviceVendor,
       required this.deviceVendor,
+      required this.deviceNetworkLastUpdate,
       required this.powerConsumption,
       required this.deviceUniqueId,
       required this.devicePort,
@@ -521,7 +549,11 @@ class _$GenericSecurityCameraDeviceDtosImpl
   @override
   final String? compUuid;
   @override
+  final String? cbjDeviceVendor;
+  @override
   final String? deviceVendor;
+  @override
+  final String? deviceNetworkLastUpdate;
   @override
   final String? powerConsumption;
   @override
@@ -557,7 +589,7 @@ class _$GenericSecurityCameraDeviceDtosImpl
 
   @override
   String toString() {
-    return 'GenericSecurityCameraDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, securityCameraSuspendState: $securityCameraSuspendState, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericSecurityCameraDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, securityCameraSuspendState: $securityCameraSuspendState, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -586,8 +618,12 @@ class _$GenericSecurityCameraDeviceDtosImpl
                 other.entityTypes == entityTypes) &&
             (identical(other.compUuid, compUuid) ||
                 other.compUuid == compUuid) &&
+            (identical(other.cbjDeviceVendor, cbjDeviceVendor) ||
+                other.cbjDeviceVendor == cbjDeviceVendor) &&
             (identical(other.deviceVendor, deviceVendor) ||
                 other.deviceVendor == deviceVendor) &&
+            (identical(other.deviceNetworkLastUpdate, deviceNetworkLastUpdate) ||
+                other.deviceNetworkLastUpdate == deviceNetworkLastUpdate) &&
             (identical(other.powerConsumption, powerConsumption) ||
                 other.powerConsumption == powerConsumption) &&
             (identical(other.deviceUniqueId, deviceUniqueId) ||
@@ -641,7 +677,9 @@ class _$GenericSecurityCameraDeviceDtosImpl
         senderId,
         entityTypes,
         compUuid,
+        cbjDeviceVendor,
         deviceVendor,
+        deviceNetworkLastUpdate,
         powerConsumption,
         deviceUniqueId,
         devicePort,
@@ -690,7 +728,9 @@ abstract class _GenericSecurityCameraDeviceDtos
       required final String? senderId,
       required final String? entityTypes,
       required final String? compUuid,
+      required final String? cbjDeviceVendor,
       required final String? deviceVendor,
+      required final String? deviceNetworkLastUpdate,
       required final String? powerConsumption,
       required final String? deviceUniqueId,
       required final String? devicePort,
@@ -735,7 +775,11 @@ abstract class _GenericSecurityCameraDeviceDtos
   @override
   String? get compUuid;
   @override
+  String? get cbjDeviceVendor;
+  @override
   String? get deviceVendor;
+  @override
+  String? get deviceNetworkLastUpdate;
   @override
   String? get powerConsumption;
   @override

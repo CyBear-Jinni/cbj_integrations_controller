@@ -17,6 +17,8 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -28,7 +30,7 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
     required super.devicePort,
     required super.deviceLastKnownIp,
     required super.deviceHostName,
- required super.deviceMdns,
+    required super.deviceMdns,
     required super.srvResourceRecord,
     required super.ptrResourceRecord,
     required super.devicesMacAddress,
@@ -38,7 +40,8 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.espHome.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.espHome.toString()),
         );
 
   factory EspHomeSwitchEntity.fromGeneric(GenericSwitchDE genericDevice) {
@@ -48,6 +51,8 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

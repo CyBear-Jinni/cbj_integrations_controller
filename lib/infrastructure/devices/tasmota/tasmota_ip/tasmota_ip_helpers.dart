@@ -99,6 +99,8 @@ class TasmotaIpHelpers {
         ),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('Tasmota'),
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel: DeviceSenderDeviceModel('Tasmota'),
         senderId: DeviceSenderId(),
         compUuid: DeviceCompUuid('34asdfrsd23gggg'),

@@ -243,18 +243,40 @@ class EntityType extends ValueObjectCore<String> {
   final Either<CoreFailure<String>, String> value;
 }
 
-class DeviceVendor extends ValueObjectCore<String> {
-  factory DeviceVendor(String? input) {
+class CbjDeviceVendor extends ValueObjectCore<String> {
+  factory CbjDeviceVendor(String? input) {
     assert(input != null);
-    return DeviceVendor._(
+    return CbjDeviceVendor._(
       validateNotEmpty(input!).flatMap((a) => validateDeviceVendorExist(input)),
     );
+  }
+
+  const CbjDeviceVendor._(this.value);
+
+  @override
+  final Either<CoreFailure<String>, String> value;
+}
+
+class DeviceVendor extends ValueObjectCore<String?> {
+  factory DeviceVendor(String? input) {
+    return DeviceVendor._(right(input));
   }
 
   const DeviceVendor._(this.value);
 
   @override
-  final Either<CoreFailure<String>, String> value;
+  final Either<CoreFailure<String?>, String?> value;
+}
+
+class DeviceNetworkLastUpdate extends ValueObjectCore<String?> {
+  factory DeviceNetworkLastUpdate(String? input) {
+    return DeviceNetworkLastUpdate._(right(input));
+  }
+
+  const DeviceNetworkLastUpdate._(this.value);
+
+  @override
+  final Either<CoreFailure<String?>, String?> value;
 }
 
 class DeviceCompUuid extends ValueObjectCore<String> {

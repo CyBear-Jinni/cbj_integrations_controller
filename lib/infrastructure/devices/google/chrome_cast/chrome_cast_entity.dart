@@ -18,6 +18,8 @@ class ChromeCastEntity extends GenericSmartTvDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -43,7 +45,8 @@ class ChromeCastEntity extends GenericSmartTvDE {
     super.skip,
     super.volume,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.google.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.google.toString()),
         ) {
     setUpNodeRedApi();
   }
@@ -55,6 +58,8 @@ class ChromeCastEntity extends GenericSmartTvDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

@@ -16,6 +16,8 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -37,8 +39,8 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          deviceVendor:
-              DeviceVendor(VendorsAndServices.sonoffEweLink.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.sonoffEweLink.toString()),
         );
 
   factory EwelinkSwitchEntity.fromGeneric(GenericSwitchDE genericDevice) {
@@ -48,6 +50,8 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

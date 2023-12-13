@@ -34,7 +34,9 @@ mixin _$GenericDimmableLightDeviceDtos {
   String? get lightSwitchState => throw _privateConstructorUsedError;
   String? get entityTypes => throw _privateConstructorUsedError;
   String? get compUuid => throw _privateConstructorUsedError;
+  String? get cbjDeviceVendor => throw _privateConstructorUsedError;
   String? get deviceVendor => throw _privateConstructorUsedError;
+  String? get deviceNetworkLastUpdate => throw _privateConstructorUsedError;
   String? get powerConsumption => throw _privateConstructorUsedError;
   String? get lightBrightness => throw _privateConstructorUsedError;
   String? get deviceUniqueId => throw _privateConstructorUsedError;
@@ -80,7 +82,9 @@ abstract class $GenericDimmableLightDeviceDtosCopyWith<$Res> {
       String? lightSwitchState,
       String? entityTypes,
       String? compUuid,
+      String? cbjDeviceVendor,
       String? deviceVendor,
+      String? deviceNetworkLastUpdate,
       String? powerConsumption,
       String? lightBrightness,
       String? deviceUniqueId,
@@ -125,7 +129,9 @@ class _$GenericDimmableLightDeviceDtosCopyWithImpl<$Res,
     Object? lightSwitchState = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
+    Object? cbjDeviceVendor = freezed,
     Object? deviceVendor = freezed,
+    Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
     Object? lightBrightness = freezed,
     Object? deviceUniqueId = freezed,
@@ -192,9 +198,17 @@ class _$GenericDimmableLightDeviceDtosCopyWithImpl<$Res,
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      cbjDeviceVendor: freezed == cbjDeviceVendor
+          ? _value.cbjDeviceVendor
+          : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deviceNetworkLastUpdate: freezed == deviceNetworkLastUpdate
+          ? _value.deviceNetworkLastUpdate
+          : deviceNetworkLastUpdate // ignore: cast_nullable_to_non_nullable
               as String?,
       powerConsumption: freezed == powerConsumption
           ? _value.powerConsumption
@@ -287,7 +301,9 @@ abstract class _$$GenericDimmableLightDeviceDtosImplCopyWith<$Res>
       String? lightSwitchState,
       String? entityTypes,
       String? compUuid,
+      String? cbjDeviceVendor,
       String? deviceVendor,
+      String? deviceNetworkLastUpdate,
       String? powerConsumption,
       String? lightBrightness,
       String? deviceUniqueId,
@@ -331,7 +347,9 @@ class __$$GenericDimmableLightDeviceDtosImplCopyWithImpl<$Res>
     Object? lightSwitchState = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
+    Object? cbjDeviceVendor = freezed,
     Object? deviceVendor = freezed,
+    Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
     Object? lightBrightness = freezed,
     Object? deviceUniqueId = freezed,
@@ -398,9 +416,17 @@ class __$$GenericDimmableLightDeviceDtosImplCopyWithImpl<$Res>
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      cbjDeviceVendor: freezed == cbjDeviceVendor
+          ? _value.cbjDeviceVendor
+          : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deviceNetworkLastUpdate: freezed == deviceNetworkLastUpdate
+          ? _value.deviceNetworkLastUpdate
+          : deviceNetworkLastUpdate // ignore: cast_nullable_to_non_nullable
               as String?,
       powerConsumption: freezed == powerConsumption
           ? _value.powerConsumption
@@ -488,7 +514,9 @@ class _$GenericDimmableLightDeviceDtosImpl
       required this.lightSwitchState,
       required this.entityTypes,
       required this.compUuid,
+      required this.cbjDeviceVendor,
       required this.deviceVendor,
+      required this.deviceNetworkLastUpdate,
       required this.powerConsumption,
       required this.lightBrightness,
       required this.deviceUniqueId,
@@ -537,7 +565,11 @@ class _$GenericDimmableLightDeviceDtosImpl
   @override
   final String? compUuid;
   @override
+  final String? cbjDeviceVendor;
+  @override
   final String? deviceVendor;
+  @override
+  final String? deviceNetworkLastUpdate;
   @override
   final String? powerConsumption;
   @override
@@ -573,7 +605,7 @@ class _$GenericDimmableLightDeviceDtosImpl
 
   @override
   String toString() {
-    return 'GenericDimmableLightDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, lightSwitchState: $lightSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, lightBrightness: $lightBrightness, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericDimmableLightDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, lightSwitchState: $lightSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, lightBrightness: $lightBrightness, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -604,8 +636,13 @@ class _$GenericDimmableLightDeviceDtosImpl
                 other.entityTypes == entityTypes) &&
             (identical(other.compUuid, compUuid) ||
                 other.compUuid == compUuid) &&
+            (identical(other.cbjDeviceVendor, cbjDeviceVendor) ||
+                other.cbjDeviceVendor == cbjDeviceVendor) &&
             (identical(other.deviceVendor, deviceVendor) ||
                 other.deviceVendor == deviceVendor) &&
+            (identical(
+                    other.deviceNetworkLastUpdate, deviceNetworkLastUpdate) ||
+                other.deviceNetworkLastUpdate == deviceNetworkLastUpdate) &&
             (identical(other.powerConsumption, powerConsumption) ||
                 other.powerConsumption == powerConsumption) &&
             (identical(other.lightBrightness, lightBrightness) ||
@@ -658,7 +695,9 @@ class _$GenericDimmableLightDeviceDtosImpl
         lightSwitchState,
         entityTypes,
         compUuid,
+        cbjDeviceVendor,
         deviceVendor,
+        deviceNetworkLastUpdate,
         powerConsumption,
         lightBrightness,
         deviceUniqueId,
@@ -708,7 +747,9 @@ abstract class _GenericDimmableLightDeviceDtos
       required final String? lightSwitchState,
       required final String? entityTypes,
       required final String? compUuid,
+      required final String? cbjDeviceVendor,
       required final String? deviceVendor,
+      required final String? deviceNetworkLastUpdate,
       required final String? powerConsumption,
       required final String? lightBrightness,
       required final String? deviceUniqueId,
@@ -755,7 +796,11 @@ abstract class _GenericDimmableLightDeviceDtos
   @override
   String? get compUuid;
   @override
+  String? get cbjDeviceVendor;
+  @override
   String? get deviceVendor;
+  @override
+  String? get deviceNetworkLastUpdate;
   @override
   String? get powerConsumption;
   @override

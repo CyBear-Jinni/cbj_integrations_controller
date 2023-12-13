@@ -12,6 +12,8 @@ class HpPrinterEntity extends GenericPrinterDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -33,7 +35,7 @@ class HpPrinterEntity extends GenericPrinterDE {
     required super.deviceCbjUniqueId,
     required super.printerSwitchState,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.hp.toString()),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.hp.toString()),
         );
 
   factory HpPrinterEntity.fromGeneric(GenericPrinterDE genericDevice) {
@@ -43,6 +45,8 @@ class HpPrinterEntity extends GenericPrinterDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

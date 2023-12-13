@@ -5,10 +5,12 @@ class XiaomiLedSmartBulbEssentialWhiteAndColorEntity
   XiaomiLedSmartBulbEssentialWhiteAndColorEntity({
     required super.uniqueId,
     required super.entityUniqueId,
-    required super.deviceVendor,
+    required super.cbjDeviceVendor,
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,

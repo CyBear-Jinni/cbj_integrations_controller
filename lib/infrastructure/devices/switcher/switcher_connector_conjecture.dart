@@ -37,7 +37,7 @@ class SwitcherConnectorConjecture
               savedDevice is SwitcherSmartPlugEntity) &&
           entity.deviceCbjUniqueId.getOrCrash() ==
               savedDevice.deviceCbjUniqueId.getOrCrash()) {
-        return null;
+        return HashMap();
       } else if (savedDevice is GenericBoilerDE ||
           savedDevice is GenericBlindsDE &&
               entity.deviceCbjUniqueId.getOrCrash() ==
@@ -61,7 +61,7 @@ class SwitcherConnectorConjecture
     addedDevice.addEntries([deviceAsEntry]);
 
     icLogger.t(
-      'New switcher devices name:${entity.entityOriginalName.getOrCrash()}',
+      'New switcher devices name: ${entity.entityOriginalName.getOrCrash()}',
     );
     return addedDevice;
   }

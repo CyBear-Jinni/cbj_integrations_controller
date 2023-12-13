@@ -18,6 +18,8 @@ class WizWhiteEntity extends GenericLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -39,7 +41,7 @@ class WizWhiteEntity extends GenericLightDE {
     required super.deviceCbjUniqueId,
     required super.lightSwitchState,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.wiz.toString()),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.wiz.toString()),
         );
 
   WizPort? wizPort;

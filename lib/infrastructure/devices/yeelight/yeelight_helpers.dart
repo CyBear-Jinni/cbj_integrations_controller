@@ -34,6 +34,8 @@ class YeelightHelpers {
         deviceOriginalName: DeviceOriginalName(deviceName),
         entityStateGRPC: entity.entityStateGRPC,
         senderDeviceOs: entity.senderDeviceOs,
+        deviceVendor: entity.deviceVendor,
+        deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,
         senderDeviceModel: entity.senderDeviceModel,
         senderId: entity.senderId,
         compUuid: entity.compUuid,

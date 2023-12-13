@@ -16,6 +16,8 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -37,7 +39,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
     required super.deviceCbjUniqueId,
     required super.securityCameraSuspendState,
   }) : super(
-          deviceVendor: DeviceVendor(
+          cbjDeviceVendor: CbjDeviceVendor(
             VendorsAndServices.cyBearJinniAppSmartEntity.toString(),
           ),
         );
@@ -51,6 +53,8 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

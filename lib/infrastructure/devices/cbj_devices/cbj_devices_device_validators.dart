@@ -11,7 +11,7 @@ Either<CoreFailure<String>, String> validateCbjDevicesPortNotEmpty(
   return right(input);
 }
 
-Either<CoreFailure<String>, String> validateCbjDevicesMacAddressNotEmpty(
+Either<CoreFailure<String>, String> validatedevicesMacAddressNotEmpty(
   String input,
 ) {
   return right(input);

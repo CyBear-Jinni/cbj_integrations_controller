@@ -19,6 +19,8 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -41,7 +43,7 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
     required super.lightSwitchState,
     required super.lightBrightness,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.lifx.toString()),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lifx.toString()),
         );
 
   factory LifxWhiteEntity.fromGeneric(GenericDimmableLightDE genericDevice) {
@@ -51,6 +53,8 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

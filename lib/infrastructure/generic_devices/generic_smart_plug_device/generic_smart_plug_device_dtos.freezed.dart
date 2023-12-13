@@ -34,7 +34,9 @@ mixin _$GenericSmartPlugDeviceDtos {
   String? get smartPlugState => throw _privateConstructorUsedError;
   String? get entityTypes => throw _privateConstructorUsedError;
   String? get compUuid => throw _privateConstructorUsedError;
+  String? get cbjDeviceVendor => throw _privateConstructorUsedError;
   String? get deviceVendor => throw _privateConstructorUsedError;
+  String? get deviceNetworkLastUpdate => throw _privateConstructorUsedError;
   String? get powerConsumption => throw _privateConstructorUsedError;
   String? get deviceUniqueId => throw _privateConstructorUsedError;
   String? get devicePort => throw _privateConstructorUsedError;
@@ -78,7 +80,9 @@ abstract class $GenericSmartPlugDeviceDtosCopyWith<$Res> {
       String? smartPlugState,
       String? entityTypes,
       String? compUuid,
+      String? cbjDeviceVendor,
       String? deviceVendor,
+      String? deviceNetworkLastUpdate,
       String? powerConsumption,
       String? deviceUniqueId,
       String? devicePort,
@@ -122,7 +126,9 @@ class _$GenericSmartPlugDeviceDtosCopyWithImpl<$Res,
     Object? smartPlugState = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
+    Object? cbjDeviceVendor = freezed,
     Object? deviceVendor = freezed,
+    Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
     Object? deviceUniqueId = freezed,
     Object? devicePort = freezed,
@@ -188,9 +194,17 @@ class _$GenericSmartPlugDeviceDtosCopyWithImpl<$Res,
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      cbjDeviceVendor: freezed == cbjDeviceVendor
+          ? _value.cbjDeviceVendor
+          : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deviceNetworkLastUpdate: freezed == deviceNetworkLastUpdate
+          ? _value.deviceNetworkLastUpdate
+          : deviceNetworkLastUpdate // ignore: cast_nullable_to_non_nullable
               as String?,
       powerConsumption: freezed == powerConsumption
           ? _value.powerConsumption
@@ -279,7 +293,9 @@ abstract class _$$GenericSmartPlugDeviceDtosImplCopyWith<$Res>
       String? smartPlugState,
       String? entityTypes,
       String? compUuid,
+      String? cbjDeviceVendor,
       String? deviceVendor,
+      String? deviceNetworkLastUpdate,
       String? powerConsumption,
       String? deviceUniqueId,
       String? devicePort,
@@ -322,7 +338,9 @@ class __$$GenericSmartPlugDeviceDtosImplCopyWithImpl<$Res>
     Object? smartPlugState = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
+    Object? cbjDeviceVendor = freezed,
     Object? deviceVendor = freezed,
+    Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
     Object? deviceUniqueId = freezed,
     Object? devicePort = freezed,
@@ -388,9 +406,17 @@ class __$$GenericSmartPlugDeviceDtosImplCopyWithImpl<$Res>
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      cbjDeviceVendor: freezed == cbjDeviceVendor
+          ? _value.cbjDeviceVendor
+          : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deviceNetworkLastUpdate: freezed == deviceNetworkLastUpdate
+          ? _value.deviceNetworkLastUpdate
+          : deviceNetworkLastUpdate // ignore: cast_nullable_to_non_nullable
               as String?,
       powerConsumption: freezed == powerConsumption
           ? _value.powerConsumption
@@ -473,7 +499,9 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
       required this.smartPlugState,
       required this.entityTypes,
       required this.compUuid,
+      required this.cbjDeviceVendor,
       required this.deviceVendor,
+      required this.deviceNetworkLastUpdate,
       required this.powerConsumption,
       required this.deviceUniqueId,
       required this.devicePort,
@@ -521,7 +549,11 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
   @override
   final String? compUuid;
   @override
+  final String? cbjDeviceVendor;
+  @override
   final String? deviceVendor;
+  @override
+  final String? deviceNetworkLastUpdate;
   @override
   final String? powerConsumption;
   @override
@@ -555,7 +587,7 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
 
   @override
   String toString() {
-    return 'GenericSmartPlugDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, smartPlugState: $smartPlugState, entityTypes: $entityTypes, compUuid: $compUuid, deviceVendor: $deviceVendor, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericSmartPlugDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, smartPlugState: $smartPlugState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -586,8 +618,13 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
                 other.entityTypes == entityTypes) &&
             (identical(other.compUuid, compUuid) ||
                 other.compUuid == compUuid) &&
+            (identical(other.cbjDeviceVendor, cbjDeviceVendor) ||
+                other.cbjDeviceVendor == cbjDeviceVendor) &&
             (identical(other.deviceVendor, deviceVendor) ||
                 other.deviceVendor == deviceVendor) &&
+            (identical(
+                    other.deviceNetworkLastUpdate, deviceNetworkLastUpdate) ||
+                other.deviceNetworkLastUpdate == deviceNetworkLastUpdate) &&
             (identical(other.powerConsumption, powerConsumption) ||
                 other.powerConsumption == powerConsumption) &&
             (identical(other.deviceUniqueId, deviceUniqueId) ||
@@ -638,7 +675,9 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
         smartPlugState,
         entityTypes,
         compUuid,
+        cbjDeviceVendor,
         deviceVendor,
+        deviceNetworkLastUpdate,
         powerConsumption,
         deviceUniqueId,
         devicePort,
@@ -685,7 +724,9 @@ abstract class _GenericSmartPlugDeviceDtos extends GenericSmartPlugDeviceDtos {
       required final String? smartPlugState,
       required final String? entityTypes,
       required final String? compUuid,
+      required final String? cbjDeviceVendor,
       required final String? deviceVendor,
+      required final String? deviceNetworkLastUpdate,
       required final String? powerConsumption,
       required final String? deviceUniqueId,
       required final String? devicePort,
@@ -731,7 +772,11 @@ abstract class _GenericSmartPlugDeviceDtos extends GenericSmartPlugDeviceDtos {
   @override
   String? get compUuid;
   @override
+  String? get cbjDeviceVendor;
+  @override
   String? get deviceVendor;
+  @override
+  String? get deviceNetworkLastUpdate;
   @override
   String? get powerConsumption;
   @override

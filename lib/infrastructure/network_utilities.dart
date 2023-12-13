@@ -24,15 +24,24 @@ class _NetworkUtilities implements INetworkUtilities {
     ActiveHost activeHost,
   ) async {
     final ARPData? arpData = await activeHost.arpData;
-    final String deviceName = await activeHost.deviceName;
+    String? deviceName = await activeHost.deviceName;
+    if (deviceName == 'Generic Device') {
+      deviceName = null;
+    }
     final MdnsInfo? mdns = await activeHost.mdnsInfo;
+    final Vendor? vendor = await activeHost.vendor;
+    final String? hostName = await activeHost.hostName;
 
     return GenericUnsupportedDE(
       uniqueId: CoreUniqueId(),
       entityUniqueId: EntityUniqueId(arpData?.macAddress ?? activeHost.hostId),
-      deviceVendor:
-          DeviceVendor(VendorsAndServices.vendorsAndServicesNotSupported.name),
-      cbjEntityName: CbjEntityName(await activeHost.deviceName),
+      cbjDeviceVendor: CbjDeviceVendor(
+        VendorsAndServices.vendorsAndServicesNotSupported.name,
+      ),
+      cbjEntityName:
+          CbjEntityName(deviceName ?? hostName ?? arpData?.hostname ?? ''),
+      deviceVendor: DeviceVendor(vendor?.vendorName),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(vendor?.lastUpdate),
       stateMassage: DeviceStateMassage(''),
       senderDeviceOs: DeviceSenderDeviceOs(''),
       senderDeviceModel: DeviceSenderDeviceModel(''),
@@ -45,13 +54,14 @@ class _NetworkUtilities implements INetworkUtilities {
       deviceUniqueId: DeviceUniqueId(arpData?.macAddress ?? activeHost.hostId),
       devicePort: DevicePort(activeHost.openPorts.toString()),
       deviceLastKnownIp: DeviceLastKnownIp(activeHost.address),
-      deviceHostName: DeviceHostName(deviceName),
+      deviceHostName: DeviceHostName(hostName),
       deviceMdns: DeviceMdns(mdns?.mdnsDomainName),
       srvResourceRecord:
           DeviceSrvResourceRecord(input: mdns?.srvResourceRecord.name),
       ptrResourceRecord:
           DevicePtrResourceRecord(input: mdns?.ptrResourceRecord.name),
-      devicesMacAddress: DevicesMacAddress(arpData?.macAddress),
+      devicesMacAddress:
+          DevicesMacAddress(arpData?.macAddress ?? vendor?.macPrefix),
       entityKey: EntityKey(''),
       requestTimeStamp: RequestTimeStamp(''),
       lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),

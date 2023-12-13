@@ -19,15 +19,15 @@ class CbjDevicesPort extends ValueObjectCore<String> {
 }
 
 /// CbjDevices communication port
-class CbjDevicesMacAddress extends ValueObjectCore<String> {
-  factory CbjDevicesMacAddress(String? input) {
+class DevicesMacAddress extends ValueObjectCore<String> {
+  factory DevicesMacAddress(String? input) {
     assert(input != null);
-    return CbjDevicesMacAddress._(
-      validateCbjDevicesMacAddressNotEmpty(input!),
+    return DevicesMacAddress._(
+      validatedevicesMacAddressNotEmpty(input!),
     );
   }
 
-  const CbjDevicesMacAddress._(this.value);
+  const DevicesMacAddress._(this.value);
 
   @override
   final Either<CoreFailure<String>, String> value;

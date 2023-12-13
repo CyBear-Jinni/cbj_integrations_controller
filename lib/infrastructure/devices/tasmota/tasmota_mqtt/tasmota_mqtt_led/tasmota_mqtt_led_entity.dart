@@ -17,6 +17,8 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -39,7 +41,8 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     required super.lightSwitchState,
     required this.tasmotaMqttDeviceTopicName,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.tasmota.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.tasmota.toString()),
         );
 
   TasmotaMqttDeviceTopicName tasmotaMqttDeviceTopicName;

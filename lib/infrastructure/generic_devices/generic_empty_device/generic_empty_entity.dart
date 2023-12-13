@@ -14,7 +14,9 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
   GenericUnsupportedDE({
     required super.uniqueId,
     required super.entityUniqueId,
+    required super.cbjDeviceVendor,
     required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
@@ -43,9 +45,11 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
 
   /// Empty instance of GenericEmptyEntity
   factory GenericUnsupportedDE.empty() => GenericUnsupportedDE(
-        deviceVendor: DeviceVendor(
+        cbjDeviceVendor: CbjDeviceVendor(
           VendorsAndServices.vendorsAndServicesNotSupported.toString(),
         ),
+        deviceVendor: DeviceVendor(null),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         uniqueId: CoreUniqueId(),
         entityUniqueId: EntityUniqueId(''),
         cbjEntityName: CbjEntityName('Empty device'),
@@ -118,7 +122,9 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
       senderId: senderId.getOrCrash(),
       entityTypes: entityTypes.getOrCrash(),
       compUuid: compUuid.getOrCrash(),
+      cbjDeviceVendor: cbjDeviceVendor.getOrCrash(),
       deviceVendor: deviceVendor.getOrCrash(),
+      deviceNetworkLastUpdate: deviceNetworkLastUpdate.getOrCrash(),
       powerConsumption: powerConsumption.getOrCrash(),
       deviceUniqueId: deviceUniqueId.getOrCrash(),
       devicePort: devicePort.getOrCrash(),

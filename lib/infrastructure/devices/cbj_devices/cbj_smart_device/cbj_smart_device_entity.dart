@@ -16,6 +16,8 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -38,7 +40,7 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
     required super.smartComputerShutDownState,
     required super.smartComputerSuspendState,
   }) : super(
-          deviceVendor: DeviceVendor(
+          cbjDeviceVendor: CbjDeviceVendor(
             VendorsAndServices.cyBearJinniAppSmartEntity.toString(),
           ),
         );
@@ -52,6 +54,8 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

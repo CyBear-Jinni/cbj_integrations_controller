@@ -19,6 +19,8 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -46,7 +48,8 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required super.lightColorValue,
     required super.lightBrightness,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.yeelight.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.yeelight.toString()),
         );
 
   factory Yeelight1SeEntity.fromGeneric(GenericRgbwLightDE genericDevice) {
@@ -56,6 +59,8 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

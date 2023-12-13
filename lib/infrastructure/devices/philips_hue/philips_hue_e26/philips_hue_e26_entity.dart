@@ -19,6 +19,8 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -43,7 +45,7 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
     required this.philipsHueApiLight,
     this.philipsHuePackageObject,
   }) : super(
-          deviceVendor: DeviceVendor(
+          cbjDeviceVendor: CbjDeviceVendor(
             VendorsAndServices.philipsHue.toString(),
           ),
         );
@@ -57,6 +59,8 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

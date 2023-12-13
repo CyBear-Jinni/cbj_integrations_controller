@@ -28,6 +28,9 @@ class LifxHelpers {
       deviceOriginalName: DeviceOriginalName(deviceName),
       entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
       senderDeviceOs: DeviceSenderDeviceOs('Lifx'),
+
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       senderDeviceModel: DeviceSenderDeviceModel('Cloud'),
       senderId: DeviceSenderId(),
       compUuid: DeviceCompUuid(lifxDevice.uuid),

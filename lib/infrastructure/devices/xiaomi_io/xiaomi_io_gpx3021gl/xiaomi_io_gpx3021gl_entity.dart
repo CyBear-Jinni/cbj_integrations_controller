@@ -18,6 +18,8 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -45,7 +47,7 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
     required super.lightColorValue,
     required super.lightBrightness,
   }) : super(
-          deviceVendor: DeviceVendor(
+          cbjDeviceVendor: CbjDeviceVendor(
             VendorsAndServices.xiaomi.toString(),
           ),
         );
@@ -59,6 +61,8 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

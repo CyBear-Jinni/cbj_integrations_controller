@@ -17,6 +17,8 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -45,7 +47,8 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
     required super.lightBrightness,
     ShellyApiColorBulb? bulbMode,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.shelly.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.shelly.toString()),
         ) {
     shellyColorBulb = bulbMode ??
         ShellyApiColorBulb(
@@ -62,6 +65,8 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

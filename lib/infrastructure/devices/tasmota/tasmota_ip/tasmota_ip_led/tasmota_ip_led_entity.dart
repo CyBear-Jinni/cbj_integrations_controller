@@ -28,6 +28,8 @@ class TasmotaIpLedEntity extends GenericLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -49,7 +51,8 @@ class TasmotaIpLedEntity extends GenericLightDE {
     required super.deviceCbjUniqueId,
     required super.lightSwitchState,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.tasmota.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.tasmota.toString()),
         );
 
   factory TasmotaIpLedEntity.fromGeneric(GenericLightDE genericDevice) {
@@ -59,6 +62,8 @@ class TasmotaIpLedEntity extends GenericLightDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,

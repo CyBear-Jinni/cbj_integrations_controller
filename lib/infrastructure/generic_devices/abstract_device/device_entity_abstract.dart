@@ -11,7 +11,7 @@ abstract class DeviceEntityAbstract {
   DeviceEntityAbstract({
     required this.uniqueId,
     required this.entityUniqueId,
-    required this.deviceVendor,
+    required this.cbjDeviceVendor,
     required this.entityTypes,
     required this.cbjEntityName,
     required this.stateMassage,
@@ -35,6 +35,8 @@ abstract class DeviceEntityAbstract {
     required this.deviceCbjUniqueId,
     required this.srvResourceRecord,
     required this.ptrResourceRecord,
+    required this.deviceVendor,
+    required this.deviceNetworkLastUpdate,
   });
 
   /// The unique id that CyBear Jinni Hub gave the device
@@ -71,8 +73,14 @@ abstract class DeviceEntityAbstract {
   /// The smart entity type
   EntityType entityTypes;
 
-  /// The smart GenericLight type
+  /// The vendor assignd by cbj
+  CbjDeviceVendor cbjDeviceVendor;
+
+  /// Device vendor as discoverd by network search
   DeviceVendor deviceVendor;
+
+  /// Last time the device was connected to network as discovered by netowrk serach
+  DeviceNetworkLastUpdate deviceNetworkLastUpdate;
 
   /// Unique id of the computer
   DeviceCompUuid compUuid;
@@ -174,7 +182,7 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
       : super(
           uniqueId: CoreUniqueId(),
           entityUniqueId: EntityUniqueId('Entity unique id is empty'),
-          deviceVendor: DeviceVendor(
+          cbjDeviceVendor: CbjDeviceVendor(
             VendorsAndServices.vendorsAndServicesNotSupported.toString(),
           ),
           entityStateGRPC:
@@ -206,6 +214,8 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
             'lastResponseFromDeviceTimeStamp is empty',
           ),
           deviceCbjUniqueId: CoreUniqueId(),
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         );
 
   @override
@@ -247,7 +257,9 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
 //   GenericGenericUnsupportedDE({
 //     required super.uniqueId,
 //     required super.entityUniqueId,
-//     required super.deviceVendor,
+//         required super.cbjDeviceVendor,
+    // required super.deviceVendor,
+    // required super.deviceNetworkLastUpdate,
 //     required super.entityTypes,
 //     required super.cbjEntityName,
 //     required super.stateMassage,

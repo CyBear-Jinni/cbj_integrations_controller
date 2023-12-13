@@ -30,6 +30,8 @@ class XiaomiIoHelpers {
       deviceOriginalName: DeviceOriginalName(deviceName),
       entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
       senderDeviceOs: DeviceSenderDeviceOs('xiaomi_io'),
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       senderDeviceModel: DeviceSenderDeviceModel('1SE'),
       senderId: DeviceSenderId(),
       compUuid: DeviceCompUuid('34asdfrsd23gggg'),

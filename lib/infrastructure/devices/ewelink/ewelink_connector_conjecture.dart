@@ -31,9 +31,15 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
     GenericEwelinkLoginDE loginDE,
   ) async {
     try {
+      final String email = loginDE.ewelinkAccountEmail.getOrCrash();
+      final String password = loginDE.ewelinkAccountPass.getOrCrash();
+      if (email.isEmpty || password.isEmpty) {
+        return false;
+      }
+
       ewelink = Ewelink(
-        email: loginDE.ewelinkAccountEmail.getOrCrash(),
-        password: loginDE.ewelinkAccountPass.getOrCrash(),
+        email: email,
+        password: password,
       );
 
       await ewelink!.getCredentials();
