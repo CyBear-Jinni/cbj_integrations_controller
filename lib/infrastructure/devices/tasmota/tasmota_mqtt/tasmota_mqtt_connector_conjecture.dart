@@ -112,7 +112,8 @@ class TasmotaMqttConnectorConjecture
 
   @override
   Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
-      DeviceEntityAbstract entity) async {
+    DeviceEntityAbstract entity,
+  ) async {
     return null;
   }
 }

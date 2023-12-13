@@ -7,7 +7,6 @@ import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_relay_switch/shelly_relay_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 
@@ -26,8 +25,8 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  /// Add new devices to [companyDevices] if not exist
-  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
     DeviceEntityAbstract entity,
   ) async {
     final String? mdnsName = entity.deviceMdns.getOrCrash();
@@ -105,11 +104,5 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
-      DeviceEntityAbstract entity) {
-    return addNewDeviceByMdnsName(entity);
   }
 }

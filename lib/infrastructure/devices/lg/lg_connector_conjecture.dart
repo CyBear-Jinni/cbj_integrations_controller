@@ -6,7 +6,6 @@ import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_helpers
 import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_webos_tv/lg_webos_tv_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 
 class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
   factory LgConnectorConjecture() {
@@ -27,8 +26,8 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
     '_airplay._tcp',
   ];
 
-  /// Add new devices to [companyDevices] if not exist
-  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
     DeviceEntityAbstract entity,
   ) async {
     final String? mdnsName = entity.deviceMdns.getOrCrash();
@@ -95,10 +94,4 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
   @override
   Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {}
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
-      DeviceEntityAbstract entity) {
-    return addNewDeviceByMdnsName(entity);
-  }
 }

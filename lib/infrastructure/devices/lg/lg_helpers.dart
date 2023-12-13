@@ -1,5 +1,4 @@
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 
 class LgHelpers {
   static List<DeviceEntityAbstract> addDiscoveredDevice(

@@ -184,8 +184,7 @@ class SearchDevices {
 
           final GenericUnsupportedDE entity =
               await INetworkUtilities.instance.activeHostToEntity(activeHost);
-          CbjDevicesConnectorConjecture()
-              .addNewDeviceByHostInfo(entity: entity);
+          CbjDevicesConnectorConjecture().foundDevice(entity);
         });
       }
     } catch (e) {

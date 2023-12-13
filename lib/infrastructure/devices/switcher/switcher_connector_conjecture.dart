@@ -27,7 +27,8 @@ class SwitcherConnectorConjecture
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<HashMap<String, DeviceEntityAbstract>?> addOnlyNewSwitcherDevice(
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
     DeviceEntityAbstract entity,
   ) async {
     for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
@@ -60,7 +61,8 @@ class SwitcherConnectorConjecture
     addedDevice.addEntries([deviceAsEntry]);
 
     icLogger.t(
-        'New switcher devices name:${entity.entityOriginalName.getOrCrash()}');
+      'New switcher devices name:${entity.entityOriginalName.getOrCrash()}',
+    );
     return addedDevice;
   }
 
@@ -129,12 +131,5 @@ class SwitcherConnectorConjecture
       ),
     );
     return bindingStream;
-  }
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
-    DeviceEntityAbstract entity,
-  ) {
-    return addOnlyNewSwitcherDevice(entity);
   }
 }

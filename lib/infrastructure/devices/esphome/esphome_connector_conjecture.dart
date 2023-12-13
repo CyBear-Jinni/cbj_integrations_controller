@@ -9,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/devices/esphome/espho
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_switch/esphome_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 
@@ -43,8 +42,8 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     return 'Success';
   }
 
-  /// Add new devices to [companyDevices] if not exist
-  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
     DeviceEntityAbstract entity,
   ) async {
     if (espHomeDevicePass == null) {
@@ -109,11 +108,5 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
-      DeviceEntityAbstract entity) {
-    return addNewDeviceByMdnsName(entity);
   }
 }

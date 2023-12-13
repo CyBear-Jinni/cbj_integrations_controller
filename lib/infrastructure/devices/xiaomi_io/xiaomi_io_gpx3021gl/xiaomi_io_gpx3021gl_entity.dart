@@ -46,7 +46,7 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
     required super.lightBrightness,
   }) : super(
           deviceVendor: DeviceVendor(
-            VendorsAndServices.philipsHue.toString(),
+            VendorsAndServices.xiaomi.toString(),
           ),
         );
 

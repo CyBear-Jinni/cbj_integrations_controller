@@ -6,7 +6,6 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_white/wiz_white_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 
 class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
   factory WizConnectorConjecture() {
@@ -27,9 +26,10 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByHostInfo({
-    required DeviceEntityAbstract entity,
-  }) async {
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+    DeviceEntityAbstract entity,
+  ) async {
     icLogger.w('Wiz device got discovered but missing implementation');
     // final List<CoreUniqueId?> tempCoreUniqueId = [];
     //
@@ -152,10 +152,4 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
   @override
   Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {}
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
-      DeviceEntityAbstract entity) {
-    return addNewDeviceByHostInfo(entity: entity);
-  }
 }

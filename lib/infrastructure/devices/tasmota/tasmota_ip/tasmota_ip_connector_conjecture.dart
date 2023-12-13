@@ -9,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmo
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
 import 'package:http/http.dart';
@@ -32,9 +31,10 @@ class TasmotaIpConnectorConjecture
   // http://ip/cm?cmnd=SetOption19%200
   // http://ip/cm?cmnd=MqttHost%200
 
-  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByHostInfo({
-    required DeviceEntityAbstract entity,
-  }) async {
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+    DeviceEntityAbstract entity,
+  ) async {
     final List<CoreUniqueId?> tempCoreUniqueId = [];
     final String hostName = entity.deviceHostName.getOrCrash();
 
@@ -163,11 +163,5 @@ class TasmotaIpConnectorConjecture
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
-      DeviceEntityAbstract entity) {
-    return addNewDeviceByHostInfo(entity: entity);
   }
 }

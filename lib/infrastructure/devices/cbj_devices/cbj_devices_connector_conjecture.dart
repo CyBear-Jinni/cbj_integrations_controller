@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:collection';
-import 'dart:math';
 
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_helpers.dart';
@@ -9,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/c
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_entity.dart';
 
 class CbjDevicesConnectorConjecture
@@ -26,9 +24,10 @@ class CbjDevicesConnectorConjecture
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByHostInfo({
-    required DeviceEntityAbstract entity,
-  }) async {
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+    DeviceEntityAbstract entity,
+  ) async {
     final String hostName = entity.deviceHostName.getOrCrash();
 
     for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
@@ -123,11 +122,5 @@ class CbjDevicesConnectorConjecture
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
-      DeviceEntityAbstract entity) {
-    return addNewDeviceByHostInfo(entity: entity);
   }
 }

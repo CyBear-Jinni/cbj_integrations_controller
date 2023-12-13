@@ -18,5 +18,6 @@ abstract class AbstractCompanyConnectorConjecture {
   Future<void> manageHubRequestsForDevice(DeviceEntityAbstract entity);
 
   Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
-      DeviceEntityAbstract entity);
+    DeviceEntityAbstract entity,
+  );
 }

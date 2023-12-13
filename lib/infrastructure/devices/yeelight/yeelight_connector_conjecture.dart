@@ -30,13 +30,8 @@ class YeelightConnectorConjecture
   /// Make sure that it will activate discoverNewDevices only once
   bool searchStarted = false;
 
-  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
-    DeviceEntityAbstract entity,
-  ) async {
-    return addNewDevice(entity);
-  }
-
-  Future<HashMap<String, DeviceEntityAbstract>?> addNewDevice(
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
     DeviceEntityAbstract entity,
   ) async {
     try {
@@ -115,11 +110,5 @@ class YeelightConnectorConjecture
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
-      DeviceEntityAbstract entity) {
-    return addNewDevice(entity);
   }
 }
