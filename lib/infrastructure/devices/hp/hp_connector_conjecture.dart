@@ -26,7 +26,7 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
   /// Add new devices to [companyDevices] if not exist
   Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
-    GenericUnsupportedDE entity,
+    DeviceEntityAbstract entity,
   ) async {
     final String? ip = entity.deviceLastKnownIp.getOrCrash();
 
@@ -100,5 +100,11 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+      DeviceEntityAbstract entity) {
+    return addNewDeviceByMdnsName(entity);
   }
 }

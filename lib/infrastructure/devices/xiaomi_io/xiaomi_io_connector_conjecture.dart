@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
@@ -43,8 +44,8 @@ class XiaomiIoConnectorConjecture
 
   // Discover from miio package does not work on Linux, but it is better than
   // filtering devices by host names like we do now
-  Future<void> discoverNewDevices({
-    required GenericUnsupportedDE entity,
+  Future<HashMap<String, DeviceEntityAbstract>?> discoverNewDevices({
+    required DeviceEntityAbstract entity,
   }) async {
     if (miCloud == null) {
       icLogger.w('Please set Xiaomi Mi credentials in the app');
@@ -104,6 +105,7 @@ class XiaomiIoConnectorConjecture
     // } catch (e) {
     //   logger.t('All else');
     // }
+    return null;
   }
 
   @override
@@ -136,5 +138,12 @@ class XiaomiIoConnectorConjecture
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+    DeviceEntityAbstract entity,
+  ) {
+    return discoverNewDevices(entity: entity);
   }
 }

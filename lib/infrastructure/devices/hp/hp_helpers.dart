@@ -7,7 +7,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 
 class HpHelpers {
   static List<DeviceEntityAbstract> addDiscoveredDevice(
-    GenericUnsupportedDE entity,
+    DeviceEntityAbstract entity,
   ) {
     final HpPrinterEntity lgDE = HpPrinterEntity(
       uniqueId: entity.uniqueId,

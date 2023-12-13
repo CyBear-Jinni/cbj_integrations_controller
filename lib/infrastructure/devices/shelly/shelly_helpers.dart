@@ -13,7 +13,7 @@ import 'package:shelly/shelly.dart';
 
 class ShellyHelpers {
   static Future<List<DeviceEntityAbstract>> addDiscoveredDevice(
-    GenericUnsupportedDE entity,
+    DeviceEntityAbstract entity,
   ) async {
     final List<DeviceEntityAbstract> deviceEntityList = [];
     final String ip = entity.deviceLastKnownIp.getOrCrash()!;

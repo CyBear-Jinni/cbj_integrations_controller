@@ -9,7 +9,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 
 class TasmotaIpHelpers {
   static Future<List<DeviceEntityAbstract>> addDiscoveredDevice({
-    required GenericUnsupportedDE entity,
+    required DeviceEntityAbstract entity,
     required List<CoreUniqueId?> uniqueDeviceIdList,
     required List<String> componentInDeviceNumberLabelList,
   }) async {
@@ -49,7 +49,7 @@ class TasmotaIpHelpers {
 
   static Future<DeviceEntityAbstract?> addDeviceByTasmotaType({
     required String componentInDeviceNumberLabel,
-    required GenericUnsupportedDE entity,
+    required DeviceEntityAbstract entity,
     required CoreUniqueId coreUniqueIdTemp,
   }) async {
     final String deviceHostName = entity.deviceHostName.getOrCrash();
@@ -118,7 +118,9 @@ class TasmotaIpHelpers {
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId(),
+        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(
+          '$deviceHostName-$componentInDeviceNumberLabel}',
+        ),
       );
     } else if (componentInDeviceNumberLabelAsInt >= 256 &&
         componentInDeviceNumberLabelAsInt <= 283) {

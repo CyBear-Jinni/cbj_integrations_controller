@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
@@ -108,4 +109,10 @@ class TasmotaMqttConnectorConjecture
 
   @override
   Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {}
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+      DeviceEntityAbstract entity) async {
+    return null;
+  }
 }

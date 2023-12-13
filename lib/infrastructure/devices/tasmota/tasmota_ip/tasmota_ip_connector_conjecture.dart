@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
@@ -31,8 +32,8 @@ class TasmotaIpConnectorConjecture
   // http://ip/cm?cmnd=SetOption19%200
   // http://ip/cm?cmnd=MqttHost%200
 
-  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
-    required GenericUnsupportedDE entity,
+  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByHostInfo({
+    required DeviceEntityAbstract entity,
   }) async {
     final List<CoreUniqueId?> tempCoreUniqueId = [];
     final String hostName = entity.deviceHostName.getOrCrash();
@@ -40,7 +41,7 @@ class TasmotaIpConnectorConjecture
     for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
       if ((savedDevice is TasmotaIpSwitchEntity) &&
           hostName == savedDevice.entityUniqueId.getOrCrash()) {
-        return [];
+        return null;
       } else if (savedDevice is GenericLightDE &&
           hostName == savedDevice.entityUniqueId.getOrCrash()) {
         /// Device exist as generic and needs to get converted to non generic type for this vendor
@@ -65,20 +66,25 @@ class TasmotaIpConnectorConjecture
     );
 
     if (tasmotaIpDevices.isEmpty) {
-      return [];
+      return null;
     }
 
-    for (final DeviceEntityAbstract entityAsDevice in tasmotaIpDevices) {
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(entityAsDevice.uniqueId.getOrCrash(), entityAsDevice);
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
+    for (final DeviceEntityAbstract entityAsDevice in tasmotaIpDevices) {
+      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice,
+      );
+
+      addedDevice.addEntries([deviceAsEntry]);
       companyDevices.addEntries([deviceAsEntry]);
 
       icLogger.t(
         'New Tasmota Ip device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
-    return tasmotaIpDevices;
+    return addedDevice;
   }
 
   @override
@@ -98,7 +104,7 @@ class TasmotaIpConnectorConjecture
   /// Getting all of the components/gpio configuration of the device.
   /// Doc of all components: https://tasmota.github.io/docs/Components/#tasmota
   Future<List<String>> getAllComponentsOfDevice(
-    GenericUnsupportedDE entity,
+    DeviceEntityAbstract entity,
   ) async {
     final String? deviceIp = entity.devicesMacAddress.getOrCrash();
     const String getComponentsCommand = 'cm?cmnd=Gpio';
@@ -157,5 +163,11 @@ class TasmotaIpConnectorConjecture
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+      DeviceEntityAbstract entity) {
+    return addNewDeviceByHostInfo(entity: entity);
   }
 }

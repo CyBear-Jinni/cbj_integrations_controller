@@ -11,7 +11,7 @@ import 'package:hue_dart/hue_dart.dart';
 
 class PhilipsHueHelpers {
   static Future<List<DeviceEntityAbstract>> addDiscoveredDevice(
-    GenericUnsupportedDE entity,
+    DeviceEntityAbstract entity,
   ) async {
     final client = Client();
 

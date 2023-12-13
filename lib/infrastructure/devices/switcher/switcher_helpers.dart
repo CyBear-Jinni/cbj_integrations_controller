@@ -11,18 +11,9 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherHelpers {
-  static DeviceEntityAbstract? addDiscoveredDevice({
-    required SwitcherApiObject switcherDevice,
-    required CoreUniqueId? uniqueDeviceId,
-  }) {
-    CoreUniqueId uniqueDeviceIdTemp;
-
-    if (uniqueDeviceId != null) {
-      uniqueDeviceIdTemp = uniqueDeviceId;
-    } else {
-      uniqueDeviceIdTemp = CoreUniqueId();
-    }
-
+  static DeviceEntityAbstract? addDiscoveredDevice(
+    SwitcherApiObject switcherDevice,
+  ) {
     if (switcherDevice.deviceType == SwitcherDevicesTypes.switcherRunner ||
         switcherDevice.deviceType == SwitcherDevicesTypes.switcherRunnerMini) {
       EntityActions deviceActions = EntityActions.actionNotSupported;
@@ -38,7 +29,7 @@ class SwitcherHelpers {
       }
 
       final SwitcherRunnerEntity switcherRunnerDe = SwitcherRunnerEntity(
-        uniqueId: uniqueDeviceIdTemp,
+        uniqueId: CoreUniqueId(),
         entityUniqueId: EntityUniqueId(switcherDevice.deviceId),
         cbjEntityName: CbjEntityName(switcherDevice.switcherName),
         entityOriginalName: EntityOriginalName(switcherDevice.switcherName),
@@ -61,12 +52,13 @@ class SwitcherHelpers {
         deviceUniqueId: DeviceUniqueId('0'),
         deviceHostName: DeviceHostName('0'),
         deviceMdns: DeviceMdns('0'),
-      srvResourceRecord: DeviceSrvResourceRecord(),
-      ptrResourceRecord: DevicePtrResourceRecord(),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId(),
+        deviceCbjUniqueId:
+            CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 
       return switcherRunnerDe;
@@ -82,7 +74,7 @@ class SwitcherHelpers {
         deviceActions = EntityActions.off;
       }
       final SwitcherV2Entity switcherV2De = SwitcherV2Entity(
-        uniqueId: uniqueDeviceIdTemp,
+        uniqueId: CoreUniqueId(),
         entityUniqueId: EntityUniqueId(switcherDevice.deviceId),
         cbjEntityName: CbjEntityName(switcherDevice.switcherName),
         entityOriginalName: EntityOriginalName(switcherDevice.switcherName),
@@ -103,12 +95,13 @@ class SwitcherHelpers {
         deviceUniqueId: DeviceUniqueId('0'),
         deviceHostName: DeviceHostName('0'),
         deviceMdns: DeviceMdns('0'),
-      srvResourceRecord: DeviceSrvResourceRecord(),
-      ptrResourceRecord: DevicePtrResourceRecord(),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId(),
+        deviceCbjUniqueId:
+            CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 
       return switcherV2De;
@@ -122,7 +115,7 @@ class SwitcherHelpers {
       }
       final SwitcherSmartPlugEntity switcherSmartPlugDe =
           SwitcherSmartPlugEntity(
-        uniqueId: uniqueDeviceIdTemp,
+        uniqueId: CoreUniqueId(),
         entityUniqueId: EntityUniqueId(switcherDevice.deviceId),
         cbjEntityName: CbjEntityName(switcherDevice.switcherName),
         entityOriginalName: EntityOriginalName(switcherDevice.switcherName),
@@ -142,13 +135,14 @@ class SwitcherHelpers {
         devicePort: DevicePort(switcherDevice.port.toString()),
         deviceHostName: DeviceHostName('0'),
         deviceMdns: DeviceMdns('0'),
-      srvResourceRecord: DeviceSrvResourceRecord(),
-      ptrResourceRecord: DevicePtrResourceRecord(),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         devicesMacAddress: DevicesMacAddress(switcherDevice.macAddress),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId(),
+        deviceCbjUniqueId:
+            CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 
       return switcherSmartPlugDe;

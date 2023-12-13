@@ -45,14 +45,12 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
   /// Add new devices to [companyDevices] if not exist
   Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
-    GenericUnsupportedDE entity,
+    DeviceEntityAbstract entity,
   ) async {
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
     if (espHomeDevicePass == null) {
       icLogger.w('ESPHome device got found but missing a password, please add '
           'password for it in the app');
-      return addedDevice;
+      return null;
     }
 
     final List<DeviceEntityAbstract> espDevice =
@@ -60,6 +58,8 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
       entity: entity,
       devicePassword: espHomeDevicePass!,
     );
+
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
     for (final DeviceEntityAbstract entityAsDevice in espDevice) {
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
@@ -109,5 +109,11 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+      DeviceEntityAbstract entity) {
+    return addNewDeviceByMdnsName(entity);
   }
 }

@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:collection';
+import 'dart:math';
 
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_helpers.dart';
@@ -24,15 +26,15 @@ class CbjDevicesConnectorConjecture
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
-    required GenericUnsupportedDE entity,
+  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByHostInfo({
+    required DeviceEntityAbstract entity,
   }) async {
     final String hostName = entity.deviceHostName.getOrCrash();
 
     for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
       if ((savedDevice is CbjSmartComputerEntity) &&
           hostName == savedDevice.entityUniqueId.getOrCrash()) {
-        return [];
+        return null;
       } else if (hostName == savedDevice.entityUniqueId.getOrCrash()) {
         icLogger.w(
           'Cbj device type supported but implementation is missing here',
@@ -49,20 +51,25 @@ class CbjDevicesConnectorConjecture
       deviceAddress: address,
     );
     if (devicesList.isEmpty) {
-      return [];
+      return null;
     }
 
-    for (final DeviceEntityAbstract entityAsDevice in devicesList) {
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(entityAsDevice.uniqueId.getOrCrash(), entityAsDevice);
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
+    for (final DeviceEntityAbstract entityAsDevice in devicesList) {
+      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice,
+      );
+
+      addedDevice.addEntries([deviceAsEntry]);
       companyDevices.addEntries([deviceAsEntry]);
 
       icLogger.t(
         'New Cbj Smart Device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
-    return devicesList;
+    return addedDevice;
   }
 
   @override
@@ -93,7 +100,7 @@ class CbjDevicesConnectorConjecture
   // // }
 
   Future<List<CbjSmartDeviceInfo?>> getAllComponentsOfDevice(
-    GenericUnsupportedDE entity,
+    DeviceEntityAbstract entity,
   ) async {
     final List<CbjSmartDeviceInfo?> devicesInfo =
         await CbjSmartDeviceClient.getCbjSmartDeviceHostDevicesInfo(entity);
@@ -116,5 +123,11 @@ class CbjDevicesConnectorConjecture
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+      DeviceEntityAbstract entity) {
+    return addNewDeviceByHostInfo(entity: entity);
   }
 }

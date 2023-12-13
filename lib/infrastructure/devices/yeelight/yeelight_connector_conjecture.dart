@@ -6,7 +6,6 @@ import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeel
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
 import 'package:yeedart/yeedart.dart';
 
@@ -32,13 +31,13 @@ class YeelightConnectorConjecture
   bool searchStarted = false;
 
   Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByMdnsName(
-    GenericUnsupportedDE entity,
+    DeviceEntityAbstract entity,
   ) async {
     return addNewDevice(entity);
   }
 
   Future<HashMap<String, DeviceEntityAbstract>?> addNewDevice(
-    GenericUnsupportedDE entity,
+    DeviceEntityAbstract entity,
   ) async {
     try {
       final responses = await Yeelight.discover();
@@ -116,5 +115,11 @@ class YeelightConnectorConjecture
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+      DeviceEntityAbstract entity) {
+    return addNewDevice(entity);
   }
 }

@@ -55,7 +55,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
   Future<bool>? didRequestLogin;
 
   Future<HashMap<String, DeviceEntityAbstract>?> discoverNewDevices(
-    GenericUnsupportedDE? entity,
+    DeviceEntityAbstract? entity,
   ) async {
     if (didRequestLogin != null) {
       return null;
@@ -162,5 +162,11 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
     await Future.delayed(const Duration(seconds: 20));
     return waitUntilConnectionEstablished(executed + 1);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+      DeviceEntityAbstract entity) {
+    return discoverNewDevices(entity);
   }
 }

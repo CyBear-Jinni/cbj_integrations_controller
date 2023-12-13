@@ -68,7 +68,7 @@ class CbjDevicesHelpers {
           entityKey: EntityKey('0'),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          deviceCbjUniqueId: CoreUniqueId(),
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceId),
         );
       } else if (deviceType == CbjDeviceTypes.smart_camera) {
         entityAbstract = CbjSecurityCameraEntity(
@@ -84,7 +84,7 @@ class CbjDevicesHelpers {
           securityCameraSuspendState: GenericSecurityCameraSuspendState(
             EntityActions.itIsFalse.toString(),
           ),
-          entityOriginalName: EntityOriginalName(''),
+          entityOriginalName: EntityOriginalName('entityOriginalName'),
           deviceOriginalName: DeviceOriginalName(''),
           powerConsumption: DevicePowerConsumption('0'),
           deviceUniqueId: DeviceUniqueId('0'),
@@ -98,7 +98,7 @@ class CbjDevicesHelpers {
           entityKey: EntityKey('0'),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          deviceCbjUniqueId: CoreUniqueId(),
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceId),
         );
       } else {
         icLogger.w('Cbj Smart Device type is not supported ${deviceType.name}');

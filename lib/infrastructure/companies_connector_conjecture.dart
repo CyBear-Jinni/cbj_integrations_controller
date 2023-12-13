@@ -150,7 +150,7 @@ class CompaniesConnectorConjecture {
       return;
     }
 
-    HashMap<String, DeviceEntityAbstract>? handeldEntities = HashMap();
+    HashMap<String, DeviceEntityAbstract>? handeldEntities;
 
     if (EspHomeConnectorConjecture.mdnsTypes.contains(serviceType)) {
       handeldEntities =
@@ -189,47 +189,88 @@ class CompaniesConnectorConjecture {
       icLogger.t(
         'mDNS service type $serviceType is not supported\n IP: $address, Port: $port, ServiceType: $serviceType, MdnsName: $startOfMdnsName',
       );
+      handeldEntities = HashMap();
       handeldEntities.addEntries(
         [MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity)],
       );
     }
     if (handeldEntities == null || handeldEntities.isEmpty) {
-      icLogger.e('Entity failed to load $entity');
+      icLogger.e(
+        'Entity failed to load mdns device ${entity.deviceMdns.getOrCrash()}',
+      );
       return;
     }
     DevicesService().discovedEntity(handeldEntities);
   }
 
-  Future<void> setHostNameDeviceByCompany({
-    required GenericUnsupportedDE entity,
-  }) async {
+  Future<void> setHostNameDeviceByCompany(GenericUnsupportedDE entity) async {
     final String deviceHostNameLowerCase =
         entity.deviceHostName.getOrCrash().toLowerCase();
     if (deviceHostNameLowerCase.isEmpty) {
       return;
     }
+
+    HashMap<String, DeviceEntityAbstract>? handeldEntities;
+
     if (deviceHostNameLowerCase.contains('tasmota')) {
-      TasmotaIpConnectorConjecture().addNewDeviceByHostInfo(entity: entity);
+      handeldEntities = await TasmotaIpConnectorConjecture()
+          .addNewDeviceByHostInfo(entity: entity);
     } else if (deviceHostNameLowerCase.contains('xiaomi') ||
         deviceHostNameLowerCase.contains('yeelink') ||
         deviceHostNameLowerCase.contains('xiao')) {
-      XiaomiIoConnectorConjecture().discoverNewDevices(entity: entity);
+      handeldEntities = await XiaomiIoConnectorConjecture()
+          .discoverNewDevices(entity: entity);
     } else if (deviceHostNameLowerCase.startsWith('wiz')) {
-      WizConnectorConjecture().addNewDeviceByHostInfo(entity: entity);
+      handeldEntities =
+          await WizConnectorConjecture().addNewDeviceByHostInfo(entity: entity);
+    } else {
+      final GenericUnsupportedDE? entityTemp =
+          await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice(
+        entity.devicesMacAddress.getOrCrash(),
+      );
+      if (entityTemp != null) {
+        handeldEntities = await CbjDevicesConnectorConjecture()
+            .addNewDeviceByHostInfo(entity: entityTemp);
+      } else {
+        icLogger.i('Found unseported pingable device $deviceHostNameLowerCase');
+        handeldEntities = HashMap();
+        handeldEntities.addEntries(
+          [MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity)],
+        );
+      }
     }
-    final GenericUnsupportedDE? entityTemp =
-        await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice(
-      entity.devicesMacAddress.getOrCrash(),
-    );
-    if (entityTemp != null) {
-      CbjDevicesConnectorConjecture()
-          .addNewDeviceByHostInfo(entity: entityTemp);
+    if (handeldEntities == null || handeldEntities.isEmpty) {
+      icLogger.e(
+        'Entity failed to load company name device $deviceHostNameLowerCase',
+      );
       return;
+    }
+    DevicesService().discovedEntity(handeldEntities);
+  }
 
-      // logger.i('Found pingable device $deviceHostNameLowerCase');
+  List<Stream<DeviceEntityAbstract?>> searchOfBindingIntoSocketsList() =>
+      SwitcherConnectorConjecture().bindSocketSearchStream();
+
+  Future<void> foundBindingDevice(DeviceEntityAbstract entity) async {
+    HashMap<String, DeviceEntityAbstract>? handeldEntities;
+
+    final String deviceVendor = entity.deviceVendor.getOrCrash();
+    final AbstractCompanyConnectorConjecture? companyConnectorConjecture =
+        vendorStringToCompanyConnectorConjecture(deviceVendor);
+
+    if (companyConnectorConjecture != null) {
+      handeldEntities = await companyConnectorConjecture.foundDevice(entity);
+    } else {
+      icLogger.w(
+        'Cannot send device changes to its repo, company not supported $deviceVendor',
+      );
     }
 
-    // TODO: Add device as unseported device
+    if (handeldEntities == null || handeldEntities.isEmpty) {
+      icLogger.i('Found unseported socket device $entity');
+      return;
+    }
+    DevicesService().discovedEntity(handeldEntities);
   }
 
   AbstractCompanyConnectorConjecture? vendorStringToCompanyConnectorConjecture(

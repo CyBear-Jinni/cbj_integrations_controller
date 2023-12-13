@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 
 abstract class AbstractCompanyConnectorConjecture {
@@ -14,4 +16,7 @@ abstract class AbstractCompanyConnectorConjecture {
   Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity);
 
   Future<void> manageHubRequestsForDevice(DeviceEntityAbstract entity);
+
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+      DeviceEntityAbstract entity);
 }

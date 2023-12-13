@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_helpers.dart';
@@ -7,7 +8,6 @@ import 'package:cbj_integrations_controller/infrastructure/devices/switcher/swit
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_v2/switcher_v2_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_entity.dart';
@@ -27,27 +27,24 @@ class SwitcherConnectorConjecture
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<List<DeviceEntityAbstract>> addOnlyNewSwitcherDevice(
-    SwitcherApiObject switcherApiObject,
+  Future<HashMap<String, DeviceEntityAbstract>?> addOnlyNewSwitcherDevice(
+    DeviceEntityAbstract entity,
   ) async {
-    CoreUniqueId? tempCoreUniqueId;
-
     for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
       if ((savedDevice is SwitcherV2Entity ||
               savedDevice is SwitcherRunnerEntity ||
               savedDevice is SwitcherSmartPlugEntity) &&
-          switcherApiObject.deviceId ==
-              savedDevice.entityUniqueId.getOrCrash()) {
-        return [];
+          entity.deviceCbjUniqueId.getOrCrash() ==
+              savedDevice.deviceCbjUniqueId.getOrCrash()) {
+        return null;
       } else if (savedDevice is GenericBoilerDE ||
           savedDevice is GenericBlindsDE &&
-              switcherApiObject.deviceId ==
-                  savedDevice.entityUniqueId.getOrCrash()) {
+              entity.deviceCbjUniqueId.getOrCrash() ==
+                  savedDevice.deviceCbjUniqueId.getOrCrash()) {
         /// Device exist as generic and needs to get converted to non generic type for this vendor
-        tempCoreUniqueId = savedDevice.uniqueId;
         break;
-      } else if (switcherApiObject.deviceId ==
-          savedDevice.entityUniqueId.getOrCrash()) {
+      } else if (entity.deviceCbjUniqueId.getOrCrash() ==
+          savedDevice.deviceCbjUniqueId.getOrCrash()) {
         icLogger.w(
           'Switcher device type supported but implementation is missing here',
         );
@@ -55,21 +52,16 @@ class SwitcherConnectorConjecture
       }
     }
 
-    final DeviceEntityAbstract? addDevice = SwitcherHelpers.addDiscoveredDevice(
-      switcherDevice: switcherApiObject,
-      uniqueDeviceId: tempCoreUniqueId,
-    );
-    if (addDevice == null) {
-      return [];
-    }
-
     final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-        MapEntry(addDevice.entityUniqueId.getOrCrash(), addDevice);
+        MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity);
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
     companyDevices.addEntries([deviceAsEntry]);
+    addedDevice.addEntries([deviceAsEntry]);
 
-    // logger.t('New switcher devices name:${switcherApiObject.switcherName}');
-    return [deviceAsEntry.value];
+    icLogger.t(
+        'New switcher devices name:${entity.entityOriginalName.getOrCrash()}');
+    return addedDevice;
   }
 
   @override
@@ -122,5 +114,27 @@ class SwitcherConnectorConjecture
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  List<Stream<DeviceEntityAbstract?>> bindSocketSearchStream() {
+    final List<Stream<DeviceEntityAbstract?>> bindingStream = [];
+    bindingStream.add(
+      SwitcherDiscover.discover20002Devices().map(
+        (event) => SwitcherHelpers.addDiscoveredDevice(event),
+      ),
+    );
+    bindingStream.add(
+      SwitcherDiscover.discover20003Devices().map(
+        (event) => SwitcherHelpers.addDiscoveredDevice(event),
+      ),
+    );
+    return bindingStream;
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+    DeviceEntityAbstract entity,
+  ) {
+    return addOnlyNewSwitcherDevice(entity);
   }
 }

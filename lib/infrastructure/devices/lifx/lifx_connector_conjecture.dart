@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
@@ -21,6 +22,7 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
   static final LifxConnectorConjecture _instance =
       LifxConnectorConjecture._singletonContractor();
 
+  // TODO: Convert search from cloud into connector conjector
   Future<String> accountLogin(GenericLifxLoginDE genericLifxLoginDE) async {
     lifxClient = LIFXClient(genericLifxLoginDE.lifxApiKey.getOrCrash());
     _discoverNewDevices();
@@ -116,5 +118,12 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
     companyDevices.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+    DeviceEntityAbstract entity,
+  ) async {
+    return null;
   }
 }

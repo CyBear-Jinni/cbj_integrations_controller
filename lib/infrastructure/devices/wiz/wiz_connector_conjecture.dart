@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/vendors/wiz_login/generic_wiz_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
@@ -26,8 +27,8 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
   @override
   Map<String, DeviceEntityAbstract> companyDevices = {};
 
-  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
-    required GenericUnsupportedDE entity,
+  Future<HashMap<String, DeviceEntityAbstract>?> addNewDeviceByHostInfo({
+    required DeviceEntityAbstract entity,
   }) async {
     icLogger.w('Wiz device got discovered but missing implementation');
     // final List<CoreUniqueId?> tempCoreUniqueId = [];
@@ -73,7 +74,7 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
     //     'New Wiz Ip device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
     //   );
     // }
-    return [];
+    return null;
   }
 
   // static WizClient? wizClient;
@@ -151,4 +152,10 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
 
   @override
   Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {}
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+      DeviceEntityAbstract entity) {
+    return addNewDeviceByHostInfo(entity: entity);
+  }
 }

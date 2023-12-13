@@ -4,12 +4,11 @@ import 'package:cbj_integrations_controller/domain/i_network_utilities.dart';
 import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:network_tools/network_tools.dart';
-import 'package:switcher_dart/switcher_dart.dart';
 
 class SearchDevices {
   factory SearchDevices() {
@@ -73,9 +72,7 @@ class SearchDevices {
 
       for (final GenericUnsupportedDE entity in pingableDevices) {
         try {
-          CompaniesConnectorConjecture().setHostNameDeviceByCompany(
-            entity: entity,
-          );
+          CompaniesConnectorConjecture().setHostNameDeviceByCompany(entity);
         } catch (e) {
           continue;
         }
@@ -166,15 +163,15 @@ class SearchDevices {
   /// Searching devices by binding to sockets, used for devices with
   /// udp ports which can't be discovered by regular open (tcp) port scan
   Future<void> _searchDevicesByBindingIntoSockets() async {
-    final List<Stream<dynamic>> switcherBindingsList =
-        _findSwitcherDevicesByBindingIntoSockets();
-    for (final Stream<dynamic> socketBinding in switcherBindingsList) {
-      socketBinding.listen((switcherApiObject) {
-        if (switcherApiObject! is SwitcherApiObject) {
+    final List<Stream<DeviceEntityAbstract?>> switcherBindingsList =
+        CompaniesConnectorConjecture().searchOfBindingIntoSocketsList();
+    for (final Stream<DeviceEntityAbstract?> socketBinding
+        in switcherBindingsList) {
+      socketBinding.listen((bindingDevice) async {
+        if (bindingDevice == null) {
           return;
         }
-        SwitcherConnectorConjecture()
-            .addOnlyNewSwitcherDevice(switcherApiObject as SwitcherApiObject);
+        CompaniesConnectorConjecture().foundBindingDevice(bindingDevice);
       });
     }
 
@@ -219,14 +216,6 @@ class SearchDevices {
         );
       }
     }
-    return bindingStream;
-  }
-
-  List<Stream<dynamic>> _findSwitcherDevicesByBindingIntoSockets() {
-    final List<Stream<dynamic>> bindingStream = [];
-    bindingStream.add(SwitcherDiscover.discover20002Devices());
-    bindingStream.add(SwitcherDiscover.discover20003Devices());
-
     return bindingStream;
   }
 

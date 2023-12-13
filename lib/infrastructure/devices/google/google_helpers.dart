@@ -7,7 +7,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_devices/gener
 
 class GoogleHelpers {
   static List<DeviceEntityAbstract> addDiscoveredDevice(
-    GenericUnsupportedDE entity,
+    DeviceEntityAbstract entity,
   ) {
     final ChromeCastEntity googleDE = ChromeCastEntity(
       uniqueId: entity.uniqueId,
