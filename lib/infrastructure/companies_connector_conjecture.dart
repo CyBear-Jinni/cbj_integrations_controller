@@ -203,9 +203,9 @@ class CompaniesConnectorConjecture {
   }
 
   Future<void> setHostNameDeviceByCompany(GenericUnsupportedDE entity) async {
-    final String deviceHostNameLowerCase =
-        entity.deviceHostName.getOrCrash().toLowerCase();
-    if (deviceHostNameLowerCase.isEmpty) {
+    final String? deviceHostNameLowerCase =
+        entity.deviceHostName.getOrCrash()?.toLowerCase();
+    if (deviceHostNameLowerCase == null || deviceHostNameLowerCase.isEmpty) {
       return;
     }
 

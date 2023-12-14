@@ -24,7 +24,10 @@ class EnumHelperCbj {
     return vendorsAndServices.toString().replaceAll('VendorsAndServices.', '');
   }
 
-  static EntityTypes? stringToDt(String deviceTypeAsString) {
+  static EntityTypes? stringToDt(String? deviceTypeAsString) {
+    if (deviceTypeAsString == null) {
+      return null;
+    }
     String deviceTypeAsStringTemp = deviceTypeAsString;
     if (deviceTypeAsStringTemp.contains('Object')) {
       deviceTypeAsStringTemp = deviceTypeAsStringTemp.substring(

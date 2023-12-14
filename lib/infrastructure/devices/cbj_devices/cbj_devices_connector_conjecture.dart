@@ -28,8 +28,10 @@ class CbjDevicesConnectorConjecture
   Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
     DeviceEntityAbstract entity,
   ) async {
-    final String hostName = entity.deviceHostName.getOrCrash();
-
+    final String? hostName = entity.deviceHostName.getOrCrash();
+    if (hostName == null) {
+      return null;
+    }
     for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
       if ((savedDevice is CbjSmartComputerEntity) &&
           hostName == savedDevice.entityUniqueId.getOrCrash()) {

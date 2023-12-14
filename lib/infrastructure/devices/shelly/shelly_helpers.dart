@@ -11,14 +11,16 @@ import 'package:color/color.dart';
 import 'package:shelly/shelly.dart';
 
 class ShellyHelpers {
-  static Future<List<DeviceEntityAbstract>> addDiscoveredDevice(
+  static Future<List<DeviceEntityAbstract>?> addDiscoveredDevice(
     DeviceEntityAbstract entity,
   ) async {
     final List<DeviceEntityAbstract> deviceEntityList = [];
     final String ip = entity.deviceLastKnownIp.getOrCrash()!;
     final String mDnsName = entity.deviceMdns.getOrCrash()!;
-    final String hostName = entity.deviceHostName.getOrCrash();
-
+    final String? hostName = entity.deviceHostName.getOrCrash();
+    if (hostName == null) {
+      return null;
+    }
     try {
       // TODO: shelly duo bulb needs type that as the time of writing is
       // not supported, bulb + brightness + white temperature (not rgb).

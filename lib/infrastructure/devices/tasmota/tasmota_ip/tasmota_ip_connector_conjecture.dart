@@ -36,7 +36,10 @@ class TasmotaIpConnectorConjecture
     DeviceEntityAbstract entity,
   ) async {
     final List<CoreUniqueId?> tempCoreUniqueId = [];
-    final String hostName = entity.deviceHostName.getOrCrash();
+    final String? hostName = entity.deviceHostName.getOrCrash();
+    if (hostName == null || hostName.isEmpty) {
+      return null;
+    }
 
     for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
       if ((savedDevice is TasmotaIpSwitchEntity) &&

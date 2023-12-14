@@ -50,10 +50,10 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
       }
     }
 
-    final List<DeviceEntityAbstract> shellyDevice =
+    final List<DeviceEntityAbstract>? shellyDevice =
         await ShellyHelpers.addDiscoveredDevice(entity);
 
-    if (shellyDevice.isEmpty) {
+    if (shellyDevice == null || shellyDevice.isEmpty) {
       return null;
     }
 

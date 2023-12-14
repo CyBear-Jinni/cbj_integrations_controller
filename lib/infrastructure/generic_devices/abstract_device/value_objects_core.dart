@@ -70,10 +70,11 @@ class EntityUniqueId extends ValueObjectCore<String> {
 
 class CbjEntityName extends ValueObjectCore<String?> {
   factory CbjEntityName(String? input) {
-    assert(input != null);
     return CbjEntityName._(
-      validateNotEmpty(input!)
-          .flatMap((a) => validateMaxNameLength(input, maxLength)),
+      input == null
+          ? right(input)
+          : validateNotEmpty(input)
+              .flatMap((a) => validateMaxNameLength(input, maxLength)),
     );
   }
 
@@ -100,10 +101,11 @@ class EntityOriginalName extends ValueObjectCore<String> {
 
 class DeviceOriginalName extends ValueObjectCore<String?> {
   factory DeviceOriginalName(String? input) {
-    assert(input != null);
     return DeviceOriginalName._(
-      validateNotEmpty(input!)
-          .flatMap((a) => validateMaxNameLength(input, maxLength)),
+      input == null
+          ? right(input)
+          : validateNotEmpty(input)
+              .flatMap((a) => validateMaxNameLength(input, maxLength)),
     );
   }
 
@@ -371,18 +373,17 @@ class DeviceUniqueId extends ValueObjectCore<String> {
   final Either<CoreFailure<String>, String> value;
 }
 
-class DeviceHostName extends ValueObjectCore<String> {
+class DeviceHostName extends ValueObjectCore<String?> {
   factory DeviceHostName(String? input) {
-    assert(input != null);
     return DeviceHostName._(
-      validateNotEmpty(input!),
+      input == null ? right(input) : validateNotEmpty(input),
     );
   }
 
   const DeviceHostName._(this.value);
 
   @override
-  final Either<CoreFailure<String>, String> value;
+  final Either<CoreFailure<String?>, String?> value;
 }
 
 class RequestTimeStamp extends ValueObjectCore<String> {

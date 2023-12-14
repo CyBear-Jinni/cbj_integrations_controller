@@ -51,10 +51,12 @@ class TasmotaIpHelpers {
     required DeviceEntityAbstract entity,
     required CoreUniqueId coreUniqueIdTemp,
   }) async {
-    final String deviceHostName = entity.deviceHostName.getOrCrash();
-    if (deviceHostName.isEmpty) {
+    final String? deviceHostName = entity.deviceHostName.getOrCrash();
+
+    if (deviceHostName == null || deviceHostName.isEmpty) {
       return null;
     }
+
     final int componentInDeviceNumberLabelAsInt =
         int.parse(componentInDeviceNumberLabel);
 
@@ -99,8 +101,8 @@ class TasmotaIpHelpers {
         ),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('Tasmota'),
-          deviceVendor: DeviceVendor(null),
-          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+        deviceVendor: DeviceVendor(null),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel: DeviceSenderDeviceModel('Tasmota'),
         senderId: DeviceSenderId(),
         compUuid: DeviceCompUuid('34asdfrsd23gggg'),

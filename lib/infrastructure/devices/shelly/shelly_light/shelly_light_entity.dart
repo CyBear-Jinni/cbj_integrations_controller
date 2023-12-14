@@ -54,7 +54,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
         ShellyApiColorBulb(
           lastKnownIp: deviceLastKnownIp.getOrCrash()!,
           mDnsName: deviceMdns.getOrCrash(),
-          hostName: deviceHostName.getOrCrash(),
+          hostName: deviceHostName.getOrCrash() ?? '',
         );
   }
 
