@@ -1,21 +1,20 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_runner_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_smart_plug_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_v2_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_runner/switcher_runner_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_smart_plug/switcher_smart_plug_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_v2/switcher_v2_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_plug_entity/generic_smart_plug_entity.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
-class SwitcherConnectorConjecture
-    implements AbstractCompanyConnectorConjecture {
+class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory SwitcherConnectorConjecture() {
     return _instance;
   }
@@ -26,54 +25,46 @@ class SwitcherConnectorConjecture
       SwitcherConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  VendorsAndServices get vendorsAndServices =>
+      VendorsAndServices.switcherSmartHome;
 
-  Future<List<DeviceEntityAbstract>> addOnlyNewSwitcherDevice(
-    SwitcherApiObject switcherApiObject,
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
   ) async {
-    CoreUniqueId? tempCoreUniqueId;
-
-    for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
+    for (final DeviceEntityAbstract savedDevice in vendorEntities.values) {
       if ((savedDevice is SwitcherV2Entity ||
               savedDevice is SwitcherRunnerEntity ||
               savedDevice is SwitcherSmartPlugEntity) &&
-          switcherApiObject.deviceId ==
-              savedDevice.entityUniqueId.getOrCrash()) {
-        return [];
+          entity.deviceCbjUniqueId.getOrCrash() ==
+              savedDevice.deviceCbjUniqueId.getOrCrash()) {
+        return HashMap();
       } else if (savedDevice is GenericBoilerDE ||
           savedDevice is GenericBlindsDE &&
-              switcherApiObject.deviceId ==
-                  savedDevice.entityUniqueId.getOrCrash()) {
+              entity.deviceCbjUniqueId.getOrCrash() ==
+                  savedDevice.deviceCbjUniqueId.getOrCrash()) {
         /// Device exist as generic and needs to get converted to non generic type for this vendor
-        tempCoreUniqueId = savedDevice.uniqueId;
         break;
-      } else if (switcherApiObject.deviceId ==
-          savedDevice.entityUniqueId.getOrCrash()) {
-        logger.w(
+      } else if (entity.deviceCbjUniqueId.getOrCrash() ==
+          savedDevice.deviceCbjUniqueId.getOrCrash()) {
+        icLogger.w(
           'Switcher device type supported but implementation is missing here',
         );
         break;
       }
     }
 
-    final DeviceEntityAbstract? addDevice = SwitcherHelpers.addDiscoveredDevice(
-      switcherDevice: switcherApiObject,
-      uniqueDeviceId: tempCoreUniqueId,
-    );
-    if (addDevice == null) {
-      return [];
-    }
-
-    final DeviceEntityAbstract deviceToAdd =
-        CompaniesConnectorConjecture().addDiscoveredDeviceToHub(addDevice);
-
     final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-        MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
+        MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity);
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
-    companyDevices.addEntries([deviceAsEntry]);
+    vendorEntities.addEntries([deviceAsEntry]);
+    addedDevice.addEntries([deviceAsEntry]);
 
-    // logger.t('New switcher devices name:${switcherApiObject.switcherName}');
-    return [deviceAsEntry.value];
+    icLogger.t(
+      'New switcher devices name: ${entity.entityOriginalName.getOrCrash()}',
+    );
+    return addedDevice;
   }
 
   @override
@@ -81,7 +72,7 @@ class SwitcherConnectorConjecture
     DeviceEntityAbstract switcherDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[switcherDE.entityUniqueId.getOrCrash()];
+        vendorEntities[switcherDE.entityUniqueId.getOrCrash()];
 
     // if (device == null) {
     //   setTheSameDeviceFromAllDevices(switcherDE);
@@ -93,9 +84,9 @@ class SwitcherConnectorConjecture
         (device is SwitcherV2Entity ||
             device is SwitcherRunnerEntity ||
             device is SwitcherSmartPlugEntity)) {
-      device.executeDeviceAction(newEntity: switcherDE);
+      // device.executeDeviceAction(newEntity: switcherDE);
     } else {
-      logger.w('Switcher device type ${device.runtimeType} does not exist');
+      icLogger.w('Switcher device type ${device.runtimeType} does not exist');
     }
   }
 
@@ -107,7 +98,7 @@ class SwitcherConnectorConjecture
   // }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericBoilerDE) {
@@ -119,12 +110,27 @@ class SwitcherConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  List<Stream<DeviceEntityAbstract?>> bindSocketSearchStream() {
+    final List<Stream<DeviceEntityAbstract?>> bindingStream = [];
+    bindingStream.add(
+      SwitcherDiscover.discover20002Devices().map(
+        (event) => SwitcherHelpers.addDiscoveredDevice(event),
+      ),
+    );
+    bindingStream.add(
+      SwitcherDiscover.discover20003Devices().map(
+        (event) => SwitcherHelpers.addDiscoveredDevice(event),
+      ),
+    );
+    return bindingStream;
   }
 }

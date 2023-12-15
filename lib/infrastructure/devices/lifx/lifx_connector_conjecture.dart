@@ -1,18 +1,19 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_white/lifx_white_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
-class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class LifxConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory LifxConnectorConjecture() {
     return _instance;
   }
@@ -22,14 +23,15 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
   static final LifxConnectorConjecture _instance =
       LifxConnectorConjecture._singletonContractor();
 
+  @override
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.lifx;
+
+  // TODO: Convert search from cloud into connector conjector
   Future<String> accountLogin(GenericLifxLoginDE genericLifxLoginDE) async {
     lifxClient = LIFXClient(genericLifxLoginDE.lifxApiKey.getOrCrash());
     _discoverNewDevices();
     return 'Success';
   }
-
-  @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
 
   LIFXClient? lifxClient;
 
@@ -43,7 +45,7 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
           CoreUniqueId? tempCoreUniqueId;
           bool deviceExist = false;
           for (final DeviceEntityAbstract savedDevice
-              in companyDevices.values) {
+              in vendorEntities.values) {
             if (savedDevice is LifxWhiteEntity &&
                 lifxDevice.id == savedDevice.entityUniqueId.getOrCrash()) {
               deviceExist = true;
@@ -54,7 +56,7 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
               break;
             } else if (lifxDevice.id ==
                 savedDevice.entityUniqueId.getOrCrash()) {
-              logger.w(
+              icLogger.w(
                 'Lifx device type supported but implementation is missing here',
               );
               break;
@@ -71,21 +73,17 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
               continue;
             }
 
-            final DeviceEntityAbstract deviceToAdd =
-                CompaniesConnectorConjecture()
-                    .addDiscoveredDeviceToHub(addDevice);
-
             final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-                MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
+                MapEntry(addDevice.entityUniqueId.getOrCrash(), addDevice);
 
-            companyDevices.addEntries([deviceAsEntry]);
+            vendorEntities.addEntries([deviceAsEntry]);
 
-            logger.i('New Lifx device got added');
+            icLogger.i('New Lifx device got added');
           }
         }
         await Future.delayed(const Duration(minutes: 3));
       } catch (e) {
-        logger.e('Error discover in Lifx\n$e');
+        icLogger.e('Error discover in Lifx\n$e');
         await Future.delayed(const Duration(minutes: 1));
       }
     }
@@ -96,17 +94,17 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
     DeviceEntityAbstract lifxDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[lifxDE.entityUniqueId.getOrCrash()];
+        vendorEntities[lifxDE.entityUniqueId.getOrCrash()];
 
     if (device is LifxWhiteEntity) {
       device.executeDeviceAction(newEntity: lifxDE);
     } else {
-      logger.w('Lifx device type does not exist');
+      icLogger.w('Lifx device type does not exist');
     }
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericDimmableLightDE) {
@@ -114,12 +112,19 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
+    return null;
   }
 }

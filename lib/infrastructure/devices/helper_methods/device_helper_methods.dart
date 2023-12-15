@@ -1,27 +1,27 @@
 import 'dart:convert';
 
-import 'package:cbj_integrations_controller/domain/app_communication/i_app_communication_repository.dart';
-import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
+import 'package:cbj_integrations_controller/domain/i_app_communication_repository.dart';
+import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
+import 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';
 import 'package:cbj_integrations_controller/domain/routine/i_routine_cbj_repository.dart';
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/routine/value_objects_routine_cbj.dart';
-import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/scene/i_scene_cbj_repository.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_dto_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_login_abstract/login_entity_dto_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/remote_pipes/remote_pipes_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/room/room_entity_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/routines/routine_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/scene_cbj_dtos.dart';
-import 'package:cbj_integrations_controller/infrastructure/vendors/vendor_helper.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/vendors/vendor_utils.dart';
 
 class DeviceHelperMethods {
   factory DeviceHelperMethods() {
@@ -34,7 +34,8 @@ class DeviceHelperMethods {
       DeviceHelperMethods._singletonContractor();
 
   RequestsAndStatusFromHub dynamicToRequestsAndStatusFromHub(
-      dynamic entityDto) {
+    dynamic entityDto,
+  ) {
     if (entityDto is DeviceEntityDtoAbstract) {
       return RequestsAndStatusFromHub(
         sendingType: SendingType.entityType,
@@ -56,7 +57,7 @@ class DeviceHelperMethods {
         allRemoteCommands: jsonEncode(entityDto.toJson()),
       );
     } else {
-      logger.w('Not sure what type to send');
+      icLogger.w('Not sure what type to send');
       return RequestsAndStatusFromHub(
         sendingType: SendingType.undefinedType,
         allRemoteCommands: '',
@@ -65,10 +66,12 @@ class DeviceHelperMethods {
   }
 
   dynamic clientStatusRequestsToItsDtoType(
-      ClientStatusRequests clientStatusRequests) {
+    ClientStatusRequests clientStatusRequests,
+  ) {
     if (clientStatusRequests.sendingType == SendingType.entityType) {
       return DeviceHelper.convertJsonStringToDto(
-          clientStatusRequests.allRemoteCommands);
+        clientStatusRequests.allRemoteCommands,
+      );
     } else if (clientStatusRequests.sendingType == SendingType.roomType) {
       return RoomEntityDtos.fromJson(
         jsonDecode(clientStatusRequests.allRemoteCommands)
@@ -76,8 +79,9 @@ class DeviceHelperMethods {
       );
     } else if (clientStatusRequests.sendingType ==
         SendingType.vendorLoginType) {
-      return VendorHelper.convertJsonStringToDto(
-          clientStatusRequests.allRemoteCommands);
+      return VendorUtils.convertJsonStringToDto(
+        clientStatusRequests.allRemoteCommands,
+      );
     } else if (clientStatusRequests.sendingType ==
         SendingType.remotePipesInformation) {
       final Map<String, dynamic> jsonDecoded =
@@ -98,20 +102,22 @@ class DeviceHelperMethods {
 
       return RoutineCbjDtos.fromJson(jsonRoutineFromJsonString);
     } else {
-      logger.w('Request from app does not support this sending device type');
+      icLogger.w('Request from app does not support this sending device type');
     }
 
     return null;
   }
 
   Future handleClientStatusRequests(
-      ClientStatusRequests clientStatusRequests) async {
-    logger.i('Got From App');
+    ClientStatusRequests clientStatusRequests,
+  ) async {
+    icLogger.i('Got From App');
 
-    dynamic dtoEntity = clientStatusRequestsToItsDtoType(clientStatusRequests);
+    final dynamic dtoEntity =
+        clientStatusRequestsToItsDtoType(clientStatusRequests);
 
     if (dtoEntity is DeviceEntityDtoAbstract) {
-      DeviceEntityAbstract deviceEntityAbstract = dtoEntity.toDomain();
+      final DeviceEntityAbstract deviceEntityAbstract = dtoEntity.toDomain();
       deviceEntityAbstract.entityStateGRPC =
           EntityState(EntityStateGRPC.waitingInComp.toString());
 
@@ -141,13 +147,14 @@ class DeviceHelperMethods {
       IAppCommunicationRepository.instance.sendAllScenesFromHubRequestsStream();
     } else if (dtoEntity is RemotePipesDtos) {
       ISavedDevicesRepo.instance.saveAndActivateRemotePipesDomainToDb(
-          remotePipes: dtoEntity.toDomain());
+        remotePipes: dtoEntity.toDomain(),
+      );
     } else if (dtoEntity is SceneCbjDtos) {
       final SceneCbjEntity sceneCbj = dtoEntity.toDomain();
 
       final String sceneStateGrpcTemp = sceneCbj.entityStateGRPC.getOrCrash()!;
 
-      SceneCbjEntity sceneCopy = sceneCbj.copyWith(
+      final SceneCbjEntity sceneCopy = sceneCbj.copyWith(
         entityStateGRPC: SceneCbjDeviceStateGRPC(
           EntityStateGRPC.waitingInComp.toString(),
         ),
@@ -177,7 +184,7 @@ class DeviceHelperMethods {
         // IRoutineCbjRepository.instance.activateRoutine(routineCbj);
       }
     } else {
-      logger.w('Request from app does not support this sending device type');
+      icLogger.w('Request from app does not support this sending device type');
     }
   }
 }

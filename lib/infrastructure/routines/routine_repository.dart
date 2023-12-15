@@ -5,9 +5,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ICbjIntegrationsControllerDbRepository.instance
-        .getRoutinesFromDb()
-        .then((value) {
+    await IDbRepository.instance.getRoutinesFromDb().then((value) {
       value.fold((l) => null, (r) async {
         for (final element in r) {
           await addNewRoutine(element);
@@ -28,7 +26,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveAndActivateRoutineToDb() async {
-    return ICbjIntegrationsControllerDbRepository.instance.saveRoutines(
+    return IDbRepository.instance.saveRoutines(
       routineList: List<RoutineCbjEntity>.from(_allRoutines.values),
     );
   }
@@ -53,8 +51,8 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
       ISavedRoomsRepo.instance
           .addRoutineToRoomDiscoveredIfNotExist(tempRoutineCbj);
 
-      final String routineNodeRedFlowId = await NodeRedRepository.instance
-          .createNewNodeRedRoutine(tempRoutineCbj);
+      final String routineNodeRedFlowId =
+          await NodeRedRepository().createNewNodeRedRoutine(tempRoutineCbj);
       if (routineNodeRedFlowId.isNotEmpty) {
         tempRoutineCbj = tempRoutineCbj.copyWith(
           nodeRedFlowId: RoutineCbjNodeRedFlowId(routineNodeRedFlowId),
@@ -209,11 +207,11 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
         RoutineCbjEntity(
           uniqueId: UniqueId(),
           name: RoutineCbjName('Go to sleep ----------- 😴'),
-          backgroundColor:
-              RoutineCbjBackgroundColor(Colors.blue.value.toString()),
-          iconCodePoint: RoutineCbjIconCodePoint(null
-              // FontAwesomeIcons.school.codePoint.toString(),
-              ),
+          backgroundColor: RoutineCbjBackgroundColor(Colors.blue.value),
+          iconCodePoint: RoutineCbjIconCodePoint(
+            null,
+            // FontAwesomeIcons.school.codePoint.toString(),
+          ),
           image: RoutineCbjBackgroundImage(null),
           automationString: RoutineCbjAutomationString(null),
           nodeRedFlowId: RoutineCbjNodeRedFlowId(null),

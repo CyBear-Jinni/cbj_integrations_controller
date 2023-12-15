@@ -1,12 +1,12 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_camera_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_device_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_security_camera_device/generic_security_camera_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_security_camera_entity/generic_security_camera_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_computer_entity/generic_smart_computer_value_objects.dart';
 
 class CbjDevicesHelpers {
   static List<DeviceEntityAbstract> addDiscoveredDevice({
@@ -45,6 +45,8 @@ class CbjDevicesHelpers {
           entityStateGRPC: EntityState(deviceStateGrpc.toString()),
           stateMassage: DeviceStateMassage(deviceStateMassage),
           senderDeviceOs: DeviceSenderDeviceOs(deviceOs),
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
           senderDeviceModel: DeviceSenderDeviceModel(deviceModel),
           senderId: DeviceSenderId.fromUniqueString(deviceSenderId),
           compUuid: DeviceCompUuid(deviceCompUuid),
@@ -54,19 +56,21 @@ class CbjDevicesHelpers {
           smartComputerShutDownState: GenericSmartComputerShutdownState(
             EntityActions.itIsFalse.toString(),
           ),
-          entityOriginalName: EntityOriginalName(cbjEntityName),
-          deviceOriginalName: DeviceOriginalName(cbjEntityName),
+          entityOriginalName: EntityOriginalName(''),
+          deviceOriginalName: DeviceOriginalName(''),
           powerConsumption: DevicePowerConsumption('0'),
           deviceUniqueId: DeviceUniqueId('0'),
           devicePort: DevicePort('0'),
           deviceLastKnownIp: DeviceLastKnownIp(deviceAddress),
           deviceHostName: DeviceHostName('0'),
           deviceMdns: DeviceMdns('0'),
+          srvResourceRecord: DeviceSrvResourceRecord(),
+          ptrResourceRecord: DevicePtrResourceRecord(),
           devicesMacAddress: DevicesMacAddress('0'),
           entityKey: EntityKey('0'),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          deviceCbjUniqueId: CoreUniqueId(),
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceId),
         );
       } else if (deviceType == CbjDeviceTypes.smart_camera) {
         entityAbstract = CbjSecurityCameraEntity(
@@ -76,28 +80,32 @@ class CbjDevicesHelpers {
           entityStateGRPC: EntityState(deviceStateGrpc.toString()),
           stateMassage: DeviceStateMassage(deviceStateMassage),
           senderDeviceOs: DeviceSenderDeviceOs(deviceOs),
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
           senderDeviceModel: DeviceSenderDeviceModel(deviceModel),
           senderId: DeviceSenderId.fromUniqueString(deviceSenderId),
           compUuid: DeviceCompUuid(deviceCompUuid),
           securityCameraSuspendState: GenericSecurityCameraSuspendState(
             EntityActions.itIsFalse.toString(),
           ),
-          entityOriginalName: EntityOriginalName(cbjEntityName),
-          deviceOriginalName: DeviceOriginalName(cbjEntityName),
+          entityOriginalName: EntityOriginalName('entityOriginalName'),
+          deviceOriginalName: DeviceOriginalName(''),
           powerConsumption: DevicePowerConsumption('0'),
           deviceUniqueId: DeviceUniqueId('0'),
           devicePort: DevicePort('0'),
           deviceLastKnownIp: DeviceLastKnownIp(deviceAddress),
           deviceHostName: DeviceHostName('0'),
           deviceMdns: DeviceMdns('0'),
+          srvResourceRecord: DeviceSrvResourceRecord(),
+          ptrResourceRecord: DevicePtrResourceRecord(),
           devicesMacAddress: DevicesMacAddress('0'),
           entityKey: EntityKey('0'),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          deviceCbjUniqueId: CoreUniqueId(),
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceId),
         );
       } else {
-        logger.w('Cbj Smart Device type is not supported ${deviceType.name}');
+        icLogger.w('Cbj Smart Device type is not supported ${deviceType.name}');
         continue;
       }
 

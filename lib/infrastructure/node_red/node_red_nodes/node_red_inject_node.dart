@@ -1,8 +1,7 @@
 import 'package:cbj_integrations_controller/domain/routine/value_objects_routine_cbj.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_nodes/node_red_visual_node_abstract.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
-///
 class NodeRedInjectAtASpecificTimeNode extends NodeRedVisualNodeAbstract {
   NodeRedInjectAtASpecificTimeNode({
     required this.daysToRepeat,
@@ -75,7 +74,7 @@ class NodeRedInjectAtASpecificTimeNode extends NodeRedVisualNodeAbstract {
         daysToRepeatTemp += '6';
       } else {
         daysToRepeatTemp += 'Error';
-        logger.e('Day does not exist');
+        icLogger.e('Day does not exist');
       }
     }
     return daysToRepeatTemp;

@@ -1,13 +1,13 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_tv_entity/generic_smart_tv_entity.dart';
 import 'package:dartz/dartz.dart';
 
 class LgWebosTvEntity extends GenericSmartTvDE {
@@ -17,6 +17,8 @@ class LgWebosTvEntity extends GenericSmartTvDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -29,6 +31,8 @@ class LgWebosTvEntity extends GenericSmartTvDE {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -40,7 +44,7 @@ class LgWebosTvEntity extends GenericSmartTvDE {
     super.skip,
     super.volume,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.lg.toString()),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lg.toString()),
         );
 
   /// Please override the following methods
@@ -57,30 +61,29 @@ class LgWebosTvEntity extends GenericSmartTvDE {
     }
 
     try {
-      if (newEntity.lightSwitchState!.getOrCrash() !=
+      if (newEntity.lightSwitchState.getOrCrash() !=
               smartTvSwitchState!.getOrCrash() ||
           entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform =
-            EnumHelperCbj.stringToDeviceAction(
-          newEntity.lightSwitchState!.getOrCrash(),
+        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
+          newEntity.lightSwitchState.getOrCrash(),
         );
 
         if (actionToPreform == EntityActions.on) {
           (await turnOnSmartTv()).fold((l) {
-            logger.e('Error turning WebOs on');
+            icLogger.e('Error turning WebOs on');
             throw l;
           }, (r) {
-            logger.i('WebOs turn on success');
+            icLogger.i('WebOs turn on success');
           });
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffSmartTv()).fold((l) {
-            logger.e('Error turning WebOs off');
+            icLogger.e('Error turning WebOs off');
             throw l;
           }, (r) {
-            logger.i('WebOs turn off success');
+            icLogger.i('WebOs turn off success');
           });
         } else {
-          logger.e('actionToPreform is not set correctly on WebOs');
+          icLogger.e('actionToPreform is not set correctly on WebOs');
         }
       }
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());

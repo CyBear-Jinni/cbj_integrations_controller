@@ -1,15 +1,14 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_api/tasmota_ip_api_components.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_switch/tasmota_ip_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
-import 'package:network_tools/network_tools.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 
 class TasmotaIpHelpers {
   static Future<List<DeviceEntityAbstract>> addDiscoveredDevice({
-    required ActiveHost activeHost,
+    required DeviceEntityAbstract entity,
     required List<CoreUniqueId?> uniqueDeviceIdList,
     required List<String> componentInDeviceNumberLabelList,
   }) async {
@@ -37,7 +36,7 @@ class TasmotaIpHelpers {
       final DeviceEntityAbstract? deviceEntity = await addDeviceByTasmotaType(
         componentInDeviceNumberLabel: componentInDeviceNumberLabel,
         coreUniqueIdTemp: coreUniqueIdTemp,
-        activeHost: activeHost,
+        entity: entity,
       );
       if (deviceEntity != null) {
         devicesToAddTemp.add(deviceEntity);
@@ -49,19 +48,21 @@ class TasmotaIpHelpers {
 
   static Future<DeviceEntityAbstract?> addDeviceByTasmotaType({
     required String componentInDeviceNumberLabel,
-    required ActiveHost activeHost,
+    required DeviceEntityAbstract entity,
     required CoreUniqueId coreUniqueIdTemp,
   }) async {
-    final String? deviceHostName = await activeHost.hostName;
-    if (deviceHostName == null) {
+    final String? deviceHostName = entity.deviceHostName.getOrCrash();
+
+    if (deviceHostName == null || deviceHostName.isEmpty) {
       return null;
     }
+
     final int componentInDeviceNumberLabelAsInt =
         int.parse(componentInDeviceNumberLabel);
 
     if (!gpioOverviewTasmota.keys.contains(componentInDeviceNumberLabelAsInt) ||
         gpioOverviewTasmota[componentInDeviceNumberLabelAsInt]!.length < 2) {
-      logger.w(
+      icLogger.w(
         'Tasmota ip does not contain this key, you can add more in [gpioOverviewTasmota]',
       );
       return null;
@@ -100,6 +101,8 @@ class TasmotaIpHelpers {
         ),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('Tasmota'),
+        deviceVendor: DeviceVendor(null),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel: DeviceSenderDeviceModel('Tasmota'),
         senderId: DeviceSenderId(),
         compUuid: DeviceCompUuid('34asdfrsd23gggg'),
@@ -107,15 +110,20 @@ class TasmotaIpHelpers {
         powerConsumption: DevicePowerConsumption('0'),
         switchState: GenericSwitchSwitchState(EntityActions.off.toString()),
         deviceHostName: DeviceHostName(deviceHostName),
-        deviceLastKnownIp: DeviceLastKnownIp(activeHost.address),
+        deviceLastKnownIp:
+            DeviceLastKnownIp(entity.devicesMacAddress.getOrCrash()),
         deviceUniqueId: DeviceUniqueId('0'),
         devicePort: DevicePort('0'),
         deviceMdns: DeviceMdns('0'),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         devicesMacAddress: DevicesMacAddress('0'),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId(),
+        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(
+          '$deviceHostName-$componentInDeviceNumberLabel}',
+        ),
       );
     } else if (componentInDeviceNumberLabelAsInt >= 256 &&
         componentInDeviceNumberLabelAsInt <= 283) {
@@ -128,7 +136,7 @@ class TasmotaIpHelpers {
       // UI Label: Led_i
     }
 
-    logger.i(
+    icLogger.i(
       'Please add new Tasmota device type ${componentInDeviceUiLabelAndComment![0]}',
     );
     return null;

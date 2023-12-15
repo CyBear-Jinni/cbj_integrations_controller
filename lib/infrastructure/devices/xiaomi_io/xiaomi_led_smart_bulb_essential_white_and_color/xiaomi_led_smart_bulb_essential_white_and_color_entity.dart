@@ -1,14 +1,16 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 
 class XiaomiLedSmartBulbEssentialWhiteAndColorEntity
     extends GenericRgbwLightDE {
   XiaomiLedSmartBulbEssentialWhiteAndColorEntity({
     required super.uniqueId,
     required super.entityUniqueId,
-    required super.deviceVendor,
+    required super.cbjDeviceVendor,
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -21,6 +23,8 @@ class XiaomiLedSmartBulbEssentialWhiteAndColorEntity
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,

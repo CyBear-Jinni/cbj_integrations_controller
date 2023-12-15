@@ -1,13 +1,14 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/vendors/wiz_login/generic_wiz_login_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_white/wiz_white_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/utils.dart';
-import 'package:network_tools/network_tools.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 
-class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory WizConnectorConjecture() {
     return _instance;
   }
@@ -17,6 +18,9 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
   static final WizConnectorConjecture _instance =
       WizConnectorConjecture._singletonContractor();
 
+  @override
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.wiz;
+
   Future<String> accountLogin(GenericWizLoginDE genericWizLoginDE) async {
     // wizClient = WizClient(genericWizLoginDE.wizApiKey.getOrCrash());
     _discoverNewDevices();
@@ -24,12 +28,10 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
-
-  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
-    required ActiveHost activeHost,
-  }) async {
-    logger.w('Wiz device got discovered but missing implementation');
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
+    icLogger.w('Wiz device got discovered but missing implementation');
     // final List<CoreUniqueId?> tempCoreUniqueId = [];
     //
     // for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
@@ -73,7 +75,7 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
     //     'New Wiz Ip device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
     //   );
     // }
-    return [];
+    return null;
   }
 
   // static WizClient? wizClient;
@@ -129,7 +131,7 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
         // }
         await Future.delayed(const Duration(minutes: 3));
       } catch (e) {
-        logger.e('Error discover in Wiz\n$e');
+        icLogger.e('Error discover in Wiz\n$e');
         await Future.delayed(const Duration(minutes: 1));
       }
     }
@@ -140,15 +142,15 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
     DeviceEntityAbstract wizDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[wizDE.entityUniqueId.getOrCrash()];
+        vendorEntities[wizDE.entityUniqueId.getOrCrash()];
 
     if (device is WizWhiteEntity) {
       device.executeDeviceAction(newEntity: wizDE);
     } else {
-      logger.w('Wiz device type does not exist');
+      icLogger.w('Wiz device type does not exist');
     }
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {}
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
 }

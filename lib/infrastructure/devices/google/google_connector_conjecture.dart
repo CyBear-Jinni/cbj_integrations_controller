@@ -1,15 +1,15 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/chrome_cast/chrome_cast_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/google_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_tv/generic_smart_tv_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_tv_entity/generic_smart_tv_entity.dart';
 
-class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory GoogleConnectorConjecture() {
     return _instance;
   }
@@ -20,7 +20,7 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
       GoogleConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.google;
 
   static const List<String> mdnsTypes = [
     '_googlecast._tcp',
@@ -28,74 +28,71 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
     '_rc._tcp',
   ];
 
-  /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    CoreUniqueId? tempCoreUniqueId;
-
-    for (final DeviceEntityAbstract device in companyDevices.values) {
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
+    final String? mdnsName = entity.deviceMdns.getOrCrash();
+    if (mdnsName == null) {
+      return null;
+    }
+    for (final DeviceEntityAbstract device in vendorEntities.values) {
       if (device is ChromeCastEntity &&
-          (mDnsName == device.entityUniqueId.getOrCrash() ||
-              ip == device.lastKnownIp!.getOrCrash())) {
-        return [];
+          (mdnsName == device.entityUniqueId.getOrCrash() ||
+              entity.deviceLastKnownIp.getOrCrash() ==
+                  device.deviceLastKnownIp.getOrCrash())) {
+        return null;
       } // Same tv can have multiple mDns names so we can't compere it without ip in the object
       // else if (device is GenericSmartTvDE &&
       //     (mDnsName == device.entityUniqueId.getOrCrash() ||
       //         ip == device.lastKnownIp!.getOrCrash())) {
       //   return;
       // }
-      else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
+      else if (mdnsName == device.entityUniqueId.getOrCrash()) {
+        icLogger.w(
           'Google device type supported but implementation is missing here',
         );
-        return [];
+        return null;
       }
     }
 
     final List<DeviceEntityAbstract> googleDevice =
-        GoogleHelpers.addDiscoveredDevice(
-      mDnsName: mDnsName,
-      ip: ip,
-      port: port,
-      uniqueDeviceId: tempCoreUniqueId,
-    );
+        GoogleHelpers.addDiscoveredDevice(entity);
 
     if (googleDevice.isEmpty) {
-      return [];
+      return null;
     }
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
     for (final DeviceEntityAbstract entityAsDevice in googleDevice) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
+      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice,
+      );
 
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
-
-      companyDevices.addEntries([deviceAsEntry]);
+      addedDevice.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
     }
-    logger.i('New Chromecast device got added');
-    return googleDevice;
+    icLogger.i('New Chromecast device got added');
+    return addedDevice;
   }
 
   @override
   Future<void> manageHubRequestsForDevice(DeviceEntityAbstract googleDE) async {
     final DeviceEntityAbstract? device =
-        companyDevices[googleDE.entityUniqueId.getOrCrash()];
+        vendorEntities[googleDE.entityUniqueId.getOrCrash()];
 
     if (device is ChromeCastEntity) {
       device.executeDeviceAction(newEntity: googleDE);
     } else {
-      logger.w(
+      icLogger.w(
         'Google device type does not exist ${device?.entityTypes.getOrCrash()}',
       );
     }
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericSmartTvDE) {
@@ -103,11 +100,11 @@ class GoogleConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     if (nonGenericDevice == null) {
-      logger.w('EspHome device could not get loaded from the server');
+      icLogger.w('EspHome device could not get loaded from the server');
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
   }

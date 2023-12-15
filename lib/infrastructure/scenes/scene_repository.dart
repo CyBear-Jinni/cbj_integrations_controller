@@ -5,9 +5,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ICbjIntegrationsControllerDbRepository.instance
-        .getScenesFromDb()
-        .then((value) {
+    await IDbRepository.instance.getScenesFromDb().then((value) {
       value.fold((l) => null, (r) {
         for (final element in r) {
           addNewScene(element);
@@ -31,7 +29,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       saveAndActivateScenesAndSmartDevicesToDb() async {
     await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
 
-    return ICbjIntegrationsControllerDbRepository.instance.saveScenes(
+    return IDbRepository.instance.saveScenes(
       sceneList: List<SceneCbjEntity>.from(_allScenes.values),
     );
   }
@@ -65,7 +63,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
         tempSceneCbj.automationString.getOrCrash() !=
             existingScene.automationString.getOrCrash()) {
       sceneNodeRedFlowId =
-          await NodeRedRepository.instance.createNewNodeRedScene(tempSceneCbj);
+          await NodeRedRepository().createNewNodeRedScene(tempSceneCbj);
     }
 
     if (sceneNodeRedFlowId.isNotEmpty) {
@@ -139,8 +137,8 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       if (tempScene != null) {
         sceneCbjEntityTemp =
             sceneCbjEntityTemp.copyWith(nodeRedFlowId: tempScene.nodeRedFlowId);
-        nodeRedFlowId = await NodeRedRepository.instance
-            .createNewNodeRedScene(sceneCbjEntityTemp);
+        nodeRedFlowId =
+            await NodeRedRepository().createNewNodeRedScene(sceneCbjEntityTemp);
 
         sceneCbjEntityTemp = sceneCbjEntityTemp.copyWith(
           nodeRedFlowId: SceneCbjNodeRedFlowId(nodeRedFlowId),
@@ -228,7 +226,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
 
     for (final String sceneId in scenesId) {
       if (_allScenes[sceneId] == null) {
-        logger.w('Scene ID does not exist in saved scenes list\n $sceneId');
+        icLogger.w('Scene ID does not exist in saved scenes list\n $sceneId');
         continue;
       }
       final SceneCbjEntity sceneCbjEntity = _allScenes[sceneId]!;
@@ -281,7 +279,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       }
       brokerNodeId = tempValue;
     } catch (e) {
-      logger.e('Error decoding automation string\n$sceneAutomationString');
+      icLogger.e('Error decoding automation string\n$sceneAutomationString');
     }
     final Map<String, String> nodeActionsMap = {};
     final List<String> nodeRedFuncNodesIds = [];
@@ -327,6 +325,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
 
     String mapAutomationFixed = '';
     for (final String actionValue in nodActionsMapValues) {
+      // ignore: use_string_buffers
       mapAutomationFixed += actionValue;
       if (actionValue != nodActionsMapValues.last) {
         mapAutomationFixed += ", ";
@@ -372,8 +371,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       if (tempScene != null) {
         scene = scene.copyWith(nodeRedFlowId: tempScene.nodeRedFlowId);
 
-        nodeRedFlowId =
-            await NodeRedRepository.instance.createNewNodeRedScene(scene);
+        nodeRedFlowId = await NodeRedRepository().createNewNodeRedScene(scene);
 
         scene =
             scene.copyWith(nodeRedFlowId: SceneCbjNodeRedFlowId(nodeRedFlowId));
@@ -404,7 +402,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
         }
       }
     } catch (e) {
-      logger.e('Error decoding automation string\n$sceneAutomationString');
+      icLogger.e('Error decoding automation string\n$sceneAutomationString');
     }
     return null;
   }
@@ -436,7 +434,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
           '$sceneAutomationStringBeforeType$sceneAutomationStringBeforeKey"$keyToChange":  $valueToInsert\n$sceneAutomationStringAfterKey';
       return finalString;
     } catch (e) {
-      logger.e(
+      icLogger.e(
         'Wrong node or key in node $sceneAutomationString $nodeType $keyToChange $valueToInsert\n $e',
       );
     }

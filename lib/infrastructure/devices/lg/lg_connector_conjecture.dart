@@ -1,14 +1,14 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_webos_tv/lg_webos_tv_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 
-class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class LgConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory LgConnectorConjecture() {
     return _instance;
   }
@@ -19,7 +19,7 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
       LgConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.lg;
 
   static const List<String> mdnsTypes = [
     '_hap._tcp',
@@ -27,19 +27,21 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
     '_airplay._tcp',
   ];
 
-  /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    CoreUniqueId? tempCoreUniqueId;
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
+    final String? mdnsName = entity.deviceMdns.getOrCrash();
+    if (mdnsName == null) {
+      return null;
+    }
 
-    for (final DeviceEntityAbstract device in companyDevices.values) {
+    for (final DeviceEntityAbstract device in vendorEntities.values) {
       if (device is LgWebosTvEntity &&
-          (mDnsName == device.entityUniqueId.getOrCrash() ||
-              ip == device.deviceLastKnownIp.getOrCrash())) {
-        return [];
+          (mdnsName == device.entityUniqueId.getOrCrash() ||
+              entity.deviceLastKnownIp.getOrCrash() ==
+                  device.deviceLastKnownIp.getOrCrash())) {
+        return null;
       }
       // Same tv can have multiple mDns names so we can't compere it without ip in the object
       // else if (device is GenericSmartTvDE &&
@@ -47,52 +49,50 @@ class LgConnectorConjecture implements AbstractCompanyConnectorConjecture {
       //         ip == device.lastKnownIp!.getOrCrash())) {
       //   return;
       // }
-      else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
+      else if (mdnsName == device.entityUniqueId.getOrCrash()) {
+        icLogger.w(
           'LG device type supported but implementation is missing here',
         );
-        return [];
+        return null;
       }
     }
 
-    final List<DeviceEntityAbstract> lgDevice = LgHelpers.addDiscoveredDevice(
-      mDnsName: mDnsName,
-      ip: ip,
-      port: port,
-      uniqueDeviceId: tempCoreUniqueId,
-    );
+    final List<DeviceEntityAbstract> lgDevice =
+        LgHelpers.addDiscoveredDevice(entity);
 
     if (lgDevice.isEmpty) {
-      return [];
+      return null;
     }
 
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
+
     for (final DeviceEntityAbstract entityAsDevice in lgDevice) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
+      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice,
+      );
 
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
-
-      companyDevices.addEntries([deviceAsEntry]);
-      logger.i(
+      addedDevice.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
+      icLogger.i(
         'New LG device got added ${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
-    return lgDevice;
+    return addedDevice;
   }
 
   @override
   Future<void> manageHubRequestsForDevice(DeviceEntityAbstract lgDE) async {
     final DeviceEntityAbstract? device =
-        companyDevices[lgDE.entityUniqueId.getOrCrash()];
+        vendorEntities[lgDE.entityUniqueId.getOrCrash()];
 
     if (device is LgWebosTvEntity) {
       device.executeDeviceAction(newEntity: lgDE);
     } else {
-      logger.i('Lg device type does not exist');
+      icLogger.i('Lg device type does not exist');
     }
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {}
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
 }

@@ -1,8 +1,8 @@
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_switch/ewelink_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
 
 class EwelinkHelpers {
@@ -21,6 +21,8 @@ class EwelinkHelpers {
           deviceOriginalName: DeviceOriginalName(ewelinkDevice.name),
           stateMassage: DeviceStateMassage('ok'),
           senderDeviceOs: DeviceSenderDeviceOs('EweLink'),
+          deviceVendor: DeviceVendor(null),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
           senderDeviceModel: DeviceSenderDeviceModel(ewelinkDevice.type),
           senderId: DeviceSenderId(),
           deviceUniqueId: DeviceUniqueId(ewelinkDevice.deviceid),
@@ -28,6 +30,8 @@ class EwelinkHelpers {
           deviceLastKnownIp: DeviceLastKnownIp(''),
           deviceHostName: DeviceHostName('0'),
           deviceMdns: DeviceMdns('0'),
+          srvResourceRecord: DeviceSrvResourceRecord(),
+          ptrResourceRecord: DevicePtrResourceRecord(),
           compUuid: DeviceCompUuid('empty'),
           powerConsumption: DevicePowerConsumption('0'),
           devicesMacAddress: DevicesMacAddress('0'),
@@ -35,7 +39,9 @@ class EwelinkHelpers {
           entityKey: EntityKey('1'),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          deviceCbjUniqueId: CoreUniqueId(),
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(
+            '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}',
+          ),
           switchState: GenericSwitchSwitchState('off'),
           entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         ),
@@ -89,6 +95,9 @@ class EwelinkHelpers {
             deviceOriginalName: DeviceOriginalName(ewelinkDevice.name),
             stateMassage: DeviceStateMassage('ok'),
             senderDeviceOs: DeviceSenderDeviceOs('EweLink'),
+
+            deviceVendor: DeviceVendor(null),
+            deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
             senderDeviceModel: DeviceSenderDeviceModel(ewelinkDevice.type),
             senderId: DeviceSenderId(),
             deviceUniqueId: DeviceUniqueId(ewelinkDevice.deviceid),
@@ -96,6 +105,8 @@ class EwelinkHelpers {
             deviceLastKnownIp: DeviceLastKnownIp(''),
             deviceHostName: DeviceHostName('0'),
             deviceMdns: DeviceMdns('0'),
+            srvResourceRecord: DeviceSrvResourceRecord(),
+            ptrResourceRecord: DevicePtrResourceRecord(),
             compUuid: DeviceCompUuid('empty'),
             powerConsumption: DevicePowerConsumption('0'),
             devicesMacAddress: DevicesMacAddress('0'),
@@ -104,7 +115,9 @@ class EwelinkHelpers {
             requestTimeStamp: RequestTimeStamp('0'),
             lastResponseFromDeviceTimeStamp:
                 LastResponseFromDeviceTimeStamp('0'),
-            deviceCbjUniqueId: CoreUniqueId(),
+            deviceCbjUniqueId: CoreUniqueId.fromUniqueString(
+              '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}-$outletNumber',
+            ),
             switchState:
                 GenericSwitchSwitchState(switchParam['switch'] as String),
             entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),

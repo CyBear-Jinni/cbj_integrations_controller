@@ -1,16 +1,15 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_e26/philips_hue_e26_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
 
-class PhilipsHueConnectorConjecture
-    implements AbstractCompanyConnectorConjecture {
+class PhilipsHueConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory PhilipsHueConnectorConjecture() {
     return _instance;
   }
@@ -21,7 +20,7 @@ class PhilipsHueConnectorConjecture
       PhilipsHueConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.philipsHue;
 
   static const List<String> mdnsTypes = [
     '_hue._tcp',
@@ -29,55 +28,49 @@ class PhilipsHueConnectorConjecture
 
   static bool gotHueHubIp = false;
 
-  /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    /// There can only be one Philips Hub in the same network
-    if (gotHueHubIp) {
-      return [];
-    }
-    CoreUniqueId? tempCoreUniqueId;
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
+    final String ip = entity.deviceLastKnownIp.getOrCrash()!;
 
-    for (final DeviceEntityAbstract device in companyDevices.values) {
+    final String? mdnsName = entity.deviceMdns.getOrCrash();
+    if (mdnsName == null) {
+      return null;
+    }
+
+    for (final DeviceEntityAbstract device in vendorEntities.values) {
       if (device is PhilipsHueE26Entity &&
-          (mDnsName == device.entityUniqueId.getOrCrash() ||
+          (mdnsName == device.entityUniqueId.getOrCrash() ||
               ip == device.deviceLastKnownIp.getOrCrash())) {
-        return [];
-      } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
+        return null;
+      } else if (mdnsName == device.entityUniqueId.getOrCrash()) {
+        icLogger.w(
           'HP device type supported but implementation is missing here',
         );
-        return [];
+        return null;
       }
     }
     gotHueHubIp = true;
 
     final List<DeviceEntityAbstract> phillipsDevice =
-        await PhilipsHueHelpers.addDiscoveredDevice(
-      mDnsName: mDnsName,
-      ip: ip,
-      port: port,
-      uniqueDeviceId: tempCoreUniqueId,
-    );
+        await PhilipsHueHelpers.addDiscoveredDevice(entity);
 
     if (phillipsDevice.isEmpty) {
-      return [];
+      return null;
     }
+
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
     for (final DeviceEntityAbstract entityAsDevice in phillipsDevice) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
-
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
+          MapEntry(entityAsDevice.entityUniqueId.getOrCrash(), entityAsDevice);
 
-      companyDevices.addEntries([deviceAsEntry]);
+      addedDevice.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
     }
-    logger.i('New Philips Hue device got added');
-    return phillipsDevice;
+    icLogger.i('New Philips Hue device got added');
+    return addedDevice;
   }
 
   @override
@@ -85,17 +78,17 @@ class PhilipsHueConnectorConjecture
     DeviceEntityAbstract philipsHueDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[philipsHueDE.entityUniqueId.getOrCrash()];
+        vendorEntities[philipsHueDE.entityUniqueId.getOrCrash()];
 
     if (device is PhilipsHueE26Entity) {
       device.executeDeviceAction(newEntity: philipsHueDE);
     } else {
-      logger.w('PhilipsHue device type does not exist');
+      icLogger.w('PhilipsHue device type does not exist');
     }
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericDimmableLightDE) {
@@ -103,11 +96,11 @@ class PhilipsHueConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
   }

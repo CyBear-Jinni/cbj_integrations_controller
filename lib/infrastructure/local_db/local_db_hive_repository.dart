@@ -1,7 +1,7 @@
-part of 'package:cbj_integrations_controller/domain/local_db/i_local_devices_db_repository.dart';
+part of 'package:cbj_integrations_controller/domain/local_db/i_local_db_repository.dart';
 
 /// Only ISavedDevicesRepo need to call functions here
-class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
+class _HiveRepository extends IDbRepository {
   /// Name of the box that stores Remote Pipes credentials
   String remotePipesBoxName = 'remotePipesBox';
 
@@ -56,7 +56,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       }
       localDbPath += '/hive';
 
-      logger.i('Hive db location\n$localDbPath');
+      icLogger.i('Hive db location\n$localDbPath');
 
       Hive.init(localDbPath);
       await Future.delayed(const Duration(milliseconds: 500));
@@ -98,13 +98,12 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
   @override
   Future<void> loadFromDb() async {
     (await getRemotePipesDnsName()).fold(
-        (l) =>
-            logger.w('No Remote Pipes Dns name was found in the local storage'),
-        (r) {
+        (l) => icLogger
+            .w('No Remote Pipes Dns name was found in the local storage'), (r) {
       // TODO: Fix after new cbj_integrations_controller
       // getIt<IAppCommunicationRepository>().startRemotePipesConnection(r);
 
-      logger.i('Remote Pipes DNS name was "$r" found');
+      icLogger.i('Remote Pipes DNS name was "$r" found');
     });
 
     {
@@ -125,9 +124,9 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
         lifxVendorCredentialsModelFromDb: lifxVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
+        VendorsConnectorConjecture().setVendorLoginCredentials(r);
 
-        logger.i(
+        icLogger.i(
           'Lifx login credentials got found in DB',
         );
       });
@@ -153,9 +152,9 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
             espHomeVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
+        VendorsConnectorConjecture().setVendorLoginCredentials(r);
 
-        logger.i(
+        icLogger.i(
           'ESPHome device password got found in DB',
         );
       });
@@ -182,9 +181,9 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
             xiaomiMiVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
+        VendorsConnectorConjecture().setVendorLoginCredentials(r);
 
-        logger.i(
+        icLogger.i(
           'Xiaomi Mi device password got found in DB',
         );
       });
@@ -211,9 +210,9 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
             ewelinkVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
+        VendorsConnectorConjecture().setVendorLoginCredentials(r);
 
-        logger.i(
+        icLogger.i(
           'EweLink account email and password got found in DB',
         );
       });
@@ -254,7 +253,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
         rooms.add(roomEntity);
       }
     } catch (e) {
-      logger.e('Local DB hive error while getting rooms: $e');
+      icLogger.e('Local DB hive error while getting rooms: $e');
       // TODO: Check why hive crash stop this from working
       await deleteAllSavedRooms();
     }
@@ -288,7 +287,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       }
       return right(devices);
     } catch (e) {
-      logger.e('Local DB hive error while getting devices: $e');
+      icLogger.e('Local DB hive error while getting devices: $e');
     }
     return left(const LocalDbFailures.unexpected());
   }
@@ -312,7 +311,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
           lifxApiKey: GenericLifxLoginApiKey(lifxApiKey),
         );
 
-        logger.i(
+        icLogger.i(
           'Lifx got returned from local storage',
         );
         return right(genericLifxLoginDE);
@@ -321,7 +320,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       //   "Didn't find any Lifx in the local DB",
       // );
     } catch (e) {
-      logger.e('Local DB hive error while getting Lifx vendor: $e');
+      icLogger.e('Local DB hive error while getting Lifx vendor: $e');
     }
     return left(const LocalDbFailures.unexpected());
   }
@@ -348,7 +347,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
               GenericEspHomeDeviceLoginApiPass(espHomeDevicePass),
         );
 
-        logger.i(
+        icLogger.i(
           'ESPHome got returned from local storage',
         );
         return right(genericEspHomeLoginDE);
@@ -357,7 +356,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       //   "Didn't find any ESPHome in the local DB",
       // );
     } catch (e) {
-      logger.e('Local DB hive error while getting ESPHome vendor: $e');
+      icLogger.e('Local DB hive error while getting ESPHome vendor: $e');
     }
     return left(const LocalDbFailures.unexpected());
   }
@@ -387,7 +386,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
           xiaomiMiAccountPass: GenericXiaomiMiAccountPass(xiaomiMiAccountPass),
         );
 
-        logger.i(
+        icLogger.i(
           'Xiaomi Mi got returned from local storage',
         );
         return right(genericXiaomiMiLoginDE);
@@ -396,7 +395,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       //   "Didn't find any Xiaomi Mi in the local DB",
       // );
     } catch (e) {
-      logger.e('Local DB hive error while getting Xiaomi Mi vendor: $e');
+      icLogger.e('Local DB hive error while getting Xiaomi Mi vendor: $e');
     }
     return left(const LocalDbFailures.unexpected());
   }
@@ -425,7 +424,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
           ewelinkAccountPass: GenericEwelinkAccountPass(ewelinkAccountPass),
         );
 
-        logger.i(
+        icLogger.i(
           'EweLink got returned from local storage',
         );
         return right(genericEwelinkLoginDE);
@@ -434,7 +433,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       //   "Didn't find any Xiaomi Mi in the local DB",
       // );
     } catch (e) {
-      logger.e('Local DB hive error while getting Xiaomi Mi vendor: $e');
+      icLogger.e('Local DB hive error while getting Xiaomi Mi vendor: $e');
     }
     return left(const LocalDbFailures.unexpected());
   }
@@ -453,15 +452,15 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
         final String remotePipesDnsName =
             remotePipesHiveModelFromDb[0].domainName;
 
-        logger.i(
+        icLogger.i(
           'Remote pipes domain name is: '
           '$remotePipesDnsName',
         );
         return right(remotePipesDnsName);
       }
-      logger.i("Didn't find any remote pipes in the local DB");
+      icLogger.i("Didn't find any remote pipes in the local DB");
     } catch (e) {
-      logger.e('Local DB hive error while getting Remote Pipes: $e');
+      icLogger.e('Local DB hive error while getting Remote Pipes: $e');
     }
     return left(const LocalDbFailures.unexpected());
   }
@@ -489,9 +488,9 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       await devicesBox?.addAll(devicesHiveList);
 
       await devicesBox?.close();
-      logger.i('Devices got saved to local storage');
+      icLogger.i('Devices got saved to local storage');
     } catch (e) {
-      logger.e('Error saving Devices to local storage\n$e');
+      icLogger.e('Error saving Devices to local storage\n$e');
       return left(const LocalDbFailures.unexpected());
     }
 
@@ -530,9 +529,9 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       await roomsBox?.addAll(rommsHiveList);
 
       await roomsBox?.close();
-      logger.i('Rooms got saved to local storage');
+      icLogger.i('Rooms got saved to local storage');
     } catch (e) {
-      logger.e('Error saving Rooms to local storage\n$e');
+      icLogger.e('Error saving Rooms to local storage\n$e');
       return left(const LocalDbFailures.unexpected());
     }
 
@@ -574,7 +573,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
         vendorCredentialsBoxName: ewelinkVendorCredentialsBoxName,
       );
     } else {
-      logger.e(
+      icLogger.e(
         'Please implement save function for this login type '
         '${loginEntityAbstract.runtimeType}',
       );
@@ -601,12 +600,12 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       }
 
       await remotePipesBox?.close();
-      logger.i(
+      icLogger.i(
         'Remote Pipes got saved to local storage with domain name is: '
         '$remotePipesDomainName',
       );
     } catch (e) {
-      logger.e('Error saving Remote Pipes to local storage');
+      icLogger.e('Error saving Remote Pipes to local storage');
       return left(const LocalDbFailures.unexpected());
     }
 
@@ -635,11 +634,11 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       }
 
       await lifxVendorCredentialsBox.close();
-      logger.i(
+      icLogger.i(
         'Lifx vendor credentials saved to local storage',
       );
     } catch (e) {
-      logger.e('Error saving Lifx vendor credentials to local storage');
+      icLogger.e('Error saving Lifx vendor credentials to local storage');
       return left(const LocalDbFailures.unexpected());
     }
     return right(unit);
@@ -670,11 +669,11 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       }
 
       await espHomeVendorCredentialsBox.close();
-      logger.i(
+      icLogger.i(
         'ESPHome vendor credentials saved to local storage',
       );
     } catch (e) {
-      logger.e('Error saving ESPHome vendor credentials to local storage');
+      icLogger.e('Error saving ESPHome vendor credentials to local storage');
       return left(const LocalDbFailures.unexpected());
     }
     return right(unit);
@@ -709,11 +708,11 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       }
 
       await xiaomiMiVendorCredentialsBox.close();
-      logger.i(
+      icLogger.i(
         'Xiaomi Mi vendor credentials saved to local storage',
       );
     } catch (e) {
-      logger.e('Error saving Xiaomi Mi vendor credentials to local storage');
+      icLogger.e('Error saving Xiaomi Mi vendor credentials to local storage');
       return left(const LocalDbFailures.unexpected());
     }
     return right(unit);
@@ -747,11 +746,11 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       }
 
       await ewelinkVendorCredentialsBox.close();
-      logger.i(
+      icLogger.i(
         'EweLink vendor credentials saved to local storage',
       );
     } catch (e) {
-      logger.e('Error saving EweLink vendor credentials to local storage');
+      icLogger.e('Error saving EweLink vendor credentials to local storage');
       return left(const LocalDbFailures.unexpected());
     }
     return right(unit);
@@ -791,7 +790,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       }
       return right(scenes);
     } catch (e) {
-      logger.e('Local DB hive error while getting scenes: $e');
+      icLogger.e('Local DB hive error while getting scenes: $e');
     }
     return left(const LocalDbFailures.unexpected());
   }
@@ -825,7 +824,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       }
       return right(routines);
     } catch (e) {
-      logger.e('Local DB hive error while getting routines: $e');
+      icLogger.e('Local DB hive error while getting routines: $e');
     }
     return left(const LocalDbFailures.unexpected());
   }
@@ -859,7 +858,7 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       }
       return right(bindings);
     } catch (e) {
-      logger.e('Local DB hive error while getting bindings: $e');
+      icLogger.e('Local DB hive error while getting bindings: $e');
     }
     return left(const LocalDbFailures.unexpected());
   }
@@ -888,9 +887,9 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       await scenesBox?.addAll(scenesHiveList);
 
       await scenesBox?.close();
-      logger.i('Scenes got saved to local storage');
+      icLogger.i('Scenes got saved to local storage');
     } catch (e) {
-      logger.e('Error saving Scenes to local storage\n$e');
+      icLogger.e('Error saving Scenes to local storage\n$e');
       return left(const LocalDbFailures.unexpected());
     }
 
@@ -922,9 +921,9 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       await routinesBox?.addAll(routinesHiveList);
 
       await routinesBox?.close();
-      logger.i('Routines got saved to local storage');
+      icLogger.i('Routines got saved to local storage');
     } catch (e) {
-      logger.e('Error saving Routines to local storage\n$e');
+      icLogger.e('Error saving Routines to local storage\n$e');
       return left(const LocalDbFailures.unexpected());
     }
 
@@ -957,9 +956,9 @@ class _HiveRepository extends ICbjIntegrationsControllerDbRepository {
       await bindingsBox?.addAll(bindingsHiveList);
 
       await bindingsBox?.close();
-      logger.i('Bindings got saved to local storage');
+      icLogger.i('Bindings got saved to local storage');
     } catch (e) {
-      logger.e('Error saving Bindings to local storage\n$e');
+      icLogger.e('Error saving Bindings to local storage\n$e');
       return left(const LocalDbFailures.unexpected());
     }
 

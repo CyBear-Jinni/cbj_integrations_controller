@@ -1,13 +1,13 @@
 import 'dart:convert';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart';
 
@@ -30,6 +30,8 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -42,6 +44,8 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -49,7 +53,8 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.tasmota.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.tasmota.toString()),
         );
 
   factory TasmotaIpSwitchEntity.fromGeneric(GenericSwitchDE genericDevice) {
@@ -59,6 +64,8 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,
@@ -71,6 +78,8 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
       deviceLastKnownIp: genericDevice.deviceLastKnownIp,
       deviceHostName: genericDevice.deviceHostName,
       deviceMdns: genericDevice.deviceMdns,
+      srvResourceRecord: genericDevice.srvResourceRecord,
+      ptrResourceRecord: genericDevice.ptrResourceRecord,
       devicesMacAddress: genericDevice.devicesMacAddress,
       entityKey: genericDevice.entityKey,
       requestTimeStamp: genericDevice.requestTimeStamp,
@@ -95,35 +104,35 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
     }
 
     try {
-      if (newEntity.switchState!.getOrCrash() != switchState!.getOrCrash() ||
+      if (newEntity.switchState.getOrCrash() != switchState.getOrCrash() ||
           entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform =
-            EnumHelperCbj.stringToDeviceAction(
-          newEntity.switchState!.getOrCrash(),
+        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
+          newEntity.switchState.getOrCrash(),
         );
 
         if (actionToPreform == EntityActions.on) {
           (await turnOnSwitch()).fold(
             (l) {
-              logger.e('Error turning TasmotaIp switch on');
+              icLogger.e('Error turning TasmotaIp switch on');
               throw l;
             },
             (r) {
-              logger.i('TasmotaIp switch turn on success');
+              icLogger.i('TasmotaIp switch turn on success');
             },
           );
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffSwitch()).fold(
             (l) {
-              logger.e('Error turning TasmotaIp switch off');
+              icLogger.e('Error turning TasmotaIp switch off');
               throw l;
             },
             (r) {
-              logger.i('TasmotaIp switch turn off success');
+              icLogger.i('TasmotaIp switch turn off success');
             },
           );
         } else {
-          logger.e('actionToPreform is not set correctly on TasmotaIp Switch');
+          icLogger
+              .e('actionToPreform is not set correctly on TasmotaIp Switch');
         }
       }
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
@@ -144,7 +153,7 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
   Future<Either<CoreFailure, Unit>> turnOnSwitch() async {
     switchState = GenericSwitchSwitchState(EntityActions.on.toString());
 
-    final String deviceIp = deviceLastKnownIp.getOrCrash();
+    final String deviceIp = deviceLastKnownIp.getOrCrash()!;
     const String getComponentsCommand = 'cm?cmnd=Power%20ON';
 
     // Map<String, String>? responseJson;
@@ -166,7 +175,7 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
   Future<Either<CoreFailure, Unit>> turnOffSwitch() async {
     switchState = GenericSwitchSwitchState(EntityActions.off.toString());
 
-    final String deviceIp = deviceLastKnownIp.getOrCrash();
+    final String deviceIp = deviceLastKnownIp.getOrCrash()!;
     const String getComponentsCommand = 'cm?cmnd=Power%20OFF';
 
     // Map<String, String>? responseJson;

@@ -95,3 +95,9 @@ lib/generated_plugin_registrant.dart
 
 # Network tools
 network_tools_db/*
+
+# melos
+pubspec_overrides.yaml
+
+# Linux
+.directory

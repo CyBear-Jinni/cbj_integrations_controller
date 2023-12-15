@@ -1,17 +1,17 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_led/tasmota_mqtt_led_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
 
-class TasmotaMqttConnectorConjecture
-    implements AbstractCompanyConnectorConjecture {
+class TasmotaMqttConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory TasmotaMqttConnectorConjecture() {
     return _instance;
   }
@@ -20,6 +20,9 @@ class TasmotaMqttConnectorConjecture
 
   static final TasmotaMqttConnectorConjecture _instance =
       TasmotaMqttConnectorConjecture._singletonContractor();
+
+  @override
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.tasmota;
 
   // Future<void> addNewDeviceByHostInfo({
   //   required ActiveHost activeHost,
@@ -37,9 +40,6 @@ class TasmotaMqttConnectorConjecture
   //       .publishMessage('cmnd/$tasmotaMqttTopic/SetOption19', '0');
   // }
 
-  @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
-
   Future<void> discoverNewDevices() async {
     IMqttServerRepository.instance
         .streamOfChosenSubscription('tasmota/discovery/+/config')
@@ -53,7 +53,7 @@ class TasmotaMqttConnectorConjecture
       bool deviceExist = false;
       CoreUniqueId? tempCoreUniqueId;
 
-      for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
+      for (final DeviceEntityAbstract savedDevice in vendorEntities.values) {
         if (savedDevice is TasmotaMqttLedEntity &&
             deviceId == savedDevice.entityUniqueId.getOrCrash()) {
           deviceExist = true;
@@ -64,7 +64,7 @@ class TasmotaMqttConnectorConjecture
           tempCoreUniqueId = savedDevice.uniqueId;
           break;
         } else if (deviceId == savedDevice.entityUniqueId.getOrCrash()) {
-          logger.e(
+          icLogger.e(
             'Tasmota Mqtt device type supported but implementation is missing here',
           );
           return;
@@ -85,14 +85,11 @@ class TasmotaMqttConnectorConjecture
         return;
       }
 
-      final DeviceEntityAbstract deviceToAdd =
-          CompaniesConnectorConjecture().addDiscoveredDeviceToHub(addDevice);
-
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
+          MapEntry(addDevice.uniqueId.getOrCrash(), addDevice);
 
-      companyDevices.addEntries([deviceAsEntry]);
-      logger.t('Adding Tasmota mqtt device');
+      vendorEntities.addEntries([deviceAsEntry]);
+      icLogger.t('Adding Tasmota mqtt device');
     });
   }
 
@@ -101,15 +98,22 @@ class TasmotaMqttConnectorConjecture
     DeviceEntityAbstract tasmotaMqttDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[tasmotaMqttDE.entityUniqueId.getOrCrash()];
+        vendorEntities[tasmotaMqttDE.entityUniqueId.getOrCrash()];
 
     if (device is TasmotaMqttLedEntity) {
       device.executeDeviceAction(newEntity: tasmotaMqttDE);
     } else {
-      logger.w('TasmotaMqtt device type does not exist');
+      icLogger.w('TasmotaMqtt device type does not exist');
     }
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {}
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
+    return null;
+  }
 }

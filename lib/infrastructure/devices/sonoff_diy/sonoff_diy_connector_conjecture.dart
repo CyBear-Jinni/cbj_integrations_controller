@@ -1,16 +1,13 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff__diy_wall_switch/sonoff_diy_mod_wall_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff_diy_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 
-class SonoffDiyConnectorConjecture
-    implements AbstractCompanyConnectorConjecture {
+class SonoffDiyConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory SonoffDiyConnectorConjecture() {
     return _instance;
   }
@@ -20,58 +17,62 @@ class SonoffDiyConnectorConjecture
   static final SonoffDiyConnectorConjecture _instance =
       SonoffDiyConnectorConjecture._singletonContractor();
 
-  static const List<String> mdnsTypes = ['_ewelink._tcp'];
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.sonoffDiy;
 
-  /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    CoreUniqueId? tempCoreUniqueId;
+  static const List<String> mdnsTypes = ['_ewelink._tcp'];
 
-    for (final DeviceEntityAbstract device in companyDevices.values) {
-      if (device is SonoffDiyRelaySwitchEntity &&
-          mDnsName == device.entityUniqueId.getOrCrash()) {
-        return [];
-      } else if (device is GenericSwitchDE &&
-          mDnsName == device.entityUniqueId.getOrCrash()) {
-        /// Device exist as generic and needs to get converted to non generic type for this vendor
-        tempCoreUniqueId = device.uniqueId;
-        break;
-      } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
-          'Sonoff device type supported but implementation is missing here',
-        );
-        return [];
-      }
-    }
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
+    // /// Add new devices to [companyDevices] if not exist
+    // Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
+    //   required String mDnsName,
+    //   required String ip,
+    //   required String port,
+    // }) async {
 
-    final List<DeviceEntityAbstract> sonoffDevices =
-        SonoffDiyHelpers.addDiscoveredDevice(
-      mDnsName: mDnsName,
-      ip: ip,
-      port: port,
-      uniqueDeviceId: tempCoreUniqueId,
-    );
+    // CoreUniqueId? tempCoreUniqueId;
 
-    if (sonoffDevices.isEmpty) {
-      return [];
-    }
+    // for (final DeviceEntityAbstract device in companyDevices.values) {
+    //   if (device is SonoffDiyRelaySwitchEntity &&
+    //       mDnsName == device.entityUniqueId.getOrCrash()) {
+    //     return [];
+    //   } else if (device is GenericSwitchDE &&
+    //       mDnsName == device.entityUniqueId.getOrCrash()) {
+    //     /// Device exist as generic and needs to get converted to non generic type for this vendor
+    //     tempCoreUniqueId = device.uniqueId;
+    //     break;
+    //   } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
+    //     icLogger.w(
+    //       'Sonoff device type supported but implementation is missing here',
+    //     );
+    //     return [];
+    //   }
+    // }
 
-    for (final DeviceEntityAbstract entityAsDevice in sonoffDevices) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
+    // final List<DeviceEntityAbstract> sonoffDevices =
+    //     SonoffDiyHelpers.addDiscoveredDevice(
+    //   mDnsName: mDnsName,
+    //   ip: ip,
+    //   port: port,
+    //   uniqueDeviceId: tempCoreUniqueId,
+    // );
 
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
+    // if (sonoffDevices.isEmpty) {
+    //   return [];
+    // }
 
-      companyDevices.addEntries([deviceAsEntry]);
-    }
-    logger.t('New Sonoff diy devices name:$mDnsName');
-    return sonoffDevices;
+    // for (final DeviceEntityAbstract entityAsDevice in sonoffDevices) {
+    //   final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
+    //       MapEntry(entityAsDevice.uniqueId.getOrCrash(), entityAsDevice);
+
+    //   companyDevices.addEntries([deviceAsEntry]);
+    // }
+    // icLogger.t('New Sonoff diy devices name:$mDnsName');
+    // return sonoffDevices;
+    return null;
   }
 
   @override
@@ -79,15 +80,15 @@ class SonoffDiyConnectorConjecture
     DeviceEntityAbstract sonoffDiyDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[sonoffDiyDE.entityUniqueId.getOrCrash()];
+        vendorEntities[sonoffDiyDE.entityUniqueId.getOrCrash()];
 
     if (device is SonoffDiyRelaySwitchEntity) {
       device.executeDeviceAction(newEntity: sonoffDiyDE);
     } else {
-      logger.w('Sonoff diy device type does not exist');
+      icLogger.w('Sonoff diy device type does not exist');
     }
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {}
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
 }

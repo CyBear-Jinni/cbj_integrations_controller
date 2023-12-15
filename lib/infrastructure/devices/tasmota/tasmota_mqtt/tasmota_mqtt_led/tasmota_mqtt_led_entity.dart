@@ -1,13 +1,13 @@
-import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_device_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_value_objects.dart';
 import 'package:dartz/dartz.dart';
 
 class TasmotaMqttLedEntity extends GenericLightDE {
@@ -17,6 +17,8 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -29,6 +31,8 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -37,7 +41,8 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     required super.lightSwitchState,
     required this.tasmotaMqttDeviceTopicName,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.tasmota.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.tasmota.toString()),
         );
 
   TasmotaMqttDeviceTopicName tasmotaMqttDeviceTopicName;
@@ -56,36 +61,35 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     }
 
     try {
-      if (newEntity.lightSwitchState!.getOrCrash() !=
-              lightSwitchState!.getOrCrash() ||
+      if (newEntity.lightSwitchState.getOrCrash() !=
+              lightSwitchState.getOrCrash() ||
           entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform =
-            EnumHelperCbj.stringToDeviceAction(
-          newEntity.lightSwitchState!.getOrCrash(),
+        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
+          newEntity.lightSwitchState.getOrCrash(),
         );
 
         if (actionToPreform == EntityActions.on) {
           (await turnOnLight()).fold(
             (l) {
-              logger.e('Error turning TasmotaMqtt light on');
+              icLogger.e('Error turning TasmotaMqtt light on');
               throw l;
             },
             (r) {
-              logger.i('TasmotaMqtt light turn on success');
+              icLogger.i('TasmotaMqtt light turn on success');
             },
           );
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffLight()).fold(
             (l) {
-              logger.e('Error turning TasmotaMqtt light off');
+              icLogger.e('Error turning TasmotaMqtt light off');
               throw l;
             },
             (r) {
-              logger.i('TasmotaMqtt light turn off success');
+              icLogger.i('TasmotaMqtt light turn off success');
             },
           );
         } else {
-          logger.e('actionToPreform is not set correctly on TasmotaMqtt Led');
+          icLogger.e('actionToPreform is not set correctly on TasmotaMqtt Led');
         }
       }
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());

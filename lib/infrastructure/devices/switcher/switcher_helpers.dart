@@ -1,28 +1,19 @@
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_runner/switcher_runner_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_smart_plug/switcher_smart_plug_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_v2/switcher_v2_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_runner_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_smart_plug_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_v2_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_plug_entity/generic_smart_plug_value_objects.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherHelpers {
-  static DeviceEntityAbstract? addDiscoveredDevice({
-    required SwitcherApiObject switcherDevice,
-    required CoreUniqueId? uniqueDeviceId,
-  }) {
-    CoreUniqueId uniqueDeviceIdTemp;
-
-    if (uniqueDeviceId != null) {
-      uniqueDeviceIdTemp = uniqueDeviceId;
-    } else {
-      uniqueDeviceIdTemp = CoreUniqueId();
-    }
-
+  static DeviceEntityAbstract? addDiscoveredDevice(
+    SwitcherApiObject switcherDevice,
+  ) {
     if (switcherDevice.deviceType == SwitcherDevicesTypes.switcherRunner ||
         switcherDevice.deviceType == SwitcherDevicesTypes.switcherRunnerMini) {
       EntityActions deviceActions = EntityActions.actionNotSupported;
@@ -38,13 +29,15 @@ class SwitcherHelpers {
       }
 
       final SwitcherRunnerEntity switcherRunnerDe = SwitcherRunnerEntity(
-        uniqueId: uniqueDeviceIdTemp,
+        uniqueId: CoreUniqueId(),
         entityUniqueId: EntityUniqueId(switcherDevice.deviceId),
         cbjEntityName: CbjEntityName(switcherDevice.switcherName),
         entityOriginalName: EntityOriginalName(switcherDevice.switcherName),
         deviceOriginalName: DeviceOriginalName(switcherDevice.switcherName),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('switcher'),
+        deviceVendor: DeviceVendor(null),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel:
             DeviceSenderDeviceModel(switcherDevice.deviceType.toString()),
         senderId: DeviceSenderId(),
@@ -61,10 +54,13 @@ class SwitcherHelpers {
         deviceUniqueId: DeviceUniqueId('0'),
         deviceHostName: DeviceHostName('0'),
         deviceMdns: DeviceMdns('0'),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId(),
+        deviceCbjUniqueId:
+            CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 
       return switcherRunnerDe;
@@ -80,13 +76,15 @@ class SwitcherHelpers {
         deviceActions = EntityActions.off;
       }
       final SwitcherV2Entity switcherV2De = SwitcherV2Entity(
-        uniqueId: uniqueDeviceIdTemp,
+        uniqueId: CoreUniqueId(),
         entityUniqueId: EntityUniqueId(switcherDevice.deviceId),
         cbjEntityName: CbjEntityName(switcherDevice.switcherName),
         entityOriginalName: EntityOriginalName(switcherDevice.switcherName),
         deviceOriginalName: DeviceOriginalName(switcherDevice.switcherName),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('switcher'),
+        deviceVendor: DeviceVendor(null),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel:
             DeviceSenderDeviceModel(switcherDevice.deviceType.toString()),
         senderId: DeviceSenderId(),
@@ -101,10 +99,13 @@ class SwitcherHelpers {
         deviceUniqueId: DeviceUniqueId('0'),
         deviceHostName: DeviceHostName('0'),
         deviceMdns: DeviceMdns('0'),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId(),
+        deviceCbjUniqueId:
+            CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 
       return switcherV2De;
@@ -118,13 +119,15 @@ class SwitcherHelpers {
       }
       final SwitcherSmartPlugEntity switcherSmartPlugDe =
           SwitcherSmartPlugEntity(
-        uniqueId: uniqueDeviceIdTemp,
+        uniqueId: CoreUniqueId(),
         entityUniqueId: EntityUniqueId(switcherDevice.deviceId),
         cbjEntityName: CbjEntityName(switcherDevice.switcherName),
         entityOriginalName: EntityOriginalName(switcherDevice.switcherName),
         deviceOriginalName: DeviceOriginalName(switcherDevice.switcherName),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('switcher'),
+        deviceVendor: DeviceVendor(null),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel:
             DeviceSenderDeviceModel(switcherDevice.deviceType.toString()),
         senderId: DeviceSenderId(),
@@ -138,17 +141,20 @@ class SwitcherHelpers {
         devicePort: DevicePort(switcherDevice.port.toString()),
         deviceHostName: DeviceHostName('0'),
         deviceMdns: DeviceMdns('0'),
+        srvResourceRecord: DeviceSrvResourceRecord(),
+        ptrResourceRecord: DevicePtrResourceRecord(),
         devicesMacAddress: DevicesMacAddress(switcherDevice.macAddress),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId(),
+        deviceCbjUniqueId:
+            CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 
       return switcherSmartPlugDe;
     }
 
-    logger.i(
+    icLogger.i(
       'Please add new Switcher device type ${switcherDevice.deviceType}',
     );
     return null;

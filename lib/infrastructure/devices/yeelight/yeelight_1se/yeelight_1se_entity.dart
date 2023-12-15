@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
 import 'package:dartz/dartz.dart';
 import 'package:yeedart/yeedart.dart';
 
@@ -19,6 +19,8 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -31,6 +33,8 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -44,7 +48,8 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required super.lightColorValue,
     required super.lightBrightness,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.yeelight.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.yeelight.toString()),
         );
 
   factory Yeelight1SeEntity.fromGeneric(GenericRgbwLightDE genericDevice) {
@@ -54,6 +59,8 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,
@@ -66,6 +73,8 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
       deviceLastKnownIp: genericDevice.deviceLastKnownIp,
       deviceHostName: genericDevice.deviceHostName,
       deviceMdns: genericDevice.deviceMdns,
+      srvResourceRecord: genericDevice.srvResourceRecord,
+      ptrResourceRecord: genericDevice.ptrResourceRecord,
       devicesMacAddress: genericDevice.devicesMacAddress,
       entityKey: genericDevice.entityKey,
       requestTimeStamp: genericDevice.requestTimeStamp,
@@ -126,36 +135,37 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
             () async {
       try {
         try {
-          if (newEntity.lightSwitchState!.getOrCrash() !=
-                  lightSwitchState!.getOrCrash() ||
+          if (newEntity.lightSwitchState.getOrCrash() !=
+                  lightSwitchState.getOrCrash() ||
               entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
             final EntityActions? actionToPreform =
-                EnumHelperCbj.stringToDeviceAction(
-              newEntity.lightSwitchState!.getOrCrash(),
+                EntityUtils.stringToDeviceAction(
+              newEntity.lightSwitchState.getOrCrash(),
             );
 
             if (actionToPreform == EntityActions.on) {
               (await turnOnLight()).fold(
                 (l) {
-                  logger.e('Error turning Yeelight light on\n$l');
+                  icLogger.e('Error turning Yeelight light on\n$l');
                   throw l;
                 },
                 (r) {
-                  logger.i('Yeelight light turn on success');
+                  icLogger.i('Yeelight light turn on success');
                 },
               );
             } else if (actionToPreform == EntityActions.off) {
               (await turnOffLight()).fold(
                 (l) {
-                  logger.e('Error turning Yeelight light off\n$l');
+                  icLogger.e('Error turning Yeelight light off\n$l');
                   throw l;
                 },
                 (r) {
-                  logger.i('Yeelight light turn off success');
+                  icLogger.i('Yeelight light turn off success');
                 },
               );
             } else {
-              logger.i('actionToPreform is not set correctly on Yeelight 1SE');
+              icLogger
+                  .i('actionToPreform is not set correctly on Yeelight 1SE');
             }
           }
 
@@ -168,11 +178,11 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
             ))
                 .fold(
               (l) {
-                logger.e('Error changing Yeelight ColorTemper\n$l');
+                icLogger.e('Error changing Yeelight ColorTemper\n$l');
                 throw l;
               },
               (r) {
-                logger.i('Yeelight changed ColorTemper successfully');
+                icLogger.i('Yeelight changed ColorTemper successfully');
               },
             );
           }
@@ -194,11 +204,11 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
             ))
                 .fold(
               (l) {
-                logger.e('Error changing Yeelight light color\n$l');
+                icLogger.e('Error changing Yeelight light color\n$l');
                 throw l;
               },
               (r) {
-                logger.i('Yeelight changed color successfully');
+                icLogger.i('Yeelight changed color successfully');
               },
             );
           }
@@ -208,22 +218,22 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
               entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
             (await setBrightness(newEntity.lightBrightness.getOrCrash())).fold(
               (l) {
-                logger.e('Error changing Yeelight brightness\n$l');
+                icLogger.e('Error changing Yeelight brightness\n$l');
                 throw l;
               },
               (r) {
-                logger.i('Yeelight changed brightness successfully');
+                icLogger.i('Yeelight changed brightness successfully');
               },
             );
           }
           entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
         } catch (e) {
-          logger.e('Error executing Yeelight current state\n$e');
+          icLogger.e('Error executing Yeelight current state\n$e');
         } finally {
           yeelightPackageObject?.disconnect();
         }
       } catch (e) {
-        logger.e('Yeelight throws exception on disconnect\n$e');
+        icLogger.e('Yeelight throws exception on disconnect\n$e');
         entityStateGRPC =
             EntityState(EntityStateGRPC.newStateFailed.toString());
       }
@@ -241,7 +251,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
 
       return right(unit);
     } catch (e) {
-      logger.e('Error in Yeelight Device setting turn on\n$e');
+      icLogger.e('Error in Yeelight Device setting turn on\n$e');
 
       return left(const CoreFailure.unexpected());
     }
@@ -270,7 +280,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
 
       return right(unit);
     } catch (e) {
-      logger.e('Error in Yeelight Device setting brightness\n$e');
+      icLogger.e('Error in Yeelight Device setting brightness\n$e');
 
       return left(const CoreFailure.unexpected());
     }
@@ -295,7 +305,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
 
       return right(unit);
     } catch (e) {
-      logger.e('Error in Yeelight Device setting color temprature\n$e');
+      icLogger.e('Error in Yeelight Device setting color temprature\n$e');
 
       return left(const CoreFailure.unexpected());
     }
@@ -318,7 +328,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
       await _sendChangeColorHsv();
       return right(unit);
     } catch (e) {
-      logger.e('Error in Yeelight Device setting color hue\n$e');
+      icLogger.e('Error in Yeelight Device setting color hue\n$e');
 
       return left(const CoreFailure.unexpected());
     }
@@ -333,7 +343,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   Future<Either<CoreFailure, Unit>> _sendTurnOffDevice() async {
     try {
       yeelightPackageObject = Device(
-        address: InternetAddress(deviceLastKnownIp.getOrCrash()),
+        address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
         port: int.parse(devicePort.getOrCrash()),
       );
 
@@ -362,7 +372,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   Future<Either<CoreFailure, Unit>> _sendTurnOnDevice() async {
     try {
       yeelightPackageObject = Device(
-        address: InternetAddress(deviceLastKnownIp.getOrCrash()),
+        address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
         port: int.parse(devicePort.getOrCrash()),
       );
 
@@ -392,7 +402,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     try {
       try {
         yeelightPackageObject = Device(
-          address: InternetAddress(deviceLastKnownIp.getOrCrash()),
+          address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
           port: int.parse(devicePort.getOrCrash()),
         );
 
@@ -434,7 +444,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
         return right(unit);
       }
     } catch (error) {
-      logger.e('Error in Yeelight Device setting brightness\n$error');
+      icLogger.e('Error in Yeelight Device setting brightness\n$error');
       return left(const CoreFailure.unexpected());
     }
   }
@@ -443,7 +453,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     try {
       try {
         yeelightPackageObject = Device(
-          address: InternetAddress(deviceLastKnownIp.getOrCrash()),
+          address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
           port: int.parse(devicePort.getOrCrash()),
         );
 
@@ -486,7 +496,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     try {
       try {
         yeelightPackageObject = Device(
-          address: InternetAddress(deviceLastKnownIp.getOrCrash()),
+          address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
           port: int.parse(devicePort.getOrCrash()),
         );
         int saturationValue;

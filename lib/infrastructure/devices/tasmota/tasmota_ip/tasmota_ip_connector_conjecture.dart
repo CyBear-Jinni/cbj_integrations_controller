@@ -1,21 +1,20 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_led/tasmota_ip_led_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_switch/tasmota_ip_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 import 'package:http/http.dart';
-import 'package:network_tools/network_tools.dart';
 
-class TasmotaIpConnectorConjecture
-    implements AbstractCompanyConnectorConjecture {
+class TasmotaIpConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory TasmotaIpConnectorConjecture() {
     return _instance;
   }
@@ -26,31 +25,33 @@ class TasmotaIpConnectorConjecture
       TasmotaIpConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.tasmota;
 
   // This is how you can interact tasmota using network calls.
   // http://ip/cm?cmnd=SetOption19%200
   // http://ip/cm?cmnd=MqttHost%200
 
-  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
-    required ActiveHost activeHost,
-  }) async {
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
     final List<CoreUniqueId?> tempCoreUniqueId = [];
+    final String? hostName = entity.deviceHostName.getOrCrash();
+    if (hostName == null || hostName.isEmpty) {
+      return null;
+    }
 
-    for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
+    for (final DeviceEntityAbstract savedDevice in vendorEntities.values) {
       if ((savedDevice is TasmotaIpSwitchEntity) &&
-          await activeHost.hostName ==
-              savedDevice.entityUniqueId.getOrCrash()) {
-        return [];
+          hostName == savedDevice.entityUniqueId.getOrCrash()) {
+        return null;
       } else if (savedDevice is GenericLightDE &&
-          await activeHost.hostName ==
-              savedDevice.entityUniqueId.getOrCrash()) {
+          hostName == savedDevice.entityUniqueId.getOrCrash()) {
         /// Device exist as generic and needs to get converted to non generic type for this vendor
         tempCoreUniqueId.add(savedDevice.uniqueId);
         break;
-      } else if (await activeHost.hostName ==
-          savedDevice.entityUniqueId.getOrCrash()) {
-        logger.w(
+      } else if (hostName == savedDevice.entityUniqueId.getOrCrash()) {
+        icLogger.w(
           'Tasmota IP device type supported but implementation is missing here',
         );
       }
@@ -58,33 +59,35 @@ class TasmotaIpConnectorConjecture
     // TODO: Create list of CoreUniqueId and populate it with all the
     //  components saved devices that already exist
     final List<String> componentsInDevice =
-        await getAllComponentsOfDevice(activeHost);
+        await getAllComponentsOfDevice(entity);
 
     final List<DeviceEntityAbstract> tasmotaIpDevices =
         await TasmotaIpHelpers.addDiscoveredDevice(
-      activeHost: activeHost,
+      entity: entity,
       uniqueDeviceIdList: tempCoreUniqueId,
       componentInDeviceNumberLabelList: componentsInDevice,
     );
 
     if (tasmotaIpDevices.isEmpty) {
-      return [];
+      return null;
     }
 
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
+
     for (final DeviceEntityAbstract entityAsDevice in tasmotaIpDevices) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
+      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice,
+      );
 
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
+      addedDevice.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
 
-      companyDevices.addEntries([deviceAsEntry]);
-
-      logger.t(
+      icLogger.t(
         'New Tasmota Ip device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
-    return tasmotaIpDevices;
+    return addedDevice;
   }
 
   @override
@@ -92,21 +95,21 @@ class TasmotaIpConnectorConjecture
     DeviceEntityAbstract tasmotaIpDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[tasmotaIpDE.entityUniqueId.getOrCrash()];
+        vendorEntities[tasmotaIpDE.entityUniqueId.getOrCrash()];
 
     if (device is TasmotaIpSwitchEntity) {
       device.executeDeviceAction(newEntity: tasmotaIpDE);
     } else {
-      logger.w('TasmotaIp device type does not exist');
+      icLogger.w('TasmotaIp device type does not exist');
     }
   }
 
   /// Getting all of the components/gpio configuration of the device.
   /// Doc of all components: https://tasmota.github.io/docs/Components/#tasmota
   Future<List<String>> getAllComponentsOfDevice(
-    ActiveHost activeHost,
+    DeviceEntityAbstract entity,
   ) async {
-    final String deviceIp = activeHost.address;
+    final String? deviceIp = entity.devicesMacAddress.getOrCrash();
     const String getComponentsCommand = 'cm?cmnd=Gpio';
 
     Map<String, Map<String, String>>? responseJson;
@@ -137,7 +140,7 @@ class TasmotaIpConnectorConjecture
         ),
       );
     } catch (e) {
-      logger.e(e);
+      icLogger.e(e);
     }
     if (responseJson == null || responseJson.isEmpty) {
       return [];
@@ -146,7 +149,7 @@ class TasmotaIpConnectorConjecture
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericLightDE) {
@@ -156,11 +159,11 @@ class TasmotaIpConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
   }

@@ -1,12 +1,12 @@
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_security_camera_device/generic_security_camera_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_security_camera_device/generic_security_camera_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_security_camera_entity/generic_security_camera_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_security_camera_entity/generic_security_camera_value_objects.dart';
 import 'package:dartz/dartz.dart';
 
 class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
@@ -16,6 +16,8 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -28,6 +30,8 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -35,7 +39,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
     required super.deviceCbjUniqueId,
     required super.securityCameraSuspendState,
   }) : super(
-          deviceVendor: DeviceVendor(
+          cbjDeviceVendor: CbjDeviceVendor(
             VendorsAndServices.cyBearJinniAppSmartEntity.toString(),
           ),
         );
@@ -49,6 +53,8 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,
@@ -61,6 +67,8 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
       deviceLastKnownIp: genericDevice.deviceLastKnownIp,
       deviceHostName: genericDevice.deviceHostName,
       deviceMdns: genericDevice.deviceMdns,
+      srvResourceRecord: genericDevice.srvResourceRecord,
+      ptrResourceRecord: genericDevice.ptrResourceRecord,
       devicesMacAddress: genericDevice.devicesMacAddress,
       entityKey: genericDevice.entityKey,
       requestTimeStamp: genericDevice.requestTimeStamp,
@@ -86,20 +94,19 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
     try {
       if (newEntity.securityCameraSuspendState!.getOrCrash() !=
           securityCameraSuspendState!.getOrCrash()) {
-        final EntityActions? actionToPreform =
-            EnumHelperCbj.stringToDeviceAction(
+        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
           newEntity.securityCameraSuspendState!.getOrCrash(),
         );
 
         if (actionToPreform == EntityActions.suspend) {
           (await suspendSecurityCamera()).fold((l) {
-            logger.e('Error suspending Cbj Computer');
+            icLogger.e('Error suspending Cbj Computer');
             throw l;
           }, (r) {
-            logger.i('Cbj Computer suspended success');
+            icLogger.i('Cbj Computer suspended success');
           });
         } else {
-          logger.e('actionToPreform is not set correctly Cbj Computer');
+          icLogger.e('actionToPreform is not set correctly Cbj Computer');
         }
       }
 
@@ -131,7 +138,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
         GenericSecurityCameraSuspendState(EntityActions.itIsFalse.toString());
 
     await CbjSmartDeviceClient.suspendCbjSmartDeviceHostDevice(
-      deviceLastKnownIp.getOrCrash(),
+      deviceLastKnownIp.getOrCrash()!,
       entityUniqueId.getOrCrash(),
     );
 
@@ -146,7 +153,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
   @override
   Future<Either<CoreFailure, Unit>> shutDownSecurityCamera() async {
     await CbjSmartDeviceClient.shutDownCbjSmartDeviceHostDevice(
-      deviceLastKnownIp.getOrCrash(),
+      deviceLastKnownIp.getOrCrash()!,
       entityUniqueId.getOrCrash(),
     );
 

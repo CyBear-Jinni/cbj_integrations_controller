@@ -1,18 +1,18 @@
 import 'dart:async';
+import 'dart:collection';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_device_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
-import 'package:network_tools/network_tools.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_computer_entity/generic_smart_computer_entity.dart';
 
-class CbjDevicesConnectorConjecture
-    implements AbstractCompanyConnectorConjecture {
+class CbjDevicesConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory CbjDevicesConnectorConjecture() {
     return _instance;
   }
@@ -23,49 +23,56 @@ class CbjDevicesConnectorConjecture
       CbjDevicesConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  VendorsAndServices get vendorsAndServices =>
+      VendorsAndServices.cbjDeviceSmartEntity;
 
-  Future<List<DeviceEntityAbstract>> addNewDeviceByHostInfo({
-    required ActiveHost activeHost,
-  }) async {
-    for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
+    final String? hostName = entity.deviceHostName.getOrCrash();
+    if (hostName == null) {
+      return null;
+    }
+    for (final DeviceEntityAbstract savedDevice in vendorEntities.values) {
       if ((savedDevice is CbjSmartComputerEntity) &&
-          await activeHost.hostName ==
-              savedDevice.entityUniqueId.getOrCrash()) {
-        return [];
-      } else if (await activeHost.hostName ==
-          savedDevice.entityUniqueId.getOrCrash()) {
-        logger.w(
+          hostName == savedDevice.entityUniqueId.getOrCrash()) {
+        return null;
+      } else if (hostName == savedDevice.entityUniqueId.getOrCrash()) {
+        icLogger.w(
           'Cbj device type supported but implementation is missing here',
         );
       }
     }
 
     final List<CbjSmartDeviceInfo?> componentsInDevice =
-        await getAllComponentsOfDevice(activeHost);
+        await getAllComponentsOfDevice(entity);
+    final String address = entity.deviceLastKnownIp.getOrCrash()!;
     final List<DeviceEntityAbstract> devicesList =
         CbjDevicesHelpers.addDiscoveredDevice(
       componentsInDevice: componentsInDevice,
-      deviceAddress: activeHost.address,
+      deviceAddress: address,
     );
     if (devicesList.isEmpty) {
-      return [];
+      return null;
     }
 
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
+
     for (final DeviceEntityAbstract entityAsDevice in devicesList) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
+      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice,
+      );
 
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
+      addedDevice.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
 
-      companyDevices.addEntries([deviceAsEntry]);
-
-      logger.t(
+      icLogger.t(
         'New Cbj Smart Device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
-    return devicesList;
+    return addedDevice;
   }
 
   @override
@@ -73,7 +80,7 @@ class CbjDevicesConnectorConjecture
     DeviceEntityAbstract cbjDevicesDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[cbjDevicesDE.entityUniqueId.getOrCrash()];
+        vendorEntities[cbjDevicesDE.entityUniqueId.getOrCrash()];
 
     // if (device == null) {
     //   setTheSameDeviceFromAllDevices(cbjDevicesDE);
@@ -84,7 +91,7 @@ class CbjDevicesConnectorConjecture
     if (device != null && (device is CbjSmartComputerEntity)) {
       device.executeDeviceAction(newEntity: cbjDevicesDE);
     } else {
-      logger.w('CbjDevices device type ${device.runtimeType} does not exist');
+      icLogger.w('CbjDevices device type ${device.runtimeType} does not exist');
     }
   }
   //
@@ -96,15 +103,15 @@ class CbjDevicesConnectorConjecture
   // // }
 
   Future<List<CbjSmartDeviceInfo?>> getAllComponentsOfDevice(
-    ActiveHost activeHost,
+    DeviceEntityAbstract entity,
   ) async {
     final List<CbjSmartDeviceInfo?> devicesInfo =
-        await CbjSmartDeviceClient.getCbjSmartDeviceHostDevicesInfo(activeHost);
+        await CbjSmartDeviceClient.getCbjSmartDeviceHostDevicesInfo(entity);
     return devicesInfo;
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericSmartComputerDE) {
@@ -112,12 +119,22 @@ class CbjDevicesConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future setEntityState({
+    required HashSet<String> ids,
+    required EntityProperties property,
+    required EntityActions action,
+    required dynamic value,
+  }) async {
+    icLogger.e('setEntityState need to get writen');
   }
 }

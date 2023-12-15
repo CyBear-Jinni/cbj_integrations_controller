@@ -6,23 +6,23 @@ import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
 import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/hub_client/hub_client.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class HubClientDemo {
   ///  Creates a stream with the Hub
@@ -30,7 +30,7 @@ class HubClientDemo {
     try {
       await firstConnection();
     } catch (e) {
-      logger.e('Error in demo Hub\n$e');
+      icLogger.e('Error in demo Hub\n$e');
     }
   }
 
@@ -201,8 +201,10 @@ class HubClientDemo {
       uniqueId:
           CoreUniqueId.fromUniqueString('96386cd0-419b-11ed-8246-e17a279f4d89'),
       entityUniqueId: EntityUniqueId('63b298'),
-      deviceVendor:
-          DeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
+      cbjDeviceVendor:
+          CbjDeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
+      deviceVendor: DeviceVendor(null),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Guy Blinds'),
       entityOriginalName: EntityOriginalName('Guy Blinds'),
       deviceOriginalName: DeviceOriginalName('Guy Blinds'),
@@ -223,6 +225,8 @@ class HubClientDemo {
       deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
       deviceHostName: DeviceHostName('deviceHostName'),
       deviceMdns: DeviceMdns('deviceMdns'),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
@@ -247,7 +251,9 @@ class HubClientDemo {
       uniqueId:
           CoreUniqueId.fromUniqueString('c90137f2-419b-11ed-8246-e17a279f4d89'),
       entityUniqueId: EntityUniqueId('67600068c44f33f5b515'),
-      deviceVendor: DeviceVendor(VendorsAndServices.tuyaSmart.toString()),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.tuyaSmart.toString()),
+      deviceVendor: DeviceVendor(null),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Guy Ceiling Button'),
       entityOriginalName: EntityOriginalName('Guy Ceiling Button'),
       deviceOriginalName: DeviceOriginalName('Guy Ceiling Button'),
@@ -266,6 +272,8 @@ class HubClientDemo {
       deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
       deviceHostName: DeviceHostName('deviceHostName'),
       deviceMdns: DeviceMdns('deviceMdns'),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
@@ -289,7 +297,9 @@ class HubClientDemo {
       uniqueId:
           CoreUniqueId.fromUniqueString('a31523m6-463s-32ge-7426-g33c642r7m25'),
       entityUniqueId: EntityUniqueId('67600068c44f33f5b515'),
-      deviceVendor: DeviceVendor(VendorsAndServices.tuyaSmart.toString()),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.tuyaSmart.toString()),
+      deviceVendor: DeviceVendor(null),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Guy Bedroom Button'),
       entityOriginalName: EntityOriginalName('Guy Bedroom Button'),
       deviceOriginalName: DeviceOriginalName('Guy Bedroom Button'),
@@ -308,6 +318,8 @@ class HubClientDemo {
       deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
       deviceHostName: DeviceHostName('deviceHostName'),
       deviceMdns: DeviceMdns('deviceMdns'),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
@@ -331,8 +343,10 @@ class HubClientDemo {
       uniqueId:
           CoreUniqueId.fromUniqueString('65d84b10-434d-11ed-817a-7d350fb52f91'),
       entityUniqueId: EntityUniqueId('65fd2f'),
-      deviceVendor:
-          DeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
+      cbjDeviceVendor:
+          CbjDeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
+      deviceVendor: DeviceVendor(null),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Boiler'),
       entityOriginalName: EntityOriginalName('Boiler'),
       deviceOriginalName: DeviceOriginalName('Boiler'),
@@ -352,6 +366,8 @@ class HubClientDemo {
       deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
       deviceHostName: DeviceHostName('deviceHostName'),
       deviceMdns: DeviceMdns('deviceMdns'),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
@@ -375,7 +391,9 @@ class HubClientDemo {
       uniqueId:
           CoreUniqueId.fromUniqueString('7189ed76-4351-11ed-b249-63fd7e165c16'),
       entityUniqueId: EntityUniqueId('bf4bccdaf68347e31dhiut'),
-      deviceVendor: DeviceVendor(VendorsAndServices.tuyaSmart.toString()),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.tuyaSmart.toString()),
+      deviceVendor: DeviceVendor(null),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Dining Room Ceiling'),
       entityOriginalName: EntityOriginalName('Dining Room Ceiling'),
       deviceOriginalName: DeviceOriginalName('Dining Room Ceiling'),
@@ -401,6 +419,8 @@ class HubClientDemo {
       deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
       deviceHostName: DeviceHostName('deviceHostName'),
       deviceMdns: DeviceMdns('deviceMdns'),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
@@ -425,7 +445,9 @@ class HubClientDemo {
       uniqueId:
           CoreUniqueId.fromUniqueString('sfds344t-sdf3-fd3d-24s4-bd2sdf3n5rfd'),
       entityUniqueId: EntityUniqueId('dn2fs1sgnxzzx34sh53qdf'),
-      deviceVendor: DeviceVendor(VendorsAndServices.lifx.toString()),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lifx.toString()),
+      deviceVendor: DeviceVendor(null),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Dining Room Stove'),
       entityOriginalName: EntityOriginalName('Dining Room Light 1'),
       deviceOriginalName: DeviceOriginalName('Dining Room Light 1'),
@@ -446,6 +468,8 @@ class HubClientDemo {
       deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
       deviceHostName: DeviceHostName('deviceHostName'),
       deviceMdns: DeviceMdns('deviceMdns'),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
@@ -469,7 +493,9 @@ class HubClientDemo {
       uniqueId:
           CoreUniqueId.fromUniqueString('gcvweg3y-bv2s-cvwe-bdmf-7h4f3f2dw2d1'),
       entityUniqueId: EntityUniqueId('4gj76jykeg3fsdf2dsq11f'),
-      deviceVendor: DeviceVendor(VendorsAndServices.lifx.toString()),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lifx.toString()),
+      deviceVendor: DeviceVendor(null),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Ami Room Ceiling'),
       entityOriginalName: EntityOriginalName('Ami Workshop Light'),
       deviceOriginalName: DeviceOriginalName('Ami Workshop Light'),
@@ -490,6 +516,8 @@ class HubClientDemo {
       deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
       deviceHostName: DeviceHostName('deviceHostName'),
       deviceMdns: DeviceMdns('deviceMdns'),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
@@ -514,7 +542,9 @@ class HubClientDemo {
       uniqueId:
           CoreUniqueId.fromUniqueString('wfdsg2w6-fgde-234s-vbz2-b234jmgvbfd6'),
       entityUniqueId: EntityUniqueId('cb3rdfh2ttgl9dgbvnsudt'),
-      deviceVendor: DeviceVendor(VendorsAndServices.espHome.toString()),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.espHome.toString()),
+      deviceVendor: DeviceVendor(null),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Dining Room Light 2'),
       entityOriginalName: EntityOriginalName('Dining Room Light 2'),
       deviceOriginalName: DeviceOriginalName('Dining Room Light 2'),
@@ -533,6 +563,8 @@ class HubClientDemo {
       deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
       deviceHostName: DeviceHostName('deviceHostName'),
       deviceMdns: DeviceMdns('deviceMdns'),
+      srvResourceRecord: DeviceSrvResourceRecord(),
+      ptrResourceRecord: DevicePtrResourceRecord(),
       devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),

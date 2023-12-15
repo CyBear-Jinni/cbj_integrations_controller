@@ -1,16 +1,16 @@
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_esphome_login/generic_esphome_login_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_ewelink_login/generic_ewelink_login_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_lifx_login/generic_lifx_login_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_xiaomi_mi_login/generic_xiaomi_mi_login_dtos.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 
 class LoginEntityDtoAbstract {
   LoginEntityDtoAbstract();
 
   factory LoginEntityDtoAbstract.fromDomain() {
-    logger.t('LoginEntityDtoAbstract.fromDomain');
+    icLogger.t('LoginEntityDtoAbstract.fromDomain');
     return LoginEntityDtoAbstract();
   }
 
@@ -36,12 +36,12 @@ class LoginEntityDtoAbstract {
   final String loginDtoClassInstance = (LoginEntityDtoAbstract).toString();
 
   Map<String, dynamic> toJson() {
-    logger.t('LoginEntityDtoAbstract to Json');
+    icLogger.t('LoginEntityDtoAbstract to Json');
     return {};
   }
 
   LoginEntityAbstract toDomain() {
-    logger.t('ToDomain');
+    icLogger.t('ToDomain');
     return LoginEntityEmpty();
   }
 }

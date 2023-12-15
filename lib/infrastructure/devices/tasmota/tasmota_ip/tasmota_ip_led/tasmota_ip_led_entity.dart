@@ -1,12 +1,12 @@
-import 'package:cbj_integrations_controller/domain/mqtt_server/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_value_objects.dart';
 import 'package:dartz/dartz.dart';
 
 // TODO: Make the commends work, currently this object does not work
@@ -28,6 +28,8 @@ class TasmotaIpLedEntity extends GenericLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -40,6 +42,8 @@ class TasmotaIpLedEntity extends GenericLightDE {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -47,7 +51,8 @@ class TasmotaIpLedEntity extends GenericLightDE {
     required super.deviceCbjUniqueId,
     required super.lightSwitchState,
   }) : super(
-          deviceVendor: DeviceVendor(VendorsAndServices.tasmota.toString()),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.tasmota.toString()),
         );
 
   factory TasmotaIpLedEntity.fromGeneric(GenericLightDE genericDevice) {
@@ -57,6 +62,8 @@ class TasmotaIpLedEntity extends GenericLightDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,
@@ -69,6 +76,8 @@ class TasmotaIpLedEntity extends GenericLightDE {
       deviceLastKnownIp: genericDevice.deviceLastKnownIp,
       deviceHostName: genericDevice.deviceHostName,
       deviceMdns: genericDevice.deviceMdns,
+      srvResourceRecord: genericDevice.srvResourceRecord,
+      ptrResourceRecord: genericDevice.ptrResourceRecord,
       devicesMacAddress: genericDevice.devicesMacAddress,
       entityKey: genericDevice.entityKey,
       requestTimeStamp: genericDevice.requestTimeStamp,
@@ -93,36 +102,35 @@ class TasmotaIpLedEntity extends GenericLightDE {
     }
 
     try {
-      if (newEntity.lightSwitchState!.getOrCrash() !=
-              lightSwitchState!.getOrCrash() ||
+      if (newEntity.lightSwitchState.getOrCrash() !=
+              lightSwitchState.getOrCrash() ||
           entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform =
-            EnumHelperCbj.stringToDeviceAction(
-          newEntity.lightSwitchState!.getOrCrash(),
+        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
+          newEntity.lightSwitchState.getOrCrash(),
         );
 
         if (actionToPreform == EntityActions.on) {
           (await turnOnLight()).fold(
             (l) {
-              logger.e('Error turning TasmotaIp light on');
+              icLogger.e('Error turning TasmotaIp light on');
               throw l;
             },
             (r) {
-              logger.i('TasmotaIp light turn on success');
+              icLogger.i('TasmotaIp light turn on success');
             },
           );
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffLight()).fold(
             (l) {
-              logger.e('Error turning TasmotaIp light off');
+              icLogger.e('Error turning TasmotaIp light off');
               throw l;
             },
             (r) {
-              logger.i('TasmotaIp light turn off success');
+              icLogger.i('TasmotaIp light turn off success');
             },
           );
         } else {
-          logger.e('actionToPreform is not set correctly on TasmotaIp Led');
+          icLogger.e('actionToPreform is not set correctly on TasmotaIp Led');
         }
       }
       entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());

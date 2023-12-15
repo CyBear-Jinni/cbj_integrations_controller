@@ -102,7 +102,7 @@ class _VendorsRepository implements IVendorsRepository {
   ) async {
     try {
       final String loginDtoAsString =
-          VendorHelper.convertDomainToJsonString(login);
+          VendorUtils.convertDomainToJsonString(login);
 
       final ClientStatusRequests clientStatusRequests = ClientStatusRequests(
         allRemoteCommands: loginDtoAsString,

@@ -1,15 +1,15 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_printer/hp_printer_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_printer_device/generic_printer_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_printer_entity/generic_printer_entity.dart';
 
-class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class HpConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory HpConnectorConjecture() {
     return _instance;
   }
@@ -19,54 +19,55 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
   static final HpConnectorConjecture _instance =
       HpConnectorConjecture._singletonContractor();
 
+  @override
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.hp;
+
   static const List<String> mdnsTypes = ['_hplib._tcp'];
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
+    final String? ip = entity.deviceLastKnownIp.getOrCrash();
 
-  /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-  }) async {
-    CoreUniqueId? tempCoreUniqueId;
+    final String? mdnsName = entity.deviceMdns.getOrCrash();
+    if (mdnsName == null) {
+      return null;
+    }
 
-    for (final DeviceEntityAbstract device in companyDevices.values) {
+    for (final DeviceEntityAbstract device in vendorEntities.values) {
       if (device is HpPrinterEntity &&
-          (mDnsName == device.entityUniqueId.getOrCrash() ||
-              ip == device.deviceLastKnownIp.getOrCrash())) {
-        return [];
-      } else if (mDnsName == device.entityUniqueId.getOrCrash()) {
-        logger.w(
+          (mdnsName == device.entityUniqueId.getOrCrash() ||
+              (ip != null && ip == device.deviceLastKnownIp.getOrCrash()))) {
+        return null;
+      } else if (mdnsName == device.entityUniqueId.getOrCrash()) {
+        icLogger.w(
           'HP device type supported but implementation is missing here',
         );
-        return [];
+        return null;
       }
     }
 
     final List<DeviceEntityAbstract> hpDevice = HpHelpers.addDiscoveredDevice(
-      mDnsName: mDnsName,
-      ip: ip,
-      port: port,
-      uniqueDeviceId: tempCoreUniqueId,
+      entity,
     );
 
     if (hpDevice.isEmpty) {
-      return [];
+      return null;
     }
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
     for (final DeviceEntityAbstract entityAsDevice in hpDevice) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
+      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice,
+      );
 
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
-
-      companyDevices.addEntries([deviceAsEntry]);
+      addedDevice.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
     }
-    logger.i('New HP device got added');
-    return hpDevice;
+    icLogger.i('New HP device got added');
+    return addedDevice;
   }
 
   @override
@@ -74,17 +75,17 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
     DeviceEntityAbstract hpDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[hpDE.entityUniqueId.getOrCrash()];
+        vendorEntities[hpDE.entityUniqueId.getOrCrash()];
 
     if (device is HpPrinterEntity) {
       device.executeDeviceAction(newEntity: hpDE);
     } else {
-      logger.w('HP device type does not exist');
+      icLogger.w('HP device type does not exist');
     }
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericPrinterDE) {
@@ -92,11 +93,11 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Switcher device could not get loaded from the server');
+      icLogger.w('Switcher device could not get loaded from the server');
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
   }

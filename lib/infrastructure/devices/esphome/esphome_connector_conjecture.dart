@@ -1,18 +1,19 @@
 import 'dart:async';
+import 'dart:collection';
 
-import 'package:cbj_integrations_controller/domain/saved_devices/i_saved_devices_repo.dart';
+import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/companies_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_light/esphome_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_switch/esphome_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 
-class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class EspHomeConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory EspHomeConnectorConjecture() {
     return _instance;
   }
@@ -22,14 +23,14 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
   static final EspHomeConnectorConjecture _instance =
       EspHomeConnectorConjecture._singletonContractor();
 
-  static const List<String> mdnsTypes = ['_esphomelib._tcp'];
-
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.espHome;
+
+  static const List<String> mdnsTypes = ['_esphomelib._tcp'];
 
   static String? espHomeDevicePass;
 
-  Map<String, DeviceEntityAbstract> get getAllCompanyDevices => companyDevices;
+  Map<String, DeviceEntityAbstract> get getAllCompanyDevices => vendorEntities;
 
   Future<String> accountLogin(
     GenericEspHomeLoginDE genericEspHomeDeviceLoginDE,
@@ -42,44 +43,38 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     return 'Success';
   }
 
-  /// Add new devices to [companyDevices] if not exist
-  Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
-    required String mDnsName,
-    required String ip,
-    required String port,
-    required String address,
-  }) async {
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
     if (espHomeDevicePass == null) {
-      logger.w('ESPHome device got found but missing a password, please add '
+      icLogger.w('ESPHome device got found but missing a password, please add '
           'password for it in the app');
-      return [];
+      return null;
     }
 
     final List<DeviceEntityAbstract> espDevice =
         await EspHomeHelpers.addDiscoveredEntities(
-      mDnsName: mDnsName,
-      port: port,
-      address: address,
+      entity: entity,
       devicePassword: espHomeDevicePass!,
     );
 
+    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
+
     for (final DeviceEntityAbstract entityAsDevice in espDevice) {
-      final DeviceEntityAbstract deviceToAdd = CompaniesConnectorConjecture()
-          .addDiscoveredDeviceToHub(entityAsDevice);
-
       final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(deviceToAdd.entityUniqueId.getOrCrash(), deviceToAdd);
+          MapEntry(entityAsDevice.entityUniqueId.getOrCrash(), entityAsDevice);
+      addedDevice.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
 
-      companyDevices.addEntries([deviceAsEntry]);
-
-      logger.i(
+      icLogger.i(
         'New ESPHome devices name:${entityAsDevice.cbjEntityName.getOrCrash()}',
       );
     }
     // Save state locally so that nodeRED flows will not get created again
     // after restart
     ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
-    return espDevice;
+    return addedDevice;
   }
 
   @override
@@ -87,17 +82,17 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     DeviceEntityAbstract espHomeDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[espHomeDE.entityUniqueId.getOrCrash()];
+        vendorEntities[espHomeDE.entityUniqueId.getOrCrash()];
 
     if (device != null) {
       device.executeDeviceAction(newEntity: espHomeDE);
     } else {
-      logger.w('ESPHome device type does not exist');
+      icLogger.w('ESPHome device type does not exist');
     }
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericLightDE) {
@@ -107,11 +102,11 @@ class EspHomeConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
 
     if (nonGenericDevice == null) {
-      logger.w('EspHome device could not get loaded from the server');
+      icLogger.w('EspHome device could not get loaded from the server');
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
   }

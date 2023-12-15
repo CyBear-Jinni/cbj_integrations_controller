@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:crclib/crclib.dart';
 
 class CbjDevicesApiObject {
@@ -39,7 +39,7 @@ class CbjDevicesApiObject {
 
     if (!isCbjDevicesMessage(data, hexSeparatedLetters) &&
         !isCbjDevicesMessageNew(data, hexSeparatedLetters)) {
-      logger.w('Not a cbjDevices message arrived to here');
+      icLogger.w('Not a cbjDevices message arrived to here');
     }
 
     final CbjDevicesDevicesTypes sDeviceType = getDeviceType(messageBuffer);
@@ -60,7 +60,7 @@ class CbjDevicesApiObject {
     if (sDeviceType == CbjDevicesDevicesTypes.cbjDevicesRunner ||
         sDeviceType == CbjDevicesDevicesTypes.cbjDevicesRunnerMini) {
       if (!isCbjDevicesMessageNew(data, hexSeparatedLetters)) {
-        logger.t('Not new cbjDevices device!');
+        icLogger.t('Not new cbjDevices device!');
       }
 
       final CbjDevicesDeviceDirection cbjDevicesDeviceDirection =
@@ -79,7 +79,7 @@ class CbjDevicesApiObject {
     }
 
     if (!isCbjDevicesMessage(data, hexSeparatedLetters)) {
-      logger.t('Not old cbjDevices device!');
+      icLogger.t('Not old cbjDevices device!');
     }
 
     final CbjDevicesDeviceState cbjDevicesDeviceState =
@@ -175,7 +175,7 @@ class CbjDevicesApiObject {
     } else if (hexModel == '02') {
       sDevicesTypes = CbjDevicesDevicesTypes.cbjDevicesRunnerMini;
     } else {
-      logger.w('New device type? hexModel:$hexModel');
+      icLogger.w('New device type? hexModel:$hexModel');
     }
 
     return sDevicesTypes;
@@ -195,7 +195,7 @@ class CbjDevicesApiObject {
   Future<void> _runPowerCommand(String commandType) async {
     pSession = await _login();
     if (pSession == 'B') {
-      logger.e('CbjDevices run power command error');
+      icLogger.e('CbjDevices run power command error');
       return;
     }
     var data =
@@ -216,13 +216,13 @@ class CbjDevicesApiObject {
   Future<void> stopBlinds() async {
     if (deviceType != CbjDevicesDevicesTypes.cbjDevicesRunner &&
         deviceType != CbjDevicesDevicesTypes.cbjDevicesRunnerMini) {
-      logger.t('Stop blinds support only for blinds');
+      icLogger.t('Stop blinds support only for blinds');
       return;
     }
 
     pSession = await _login2();
     if (pSession == 'B') {
-      logger.e('CbjDevices run position command error');
+      icLogger.e('CbjDevices run position command error');
       return;
     }
     var data =
@@ -242,7 +242,7 @@ class CbjDevicesApiObject {
   Future<void> setPosition({int pos = 0}) async {
     if (deviceType != CbjDevicesDevicesTypes.cbjDevicesRunner &&
         deviceType != CbjDevicesDevicesTypes.cbjDevicesRunnerMini) {
-      logger.t('Set position support only blinds');
+      icLogger.t('Set position support only blinds');
       return;
     }
 
@@ -262,7 +262,7 @@ class CbjDevicesApiObject {
     // final int pos = int.parse(positionCommand, radix: 16);
     pSession = await _login2();
     if (pSession == 'B') {
-      logger.e('CbjDevices run position command error');
+      icLogger.e('CbjDevices run position command error');
       return;
     }
     var data =
@@ -313,7 +313,7 @@ class CbjDevicesApiObject {
 
       return resultSession;
     } catch (error) {
-      logger.e('Cbj smart device login failed due to an error\n$error');
+      icLogger.e('Cbj smart device login failed due to an error\n$error');
       pSession = 'B';
     }
     return pSession!;
@@ -342,7 +342,7 @@ class CbjDevicesApiObject {
 
       return resultSession;
     } catch (error) {
-      logger.e('login2 failed due to an error\n$error');
+      icLogger.e('login2 failed due to an error\n$error');
       pSession = 'B';
     }
     return pSession!;
@@ -584,7 +584,7 @@ class CbjDevicesApiObject {
     } else if (hexModel == '0000') {
       cbjDevicesDeviceState = CbjDevicesDeviceState.off;
     } else {
-      logger.w('CbjDevices state is not recognized: $hexModel');
+      icLogger.w('CbjDevices state is not recognized: $hexModel');
     }
     return cbjDevicesDeviceState;
   }
@@ -605,7 +605,7 @@ class CbjDevicesApiObject {
     } else if (hexModel == '0001') {
       cbjDevicesDeviceState = CbjDevicesDeviceDirection.down;
     } else {
-      logger.w('CbjDevices direction is not recognized: $hexModel');
+      icLogger.w('CbjDevices direction is not recognized: $hexModel');
     }
     return cbjDevicesDeviceState;
   }
@@ -620,7 +620,7 @@ class CbjDevicesApiObject {
       return socket;
     } catch (e) {
       _socket = null;
-      logger.e('Error connecting to socket for cbjDevices device: $e');
+      icLogger.e('Error connecting to socket for cbjDevices device: $e');
       rethrow;
     }
   }

@@ -6,7 +6,7 @@ import 'package:cbj_integrations_controller/domain/routine/value_objects_routine
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:nodered/nodered.dart';
 import 'package:uuid/uuid.dart';
 
@@ -297,6 +297,7 @@ class NodeRedConverter {
       if (nodes.isNotEmpty) {
         nodes += ', ';
       }
+      // ignore: use_string_buffers
       nodes += nodeRedStringNode.value;
       allNodeRedIdToConnectTo.add(nodeRedStringNode.key);
     }

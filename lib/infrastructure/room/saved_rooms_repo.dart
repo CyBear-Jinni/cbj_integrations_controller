@@ -1,13 +1,11 @@
-part of 'package:cbj_integrations_controller/domain/rooms/i_saved_rooms_repo.dart';
+part of 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';
 
 class _SavedRoomsRepo extends ISavedRoomsRepo {
   final HashMap<String, RoomEntity> _allRooms = HashMap<String, RoomEntity>();
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ICbjIntegrationsControllerDbRepository.instance
-        .getRoomsFromDb()
-        .then((value) {
+    await IDbRepository.instance.getRoomsFromDb().then((value) {
       value.fold((l) => null, (rooms) {
         /// Gets all rooms from db, if there are non it will create and return
         /// only a discovered room
@@ -254,7 +252,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
       areaTypes: _allRooms[roomId]!.roomTypes.getOrCrash(),
     );
     final Future<Either<LocalDbFailures, Unit>> saveRoomToDbResponse =
-        ICbjIntegrationsControllerDbRepository.instance.saveRoomsToDb(
+        IDbRepository.instance.saveRoomsToDb(
       roomsList: List<RoomEntity>.from(_allRooms.values),
     );
 
@@ -317,7 +315,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
           areaPurposeType,
         );
         sceneOrFailure.fold(
-          (l) => logger.e('Error creating scene from room type'),
+          (l) => icLogger.e('Error creating scene from room type'),
           (r) {
             //Add scene id to room
             roomEntityTemp.addSceneId(r.uniqueId.getOrCrash());
@@ -327,7 +325,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
       }
       return right(_allRooms[roomEntityTemp.uniqueId.getOrCrash()]!);
     } catch (e) {
-      logger.e('Error setting new scene from room type\n$e');
+      icLogger.e('Error setting new scene from room type\n$e');
       return left(const LocalDbFailures.unexpected());
     }
   }
@@ -396,6 +394,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
       if (charFromAreaType[0] == charFromAreaType[0].toUpperCase()) {
         areaNameEdited += ' ';
       }
+      // ignore: use_string_buffers
       areaNameEdited += charFromAreaType;
     }
     return areaNameEdited;

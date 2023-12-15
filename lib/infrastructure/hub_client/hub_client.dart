@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:async/async.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/utils.dart';
 import 'package:grpc/grpc.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -19,13 +19,13 @@ class HubClient {
 
     channel = await _createCbjHubClient(addressToHub, hubPort);
     channel!.onConnectionStateChanged.listen((event) {
-      logger.i('gRPC connection state $event');
+      icLogger.i('gRPC connection state $event');
     });
     stub = CbjHubClient(channel!);
-    ResponseStream<RequestsAndStatusFromHub> response;
 
     try {
-      response = stub!.clientTransferEntities(
+      final ResponseStream<RequestsAndStatusFromHub> response =
+          stub!.clientTransferEntities(
         AppRequestsToHub.appRequestsToHubStreamBroadcast.stream,
       );
 
@@ -34,7 +34,7 @@ class HubClient {
 
       HubRequestsToApp.streamRequestsToApp.add(response);
     } catch (e) {
-      logger.e('Caught error while stream with hub\n$e');
+      icLogger.e('Caught error while stream with hub\n$e');
       await channel?.shutdown();
     }
   }
@@ -51,7 +51,7 @@ class HubClient {
     try {
       return await stub!.getCompHubInfo(compHubInfo);
     } catch (e) {
-      logger.e('Caught error while trying to get Hub comp info\n$e');
+      icLogger.e('Caught error while trying to get Hub comp info\n$e');
       await channel?.shutdown();
     }
     return null;

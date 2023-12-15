@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 
 class BashCommandsForRaspberryPi {
   static Future<String?> getRaspberryPiDeviceVersion() async {
@@ -14,7 +14,7 @@ class BashCommandsForRaspberryPi {
     }
     piVersion = piVersion.substring(piVersion.indexOf('Model'));
 
-    logger.t('This is the Pi Version: $piVersion');
+    icLogger.t('This is the Pi Version: $piVersion');
 
     piVersion = piVersion.substring(piVersion.indexOf(':') + 2);
 

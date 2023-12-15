@@ -5,9 +5,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
 
   @override
   Future<void> setUpAllFromDb() async {
-    await ICbjIntegrationsControllerDbRepository.instance
-        .getBindingsFromDb()
-        .then((value) {
+    await IDbRepository.instance.getBindingsFromDb().then((value) {
       value.fold((l) => null, (r) async {
         for (final element in r) {
           await addNewBinding(element);
@@ -28,7 +26,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveAndActivateBindingToDb() async {
-    return ICbjIntegrationsControllerDbRepository.instance.saveBindings(
+    return IDbRepository.instance.saveBindings(
       bindingList: List<BindingCbjEntity>.from(_allBindings.values),
     );
   }
@@ -53,8 +51,8 @@ class _BindingCbjRepository implements IBindingCbjRepository {
       await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
       ISavedRoomsRepo.instance
           .addBindingToRoomDiscoveredIfNotExist(tempBindingCbj);
-      final String bindingNodeRedFlowId = await NodeRedRepository.instance
-          .createNewNodeRedBinding(tempBindingCbj);
+      final String bindingNodeRedFlowId =
+          await NodeRedRepository().createNewNodeRedBinding(tempBindingCbj);
       if (bindingNodeRedFlowId.isNotEmpty) {
         tempBindingCbj = tempBindingCbj.copyWith(
           nodeRedFlowId: BindingCbjNodeRedFlowId(bindingNodeRedFlowId),
@@ -117,11 +115,11 @@ class _BindingCbjRepository implements IBindingCbjRepository {
         BindingCbjEntity(
           uniqueId: UniqueId(),
           name: BindingCbjName('Go to sleep ----------- 😴'),
-          backgroundColor:
-              BindingCbjBackgroundColor(Colors.blue.value.toString()),
-          iconCodePoint: BindingCbjIconCodePoint(null
-              // FontAwesomeIcons.school.codePoint.toString(),
-              ),
+          backgroundColor: BindingCbjBackgroundColor(Colors.blue.value),
+          iconCodePoint: BindingCbjIconCodePoint(
+            null,
+            // FontAwesomeIcons.school.codePoint.toString(),
+          ),
           image: BindingCbjBackgroundImage(null),
           automationString: BindingCbjAutomationString(null),
           nodeRedFlowId: BindingCbjNodeRedFlowId(null),

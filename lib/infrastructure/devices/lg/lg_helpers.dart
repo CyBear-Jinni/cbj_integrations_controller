@@ -1,13 +1,9 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 
 class LgHelpers {
-  static List<DeviceEntityAbstract> addDiscoveredDevice({
-    required String mDnsName,
-    required String ip,
-    required String port,
-    required CoreUniqueId? uniqueDeviceId,
-  }) {
+  static List<DeviceEntityAbstract> addDiscoveredDevice(
+    DeviceEntityAbstract entity,
+  ) {
     return [];
     // TODO: Add minimal LG TV api
     // CoreUniqueId uniqueDeviceIdTemp;

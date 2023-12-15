@@ -1,16 +1,16 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xiaomi_io_gpx3021gl/xiaomi_io_gpx3021gl_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:mi_iot_token/mi_iot_token.dart';
-import 'package:network_tools/network_tools.dart';
 
-class XiaomiIoConnectorConjecture
-    implements AbstractCompanyConnectorConjecture {
+class XiaomiIoConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory XiaomiIoConnectorConjecture() {
     return _instance;
   }
@@ -21,7 +21,7 @@ class XiaomiIoConnectorConjecture
       XiaomiIoConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.xiaomi;
 
   MiCloud? miCloud;
 
@@ -43,11 +43,12 @@ class XiaomiIoConnectorConjecture
 
   // Discover from miio package does not work on Linux, but it is better than
   // filtering devices by host names like we do now
-  Future<void> discoverNewDevices({
-    required ActiveHost activeHost,
-  }) async {
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+    DeviceEntityAbstract entity,
+  ) async {
     if (miCloud == null) {
-      logger.w('Please set Xiaomi Mi credentials in the app');
+      icLogger.w('Please set Xiaomi Mi credentials in the app');
     }
 
     // try {
@@ -104,6 +105,7 @@ class XiaomiIoConnectorConjecture
     // } catch (e) {
     //   logger.t('All else');
     // }
+    return null;
   }
 
   @override
@@ -111,17 +113,17 @@ class XiaomiIoConnectorConjecture
     DeviceEntityAbstract xiaomiDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[xiaomiDE.entityUniqueId.getOrCrash()];
+        vendorEntities[xiaomiDE.entityUniqueId.getOrCrash()];
 
     if (device is XiaomiIoGpx4021GlEntity) {
       device.executeDeviceAction(newEntity: xiaomiDE);
     } else {
-      logger.w('XiaomiIo device type does not exist');
+      icLogger.w('XiaomiIo device type does not exist');
     }
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericRgbwLightDE) {
@@ -129,11 +131,11 @@ class XiaomiIoConnectorConjecture
     }
 
     if (nonGenericDevice == null) {
-      logger.w('Xiaomi mi device could not get loaded from the server');
+      icLogger.w('Xiaomi mi device could not get loaded from the server');
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
   }

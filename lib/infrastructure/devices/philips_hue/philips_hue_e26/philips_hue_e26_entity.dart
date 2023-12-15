@@ -1,14 +1,14 @@
 import 'dart:async';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_api/philips_hue_api_light.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_value_objects.dart';
-import 'package:cbj_integrations_controller/utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_value_objects.dart';
 import 'package:dartz/dartz.dart';
 import 'package:yeedart/yeedart.dart';
 
@@ -19,6 +19,8 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
     required super.cbjEntityName,
     required super.entityOriginalName,
     required super.deviceOriginalName,
+    required super.deviceVendor,
+    required super.deviceNetworkLastUpdate,
     required super.stateMassage,
     required super.senderDeviceOs,
     required super.senderDeviceModel,
@@ -31,6 +33,8 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
     required super.deviceLastKnownIp,
     required super.deviceHostName,
     required super.deviceMdns,
+    required super.srvResourceRecord,
+    required super.ptrResourceRecord,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -41,7 +45,7 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
     required this.philipsHueApiLight,
     this.philipsHuePackageObject,
   }) : super(
-          deviceVendor: DeviceVendor(
+          cbjDeviceVendor: CbjDeviceVendor(
             VendorsAndServices.philipsHue.toString(),
           ),
         );
@@ -55,6 +59,8 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
       cbjEntityName: genericDevice.cbjEntityName,
       entityOriginalName: genericDevice.entityOriginalName,
       deviceOriginalName: genericDevice.deviceOriginalName,
+      deviceVendor: genericDevice.deviceVendor,
+      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
       stateMassage: genericDevice.stateMassage,
       senderDeviceOs: genericDevice.senderDeviceOs,
       senderDeviceModel: genericDevice.senderDeviceModel,
@@ -67,6 +73,8 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
       deviceLastKnownIp: genericDevice.deviceLastKnownIp,
       deviceHostName: genericDevice.deviceHostName,
       deviceMdns: genericDevice.deviceMdns,
+      srvResourceRecord: genericDevice.srvResourceRecord,
+      ptrResourceRecord: genericDevice.ptrResourceRecord,
       devicesMacAddress: genericDevice.devicesMacAddress,
       entityKey: genericDevice.entityKey,
       requestTimeStamp: genericDevice.requestTimeStamp,
@@ -79,7 +87,7 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
       /// TODO: Save and pull philips hub generated user name
       /// (created in phillips_hue_helpers.dart)
       philipsHueApiLight: PhilipsHueApiLight(
-        ipAdress: genericDevice.deviceLastKnownIp.getOrCrash(),
+        ipAdress: genericDevice.deviceLastKnownIp.getOrCrash()!,
         username: '',
       ),
     );
@@ -104,36 +112,35 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
     }
 
     try {
-      if (newEntity.lightSwitchState!.getOrCrash() !=
-              lightSwitchState!.getOrCrash() ||
+      if (newEntity.lightSwitchState.getOrCrash() !=
+              lightSwitchState.getOrCrash() ||
           entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform =
-            EnumHelperCbj.stringToDeviceAction(
-          newEntity.lightSwitchState!.getOrCrash(),
+        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
+          newEntity.lightSwitchState.getOrCrash(),
         );
 
         if (actionToPreform == EntityActions.on) {
           (await turnOnLight()).fold(
             (l) {
-              logger.e('Error turning philips_hue light on');
+              icLogger.e('Error turning philips_hue light on');
               throw l;
             },
             (r) {
-              logger.i('Philips Hue light turn on success');
+              icLogger.i('Philips Hue light turn on success');
             },
           );
         } else if (actionToPreform == EntityActions.off) {
           (await turnOffLight()).fold(
             (l) {
-              logger.e('Error turning philips_hue light off');
+              icLogger.e('Error turning philips_hue light off');
               throw l;
             },
             (r) {
-              logger.i('Philips Hue light turn off success');
+              icLogger.i('Philips Hue light turn off success');
             },
           );
         } else {
-          logger.w('actionToPreform is not set correctly on PhilipsHue E26');
+          icLogger.w('actionToPreform is not set correctly on PhilipsHue E26');
         }
       }
 
@@ -141,11 +148,11 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
           lightBrightness.getOrCrash()) {
         (await setBrightness(newEntity.lightBrightness.getOrCrash())).fold(
           (l) {
-            logger.e('Error changing Phillips hue e26 brightness\n$l');
+            icLogger.e('Error changing Phillips hue e26 brightness\n$l');
             throw l;
           },
           (r) {
-            logger.i('Phillips hue e26 changed brightness successfully');
+            icLogger.i('Phillips hue e26 changed brightness successfully');
           },
         );
       }

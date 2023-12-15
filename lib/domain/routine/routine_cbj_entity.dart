@@ -1,6 +1,6 @@
+import 'package:cbj_integrations_controller/domain/core/value_objects.dart';
 import 'package:cbj_integrations_controller/domain/routine/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/infrastructure/routines/routine_cbj_dtos.dart';
-import 'package:cbj_integrations_controller/domain/core/value_objects.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'routine_cbj_entity.freezed.dart';

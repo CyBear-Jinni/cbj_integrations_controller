@@ -1,5 +1,5 @@
 import 'package:cbj_integrations_controller/domain/binding/binding_cbj_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:dartz/dartz.dart';
 
 Either<BindingCbjFailure<String>, String> validateBindingNotEmpty(
@@ -123,7 +123,7 @@ Either<BindingCbjFailure<String>, String> validateBindingCbjDeviceStateGRPC(
 Either<BindingCbjFailure<String>, String> validateBindingStateExist(
   String input,
 ) {
-  if (EnumHelperCbj.stringToDeviceState(input) != null) {
+  if (EntityUtils.stringToDeviceState(input) != null) {
     return right(input);
   }
   return left(const BindingCbjFailure.bindingStateDoesNotExist());
