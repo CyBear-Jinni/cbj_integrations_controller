@@ -25,12 +25,11 @@ import 'package:cbj_integrations_controller/domain/vendors/login_abstract/value_
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/bindings/binding_cbj_dtos.dart';
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/bindings_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/devices_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/esphome_vendor_credentials_hive_model.dart';
@@ -46,6 +45,7 @@ import 'package:cbj_integrations_controller/infrastructure/room/room_entity_dtos
 import 'package:cbj_integrations_controller/infrastructure/routines/routine_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/scene_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
+import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
 

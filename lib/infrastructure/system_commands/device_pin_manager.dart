@@ -1,5 +1,5 @@
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
+import 'package:cbj_integrations_controller/infrastructure/system_commands/computer_type_utility.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 
 ///  This class save all the configuration of the pins per device,
@@ -70,7 +70,7 @@ class DevicePinListManager extends DevicePinListManagerAbstract {
     }
     icLogger.i(
       'This device is of type:'
-      ' ${EnumHelperCbj.physicalDeviceTypeToString(physicalDeviceType)}',
+      ' ${ComputerTypeUtility.physicalDeviceTypeToString(physicalDeviceType)}',
     );
   }
 
@@ -83,7 +83,7 @@ class DevicePinListManager extends DevicePinListManagerAbstract {
     //  Loop through all the physical devices types
     for (final PhysicalDeviceType physicalDeviceTypeTemp
         in PhysicalDeviceType.values) {
-      if (EnumHelperCbj.physicalDeviceTypeToString(physicalDeviceTypeTemp)
+      if (ComputerTypeUtility.physicalDeviceTypeToString(physicalDeviceTypeTemp)
               .toLowerCase() ==
           physicalDeviceType.toLowerCase()) {
         return physicalDeviceTypeTemp; //  If physicalDeviceType string exist

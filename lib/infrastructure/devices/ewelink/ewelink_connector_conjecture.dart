@@ -6,11 +6,13 @@ import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_switch/ewelink_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
 
-class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class EwelinkConnectorConjecture implements AbstractVendorConnectorConjecture {
   factory EwelinkConnectorConjecture() {
     return _instance;
   }
@@ -25,7 +27,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
   Ewelink? ewelink;
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   Future<bool> accountLogin(
     GenericEwelinkLoginDE loginDE,
@@ -60,7 +62,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
   Future<bool>? didRequestLogin;
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
     DeviceEntityAbstract entity,
   ) async {
     if (didRequestLogin != null) {
@@ -97,7 +99,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
           EwelinkHelpers.addDiscoveredDevice(ewelinkDeviceWithTag);
 
       for (final DeviceEntityAbstract deviceEntityAbstract in entityList) {
-        if (companyDevices[
+        if (vendorEntities[
                 deviceEntityAbstract.deviceCbjUniqueId.getOrCrash()] !=
             null) {
           continue;
@@ -109,7 +111,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
         );
 
         addedDevice.addEntries([deviceAsEntry]);
-        companyDevices.addEntries([deviceAsEntry]);
+        vendorEntities.addEntries([deviceAsEntry]);
 
         icLogger.i(
           'New EweLink devices name:${deviceEntityAbstract.cbjEntityName.getOrCrash()}',
@@ -124,11 +126,11 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
   Future<void> manageHubRequestsForDevice(
     DeviceEntityAbstract ewelinkDE,
   ) async {
-    if (ewelink == null || companyDevices.isEmpty) {
+    if (ewelink == null || vendorEntities.isEmpty) {
       await waitUntilConnectionEstablished(0);
     }
 
-    final DeviceEntityAbstract? device = companyDevices[
+    final DeviceEntityAbstract? device = vendorEntities[
         '${ewelinkDE.deviceUniqueId.getOrCrash()}-${ewelinkDE.entityUniqueId.getOrCrash()}'];
 
     if (device is EwelinkSwitchEntity) {
@@ -139,9 +141,9 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
-    if (ewelink == null || companyDevices.isEmpty) {
+    if (ewelink == null || vendorEntities.isEmpty) {
       await waitUntilConnectionEstablished(0);
     }
     if (deviceEntity is EwelinkSwitchEntity) {
@@ -153,7 +155,7 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(
         '${nonGenericDevice.deviceUniqueId.getOrCrash()}-${nonGenericDevice.entityUniqueId.getOrCrash()}',
         nonGenericDevice,
@@ -168,5 +170,15 @@ class EwelinkConnectorConjecture implements AbstractCompanyConnectorConjecture {
     }
     await Future.delayed(const Duration(seconds: 20));
     return waitUntilConnectionEstablished(executed + 1);
+  }
+
+  @override
+  Future setEntityState({
+    required String cbjUniqeId,
+    required EntityProperties property,
+    required EntityActions action,
+    required dynamic value,
+  }) async {
+    icLogger.e('setEntityState need to get writen');
   }
 }

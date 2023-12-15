@@ -1,5 +1,5 @@
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:dartz/dartz.dart';
 
 Either<SceneCbjFailure<String>, String> validateSceneNotEmpty(String input) {
@@ -119,7 +119,7 @@ Either<SceneCbjFailure<String>, String> validateSceneCbjDeviceStateGRPC(
 Either<SceneCbjFailure<String>, String> validateSceneStateExist(
   String input,
 ) {
-  if (EnumHelperCbj.stringToDeviceState(input) != null) {
+  if (EntityUtils.stringToDeviceState(input) != null) {
     return right(input);
   }
   return left(const SceneCbjFailure.sceneStateDoesNotExist());

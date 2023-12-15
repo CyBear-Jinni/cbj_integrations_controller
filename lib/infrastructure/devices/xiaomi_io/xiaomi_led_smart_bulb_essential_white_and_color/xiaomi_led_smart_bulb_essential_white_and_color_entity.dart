@@ -1,4 +1,4 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 
 class XiaomiLedSmartBulbEssentialWhiteAndColorEntity
     extends GenericRgbwLightDE {

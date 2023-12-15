@@ -5,14 +5,16 @@ import 'package:cbj_integrations_controller/domain/vendors/lifx_login/generic_li
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_white/lifx_white_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
-class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class LifxConnectorConjecture implements AbstractVendorConnectorConjecture {
   factory LifxConnectorConjecture() {
     return _instance;
   }
@@ -30,7 +32,7 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   LIFXClient? lifxClient;
 
@@ -44,7 +46,7 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
           CoreUniqueId? tempCoreUniqueId;
           bool deviceExist = false;
           for (final DeviceEntityAbstract savedDevice
-              in companyDevices.values) {
+              in vendorEntities.values) {
             if (savedDevice is LifxWhiteEntity &&
                 lifxDevice.id == savedDevice.entityUniqueId.getOrCrash()) {
               deviceExist = true;
@@ -75,7 +77,7 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
             final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
                 MapEntry(addDevice.entityUniqueId.getOrCrash(), addDevice);
 
-            companyDevices.addEntries([deviceAsEntry]);
+            vendorEntities.addEntries([deviceAsEntry]);
 
             icLogger.i('New Lifx device got added');
           }
@@ -93,7 +95,7 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
     DeviceEntityAbstract lifxDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[lifxDE.entityUniqueId.getOrCrash()];
+        vendorEntities[lifxDE.entityUniqueId.getOrCrash()];
 
     if (device is LifxWhiteEntity) {
       device.executeDeviceAction(newEntity: lifxDE);
@@ -103,7 +105,7 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericDimmableLightDE) {
@@ -115,15 +117,25 @@ class LifxConnectorConjecture implements AbstractCompanyConnectorConjecture {
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
   }
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
     DeviceEntityAbstract entity,
   ) async {
     return null;
+  }
+
+  @override
+  Future setEntityState({
+    required String cbjUniqeId,
+    required EntityProperties property,
+    required EntityActions action,
+    required dynamic value,
+  }) async {
+    icLogger.e('setEntityState need to get writen');
   }
 }

@@ -93,7 +93,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
       saveAndActivateVendorLoginCredentialsDomainToDb({
     required LoginEntityAbstract loginEntity,
   }) async {
-    CompaniesConnectorConjecture().setVendorLoginCredentials(loginEntity);
+    VendorsConnectorConjecture().setVendorLoginCredentials(loginEntity);
 
     return IDbRepository.instance
         .saveVendorLoginCredentials(loginEntityAbstract: loginEntity);

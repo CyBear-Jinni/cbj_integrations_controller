@@ -9,11 +9,11 @@ import 'package:cbj_integrations_controller/domain/remote_pipes/remote_pipes_ent
 import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
 import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/injection.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/remote_pipes/remote_pipes_dtos.dart';
+import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
 import 'package:dartz/dartz.dart';
 
 part 'package:cbj_integrations_controller/infrastructure/saved_devices_repo.dart';

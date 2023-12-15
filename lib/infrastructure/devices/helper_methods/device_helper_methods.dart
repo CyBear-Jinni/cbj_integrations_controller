@@ -13,15 +13,15 @@ import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_dto_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_login_abstract/login_entity_dto_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/remote_pipes/remote_pipes_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/room/room_entity_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/routines/routine_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/scene_cbj_dtos.dart';
-import 'package:cbj_integrations_controller/infrastructure/vendors/vendor_helper.dart';
+import 'package:cbj_integrations_controller/infrastructure/vendors/vendor_utils.dart';
 
 class DeviceHelperMethods {
   factory DeviceHelperMethods() {
@@ -79,7 +79,7 @@ class DeviceHelperMethods {
       );
     } else if (clientStatusRequests.sendingType ==
         SendingType.vendorLoginType) {
-      return VendorHelper.convertJsonStringToDto(
+      return VendorUtils.convertJsonStringToDto(
         clientStatusRequests.allRemoteCommands,
       );
     } else if (clientStatusRequests.sendingType ==

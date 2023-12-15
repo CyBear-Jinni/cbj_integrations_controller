@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
 
 class DevicesService {
   factory DevicesService() {
@@ -29,10 +32,26 @@ class DevicesService {
     }
   }
 
-  void deviceStateChanged() {
+  void setEntityState({
+    required String cbjUniqeId,
+    required VendorsAndServices vendor,
+    required EntityProperties property,
+    required EntityActions action,
+    required dynamic value,
+  }) {
+    VendorsConnectorConjecture().setEntityState(
+      cbjUniqeId: cbjUniqeId,
+      vendor: vendor,
+      action: action,
+      property: property,
+      value: value,
+    );
+  }
+
+  void notifyDeviceState() {
     // Save on db
 
-    // Add device to deviceChangesStream
+    // Send to app
   }
 
   // TODO: Gete devices from db instead

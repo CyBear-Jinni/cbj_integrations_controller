@@ -2,9 +2,9 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_device_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_led/tasmota_mqtt_led_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_light_device/generic_light_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_value_objects.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
 class TasmotaMqttHelpers {
@@ -58,8 +58,8 @@ class TasmotaMqttHelpers {
         deviceOriginalName: DeviceOriginalName(name),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('TasmotaMqtt'),
-          deviceVendor: DeviceVendor(null),
-          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+        deviceVendor: DeviceVendor(null),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel: DeviceSenderDeviceModel('LED'),
         senderId: DeviceSenderId(),
         compUuid: DeviceCompUuid(mac),

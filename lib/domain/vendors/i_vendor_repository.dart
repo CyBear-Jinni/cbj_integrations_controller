@@ -9,7 +9,7 @@ import 'package:cbj_integrations_controller/domain/vendors/vendor_value_objects.
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/hub_client/hub_client.dart';
-import 'package:cbj_integrations_controller/infrastructure/vendors/vendor_helper.dart';
+import 'package:cbj_integrations_controller/infrastructure/vendors/vendor_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/kt.dart';
 

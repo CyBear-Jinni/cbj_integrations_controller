@@ -4,10 +4,12 @@ import 'dart:collection';
 import 'package:cbj_integrations_controller/domain/vendors/wiz_login/generic_wiz_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_white/wiz_white_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 
-class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class WizConnectorConjecture implements AbstractVendorConnectorConjecture {
   factory WizConnectorConjecture() {
     return _instance;
   }
@@ -24,10 +26,10 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
     DeviceEntityAbstract entity,
   ) async {
     icLogger.w('Wiz device got discovered but missing implementation');
@@ -141,7 +143,7 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
     DeviceEntityAbstract wizDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[wizDE.entityUniqueId.getOrCrash()];
+        vendorEntities[wizDE.entityUniqueId.getOrCrash()];
 
     if (device is WizWhiteEntity) {
       device.executeDeviceAction(newEntity: wizDE);
@@ -151,5 +153,15 @@ class WizConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {}
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
+
+  @override
+  Future setEntityState({
+    required String cbjUniqeId,
+    required EntityProperties property,
+    required EntityActions action,
+    required dynamic value,
+  }) async {
+    icLogger.e('setEntityState need to get writen');
+  }
 }

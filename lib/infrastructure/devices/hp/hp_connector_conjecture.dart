@@ -4,11 +4,13 @@ import 'dart:collection';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_printer/hp_printer_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_printer_device/generic_printer_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_printer_entity/generic_printer_entity.dart';
 
-class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class HpConnectorConjecture implements AbstractVendorConnectorConjecture {
   factory HpConnectorConjecture() {
     return _instance;
   }
@@ -21,10 +23,10 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
   static const List<String> mdnsTypes = ['_hplib._tcp'];
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
     DeviceEntityAbstract entity,
   ) async {
     final String? ip = entity.deviceLastKnownIp.getOrCrash();
@@ -34,7 +36,7 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
       return null;
     }
 
-    for (final DeviceEntityAbstract device in companyDevices.values) {
+    for (final DeviceEntityAbstract device in vendorEntities.values) {
       if (device is HpPrinterEntity &&
           (mdnsName == device.entityUniqueId.getOrCrash() ||
               (ip != null && ip == device.deviceLastKnownIp.getOrCrash()))) {
@@ -63,7 +65,7 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
       );
 
       addedDevice.addEntries([deviceAsEntry]);
-      companyDevices.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
     }
     icLogger.i('New HP device got added');
     return addedDevice;
@@ -74,7 +76,7 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
     DeviceEntityAbstract hpDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[hpDE.entityUniqueId.getOrCrash()];
+        vendorEntities[hpDE.entityUniqueId.getOrCrash()];
 
     if (device is HpPrinterEntity) {
       device.executeDeviceAction(newEntity: hpDE);
@@ -84,7 +86,7 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericPrinterDE) {
@@ -96,8 +98,18 @@ class HpConnectorConjecture implements AbstractCompanyConnectorConjecture {
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future setEntityState({
+    required String cbjUniqeId,
+    required EntityProperties property,
+    required EntityActions action,
+    required dynamic value,
+  }) async {
+    icLogger.e('setEntityState need to get writen');
   }
 }

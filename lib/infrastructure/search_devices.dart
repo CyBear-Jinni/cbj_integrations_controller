@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:cbj_integrations_controller/domain/i_network_utilities.dart';
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_empty_device/generic_empty_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_empty_entity/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
+import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:network_tools/network_tools.dart';
 
@@ -54,7 +54,7 @@ class SearchDevices {
         for (final ActiveHost activeHost in activeHostList) {
           final GenericUnsupportedDE entity =
               await INetworkUtilities.instance.activeHostToEntity(activeHost);
-          CompaniesConnectorConjecture().setMdnsDeviceByCompany(entity);
+          VendorsConnectorConjecture().setMdnsDeviceByCompany(entity);
         }
 
         await Future.delayed(const Duration(minutes: 2));
@@ -72,7 +72,7 @@ class SearchDevices {
 
       for (final GenericUnsupportedDE entity in pingableDevices) {
         try {
-          CompaniesConnectorConjecture().setHostNameDeviceByCompany(entity);
+          VendorsConnectorConjecture().setHostNameDeviceByCompany(entity);
         } catch (e) {
           continue;
         }
@@ -164,14 +164,14 @@ class SearchDevices {
   /// udp ports which can't be discovered by regular open (tcp) port scan
   Future<void> _searchDevicesByBindingIntoSockets() async {
     final List<Stream<DeviceEntityAbstract?>> switcherBindingsList =
-        CompaniesConnectorConjecture().searchOfBindingIntoSocketsList();
+        VendorsConnectorConjecture().searchOfBindingIntoSocketsList();
     for (final Stream<DeviceEntityAbstract?> socketBinding
         in switcherBindingsList) {
       socketBinding.listen((bindingDevice) async {
         if (bindingDevice == null) {
           return;
         }
-        CompaniesConnectorConjecture().foundBindingDevice(bindingDevice);
+        VendorsConnectorConjecture().foundBindingDevice(bindingDevice);
       });
     }
 
@@ -184,7 +184,7 @@ class SearchDevices {
 
           final GenericUnsupportedDE entity =
               await INetworkUtilities.instance.activeHostToEntity(activeHost);
-          CbjDevicesConnectorConjecture().foundDevice(entity);
+          CbjDevicesConnectorConjecture().foundEntity(entity);
         });
       }
     } catch (e) {

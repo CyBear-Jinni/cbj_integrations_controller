@@ -1,13 +1,13 @@
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_runner/switcher_runner_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_smart_plug/switcher_smart_plug_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_v2/switcher_v2_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_runner_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_smart_plug_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_v2_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_blinds_device/generic_blinds_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_boiler_device/generic_boiler_value_objects.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_plug_device/generic_smart_plug_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_plug_entity/generic_smart_plug_value_objects.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherHelpers {
@@ -36,8 +36,8 @@ class SwitcherHelpers {
         deviceOriginalName: DeviceOriginalName(switcherDevice.switcherName),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('switcher'),
-          deviceVendor: DeviceVendor(null),
-          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+        deviceVendor: DeviceVendor(null),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel:
             DeviceSenderDeviceModel(switcherDevice.deviceType.toString()),
         senderId: DeviceSenderId(),
@@ -83,8 +83,8 @@ class SwitcherHelpers {
         deviceOriginalName: DeviceOriginalName(switcherDevice.switcherName),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('switcher'),
-          deviceVendor: DeviceVendor(null),
-          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+        deviceVendor: DeviceVendor(null),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel:
             DeviceSenderDeviceModel(switcherDevice.deviceType.toString()),
         senderId: DeviceSenderId(),
@@ -126,8 +126,8 @@ class SwitcherHelpers {
         deviceOriginalName: DeviceOriginalName(switcherDevice.switcherName),
         entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
         senderDeviceOs: DeviceSenderDeviceOs('switcher'),
-          deviceVendor: DeviceVendor(null),
-          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+        deviceVendor: DeviceVendor(null),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
         senderDeviceModel:
             DeviceSenderDeviceModel(switcherDevice.deviceType.toString()),
         senderId: DeviceSenderId(),

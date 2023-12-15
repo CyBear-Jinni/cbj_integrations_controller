@@ -6,12 +6,12 @@ import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';
 import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
 import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
-import 'package:cbj_integrations_controller/infrastructure/companies_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/hub_client/hub_client.dart';
+import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
 class Connector {
@@ -99,7 +99,7 @@ class Connector {
           final DeviceEntityAbstract savedDeviceWithSameIdAsMqtt =
               DeviceEntityDtoAbstract.fromJson(deviceAsJson).toDomain();
 
-          CompaniesConnectorConjecture().updateAllDevicesReposWithDeviceChanges(
+          VendorsConnectorConjecture().updateAllDevicesReposWithDeviceChanges(
             savedDeviceWithSameIdAsMqtt,
           );
           savedDevicesRepo.addOrUpdateFromMqtt(savedDeviceWithSameIdAsMqtt);

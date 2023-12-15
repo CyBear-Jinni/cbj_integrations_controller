@@ -124,7 +124,7 @@ class _HiveRepository extends IDbRepository {
         lifxVendorCredentialsModelFromDb: lifxVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
+        VendorsConnectorConjecture().setVendorLoginCredentials(r);
 
         icLogger.i(
           'Lifx login credentials got found in DB',
@@ -152,7 +152,7 @@ class _HiveRepository extends IDbRepository {
             espHomeVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
+        VendorsConnectorConjecture().setVendorLoginCredentials(r);
 
         icLogger.i(
           'ESPHome device password got found in DB',
@@ -181,7 +181,7 @@ class _HiveRepository extends IDbRepository {
             xiaomiMiVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
+        VendorsConnectorConjecture().setVendorLoginCredentials(r);
 
         icLogger.i(
           'Xiaomi Mi device password got found in DB',
@@ -210,7 +210,7 @@ class _HiveRepository extends IDbRepository {
             ewelinkVendorCredentialsModelFromDb,
       ))
           .fold((l) {}, (r) {
-        CompaniesConnectorConjecture().setVendorLoginCredentials(r);
+        VendorsConnectorConjecture().setVendorLoginCredentials(r);
 
         icLogger.i(
           'EweLink account email and password got found in DB',

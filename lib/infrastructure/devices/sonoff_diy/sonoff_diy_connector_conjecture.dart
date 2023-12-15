@@ -3,11 +3,13 @@ import 'dart:collection';
 
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff__diy_wall_switch/sonoff_diy_mod_wall_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 
 class SonoffDiyConnectorConjecture
-    implements AbstractCompanyConnectorConjecture {
+    implements AbstractVendorConnectorConjecture {
   factory SonoffDiyConnectorConjecture() {
     return _instance;
   }
@@ -19,10 +21,10 @@ class SonoffDiyConnectorConjecture
 
   static const List<String> mdnsTypes = ['_ewelink._tcp'];
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
     DeviceEntityAbstract entity,
   ) async {
     // /// Add new devices to [companyDevices] if not exist
@@ -79,7 +81,7 @@ class SonoffDiyConnectorConjecture
     DeviceEntityAbstract sonoffDiyDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[sonoffDiyDE.entityUniqueId.getOrCrash()];
+        vendorEntities[sonoffDiyDE.entityUniqueId.getOrCrash()];
 
     if (device is SonoffDiyRelaySwitchEntity) {
       device.executeDeviceAction(newEntity: sonoffDiyDE);
@@ -89,5 +91,15 @@ class SonoffDiyConnectorConjecture
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {}
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
+
+  @override
+  Future setEntityState({
+    required String cbjUniqeId,
+    required EntityProperties property,
+    required EntityActions action,
+    required dynamic value,
+  }) async {
+    icLogger.e('setEntityState need to get writen');
+  }
 }

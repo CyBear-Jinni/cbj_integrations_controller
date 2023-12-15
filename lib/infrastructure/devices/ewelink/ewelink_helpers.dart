@@ -1,8 +1,8 @@
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_switch/ewelink_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
 
 class EwelinkHelpers {
@@ -96,8 +96,8 @@ class EwelinkHelpers {
             stateMassage: DeviceStateMassage('ok'),
             senderDeviceOs: DeviceSenderDeviceOs('EweLink'),
 
-          deviceVendor: DeviceVendor(null),
-          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+            deviceVendor: DeviceVendor(null),
+            deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
             senderDeviceModel: DeviceSenderDeviceModel(ewelinkDevice.type),
             senderId: DeviceSenderId(),
             deviceUniqueId: DeviceUniqueId(ewelinkDevice.deviceid),

@@ -5,12 +5,14 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_light/shelly_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_relay_switch/shelly_relay_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_rgbw_light_device/generic_rgbw_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_switch_device/generic_switch_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 
-class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
+class ShellyConnectorConjecture implements AbstractVendorConnectorConjecture {
   factory ShellyConnectorConjecture() {
     return _instance;
   }
@@ -23,10 +25,10 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
   static const List<String> mdnsTypes = ['_http._tcp'];
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
     DeviceEntityAbstract entity,
   ) async {
     final String? mdnsName = entity.deviceMdns.getOrCrash();
@@ -34,7 +36,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
       return null;
     }
 
-    for (final DeviceEntityAbstract device in companyDevices.values) {
+    for (final DeviceEntityAbstract device in vendorEntities.values) {
       if ((device is ShellyColorLightEntity ||
               device is ShellyRelaySwitchEntity) &&
           mdnsName == device.entityUniqueId.getOrCrash()) {
@@ -66,7 +68,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
       );
 
       addedDevice.addEntries([deviceAsEntry]);
-      companyDevices.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
     }
     icLogger.t('New shelly devices name:$mdnsName');
     return addedDevice;
@@ -77,7 +79,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
     DeviceEntityAbstract shellyDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[shellyDE.entityUniqueId.getOrCrash()];
+        vendorEntities[shellyDE.entityUniqueId.getOrCrash()];
 
     if (device is ShellyColorLightEntity) {
       device.executeDeviceAction(newEntity: shellyDE);
@@ -89,7 +91,7 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericRgbwLightDE) {
@@ -101,8 +103,18 @@ class ShellyConnectorConjecture implements AbstractCompanyConnectorConjecture {
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future setEntityState({
+    required String cbjUniqeId,
+    required EntityProperties property,
+    required EntityActions action,
+    required dynamic value,
+  }) async {
+    icLogger.e('setEntityState need to get writen');
   }
 }

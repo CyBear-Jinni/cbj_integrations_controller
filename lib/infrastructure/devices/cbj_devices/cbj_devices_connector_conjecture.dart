@@ -5,13 +5,15 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_device_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_computer_entity/generic_smart_computer_entity.dart';
 
 class CbjDevicesConnectorConjecture
-    implements AbstractCompanyConnectorConjecture {
+    implements AbstractVendorConnectorConjecture {
   factory CbjDevicesConnectorConjecture() {
     return _instance;
   }
@@ -22,17 +24,17 @@ class CbjDevicesConnectorConjecture
       CbjDevicesConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
     DeviceEntityAbstract entity,
   ) async {
     final String? hostName = entity.deviceHostName.getOrCrash();
     if (hostName == null) {
       return null;
     }
-    for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
+    for (final DeviceEntityAbstract savedDevice in vendorEntities.values) {
       if ((savedDevice is CbjSmartComputerEntity) &&
           hostName == savedDevice.entityUniqueId.getOrCrash()) {
         return null;
@@ -64,7 +66,7 @@ class CbjDevicesConnectorConjecture
       );
 
       addedDevice.addEntries([deviceAsEntry]);
-      companyDevices.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
 
       icLogger.t(
         'New Cbj Smart Device name:${entityAsDevice.cbjEntityName.getOrCrash()}',
@@ -78,7 +80,7 @@ class CbjDevicesConnectorConjecture
     DeviceEntityAbstract cbjDevicesDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[cbjDevicesDE.entityUniqueId.getOrCrash()];
+        vendorEntities[cbjDevicesDE.entityUniqueId.getOrCrash()];
 
     // if (device == null) {
     //   setTheSameDeviceFromAllDevices(cbjDevicesDE);
@@ -109,7 +111,7 @@ class CbjDevicesConnectorConjecture
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericSmartComputerDE) {
@@ -121,8 +123,18 @@ class CbjDevicesConnectorConjecture
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future setEntityState({
+    required String cbjUniqeId,
+    required EntityProperties property,
+    required EntityActions action,
+    required dynamic value,
+  }) async {
+    icLogger.e('setEntityState need to get writen');
   }
 }

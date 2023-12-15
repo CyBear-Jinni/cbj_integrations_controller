@@ -4,12 +4,14 @@ import 'dart:collection';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_e26/philips_hue_e26_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/abstract_company_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_dimmable_light_device/generic_dimmable_light_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
 
 class PhilipsHueConnectorConjecture
-    implements AbstractCompanyConnectorConjecture {
+    implements AbstractVendorConnectorConjecture {
   factory PhilipsHueConnectorConjecture() {
     return _instance;
   }
@@ -20,7 +22,7 @@ class PhilipsHueConnectorConjecture
       PhilipsHueConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> companyDevices = {};
+  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   static const List<String> mdnsTypes = [
     '_hue._tcp',
@@ -29,7 +31,7 @@ class PhilipsHueConnectorConjecture
   static bool gotHueHubIp = false;
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundDevice(
+  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
     DeviceEntityAbstract entity,
   ) async {
     final String ip = entity.deviceLastKnownIp.getOrCrash()!;
@@ -39,7 +41,7 @@ class PhilipsHueConnectorConjecture
       return null;
     }
 
-    for (final DeviceEntityAbstract device in companyDevices.values) {
+    for (final DeviceEntityAbstract device in vendorEntities.values) {
       if (device is PhilipsHueE26Entity &&
           (mdnsName == device.entityUniqueId.getOrCrash() ||
               ip == device.deviceLastKnownIp.getOrCrash())) {
@@ -67,7 +69,7 @@ class PhilipsHueConnectorConjecture
           MapEntry(entityAsDevice.entityUniqueId.getOrCrash(), entityAsDevice);
 
       addedDevice.addEntries([deviceAsEntry]);
-      companyDevices.addEntries([deviceAsEntry]);
+      vendorEntities.addEntries([deviceAsEntry]);
     }
     icLogger.i('New Philips Hue device got added');
     return addedDevice;
@@ -78,7 +80,7 @@ class PhilipsHueConnectorConjecture
     DeviceEntityAbstract philipsHueDE,
   ) async {
     final DeviceEntityAbstract? device =
-        companyDevices[philipsHueDE.entityUniqueId.getOrCrash()];
+        vendorEntities[philipsHueDE.entityUniqueId.getOrCrash()];
 
     if (device is PhilipsHueE26Entity) {
       device.executeDeviceAction(newEntity: philipsHueDE);
@@ -88,7 +90,7 @@ class PhilipsHueConnectorConjecture
   }
 
   @override
-  Future<void> setUpDeviceFromDb(DeviceEntityAbstract deviceEntity) async {
+  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
     DeviceEntityAbstract? nonGenericDevice;
 
     if (deviceEntity is GenericDimmableLightDE) {
@@ -100,8 +102,18 @@ class PhilipsHueConnectorConjecture
       return;
     }
 
-    companyDevices.addEntries([
+    vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future setEntityState({
+    required String cbjUniqeId,
+    required EntityProperties property,
+    required EntityActions action,
+    required dynamic value,
+  }) async {
+    icLogger.e('setEntityState need to get writen');
   }
 }

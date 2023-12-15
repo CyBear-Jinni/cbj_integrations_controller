@@ -1,12 +1,12 @@
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/abstract_device/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/device_type_enums.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_devices/generic_smart_computer_device/generic_smart_computer_value_objects.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_computer_entity/generic_smart_computer_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_computer_entity/generic_smart_computer_value_objects.dart';
 import 'package:dartz/dartz.dart';
 
 class CbjSmartComputerEntity extends GenericSmartComputerDE {
@@ -96,8 +96,7 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
     try {
       if (newEntity.smartComputerSuspendState!.getOrCrash() !=
           smartComputerSuspendState!.getOrCrash()) {
-        final EntityActions? actionToPreform =
-            EnumHelperCbj.stringToDeviceAction(
+        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
           newEntity.smartComputerSuspendState!.getOrCrash(),
         );
 
@@ -115,8 +114,7 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
 
       if (newEntity.smartComputerShutDownState!.getOrCrash() !=
           smartComputerShutDownState!.getOrCrash()) {
-        final EntityActions? actionToPreform =
-            EnumHelperCbj.stringToDeviceAction(
+        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
           newEntity.smartComputerShutDownState!.getOrCrash(),
         );
         if (actionToPreform == EntityActions.shutdown) {
