@@ -7,9 +7,8 @@ import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_white
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 
-class WizConnectorConjecture implements AbstractVendorConnectorConjecture {
+class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory WizConnectorConjecture() {
     return _instance;
   }
@@ -19,14 +18,14 @@ class WizConnectorConjecture implements AbstractVendorConnectorConjecture {
   static final WizConnectorConjecture _instance =
       WizConnectorConjecture._singletonContractor();
 
+  @override
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.wiz;
+
   Future<String> accountLogin(GenericWizLoginDE genericWizLoginDE) async {
     // wizClient = WizClient(genericWizLoginDE.wizApiKey.getOrCrash());
     _discoverNewDevices();
     return 'Success';
   }
-
-  @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   @override
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
@@ -154,14 +153,4 @@ class WizConnectorConjecture implements AbstractVendorConnectorConjecture {
 
   @override
   Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
-  }
 }

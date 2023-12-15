@@ -6,10 +6,8 @@ import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/so
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 
-class SonoffDiyConnectorConjecture
-    implements AbstractVendorConnectorConjecture {
+class SonoffDiyConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory SonoffDiyConnectorConjecture() {
     return _instance;
   }
@@ -19,9 +17,10 @@ class SonoffDiyConnectorConjecture
   static final SonoffDiyConnectorConjecture _instance =
       SonoffDiyConnectorConjecture._singletonContractor();
 
-  static const List<String> mdnsTypes = ['_ewelink._tcp'];
   @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.sonoffDiy;
+
+  static const List<String> mdnsTypes = ['_ewelink._tcp'];
 
   @override
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
@@ -92,14 +91,4 @@ class SonoffDiyConnectorConjecture
 
   @override
   Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
-  }
 }

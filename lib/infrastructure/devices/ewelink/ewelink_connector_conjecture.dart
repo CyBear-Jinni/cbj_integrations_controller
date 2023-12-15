@@ -9,10 +9,9 @@ import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/eweli
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
 
-class EwelinkConnectorConjecture implements AbstractVendorConnectorConjecture {
+class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory EwelinkConnectorConjecture() {
     return _instance;
   }
@@ -22,12 +21,12 @@ class EwelinkConnectorConjecture implements AbstractVendorConnectorConjecture {
   static final EwelinkConnectorConjecture _instance =
       EwelinkConnectorConjecture._singletonContractor();
 
+  @override
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.sonoffEweLink;
+
   static const List<String> mdnsTypes = ['_ewelink._tcp'];
 
   Ewelink? ewelink;
-
-  @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   Future<bool> accountLogin(
     GenericEwelinkLoginDE loginDE,
@@ -170,15 +169,5 @@ class EwelinkConnectorConjecture implements AbstractVendorConnectorConjecture {
     }
     await Future.delayed(const Duration(seconds: 20));
     return waitUntilConnectionEstablished(executed + 1);
-  }
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
   }
 }

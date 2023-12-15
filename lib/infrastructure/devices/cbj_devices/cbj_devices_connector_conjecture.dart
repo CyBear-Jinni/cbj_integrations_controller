@@ -12,8 +12,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/abst
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_computer_entity/generic_smart_computer_entity.dart';
 
-class CbjDevicesConnectorConjecture
-    implements AbstractVendorConnectorConjecture {
+class CbjDevicesConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory CbjDevicesConnectorConjecture() {
     return _instance;
   }
@@ -24,7 +23,8 @@ class CbjDevicesConnectorConjecture
       CbjDevicesConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
+  VendorsAndServices get vendorsAndServices =>
+      VendorsAndServices.cbjDeviceSmartEntity;
 
   @override
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
@@ -130,7 +130,7 @@ class CbjDevicesConnectorConjecture
 
   @override
   Future setEntityState({
-    required String cbjUniqeId,
+    required HashSet<String> ids,
     required EntityProperties property,
     required EntityActions action,
     required dynamic value,

@@ -1,6 +1,7 @@
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_validators.dart';
 import 'package:dartz/dartz.dart';
 
@@ -12,12 +13,21 @@ class GenericRgbwLightSwitchState extends ValueObjectCore<String> {
     } else if (input.toLowerCase() == false.toString()) {
       input = EntityActions.off.toString();
     }
+
+    final EntityActions action = EntityUtils.stringToDeviceAction(input) ??
+        EntityActions.actionNotSupported;
+
     return GenericRgbwLightSwitchState._(
       validateGenericRgbwLightStateNotEmpty(input),
+      action,
     );
   }
 
-  const GenericRgbwLightSwitchState._(this.value);
+  const GenericRgbwLightSwitchState._(this.value, this._action);
+
+  final EntityActions _action;
+
+  EntityActions get action => _action;
 
   @override
   final Either<CoreFailure<String>, String> value;

@@ -142,12 +142,20 @@ class DevicePtrResourceRecord extends ValueObjectCore<String?> {
 
 class EntityState extends ValueObjectCore<String> {
   factory EntityState(String? input) {
+    final EntityStateGRPC state = EntityUtils.stringToDeviceState(input!) ??
+        EntityStateGRPC.stateNotSupported;
+
     return EntityState._(
-      validateNotEmpty(input!).flatMap((a) => validateDeviceStateExist(input)),
+      validateNotEmpty(input).flatMap((a) => validateDeviceStateExist(input)),
+      state,
     );
   }
 
-  const EntityState._(this.value);
+  const EntityState._(this.value, this._state);
+
+  final EntityStateGRPC _state;
+
+  EntityStateGRPC get state => _state;
 
   @override
   final Either<CoreFailure<String>, String> value;

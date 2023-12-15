@@ -92,7 +92,7 @@ class GenericRgbwLightDE extends DeviceEntityAbstract {
       );
 
   /// State of the light on/off
-  GenericRgbwLightSwitchState? lightSwitchState;
+  GenericRgbwLightSwitchState lightSwitchState;
 
   /// Color temperature in int
   GenericRgbwLightColorTemperature lightColorTemperature;
@@ -183,7 +183,7 @@ class GenericRgbwLightDE extends DeviceEntityAbstract {
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
       deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
-      lightSwitchState: lightSwitchState!.getOrCrash(),
+      lightSwitchState: lightSwitchState.getOrCrash(),
       lightColorTemperature: lightColorTemperature.getOrCrash(),
       lightBrightness: lightBrightness.getOrCrash(),
       lightColorAlpha: lightColorAlpha.getOrCrash(),

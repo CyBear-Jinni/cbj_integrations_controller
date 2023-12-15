@@ -7,10 +7,9 @@ import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_printer
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_printer_entity/generic_printer_entity.dart';
 
-class HpConnectorConjecture implements AbstractVendorConnectorConjecture {
+class HpConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory HpConnectorConjecture() {
     return _instance;
   }
@@ -20,10 +19,10 @@ class HpConnectorConjecture implements AbstractVendorConnectorConjecture {
   static final HpConnectorConjecture _instance =
       HpConnectorConjecture._singletonContractor();
 
-  static const List<String> mdnsTypes = ['_hplib._tcp'];
-
   @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.hp;
+
+  static const List<String> mdnsTypes = ['_hplib._tcp'];
 
   @override
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
@@ -101,15 +100,5 @@ class HpConnectorConjecture implements AbstractVendorConnectorConjecture {
     vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
   }
 }

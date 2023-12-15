@@ -62,7 +62,7 @@ abstract class GenericLightDeviceDtos
       senderDeviceOs: deviceDe.senderDeviceOs.getOrCrash(),
       senderDeviceModel: deviceDe.senderDeviceModel.getOrCrash(),
       senderId: deviceDe.senderId.getOrCrash(),
-      lightSwitchState: deviceDe.lightSwitchState!.getOrCrash(),
+      lightSwitchState: deviceDe.lightSwitchState.getOrCrash(),
       entityTypes: deviceDe.entityTypes.getOrCrash(),
       compUuid: deviceDe.compUuid.getOrCrash(),
       cbjDeviceVendor: deviceDe.cbjDeviceVendor.getOrCrash(),

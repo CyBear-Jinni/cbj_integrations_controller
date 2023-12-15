@@ -82,7 +82,7 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
       );
 
   /// State of the light on/off
-  GenericDimmableLightSwitchState? lightSwitchState;
+  GenericDimmableLightSwitchState lightSwitchState;
 
   /// Brightness 0-100%
   GenericDimmableLightBrightness lightBrightness;
@@ -152,7 +152,7 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
       deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
-      lightSwitchState: lightSwitchState!.getOrCrash(),
+      lightSwitchState: lightSwitchState.getOrCrash(),
       lightBrightness: lightBrightness.getOrCrash(),
     );
   }

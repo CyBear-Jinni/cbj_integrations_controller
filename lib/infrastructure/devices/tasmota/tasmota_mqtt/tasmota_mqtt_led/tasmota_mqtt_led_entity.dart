@@ -61,11 +61,11 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     }
 
     try {
-      if (newEntity.lightSwitchState!.getOrCrash() !=
-              lightSwitchState!.getOrCrash() ||
+      if (newEntity.lightSwitchState.getOrCrash() !=
+              lightSwitchState.getOrCrash() ||
           entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
         final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.lightSwitchState!.getOrCrash(),
+          newEntity.lightSwitchState.getOrCrash(),
         );
 
         if (actionToPreform == EntityActions.on) {

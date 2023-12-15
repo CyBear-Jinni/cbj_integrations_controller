@@ -361,17 +361,20 @@ class VendorsConnectorConjecture {
   }
 
   void setEntityState({
-    required String cbjUniqeId,
-    required VendorsAndServices vendor,
+    required HashMap<VendorsAndServices, HashSet<String>> uniqueIdByVendor,
     required EntityProperties property,
     required EntityActions action,
     required dynamic value,
   }) {
-    getVendorConnectorConjecture(vendor)?.setEntityState(
-      cbjUniqeId: cbjUniqeId,
-      action: action,
-      property: property,
-      value: value,
-    );
+    for (final MapEntry<VendorsAndServices, HashSet<String>> entry
+        in uniqueIdByVendor.entries.toList()) {
+      final VendorsAndServices vendor = entry.key;
+      getVendorConnectorConjecture(vendor)?.setEntityState(
+        ids: entry.value,
+        action: action,
+        property: property,
+        value: value,
+      );
+    }
   }
 }

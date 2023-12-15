@@ -132,11 +132,11 @@ class SwitcherV2Entity extends GenericBoilerDE {
     try {
       if (newEntity.entityStateGRPC.getOrCrash() !=
           EntityStateGRPC.ack.toString()) {
-        if (newEntity.boilerSwitchState!.getOrCrash() !=
-            boilerSwitchState!.getOrCrash()) {
+        if (newEntity.boilerSwitchState.getOrCrash() !=
+            boilerSwitchState.getOrCrash()) {
           final EntityActions? actionToPreform =
               EntityUtils.stringToDeviceAction(
-            newEntity.boilerSwitchState!.getOrCrash(),
+            newEntity.boilerSwitchState.getOrCrash(),
           );
 
           if (actionToPreform == EntityActions.on) {

@@ -64,7 +64,7 @@ abstract class GenericSmartPlugDeviceDtos
       senderDeviceOs: deviceDe.senderDeviceOs.getOrCrash(),
       senderDeviceModel: deviceDe.senderDeviceModel.getOrCrash(),
       senderId: deviceDe.senderId.getOrCrash(),
-      smartPlugState: deviceDe.smartPlugState!.getOrCrash(),
+      smartPlugState: deviceDe.smartPlugState.getOrCrash(),
       entityTypes: deviceDe.entityTypes.getOrCrash(),
       compUuid: deviceDe.compUuid.getOrCrash(),
       cbjDeviceVendor: deviceDe.cbjDeviceVendor.getOrCrash(),

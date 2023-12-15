@@ -7,11 +7,10 @@ import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xia
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:mi_iot_token/mi_iot_token.dart';
 
-class XiaomiIoConnectorConjecture implements AbstractVendorConnectorConjecture {
+class XiaomiIoConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory XiaomiIoConnectorConjecture() {
     return _instance;
   }
@@ -22,7 +21,7 @@ class XiaomiIoConnectorConjecture implements AbstractVendorConnectorConjecture {
       XiaomiIoConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.xiaomi;
 
   MiCloud? miCloud;
 
@@ -139,15 +138,5 @@ class XiaomiIoConnectorConjecture implements AbstractVendorConnectorConjecture {
     vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
   }
 }

@@ -9,11 +9,9 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
 
-class TasmotaMqttConnectorConjecture
-    implements AbstractVendorConnectorConjecture {
+class TasmotaMqttConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory TasmotaMqttConnectorConjecture() {
     return _instance;
   }
@@ -22,6 +20,9 @@ class TasmotaMqttConnectorConjecture
 
   static final TasmotaMqttConnectorConjecture _instance =
       TasmotaMqttConnectorConjecture._singletonContractor();
+
+  @override
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.tasmota;
 
   // Future<void> addNewDeviceByHostInfo({
   //   required ActiveHost activeHost,
@@ -38,9 +39,6 @@ class TasmotaMqttConnectorConjecture
   //   IMqttServerRepository.instance
   //       .publishMessage('cmnd/$tasmotaMqttTopic/SetOption19', '0');
   // }
-
-  @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   Future<void> discoverNewDevices() async {
     IMqttServerRepository.instance
@@ -117,15 +115,5 @@ class TasmotaMqttConnectorConjecture
     DeviceEntityAbstract entity,
   ) async {
     return null;
-  }
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
   }
 }

@@ -8,11 +8,10 @@ import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 
-class ShellyConnectorConjecture implements AbstractVendorConnectorConjecture {
+class ShellyConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory ShellyConnectorConjecture() {
     return _instance;
   }
@@ -22,10 +21,10 @@ class ShellyConnectorConjecture implements AbstractVendorConnectorConjecture {
   static final ShellyConnectorConjecture _instance =
       ShellyConnectorConjecture._singletonContractor();
 
-  static const List<String> mdnsTypes = ['_http._tcp'];
-
   @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.shelly;
+
+  static const List<String> mdnsTypes = ['_http._tcp'];
 
   @override
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
@@ -106,15 +105,5 @@ class ShellyConnectorConjecture implements AbstractVendorConnectorConjecture {
     vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
   }
 }

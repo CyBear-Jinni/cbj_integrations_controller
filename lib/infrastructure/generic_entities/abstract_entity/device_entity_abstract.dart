@@ -195,7 +195,8 @@ abstract class DeviceEntityAbstract {
   }) {
     if (!getListOfPropertiesToChange().contains(property)) {
       icLogger.e(
-          'Entity type ${entityTypes.getOrCrash()} does not contain property ${property.name}');
+        'Entity type ${entityTypes.getOrCrash()} does not contain property ${property.name}',
+      );
       return false;
     }
 

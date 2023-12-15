@@ -62,7 +62,7 @@ abstract class GenericSwitchDeviceDtos
       senderDeviceOs: deviceDe.senderDeviceOs.getOrCrash(),
       senderDeviceModel: deviceDe.senderDeviceModel.getOrCrash(),
       senderId: deviceDe.senderId.getOrCrash(),
-      switchState: deviceDe.switchState!.getOrCrash(),
+      switchState: deviceDe.switchState.getOrCrash(),
       entityTypes: deviceDe.entityTypes.getOrCrash(),
       compUuid: deviceDe.compUuid.getOrCrash(),
       cbjDeviceVendor: deviceDe.cbjDeviceVendor.getOrCrash(),

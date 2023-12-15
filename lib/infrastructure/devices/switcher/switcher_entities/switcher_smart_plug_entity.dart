@@ -133,11 +133,11 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
     try {
       if (newEntity.entityStateGRPC.getOrCrash() !=
           EntityStateGRPC.ack.toString()) {
-        if (newEntity.smartPlugState!.getOrCrash() !=
-            smartPlugState!.getOrCrash()) {
+        if (newEntity.smartPlugState.getOrCrash() !=
+            smartPlugState.getOrCrash()) {
           final EntityActions? actionToPreform =
               EntityUtils.stringToDeviceAction(
-            newEntity.smartPlugState!.getOrCrash(),
+            newEntity.smartPlugState.getOrCrash(),
           );
 
           if (actionToPreform == EntityActions.on) {

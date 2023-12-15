@@ -7,9 +7,8 @@ import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_webos_t
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 
-class LgConnectorConjecture implements AbstractVendorConnectorConjecture {
+class LgConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory LgConnectorConjecture() {
     return _instance;
   }
@@ -20,7 +19,7 @@ class LgConnectorConjecture implements AbstractVendorConnectorConjecture {
       LgConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.lg;
 
   static const List<String> mdnsTypes = [
     '_hap._tcp',
@@ -96,14 +95,4 @@ class LgConnectorConjecture implements AbstractVendorConnectorConjecture {
 
   @override
   Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
-  }
 }

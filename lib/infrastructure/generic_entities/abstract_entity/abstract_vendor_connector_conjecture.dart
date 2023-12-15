@@ -1,10 +1,13 @@
 import 'dart:collection';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 
 abstract class AbstractVendorConnectorConjecture {
+  VendorsAndServices get vendorsAndServices;
+
   /// Stores all devices for the each vendor, devices will be stored as the
   /// vendor implementation and not as generic devices
   ///
@@ -24,9 +27,20 @@ abstract class AbstractVendorConnectorConjecture {
   );
 
   Future setEntityState({
-    required String cbjUniqeId,
+    required HashSet<String> ids,
     required EntityProperties property,
     required EntityActions action,
     required dynamic value,
-  });
+  }) async {
+    for (final String id in ids) {
+      final DeviceEntityAbstract? entity = vendorEntities[id];
+      if (entity == null) {
+        icLogger.e(
+          "$vendorsAndServices can't find the device to set cbjUniqeId: $id",
+        );
+        continue;
+      }
+      entity.executeAction(property: property, action: action, value: value);
+    }
+  }
 }

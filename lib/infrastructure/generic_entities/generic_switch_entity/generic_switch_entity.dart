@@ -79,7 +79,7 @@ class GenericSwitchDE extends DeviceEntityAbstract {
       );
 
   /// State of the switch on/off
-  GenericSwitchSwitchState? switchState;
+  GenericSwitchSwitchState switchState;
 
   //
   // /// Will return failure if any of the fields failed or return unit if fields
@@ -144,7 +144,7 @@ class GenericSwitchDE extends DeviceEntityAbstract {
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
       deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
-      switchState: switchState!.getOrCrash(),
+      switchState: switchState.getOrCrash(),
     );
   }
 

@@ -10,11 +10,10 @@ import 'package:cbj_integrations_controller/infrastructure/devices/esphome/espho
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 
-class EspHomeConnectorConjecture implements AbstractVendorConnectorConjecture {
+class EspHomeConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory EspHomeConnectorConjecture() {
     return _instance;
   }
@@ -24,10 +23,10 @@ class EspHomeConnectorConjecture implements AbstractVendorConnectorConjecture {
   static final EspHomeConnectorConjecture _instance =
       EspHomeConnectorConjecture._singletonContractor();
 
-  static const List<String> mdnsTypes = ['_esphomelib._tcp'];
-
   @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.espHome;
+
+  static const List<String> mdnsTypes = ['_esphomelib._tcp'];
 
   static String? espHomeDevicePass;
 
@@ -110,15 +109,5 @@ class EspHomeConnectorConjecture implements AbstractVendorConnectorConjecture {
     vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
   }
 }

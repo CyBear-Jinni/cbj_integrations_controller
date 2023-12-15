@@ -79,7 +79,7 @@ class GenericLightDE extends DeviceEntityAbstract {
       );
 
   /// State of the light on/off
-  GenericLightSwitchState? lightSwitchState;
+  GenericLightSwitchState lightSwitchState;
 
   //
   // /// Will return failure if any of the fields failed or return unit if fields
@@ -144,7 +144,7 @@ class GenericLightDE extends DeviceEntityAbstract {
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
       deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
-      lightSwitchState: lightSwitchState!.getOrCrash(),
+      lightSwitchState: lightSwitchState.getOrCrash(),
     );
   }
 

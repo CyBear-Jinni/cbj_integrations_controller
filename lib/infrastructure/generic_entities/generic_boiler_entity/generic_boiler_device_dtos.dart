@@ -62,7 +62,7 @@ abstract class GenericBoilerDeviceDtos
       senderDeviceOs: deviceDe.senderDeviceOs.getOrCrash(),
       senderDeviceModel: deviceDe.senderDeviceModel.getOrCrash(),
       senderId: deviceDe.senderId.getOrCrash(),
-      boilerSwitchState: deviceDe.boilerSwitchState!.getOrCrash(),
+      boilerSwitchState: deviceDe.boilerSwitchState.getOrCrash(),
       entityTypes: deviceDe.entityTypes.getOrCrash(),
       compUuid: deviceDe.compUuid.getOrCrash(),
       cbjDeviceVendor: deviceDe.cbjDeviceVendor.getOrCrash(),

@@ -90,10 +90,10 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
     }
 
     try {
-      if (newEntity.switchState!.getOrCrash() != switchState!.getOrCrash() ||
+      if (newEntity.switchState.getOrCrash() != switchState.getOrCrash() ||
           entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
         final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.switchState!.getOrCrash(),
+          newEntity.switchState.getOrCrash(),
         );
 
         if (actionToPreform == EntityActions.on) {

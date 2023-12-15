@@ -33,15 +33,13 @@ class DevicesService {
   }
 
   void setEntityState({
-    required String cbjUniqeId,
-    required VendorsAndServices vendor,
+    required HashMap<VendorsAndServices, HashSet<String>> uniqueIdByVendor,
     required EntityProperties property,
     required EntityActions action,
     required dynamic value,
   }) {
     VendorsConnectorConjecture().setEntityState(
-      cbjUniqeId: cbjUniqeId,
-      vendor: vendor,
+      uniqueIdByVendor: uniqueIdByVendor,
       action: action,
       property: property,
       value: value,

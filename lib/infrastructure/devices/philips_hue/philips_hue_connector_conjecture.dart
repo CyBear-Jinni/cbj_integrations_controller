@@ -7,11 +7,9 @@ import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/p
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
 
-class PhilipsHueConnectorConjecture
-    implements AbstractVendorConnectorConjecture {
+class PhilipsHueConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory PhilipsHueConnectorConjecture() {
     return _instance;
   }
@@ -22,7 +20,7 @@ class PhilipsHueConnectorConjecture
       PhilipsHueConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.philipsHue;
 
   static const List<String> mdnsTypes = [
     '_hue._tcp',
@@ -105,15 +103,5 @@ class PhilipsHueConnectorConjecture
     vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
   }
 }

@@ -79,7 +79,7 @@ class GenericSmartPlugDE extends DeviceEntityAbstract {
       );
 
   /// State of the smartPlug on/off
-  GenericSmartPlugState? smartPlugState;
+  GenericSmartPlugState smartPlugState;
 
   //
   // /// Will return failure if any of the fields failed or return unit if fields
@@ -144,7 +144,7 @@ class GenericSmartPlugDE extends DeviceEntityAbstract {
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
       deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
-      smartPlugState: smartPlugState!.getOrCrash(),
+      smartPlugState: smartPlugState.getOrCrash(),
     );
   }
 

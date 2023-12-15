@@ -115,10 +115,10 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
       //   return right(unit);
       // }
 
-      if (newEntity.lightSwitchState!.getOrCrash() !=
-          lightSwitchState!.getOrCrash()) {
+      if (newEntity.lightSwitchState.getOrCrash() !=
+          lightSwitchState.getOrCrash()) {
         final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.lightSwitchState!.getOrCrash(),
+          newEntity.lightSwitchState.getOrCrash(),
         );
 
         if (actionToPreform == EntityActions.on) {

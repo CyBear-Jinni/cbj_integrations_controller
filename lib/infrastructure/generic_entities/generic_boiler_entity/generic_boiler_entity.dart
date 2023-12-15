@@ -80,7 +80,7 @@ class GenericBoilerDE extends DeviceEntityAbstract {
       );
 
   /// State of the boiler on/off
-  GenericBoilerSwitchState? boilerSwitchState;
+  GenericBoilerSwitchState boilerSwitchState;
 
   //
   // /// Will return failure if any of the fields failed or return unit if fields
@@ -145,7 +145,7 @@ class GenericBoilerDE extends DeviceEntityAbstract {
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
       deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
-      boilerSwitchState: boilerSwitchState!.getOrCrash(),
+      boilerSwitchState: boilerSwitchState.getOrCrash(),
     );
   }
 

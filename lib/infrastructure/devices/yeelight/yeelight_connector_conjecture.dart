@@ -7,11 +7,10 @@ import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeel
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:yeedart/yeedart.dart';
 
-class YeelightConnectorConjecture implements AbstractVendorConnectorConjecture {
+class YeelightConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory YeelightConnectorConjecture() {
     return _instance;
   }
@@ -22,7 +21,7 @@ class YeelightConnectorConjecture implements AbstractVendorConnectorConjecture {
       YeelightConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.yeelight;
 
   static const List<String> mdnsTypes = [
     '_hap._tcp',
@@ -111,15 +110,5 @@ class YeelightConnectorConjecture implements AbstractVendorConnectorConjecture {
     vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
   }
 }

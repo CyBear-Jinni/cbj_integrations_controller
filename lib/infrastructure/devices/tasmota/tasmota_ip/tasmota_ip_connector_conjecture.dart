@@ -10,13 +10,11 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 import 'package:http/http.dart';
 
-class TasmotaIpConnectorConjecture
-    implements AbstractVendorConnectorConjecture {
+class TasmotaIpConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory TasmotaIpConnectorConjecture() {
     return _instance;
   }
@@ -27,7 +25,7 @@ class TasmotaIpConnectorConjecture
       TasmotaIpConnectorConjecture._singletonContractor();
 
   @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.tasmota;
 
   // This is how you can interact tasmota using network calls.
   // http://ip/cm?cmnd=SetOption19%200
@@ -168,15 +166,5 @@ class TasmotaIpConnectorConjecture
     vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
-  }
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
   }
 }

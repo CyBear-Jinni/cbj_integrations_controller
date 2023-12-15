@@ -61,11 +61,11 @@ class LgWebosTvEntity extends GenericSmartTvDE {
     }
 
     try {
-      if (newEntity.lightSwitchState!.getOrCrash() !=
+      if (newEntity.lightSwitchState.getOrCrash() !=
               smartTvSwitchState!.getOrCrash() ||
           entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
         final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.lightSwitchState!.getOrCrash(),
+          newEntity.lightSwitchState.getOrCrash(),
         );
 
         if (actionToPreform == EntityActions.on) {

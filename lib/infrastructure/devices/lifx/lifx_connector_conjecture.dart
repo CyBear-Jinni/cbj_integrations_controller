@@ -9,12 +9,11 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
-class LifxConnectorConjecture implements AbstractVendorConnectorConjecture {
+class LifxConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory LifxConnectorConjecture() {
     return _instance;
   }
@@ -24,15 +23,15 @@ class LifxConnectorConjecture implements AbstractVendorConnectorConjecture {
   static final LifxConnectorConjecture _instance =
       LifxConnectorConjecture._singletonContractor();
 
+  @override
+  VendorsAndServices get vendorsAndServices => VendorsAndServices.lifx;
+
   // TODO: Convert search from cloud into connector conjector
   Future<String> accountLogin(GenericLifxLoginDE genericLifxLoginDE) async {
     lifxClient = LIFXClient(genericLifxLoginDE.lifxApiKey.getOrCrash());
     _discoverNewDevices();
     return 'Success';
   }
-
-  @override
-  Map<String, DeviceEntityAbstract> vendorEntities = {};
 
   LIFXClient? lifxClient;
 
@@ -127,15 +126,5 @@ class LifxConnectorConjecture implements AbstractVendorConnectorConjecture {
     DeviceEntityAbstract entity,
   ) async {
     return null;
-  }
-
-  @override
-  Future setEntityState({
-    required String cbjUniqeId,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
   }
 }
