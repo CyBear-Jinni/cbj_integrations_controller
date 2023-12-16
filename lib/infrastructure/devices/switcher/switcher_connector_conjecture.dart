@@ -12,6 +12,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/abst
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_plug_entity/generic_smart_plug_entity.dart';
+import 'package:collection/collection.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
@@ -32,26 +33,14 @@ class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
     DeviceEntityAbstract entity,
   ) async {
-    for (final DeviceEntityAbstract savedDevice in vendorEntities.values) {
-      if ((savedDevice is SwitcherV2Entity ||
-              savedDevice is SwitcherRunnerEntity ||
-              savedDevice is SwitcherSmartPlugEntity) &&
+    final DeviceEntityAbstract? savedDevice =
+        vendorEntities.values.firstWhereOrNull(
+      (element) =>
           entity.deviceCbjUniqueId.getOrCrash() ==
-              savedDevice.deviceCbjUniqueId.getOrCrash()) {
-        return HashMap();
-      } else if (savedDevice is GenericBoilerDE ||
-          savedDevice is GenericBlindsDE &&
-              entity.deviceCbjUniqueId.getOrCrash() ==
-                  savedDevice.deviceCbjUniqueId.getOrCrash()) {
-        /// Device exist as generic and needs to get converted to non generic type for this vendor
-        break;
-      } else if (entity.deviceCbjUniqueId.getOrCrash() ==
-          savedDevice.deviceCbjUniqueId.getOrCrash()) {
-        icLogger.w(
-          'Switcher device type supported but implementation is missing here',
-        );
-        break;
-      }
+          element.deviceCbjUniqueId.getOrCrash(),
+    );
+    if (savedDevice != null) {
+      return HashMap();
     }
 
     final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =

@@ -20,7 +20,7 @@ class WizHelpers {
     //   cbjEntityName: CbjEntityName(
     //     wizDevice.label != '' ? wizDevice.label : 'Wiz test 2',
     //   ),
-    //   entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
+    //   entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
     //   senderDeviceOs: DeviceSenderDeviceOs('Wiz'),
     //   senderDeviceModel: DeviceSenderDeviceModel('Cloud'),
     //   senderId: DeviceSenderId(),

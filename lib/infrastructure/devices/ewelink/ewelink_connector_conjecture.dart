@@ -25,7 +25,7 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
   VendorsAndServices get vendorsAndServices => VendorsAndServices.sonoffEweLink;
 
   @override
-  final List<String> mdnsTypes = ['_ewelink._tcp'];
+  final List<String> mdnsVendorUniqueTypes = ['_ewelink._tcp'];
 
   Ewelink? ewelink;
 

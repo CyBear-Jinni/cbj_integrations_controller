@@ -113,7 +113,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
       securityCameraSuspendState =
           GenericSecurityCameraSuspendState(EntityActions.itIsFalse.toString());
 
-      // entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+      // entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
       //
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
@@ -121,7 +121,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
 
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
 
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,

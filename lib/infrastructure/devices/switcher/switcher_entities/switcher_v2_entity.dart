@@ -43,7 +43,7 @@ class SwitcherV2Entity extends GenericBoilerDE {
     required super.boilerSwitchState,
   }) : super(
           cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
+              CbjDeviceVendor.vendor(VendorsAndServices.switcherSmartHome),
         ) {
     switcherObject = SwitcherApiObject(
       deviceType: SwitcherDevicesTypes.switcherV2Esp,
@@ -163,7 +163,7 @@ class SwitcherV2Entity extends GenericBoilerDE {
             icLogger.e('actionToPreform is not set correctly on Switcher V2');
           }
         }
-        entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+        entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
 
         IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
           entityFromTheHub: this,
@@ -171,7 +171,7 @@ class SwitcherV2Entity extends GenericBoilerDE {
       }
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
 
       IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
         entityFromTheHub: this,

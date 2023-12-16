@@ -40,8 +40,7 @@ class EspHomeLightEntity extends GenericLightDE {
     required super.deviceCbjUniqueId,
     required super.lightSwitchState,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.espHome.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.espHome),
         );
 
   factory EspHomeLightEntity.fromGeneric(GenericLightDE genericDevice) {
@@ -115,13 +114,13 @@ class EspHomeLightEntity extends GenericLightDE {
           icLogger.e('actionToPreform is not set correctly ESPHome light');
         }
       }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
       //
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,

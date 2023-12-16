@@ -47,7 +47,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
     this.skip,
     this.volume,
   }) : super(
-          entityTypes: EntityType(EntityTypes.smartTV.toString()),
+          entityTypes: EntityType.type(EntityTypes.smartTV),
         );
 
   /// Empty instance of GenericSmartTvEntity
@@ -205,9 +205,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
   }
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> togglePausePlay(
-    String toggleNewState,
-  ) async {
+  Future<Either<CoreFailure, Unit>> togglePausePlay() async {
     icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
@@ -247,7 +245,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
   }
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> queueNext() async {
+  Future<Either<CoreFailure, Unit>> skipForeword() async {
     icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(
@@ -257,7 +255,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
   }
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> queuePrev() async {
+  Future<Either<CoreFailure, Unit>> skipBackward() async {
     icLogger.w('Please override this method in the non generic implementation');
     return left(
       const CoreFailure.actionExcecuter(

@@ -23,6 +23,10 @@ abstract class AbstractVendorConnectorConjecture {
   /// the action already arrives with entityUniqueId value
   Map<String, DeviceEntityAbstract> vendorEntities = {};
 
+  /// Exists only for the vendor devices
+  List<String> get mdnsVendorUniqueTypes => [];
+
+  /// Can be found on more then one vendor
   List<String> get mdnsTypes => [];
 
   List<String> get uniqueIdentifierNameInMdns => [];

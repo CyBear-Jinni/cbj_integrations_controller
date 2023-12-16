@@ -44,7 +44,7 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
     required this.lightSwitchState,
     required this.lightBrightness,
   }) : super(
-          entityTypes: EntityType(EntityTypes.dimmableLight.toString()),
+          entityTypes: EntityType.type(EntityTypes.dimmableLight),
         );
 
   /// Empty instance of GenericLightWithBrightnessEntity

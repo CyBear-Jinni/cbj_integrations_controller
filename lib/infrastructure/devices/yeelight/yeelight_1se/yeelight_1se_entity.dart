@@ -48,8 +48,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required super.lightColorValue,
     required super.lightBrightness,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.yeelight.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.yeelight),
         );
 
   factory Yeelight1SeEntity.fromGeneric(GenericRgbwLightDE genericDevice) {
@@ -226,7 +225,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
               },
             );
           }
-          entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+          entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
         } catch (e) {
           icLogger.e('Error executing Yeelight current state\n$e');
         } finally {
@@ -234,8 +233,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
         }
       } catch (e) {
         icLogger.e('Yeelight throws exception on disconnect\n$e');
-        entityStateGRPC =
-            EntityState(EntityStateGRPC.newStateFailed.toString());
+        entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
       }
       executeStateTimer = null;
     });
@@ -342,9 +340,13 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   /// Will turn off the device, will not close the connection
   Future<Either<CoreFailure, Unit>> _sendTurnOffDevice() async {
     try {
+      final String? port = devicePort.getOrCrash();
+      if (port == null) {
+        return left(const CoreFailure.unexpected());
+      }
       yeelightPackageObject = Device(
         address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
-        port: int.parse(devicePort.getOrCrash()),
+        port: int.parse(port),
       );
 
       await yeelightPackageObject!.turnOff();
@@ -371,9 +373,13 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   /// Will turn on the device, will not close the connection
   Future<Either<CoreFailure, Unit>> _sendTurnOnDevice() async {
     try {
+      final String? port = devicePort.getOrCrash();
+      if (port == null) {
+        return left(const CoreFailure.unexpected());
+      }
       yeelightPackageObject = Device(
         address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
-        port: int.parse(devicePort.getOrCrash()),
+        port: int.parse(port),
       );
 
       await yeelightPackageObject!.turnOn();
@@ -401,9 +407,13 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   Future<Either<CoreFailure, Unit>> _sendSetBrightness() async {
     try {
       try {
+        final String? port = devicePort.getOrCrash();
+        if (port == null) {
+          return left(const CoreFailure.unexpected());
+        }
         yeelightPackageObject = Device(
           address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
-          port: int.parse(devicePort.getOrCrash()),
+          port: int.parse(port),
         );
 
         await yeelightPackageObject?.turnOn();
@@ -452,9 +462,13 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   Future<Either<CoreFailure, Unit>> _sendChangeColorTemperature() async {
     try {
       try {
+        final String? port = devicePort.getOrCrash();
+        if (port == null) {
+          return left(const CoreFailure.unexpected());
+        }
         yeelightPackageObject = Device(
           address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
-          port: int.parse(devicePort.getOrCrash()),
+          port: int.parse(port),
         );
 
         await yeelightPackageObject!.setColorTemperature(
@@ -495,9 +509,13 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   Future<Either<CoreFailure, Unit>> _sendChangeColorHsv() async {
     try {
       try {
+        final String? port = devicePort.getOrCrash();
+        if (port == null) {
+          return left(const CoreFailure.unexpected());
+        }
         yeelightPackageObject = Device(
           address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
-          port: int.parse(devicePort.getOrCrash()),
+          port: int.parse(port),
         );
         int saturationValue;
         if (lightColorSaturation.getOrCrash().length <= 3 &&

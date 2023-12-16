@@ -43,7 +43,7 @@ class GenericSecurityCameraDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.securityCameraSuspendState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.securityCamera.toString()),
+          entityTypes: EntityType.type(EntityTypes.securityCamera),
         );
 
   /// Empty instance of GenericSecurityCameraEntity

@@ -35,7 +35,7 @@ class HpPrinterEntity extends GenericPrinterDE {
     required super.deviceCbjUniqueId,
     required super.printerSwitchState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.hp.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.hp),
         );
 
   factory HpPrinterEntity.fromGeneric(GenericPrinterDE genericDevice) {
@@ -76,13 +76,13 @@ class HpPrinterEntity extends GenericPrinterDE {
     required DeviceEntityAbstract newEntity,
   }) async {
     // logger.i('Currently printer does not support any action');
-    // entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+    // entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
     //
     // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
     //   entityFromTheHub: this,
     // );
 
-    // entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+    // entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
     // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
     //   entityFromTheHub: this,
     // );

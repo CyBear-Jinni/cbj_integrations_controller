@@ -56,7 +56,7 @@ class TasmotaMqttHelpers {
         cbjEntityName: CbjEntityName(name),
         entityOriginalName: EntityOriginalName(name),
         deviceOriginalName: DeviceOriginalName(name),
-        entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
+        entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
         senderDeviceOs: DeviceSenderDeviceOs('TasmotaMqtt'),
         deviceVendor: DeviceVendor(null),
         deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),

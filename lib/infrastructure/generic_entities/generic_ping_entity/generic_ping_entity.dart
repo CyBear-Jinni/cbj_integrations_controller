@@ -43,7 +43,7 @@ class GenericPingDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.pingSwitchState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.pingEntity.toString()),
+          entityTypes: EntityType.type(EntityTypes.pingEntity),
         );
 
   /// Ping instance of GenericPingEntity
@@ -53,7 +53,7 @@ class GenericPingDE extends DeviceEntityAbstract {
         cbjEntityName: CbjEntityName('Ping device'),
         entityOriginalName: EntityOriginalName('Missing entity original name'),
         deviceOriginalName: DeviceOriginalName('Missing device original name'),
-        entityStateGRPC: EntityState(EntityStateGRPC.pingNow.toString()),
+        entityStateGRPC: EntityState.state(EntityStateGRPC.pingNow),
         senderDeviceOs: DeviceSenderDeviceOs('Hub'),
         senderDeviceModel: DeviceSenderDeviceModel('Hub'),
         stateMassage: DeviceStateMassage('Test'),

@@ -23,9 +23,13 @@ class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
   VendorsAndServices get vendorsAndServices => VendorsAndServices.google;
 
   @override
-  final List<String> mdnsTypes = [
+  final List<String> mdnsVendorUniqueTypes = [
     '_googlecast._tcp',
     '_androidtvremote2._tcp',
+  ];
+
+  @override
+  final List<String> mdnsTypes = [
     '_rc._tcp',
   ];
 
@@ -44,43 +48,26 @@ class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
     if (mdnsName == null) {
       return null;
     }
+
+    final DeviceEntityAbstract googleDevice =
+        GoogleHelpers.addDiscoveredDevice(entity);
+
     for (final DeviceEntityAbstract device in vendorEntities.values) {
-      if (device is ChromeCastEntity &&
-          (mdnsName == device.entityUniqueId.getOrCrash() ||
-              entity.deviceLastKnownIp.getOrCrash() ==
-                  device.deviceLastKnownIp.getOrCrash())) {
-        return null;
-      } // Same tv can have multiple mDns names so we can't compere it without ip in the object
-      // else if (device is GenericSmartTvDE &&
-      //     (mDnsName == device.entityUniqueId.getOrCrash() ||
-      //         ip == device.lastKnownIp!.getOrCrash())) {
-      //   return;
-      // }
-      else if (mdnsName == device.entityUniqueId.getOrCrash()) {
-        icLogger.w(
-          'Google device type supported but implementation is missing here',
-        );
-        return null;
+      if (googleDevice.deviceCbjUniqueId.getOrCrash() ==
+          device.deviceLastKnownIp.getOrCrash()) {
+        return HashMap();
       }
     }
 
-    final List<DeviceEntityAbstract> googleDevice =
-        GoogleHelpers.addDiscoveredDevice(entity);
-
-    if (googleDevice.isEmpty) {
-      return null;
-    }
     final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
 
-    for (final DeviceEntityAbstract entityAsDevice in googleDevice) {
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
-        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
-        entityAsDevice,
-      );
+    final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+      googleDevice.deviceCbjUniqueId.getOrCrash(),
+      googleDevice,
+    );
 
-      addedDevice.addEntries([deviceAsEntry]);
-      vendorEntities.addEntries([deviceAsEntry]);
-    }
+    addedDevice.addEntries([deviceAsEntry]);
+    vendorEntities.addEntries([deviceAsEntry]);
     icLogger.i('New Chromecast device got added');
     return addedDevice;
   }
@@ -112,8 +99,8 @@ class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
       return;
     }
 
-    vendorEntities.addEntries([
-      MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
-    ]);
+    // vendorEntities.addEntries([
+    //   MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
+    // ]);
   }
 }

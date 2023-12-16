@@ -53,8 +53,7 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.tasmota.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.tasmota),
         );
 
   factory TasmotaIpSwitchEntity.fromGeneric(GenericSwitchDE genericDevice) {
@@ -135,13 +134,13 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
               .e('actionToPreform is not set correctly on TasmotaIp Switch');
         }
       }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );

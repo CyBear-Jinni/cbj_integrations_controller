@@ -43,7 +43,7 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
     required super.lightSwitchState,
     required super.lightBrightness,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lifx.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lifx),
         );
 
   factory LifxWhiteEntity.fromGeneric(GenericDimmableLightDE genericDevice) {
@@ -132,13 +132,13 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
           },
         );
       }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );

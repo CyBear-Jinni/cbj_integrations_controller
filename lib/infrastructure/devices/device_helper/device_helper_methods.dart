@@ -119,7 +119,7 @@ class DeviceHelperMethods {
     if (dtoEntity is DeviceEntityDtoAbstract) {
       final DeviceEntityAbstract deviceEntityAbstract = dtoEntity.toDomain();
       deviceEntityAbstract.entityStateGRPC =
-          EntityState(EntityStateGRPC.waitingInComp.toString());
+          EntityState.state(EntityStateGRPC.waitingInComp);
 
       IMqttServerRepository.instance.postToHubMqtt(
         entityFromTheApp: deviceEntityAbstract,

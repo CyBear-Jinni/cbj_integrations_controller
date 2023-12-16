@@ -1,4 +1,5 @@
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_errors.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_validators.dart';
@@ -151,6 +152,13 @@ class EntityState extends ValueObjectCore<String> {
     );
   }
 
+  factory EntityState.state(EntityStateGRPC input) {
+    return EntityState._(
+      right(input.toString()),
+      input,
+    );
+  }
+
   const EntityState._(this.value, this._state);
 
   final EntityStateGRPC _state;
@@ -241,14 +249,16 @@ class DeviceAction extends ValueObjectCore<String> {
 }
 
 class EntityType extends ValueObjectCore<String> {
-  factory EntityType(String? input) {
-    assert(input != null);
+  const EntityType._(this.value, this.type);
+
+  factory EntityType.type(EntityTypes type) {
     return EntityType._(
-      validateNotEmpty(input!).flatMap((a) => validateDeviceTypeExist(input)),
+      right(type.toString()),
+      type,
     );
   }
 
-  const EntityType._(this.value);
+  final EntityTypes type;
 
   @override
   final Either<CoreFailure<String>, String> value;
@@ -356,18 +366,17 @@ class DeviceMdns extends ValueObjectCore<String?> {
   final Either<CoreFailure<String?>, String?> value;
 }
 
-class DevicePort extends ValueObjectCore<String> {
+class DevicePort extends ValueObjectCore<String?> {
   factory DevicePort(String? input) {
-    assert(input != null);
     return DevicePort._(
-      validatePortNotEmpty(input!),
+      validatePortNotEmpty(input),
     );
   }
 
   const DevicePort._(this.value);
 
   @override
-  final Either<CoreFailure<String>, String> value;
+  final Either<CoreFailure<String?>, String?> value;
 }
 
 class EntityKey extends ValueObjectCore<String> {

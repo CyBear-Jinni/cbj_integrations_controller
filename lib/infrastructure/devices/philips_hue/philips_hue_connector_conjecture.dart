@@ -23,7 +23,7 @@ class PhilipsHueConnectorConjecture extends AbstractVendorConnectorConjecture {
   VendorsAndServices get vendorsAndServices => VendorsAndServices.philipsHue;
 
   @override
-  final List<String> mdnsTypes = ['_hue._tcp'];
+  final List<String> mdnsVendorUniqueTypes = ['_hue._tcp'];
 
   static bool gotHueHubIp = false;
 

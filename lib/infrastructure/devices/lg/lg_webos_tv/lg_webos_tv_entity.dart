@@ -44,7 +44,7 @@ class LgWebosTvEntity extends GenericSmartTvDE {
     super.skip,
     super.volume,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lg.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lg),
         );
 
   /// Please override the following methods
@@ -86,14 +86,14 @@ class LgWebosTvEntity extends GenericSmartTvDE {
           icLogger.e('actionToPreform is not set correctly on WebOs');
         }
       }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
 
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );

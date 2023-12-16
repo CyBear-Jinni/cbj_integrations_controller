@@ -43,7 +43,7 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
     required super.smartPlugState,
   }) : super(
           cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
+              CbjDeviceVendor.vendor(VendorsAndServices.switcherSmartHome),
         ) {
     switcherObject = SwitcherApiObject(
       deviceType: SwitcherDevicesTypes.switcherPowerPlug,
@@ -166,7 +166,7 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
             );
           }
         }
-        entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+        entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
 
         IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
           entityFromTheHub: this,
@@ -174,7 +174,7 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
       }
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
 
       IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
         entityFromTheHub: this,

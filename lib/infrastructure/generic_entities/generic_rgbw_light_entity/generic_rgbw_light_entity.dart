@@ -49,7 +49,7 @@ class GenericRgbwLightDE extends DeviceEntityAbstract {
     required this.lightColorValue,
     required this.lightBrightness,
   }) : super(
-          entityTypes: EntityType(EntityTypes.rgbwLights.toString()),
+          entityTypes: EntityType.type(EntityTypes.rgbwLights),
         );
 
   /// Empty instance of GenericLightEntity

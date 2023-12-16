@@ -43,7 +43,7 @@ class GenericPrinterDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.printerSwitchState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.printer.toString()),
+          entityTypes: EntityType.type(EntityTypes.printer),
         );
 
   /// Empty instance of GenericPrinterEntity

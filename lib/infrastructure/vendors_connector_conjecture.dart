@@ -143,7 +143,7 @@ class VendorsConnectorConjecture {
         mdnsName?.substring(0, mdnsName.indexOf('.'));
     final String startOfMdnsNameLower = startOfMdnsName!.toLowerCase();
 
-    final String port = entity.devicePort.getOrCrash();
+    final String? port = entity.devicePort.getOrCrash();
     String? serviceType;
 
     final List<String>? ptrNameSplit =
@@ -165,12 +165,18 @@ class VendorsConnectorConjecture {
       return;
     }
 
-    HashMap<String, DeviceEntityAbstract>? handeldEntities;
-
     AbstractVendorConnectorConjecture? companyConnectorConjecture;
 
     for (final AbstractVendorConnectorConjecture connectorConjecture
         in AbstractVendorConnectorConjecture.vendorConnectorConjectureClass) {
+      final bool containUniqueType =
+          connectorConjecture.mdnsVendorUniqueTypes.contains(serviceType);
+
+      if (containUniqueType) {
+        companyConnectorConjecture = connectorConjecture;
+        break;
+      }
+
       final bool containServiceType =
           connectorConjecture.mdnsTypes.contains(serviceType);
       if (!containServiceType) {
@@ -179,6 +185,11 @@ class VendorsConnectorConjecture {
 
       bool containStartOfMdns =
           connectorConjecture.uniqueIdentifierNameInMdns.isEmpty;
+
+      if (containStartOfMdns) {
+        companyConnectorConjecture = connectorConjecture;
+        break;
+      }
 
       for (final String uniqueNameInMdns
           in connectorConjecture.uniqueIdentifierNameInMdns) {
@@ -194,25 +205,27 @@ class VendorsConnectorConjecture {
       }
     }
 
+    HashMap<String, DeviceEntityAbstract>? handeldEntities;
+
     if (companyConnectorConjecture != null) {
       handeldEntities = await companyConnectorConjecture.foundEntity(entity);
-    } else {
+    }
+
+    if (handeldEntities == null) {
+      icLogger.e(
+        'Entity failed to load mdns device ${entity.deviceMdns.getOrCrash()}',
+      );
       final String address = entity.deviceLastKnownIp.getOrCrash()!;
       icLogger.t(
-        'mDNS service type $serviceType is not supported\n IP: $address, Port: $port, ServiceType: $serviceType, MdnsName: $startOfMdnsName',
+        'Entity service type $serviceType is not supported\n IP: $address, Port: $port,\n'
+        'ServiceType: $serviceType, mDNS device ${entity.deviceMdns.getOrCrash()}',
       );
       handeldEntities = HashMap();
       handeldEntities.addEntries(
         [MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity)],
       );
-    }
-    if (handeldEntities == null) {
-      icLogger.e(
-        'Entity failed to load mdns device ${entity.deviceMdns.getOrCrash()}',
-      );
       return;
-    }
-    if (handeldEntities.isEmpty) {
+    } else if (handeldEntities.isEmpty) {
       /// Device exists
       return;
     }
@@ -245,9 +258,7 @@ class VendorsConnectorConjecture {
       handeldEntities = await companyConnectorConjecture?.foundEntity(entity);
     } else {
       final GenericUnsupportedDE? entityTemp =
-          await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice(
-        entity.devicesMacAddress.getOrCrash(),
-      );
+          await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice();
       if (entityTemp != null) {
         handeldEntities =
             await CbjDevicesConnectorConjecture().foundEntity(entityTemp);
@@ -343,8 +354,7 @@ class VendorsConnectorConjecture {
   ) {
     for (final AbstractVendorConnectorConjecture vendorConnectorConjecture
         in AbstractVendorConnectorConjecture.vendorConnectorConjectureClass) {
-      if (vendorConnectorConjecture.vendorsAndServices ==
-          VendorsAndServices.shelly) {
+      if (vendorConnectorConjecture.vendorsAndServices == vendor) {
         return vendorConnectorConjecture;
       }
     }

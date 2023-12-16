@@ -99,7 +99,7 @@ class TasmotaIpHelpers {
         deviceOriginalName: DeviceOriginalName(
           '$deviceHostName-${componentInDeviceUiLabelAndComment[0]}',
         ),
-        entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
+        entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
         senderDeviceOs: DeviceSenderDeviceOs('Tasmota'),
         deviceVendor: DeviceVendor(null),
         deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),

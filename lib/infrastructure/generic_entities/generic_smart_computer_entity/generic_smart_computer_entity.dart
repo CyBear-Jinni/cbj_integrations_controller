@@ -44,7 +44,7 @@ class GenericSmartComputerDE extends DeviceEntityAbstract {
     required this.smartComputerSuspendState,
     required this.smartComputerShutDownState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.smartComputer.toString()),
+          entityTypes: EntityType.type(EntityTypes.smartComputer),
         );
 
   /// Empty instance of GenericSmartComputerEntity

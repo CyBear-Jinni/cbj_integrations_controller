@@ -31,6 +31,13 @@ class _NetworkUtilities implements INetworkUtilities {
     final MdnsInfo? mdns = await activeHost.mdnsInfo;
     final Vendor? vendor = await activeHost.vendor;
     final String? hostName = await activeHost.hostName;
+    final List<OpenPort> openPorts = activeHost.openPorts;
+    final SrvResourceRecord? srvResourceRecord = mdns?.srvResourceRecord;
+    final PtrResourceRecord? ptrResourceRecord = mdns?.ptrResourceRecord;
+
+    final int? port = openPorts.isNotEmpty
+        ? openPorts.first.port
+        : (srvResourceRecord?.port ?? mdns?.mdnsPort);
 
     return GenericUnsupportedDE(
       uniqueId: CoreUniqueId(),
@@ -52,14 +59,14 @@ class _NetworkUtilities implements INetworkUtilities {
       deviceOriginalName: DeviceOriginalName(deviceName),
       powerConsumption: DevicePowerConsumption(''),
       deviceUniqueId: DeviceUniqueId(arpData?.macAddress ?? activeHost.hostId),
-      devicePort: DevicePort(activeHost.openPorts.toString()),
+      devicePort: DevicePort(port?.toString()),
       deviceLastKnownIp: DeviceLastKnownIp(activeHost.address),
       deviceHostName: DeviceHostName(hostName),
       deviceMdns: DeviceMdns(mdns?.mdnsDomainName),
       srvResourceRecord:
-          DeviceSrvResourceRecord(input: mdns?.srvResourceRecord.name),
+          DeviceSrvResourceRecord(input: srvResourceRecord?.name),
       ptrResourceRecord:
-          DevicePtrResourceRecord(input: mdns?.ptrResourceRecord.name),
+          DevicePtrResourceRecord(input: ptrResourceRecord?.name),
       devicesMacAddress:
           DevicesMacAddress(arpData?.macAddress ?? vendor?.macPrefix),
       entityKey: EntityKey(''),

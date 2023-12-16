@@ -41,8 +41,7 @@ class ShellyRelaySwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.shelly.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.shelly),
         ) {
     shellyRelaySwitch = ShellyApiRelaySwitch(
       lastKnownIp: deviceLastKnownIp.getOrCrash()!,
@@ -98,13 +97,13 @@ class ShellyRelaySwitchEntity extends GenericSwitchDE {
           );
         }
       }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );

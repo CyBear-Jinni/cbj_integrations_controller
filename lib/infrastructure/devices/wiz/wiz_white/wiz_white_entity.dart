@@ -41,7 +41,7 @@ class WizWhiteEntity extends GenericLightDE {
     required super.deviceCbjUniqueId,
     required super.lightSwitchState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.wiz.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.wiz),
         );
 
   WizPort? wizPort;
@@ -85,13 +85,13 @@ class WizWhiteEntity extends GenericLightDE {
           icLogger.w('actionToPreform is not set correctly on Wiz White');
         }
       }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );

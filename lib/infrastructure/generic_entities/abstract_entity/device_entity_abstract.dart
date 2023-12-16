@@ -227,7 +227,7 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
           deviceOriginalName: DeviceOriginalName(
             'Device original name that entity is exists on is empty',
           ),
-          entityTypes: EntityType(EntityTypes.light.toString()),
+          entityTypes: EntityType.type(EntityTypes.light),
           senderDeviceModel: DeviceSenderDeviceModel('a'),
           senderDeviceOs: DeviceSenderDeviceOs('b'),
           senderId: DeviceSenderId(),

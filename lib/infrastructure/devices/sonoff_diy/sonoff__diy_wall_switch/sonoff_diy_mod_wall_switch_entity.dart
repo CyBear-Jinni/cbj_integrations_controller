@@ -41,13 +41,12 @@ class SonoffDiyRelaySwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.sonoffDiy.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.sonoffDiy),
         ) {
     sonoffDiyRelaySwitch = SonoffDiyApiWallSwitch(
       ipAddress: deviceLastKnownIp.getOrCrash()!,
       hostName: deviceHostName.getOrCrash() ?? '',
-      port: int.parse(devicePort.getOrCrash()),
+      port: int.parse(devicePort.getOrCrash() ?? '0'),
     );
   }
 
@@ -98,13 +97,13 @@ class SonoffDiyRelaySwitchEntity extends GenericSwitchDE {
           );
         }
       }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );

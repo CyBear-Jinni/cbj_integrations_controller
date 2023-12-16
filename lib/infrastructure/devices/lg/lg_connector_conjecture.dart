@@ -47,18 +47,6 @@ class LgConnectorConjecture extends AbstractVendorConnectorConjecture {
                   device.deviceLastKnownIp.getOrCrash())) {
         return null;
       }
-      // Same tv can have multiple mDns names so we can't compere it without ip in the object
-      // else if (device is GenericSmartTvDE &&
-      //     (mDnsName == device.entityUniqueId.getOrCrash() ||
-      //         ip == device.lastKnownIp!.getOrCrash())) {
-      //   return;
-      // }
-      else if (mdnsName == device.entityUniqueId.getOrCrash()) {
-        icLogger.w(
-          'LG device type supported but implementation is missing here',
-        );
-        return null;
-      }
     }
 
     final List<DeviceEntityAbstract> lgDevice =

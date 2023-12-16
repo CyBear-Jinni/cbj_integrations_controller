@@ -43,7 +43,7 @@ class GenericLightDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.lightSwitchState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.light.toString()),
+          entityTypes: EntityType.type(EntityTypes.light),
         );
 
   /// Empty instance of GenericLightEntity

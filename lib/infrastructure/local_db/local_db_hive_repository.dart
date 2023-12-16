@@ -282,7 +282,7 @@ class _HiveRepository extends IDbRepository {
         devices.add(
           deviceEntity
             ..entityStateGRPC =
-                EntityState(EntityStateGRPC.waitingInComp.toString()),
+                EntityState.state(EntityStateGRPC.waitingInComp),
         );
       }
       return right(devices);

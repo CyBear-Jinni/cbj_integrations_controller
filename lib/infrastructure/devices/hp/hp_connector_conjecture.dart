@@ -23,7 +23,10 @@ class HpConnectorConjecture extends AbstractVendorConnectorConjecture {
   VendorsAndServices get vendorsAndServices => VendorsAndServices.hp;
 
   @override
-  final List<String> mdnsTypes = ['_hplib._tcp', '_ipp._tcp'];
+  final List<String> mdnsVendorUniqueTypes = ['_hplib._tcp'];
+
+  @override
+  final List<String> mdnsTypes = ['_ipp._tcp'];
 
   @override
   final List<String> uniqueIdentifierNameInMdns = ['hp'];

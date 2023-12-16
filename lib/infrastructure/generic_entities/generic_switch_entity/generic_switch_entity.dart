@@ -43,7 +43,7 @@ class GenericSwitchDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.switchState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.switch_.toString()),
+          entityTypes: EntityType.type(EntityTypes.switch_),
         );
 
   /// Empty instance of GenericSwitchEntity

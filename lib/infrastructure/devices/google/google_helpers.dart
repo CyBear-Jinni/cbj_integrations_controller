@@ -5,7 +5,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/abst
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_tv_entity/generic_smart_tv_value_objects.dart';
 
 class GoogleHelpers {
-  static List<DeviceEntityAbstract> addDiscoveredDevice(
+  static DeviceEntityAbstract addDiscoveredDevice(
     DeviceEntityAbstract entity,
   ) {
     final ChromeCastEntity googleDE = ChromeCastEntity(
@@ -42,6 +42,6 @@ class GoogleHelpers {
       ),
     );
 
-    return [googleDE];
+    return googleDE;
   }
 }

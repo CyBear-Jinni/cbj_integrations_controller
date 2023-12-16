@@ -43,7 +43,7 @@ class GenericBlindsDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.blindsSwitchState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.blinds.toString()),
+          entityTypes: EntityType.type(EntityTypes.blinds),
         );
 
   /// Empty instance of GenericBlindsEntity

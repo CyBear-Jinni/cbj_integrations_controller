@@ -41,7 +41,7 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
     required super.lastResponseFromDeviceTimeStamp,
     required super.deviceCbjUniqueId,
   }) : super(
-          entityTypes: EntityType(EntityTypes.emptyEntity.toString()),
+          entityTypes: EntityType.type(EntityTypes.emptyEntity),
         );
 
   /// Empty instance of GenericEmptyEntity
@@ -56,7 +56,7 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
         cbjEntityName: CbjEntityName('Empty device'),
         entityOriginalName: EntityOriginalName('Missing entity original name'),
         deviceOriginalName: DeviceOriginalName('Missing device original name'),
-        entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
+        entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
         senderDeviceOs: DeviceSenderDeviceOs('Hub'),
         senderDeviceModel: DeviceSenderDeviceModel('Hub'),
         stateMassage: DeviceStateMassage('Test'),

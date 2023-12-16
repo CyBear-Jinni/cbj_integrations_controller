@@ -31,7 +31,7 @@ class SonoffDiyHelpers {
           cbjEntityName: CbjEntityName(mDnsName),
           entityOriginalName: EntityOriginalName(mDnsName),
           deviceOriginalName: DeviceOriginalName(mDnsName),
-          entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
+          entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
           senderDeviceOs: DeviceSenderDeviceOs('SonoffDiy'),
           deviceVendor: DeviceVendor(null),
           deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),

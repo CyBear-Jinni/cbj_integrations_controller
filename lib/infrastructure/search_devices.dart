@@ -52,6 +52,10 @@ class SearchDevices {
         }
         final List<ActiveHost> activeHostList = await _searchMdnsDevices();
         for (final ActiveHost activeHost in activeHostList) {
+          icLogger.i(
+            'Device Name ${await activeHost.hostName}, ${await activeHost.deviceName}',
+          );
+
           final GenericUnsupportedDE entity =
               await INetworkUtilities.instance.activeHostToEntity(activeHost);
           VendorsConnectorConjecture().setMdnsDeviceByCompany(entity);

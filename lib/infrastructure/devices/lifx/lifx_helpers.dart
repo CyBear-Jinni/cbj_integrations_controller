@@ -26,7 +26,7 @@ class LifxHelpers {
       cbjEntityName: CbjEntityName(deviceName),
       entityOriginalName: EntityOriginalName(deviceName),
       deviceOriginalName: DeviceOriginalName(deviceName),
-      entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
+      entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
       senderDeviceOs: DeviceSenderDeviceOs('Lifx'),
       deviceVendor: DeviceVendor(null),
       deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),

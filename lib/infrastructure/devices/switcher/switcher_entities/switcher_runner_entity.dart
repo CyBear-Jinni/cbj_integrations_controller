@@ -43,7 +43,7 @@ class SwitcherRunnerEntity extends GenericBlindsDE {
     required super.devicePort,
   }) : super(
           cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.switcherSmartHome.toString()),
+              CbjDeviceVendor.vendor(VendorsAndServices.switcherSmartHome),
         ) {
     switcherObject = SwitcherApiObject(
       deviceType: SwitcherDevicesTypes.switcherRunner,
@@ -51,7 +51,7 @@ class SwitcherRunnerEntity extends GenericBlindsDE {
       switcherIp: deviceLastKnownIp.getOrCrash()!,
       switcherName: cbjEntityName.getOrCrash()!,
       macAddress: devicesMacAddress.getOrCrash(),
-      port: int.parse(devicePort.getOrCrash()),
+      port: int.parse(devicePort.getOrCrash() ?? '0'),
       powerConsumption: powerConsumption.getOrCrash(),
     );
   }
@@ -165,7 +165,7 @@ class SwitcherRunnerEntity extends GenericBlindsDE {
                 .e('actionToPreform is not set correctly on Switcher Runner');
           }
         }
-        entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+        entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
 
         IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
           entityFromTheHub: this,
@@ -173,7 +173,7 @@ class SwitcherRunnerEntity extends GenericBlindsDE {
       }
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
 
       IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
         entityFromTheHub: this,

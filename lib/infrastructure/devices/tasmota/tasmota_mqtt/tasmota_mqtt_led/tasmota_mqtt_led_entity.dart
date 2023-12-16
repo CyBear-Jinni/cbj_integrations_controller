@@ -41,8 +41,7 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     required super.lightSwitchState,
     required this.tasmotaMqttDeviceTopicName,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.tasmota.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.tasmota),
         );
 
   TasmotaMqttDeviceTopicName tasmotaMqttDeviceTopicName;
@@ -92,13 +91,13 @@ class TasmotaMqttLedEntity extends GenericLightDE {
           icLogger.e('actionToPreform is not set correctly on TasmotaMqtt Led');
         }
       }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
       // );

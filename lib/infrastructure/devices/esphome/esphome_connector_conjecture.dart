@@ -27,7 +27,7 @@ class EspHomeConnectorConjecture extends AbstractVendorConnectorConjecture {
   VendorsAndServices get vendorsAndServices => VendorsAndServices.espHome;
 
   @override
-  final List<String> mdnsTypes = ['_esphomelib._tcp'];
+  final List<String> mdnsVendorUniqueTypes = ['_esphomelib._tcp'];
 
   static String? espHomeDevicePass;
 

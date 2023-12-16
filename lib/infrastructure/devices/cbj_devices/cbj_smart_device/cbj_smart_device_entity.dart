@@ -134,7 +134,7 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
       smartComputerShutDownState =
           GenericSmartComputerShutdownState(EntityActions.itIsFalse.toString());
 
-      // entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
+      // entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
       //
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,
@@ -142,7 +142,7 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
 
       return right(unit);
     } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
+      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
 
       // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
       //   entityFromTheHub: this,

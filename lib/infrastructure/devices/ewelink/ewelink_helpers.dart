@@ -43,7 +43,7 @@ class EwelinkHelpers {
             '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}',
           ),
           switchState: GenericSwitchSwitchState('off'),
-          entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
+          entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
         ),
       );
     } else if (ewelinkDevice.type == '10') {
@@ -120,7 +120,7 @@ class EwelinkHelpers {
             ),
             switchState:
                 GenericSwitchSwitchState(switchParam['switch'] as String),
-            entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
+            entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
           ),
         );
         if (possibleTags == null) {
