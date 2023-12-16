@@ -22,7 +22,11 @@ class HpConnectorConjecture extends AbstractVendorConnectorConjecture {
   @override
   VendorsAndServices get vendorsAndServices => VendorsAndServices.hp;
 
-  static const List<String> mdnsTypes = ['_hplib._tcp'];
+  @override
+  final List<String> mdnsTypes = ['_hplib._tcp', '_ipp._tcp'];
+
+  @override
+  final List<String> uniqueIdentifierNameInMdns = ['hp'];
 
   @override
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(

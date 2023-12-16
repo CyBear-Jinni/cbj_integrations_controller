@@ -71,10 +71,6 @@ class HpPrinterEntity extends GenericPrinterDE {
     );
   }
 
-  static const List<String> mdnsTypes = [
-    '_ipp._tcp',
-  ];
-
   @override
   Future<Either<CoreFailure, Unit>> executeDeviceAction({
     required DeviceEntityAbstract newEntity,

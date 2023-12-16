@@ -24,7 +24,11 @@ class ShellyConnectorConjecture extends AbstractVendorConnectorConjecture {
   @override
   VendorsAndServices get vendorsAndServices => VendorsAndServices.shelly;
 
-  static const List<String> mdnsTypes = ['_http._tcp'];
+  @override
+  final List<String> mdnsTypes = ['_http._tcp'];
+
+  @override
+  final List<String> uniqueIdentifierNameInMdns = ['shelly'];
 
   @override
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(

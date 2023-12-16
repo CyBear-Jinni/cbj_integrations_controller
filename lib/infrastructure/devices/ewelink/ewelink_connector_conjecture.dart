@@ -24,7 +24,8 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
   @override
   VendorsAndServices get vendorsAndServices => VendorsAndServices.sonoffEweLink;
 
-  static const List<String> mdnsTypes = ['_ewelink._tcp'];
+  @override
+  final List<String> mdnsTypes = ['_ewelink._tcp'];
 
   Ewelink? ewelink;
 

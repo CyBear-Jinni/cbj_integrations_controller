@@ -22,10 +22,18 @@ class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
   @override
   VendorsAndServices get vendorsAndServices => VendorsAndServices.google;
 
-  static const List<String> mdnsTypes = [
+  @override
+  final List<String> mdnsTypes = [
     '_googlecast._tcp',
     '_androidtvremote2._tcp',
     '_rc._tcp',
+  ];
+
+  @override
+  final List<String> uniqueIdentifierNameInMdns = [
+    'google',
+    'android',
+    'chrome',
   ];
 
   @override

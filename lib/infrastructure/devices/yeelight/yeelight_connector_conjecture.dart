@@ -23,9 +23,11 @@ class YeelightConnectorConjecture extends AbstractVendorConnectorConjecture {
   @override
   VendorsAndServices get vendorsAndServices => VendorsAndServices.yeelight;
 
-  static const List<String> mdnsTypes = [
-    '_hap._tcp',
-  ];
+  @override
+  final List<String> mdnsTypes = ['_hap._tcp'];
+
+  @override
+  final List<String> uniqueIdentifierNameInMdns = ['YL'];
 
   /// Make sure that it will activate discoverNewDevices only once
   bool searchStarted = false;

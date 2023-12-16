@@ -6,6 +6,13 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/abst
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 
 abstract class AbstractVendorConnectorConjecture {
+  AbstractVendorConnectorConjecture() {
+    vendorConnectorConjectureClass.add(this);
+  }
+
+  static HashSet<AbstractVendorConnectorConjecture>
+      vendorConnectorConjectureClass = HashSet();
+
   VendorsAndServices get vendorsAndServices;
 
   /// Stores all devices for the each vendor, devices will be stored as the
@@ -15,6 +22,10 @@ abstract class AbstractVendorConnectorConjecture {
   /// same device twice and to manage requests of actions from the app since
   /// the action already arrives with entityUniqueId value
   Map<String, DeviceEntityAbstract> vendorEntities = {};
+
+  List<String> get mdnsTypes => [];
+
+  List<String> get uniqueIdentifierNameInMdns => [];
 
   /// Will set up device for this vendor into the connector conjecture,
   /// will be called for each saved device of this vendor

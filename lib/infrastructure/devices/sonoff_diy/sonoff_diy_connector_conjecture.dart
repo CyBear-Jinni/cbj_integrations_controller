@@ -20,7 +20,8 @@ class SonoffDiyConnectorConjecture extends AbstractVendorConnectorConjecture {
   @override
   VendorsAndServices get vendorsAndServices => VendorsAndServices.sonoffDiy;
 
-  static const List<String> mdnsTypes = ['_ewelink._tcp'];
+  @override
+  final List<String> mdnsTypes = ['_ewelink._tcp'];
 
   @override
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(

@@ -21,11 +21,15 @@ class LgConnectorConjecture extends AbstractVendorConnectorConjecture {
   @override
   VendorsAndServices get vendorsAndServices => VendorsAndServices.lg;
 
-  static const List<String> mdnsTypes = [
+  @override
+  final List<String> mdnsTypes = [
     '_hap._tcp',
     '_display._tcp',
     '_airplay._tcp',
   ];
+
+  @override
+  final List<String> uniqueIdentifierNameInMdns = ['lg', 'webos'];
 
   @override
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
