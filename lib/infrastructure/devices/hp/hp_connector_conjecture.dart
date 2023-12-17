@@ -32,52 +32,6 @@ class HpConnectorConjecture extends AbstractVendorConnectorConjecture {
   final List<String> uniqueIdentifierNameInMdns = ['hp'];
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
-  ) async {
-    final String? ip = entity.deviceLastKnownIp.getOrCrash();
-
-    final String? mdnsName = entity.deviceMdns.getOrCrash();
-    if (mdnsName == null) {
-      return null;
-    }
-
-    for (final DeviceEntityAbstract device in vendorEntities.values) {
-      if (device is HpPrinterEntity &&
-          (mdnsName == device.entityUniqueId.getOrCrash() ||
-              (ip != null && ip == device.deviceLastKnownIp.getOrCrash()))) {
-        return null;
-      } else if (mdnsName == device.entityUniqueId.getOrCrash()) {
-        icLogger.w(
-          'HP device type supported but implementation is missing here',
-        );
-        return null;
-      }
-    }
-
-    final List<DeviceEntityAbstract> hpDevice = HpHelpers.addDiscoveredDevice(
-      entity,
-    );
-
-    if (hpDevice.isEmpty) {
-      return null;
-    }
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
-    for (final DeviceEntityAbstract entityAsDevice in hpDevice) {
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
-        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
-        entityAsDevice,
-      );
-
-      addedDevice.addEntries([deviceAsEntry]);
-      vendorEntities.addEntries([deviceAsEntry]);
-    }
-    icLogger.i('New HP device got added');
-    return addedDevice;
-  }
-
-  @override
   Future<void> manageHubRequestsForDevice(
     DeviceEntityAbstract hpDE,
   ) async {
@@ -108,4 +62,10 @@ class HpConnectorConjecture extends AbstractVendorConnectorConjecture {
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
   }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
+  ) =>
+      HpHelpers.addDiscoveredDevice(entity);
 }

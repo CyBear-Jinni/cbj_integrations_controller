@@ -9,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 
 class ShellyConnectorConjecture extends AbstractVendorConnectorConjecture {
   factory ShellyConnectorConjecture() {
@@ -29,53 +28,6 @@ class ShellyConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   final List<String> uniqueIdentifierNameInMdns = ['shelly'];
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
-  ) async {
-    final String? mdnsName = entity.deviceMdns.getOrCrash();
-    if (mdnsName == null) {
-      return null;
-    }
-
-    for (final DeviceEntityAbstract device in vendorEntities.values) {
-      if ((device is ShellyColorLightEntity ||
-              device is ShellyRelaySwitchEntity) &&
-          mdnsName == device.entityUniqueId.getOrCrash()) {
-        return null;
-      } else if ((device is GenericRgbwLightDE || device is GenericSwitchDE) &&
-          mdnsName == device.entityUniqueId.getOrCrash()) {
-        break;
-      } else if (mdnsName == device.entityUniqueId.getOrCrash()) {
-        icLogger.w(
-          'Shelly device type supported but implementation is missing here',
-        );
-        return null;
-      }
-    }
-
-    final List<DeviceEntityAbstract>? shellyDevice =
-        await ShellyHelpers.addDiscoveredDevice(entity);
-
-    if (shellyDevice == null || shellyDevice.isEmpty) {
-      return null;
-    }
-
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
-    for (final DeviceEntityAbstract entityAsDevice in shellyDevice) {
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
-        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
-        entityAsDevice,
-      );
-
-      addedDevice.addEntries([deviceAsEntry]);
-      vendorEntities.addEntries([deviceAsEntry]);
-    }
-    icLogger.t('New shelly devices name:$mdnsName');
-    return addedDevice;
-  }
 
   @override
   Future<void> manageHubRequestsForDevice(
@@ -110,4 +62,10 @@ class ShellyConnectorConjecture extends AbstractVendorConnectorConjecture {
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
   }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
+  ) =>
+      ShellyHelpers.addDiscoveredDevice(entity);
 }

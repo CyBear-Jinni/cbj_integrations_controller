@@ -28,51 +28,6 @@ class PhilipsHueConnectorConjecture extends AbstractVendorConnectorConjecture {
   static bool gotHueHubIp = false;
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
-  ) async {
-    final String ip = entity.deviceLastKnownIp.getOrCrash()!;
-
-    final String? mdnsName = entity.deviceMdns.getOrCrash();
-    if (mdnsName == null) {
-      return null;
-    }
-
-    for (final DeviceEntityAbstract device in vendorEntities.values) {
-      if (device is PhilipsHueE26Entity &&
-          (mdnsName == device.entityUniqueId.getOrCrash() ||
-              ip == device.deviceLastKnownIp.getOrCrash())) {
-        return null;
-      } else if (mdnsName == device.entityUniqueId.getOrCrash()) {
-        icLogger.w(
-          'HP device type supported but implementation is missing here',
-        );
-        return null;
-      }
-    }
-    gotHueHubIp = true;
-
-    final List<DeviceEntityAbstract> phillipsDevice =
-        await PhilipsHueHelpers.addDiscoveredDevice(entity);
-
-    if (phillipsDevice.isEmpty) {
-      return null;
-    }
-
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
-    for (final DeviceEntityAbstract entityAsDevice in phillipsDevice) {
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(entityAsDevice.entityUniqueId.getOrCrash(), entityAsDevice);
-
-      addedDevice.addEntries([deviceAsEntry]);
-      vendorEntities.addEntries([deviceAsEntry]);
-    }
-    icLogger.i('New Philips Hue device got added');
-    return addedDevice;
-  }
-
-  @override
   Future<void> manageHubRequestsForDevice(
     DeviceEntityAbstract philipsHueDE,
   ) async {
@@ -103,4 +58,10 @@ class PhilipsHueConnectorConjecture extends AbstractVendorConnectorConjecture {
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
   }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
+  ) =>
+      PhilipsHueHelpers.addDiscoveredDevice(entity);
 }

@@ -1,10 +1,12 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 
 class LgHelpers {
-  static List<DeviceEntityAbstract> addDiscoveredDevice(
+  static Future<HashMap<String, DeviceEntityAbstract>> addDiscoveredDevice(
     DeviceEntityAbstract entity,
-  ) {
-    return [];
+  ) async {
+    return HashMap();
     // TODO: Add minimal LG TV api
     // CoreUniqueId uniqueDeviceIdTemp;
     //

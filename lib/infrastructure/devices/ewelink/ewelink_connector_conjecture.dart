@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_helpers.dart';
@@ -62,67 +61,6 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
   Future<bool>? didRequestLogin;
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
-  ) async {
-    if (didRequestLogin != null) {
-      return null;
-    }
-
-    if (ewelink == null) {
-      didRequestLogin = accountLogin(GenericEwelinkLoginDE.empty());
-      if (!await didRequestLogin!) {
-        didRequestLogin = null;
-        icLogger.w(
-            'eWeLink device got found but missing a email and password, please add '
-            'it in the app');
-        return null;
-      }
-    }
-    didRequestLogin = null;
-
-    List<EwelinkDevice> devices;
-    try {
-      devices = await ewelink!.getDevices();
-    } catch (e) {
-      return null;
-    }
-
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
-    for (final EwelinkDevice ewelinkDevice in devices) {
-      // Getting device by id adds additional info in the result
-      final EwelinkDevice ewelinkDeviceWithTag =
-          await ewelink!.getDevice(deviceId: ewelinkDevice.deviceid);
-
-      final List<DeviceEntityAbstract> entityList =
-          EwelinkHelpers.addDiscoveredDevice(ewelinkDeviceWithTag);
-
-      for (final DeviceEntityAbstract deviceEntityAbstract in entityList) {
-        if (vendorEntities[
-                deviceEntityAbstract.deviceCbjUniqueId.getOrCrash()] !=
-            null) {
-          continue;
-        }
-
-        final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
-          deviceEntityAbstract.deviceCbjUniqueId.getOrCrash(),
-          deviceEntityAbstract,
-        );
-
-        addedDevice.addEntries([deviceAsEntry]);
-        vendorEntities.addEntries([deviceAsEntry]);
-
-        icLogger.i(
-          'New EweLink devices name:${deviceEntityAbstract.cbjEntityName.getOrCrash()}',
-        );
-      }
-    }
-    ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
-    return addedDevice;
-  }
-
-  @override
   Future<void> manageHubRequestsForDevice(
     DeviceEntityAbstract ewelinkDE,
   ) async {
@@ -170,5 +108,40 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
     }
     await Future.delayed(const Duration(seconds: 20));
     return waitUntilConnectionEstablished(executed + 1);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
+  ) async {
+    if (ewelink == null) {
+      didRequestLogin = accountLogin(GenericEwelinkLoginDE.empty());
+      if (!await didRequestLogin!) {
+        didRequestLogin = null;
+        icLogger.w(
+            'eWeLink device got found but missing a email and password, please add '
+            'it in the app');
+        return HashMap();
+      }
+    }
+    didRequestLogin = null;
+
+    List<EwelinkDevice> devices;
+    try {
+      devices = await ewelink!.getDevices();
+    } catch (e) {
+      return HashMap();
+    }
+
+    final HashMap<String, DeviceEntityAbstract> entityList = HashMap();
+    for (final EwelinkDevice ewelinkDevice in devices) {
+      // Getting device by id adds additional info in the result
+      final EwelinkDevice ewelinkDeviceWithTag =
+          await ewelink!.getDevice(deviceId: ewelinkDevice.deviceid);
+
+      entityList
+          .addAll(EwelinkHelpers.addDiscoveredDevice(ewelinkDeviceWithTag));
+    }
+    return entityList;
   }
 }

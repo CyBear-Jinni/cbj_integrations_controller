@@ -111,9 +111,8 @@ class TasmotaMqttConnectorConjecture extends AbstractVendorConnectorConjecture {
   Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
     DeviceEntityAbstract entity,
-  ) async {
-    return null;
-  }
+  ) async =>
+      HashMap();
 }

@@ -32,48 +32,6 @@ class LgConnectorConjecture extends AbstractVendorConnectorConjecture {
   final List<String> uniqueIdentifierNameInMdns = ['lg', 'webos'];
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
-  ) async {
-    final String? mdnsName = entity.deviceMdns.getOrCrash();
-    if (mdnsName == null) {
-      return null;
-    }
-
-    for (final DeviceEntityAbstract device in vendorEntities.values) {
-      if (device is LgWebosTvEntity &&
-          (mdnsName == device.entityUniqueId.getOrCrash() ||
-              entity.deviceLastKnownIp.getOrCrash() ==
-                  device.deviceLastKnownIp.getOrCrash())) {
-        return null;
-      }
-    }
-
-    final List<DeviceEntityAbstract> lgDevice =
-        LgHelpers.addDiscoveredDevice(entity);
-
-    if (lgDevice.isEmpty) {
-      return null;
-    }
-
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
-    for (final DeviceEntityAbstract entityAsDevice in lgDevice) {
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
-        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
-        entityAsDevice,
-      );
-
-      addedDevice.addEntries([deviceAsEntry]);
-      vendorEntities.addEntries([deviceAsEntry]);
-      icLogger.i(
-        'New LG device got added ${entityAsDevice.cbjEntityName.getOrCrash()}',
-      );
-    }
-    return addedDevice;
-  }
-
-  @override
   Future<void> manageHubRequestsForDevice(DeviceEntityAbstract lgDE) async {
     final DeviceEntityAbstract? device =
         vendorEntities[lgDE.entityUniqueId.getOrCrash()];
@@ -87,4 +45,10 @@ class LgConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
+  ) =>
+      LgHelpers.addDiscoveredDevice(entity);
 }

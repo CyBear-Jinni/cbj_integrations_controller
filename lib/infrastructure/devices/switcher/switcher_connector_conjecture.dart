@@ -12,7 +12,6 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/abst
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_plug_entity/generic_smart_plug_entity.dart';
-import 'package:collection/collection.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
@@ -28,33 +27,6 @@ class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
   @override
   VendorsAndServices get vendorsAndServices =>
       VendorsAndServices.switcherSmartHome;
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
-  ) async {
-    final DeviceEntityAbstract? savedDevice =
-        vendorEntities.values.firstWhereOrNull(
-      (element) =>
-          entity.deviceCbjUniqueId.getOrCrash() ==
-          element.deviceCbjUniqueId.getOrCrash(),
-    );
-    if (savedDevice != null) {
-      return HashMap();
-    }
-
-    final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-        MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity);
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
-    vendorEntities.addEntries([deviceAsEntry]);
-    addedDevice.addEntries([deviceAsEntry]);
-
-    icLogger.t(
-      'New switcher devices name: ${entity.entityOriginalName.getOrCrash()}',
-    );
-    return addedDevice;
-  }
 
   @override
   Future<void> manageHubRequestsForDevice(
@@ -122,4 +94,12 @@ class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
     );
     return bindingStream;
   }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
+  ) async =>
+      // It is getting converted in bindSocketSearchStream
+      HashMap()
+        ..addEntries([MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity)]);
 }

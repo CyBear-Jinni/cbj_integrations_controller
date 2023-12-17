@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_1se/yeelight_1se_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
@@ -6,10 +8,12 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/gene
 import 'package:yeedart/yeedart.dart';
 
 class YeelightHelpers {
-  static DeviceEntityAbstract? addDiscoveredDevice({
+  static HashMap<String, DeviceEntityAbstract> addDiscoveredDevice({
     required DiscoveryResponse yeelightDevice,
     required DeviceEntityAbstract entity,
   }) {
+    final HashMap<String, DeviceEntityAbstract> entitiesMap = HashMap();
+
     String deviceName;
     if (yeelightDevice.name != null && yeelightDevice.name != '') {
       deviceName = yeelightDevice.name!;
@@ -20,13 +24,13 @@ class YeelightHelpers {
     }
 
     if (yeelightDevice.model == null) {
-      return null;
+      return entitiesMap;
     }
 
-    final DeviceEntityAbstract deviceEntity;
+    final String deviceCbjUniqueId = yeelightDevice.id.toString();
 
     if (yeelightDevice.model == 'color4') {
-      deviceEntity = Yeelight1SeEntity(
+      final DeviceEntityAbstract newEntity = Yeelight1SeEntity(
         uniqueId: entity.uniqueId,
         entityUniqueId: EntityUniqueId(yeelightDevice.id.toString()),
         cbjEntityName: CbjEntityName(deviceName),
@@ -52,8 +56,7 @@ class YeelightHelpers {
         entityKey: entity.entityKey,
         requestTimeStamp: entity.requestTimeStamp,
         lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-        deviceCbjUniqueId:
-            CoreUniqueId.fromUniqueString(yeelightDevice.id.toString()),
+        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
         lightSwitchState:
             GenericRgbwLightSwitchState(yeelightDevice.powered.toString()),
         lightColorTemperature: GenericRgbwLightColorTemperature(
@@ -68,13 +71,13 @@ class YeelightHelpers {
         ),
         lightColorValue: GenericRgbwLightColorValue('1.0'),
       );
+      entitiesMap.addEntries([MapEntry(deviceCbjUniqueId, newEntity)]);
     } else {
       icLogger.i(
         'Please add new Yeelight device type ${yeelightDevice.model}',
       );
-      return null;
     }
 
-    return deviceEntity;
+    return entitiesMap;
   }
 }

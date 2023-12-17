@@ -33,56 +33,6 @@ class YeelightConnectorConjecture extends AbstractVendorConnectorConjecture {
   bool searchStarted = false;
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
-  ) async {
-    try {
-      final responses = await Yeelight.discover();
-      if (responses.isEmpty) {
-        return null;
-      }
-
-      final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
-      for (final DiscoveryResponse yeelightDevice in responses) {
-        if (vendorEntities.containsKey(yeelightDevice.id.toString())) {
-          return null;
-        }
-
-        DeviceEntityAbstract? addDevice;
-        if (yeelightDevice.address.address ==
-            entity.deviceLastKnownIp.getOrCrash()) {
-          addDevice = YeelightHelpers.addDiscoveredDevice(
-            yeelightDevice: yeelightDevice,
-            entity: entity,
-          );
-        } else {
-          addDevice = YeelightHelpers.addDiscoveredDevice(
-            yeelightDevice: yeelightDevice,
-            entity: entity,
-          );
-        }
-
-        if (addDevice == null) {
-          continue;
-        }
-
-        final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-            MapEntry(addDevice.deviceCbjUniqueId.getOrCrash(), addDevice);
-
-        addedDevice.addEntries([deviceAsEntry]);
-        vendorEntities.addEntries([deviceAsEntry]);
-
-        icLogger.i('New Yeelight device got added');
-      }
-      return addedDevice;
-    } catch (e) {
-      icLogger.e('Error discover in Yeelight\n$e');
-    }
-    return null;
-  }
-
-  @override
   Future<void> manageHubRequestsForDevice(
     DeviceEntityAbstract entity,
   ) async {
@@ -112,5 +62,26 @@ class YeelightConnectorConjecture extends AbstractVendorConnectorConjecture {
     vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
+  ) async {
+    final responses = await Yeelight.discover();
+    if (responses.isEmpty) {
+      return HashMap();
+    }
+
+    final HashMap<String, DeviceEntityAbstract> enitityList = HashMap();
+    for (final DiscoveryResponse yeelightDevice in responses) {
+      final HashMap<String, DeviceEntityAbstract> addDevice =
+          YeelightHelpers.addDiscoveredDevice(
+        yeelightDevice: yeelightDevice,
+        entity: entity,
+      );
+      enitityList.addAll(addDevice);
+    }
+    return enitityList;
   }
 }

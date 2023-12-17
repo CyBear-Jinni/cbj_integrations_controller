@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_helpers.dart';
@@ -45,40 +44,6 @@ class EspHomeConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
-  ) async {
-    if (espHomeDevicePass == null) {
-      icLogger.w('ESPHome device got found but missing a password, please add '
-          'password for it in the app');
-      return null;
-    }
-
-    final List<DeviceEntityAbstract> espDevice =
-        await EspHomeHelpers.addDiscoveredEntities(
-      entity: entity,
-      devicePassword: espHomeDevicePass!,
-    );
-
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
-    for (final DeviceEntityAbstract entityAsDevice in espDevice) {
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
-          MapEntry(entityAsDevice.entityUniqueId.getOrCrash(), entityAsDevice);
-      addedDevice.addEntries([deviceAsEntry]);
-      vendorEntities.addEntries([deviceAsEntry]);
-
-      icLogger.i(
-        'New ESPHome devices name:${entityAsDevice.cbjEntityName.getOrCrash()}',
-      );
-    }
-    // Save state locally so that nodeRED flows will not get created again
-    // after restart
-    ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
-    return addedDevice;
-  }
-
-  @override
   Future<void> manageHubRequestsForDevice(
     DeviceEntityAbstract espHomeDE,
   ) async {
@@ -110,5 +75,21 @@ class EspHomeConnectorConjecture extends AbstractVendorConnectorConjecture {
     vendorEntities.addEntries([
       MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     ]);
+  }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
+  ) async {
+    if (espHomeDevicePass == null) {
+      icLogger.w('ESPHome device got found but missing a password, please add '
+          'password for it in the app');
+      return HashMap();
+    }
+
+    return EspHomeHelpers.addDiscoveredEntities(
+      entity: entity,
+      devicePassword: espHomeDevicePass!,
+    );
   }
 }

@@ -9,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_computer_entity/generic_smart_computer_entity.dart';
 
 class CbjDevicesConnectorConjecture extends AbstractVendorConnectorConjecture {
@@ -129,12 +128,8 @@ class CbjDevicesConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future setEntityState({
-    required HashSet<String> ids,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
-  }
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
+  ) async =>
+      HashMap();
 }

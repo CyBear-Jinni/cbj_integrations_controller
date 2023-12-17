@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/domain/core/value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_light/esphome_light_entity.dart';
@@ -67,14 +69,14 @@ class EspHomeHelpers {
     return tempAllEntities;
   }
 
-  static Future<List<DeviceEntityAbstract>> addDiscoveredEntities({
+  static Future<HashMap<String, DeviceEntityAbstract>> addDiscoveredEntities({
     required DeviceEntityAbstract entity,
     required String devicePassword,
     String port = '6053',
   }) async {
     final String? mdnsName = entity.deviceMdns.getOrCrash();
     if (mdnsName == null) {
-      return [];
+      return HashMap();
     }
 
     final String espHomeDeviceNodeId =
@@ -92,10 +94,10 @@ class EspHomeHelpers {
     );
 
     if (entitiesList.isEmpty) {
-      return [];
+      return HashMap();
     }
 
-    final List<DeviceEntityAbstract> deviceEntityList = [];
+    // final List<DeviceEntityAbstract> deviceEntityList = [];
 
     // final EspHomeNodeRedApi espHomeNodeRedApi = EspHomeNodeRedApi(
     //   repository: getIt<NodeRedRepository>(),
@@ -105,6 +107,8 @@ class EspHomeHelpers {
     //       IMqttServerRepository.instance.getNodeRedDevicesTopicTypeName(),
     //   nodeRedMqttBrokerNodeName: 'Cbj NodeRed plugs Api Broker',
     // );
+
+    final HashMap<String, DeviceEntityAbstract> addEntities = HashMap();
 
     for (final EspHomeDeviceEntityObject espHomeDeviceEntityObject
         in entitiesList) {
@@ -123,87 +127,83 @@ class EspHomeHelpers {
         // final List supportedColorModList = espHomeDeviceEntityObject
         //     .config['supportedColorModesList'] as List<dynamic>;
         // if (supportedColorModList.first == 1) {}
-
-        deviceEntityList.add(
-          EspHomeLightEntity(
-            uniqueId: entity.uniqueId,
-            entityUniqueId: EntityUniqueId(
-              espHomeDeviceEntityObject.config['uniqueId'] as String,
-            ),
-            cbjEntityName: CbjEntityName(espHomeDeviceEntityObject.name),
-            entityOriginalName:
-                EntityOriginalName(espHomeDeviceEntityObject.name),
-            deviceOriginalName:
-                DeviceOriginalName(espHomeDeviceEntityObject.name),
-            entityStateGRPC: entity.entityStateGRPC,
-            senderDeviceOs: entity.senderDeviceOs,
-            deviceVendor: entity.deviceVendor,
-            deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,
-            senderDeviceModel: entity.senderDeviceModel,
-            senderId: entity.senderId,
-            compUuid: entity.compUuid,
-            deviceMdns: entity.deviceMdns,
-            srvResourceRecord: entity.srvResourceRecord,
-            ptrResourceRecord: entity.ptrResourceRecord,
-            deviceLastKnownIp: entity.deviceLastKnownIp,
-            stateMassage: entity.stateMassage,
-            powerConsumption: entity.powerConsumption,
-            devicePort: entity.devicePort,
-            deviceUniqueId: entity.deviceUniqueId,
-            deviceHostName: entity.deviceHostName,
-            devicesMacAddress: entity.devicesMacAddress,
-            entityKey: entity.entityKey,
-            requestTimeStamp: entity.requestTimeStamp,
-            lastResponseFromDeviceTimeStamp:
-                entity.lastResponseFromDeviceTimeStamp,
-            deviceCbjUniqueId:
-                CoreUniqueId.fromUniqueString(espHomeDeviceNodeId),
-            lightSwitchState: GenericLightSwitchState('on'),
-          ),
+        final String deviceCbjUniqueId =
+            espHomeDeviceEntityObject.config['uniqueId'] as String;
+        final DeviceEntityAbstract entityTemp = EspHomeLightEntity(
+          uniqueId: entity.uniqueId,
+          entityUniqueId: EntityUniqueId(deviceCbjUniqueId),
+          cbjEntityName: CbjEntityName(espHomeDeviceEntityObject.name),
+          entityOriginalName:
+              EntityOriginalName(espHomeDeviceEntityObject.name),
+          deviceOriginalName:
+              DeviceOriginalName(espHomeDeviceEntityObject.name),
+          entityStateGRPC: entity.entityStateGRPC,
+          senderDeviceOs: entity.senderDeviceOs,
+          deviceVendor: entity.deviceVendor,
+          deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,
+          senderDeviceModel: entity.senderDeviceModel,
+          senderId: entity.senderId,
+          compUuid: entity.compUuid,
+          deviceMdns: entity.deviceMdns,
+          srvResourceRecord: entity.srvResourceRecord,
+          ptrResourceRecord: entity.ptrResourceRecord,
+          deviceLastKnownIp: entity.deviceLastKnownIp,
+          stateMassage: entity.stateMassage,
+          powerConsumption: entity.powerConsumption,
+          devicePort: entity.devicePort,
+          deviceUniqueId: entity.deviceUniqueId,
+          deviceHostName: entity.deviceHostName,
+          devicesMacAddress: entity.devicesMacAddress,
+          entityKey: entity.entityKey,
+          requestTimeStamp: entity.requestTimeStamp,
+          lastResponseFromDeviceTimeStamp:
+              entity.lastResponseFromDeviceTimeStamp,
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          lightSwitchState: GenericLightSwitchState('on'),
         );
+        addEntities.addEntries([MapEntry(deviceCbjUniqueId, entityTemp)]);
       } else if (espHomeDeviceEntityObject.type == 'Switch' ||
           espHomeDeviceEntityObject.type == 'Fan' ||
           espHomeDeviceEntityObject.type == 'Siren') {
-        deviceEntityList.add(
-          EspHomeSwitchEntity(
-            uniqueId: entity.uniqueId,
-            entityUniqueId: EntityUniqueId(
-              espHomeDeviceEntityObject.config['uniqueId'] as String,
-            ),
-            cbjEntityName: CbjEntityName(espHomeDeviceEntityObject.name),
-            entityOriginalName:
-                EntityOriginalName(espHomeDeviceEntityObject.name),
-            deviceOriginalName:
-                DeviceOriginalName(espHomeDeviceEntityObject.name),
-            entityStateGRPC: entity.entityStateGRPC,
-            senderDeviceOs: entity.senderDeviceOs,
-            deviceVendor: entity.deviceVendor,
-            deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,
-            senderDeviceModel: entity.senderDeviceModel,
-            senderId: entity.senderId,
-            compUuid: entity.compUuid,
-            deviceMdns: entity.deviceMdns,
-            srvResourceRecord: entity.srvResourceRecord,
-            ptrResourceRecord: entity.ptrResourceRecord,
-            deviceLastKnownIp: entity.deviceLastKnownIp,
-            stateMassage: entity.stateMassage,
-            powerConsumption: entity.powerConsumption,
-            devicePort: entity.devicePort,
-            deviceUniqueId: entity.deviceUniqueId,
-            deviceHostName: entity.deviceHostName,
-            devicesMacAddress: entity.devicesMacAddress,
-            entityKey: EntityKey(deviceKey),
-            requestTimeStamp: entity.requestTimeStamp,
-            lastResponseFromDeviceTimeStamp:
-                entity.lastResponseFromDeviceTimeStamp,
-            deviceCbjUniqueId:
-                CoreUniqueId.fromUniqueString(espHomeDeviceNodeId),
-            switchState: GenericSwitchSwitchState('on'),
-          ),
+        final String deviceCbjUniqueId =
+            espHomeDeviceEntityObject.config['uniqueId'] as String;
+
+        final DeviceEntityAbstract entityTemp = EspHomeSwitchEntity(
+          uniqueId: entity.uniqueId,
+          entityUniqueId: EntityUniqueId(deviceCbjUniqueId),
+          cbjEntityName: CbjEntityName(espHomeDeviceEntityObject.name),
+          entityOriginalName:
+              EntityOriginalName(espHomeDeviceEntityObject.name),
+          deviceOriginalName:
+              DeviceOriginalName(espHomeDeviceEntityObject.name),
+          entityStateGRPC: entity.entityStateGRPC,
+          senderDeviceOs: entity.senderDeviceOs,
+          deviceVendor: entity.deviceVendor,
+          deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,
+          senderDeviceModel: entity.senderDeviceModel,
+          senderId: entity.senderId,
+          compUuid: entity.compUuid,
+          deviceMdns: entity.deviceMdns,
+          srvResourceRecord: entity.srvResourceRecord,
+          ptrResourceRecord: entity.ptrResourceRecord,
+          deviceLastKnownIp: entity.deviceLastKnownIp,
+          stateMassage: entity.stateMassage,
+          powerConsumption: entity.powerConsumption,
+          devicePort: entity.devicePort,
+          deviceUniqueId: entity.deviceUniqueId,
+          deviceHostName: entity.deviceHostName,
+          devicesMacAddress: entity.devicesMacAddress,
+          entityKey: EntityKey(deviceKey),
+          requestTimeStamp: entity.requestTimeStamp,
+          lastResponseFromDeviceTimeStamp:
+              entity.lastResponseFromDeviceTimeStamp,
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          switchState: GenericSwitchSwitchState('on'),
         );
+        addEntities.addEntries([MapEntry(deviceCbjUniqueId, entityTemp)]);
       }
     }
 
-    return deviceEntityList;
+    return addEntities;
   }
 }

@@ -39,6 +39,28 @@ abstract class AbstractVendorConnectorConjecture {
 
   Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
     DeviceEntityAbstract entity,
+  ) async {
+    final HashMap<String, DeviceEntityAbstract> vendorEntityMap =
+        await convertToVendorDevice(entity);
+    if (vendorEntityMap.isEmpty) {
+      return null;
+    }
+    vendorEntityMap
+        .removeWhere((key, value) => vendorEntities.containsKey(key));
+
+    if (vendorEntityMap.isEmpty) {
+      return HashMap();
+    }
+
+    icLogger.i('New $vendorsAndServices entities got added');
+
+    vendorEntities.addAll(vendorEntityMap);
+
+    return vendorEntityMap;
+  }
+
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
   );
 
   Future setEntityState({

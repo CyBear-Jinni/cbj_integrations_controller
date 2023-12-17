@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_api/philips_hue_api_light.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_e26/philips_hue_e26_entity.dart';
@@ -9,7 +11,7 @@ import 'package:http/http.dart';
 import 'package:hue_dart/hue_dart.dart';
 
 class PhilipsHueHelpers {
-  static Future<List<DeviceEntityAbstract>> addDiscoveredDevice(
+  static Future<HashMap<String, DeviceEntityAbstract>> addDiscoveredDevice(
     DeviceEntityAbstract entity,
   ) async {
     final client = Client();
@@ -24,15 +26,21 @@ class PhilipsHueHelpers {
 
     final List<Light> lights = await bridge.lights();
 
-    final List<DeviceEntityAbstract> tempDeviceEntities = [];
+    final HashMap<String, DeviceEntityAbstract> entitiesToAdd = HashMap();
 
     for (final Light light in lights) {
       final LightState? lightState = light.state;
+      final String? deviceCbjUniqueId = light.uniqueId;
+      if (deviceCbjUniqueId == null) {
+        icLogger.e('Philips id is null');
+        continue;
+      }
 
       if (light.type != null && light.type == 'Dimmable light') {
         final String deviceName = (light.name != null && light.name != '')
             ? light.name!
             : 'PhilipsHue test 2';
+
         final PhilipsHueE26Entity philipsHueDE = PhilipsHueE26Entity(
           uniqueId: entity.uniqueId,
           entityUniqueId: EntityUniqueId(light.uniqueId.toString()),
@@ -60,8 +68,7 @@ class PhilipsHueHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId:
-              CoreUniqueId.fromUniqueString(light.uniqueId.toString()),
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
           lightSwitchState: GenericDimmableLightSwitchState(
             lightState != null && lightState.on != null && lightState.on == true
                 ? EntityActions.on.toString()
@@ -75,12 +82,14 @@ class PhilipsHueHelpers {
             ipAdress: entity.deviceLastKnownIp.getOrCrash()!,
           ),
         );
-        tempDeviceEntities.add(philipsHueDE);
+        entitiesToAdd.addEntries([
+          MapEntry(deviceCbjUniqueId, philipsHueDE),
+        ]);
       } else {
         icLogger.w('Un supported Philips Hue light type');
       }
     }
 
-    return tempDeviceEntities;
+    return entitiesToAdd;
   }
 }

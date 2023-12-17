@@ -41,38 +41,6 @@ class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
   ];
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
-  ) async {
-    final String? mdnsName = entity.deviceMdns.getOrCrash();
-    if (mdnsName == null) {
-      return null;
-    }
-
-    final DeviceEntityAbstract googleDevice =
-        GoogleHelpers.addDiscoveredDevice(entity);
-
-    for (final DeviceEntityAbstract device in vendorEntities.values) {
-      if (googleDevice.deviceCbjUniqueId.getOrCrash() ==
-          device.deviceLastKnownIp.getOrCrash()) {
-        return HashMap();
-      }
-    }
-
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
-    final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
-      googleDevice.deviceCbjUniqueId.getOrCrash(),
-      googleDevice,
-    );
-
-    addedDevice.addEntries([deviceAsEntry]);
-    vendorEntities.addEntries([deviceAsEntry]);
-    icLogger.i('New Chromecast device got added');
-    return addedDevice;
-  }
-
-  @override
   Future<void> manageHubRequestsForDevice(DeviceEntityAbstract googleDE) async {
     final DeviceEntityAbstract? device =
         vendorEntities[googleDE.entityUniqueId.getOrCrash()];
@@ -103,4 +71,10 @@ class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
     //   MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
     // ]);
   }
+
+  @override
+  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
+    DeviceEntityAbstract entity,
+  ) =>
+      GoogleHelpers.addDiscoveredDevice(entity);
 }

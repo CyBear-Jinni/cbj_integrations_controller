@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/devices/google/chrome_cast/chrome_cast_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
@@ -5,9 +7,12 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/abst
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_tv_entity/generic_smart_tv_value_objects.dart';
 
 class GoogleHelpers {
-  static DeviceEntityAbstract addDiscoveredDevice(
+  static Future<HashMap<String, DeviceEntityAbstract>> addDiscoveredDevice(
     DeviceEntityAbstract entity,
-  ) {
+  ) async {
+    final String deviceCbjUniqueId =
+        entity.deviceMdns.getOrCrash() ?? CoreUniqueId().getOrCrash();
+
     final ChromeCastEntity googleDE = ChromeCastEntity(
       uniqueId: entity.uniqueId,
       entityUniqueId: EntityUniqueId(entity.deviceMdns.getOrCrash()),
@@ -34,14 +39,15 @@ class GoogleHelpers {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      deviceCbjUniqueId: CoreUniqueId.fromUniqueString(
-        entity.deviceMdns.getOrCrash() ?? CoreUniqueId().getOrCrash(),
-      ),
+      deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
       smartTvSwitchState: GenericSmartTvSwitchState(
         EntityActions.actionNotSupported.toString(),
       ),
     );
 
-    return googleDE;
+    return HashMap()
+      ..addEntries([
+        MapEntry(deviceCbjUniqueId, googleDE),
+      ]);
   }
 }
