@@ -61,24 +61,6 @@ class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
   Future<bool>? didRequestLogin;
 
   @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase ewelinkDE,
-  ) async {
-    if (ewelink == null || vendorEntities.isEmpty) {
-      await waitUntilConnectionEstablished(0);
-    }
-
-    final DeviceEntityBase? device = vendorEntities[
-        '${ewelinkDE.deviceUniqueId.getOrCrash()}-${ewelinkDE.entityUniqueId.getOrCrash()}'];
-
-    if (device is EwelinkSwitchEntity) {
-      device.executeDeviceAction(newEntity: ewelinkDE);
-    } else {
-      icLogger.w('Ewelink device type does not exist');
-    }
-  }
-
-  @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
     DeviceEntityBase? nonGenericDevice;
     if (ewelink == null || vendorEntities.isEmpty) {

@@ -104,6 +104,24 @@ class GenericPrinterDE extends DeviceEntityBase {
   // }
 
   @override
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    dynamic value,
+  }) async {
+    switch (action) {
+      case EntityActions.on:
+        return turnOnPrinter();
+      case EntityActions.off:
+        return turnOffPrinter();
+      default:
+        break;
+    }
+    return super
+        .executeAction(property: property, action: action, value: value);
+  }
+
+  @override
   String getDeviceId() => uniqueId.getOrCrash();
 
   /// Return a list of all valid actions for this device
@@ -147,19 +165,6 @@ class GenericPrinterDE extends DeviceEntityBase {
       deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
       printerSwitchState: printerSwitchState!.getOrCrash(),
       lastKnownIp: deviceLastKnownIp.getOrCrash(),
-    );
-  }
-
-  /// Please override the following methods
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
-  }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
     );
   }
 

@@ -74,33 +74,6 @@ class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
     return addedDevice;
   }
 
-  @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase cbjDevicesDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[cbjDevicesDE.entityUniqueId.getOrCrash()];
-
-    // if (device == null) {
-    //   setTheSameDeviceFromAllDevices(cbjDevicesDE);
-    //   device =
-    //   companyDevices[cbjDevicesDE.entityUniqueId.getOrCrash();
-    // }
-
-    if (device != null && (device is CbjSmartComputerEntity)) {
-      device.executeDeviceAction(newEntity: cbjDevicesDE);
-    } else {
-      icLogger.w('CbjDevices device type ${device.runtimeType} does not exist');
-    }
-  }
-  //
-  // // Future<void> setTheSameDeviceFromAllDevices(
-  // //   DeviceEntityBase cbjDevicesDE,
-  // // ) async {
-  // //   final String deviceEntityUniqueId = cbjDevicesDE.entityUniqueId.getOrCrash();
-  // //   for(a)
-  // // }
-
   Future<List<CbjSmartDeviceInfo?>> getAllComponentsOfDevice(
     DeviceEntityBase entity,
   ) async {

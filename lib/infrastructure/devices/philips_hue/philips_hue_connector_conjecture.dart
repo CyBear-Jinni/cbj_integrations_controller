@@ -28,20 +28,6 @@ class PhilipsHueConnectorConjecture extends VendorConnectorConjectureService {
   static bool gotHueHubIp = false;
 
   @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase philipsHueDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[philipsHueDE.entityUniqueId.getOrCrash()];
-
-    if (device is PhilipsHueE26Entity) {
-      device.executeDeviceAction(newEntity: philipsHueDE);
-    } else {
-      icLogger.w('PhilipsHue device type does not exist');
-    }
-  }
-
-  @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
     DeviceEntityBase? nonGenericDevice;
 

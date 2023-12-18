@@ -1,12 +1,9 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_value_objects.dart';
 import 'package:dartz/dartz.dart';
@@ -78,72 +75,6 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
       deviceCbjUniqueId: genericDevice.deviceCbjUniqueId,
       lightBrightness: genericDevice.lightBrightness,
     );
-  }
-
-  /// Please override the following methods
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
-  }) async {
-    if (newEntity is! GenericDimmableLightDE) {
-      return left(
-        const CoreFailure.actionExcecuter(
-          failedValue: 'Not the correct type',
-        ),
-      );
-    }
-
-    try {
-      if (newEntity.lightSwitchState.getOrCrash() !=
-              lightSwitchState.getOrCrash() ||
-          entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.lightSwitchState.getOrCrash(),
-        );
-
-        if (actionToPreform == EntityActions.on) {
-          (await turnOnLight()).fold((l) {
-            icLogger.e('Error turning Lifx light on');
-            throw l;
-          }, (r) {
-            icLogger.i('Lifx light turn on success');
-          });
-        } else if (actionToPreform == EntityActions.off) {
-          (await turnOffLight()).fold((l) {
-            icLogger.e('Error turning Lifx light off');
-            throw l;
-          }, (r) {
-            icLogger.i('Lifx light turn off success');
-          });
-        } else {
-          icLogger.w('actionToPreform is not set correctly on Lifx White');
-        }
-      }
-
-      if (newEntity.lightBrightness.getOrCrash() !=
-          lightBrightness.getOrCrash()) {
-        (await setBrightness(newEntity.lightBrightness.getOrCrash())).fold(
-          (l) {
-            icLogger.e('Error changing Lifx brightness\n$l');
-            throw l;
-          },
-          (r) {
-            icLogger.i('Lifx changed brightness successfully');
-          },
-        );
-      }
-      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return right(unit);
-    } catch (e) {
-      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return left(const CoreFailure.unexpected());
-    }
   }
 
   @override

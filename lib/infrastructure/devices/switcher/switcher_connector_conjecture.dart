@@ -29,36 +29,6 @@ class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
       VendorsAndServices.switcherSmartHome;
 
   @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase switcherDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[switcherDE.entityUniqueId.getOrCrash()];
-
-    // if (device == null) {
-    //   setTheSameDeviceFromAllDevices(switcherDE);
-    //   device =
-    //   companyDevices[switcherDE.entityUniqueId.getOrCrash();
-    // }
-
-    if (device != null &&
-        (device is SwitcherV2Entity ||
-            device is SwitcherRunnerEntity ||
-            device is SwitcherSmartPlugEntity)) {
-      // device.executeDeviceAction(newEntity: switcherDE);
-    } else {
-      icLogger.w('Switcher device type ${device.runtimeType} does not exist');
-    }
-  }
-
-  // Future<void> setTheSameDeviceFromAllDevices(
-  //   DeviceEntityBase switcherDE,
-  // ) async {
-  //   final String deviceEntityUniqueId = switcherDE.entityUniqueId.getOrCrash();
-  //   for(a)
-  // }
-
-  @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
     DeviceEntityBase? nonGenericDevice;
 

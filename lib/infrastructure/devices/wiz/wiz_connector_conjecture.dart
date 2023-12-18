@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/vendors/wiz_login/generic_wiz_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_white/wiz_white_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
@@ -136,20 +134,6 @@ class WizConnectorConjecture extends VendorConnectorConjectureService {
   // }
   // }
   // }
-
-  @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase wizDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[wizDE.entityUniqueId.getOrCrash()];
-
-    if (device is WizWhiteEntity) {
-      device.executeDeviceAction(newEntity: wizDE);
-    } else {
-      icLogger.w('Wiz device type does not exist');
-    }
-  }
 
   @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {}

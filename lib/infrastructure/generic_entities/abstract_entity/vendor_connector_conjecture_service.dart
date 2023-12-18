@@ -35,8 +35,6 @@ abstract class VendorConnectorConjectureService {
   /// will be called for each saved device of this vendor
   Future<void> setUpEntityFromDb(DeviceEntityBase entity);
 
-  Future<void> manageHubRequestsForDevice(DeviceEntityBase entity);
-
   Future<HashMap<String, DeviceEntityBase>?> foundEntity(
     DeviceEntityBase entity,
   ) async {

@@ -41,20 +41,6 @@ class GoogleConnectorConjecture extends VendorConnectorConjectureService {
   ];
 
   @override
-  Future<void> manageHubRequestsForDevice(DeviceEntityBase googleDE) async {
-    final DeviceEntityBase? device =
-        vendorEntities[googleDE.entityUniqueId.getOrCrash()];
-
-    if (device is ChromeCastEntity) {
-      device.executeDeviceAction(newEntity: googleDE);
-    } else {
-      icLogger.w(
-        'Google device type does not exist ${device?.entityTypes.getOrCrash()}',
-      );
-    }
-  }
-
-  @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
     DeviceEntityBase? nonGenericDevice;
 

@@ -33,20 +33,6 @@ class YeelightConnectorConjecture extends VendorConnectorConjectureService {
   bool searchStarted = false;
 
   @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase entity,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[entity.entityUniqueId.getOrCrash()];
-
-    if (device is Yeelight1SeEntity) {
-      device.executeDeviceAction(newEntity: entity);
-    } else {
-      icLogger.w('Yeelight device type does not exist');
-    }
-  }
-
-  @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
     DeviceEntityBase? nonGenericDevice;
 

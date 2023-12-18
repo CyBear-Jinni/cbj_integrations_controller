@@ -11,7 +11,6 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/hub_client/hub_client.dart';
-import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
 class Connector {
@@ -99,9 +98,6 @@ class Connector {
           final DeviceEntityBase savedDeviceWithSameIdAsMqtt =
               DeviceEntityDtoBase.fromJson(deviceAsJson).toDomain();
 
-          VendorsConnectorConjecture().updateAllDevicesReposWithDeviceChanges(
-            savedDeviceWithSameIdAsMqtt,
-          );
           savedDevicesRepo.addOrUpdateFromMqtt(savedDeviceWithSameIdAsMqtt);
 
           if (property == 'entityStateGRPC' &&

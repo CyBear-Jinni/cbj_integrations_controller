@@ -1,10 +1,7 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 import 'package:dartz/dartz.dart';
@@ -74,59 +71,6 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
       deviceCbjUniqueId: genericDevice.deviceCbjUniqueId,
       switchState: genericDevice.switchState,
     );
-  }
-
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
-  }) async {
-    if (newEntity is! GenericSwitchDE) {
-      return left(
-        const CoreFailure.actionExcecuter(
-          failedValue: 'Not the correct type',
-        ),
-      );
-    }
-
-    try {
-      if (newEntity.switchState.getOrCrash() != switchState.getOrCrash() ||
-          entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.switchState.getOrCrash(),
-        );
-
-        if (actionToPreform == EntityActions.on) {
-          (await turnOnSwitch()).fold((l) {
-            icLogger.e('Error turning EweLink switch on');
-            throw l;
-          }, (r) {
-            icLogger.i('EweLink switch turn on success');
-          });
-        } else if (actionToPreform == EntityActions.off) {
-          (await turnOffSwitch()).fold((l) {
-            icLogger.e('Error turning EweLink switch off');
-            throw l;
-          }, (r) {
-            icLogger.i('EweLink switch turn off success');
-          });
-        } else {
-          icLogger.e('actionToPreform is not set correctly EweLink switch');
-        }
-      }
-      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return right(unit);
-    } catch (e) {
-      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
-      //
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-
-      return left(const CoreFailure.unexpected());
-    }
   }
 
   @override

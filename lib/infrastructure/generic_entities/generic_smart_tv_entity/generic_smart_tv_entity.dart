@@ -161,17 +161,42 @@ class GenericSmartTvDE extends DeviceEntityBase {
     );
   }
 
-  /// Please override the following methods
   @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    dynamic value,
   }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
+    switch (action) {
+      case EntityActions.on:
+        return turnOnSmartTv();
+      case EntityActions.off:
+        return turnOffSmartTv();
+      case EntityActions.open:
+        if (value is! String) {
+          return const Left(CoreFailure.unexpected());
+        }
+        return sendUrlToDevice(value);
+      case EntityActions.pausePlay:
+        return togglePausePlay();
+      case EntityActions.pause:
+        return togglePause();
+      case EntityActions.play:
+        return togglePlay();
+      case EntityActions.stop:
+        return toggleStop();
+      case EntityActions.skipBackward:
+        return skipBackward();
+      case EntityActions.skipForeword:
+        return skipForeword();
+      case EntityActions.close:
+        return closeApp();
+      default:
+        break;
+    }
+
+    return super
+        .executeAction(property: property, action: action, value: value);
   }
 
   /// Please override the following methods

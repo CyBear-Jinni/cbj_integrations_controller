@@ -32,20 +32,6 @@ class HpConnectorConjecture extends VendorConnectorConjectureService {
   final List<String> uniqueIdentifierNameInMdns = ['hp'];
 
   @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase hpDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[hpDE.entityUniqueId.getOrCrash()];
-
-    if (device is HpPrinterEntity) {
-      device.executeDeviceAction(newEntity: hpDE);
-    } else {
-      icLogger.w('HP device type does not exist');
-    }
-  }
-
-  @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
     DeviceEntityBase? nonGenericDevice;
 

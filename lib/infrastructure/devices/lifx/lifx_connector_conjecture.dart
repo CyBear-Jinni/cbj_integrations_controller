@@ -88,20 +88,6 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase lifxDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[lifxDE.entityUniqueId.getOrCrash()];
-
-    if (device is LifxWhiteEntity) {
-      device.executeDeviceAction(newEntity: lifxDE);
-    } else {
-      icLogger.w('Lifx device type does not exist');
-    }
-  }
-
-  @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
     DeviceEntityBase? nonGenericDevice;
 

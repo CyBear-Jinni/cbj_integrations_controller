@@ -169,15 +169,11 @@ abstract class DeviceEntityBase {
     dynamic value,
   }) async {
     icLogger.e(
-      'executeAction is not implemented for device ${cbjDeviceVendor.getOrCrash()} ${entityTypes.getOrCrash()}',
+      'ExecuteAction is not implemented for device cbjDeviceVendor ${cbjDeviceVendor.getOrCrash()} '
+      'entityTypes ${entityTypes.getOrCrash()} property ${property.name} action ${action.name} value $value',
     );
     return const Left(CoreFailure.unexpected());
   }
-
-  /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
-  });
 
   /// Return a list of all valid actions for this device
   List<String> getAllValidActions();
@@ -265,14 +261,6 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
   @override
   List<String> getAllValidActions() {
     return [];
-  }
-
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
-  }) {
-    // TODO: implement executeDeviceAction
-    throw UnimplementedError();
   }
 
   @override

@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:cast/cast.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_tv_entity/generic_smart_tv_entity.dart';
 import 'package:dartz/dartz.dart';
 
@@ -95,53 +93,6 @@ class ChromeCastEntity extends GenericSmartTvDE {
   CastDevice? castDevice;
   CastSession? session;
   bool sessionIsClosing = false;
-
-  @override
-  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
-    required EntityProperties property,
-    required EntityActions action,
-    dynamic value,
-  }) async {
-    super.executeAction(property: property, action: action);
-    final bool canBePreform =
-        isPropertyAndActionCanBePreform(property: property, action: action);
-    if (!canBePreform) {
-      return const Left(CoreFailure.unexpected());
-    }
-    if (action == EntityActions.on) {
-      return turnOnSmartTv();
-    } else if (action == EntityActions.off) {
-      return turnOffSmartTv();
-    } else if (action == EntityActions.open) {
-      if (value is! String) {
-        return const Left(CoreFailure.unexpected());
-      }
-      return sendUrlToDevice(value);
-    } else if (action == EntityActions.pausePlay) {
-      return togglePausePlay();
-    } else if (action == EntityActions.pause) {
-      return togglePause();
-    } else if (action == EntityActions.play) {
-      return togglePlay();
-    } else if (action == EntityActions.stop) {
-      return toggleStop();
-    } else if (action == EntityActions.skipBackward) {
-      return skipBackward();
-    } else if (action == EntityActions.skipForeword) {
-      return skipForeword();
-    } else if (action == EntityActions.close) {
-      return closeApp();
-    }
-
-    return const Left(CoreFailure.unexpected());
-  }
-
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
-  }) async {
-    return right(unit);
-  }
 
   @override
   Future<Either<CoreFailure, Unit>> turnOnSmartTv() async {

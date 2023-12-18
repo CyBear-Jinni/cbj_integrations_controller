@@ -4,7 +4,6 @@ import 'dart:collection';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_light/shelly_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_relay_switch/shelly_relay_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
@@ -28,22 +27,6 @@ class ShellyConnectorConjecture extends VendorConnectorConjectureService {
 
   @override
   final List<String> uniqueIdentifierNameInMdns = ['shelly'];
-
-  @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase shellyDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[shellyDE.entityUniqueId.getOrCrash()];
-
-    if (device is ShellyColorLightEntity) {
-      device.executeDeviceAction(newEntity: shellyDE);
-    } else if (device is ShellyRelaySwitchEntity) {
-      device.executeDeviceAction(newEntity: shellyDE);
-    } else {
-      icLogger.w('Shelly device type does not exist');
-    }
-  }
 
   @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {

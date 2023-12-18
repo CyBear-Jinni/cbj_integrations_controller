@@ -29,20 +29,6 @@ class TasmotaIpConnectorConjecture extends VendorConnectorConjectureService {
   // http://ip/cm?cmnd=MqttHost%200
 
   @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase tasmotaIpDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[tasmotaIpDE.entityUniqueId.getOrCrash()];
-
-    if (device is TasmotaIpSwitchEntity) {
-      device.executeDeviceAction(newEntity: tasmotaIpDE);
-    } else {
-      icLogger.w('TasmotaIp device type does not exist');
-    }
-  }
-
-  @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
     DeviceEntityBase? nonGenericDevice;
 

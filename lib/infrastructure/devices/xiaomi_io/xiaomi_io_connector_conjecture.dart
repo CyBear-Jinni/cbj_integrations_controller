@@ -109,20 +109,6 @@ class XiaomiIoConnectorConjecture extends VendorConnectorConjectureService {
   // }
 
   @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase xiaomiDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[xiaomiDE.entityUniqueId.getOrCrash()];
-
-    if (device is XiaomiIoGpx4021GlEntity) {
-      device.executeDeviceAction(newEntity: xiaomiDE);
-    } else {
-      icLogger.w('XiaomiIo device type does not exist');
-    }
-  }
-
-  @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
     DeviceEntityBase? nonGenericDevice;
 

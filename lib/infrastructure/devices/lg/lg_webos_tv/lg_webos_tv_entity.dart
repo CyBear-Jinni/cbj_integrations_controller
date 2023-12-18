@@ -1,12 +1,8 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_tv_entity/generic_smart_tv_entity.dart';
 import 'package:dartz/dartz.dart';
 
@@ -46,60 +42,6 @@ class LgWebosTvEntity extends GenericSmartTvDE {
   }) : super(
           cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lg),
         );
-
-  /// Please override the following methods
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
-  }) async {
-    if (newEntity is! GenericRgbwLightDE) {
-      return left(
-        const CoreFailure.actionExcecuter(
-          failedValue: 'Not the correct type',
-        ),
-      );
-    }
-
-    try {
-      if (newEntity.lightSwitchState.getOrCrash() !=
-              smartTvSwitchState!.getOrCrash() ||
-          entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.lightSwitchState.getOrCrash(),
-        );
-
-        if (actionToPreform == EntityActions.on) {
-          (await turnOnSmartTv()).fold((l) {
-            icLogger.e('Error turning WebOs on');
-            throw l;
-          }, (r) {
-            icLogger.i('WebOs turn on success');
-          });
-        } else if (actionToPreform == EntityActions.off) {
-          (await turnOffSmartTv()).fold((l) {
-            icLogger.e('Error turning WebOs off');
-            throw l;
-          }, (r) {
-            icLogger.i('WebOs turn off success');
-          });
-        } else {
-          icLogger.e('actionToPreform is not set correctly on WebOs');
-        }
-      }
-      entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
-
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return right(unit);
-    } catch (e) {
-      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return left(const CoreFailure.unexpected());
-    }
-  }
 
   @override
   Future<Either<CoreFailure, Unit>> turnOnSmartTv() async {

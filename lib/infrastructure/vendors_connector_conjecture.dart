@@ -58,21 +58,6 @@ class VendorsConnectorConjecture {
   static final VendorsConnectorConjecture _instance =
       VendorsConnectorConjecture._singletonConstructor();
 
-  void updateAllDevicesReposWithDeviceChanges(DeviceEntityBase entity) {
-    final String deviceVendor = entity.cbjDeviceVendor.getOrCrash();
-
-    final VendorConnectorConjectureService? companyConnectorConjecture =
-        vendorStringToCompanyConnectorConjecture(deviceVendor);
-
-    if (companyConnectorConjecture != null) {
-      companyConnectorConjecture.manageHubRequestsForDevice(entity);
-    } else {
-      icLogger.w(
-        'Cannot send device changes to its repo, company not supported $deviceVendor',
-      );
-    }
-  }
-
   void addAllDevicesToItsRepos(
     Map<String, DeviceEntityBase> allDevices,
   ) {

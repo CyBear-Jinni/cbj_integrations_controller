@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff__diy_wall_switch/sonoff_diy_mod_wall_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff_diy_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
@@ -76,20 +74,6 @@ class SonoffDiyConnectorConjecture extends VendorConnectorConjectureService {
   // return sonoffDevices;
   // return null;
   // }
-
-  @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase sonoffDiyDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[sonoffDiyDE.entityUniqueId.getOrCrash()];
-
-    if (device is SonoffDiyRelaySwitchEntity) {
-      device.executeDeviceAction(newEntity: sonoffDiyDE);
-    } else {
-      icLogger.w('Sonoff diy device type does not exist');
-    }
-  }
 
   @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {}

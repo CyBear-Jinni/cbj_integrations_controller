@@ -149,17 +149,22 @@ class GenericBoilerDE extends DeviceEntityBase {
     );
   }
 
-  /// Please override the following methods
   @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    dynamic value,
   }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
+    switch (action) {
+      case EntityActions.on:
+        return boilerOn();
+      case EntityActions.off:
+        return boilerOff();
+      default:
+        break;
+    }
+
+    return const Left(CoreFailure.unexpected());
   }
 
   /// Please override the following methods

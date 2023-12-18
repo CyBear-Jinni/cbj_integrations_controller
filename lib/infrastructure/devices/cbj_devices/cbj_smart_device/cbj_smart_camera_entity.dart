@@ -1,10 +1,7 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_security_camera_entity/generic_security_camera_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_security_camera_entity/generic_security_camera_value_objects.dart';
 import 'package:dartz/dartz.dart';
@@ -77,58 +74,6 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
       deviceCbjUniqueId: genericDevice.deviceCbjUniqueId,
       securityCameraSuspendState: genericDevice.securityCameraSuspendState,
     );
-  }
-
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
-  }) async {
-    if (newEntity is! GenericSecurityCameraDE) {
-      return left(
-        const CoreFailure.actionExcecuter(
-          failedValue: 'Not the correct type',
-        ),
-      );
-    }
-
-    try {
-      if (newEntity.securityCameraSuspendState!.getOrCrash() !=
-          securityCameraSuspendState!.getOrCrash()) {
-        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.securityCameraSuspendState!.getOrCrash(),
-        );
-
-        if (actionToPreform == EntityActions.suspend) {
-          (await suspendSecurityCamera()).fold((l) {
-            icLogger.e('Error suspending Cbj Computer');
-            throw l;
-          }, (r) {
-            icLogger.i('Cbj Computer suspended success');
-          });
-        } else {
-          icLogger.e('actionToPreform is not set correctly Cbj Computer');
-        }
-      }
-
-      securityCameraSuspendState =
-          GenericSecurityCameraSuspendState(EntityActions.itIsFalse.toString());
-
-      // entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
-      //
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-
-      return right(unit);
-    } catch (e) {
-      entityStateGRPC = EntityState.state(EntityStateGRPC.newStateFailed);
-
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-
-      return left(const CoreFailure.unexpected());
-    }
   }
 
   /// Please override the following methods

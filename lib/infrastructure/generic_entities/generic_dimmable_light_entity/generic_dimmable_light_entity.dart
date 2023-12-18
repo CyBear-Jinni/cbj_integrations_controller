@@ -157,17 +157,27 @@ class GenericDimmableLightDE extends DeviceEntityBase {
     );
   }
 
-  /// Please override the following methods
   @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    dynamic value,
   }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
+    if (property == EntityProperties.lightBrightness) {
+      // TODO: add support for json
+      // return setBrightness(value);
+    }
+
+    switch (action) {
+      case EntityActions.on:
+        return turnOnLight();
+      case EntityActions.off:
+        return turnOffLight();
+      default:
+        break;
+    }
+    return super
+        .executeAction(property: property, action: action, value: value);
   }
 
   /// Please override the following methods

@@ -141,19 +141,6 @@ class GenericSmartTypeNotSupportedDE extends DeviceEntityBase {
   }
 
   /// Please override the following methods
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityBase newEntity,
-  }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
-
-  /// Please override the following methods
   Future<Either<CoreFailure, Unit>> turnOnSmartTypeNotSupported() async {
     icLogger.w('Please override this method in the non generic implementation');
     return left(

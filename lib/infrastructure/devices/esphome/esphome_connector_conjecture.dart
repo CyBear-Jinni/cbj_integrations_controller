@@ -44,20 +44,6 @@ class EspHomeConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityBase espHomeDE,
-  ) async {
-    final DeviceEntityBase? device =
-        vendorEntities[espHomeDE.entityUniqueId.getOrCrash()];
-
-    if (device != null) {
-      device.executeDeviceAction(newEntity: espHomeDE);
-    } else {
-      icLogger.w('ESPHome device type does not exist');
-    }
-  }
-
-  @override
   Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
     DeviceEntityBase? nonGenericDevice;
 
