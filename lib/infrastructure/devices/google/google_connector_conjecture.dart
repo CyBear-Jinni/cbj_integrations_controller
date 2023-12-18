@@ -5,11 +5,11 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/chrome_cast/chrome_cast_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/google_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_tv_entity/generic_smart_tv_entity.dart';
 
-class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
+class GoogleConnectorConjecture extends VendorConnectorConjectureService {
   factory GoogleConnectorConjecture() {
     return _instance;
   }
@@ -41,8 +41,8 @@ class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
   ];
 
   @override
-  Future<void> manageHubRequestsForDevice(DeviceEntityAbstract googleDE) async {
-    final DeviceEntityAbstract? device =
+  Future<void> manageHubRequestsForDevice(DeviceEntityBase googleDE) async {
+    final DeviceEntityBase? device =
         vendorEntities[googleDE.entityUniqueId.getOrCrash()];
 
     if (device is ChromeCastEntity) {
@@ -55,8 +55,8 @@ class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
-    DeviceEntityAbstract? nonGenericDevice;
+  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
+    DeviceEntityBase? nonGenericDevice;
 
     if (deviceEntity is GenericSmartTvDE) {
       nonGenericDevice = ChromeCastEntity.fromGeneric(deviceEntity);
@@ -73,8 +73,8 @@ class GoogleConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
   ) =>
       GoogleHelpers.addDiscoveredDevice(entity);
 }

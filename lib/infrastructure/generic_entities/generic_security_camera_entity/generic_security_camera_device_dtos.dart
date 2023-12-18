@@ -1,5 +1,5 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_security_camera_entity/generic_security_camera_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_security_camera_entity/generic_security_camera_value_objects.dart';
@@ -10,7 +10,7 @@ part 'generic_security_camera_device_dtos.g.dart';
 
 @freezed
 abstract class GenericSecurityCameraDeviceDtos
-    implements _$GenericSecurityCameraDeviceDtos, DeviceEntityDtoAbstract {
+    implements _$GenericSecurityCameraDeviceDtos, DeviceEntityDtoBase {
   factory GenericSecurityCameraDeviceDtos({
     // @JsonKey(ignore: true)
     required String id,
@@ -96,7 +96,7 @@ abstract class GenericSecurityCameraDeviceDtos
       (GenericSecurityCameraDeviceDtos).toString();
 
   @override
-  DeviceEntityAbstract toDomain() {
+  DeviceEntityBase toDomain() {
     return GenericSecurityCameraDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),

@@ -262,9 +262,9 @@ class _HiveRepository extends IDbRepository {
   }
 
   @override
-  Future<Either<LocalDbFailures, List<DeviceEntityAbstract>>>
+  Future<Either<LocalDbFailures, List<DeviceEntityBase>>>
       getSmartDevicesFromDb() async {
-    final List<DeviceEntityAbstract> devices = <DeviceEntityAbstract>[];
+    final List<DeviceEntityBase> devices = <DeviceEntityBase>[];
 
     try {
       await devicesBox?.close();
@@ -276,7 +276,7 @@ class _HiveRepository extends IDbRepository {
       await devicesBox?.close();
 
       for (final DevicesHiveModel deviceHive in devicesHiveModelFromDb) {
-        final DeviceEntityAbstract deviceEntity =
+        final DeviceEntityBase deviceEntity =
             DeviceHelper.convertJsonStringToDomain(deviceHive.deviceStringJson);
 
         devices.add(
@@ -467,7 +467,7 @@ class _HiveRepository extends IDbRepository {
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveSmartDevices({
-    required List<DeviceEntityAbstract> deviceList,
+    required List<DeviceEntityBase> deviceList,
   }) async {
     try {
       final List<DevicesHiveModel> devicesHiveList = [];

@@ -6,11 +6,11 @@ import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_light/shelly_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_relay_switch/shelly_relay_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 
-class ShellyConnectorConjecture extends AbstractVendorConnectorConjecture {
+class ShellyConnectorConjecture extends VendorConnectorConjectureService {
   factory ShellyConnectorConjecture() {
     return _instance;
   }
@@ -31,9 +31,9 @@ class ShellyConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract shellyDE,
+    DeviceEntityBase shellyDE,
   ) async {
-    final DeviceEntityAbstract? device =
+    final DeviceEntityBase? device =
         vendorEntities[shellyDE.entityUniqueId.getOrCrash()];
 
     if (device is ShellyColorLightEntity) {
@@ -46,8 +46,8 @@ class ShellyConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
-    DeviceEntityAbstract? nonGenericDevice;
+  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
+    DeviceEntityBase? nonGenericDevice;
 
     if (deviceEntity is GenericRgbwLightDE) {
       nonGenericDevice = ShellyColorLightEntity.fromGeneric(deviceEntity);
@@ -64,8 +64,8 @@ class ShellyConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
   ) =>
       ShellyHelpers.addDiscoveredDevice(entity);
 }

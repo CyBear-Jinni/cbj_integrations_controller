@@ -13,9 +13,10 @@ dependencies:
   async: ^2.11.0
   # Discover and connect with Chromecast devices 
   cast: 
-    git: 
-      url: "https://github.com/guyluz11/flutter_cast.git"
-      ref: "multicast_version"
+    # git: 
+      # url: "https://github.com/guyluz11/flutter_cast.git"
+      # ref: "multicast_version"
+    path: ../../flutter_cast
   collection: ^1.17.2
   # Package to create, convert, alter, and compare colors in a variety of colorspaces.
   color: ^3.0.0

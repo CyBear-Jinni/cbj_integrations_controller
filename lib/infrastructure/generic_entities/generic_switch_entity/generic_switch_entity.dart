@@ -1,8 +1,8 @@
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_device_dtos.dart';
@@ -11,7 +11,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericSwitch that exist inside a computer, the
 /// implementations will be actual GenericSwitch like blinds switchs and more
-class GenericSwitchDE extends DeviceEntityAbstract {
+class GenericSwitchDE extends DeviceEntityBase {
   /// All public field of GenericSwitch entity
   GenericSwitchDE({
     required super.uniqueId,
@@ -112,7 +112,7 @@ class GenericSwitchDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericSwitchDeviceDtos(
       deviceDtoClass: (GenericSwitchDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -151,7 +151,7 @@ class GenericSwitchDE extends DeviceEntityAbstract {
   /// Please override the following methods
   @override
   Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+    required DeviceEntityBase newEntity,
   }) async {
     icLogger.w('Please override this method in the non generic implementation');
     return left(

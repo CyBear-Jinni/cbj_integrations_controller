@@ -1,8 +1,8 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 
 class WizHelpers {
-  static DeviceEntityAbstract? addDiscoveredDevice({
+  static DeviceEntityBase? addDiscoveredDevice({
     // required WizBulb wizDevice,
     required CoreUniqueId? uniqueDeviceId,
   }) {

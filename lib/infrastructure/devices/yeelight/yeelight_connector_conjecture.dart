@@ -5,12 +5,12 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_1se/yeelight_1se_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:yeedart/yeedart.dart';
 
-class YeelightConnectorConjecture extends AbstractVendorConnectorConjecture {
+class YeelightConnectorConjecture extends VendorConnectorConjectureService {
   factory YeelightConnectorConjecture() {
     return _instance;
   }
@@ -34,9 +34,9 @@ class YeelightConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract entity,
+    DeviceEntityBase entity,
   ) async {
-    final DeviceEntityAbstract? device =
+    final DeviceEntityBase? device =
         vendorEntities[entity.entityUniqueId.getOrCrash()];
 
     if (device is Yeelight1SeEntity) {
@@ -47,8 +47,8 @@ class YeelightConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
-    DeviceEntityAbstract? nonGenericDevice;
+  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
+    DeviceEntityBase? nonGenericDevice;
 
     if (deviceEntity is GenericRgbwLightDE) {
       nonGenericDevice = Yeelight1SeEntity.fromGeneric(deviceEntity);
@@ -65,17 +65,17 @@ class YeelightConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
   ) async {
     final responses = await Yeelight.discover();
     if (responses.isEmpty) {
       return HashMap();
     }
 
-    final HashMap<String, DeviceEntityAbstract> enitityList = HashMap();
+    final HashMap<String, DeviceEntityBase> enitityList = HashMap();
     for (final DiscoveryResponse yeelightDevice in responses) {
-      final HashMap<String, DeviceEntityAbstract> addDevice =
+      final HashMap<String, DeviceEntityBase> addDevice =
           YeelightHelpers.addDiscoveredDevice(
         yeelightDevice: yeelightDevice,
         entity: entity,

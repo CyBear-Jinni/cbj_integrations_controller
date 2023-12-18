@@ -26,8 +26,8 @@ import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xia
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_empty_entity/generic_empty_entity.dart';
 
@@ -58,10 +58,10 @@ class VendorsConnectorConjecture {
   static final VendorsConnectorConjecture _instance =
       VendorsConnectorConjecture._singletonConstructor();
 
-  void updateAllDevicesReposWithDeviceChanges(DeviceEntityAbstract entity) {
+  void updateAllDevicesReposWithDeviceChanges(DeviceEntityBase entity) {
     final String deviceVendor = entity.cbjDeviceVendor.getOrCrash();
 
-    final AbstractVendorConnectorConjecture? companyConnectorConjecture =
+    final VendorConnectorConjectureService? companyConnectorConjecture =
         vendorStringToCompanyConnectorConjecture(deviceVendor);
 
     if (companyConnectorConjecture != null) {
@@ -74,27 +74,27 @@ class VendorsConnectorConjecture {
   }
 
   void addAllDevicesToItsRepos(
-    Map<String, DeviceEntityAbstract> allDevices,
+    Map<String, DeviceEntityBase> allDevices,
   ) {
-    for (final MapEntry<String, DeviceEntityAbstract> deviceId
+    for (final MapEntry<String, DeviceEntityBase> deviceId
         in allDevices.entries) {
       addDeviceToItsRepo(deviceId);
     }
   }
 
   void addDeviceToItsRepo(
-    MapEntry<String, DeviceEntityAbstract> deviceEntityAbstract,
+    MapEntry<String, DeviceEntityBase> deviceEntityBase,
   ) {
-    final MapEntry<String, DeviceEntityAbstract> devicesEntry =
-        MapEntry<String, DeviceEntityAbstract>(
-      deviceEntityAbstract.key,
-      deviceEntityAbstract.value,
+    final MapEntry<String, DeviceEntityBase> devicesEntry =
+        MapEntry<String, DeviceEntityBase>(
+      deviceEntityBase.key,
+      deviceEntityBase.value,
     );
 
     final String deviceVendor =
-        deviceEntityAbstract.value.cbjDeviceVendor.getOrCrash();
+        deviceEntityBase.value.cbjDeviceVendor.getOrCrash();
 
-    final AbstractVendorConnectorConjecture? companyConnectorConjecture =
+    final VendorConnectorConjectureService? companyConnectorConjecture =
         vendorStringToCompanyConnectorConjecture(deviceVendor);
 
     if (companyConnectorConjecture != null) {
@@ -104,10 +104,10 @@ class VendorsConnectorConjecture {
     }
   }
 
-  // DeviceEntityAbstract addDiscoveredDeviceToHub(
-  //   DeviceEntityAbstract deviceEntity,
+  // DeviceEntityBase addDiscoveredDeviceToHub(
+  //   DeviceEntityBase deviceEntity,
   // ) {
-  //   final DeviceEntityAbstract deviceEntityGotSaved =
+  //   final DeviceEntityBase deviceEntityGotSaved =
   //       ISavedDevicesRepo.instance.addOrUpdateDevice(deviceEntity);
 
   //   IMqttServerRepository.instance
@@ -165,10 +165,10 @@ class VendorsConnectorConjecture {
       return;
     }
 
-    AbstractVendorConnectorConjecture? companyConnectorConjecture;
+    VendorConnectorConjectureService? companyConnectorConjecture;
 
-    for (final AbstractVendorConnectorConjecture connectorConjecture
-        in AbstractVendorConnectorConjecture.vendorConnectorConjectureClass) {
+    for (final VendorConnectorConjectureService connectorConjecture
+        in VendorConnectorConjectureService.vendorConnectorConjectureClass) {
       final bool containUniqueType =
           connectorConjecture.mdnsVendorUniqueTypes.contains(serviceType);
 
@@ -205,7 +205,7 @@ class VendorsConnectorConjecture {
       }
     }
 
-    HashMap<String, DeviceEntityAbstract>? handeldEntities;
+    HashMap<String, DeviceEntityBase>? handeldEntities;
 
     if (companyConnectorConjecture != null) {
       handeldEntities = await companyConnectorConjecture.foundEntity(entity);
@@ -239,7 +239,7 @@ class VendorsConnectorConjecture {
       return;
     }
 
-    HashMap<String, DeviceEntityAbstract>? handeldEntities;
+    HashMap<String, DeviceEntityBase>? handeldEntities;
     VendorsAndServices? vendor;
 
     if (deviceHostNameLowerCase.contains('tasmota')) {
@@ -253,7 +253,7 @@ class VendorsConnectorConjecture {
     }
 
     if (vendor != null) {
-      final AbstractVendorConnectorConjecture? companyConnectorConjecture =
+      final VendorConnectorConjectureService? companyConnectorConjecture =
           vendorStringToCompanyConnectorConjecture(vendor.name);
       handeldEntities = await companyConnectorConjecture?.foundEntity(entity);
     } else {
@@ -281,14 +281,14 @@ class VendorsConnectorConjecture {
     DevicesService().discovedEntity(handeldEntities);
   }
 
-  List<Stream<DeviceEntityAbstract?>> searchOfBindingIntoSocketsList() =>
+  List<Stream<DeviceEntityBase?>> searchOfBindingIntoSocketsList() =>
       SwitcherConnectorConjecture().bindSocketSearchStream();
 
-  Future<void> foundBindingDevice(DeviceEntityAbstract entity) async {
-    HashMap<String, DeviceEntityAbstract>? handeldEntities;
+  Future<void> foundBindingDevice(DeviceEntityBase entity) async {
+    HashMap<String, DeviceEntityBase>? handeldEntities;
 
     final String deviceVendor = entity.cbjDeviceVendor.getOrCrash();
-    final AbstractVendorConnectorConjecture? companyConnectorConjecture =
+    final VendorConnectorConjectureService? companyConnectorConjecture =
         vendorStringToCompanyConnectorConjecture(deviceVendor);
 
     if (companyConnectorConjecture != null) {
@@ -308,7 +308,7 @@ class VendorsConnectorConjecture {
     DevicesService().discovedEntity(handeldEntities);
   }
 
-  AbstractVendorConnectorConjecture? vendorStringToCompanyConnectorConjecture(
+  VendorConnectorConjectureService? vendorStringToCompanyConnectorConjecture(
     String vendorName,
   ) {
     //TODO: convert vendorName to type and then use switch case
@@ -349,11 +349,11 @@ class VendorsConnectorConjecture {
     return null;
   }
 
-  AbstractVendorConnectorConjecture? getVendorConnectorConjecture(
+  VendorConnectorConjectureService? getVendorConnectorConjecture(
     VendorsAndServices vendor,
   ) {
-    for (final AbstractVendorConnectorConjecture vendorConnectorConjecture
-        in AbstractVendorConnectorConjecture.vendorConnectorConjectureClass) {
+    for (final VendorConnectorConjectureService vendorConnectorConjecture
+        in VendorConnectorConjectureService.vendorConnectorConjectureClass) {
       if (vendorConnectorConjecture.vendorsAndServices == vendor) {
         return vendorConnectorConjecture;
       }

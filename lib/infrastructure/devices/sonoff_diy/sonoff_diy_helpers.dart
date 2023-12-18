@@ -2,19 +2,19 @@ import 'dart:collection';
 
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff__diy_wall_switch/sonoff_diy_mod_wall_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 
 class SonoffDiyHelpers {
-  static Future<HashMap<String, DeviceEntityAbstract>> addDiscoveredDevice(
-    DeviceEntityAbstract entity,
+  static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
+    DeviceEntityBase entity,
   ) async {
     final String? mDnsName = entity.deviceMdns.getOrCrash();
     final String? port = entity.devicePort.getOrCrash();
     final String? ip = entity.deviceLastKnownIp.getOrCrash();
 
-    final HashMap<String, DeviceEntityAbstract> entitiesToAdd = HashMap();
+    final HashMap<String, DeviceEntityBase> entitiesToAdd = HashMap();
 
     if (mDnsName == null || port == null || ip == null) {
       return entitiesToAdd;

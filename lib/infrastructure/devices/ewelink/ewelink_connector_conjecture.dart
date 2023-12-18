@@ -6,11 +6,11 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_switch/ewelink_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
 
-class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
+class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
   factory EwelinkConnectorConjecture() {
     return _instance;
   }
@@ -62,13 +62,13 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract ewelinkDE,
+    DeviceEntityBase ewelinkDE,
   ) async {
     if (ewelink == null || vendorEntities.isEmpty) {
       await waitUntilConnectionEstablished(0);
     }
 
-    final DeviceEntityAbstract? device = vendorEntities[
+    final DeviceEntityBase? device = vendorEntities[
         '${ewelinkDE.deviceUniqueId.getOrCrash()}-${ewelinkDE.entityUniqueId.getOrCrash()}'];
 
     if (device is EwelinkSwitchEntity) {
@@ -79,8 +79,8 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
-    DeviceEntityAbstract? nonGenericDevice;
+  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
+    DeviceEntityBase? nonGenericDevice;
     if (ewelink == null || vendorEntities.isEmpty) {
       await waitUntilConnectionEstablished(0);
     }
@@ -111,8 +111,8 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
   ) async {
     if (ewelink == null) {
       didRequestLogin = accountLogin(GenericEwelinkLoginDE.empty());
@@ -133,7 +133,7 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
       return HashMap();
     }
 
-    final HashMap<String, DeviceEntityAbstract> entityList = HashMap();
+    final HashMap<String, DeviceEntityBase> entityList = HashMap();
     for (final EwelinkDevice ewelinkDevice in devices) {
       // Getting device by id adds additional info in the result
       final EwelinkDevice ewelinkDeviceWithTag =

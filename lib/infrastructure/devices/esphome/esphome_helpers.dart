@@ -4,7 +4,7 @@ import 'package:cbj_integrations_controller/domain/core/value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_light/esphome_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_switch/esphome_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
@@ -22,7 +22,7 @@ class EspHomeHelpers {
     if (espHomeNodeDeviceId == null) {
       /// Try to find entity that already got added that contains the same
       /// mDNS (multiple entities can exist on the device)
-      for (final DeviceEntityAbstract deviceE
+      for (final DeviceEntityBase deviceE
           in EspHomeConnectorConjecture().getAllCompanyDevices.values) {
         if (deviceE.deviceMdns.getOrCrash() == mDnsName) {
           return deviceE.deviceCbjUniqueId.getOrCrash();
@@ -69,8 +69,8 @@ class EspHomeHelpers {
     return tempAllEntities;
   }
 
-  static Future<HashMap<String, DeviceEntityAbstract>> addDiscoveredEntities({
-    required DeviceEntityAbstract entity,
+  static Future<HashMap<String, DeviceEntityBase>> addDiscoveredEntities({
+    required DeviceEntityBase entity,
     required String devicePassword,
     String port = '6053',
   }) async {
@@ -97,7 +97,7 @@ class EspHomeHelpers {
       return HashMap();
     }
 
-    // final List<DeviceEntityAbstract> deviceEntityList = [];
+    // final List<DeviceEntityBase> deviceEntityList = [];
 
     // final EspHomeNodeRedApi espHomeNodeRedApi = EspHomeNodeRedApi(
     //   repository: getIt<NodeRedRepository>(),
@@ -108,7 +108,7 @@ class EspHomeHelpers {
     //   nodeRedMqttBrokerNodeName: 'Cbj NodeRed plugs Api Broker',
     // );
 
-    final HashMap<String, DeviceEntityAbstract> addEntities = HashMap();
+    final HashMap<String, DeviceEntityBase> addEntities = HashMap();
 
     for (final EspHomeDeviceEntityObject espHomeDeviceEntityObject
         in entitiesList) {
@@ -129,7 +129,7 @@ class EspHomeHelpers {
         // if (supportedColorModList.first == 1) {}
         final String deviceCbjUniqueId =
             espHomeDeviceEntityObject.config['uniqueId'] as String;
-        final DeviceEntityAbstract entityTemp = EspHomeLightEntity(
+        final DeviceEntityBase entityTemp = EspHomeLightEntity(
           uniqueId: entity.uniqueId,
           entityUniqueId: EntityUniqueId(deviceCbjUniqueId),
           cbjEntityName: CbjEntityName(espHomeDeviceEntityObject.name),
@@ -168,7 +168,7 @@ class EspHomeHelpers {
         final String deviceCbjUniqueId =
             espHomeDeviceEntityObject.config['uniqueId'] as String;
 
-        final DeviceEntityAbstract entityTemp = EspHomeSwitchEntity(
+        final DeviceEntityBase entityTemp = EspHomeSwitchEntity(
           uniqueId: entity.uniqueId,
           entityUniqueId: EntityUniqueId(deviceCbjUniqueId),
           cbjEntityName: CbjEntityName(espHomeDeviceEntityObject.name),

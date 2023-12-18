@@ -1,8 +1,8 @@
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_empty_entity/generic_empty_device_dtos.dart';
@@ -10,7 +10,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericEmpty that exist inside a computer, the
 /// implementations will be actual GenericEmpty like blinds emptys and more
-class GenericUnsupportedDE extends DeviceEntityAbstract {
+class GenericUnsupportedDE extends DeviceEntityBase {
   /// All public field of GenericEmpty entity
   GenericUnsupportedDE({
     required super.uniqueId,
@@ -108,7 +108,7 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericUnsupportedDeviceDtos(
       deviceDtoClass: (GenericUnsupportedDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -146,7 +146,7 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
   /// Please override the following methods
   @override
   Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+    required DeviceEntityBase newEntity,
   }) async {
     icLogger.w('Please override this method in the non generic implementation');
     return left(

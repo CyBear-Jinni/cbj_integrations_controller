@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_light/shelly_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_relay_switch/shelly_relay_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
@@ -12,20 +12,20 @@ import 'package:color/color.dart';
 import 'package:shelly/shelly.dart';
 
 class ShellyHelpers {
-  static Future<HashMap<String, DeviceEntityAbstract>> addDiscoveredDevice(
-    DeviceEntityAbstract entity,
+  static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
+    DeviceEntityBase entity,
   ) async {
     final String ip = entity.deviceLastKnownIp.getOrCrash()!;
     final String mDnsName = entity.deviceMdns.getOrCrash()!;
     final String? hostName = entity.deviceHostName.getOrCrash();
 
-    final HashMap<String, DeviceEntityAbstract> entitiesToAdd = HashMap();
+    final HashMap<String, DeviceEntityBase> entitiesToAdd = HashMap();
 
     if (hostName == null) {
       return entitiesToAdd;
     }
     final String deviceCbjUniqueId = mDnsName;
-    DeviceEntityAbstract? tempEntity;
+    DeviceEntityBase? tempEntity;
     try {
       // TODO: shelly duo bulb needs type that as the time of writing is
       // not supported, bulb + brightness + white temperature (not rgb).

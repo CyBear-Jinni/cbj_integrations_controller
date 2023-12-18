@@ -6,14 +6,14 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_white/lifx_white_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
-class LifxConnectorConjecture extends AbstractVendorConnectorConjecture {
+class LifxConnectorConjecture extends VendorConnectorConjectureService {
   factory LifxConnectorConjecture() {
     return _instance;
   }
@@ -44,8 +44,7 @@ class LifxConnectorConjecture extends AbstractVendorConnectorConjecture {
         for (final LIFXBulb lifxDevice in lights) {
           CoreUniqueId? tempCoreUniqueId;
           bool deviceExist = false;
-          for (final DeviceEntityAbstract savedDevice
-              in vendorEntities.values) {
+          for (final DeviceEntityBase savedDevice in vendorEntities.values) {
             if (savedDevice is LifxWhiteEntity &&
                 lifxDevice.id == savedDevice.entityUniqueId.getOrCrash()) {
               deviceExist = true;
@@ -63,8 +62,7 @@ class LifxConnectorConjecture extends AbstractVendorConnectorConjecture {
             }
           }
           if (!deviceExist) {
-            final DeviceEntityAbstract? addDevice =
-                LifxHelpers.addDiscoveredDevice(
+            final DeviceEntityBase? addDevice = LifxHelpers.addDiscoveredDevice(
               lifxDevice: lifxDevice,
               uniqueDeviceId: tempCoreUniqueId,
             );
@@ -73,7 +71,7 @@ class LifxConnectorConjecture extends AbstractVendorConnectorConjecture {
               continue;
             }
 
-            final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
+            final MapEntry<String, DeviceEntityBase> deviceAsEntry =
                 MapEntry(addDevice.entityUniqueId.getOrCrash(), addDevice);
 
             vendorEntities.addEntries([deviceAsEntry]);
@@ -91,9 +89,9 @@ class LifxConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract lifxDE,
+    DeviceEntityBase lifxDE,
   ) async {
-    final DeviceEntityAbstract? device =
+    final DeviceEntityBase? device =
         vendorEntities[lifxDE.entityUniqueId.getOrCrash()];
 
     if (device is LifxWhiteEntity) {
@@ -104,8 +102,8 @@ class LifxConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
-    DeviceEntityAbstract? nonGenericDevice;
+  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
+    DeviceEntityBase? nonGenericDevice;
 
     if (deviceEntity is GenericDimmableLightDE) {
       nonGenericDevice = LifxWhiteEntity.fromGeneric(deviceEntity);
@@ -122,8 +120,8 @@ class LifxConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
   ) async =>
       HashMap();
 }

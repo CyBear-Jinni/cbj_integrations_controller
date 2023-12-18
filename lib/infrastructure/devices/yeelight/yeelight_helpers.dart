@@ -2,17 +2,17 @@ import 'dart:collection';
 
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_1se/yeelight_1se_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
 import 'package:yeedart/yeedart.dart';
 
 class YeelightHelpers {
-  static HashMap<String, DeviceEntityAbstract> addDiscoveredDevice({
+  static HashMap<String, DeviceEntityBase> addDiscoveredDevice({
     required DiscoveryResponse yeelightDevice,
-    required DeviceEntityAbstract entity,
+    required DeviceEntityBase entity,
   }) {
-    final HashMap<String, DeviceEntityAbstract> entitiesMap = HashMap();
+    final HashMap<String, DeviceEntityBase> entitiesMap = HashMap();
 
     String deviceName;
     if (yeelightDevice.name != null && yeelightDevice.name != '') {
@@ -30,7 +30,7 @@ class YeelightHelpers {
     final String deviceCbjUniqueId = yeelightDevice.id.toString();
 
     if (yeelightDevice.model == 'color4') {
-      final DeviceEntityAbstract newEntity = Yeelight1SeEntity(
+      final DeviceEntityBase newEntity = Yeelight1SeEntity(
         uniqueId: entity.uniqueId,
         entityUniqueId: EntityUniqueId(yeelightDevice.id.toString()),
         cbjEntityName: CbjEntityName(deviceName),

@@ -1,8 +1,8 @@
 part of 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 
 class _SavedDevicesRepo extends ISavedDevicesRepo {
-  final HashMap<String, DeviceEntityAbstract> _allDevices =
-      HashMap<String, DeviceEntityAbstract>();
+  final HashMap<String, DeviceEntityBase> _allDevices =
+      HashMap<String, DeviceEntityBase>();
 
   bool setUpAllFromDbAtLestOnce = false;
 
@@ -19,8 +19,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
   }
 
   @override
-  Future<Map<String, DeviceEntityAbstract>>
-      getAllDevicesAfterInitialize() async {
+  Future<Map<String, DeviceEntityBase>> getAllDevicesAfterInitialize() async {
     while (!setUpAllFromDbAtLestOnce) {
       await Future.delayed(const Duration(milliseconds: 200));
     }
@@ -28,8 +27,8 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
   }
 
   @override
-  DeviceEntityAbstract? addOrUpdateFromMqtt(dynamic updateFromMqtt) {
-    if (updateFromMqtt is DeviceEntityAbstract) {
+  DeviceEntityBase? addOrUpdateFromMqtt(dynamic updateFromMqtt) {
+    if (updateFromMqtt is DeviceEntityBase) {
       return addOrUpdateDevice(updateFromMqtt);
     } else {
       icLogger.w('Add or update type from MQTT not supported');
@@ -38,8 +37,8 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
   }
 
   @override
-  DeviceEntityAbstract addOrUpdateDevice(DeviceEntityAbstract deviceEntity) {
-    final DeviceEntityAbstract? deviceExistByIdOfVendor =
+  DeviceEntityBase addOrUpdateDevice(DeviceEntityBase deviceEntity) {
+    final DeviceEntityBase? deviceExistByIdOfVendor =
         findDeviceIfAlreadyBeenAdded(deviceEntity);
 
     /// Check if device already exist
@@ -56,7 +55,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
 
     ISavedRoomsRepo.instance.addDeviceToRoomDiscoveredIfNotExist(deviceEntity);
     Connector().fromMqtt(
-      MapEntry<String, DeviceEntityAbstract>(
+      MapEntry<String, DeviceEntityBase>(
         entityId,
         _allDevices[entityId]!,
       ),
@@ -101,10 +100,10 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
 
   /// Check if allDevices does not contain the same device already
   /// Will compare the unique id's that each company sent us
-  DeviceEntityAbstract? findDeviceIfAlreadyBeenAdded(
-    DeviceEntityAbstract deviceEntity,
+  DeviceEntityBase? findDeviceIfAlreadyBeenAdded(
+    DeviceEntityBase deviceEntity,
   ) {
-    for (final DeviceEntityAbstract deviceTemp in _allDevices.values) {
+    for (final DeviceEntityBase deviceTemp in _allDevices.values) {
       if (deviceEntity.entityUniqueId.getOrCrash() ==
           deviceTemp.entityUniqueId.getOrCrash()) {
         return deviceTemp;
@@ -117,15 +116,15 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
   Future<Either<LocalDbFailures, Unit>>
       saveAndActivateSmartDevicesToDb() async {
     return IDbRepository.instance.saveSmartDevices(
-      deviceList: List<DeviceEntityAbstract>.from(_allDevices.values),
+      deviceList: List<DeviceEntityBase>.from(_allDevices.values),
     );
   }
 
   @override
-  Future<Either<LocalDbFailures, DeviceEntityAbstract>> getDeviceById(
+  Future<Either<LocalDbFailures, DeviceEntityBase>> getDeviceById(
     String entityUniqueId,
   ) async {
-    final DeviceEntityAbstract? device = _allDevices[entityUniqueId];
+    final DeviceEntityBase? device = _allDevices[entityUniqueId];
     if (device != null) {
       return right(device);
     }
@@ -133,5 +132,5 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
   }
 
   @override
-  Map<String, DeviceEntityAbstract> getAllDevices() => _allDevices;
+  Map<String, DeviceEntityBase> getAllDevices() => _allDevices;
 }

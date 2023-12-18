@@ -11,7 +11,7 @@ import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart'
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/injection.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/remote_pipes/remote_pipes_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
 import 'package:dartz/dartz.dart';
@@ -28,10 +28,10 @@ abstract class ISavedDevicesRepo {
   /// Setting up all devices from db
   Future<void> setUpAllFromDb();
 
-  DeviceEntityAbstract? addOrUpdateFromMqtt(dynamic updateFromMqtt);
+  DeviceEntityBase? addOrUpdateFromMqtt(dynamic updateFromMqtt);
 
   /// Add new device to saved devices list
-  DeviceEntityAbstract addOrUpdateDevice(DeviceEntityAbstract deviceEntity);
+  DeviceEntityBase addOrUpdateDevice(DeviceEntityBase deviceEntity);
 
   // /// Will save the remote pipes entity to the local storage and will activate
   // /// connection to remote pipes with that info
@@ -49,12 +49,12 @@ abstract class ISavedDevicesRepo {
   });
 
   /// Get all saved devices
-  Future<Map<String, DeviceEntityAbstract>> getAllDevicesAfterInitialize();
+  Future<Map<String, DeviceEntityBase>> getAllDevicesAfterInitialize();
 
-  Map<String, DeviceEntityAbstract> getAllDevices();
+  Map<String, DeviceEntityBase> getAllDevices();
 
   /// Get device by unique ID
-  Future<Either<LocalDbFailures, DeviceEntityAbstract>> getDeviceById(
+  Future<Either<LocalDbFailures, DeviceEntityBase>> getDeviceById(
     String entityUniqueId,
   );
 }

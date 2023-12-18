@@ -1,12 +1,12 @@
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_white/lifx_white_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_value_objects.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
 class LifxHelpers {
-  static DeviceEntityAbstract? addDiscoveredDevice({
+  static DeviceEntityBase? addDiscoveredDevice({
     required LIFXBulb lifxDevice,
     required CoreUniqueId? uniqueDeviceId,
   }) {

@@ -6,7 +6,7 @@ import 'package:cbj_integrations_controller/domain/routine/value_objects_routine
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:nodered/nodered.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,7 +21,7 @@ class NodeRedConverter {
 
   static SceneCbjEntity convertToSceneNodes({
     required String nodeName,
-    required List<MapEntry<DeviceEntityAbstract, MapEntry<String?, String?>>>
+    required List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         devicesPropertyAction,
     required String sceneColor,
   }) {
@@ -73,7 +73,7 @@ class NodeRedConverter {
 
   static RoutineCbjEntity convertToRoutineNodes({
     required String nodeName,
-    required List<MapEntry<DeviceEntityAbstract, MapEntry<String?, String?>>>
+    required List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         devicesPropertyAction,
     required RoutineCbjRepeatDateDays daysToRepeat,
     required RoutineCbjRepeatDateHour hourToRepeat,
@@ -134,7 +134,7 @@ class NodeRedConverter {
 
   static BindingCbjEntity convertToBindingNodes({
     required String nodeName,
-    required List<MapEntry<DeviceEntityAbstract, MapEntry<String?, String?>>>
+    required List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         devicesPropertyAction,
     required String bindingColor,
   }) {
@@ -185,7 +185,7 @@ class NodeRedConverter {
   /// Returns the string id of the function to connect to and the whole function
   /// plus mqtt out string as node-red structure
   static MapEntry<String, String> convertToNodeString({
-    required DeviceEntityAbstract device,
+    required DeviceEntityBase device,
     required String property,
     required String action,
     required String brokerNodeId,
@@ -271,16 +271,16 @@ class NodeRedConverter {
 
   static MapEntry<String, List<String>>
       getAllNodesAsWellAsAllNodeRedIdToConnectTo({
-    required List<MapEntry<DeviceEntityAbstract, MapEntry<String?, String?>>>
+    required List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         devicesPropertyAction,
     required String brokerNodeId,
   }) {
     final List<String> allNodeRedIdToConnectTo = [];
     String nodes = '';
 
-    for (final MapEntry<DeviceEntityAbstract,
+    for (final MapEntry<DeviceEntityBase,
         MapEntry<String?, String?>> deviceEntry in devicesPropertyAction) {
-      final DeviceEntityAbstract device = deviceEntry.key;
+      final DeviceEntityBase device = deviceEntry.key;
       final String? property = deviceEntry.value.key;
       final String? action = deviceEntry.value.value;
 

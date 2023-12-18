@@ -7,14 +7,14 @@ import 'package:cbj_integrations_controller/infrastructure/devices/switcher/swit
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_v2_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_plug_entity/generic_smart_plug_entity.dart';
 import 'package:switcher_dart/switcher_dart.dart';
 
-class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
+class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
   factory SwitcherConnectorConjecture() {
     return _instance;
   }
@@ -30,9 +30,9 @@ class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract switcherDE,
+    DeviceEntityBase switcherDE,
   ) async {
-    final DeviceEntityAbstract? device =
+    final DeviceEntityBase? device =
         vendorEntities[switcherDE.entityUniqueId.getOrCrash()];
 
     // if (device == null) {
@@ -52,15 +52,15 @@ class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   // Future<void> setTheSameDeviceFromAllDevices(
-  //   DeviceEntityAbstract switcherDE,
+  //   DeviceEntityBase switcherDE,
   // ) async {
   //   final String deviceEntityUniqueId = switcherDE.entityUniqueId.getOrCrash();
   //   for(a)
   // }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
-    DeviceEntityAbstract? nonGenericDevice;
+  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
+    DeviceEntityBase? nonGenericDevice;
 
     if (deviceEntity is GenericBoilerDE) {
       nonGenericDevice = SwitcherV2Entity.fromGeneric(deviceEntity);
@@ -80,8 +80,8 @@ class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
     ]);
   }
 
-  List<Stream<DeviceEntityAbstract?>> bindSocketSearchStream() {
-    final List<Stream<DeviceEntityAbstract?>> bindingStream = [];
+  List<Stream<DeviceEntityBase?>> bindSocketSearchStream() {
+    final List<Stream<DeviceEntityBase?>> bindingStream = [];
     bindingStream.add(
       SwitcherDiscover.discover20002Devices().map(
         (event) => SwitcherHelpers.addDiscoveredDevice(event),
@@ -96,8 +96,8 @@ class SwitcherConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
   ) async =>
       // It is getting converted in bindSocketSearchStream
       HashMap()

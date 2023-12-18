@@ -1,5 +1,5 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_plug_entity/generic_smart_plug_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_plug_entity/generic_smart_plug_value_objects.dart';
@@ -10,7 +10,7 @@ part 'generic_smart_plug_device_dtos.g.dart';
 
 @freezed
 abstract class GenericSmartPlugDeviceDtos
-    implements _$GenericSmartPlugDeviceDtos, DeviceEntityDtoAbstract {
+    implements _$GenericSmartPlugDeviceDtos, DeviceEntityDtoBase {
   factory GenericSmartPlugDeviceDtos({
     // @JsonKey(ignore: true)
     required String id,
@@ -94,7 +94,7 @@ abstract class GenericSmartPlugDeviceDtos
   final String deviceDtoClassInstance = (GenericSmartPlugDeviceDtos).toString();
 
   @override
-  DeviceEntityAbstract toDomain() {
+  DeviceEntityBase toDomain() {
     return GenericSmartPlugDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),

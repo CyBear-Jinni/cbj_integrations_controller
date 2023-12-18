@@ -1,5 +1,5 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_value_objects.dart';
@@ -10,7 +10,7 @@ part 'generic_blinds_device_dtos.g.dart';
 
 @freezed
 abstract class GenericBlindsDeviceDtos
-    implements _$GenericBlindsDeviceDtos, DeviceEntityDtoAbstract {
+    implements _$GenericBlindsDeviceDtos, DeviceEntityDtoBase {
   factory GenericBlindsDeviceDtos({
     // @JsonKey(ignore: true)
     required String id,
@@ -92,7 +92,7 @@ abstract class GenericBlindsDeviceDtos
   final String deviceDtoClassInstance = (GenericBlindsDeviceDtos).toString();
 
   @override
-  DeviceEntityAbstract toDomain() {
+  DeviceEntityBase toDomain() {
     return GenericBlindsDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),

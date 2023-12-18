@@ -6,12 +6,12 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_led/tasmota_mqtt_led_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
 
-class TasmotaMqttConnectorConjecture extends AbstractVendorConnectorConjecture {
+class TasmotaMqttConnectorConjecture extends VendorConnectorConjectureService {
   factory TasmotaMqttConnectorConjecture() {
     return _instance;
   }
@@ -53,7 +53,7 @@ class TasmotaMqttConnectorConjecture extends AbstractVendorConnectorConjecture {
       bool deviceExist = false;
       CoreUniqueId? tempCoreUniqueId;
 
-      for (final DeviceEntityAbstract savedDevice in vendorEntities.values) {
+      for (final DeviceEntityBase savedDevice in vendorEntities.values) {
         if (savedDevice is TasmotaMqttLedEntity &&
             deviceId == savedDevice.entityUniqueId.getOrCrash()) {
           deviceExist = true;
@@ -74,7 +74,7 @@ class TasmotaMqttConnectorConjecture extends AbstractVendorConnectorConjecture {
         return;
       }
 
-      final DeviceEntityAbstract? addDevice =
+      final DeviceEntityBase? addDevice =
           TasmotaMqttHelpers.addDiscoveredDevice(
         deviceChangeFromMqtt:
             MapEntry(messageTopic, mqttPublishMessage[0].payload),
@@ -85,7 +85,7 @@ class TasmotaMqttConnectorConjecture extends AbstractVendorConnectorConjecture {
         return;
       }
 
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
+      final MapEntry<String, DeviceEntityBase> deviceAsEntry =
           MapEntry(addDevice.uniqueId.getOrCrash(), addDevice);
 
       vendorEntities.addEntries([deviceAsEntry]);
@@ -95,9 +95,9 @@ class TasmotaMqttConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract tasmotaMqttDE,
+    DeviceEntityBase tasmotaMqttDE,
   ) async {
-    final DeviceEntityAbstract? device =
+    final DeviceEntityBase? device =
         vendorEntities[tasmotaMqttDE.entityUniqueId.getOrCrash()];
 
     if (device is TasmotaMqttLedEntity) {
@@ -108,11 +108,11 @@ class TasmotaMqttConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
+  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {}
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
   ) async =>
       HashMap();
 }

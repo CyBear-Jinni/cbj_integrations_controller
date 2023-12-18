@@ -1,19 +1,19 @@
 import 'dart:convert';
 
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 
 class DeviceHelper {
   /// Dto to json
   static Map<String, dynamic> convertDtoToJson(
-    DeviceEntityDtoAbstract deviceEntityDto,
+    DeviceEntityDtoBase deviceEntityDto,
   ) {
     return deviceEntityDto.toJson();
   }
 
   /// json to Dto
-  static DeviceEntityDtoAbstract convertJsonToDto(Map<String, dynamic> json) {
-    return DeviceEntityDtoAbstract.fromJson(json);
+  static DeviceEntityDtoBase convertJsonToDto(Map<String, dynamic> json) {
+    return DeviceEntityDtoBase.fromJson(json);
   }
 
   /// json to json string
@@ -27,36 +27,36 @@ class DeviceHelper {
   }
 
   /// Device entity to dto
-  static DeviceEntityDtoAbstract convertDomainToDto(
-    DeviceEntityAbstract deviceEntity,
+  static DeviceEntityDtoBase convertDomainToDto(
+    DeviceEntityBase deviceEntity,
   ) {
     return deviceEntity.toInfrastructure();
   }
 
   /// Dto to device entity
-  static DeviceEntityAbstract convertDtoToDomain(
-    DeviceEntityDtoAbstract deviceEntityDto,
+  static DeviceEntityBase convertDtoToDomain(
+    DeviceEntityDtoBase deviceEntityDto,
   ) {
     return deviceEntityDto.toDomain();
   }
 
   // Extras methods
 
-  static DeviceEntityDtoAbstract convertJsonStringToDto(String jsonString) {
+  static DeviceEntityDtoBase convertJsonStringToDto(String jsonString) {
     return convertJsonToDto(convertJsonStringToJson(jsonString));
   }
 
   static String convertDtoToJsonString(
-    DeviceEntityDtoAbstract deviceEntityDto,
+    DeviceEntityDtoBase deviceEntityDto,
   ) {
     return convertJsonToJsonString(convertDtoToJson(deviceEntityDto));
   }
 
-  static DeviceEntityAbstract convertJsonStringToDomain(String jsonString) {
+  static DeviceEntityBase convertJsonStringToDomain(String jsonString) {
     return convertDtoToDomain(convertJsonStringToDto(jsonString));
   }
 
-  static String convertDomainToJsonString(DeviceEntityAbstract deviceEntity) {
+  static String convertDomainToJsonString(DeviceEntityBase deviceEntity) {
     return convertJsonToJsonString(
       convertDtoToJson(convertDomainToDto(deviceEntity)),
     );

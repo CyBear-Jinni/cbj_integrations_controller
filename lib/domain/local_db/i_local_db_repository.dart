@@ -28,7 +28,7 @@ import 'package:cbj_integrations_controller/infrastructure/bindings/binding_cbj_
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/bindings_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/devices_hive_model.dart';
@@ -68,7 +68,7 @@ abstract class IDbRepository {
   Future<Either<LocalDbFailures, String>> getRemotePipesDnsName();
 
   /// Get all saved devices from local db
-  Future<Either<LocalDbFailures, List<DeviceEntityAbstract>>>
+  Future<Either<LocalDbFailures, List<DeviceEntityBase>>>
       getSmartDevicesFromDb();
 
   /// Get all saved scenes from local db
@@ -117,7 +117,7 @@ abstract class IDbRepository {
   });
 
   Future<Either<LocalDbFailures, Unit>> saveSmartDevices({
-    required List<DeviceEntityAbstract> deviceList,
+    required List<DeviceEntityBase> deviceList,
   });
 
   Future<Either<LocalDbFailures, Unit>> saveScenes({

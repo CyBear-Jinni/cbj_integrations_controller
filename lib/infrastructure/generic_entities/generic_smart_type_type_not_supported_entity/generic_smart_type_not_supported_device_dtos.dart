@@ -1,5 +1,5 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_type_not_supported_entity/generic_smart_type_not_supported_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -9,9 +9,7 @@ part 'generic_smart_type_not_supported_device_dtos.g.dart';
 
 @freezed
 abstract class GenericSmartTypeNotSupportedDeviceDtos
-    implements
-        _$GenericSmartTypeNotSupportedDeviceDtos,
-        DeviceEntityDtoAbstract {
+    implements _$GenericSmartTypeNotSupportedDeviceDtos, DeviceEntityDtoBase {
   factory GenericSmartTypeNotSupportedDeviceDtos({
     // @JsonKey(ignore: true)
     required String id,
@@ -92,7 +90,7 @@ abstract class GenericSmartTypeNotSupportedDeviceDtos
       (GenericSmartTypeNotSupportedDeviceDtos).toString();
 
   @override
-  DeviceEntityAbstract toDomain() {
+  DeviceEntityBase toDomain() {
     return GenericSmartTypeNotSupportedDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),

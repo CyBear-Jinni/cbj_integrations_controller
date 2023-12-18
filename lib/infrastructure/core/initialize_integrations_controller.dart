@@ -5,7 +5,7 @@ import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/local_db/i_local_db_repository.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/injection.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/search_devices.dart';
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/device_pin_manager.dart';
@@ -38,7 +38,7 @@ Future initializeIntegrationsController({
 Future setupIntegrationsController() async {
   // Return all saved devices
 
-  final Map<String, DeviceEntityAbstract> allDevices =
+  final Map<String, DeviceEntityBase> allDevices =
       await ISavedDevicesRepo.instance.getAllDevicesAfterInitialize();
 
   VendorsConnectorConjecture().addAllDevicesToItsRepos(allDevices);

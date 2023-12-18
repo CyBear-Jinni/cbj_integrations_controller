@@ -12,7 +12,7 @@ import 'package:cbj_integrations_controller/domain/local_db/i_local_db_repositor
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pb.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/hub_client/hub_client.dart';
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_converter.dart';
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_repository.dart';
@@ -70,7 +70,7 @@ abstract class IBindingCbjRepository {
   Future<Either<BindingCbjFailure, BindingCbjEntity>>
       addOrUpdateNewBindingInHubFromDevicesPropertyActionList(
     String bindingName,
-    List<MapEntry<DeviceEntityAbstract, MapEntry<String?, String?>>>
+    List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         smartDevicesWithActionToAdd,
   );
 

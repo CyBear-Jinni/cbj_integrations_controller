@@ -1,7 +1,7 @@
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:dartz/dartz.dart';
@@ -9,8 +9,8 @@ import 'package:uuid/uuid.dart';
 
 /// We are using the term entity to describe individual integrations on a single device
 /// So for example switch with three buttons will have three entities
-abstract class DeviceEntityAbstract {
-  DeviceEntityAbstract({
+abstract class DeviceEntityBase {
+  DeviceEntityBase({
     required this.uniqueId,
     required this.entityUniqueId,
     required this.cbjDeviceVendor,
@@ -127,40 +127,40 @@ abstract class DeviceEntityAbstract {
   String getDeviceId();
 
   /// Copy with device state to waiting or ack
-  DeviceEntityAbstract copyWithDeviceState(EntityStateGRPC entityStateGRPC) {
+  DeviceEntityBase copyWithDeviceState(EntityStateGRPC entityStateGRPC) {
     return this;
   }
 
   /// Copy with device action
-  DeviceEntityAbstract copyWithDeviceAction(EntityActions deviceActions) {
+  DeviceEntityBase copyWithDeviceAction(EntityActions deviceActions) {
     return this;
   }
 
   /// Copy with stateMassage
-  DeviceEntityAbstract copyWithStateMassage(String stateMassage) {
+  DeviceEntityBase copyWithStateMassage(String stateMassage) {
     return this;
   }
 
   /// Copy with senderDeviceOs
-  DeviceEntityAbstract copyWithSenderDeviceOs(String senderDeviceOs) {
+  DeviceEntityBase copyWithSenderDeviceOs(String senderDeviceOs) {
     return this;
   }
 
   /// Copy with deviceSenderDeviceModel
-  DeviceEntityAbstract copyWithDeviceSenderDeviceModel(
+  DeviceEntityBase copyWithDeviceSenderDeviceModel(
     String deviceSenderDeviceModel,
   ) {
     return this;
   }
 
   /// Copy with currentUserId
-  DeviceEntityAbstract copyWithSenderId(String userId) {
+  DeviceEntityBase copyWithSenderId(String userId) {
     return this;
   }
 
   /// Convert the device to the a dtos object in the infrastructure layer
-  DeviceEntityDtoAbstract toInfrastructure() {
-    return DeviceEntityDtoAbstract();
+  DeviceEntityDtoBase toInfrastructure() {
+    return DeviceEntityDtoBase();
   }
 
   Future<Either<CoreFailure, Unit>> executeAction({
@@ -176,7 +176,7 @@ abstract class DeviceEntityAbstract {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+    required DeviceEntityBase newEntity,
   });
 
   /// Return a list of all valid actions for this device
@@ -210,7 +210,7 @@ abstract class DeviceEntityAbstract {
   }
 }
 
-class DeviceEntityNotAbstract extends DeviceEntityAbstract {
+class DeviceEntityNotAbstract extends DeviceEntityBase {
   DeviceEntityNotAbstract()
       : super(
           uniqueId: CoreUniqueId(),
@@ -252,8 +252,8 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
         );
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
-    return DeviceEntityDtoAbstract();
+  DeviceEntityDtoBase toInfrastructure() {
+    return DeviceEntityDtoBase();
   }
 
   @override
@@ -269,7 +269,7 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
 
   @override
   Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+    required DeviceEntityBase newEntity,
   }) {
     // TODO: implement executeDeviceAction
     throw UnimplementedError();
@@ -286,7 +286,7 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
   }
 }
 
-// class GenericGenericUnsupportedDE extends DeviceEntityAbstract {
+// class GenericGenericUnsupportedDE extends DeviceEntityBase {
 //   GenericGenericUnsupportedDE({
 //     required super.uniqueId,
 //     required super.entityUniqueId,
@@ -320,7 +320,7 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
 
 //   @override
 //   Future<Either<CoreFailure, Unit>> executeDeviceAction({
-//     required DeviceEntityAbstract newEntity,
+//     required DeviceEntityBase newEntity,
 //   }) async {
 //     return right(unit);
 //   }

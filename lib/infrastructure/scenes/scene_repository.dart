@@ -160,7 +160,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
   Future<Either<SceneCbjFailure, SceneCbjEntity>>
       addOrUpdateNewSceneInHubFromDevicesPropertyActionList(
     String sceneName,
-    List<MapEntry<DeviceEntityAbstract, MapEntry<String?, String?>>>
+    List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         smartDevicesWithActionToAdd,
     AreaPurposesTypes areaPurposesTypes,
   ) async {

@@ -166,7 +166,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
   Future<Either<RoutineCbjFailure, RoutineCbjEntity>>
       addOrUpdateNewRoutineInHubFromDevicesPropertyActionList(
     String routineName,
-    List<MapEntry<DeviceEntityAbstract, MapEntry<String?, String?>>>
+    List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         smartDevicesWithActionToAdd,
     RoutineCbjRepeatDateDays daysToRepeat,
     RoutineCbjRepeatDateHour hourToRepeat,

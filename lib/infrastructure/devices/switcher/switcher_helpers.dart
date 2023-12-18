@@ -3,7 +3,7 @@ import 'package:cbj_integrations_controller/infrastructure/devices/switcher/swit
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_smart_plug_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_entities/switcher_v2_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_value_objects.dart';
@@ -11,7 +11,7 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/gene
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherHelpers {
-  static DeviceEntityAbstract? addDiscoveredDevice(
+  static DeviceEntityBase? addDiscoveredDevice(
     SwitcherApiObject switcherDevice,
   ) {
     if (switcherDevice.deviceType == SwitcherDevicesTypes.switcherRunner ||

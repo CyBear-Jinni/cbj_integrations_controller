@@ -1,5 +1,5 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_value_objects.dart';
@@ -10,7 +10,7 @@ part 'generic_boiler_device_dtos.g.dart';
 
 @freezed
 abstract class GenericBoilerDeviceDtos
-    implements _$GenericBoilerDeviceDtos, DeviceEntityDtoAbstract {
+    implements _$GenericBoilerDeviceDtos, DeviceEntityDtoBase {
   factory GenericBoilerDeviceDtos({
     // @JsonKey(ignore: true)
     required String id,
@@ -92,7 +92,7 @@ abstract class GenericBoilerDeviceDtos
   final String deviceDtoClassInstance = (GenericBoilerDeviceDtos).toString();
 
   @override
-  DeviceEntityAbstract toDomain() {
+  DeviceEntityBase toDomain() {
     return GenericBoilerDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),

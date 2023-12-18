@@ -5,12 +5,12 @@ import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/gener
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xiaomi_io_gpx3021gl/xiaomi_io_gpx3021gl_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:mi_iot_token/mi_iot_token.dart';
 
-class XiaomiIoConnectorConjecture extends AbstractVendorConnectorConjecture {
+class XiaomiIoConnectorConjecture extends VendorConnectorConjectureService {
   factory XiaomiIoConnectorConjecture() {
     return _instance;
   }
@@ -44,8 +44,8 @@ class XiaomiIoConnectorConjecture extends AbstractVendorConnectorConjecture {
   // Discover from miio package does not work on Linux, but it is better than
   // filtering devices by host names like we do now
   // @override
-  // Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-  // DeviceEntityAbstract entity,
+  // Future<HashMap<String, DeviceEntityBase>?> foundEntity(
+  // DeviceEntityBase entity,
   // ) async {
   // if (miCloud == null) {
   // icLogger.w('Please set Xiaomi Mi credentials in the app');
@@ -110,9 +110,9 @@ class XiaomiIoConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract xiaomiDE,
+    DeviceEntityBase xiaomiDE,
   ) async {
-    final DeviceEntityAbstract? device =
+    final DeviceEntityBase? device =
         vendorEntities[xiaomiDE.entityUniqueId.getOrCrash()];
 
     if (device is XiaomiIoGpx4021GlEntity) {
@@ -123,8 +123,8 @@ class XiaomiIoConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
-    DeviceEntityAbstract? nonGenericDevice;
+  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
+    DeviceEntityBase? nonGenericDevice;
 
     if (deviceEntity is GenericRgbwLightDE) {
       nonGenericDevice = XiaomiIoGpx4021GlEntity.fromGeneric(deviceEntity);
@@ -141,8 +141,8 @@ class XiaomiIoConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
   ) async =>
       HashMap();
 }

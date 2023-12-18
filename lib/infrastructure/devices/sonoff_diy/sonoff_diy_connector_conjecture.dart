@@ -5,10 +5,10 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff__diy_wall_switch/sonoff_diy_mod_wall_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/sonoff_diy_helpers.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 
-class SonoffDiyConnectorConjecture extends AbstractVendorConnectorConjecture {
+class SonoffDiyConnectorConjecture extends VendorConnectorConjectureService {
   factory SonoffDiyConnectorConjecture() {
     return _instance;
   }
@@ -25,11 +25,11 @@ class SonoffDiyConnectorConjecture extends AbstractVendorConnectorConjecture {
   final List<String> mdnsVendorUniqueTypes = ['_ewelink._tcp'];
 
   // @override
-  // Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-  //   DeviceEntityAbstract entity,
+  // Future<HashMap<String, DeviceEntityBase>?> foundEntity(
+  //   DeviceEntityBase entity,
   // ) async {
   // /// Add new devices to [companyDevices] if not exist
-  // Future<List<DeviceEntityAbstract>> addNewDeviceByMdnsName({
+  // Future<List<DeviceEntityBase>> addNewDeviceByMdnsName({
   //   required String mDnsName,
   //   required String ip,
   //   required String port,
@@ -37,7 +37,7 @@ class SonoffDiyConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   // CoreUniqueId? tempCoreUniqueId;
 
-  // for (final DeviceEntityAbstract device in companyDevices.values) {
+  // for (final DeviceEntityBase device in companyDevices.values) {
   //   if (device is SonoffDiyRelaySwitchEntity &&
   //       mDnsName == device.entityUniqueId.getOrCrash()) {
   //     return [];
@@ -54,7 +54,7 @@ class SonoffDiyConnectorConjecture extends AbstractVendorConnectorConjecture {
   //   }
   // }
 
-  // final List<DeviceEntityAbstract> sonoffDevices =
+  // final List<DeviceEntityBase> sonoffDevices =
   //     SonoffDiyHelpers.addDiscoveredDevice(
   //   mDnsName: mDnsName,
   //   ip: ip,
@@ -66,8 +66,8 @@ class SonoffDiyConnectorConjecture extends AbstractVendorConnectorConjecture {
   //   return [];
   // }
 
-  // for (final DeviceEntityAbstract entityAsDevice in sonoffDevices) {
-  //   final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
+  // for (final DeviceEntityBase entityAsDevice in sonoffDevices) {
+  //   final MapEntry<String, DeviceEntityBase> deviceAsEntry =
   //       MapEntry(entityAsDevice.uniqueId.getOrCrash(), entityAsDevice);
 
   //   companyDevices.addEntries([deviceAsEntry]);
@@ -79,9 +79,9 @@ class SonoffDiyConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract sonoffDiyDE,
+    DeviceEntityBase sonoffDiyDE,
   ) async {
-    final DeviceEntityAbstract? device =
+    final DeviceEntityBase? device =
         vendorEntities[sonoffDiyDE.entityUniqueId.getOrCrash()];
 
     if (device is SonoffDiyRelaySwitchEntity) {
@@ -92,11 +92,11 @@ class SonoffDiyConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
+  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {}
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
   ) =>
       SonoffDiyHelpers.addDiscoveredDevice(entity);
 }

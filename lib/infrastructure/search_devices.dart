@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cbj_integrations_controller/domain/i_network_utilities.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_empty_entity/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
@@ -167,9 +167,9 @@ class SearchDevices {
   /// Searching devices by binding to sockets, used for devices with
   /// udp ports which can't be discovered by regular open (tcp) port scan
   Future<void> _searchDevicesByBindingIntoSockets() async {
-    final List<Stream<DeviceEntityAbstract?>> switcherBindingsList =
+    final List<Stream<DeviceEntityBase?>> switcherBindingsList =
         VendorsConnectorConjecture().searchOfBindingIntoSocketsList();
-    for (final Stream<DeviceEntityAbstract?> socketBinding
+    for (final Stream<DeviceEntityBase?> socketBinding
         in switcherBindingsList) {
       socketBinding.listen((bindingDevice) async {
         if (bindingDevice == null) {

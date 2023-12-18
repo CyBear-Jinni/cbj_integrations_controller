@@ -1,8 +1,8 @@
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_security_camera_entity/generic_security_camera_device_dtos.dart';
@@ -11,7 +11,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericSecurityCamera that exist inside a computer, the
 /// implementations will be actual GenericSecurityCamera like blinds securityCameras and more
-class GenericSecurityCameraDE extends DeviceEntityAbstract {
+class GenericSecurityCameraDE extends DeviceEntityBase {
   /// All public field of GenericSecurityCamera entity
   GenericSecurityCameraDE({
     required super.uniqueId,
@@ -114,7 +114,7 @@ class GenericSecurityCameraDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericSecurityCameraDeviceDtos(
       deviceDtoClass: (GenericSecurityCameraDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -153,7 +153,7 @@ class GenericSecurityCameraDE extends DeviceEntityAbstract {
   /// Please override the following methods
   @override
   Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+    required DeviceEntityBase newEntity,
   }) async {
     icLogger.w('Please override this method in the non generic implementation');
     return left(

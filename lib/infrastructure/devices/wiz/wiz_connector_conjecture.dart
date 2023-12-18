@@ -5,10 +5,10 @@ import 'package:cbj_integrations_controller/domain/vendors/wiz_login/generic_wiz
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_white/wiz_white_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 
-class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
+class WizConnectorConjecture extends VendorConnectorConjectureService {
   factory WizConnectorConjecture() {
     return _instance;
   }
@@ -28,13 +28,13 @@ class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   // @override
-  // Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-  // DeviceEntityAbstract entity,
+  // Future<HashMap<String, DeviceEntityBase>?> foundEntity(
+  // DeviceEntityBase entity,
   // ) async {
   // icLogger.w('Wiz device got discovered but missing implementation');
   // final List<CoreUniqueId?> tempCoreUniqueId = [];
   //
-  // for (final DeviceEntityAbstract savedDevice in companyDevices.values) {
+  // for (final DeviceEntityBase savedDevice in companyDevices.values) {
   //   if ((savedDevice is WizWhiteEntity) &&
   //       await activeHost.hostName ==
   //           savedDevice.entityUniqueId.getOrCrash()) {
@@ -51,7 +51,7 @@ class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
   // final List<String> componentsInDevice =
   //     await getAllComponentsOfDevice(activeHost);
   //
-  // final List<DeviceEntityAbstract> wizIpDevices =
+  // final List<DeviceEntityBase> wizIpDevices =
   //     await WizIpHelpers.addDiscoveredDevice(
   //   activeHost: activeHost,
   //   uniqueDeviceIdList: tempCoreUniqueId,
@@ -62,11 +62,11 @@ class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
   //   return;
   // }
   //
-  // for (final DeviceEntityAbstract entityAsDevice in wizIpDevices) {
-  //   final DeviceEntityAbstract deviceToAdd =
+  // for (final DeviceEntityBase entityAsDevice in wizIpDevices) {
+  //   final DeviceEntityBase deviceToAdd =
   //       CompaniesConnectorConjecture().addDiscoveredDeviceToHub(entityAsDevice);
   //
-  //   final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
+  //   final MapEntry<String, DeviceEntityBase> deviceAsEntry =
   //       MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
   //
   //   companyDevices.addEntries([deviceAsEntry]);
@@ -89,7 +89,7 @@ class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
   // for (final WizBulb wizDevice in lights) {
   //   CoreUniqueId? tempCoreUniqueId;
   //   bool deviceExist = false;
-  //   for (final DeviceEntityAbstract savedDevice
+  //   for (final DeviceEntityBase savedDevice
   //       in companyDevices.values) {
   //     if (savedDevice is WizWhiteEntity &&
   //         wizDevice.id == savedDevice.entityUniqueId.getOrCrash()) {
@@ -108,7 +108,7 @@ class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
   //     }
   //   }
   //   if (!deviceExist) {
-  //     final DeviceEntityAbstract? addDevice =
+  //     final DeviceEntityBase? addDevice =
   //         WizHelpers.addDiscoveredDevice(
   //       wizDevice: wizDevice,
   //       uniqueDeviceId: tempCoreUniqueId,
@@ -118,10 +118,10 @@ class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
   //       continue;
   //     }
   //
-  //     final DeviceEntityAbstract deviceToAdd =
+  //     final DeviceEntityBase deviceToAdd =
   //         CompaniesConnectorConjecture().addDiscoveredDeviceToHub(addDevice);
   //
-  //     final MapEntry<String, DeviceEntityAbstract> deviceAsEntry =
+  //     final MapEntry<String, DeviceEntityBase> deviceAsEntry =
   //         MapEntry(deviceToAdd.uniqueId.getOrCrash(), deviceToAdd);
   //
   //     companyDevices.addEntries([deviceAsEntry]);
@@ -139,9 +139,9 @@ class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   @override
   Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract wizDE,
+    DeviceEntityBase wizDE,
   ) async {
-    final DeviceEntityAbstract? device =
+    final DeviceEntityBase? device =
         vendorEntities[wizDE.entityUniqueId.getOrCrash()];
 
     if (device is WizWhiteEntity) {
@@ -152,11 +152,11 @@ class WizConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {}
+  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {}
 
   @override
-  Future<HashMap<String, DeviceEntityAbstract>> convertToVendorDevice(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
   ) async =>
       HashMap();
 }

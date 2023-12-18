@@ -8,8 +8,8 @@ import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
 import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/hub_client/hub_client.dart';
 import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -24,12 +24,12 @@ class Connector {
   static final Connector _instance = Connector._singletonConstructor();
 
   Future<void> fromMqtt(MapEntry<String, dynamic> entityForMqtt) async {
-    if (entityForMqtt.value is DeviceEntityAbstract) {
+    if (entityForMqtt.value is DeviceEntityBase) {
       /// Data will probably arrive to the function
       /// updateAllDevicesReposWithDeviceChanges where we listen to request from
       /// the mqtt with this path
       await IMqttServerRepository.instance
-          .publishDeviceEntity(entityForMqtt.value as DeviceEntityAbstract);
+          .publishDeviceEntity(entityForMqtt.value as DeviceEntityBase);
     } else if (entityForMqtt.value is RoomEntity) {
       // TODO: Create MQTT support for rooms
       icLogger.w('Please create MQTT support for Room Entity');
@@ -41,13 +41,13 @@ class Connector {
   Future<void> startConnector() async {
     final ISavedDevicesRepo savedDevicesRepo = ISavedDevicesRepo.instance;
 
-    final Map<String, DeviceEntityAbstract> allDevices =
+    final Map<String, DeviceEntityBase> allDevices =
         await savedDevicesRepo.getAllDevicesAfterInitialize();
 
     for (final String deviceId in allDevices.keys) {
       fromMqtt(
         allDevices.entries.firstWhere(
-          (MapEntry<String, DeviceEntityAbstract> a) => a.key == deviceId,
+          (MapEntry<String, DeviceEntityBase> a) => a.key == deviceId,
         ),
       );
     }
@@ -62,7 +62,7 @@ class Connector {
   ) async {
     final ISavedDevicesRepo savedDevicesRepo = ISavedDevicesRepo.instance;
 
-    final Map<String, DeviceEntityAbstract> allDevices =
+    final Map<String, DeviceEntityBase> allDevices =
         savedDevicesRepo.getAllDevices();
 
     final Map<String, dynamic> devicePropertyAndValues =
@@ -70,7 +70,7 @@ class Connector {
 
     // String? deviceStateValue;
 
-    for (final DeviceEntityAbstract d in allDevices.values) {
+    for (final DeviceEntityBase d in allDevices.values) {
       if (d.getDeviceId() == deviceChangeFromMqtt.key) {
         final Map<String, dynamic> deviceAsJson = d.toInfrastructure().toJson();
 
@@ -96,8 +96,8 @@ class Connector {
           } else {
             deviceAsJson[property] = propertyValueString;
           }
-          final DeviceEntityAbstract savedDeviceWithSameIdAsMqtt =
-              DeviceEntityDtoAbstract.fromJson(deviceAsJson).toDomain();
+          final DeviceEntityBase savedDeviceWithSameIdAsMqtt =
+              DeviceEntityDtoBase.fromJson(deviceAsJson).toDomain();
 
           VendorsConnectorConjecture().updateAllDevicesReposWithDeviceChanges(
             savedDeviceWithSameIdAsMqtt,

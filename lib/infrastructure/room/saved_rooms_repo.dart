@@ -28,8 +28,8 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
     return _allRooms;
   }
 
-  RoomEntity? getRoomDeviceExistIn(DeviceEntityAbstract deviceEntityAbstract) {
-    final String uniqueId = deviceEntityAbstract.uniqueId.getOrCrash();
+  RoomEntity? getRoomDeviceExistIn(DeviceEntityBase deviceEntityBase) {
+    final String uniqueId = deviceEntityBase.uniqueId.getOrCrash();
     for (final RoomEntity roomEntity in _allRooms.values) {
       if (roomEntity.roomDevicesId.getOrCrash().contains(uniqueId)) {
         return roomEntity;
@@ -140,7 +140,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
   }
 
   @override
-  void addDeviceToRoomDiscoveredIfNotExist(DeviceEntityAbstract deviceEntity) {
+  void addDeviceToRoomDiscoveredIfNotExist(DeviceEntityBase deviceEntity) {
     final RoomEntity? roomEntity = getRoomDeviceExistIn(deviceEntity);
     if (roomEntity != null) {
       return;

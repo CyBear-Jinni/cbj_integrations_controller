@@ -5,25 +5,25 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_api/tasmota_ip_api_components.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_switch/tasmota_ip_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 import 'package:http/http.dart';
 
 class TasmotaIpHelpers {
-  static Future<HashMap<String, DeviceEntityAbstract>> addDiscoveredDevice(
-    DeviceEntityAbstract entity,
+  static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
+    DeviceEntityBase entity,
   ) async {
     // TODO: Create list of CoreUniqueId and populate it with all the
     //  components saved devices that already exist
     final List<String> componentsInDevice =
         await getAllComponentsOfDevice(entity);
 
-    final HashMap<String, DeviceEntityAbstract> entityToAdd = HashMap();
+    final HashMap<String, DeviceEntityBase> entityToAdd = HashMap();
 
     for (int counter = 0; counter < componentsInDevice.length; counter++) {
       final String componentInDeviceNumberLabel = componentsInDevice[counter];
-      final DeviceEntityAbstract? deviceEntity = await addDeviceByTasmotaType(
+      final DeviceEntityBase? deviceEntity = await addDeviceByTasmotaType(
         componentInDeviceNumberLabel: componentInDeviceNumberLabel,
         entity: entity,
       );
@@ -37,9 +37,9 @@ class TasmotaIpHelpers {
     return entityToAdd;
   }
 
-  static Future<DeviceEntityAbstract?> addDeviceByTasmotaType({
+  static Future<DeviceEntityBase?> addDeviceByTasmotaType({
     required String componentInDeviceNumberLabel,
-    required DeviceEntityAbstract entity,
+    required DeviceEntityBase entity,
   }) async {
     final String? deviceHostName = entity.deviceHostName.getOrCrash();
 
@@ -133,7 +133,7 @@ class TasmotaIpHelpers {
   /// Getting all of the components/gpio configuration of the device.
   /// Doc of all components: https://tasmota.github.io/docs/Components/#tasmota
   static Future<List<String>> getAllComponentsOfDevice(
-    DeviceEntityAbstract entity,
+    DeviceEntityBase entity,
   ) async {
     final String? deviceIp = entity.devicesMacAddress.getOrCrash();
     const String getComponentsCommand = 'cm?cmnd=Gpio';

@@ -160,7 +160,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
   Future<Either<BindingCbjFailure, BindingCbjEntity>>
       addOrUpdateNewBindingInHubFromDevicesPropertyActionList(
     String bindingName,
-    List<MapEntry<DeviceEntityAbstract, MapEntry<String?, String?>>>
+    List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         smartDevicesWithActionToAdd,
   ) async {
     final BindingCbjEntity newCbjBinding =
