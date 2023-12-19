@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
@@ -166,13 +168,27 @@ abstract class DeviceEntityBase {
   Future<Either<CoreFailure, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    dynamic value,
+    HashMap<ActionValues, dynamic>? value,
   }) async {
     icLogger.e(
-      'ExecuteAction is not implemented for device cbjDeviceVendor ${cbjDeviceVendor.getOrCrash()} '
-      'entityTypes ${entityTypes.getOrCrash()} property ${property.name} action ${action.name} value $value',
+      'ExecuteAction is not implemented for device $_currentDeviceInfo '
+      'property ${property.name} action ${action.name} value $value',
     );
     return const Left(CoreFailure.unexpected());
+  }
+
+  String get _currentDeviceInfo =>
+      'cbjDeviceVendor ${cbjDeviceVendor.getOrCrash()}  entityTypes ${entityTypes.getOrCrash()}';
+
+  Either<CoreFailure<String>, Unit> pleaseOverrideMessage() {
+    icLogger.w(
+      'Please override this method in the non generic implementation $_currentDeviceInfo',
+    );
+    return left(
+      const CoreFailure.actionExcecuter(
+        failedValue: 'Action need to get overide',
+      ),
+    );
   }
 
   /// Return a list of all valid actions for this device
@@ -274,54 +290,7 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
   }
 }
 
-// class GenericGenericUnsupportedDE extends DeviceEntityBase {
-//   GenericGenericUnsupportedDE({
-//     required super.uniqueId,
-//     required super.entityUniqueId,
-//         required super.cbjDeviceVendor,
-    // required super.deviceVendor,
-    // required super.deviceNetworkLastUpdate,
-//     required super.entityTypes,
-//     required super.cbjEntityName,
-//     required super.stateMassage,
-//     required super.senderDeviceOs,
-//     required super.senderDeviceModel,
-//     required super.senderId,
-//     required super.compUuid,
-//     required super.entityStateGRPC,
-//     required super.entityOriginalName,
-//     required super.deviceOriginalName,
-//     required super.powerConsumption,
-//     required super.deviceUniqueId,
-//     required super.devicePort,
-//     required super.deviceLastKnownIp,
-//     required super.deviceHostName,
-//     required super.deviceMdns,
-//     required super.srvResourceRecord,
-//     required super.ptrResourceRecord,
-//     required super.devicesMacAddress,
-//     required super.entityKey,
-//     required super.requestTimeStamp,
-//     required super.lastResponseFromDeviceTimeStamp,
-//     required super.deviceCbjUniqueId,
-//   });
-
-//   @override
-//   Future<Either<CoreFailure, Unit>> executeDeviceAction({
-//     required DeviceEntityBase newEntity,
-//   }) async {
-//     return right(unit);
-//   }
-
-//   @override
-//   List<String> getAllValidActions() => [];
-
-//   @override
-//   String getDeviceId() => uniqueId.getOrCrash();
-
-//   @override
-//   List<EntityiesPropertiyes> getListOfPropertiesToChange() => [];
-
-//   @override
-//   bool replaceActionIfExist(String action) => false;
-// }
+enum ActionValues {
+  url,
+  ;
+}

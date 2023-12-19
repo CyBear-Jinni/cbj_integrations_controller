@@ -1,4 +1,5 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
@@ -197,7 +198,7 @@ class GenericRgbwLightDE extends DeviceEntityBase {
   Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    dynamic value,
+    HashMap<ActionValues, dynamic>? value,
   }) async {
     if (property == EntityProperties.lightBrightness) {
       // TODO: add support for json values
@@ -229,46 +230,22 @@ class GenericRgbwLightDE extends DeviceEntityBase {
   }
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOnLight() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOnLight() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOffLight() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOffLight() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> setBrightness(String brightness) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> setBrightness(String brightness) async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> changeColorTemperature({
     required String lightColorTemperatureNewValue,
-  }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  }) async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> changeColorHsv({
@@ -276,14 +253,8 @@ class GenericRgbwLightDE extends DeviceEntityBase {
     required String lightColorHueNewValue,
     required String lightColorSaturationNewValue,
     required String lightColorValueNewValue,
-  }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  }) async =>
+      pleaseOverrideMessage();
 
   @override
   bool replaceActionIfExist(String action) {

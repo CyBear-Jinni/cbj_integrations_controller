@@ -65,7 +65,7 @@ abstract class VendorConnectorConjectureService {
     required HashSet<String> ids,
     required EntityProperties property,
     required EntityActions action,
-    required dynamic value,
+    HashMap<ActionValues, dynamic>? value,
   }) async {
     for (final String id in ids) {
       final DeviceEntityBase? entity = vendorEntities[id];

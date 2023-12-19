@@ -89,20 +89,15 @@ class ChromeCastEntity extends GenericSmartTvDE {
     );
   }
 
-  // late ChromecastNodeRedApi chromecastNodeRedApi;
   CastDevice? castDevice;
   CastSession? session;
   bool sessionIsClosing = false;
 
   @override
-  Future<Either<CoreFailure, Unit>> turnOnSmartTv() async {
-    return right(unit);
-  }
+  Future<Either<CoreFailure, Unit>> turnOnSmartTv() async => right(unit);
 
   @override
-  Future<Either<CoreFailure, Unit>> turnOffSmartTv() async {
-    return right(unit);
-  }
+  Future<Either<CoreFailure, Unit>> turnOffSmartTv() async => right(unit);
 
   @override
   Future<Either<CoreFailure, Unit>> sendUrlToDevice(String url) async {
@@ -116,13 +111,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> togglePausePlay() async {
-    return right(unit);
-
-    // final bool plaing = pausePlayState?.getOrCrash() != null &&
-    // pausePlayState?.getOrCrash() == true.toString();
-    // return left(const CoreFailure.unexpected());
-  }
+  Future<Either<CoreFailure, Unit>> togglePausePlay() async => right(unit);
 
   @override
   Future<Either<CoreFailure, Unit>> togglePause() async {
@@ -143,18 +132,29 @@ class ChromeCastEntity extends GenericSmartTvDE {
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> skipBackward() async {
+  Future<Either<CoreFailure, Unit>> volumeUp(double value) async {
+    await castDevice?.volumeUp(value);
     return right(unit);
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> skipForeword() async {
+  Future<Either<CoreFailure, Unit>> volumeDown(double value) async {
+    await castDevice?.volumeDown(value);
     return right(unit);
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> closeApp() async {
-    await session?.close();
+  Future<Either<CoreFailure, Unit>> openApp(OpenAppOnSmartTvEnum value) async {
+    await castDevice?.launchAppId('Netflix');
     return right(unit);
   }
+
+  @override
+  Future<Either<CoreFailure, Unit>> skipBackward() async => right(unit);
+
+  @override
+  Future<Either<CoreFailure, Unit>> skipForeword() async => right(unit);
+
+  @override
+  Future<Either<CoreFailure, Unit>> closeApp() async => right(unit);
 }

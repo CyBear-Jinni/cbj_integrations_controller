@@ -354,7 +354,7 @@ class VendorsConnectorConjecture {
     required HashMap<VendorsAndServices, HashSet<String>> uniqueIdByVendor,
     required EntityProperties property,
     required EntityActions action,
-    required dynamic value,
+    HashMap<ActionValues, dynamic>? value,
   }) {
     for (final MapEntry<VendorsAndServices, HashSet<String>> entry
         in uniqueIdByVendor.entries.toList()) {
