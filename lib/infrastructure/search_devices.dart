@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:cbj_integrations_controller/domain/i_network_utilities.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
@@ -10,6 +11,12 @@ import 'package:cbj_integrations_controller/infrastructure/vendors_connector_con
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:network_tools/network_tools.dart';
 
+class SendToIsolate {
+  SendToIsolate(this.sendPort, this.projectPath);
+  SendPort sendPort;
+  String projectPath;
+}
+
 class SearchDevices {
   factory SearchDevices() {
     return _instance;
@@ -19,19 +26,61 @@ class SearchDevices {
 
   static final SearchDevices _instance = SearchDevices._singletonConstructor();
 
-  void startSearch() {
-    _searchAllMdnsDevicesAndSetThemUp();
+  Future<void> startSearchIsolate() async {
+    final String projectPath = await SystemCommandsManager().getLocalDbPath();
 
-    _searchPingableDevicesAndSetThemUpByHostName();
+    /// For mdns search
+    final mdnsReceivePort = ReceivePort();
+    SendToIsolate searchDevices =
+        SendToIsolate(mdnsReceivePort.sendPort, projectPath);
+    await Isolate.spawn(
+      _searchAllMdnsDevicesAndSetThemUp,
+      searchDevices,
+    );
 
-    _searchDevicesByBindingIntoSockets();
+    mdnsReceivePort.listen((data) {
+      if (data is GenericUnsupportedDE) {
+        VendorsConnectorConjecture().setMdnsDeviceByCompany(data);
+      }
+    });
 
-    _searchDevicesByMqttPath();
+    /// For ping search
+    final pingReceivePort = ReceivePort();
+    searchDevices = SendToIsolate(pingReceivePort.sendPort, projectPath);
 
-    _notImplementedDevicesSearch();
+    await Isolate.spawn(
+      _searchPingableDevicesAndSetThemUpByHostName,
+      searchDevices,
+    );
+
+    pingReceivePort.listen((data) {
+      if (data is GenericUnsupportedDE) {
+        VendorsConnectorConjecture().setHostNameDeviceByCompany(data);
+      }
+    });
+
+    /// For socket search
+    final socketSearchReceivePort = ReceivePort();
+    searchDevices =
+        SendToIsolate(socketSearchReceivePort.sendPort, projectPath);
+
+    await Isolate.spawn(
+      _searchDevicesByBindingIntoSockets,
+      searchDevices,
+    );
+
+    socketSearchReceivePort.listen((data) {
+      if (data is GenericUnsupportedDE) {
+        VendorsConnectorConjecture().foundBindingDevice(data);
+      }
+    });
   }
 
-  Future<void> _searchAllMdnsDevicesAndSetThemUp() async {
+  Future<void> _searchAllMdnsDevicesAndSetThemUp(
+    SendToIsolate sendToIsolate,
+  ) async {
+    await configureNetworkTools(sendToIsolate.projectPath);
+    final SendPort sendPort = sendToIsolate.sendPort;
     try {
       while (true) {
         while (true) {
@@ -58,7 +107,7 @@ class SearchDevices {
 
           final GenericUnsupportedDE entity =
               await INetworkUtilities.instance.activeHostToEntity(activeHost);
-          VendorsConnectorConjecture().setMdnsDeviceByCompany(entity);
+          sendPort.send(entity);
         }
 
         await Future.delayed(const Duration(minutes: 2));
@@ -69,14 +118,19 @@ class SearchDevices {
   }
 
   /// Get all the host names in the connected networks and try to add the device
-  Future<void> _searchPingableDevicesAndSetThemUpByHostName() async {
+  Future<void> _searchPingableDevicesAndSetThemUpByHostName(
+    SendToIsolate sendToIsolate,
+  ) async {
+    await configureNetworkTools(sendToIsolate.projectPath);
+    final SendPort sendPort = sendToIsolate.sendPort;
+
     while (true) {
       final List<GenericUnsupportedDE> pingableDevices =
           await _searchPingableDevices();
 
       for (final GenericUnsupportedDE entity in pingableDevices) {
         try {
-          VendorsConnectorConjecture().setHostNameDeviceByCompany(entity);
+          sendPort.send(entity);
         } catch (e) {
           continue;
         }
@@ -166,7 +220,12 @@ class SearchDevices {
 
   /// Searching devices by binding to sockets, used for devices with
   /// udp ports which can't be discovered by regular open (tcp) port scan
-  Future<void> _searchDevicesByBindingIntoSockets() async {
+  Future<void> _searchDevicesByBindingIntoSockets(
+    SendToIsolate sendToIsolate,
+  ) async {
+    await configureNetworkTools(sendToIsolate.projectPath);
+    final SendPort sendPort = sendToIsolate.sendPort;
+
     final List<Stream<DeviceEntityBase?>> switcherBindingsList =
         VendorsConnectorConjecture().searchOfBindingIntoSocketsList();
     for (final Stream<DeviceEntityBase?> socketBinding
@@ -175,7 +234,7 @@ class SearchDevices {
         if (bindingDevice == null) {
           return;
         }
-        VendorsConnectorConjecture().foundBindingDevice(bindingDevice);
+        sendPort.send(bindingDevice);
       });
     }
 
@@ -222,17 +281,17 @@ class SearchDevices {
     return bindingStream;
   }
 
-  /// Searching for mqtt devices
-  Future<void> _searchDevicesByMqttPath() async {
-    // getIt<TasmotaMqttConnectorConjecture>().discoverNewDevices();
-  }
+  // /// Searching for mqtt devices
+  // Future<void> _searchDevicesByMqttPath(SendPort sendPort) async {
+  //   // getIt<TasmotaMqttConnectorConjecture>().discoverNewDevices();
+  // }
 
-  /// Devices that we need to insert in to the other search options but didn't
-  /// got to it yet.
-  /// We do implement here the start of the search for convince organization
-  /// and since putting it in the constructor of singleton will be called
-  /// before all of our program.
-  Future<void> _notImplementedDevicesSearch() async {
-    // YeelightConnectorConjecture().discoverNewDevices();
-  }
+  // /// Devices that we need to insert in to the other search options but didn't
+  // /// got to it yet.
+  // /// We do implement here the start of the search for convince organization
+  // /// and since putting it in the constructor of singleton will be called
+  // /// before all of our program.
+  // Future<void> _notImplementedDevicesSearch(SendPort sendPort) async {
+  //   // YeelightConnectorConjecture().discoverNewDevices();
+  // }
 }
