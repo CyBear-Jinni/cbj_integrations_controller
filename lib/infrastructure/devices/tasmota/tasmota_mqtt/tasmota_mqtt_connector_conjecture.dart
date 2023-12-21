@@ -16,13 +16,11 @@ class TasmotaMqttConnectorConjecture extends VendorConnectorConjectureService {
     return _instance;
   }
 
-  TasmotaMqttConnectorConjecture._singletonContractor();
+  TasmotaMqttConnectorConjecture._singletonContractor()
+      : super(vendorsAndServices: VendorsAndServices.tasmota);
 
   static final TasmotaMqttConnectorConjecture _instance =
       TasmotaMqttConnectorConjecture._singletonContractor();
-
-  @override
-  VendorsAndServices get vendorsAndServices => VendorsAndServices.tasmota;
 
   // Future<void> addNewDeviceByHostInfo({
   //   required ActiveHost activeHost,
@@ -92,9 +90,6 @@ class TasmotaMqttConnectorConjecture extends VendorConnectorConjectureService {
       icLogger.t('Adding Tasmota mqtt device');
     });
   }
-
-  @override
-  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {}
 
   @override
   Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(

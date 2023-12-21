@@ -15,9 +15,10 @@ class YeelightHelpers {
     final HashMap<String, DeviceEntityBase> entitiesMap = HashMap();
 
     String deviceName;
-    if (yeelightDevice.name != null && yeelightDevice.name != '') {
+    if (yeelightDevice.name != null && yeelightDevice.name!.isNotEmpty) {
       deviceName = yeelightDevice.name!;
-    } else if (entity.deviceMdns.getOrCrash() != null) {
+    } else if (entity.deviceMdns.getOrCrash() != null &&
+        entity.deviceMdns.getOrCrash()!.isNotEmpty) {
       deviceName = entity.deviceMdns.getOrCrash()!;
     } else {
       deviceName = 'Yeelight device';
@@ -29,7 +30,7 @@ class YeelightHelpers {
 
     final String deviceCbjUniqueId = yeelightDevice.id.toString();
 
-    if (yeelightDevice.model == 'color4') {
+    if (yeelightDevice.model == 'color4' || yeelightDevice.model == 'colora') {
       final DeviceEntityBase newEntity = Yeelight1SeEntity(
         uniqueId: entity.uniqueId,
         entityUniqueId: EntityUniqueId(yeelightDevice.id.toString()),

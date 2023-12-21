@@ -48,10 +48,10 @@ class GenericUnsupportedDE extends DeviceEntityBase {
         cbjDeviceVendor: CbjDeviceVendor(
           VendorsAndServices.vendorsAndServicesNotSupported.toString(),
         ),
-        deviceVendor: DeviceVendor(null),
-        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+        deviceVendor: DeviceVendor(''),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(''),
         uniqueId: CoreUniqueId(),
-        entityUniqueId: EntityUniqueId(''),
+        entityUniqueId: EntityUniqueId('Test'),
         cbjEntityName: CbjEntityName('Empty device'),
         entityOriginalName: EntityOriginalName('Missing entity original name'),
         deviceOriginalName: DeviceOriginalName('Missing device original name'),

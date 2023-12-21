@@ -9,21 +9,20 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_computer_entity/generic_smart_computer_entity.dart';
 
 class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
   factory CbjDevicesConnectorConjecture() {
     return _instance;
   }
 
-  CbjDevicesConnectorConjecture._singletonContractor();
+  CbjDevicesConnectorConjecture._singletonContractor()
+      : super(
+          vendorsAndServices: VendorsAndServices.cbjDeviceSmartEntity,
+          ports: [50054],
+        );
 
   static final CbjDevicesConnectorConjecture _instance =
       CbjDevicesConnectorConjecture._singletonContractor();
-
-  @override
-  VendorsAndServices get vendorsAndServices =>
-      VendorsAndServices.cbjDeviceSmartEntity;
 
   @override
   Future<HashMap<String, DeviceEntityBase>?> foundEntity(
@@ -80,24 +79,6 @@ class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
     final List<CbjSmartDeviceInfo?> devicesInfo =
         await CbjSmartDeviceClient.getCbjSmartDeviceHostDevicesInfo(entity);
     return devicesInfo;
-  }
-
-  @override
-  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
-    DeviceEntityBase? nonGenericDevice;
-
-    if (deviceEntity is GenericSmartComputerDE) {
-      nonGenericDevice = CbjSmartComputerEntity.fromGeneric(deviceEntity);
-    }
-
-    if (nonGenericDevice == null) {
-      icLogger.w('Switcher device could not get loaded from the server');
-      return;
-    }
-
-    vendorEntities.addEntries([
-      MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
-    ]);
   }
 
   @override

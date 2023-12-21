@@ -149,7 +149,7 @@ class _$AuthImpl<T> implements _Auth<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthImpl<T> &&
@@ -327,7 +327,7 @@ class _$UnexpectedImpl<T> implements _Unexpected<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$UnexpectedImpl<T>);
   }
@@ -454,7 +454,7 @@ class _$EmptyImpl<T> implements _Empty<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EmptyImpl<T> &&
@@ -603,7 +603,7 @@ class _$ExceedingLengthImpl<T> implements _ExceedingLength<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ExceedingLengthImpl<T> &&

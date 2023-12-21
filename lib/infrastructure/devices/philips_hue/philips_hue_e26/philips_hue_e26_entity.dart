@@ -5,9 +5,7 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_value_objects.dart';
 import 'package:dartz/dartz.dart';
-import 'package:yeedart/yeedart.dart';
 
 class PhilipsHueE26Entity extends GenericDimmableLightDE {
   PhilipsHueE26Entity({
@@ -40,7 +38,6 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
     required super.lightSwitchState,
     required super.lightBrightness,
     required this.philipsHueApiLight,
-    this.philipsHuePackageObject,
   }) : super(
           cbjDeviceVendor: CbjDeviceVendor(
             VendorsAndServices.philipsHue.toString(),
@@ -90,16 +87,10 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
     );
   }
 
-  /// PhilipsHue package object require to close previews request before new one
-  Device? philipsHuePackageObject;
-
   PhilipsHueApiLight philipsHueApiLight;
 
   @override
   Future<Either<CoreFailure, Unit>> turnOnLight() async {
-    lightSwitchState =
-        GenericDimmableLightSwitchState(EntityActions.on.toString());
-
     try {
       await philipsHueApiLight.turnLightOn(entityUniqueId.getOrCrash());
 
@@ -111,9 +102,6 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
 
   @override
   Future<Either<CoreFailure, Unit>> turnOffLight() async {
-    lightSwitchState =
-        GenericDimmableLightSwitchState(EntityActions.off.toString());
-
     try {
       await philipsHueApiLight.turnLightOff(entityUniqueId.getOrCrash());
 
@@ -124,27 +112,16 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> setBrightness(String brightness) async {
-    final int? brightnessInt = int.tryParse(brightness);
-    if (brightnessInt == null) {
-      return left(
-        const CoreFailure.actionExcecuter(
-          failedValue: "brightnessInt can't be converted to int",
-        ),
+  Future<Either<CoreFailure, Unit>> setBrightness(int value) async {
+    try {
+      await philipsHueApiLight.setLightBrightness(
+        entityUniqueId.getOrCrash(),
+        value,
       );
+
+      return right(unit);
+    } catch (e) {
+      return left(const CoreFailure.unexpected());
     }
-
-    lightBrightness = GenericDimmableLightBrightness(brightnessInt.toString());
-
-    await philipsHueApiLight.setLightBrightness(
-      entityUniqueId.getOrCrash(),
-      brightnessInt,
-    );
-
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
   }
 }

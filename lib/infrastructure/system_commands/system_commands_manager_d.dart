@@ -93,7 +93,7 @@ class SystemCommandsManager {
             in client.lookup<IPAddressResourceRecord>(
           ResourceRecordQuery.addressIPv4(mdnsName),
         )) {
-          return ip.address.toString();
+          return ip.address.address;
         }
       }
       client.stop();

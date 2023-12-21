@@ -149,7 +149,7 @@ class _$AuthImpl<T> implements _Auth<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthImpl<T> &&
@@ -378,7 +378,7 @@ class _$EmptyImpl<T> implements _Empty<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EmptyImpl<T> &&
@@ -535,7 +535,7 @@ class _$UnexpectedImpl<T> implements _Unexpected<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$UnexpectedImpl<T>);
   }
@@ -679,7 +679,7 @@ class _$ValidateEmailNotEmptyImpl<T> implements _ValidateEmailNotEmpty<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ValidateEmailNotEmptyImpl<T>);
@@ -825,7 +825,7 @@ class _$InsufficientPermissionImpl<T> implements _InsufficientPermission<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InsufficientPermissionImpl<T>);
@@ -968,7 +968,7 @@ class _$wifiIsClosedImpl<T> implements _wifiIsClosed<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$wifiIsClosedImpl<T>);
   }
@@ -1110,7 +1110,7 @@ class _$UnableToUpdateImpl<T> implements _UnableToUpdate<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$UnableToUpdateImpl<T>);
   }
@@ -1255,7 +1255,7 @@ class _$VendorTypeDoesNotExistImpl<T> implements _VendorTypeDoesNotExist<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VendorTypeDoesNotExistImpl<T>);
@@ -1400,7 +1400,7 @@ class _$LoginTypeDoesNotExistImpl<T> implements _LoginTypeDoesNotExist<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoginTypeDoesNotExistImpl<T>);

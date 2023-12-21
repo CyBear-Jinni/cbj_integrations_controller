@@ -169,7 +169,7 @@ class _$EmptyImpl<T> implements _Empty<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EmptyImpl<T> &&
@@ -354,7 +354,7 @@ class _$ActionExcecuterImpl<T> implements _ActionExcecuter<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ActionExcecuterImpl<T> &&
@@ -548,7 +548,7 @@ class _$ExceedingLengthImpl<T> implements _ExceedingLength<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ExceedingLengthImpl<T> &&
@@ -720,7 +720,7 @@ class _$UnexpectedImpl<T> implements _Unexpected<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$UnexpectedImpl<T>);
   }
@@ -874,7 +874,7 @@ class _$InsufficientPermissionImpl<T> implements _InsufficientPermission<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InsufficientPermissionImpl<T>);
@@ -1027,7 +1027,7 @@ class _$UnableToUpdateImpl<T> implements _UnableToUpdate<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType && other is _$UnableToUpdateImpl<T>);
   }
@@ -1183,7 +1183,7 @@ class _$PowerConsumptionIsNotNumberImpl<T>
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PowerConsumptionIsNotNumberImpl<T>);
@@ -1339,7 +1339,7 @@ class _$RoomsActionDoesNotExistImpl<T> implements _RoomsActionDoesNotExist<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RoomsActionDoesNotExistImpl<T>);
@@ -1494,7 +1494,7 @@ class _$RoomsTypeDoesNotExistImpl<T> implements _RoomsTypeDoesNotExist<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RoomsTypeDoesNotExistImpl<T>);

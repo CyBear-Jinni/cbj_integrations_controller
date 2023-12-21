@@ -154,7 +154,7 @@ class _$AuthImpl<T> implements _Auth<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AuthImpl<T> &&
@@ -294,7 +294,7 @@ class _$DevicesImpl<T> implements _Devices<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DevicesImpl<T> &&
@@ -514,7 +514,7 @@ class _$InvalidEmailImpl<T> implements InvalidEmail<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InvalidEmailImpl<T> &&
@@ -675,7 +675,7 @@ class _$InvalidPasswordImpl<T> implements InvalidPassword<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InvalidPasswordImpl<T> &&
@@ -836,7 +836,7 @@ class _$ShortPasswordImpl<T> implements ShortPassword<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ShortPasswordImpl<T> &&
@@ -997,7 +997,7 @@ class _$ContainsSpaceImpl<T> implements ContainsSpace<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ContainsSpaceImpl<T> &&
@@ -1158,7 +1158,7 @@ class _$EmptyImpl<T> implements Empty<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EmptyImpl<T> &&
@@ -1324,7 +1324,7 @@ class _$ListTooLongImpl<T> implements ListTooLong<T> {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ListTooLongImpl<T> &&

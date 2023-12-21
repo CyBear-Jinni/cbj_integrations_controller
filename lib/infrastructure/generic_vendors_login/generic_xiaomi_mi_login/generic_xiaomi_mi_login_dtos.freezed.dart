@@ -170,7 +170,7 @@ class _$GenericXiaomiMiLoginDtosImpl extends _GenericXiaomiMiLoginDtos {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GenericXiaomiMiLoginDtosImpl &&

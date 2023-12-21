@@ -190,7 +190,7 @@ class GenericDimmableLightDE extends DeviceEntityBase {
       pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> setBrightness(String brightness) async =>
+  Future<Either<CoreFailure, Unit>> setBrightness(int value) async =>
       pleaseOverrideMessage();
 
   @override

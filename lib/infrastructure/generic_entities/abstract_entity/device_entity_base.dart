@@ -220,6 +220,21 @@ abstract class DeviceEntityBase {
     }
     return true;
   }
+
+  /// From 100-0 will be converted to 1.0-0.0
+  double backToDecimalPointBrightness(int value) {
+    const int oldMax = 100;
+    const int oldMin = 0;
+    const int oldRange = oldMax - oldMin;
+
+    const double newMax = 1.0;
+    const double newMin = 0;
+    const double newRange = newMax - newMin;
+
+    final double newValue = (((value - oldMin) * newRange) / oldRange) + newMin;
+
+    return newValue;
+  }
 }
 
 class DeviceEntityNotAbstract extends DeviceEntityBase {
@@ -292,5 +307,6 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
 
 enum ActionValues {
   url,
+  brightness,
   ;
 }

@@ -11,16 +11,14 @@ class SonoffDiyConnectorConjecture extends VendorConnectorConjectureService {
     return _instance;
   }
 
-  SonoffDiyConnectorConjecture._singletonContractor();
+  SonoffDiyConnectorConjecture._singletonContractor()
+      : super(
+          vendorsAndServices: VendorsAndServices.sonoffDiy,
+          mdnsVendorUniqueTypes: ['_ewelink._tcp'],
+        );
 
   static final SonoffDiyConnectorConjecture _instance =
       SonoffDiyConnectorConjecture._singletonContractor();
-
-  @override
-  VendorsAndServices get vendorsAndServices => VendorsAndServices.sonoffDiy;
-
-  @override
-  final List<String> mdnsVendorUniqueTypes = ['_ewelink._tcp'];
 
   // @override
   // Future<HashMap<String, DeviceEntityBase>?> foundEntity(
@@ -74,9 +72,6 @@ class SonoffDiyConnectorConjecture extends VendorConnectorConjectureService {
   // return sonoffDevices;
   // return null;
   // }
-
-  @override
-  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {}
 
   @override
   Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(

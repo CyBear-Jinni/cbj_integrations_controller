@@ -2,12 +2,9 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xiaomi_io_gpx3021gl/xiaomi_io_gpx3021gl_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:mi_iot_token/mi_iot_token.dart';
 
 class XiaomiIoConnectorConjecture extends VendorConnectorConjectureService {
@@ -15,13 +12,11 @@ class XiaomiIoConnectorConjecture extends VendorConnectorConjectureService {
     return _instance;
   }
 
-  XiaomiIoConnectorConjecture._singletonContractor();
+  XiaomiIoConnectorConjecture._singletonContractor()
+      : super(vendorsAndServices: VendorsAndServices.xiaomi);
 
   static final XiaomiIoConnectorConjecture _instance =
       XiaomiIoConnectorConjecture._singletonContractor();
-
-  @override
-  VendorsAndServices get vendorsAndServices => VendorsAndServices.xiaomi;
 
   MiCloud? miCloud;
 
@@ -107,24 +102,6 @@ class XiaomiIoConnectorConjecture extends VendorConnectorConjectureService {
   // }
   // return null;
   // }
-
-  @override
-  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
-    DeviceEntityBase? nonGenericDevice;
-
-    if (deviceEntity is GenericRgbwLightDE) {
-      nonGenericDevice = XiaomiIoGpx4021GlEntity.fromGeneric(deviceEntity);
-    }
-
-    if (nonGenericDevice == null) {
-      icLogger.w('Xiaomi mi device could not get loaded from the server');
-      return;
-    }
-
-    vendorEntities.addEntries([
-      MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
-    ]);
-  }
 
   @override
   Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(

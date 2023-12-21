@@ -47,7 +47,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
   }) : super(
           cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.shelly),
         ) {
-    shellyColorBulb = bulbMode ??
+    api = bulbMode ??
         ShellyApiColorBulb(
           lastKnownIp: deviceLastKnownIp.getOrCrash()!,
           mDnsName: deviceMdns.getOrCrash()!,
@@ -93,7 +93,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
       lightColorValue: genericDevice.lightColorValue,
     );
   }
-  late ShellyApiColorBulb shellyColorBulb;
+  late ShellyApiColorBulb api;
 
   @override
   Future<Either<CoreFailure, Unit>> turnOnLight() async {
@@ -101,7 +101,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
 
     try {
       icLogger.t('Turn on Shelly device');
-      shellyColorBulb.turnOn();
+      api.turnOn();
       return right(unit);
     } catch (e) {
       return left(const CoreFailure.unexpected());
@@ -115,7 +115,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
 
     try {
       icLogger.t('Turn off Shelly device');
-      await shellyColorBulb.turnOff();
+      await api.turnOff();
       return right(unit);
     } catch (exception) {
       return left(const CoreFailure.unexpected());
@@ -141,7 +141,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
       lightColorTemperature =
           GenericRgbwLightColorTemperature(temperatureInt.toString());
 
-      await shellyColorBulb.changTemperature(
+      await api.changTemperature(
         temperature: lightColorTemperature.getOrCrash(),
       );
 
@@ -152,13 +152,9 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> setBrightness(String brightness) async {
-    lightBrightness = GenericRgbwLightBrightness(brightness);
-
+  Future<Either<CoreFailure, Unit>> setBrightness(int value) async {
     try {
-      await shellyColorBulb.changBrightness(
-        brightness: brightness,
-      );
+      await api.changBrightness(brightness: value.toString());
 
       return right(unit);
     } catch (e) {
@@ -192,7 +188,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
 
       final RgbColor rgbColor = hsvColor.toRgbColor();
 
-      await shellyColorBulb.changeColor(
+      await api.changeColor(
         red: rgbColor.r.toString(),
         green: rgbColor.g.toString(),
         blue: rgbColor.b.toString(),

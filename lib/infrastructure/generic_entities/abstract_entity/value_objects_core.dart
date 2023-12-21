@@ -17,7 +17,12 @@ abstract class ValueObjectCore<T> {
   /// Throws [UnexpectedValueError] containing the [AuthValueFailure]
   T getOrCrash() {
     // id = identity - same as writing (right) => right
-    return value.fold((f) => throw CoreUnexpectedValueError(f), id);
+    return value.fold(
+      (f) {
+        return throw CoreUnexpectedValueError(f);
+      },
+      id,
+    );
   }
 
   Either<CoreFailure<dynamic>, Unit> get failureOrUnit {

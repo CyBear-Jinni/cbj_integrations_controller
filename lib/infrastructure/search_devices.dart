@@ -1,10 +1,10 @@
+import 'dart:collection';
 import 'dart:io';
 import 'dart:isolate';
 
 import 'package:cbj_integrations_controller/domain/i_network_utilities.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_empty_entity/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
@@ -12,9 +12,16 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:network_tools/network_tools.dart';
 
 class SendToIsolate {
-  SendToIsolate(this.sendPort, this.projectPath);
+  SendToIsolate(this.sendPort, this.projectPath, {this.portByVendor});
   SendPort sendPort;
   String projectPath;
+  HashMap<VendorsAndServices, List<int>>? portByVendor;
+}
+
+class BackFromIsolate {
+  BackFromIsolate(this.vendorsAndServices, this.genericUnsupportedDE);
+  VendorsAndServices vendorsAndServices;
+  GenericUnsupportedDE genericUnsupportedDE;
 }
 
 class SearchDevices {
@@ -33,7 +40,7 @@ class SearchDevices {
     final mdnsReceivePort = ReceivePort();
     SendToIsolate searchDevices =
         SendToIsolate(mdnsReceivePort.sendPort, projectPath);
-    await Isolate.spawn(
+    final Isolate mdnsIsolate = await Isolate.spawn(
       _searchAllMdnsDevicesAndSetThemUp,
       searchDevices,
     );
@@ -44,35 +51,51 @@ class SearchDevices {
       }
     });
 
-    /// For ping search
-    final pingReceivePort = ReceivePort();
-    searchDevices = SendToIsolate(pingReceivePort.sendPort, projectPath);
-
-    await Isolate.spawn(
-      _searchPingableDevicesAndSetThemUpByHostName,
-      searchDevices,
-    );
-
-    pingReceivePort.listen((data) {
-      if (data is GenericUnsupportedDE) {
-        VendorsConnectorConjecture().setHostNameDeviceByCompany(data);
-      }
+    mdnsIsolate.errors.listen((event) {
+      icLogger.f('Mdns isolate had crashed $event');
     });
 
-    /// For socket search
-    final socketSearchReceivePort = ReceivePort();
-    searchDevices =
-        SendToIsolate(socketSearchReceivePort.sendPort, projectPath);
+    // TODO: Does not work on Android https://github.com/osociety/network_tools_flutter/issues/31
+    if (!Platform.isAndroid) {
+      /// For ping search
+      final ReceivePort pingReceivePort = ReceivePort();
+      searchDevices = SendToIsolate(pingReceivePort.sendPort, projectPath);
 
-    await Isolate.spawn(
-      _searchDevicesByBindingIntoSockets,
+      final Isolate pingIsolate = await Isolate.spawn(
+        _searchPingableDevicesAndSetThemUpByHostName,
+        searchDevices,
+      );
+
+      pingReceivePort.listen((data) {
+        if (data is GenericUnsupportedDE) {
+          VendorsConnectorConjecture().setHostNameDeviceByCompany(data);
+        }
+      });
+      pingIsolate.errors.listen((event) {
+        icLogger.f('Ping isolate had crashed $event');
+      });
+    }
+
+    /// For port search
+    searchDevices.portByVendor = VendorsConnectorConjecture().portsToScen();
+    final ReceivePort portReceivePort = ReceivePort();
+    searchDevices = SendToIsolate(portReceivePort.sendPort, projectPath);
+
+    final Isolate portIsolate = await Isolate.spawn(
+      _searchAllByPorts,
       searchDevices,
     );
 
-    socketSearchReceivePort.listen((data) {
-      if (data is GenericUnsupportedDE) {
-        VendorsConnectorConjecture().foundBindingDevice(data);
+    portReceivePort.listen((data) {
+      if (data is BackFromIsolate) {
+        VendorsConnectorConjecture().setHostNameDeviceByPort(
+          data.vendorsAndServices,
+          data.genericUnsupportedDE,
+        );
       }
+    });
+    portIsolate.errors.listen((event) {
+      icLogger.f('Port isolate had crashed $event');
     });
   }
 
@@ -123,20 +146,51 @@ class SearchDevices {
   ) async {
     await configureNetworkTools(sendToIsolate.projectPath);
     final SendPort sendPort = sendToIsolate.sendPort;
-
     while (true) {
-      final List<GenericUnsupportedDE> pingableDevices =
-          await _searchPingableDevices();
-
-      for (final GenericUnsupportedDE entity in pingableDevices) {
+      await searchForAdress((subnet) async {
         try {
-          sendPort.send(entity);
+          await for (final ActiveHost activeHost
+              in HostScanner.getAllPingableDevicesAsync(
+            subnet,
+            lastHostId: 126,
+          )) {
+            sendPort.send(
+              await INetworkUtilities.instance.activeHostToEntity(activeHost),
+            );
+          }
+
+          // Spits to 2 requests to fix error in snap https://github.com/CyBear-Jinni-user/CBJ_Hub_Snap/issues/2
+          await for (final ActiveHost activeHost
+              in HostScanner.getAllPingableDevicesAsync(
+            subnet,
+            firstHostId: 127,
+          )) {
+            sendPort.send(
+              await INetworkUtilities.instance.activeHostToEntity(activeHost),
+            );
+          }
         } catch (e) {
-          continue;
+          icLogger.i('Ping search Error $e');
         }
-      }
+      });
 
       await Future.delayed(const Duration(minutes: 5));
+    }
+  }
+
+  Future searchForAdress(Future Function(String subnet) callback) async {
+    final List<NetworkInterface> networkInterfaceList =
+        await NetworkInterface.list();
+
+    for (final NetworkInterface networkInterface in networkInterfaceList) {
+      for (final InternetAddress address in networkInterface.addresses) {
+        final String ip = address.address;
+        if (!ip.contains('.')) {
+          continue;
+        }
+        final String subnet = ip.substring(0, ip.lastIndexOf('.'));
+        await callback(subnet);
+      }
     }
   }
 
@@ -180,105 +234,34 @@ class SearchDevices {
     return activeHostList;
   }
 
-  Future<List<GenericUnsupportedDE>> _searchPingableDevices() async {
-    final List<Future<GenericUnsupportedDE>> entityList = [];
-
-    final List<NetworkInterface> networkInterfaceList =
-        await NetworkInterface.list();
-
-    for (final NetworkInterface networkInterface in networkInterfaceList) {
-      for (final InternetAddress address in networkInterface.addresses) {
-        final String ip = address.address;
-        if (!ip.contains('.')) {
-          continue;
-        }
-        final String subnet = ip.substring(0, ip.lastIndexOf('.'));
-
-        await for (final ActiveHost activeHost
-            in HostScanner.getAllPingableDevices(
-          subnet,
-          lastHostId: 126,
-        )) {
-          entityList
-              .add(INetworkUtilities.instance.activeHostToEntity(activeHost));
-        }
-
-        // Spits to 2 requests to fix error in snap https://github.com/CyBear-Jinni-user/CBJ_Hub_Snap/issues/2
-        await for (final ActiveHost activeHost
-            in HostScanner.getAllPingableDevices(
-          subnet,
-          firstHostId: 127,
-        )) {
-          entityList
-              .add(INetworkUtilities.instance.activeHostToEntity(activeHost));
-        }
-      }
-    }
-
-    return Future.wait(entityList);
-  }
-
-  /// Searching devices by binding to sockets, used for devices with
-  /// udp ports which can't be discovered by regular open (tcp) port scan
-  Future<void> _searchDevicesByBindingIntoSockets(
+  Future<void> _searchAllByPorts(
     SendToIsolate sendToIsolate,
   ) async {
     await configureNetworkTools(sendToIsolate.projectPath);
     final SendPort sendPort = sendToIsolate.sendPort;
 
-    final List<Stream<DeviceEntityBase?>> switcherBindingsList =
-        VendorsConnectorConjecture().searchOfBindingIntoSocketsList();
-    for (final Stream<DeviceEntityBase?> socketBinding
-        in switcherBindingsList) {
-      socketBinding.listen((bindingDevice) async {
-        if (bindingDevice == null) {
-          return;
-        }
-        sendPort.send(bindingDevice);
-      });
-    }
-
-    final List<Stream<ActiveHost>> devicesWithPort =
-        await _findCbjDevicesByBindingIntoSockets();
-    try {
-      for (final Stream<ActiveHost> socketBinding in devicesWithPort) {
-        socketBinding.listen((activeHost) async {
-          icLogger.i('Found CBJ Smart security camera: ${activeHost.address}');
-
-          final GenericUnsupportedDE entity =
-              await INetworkUtilities.instance.activeHostToEntity(activeHost);
-          CbjDevicesConnectorConjecture().foundEntity(entity);
-        });
-      }
-    } catch (e) {
-      icLogger.w('Exception searchForHub\n$e');
-    }
-  }
-
-  Future<List<Stream<ActiveHost>>> _findCbjDevicesByBindingIntoSockets() async {
-    final List<Stream<ActiveHost>> bindingStream = [];
-
-    final List<NetworkInterface> networkInterfaceList =
-        await NetworkInterface.list();
-
-    for (final NetworkInterface networkInterface in networkInterfaceList) {
-      for (final InternetAddress address in networkInterface.addresses) {
-        final String ip = address.address;
-        if (!ip.contains('.')) {
-          continue;
-        }
-
-        final String subnet = ip.substring(0, ip.lastIndexOf('.'));
-
-        bindingStream.add(
-          HostScanner.scanDevicesForSinglePort(
+    await searchForAdress((subnet) async {
+      for (final MapEntry<VendorsAndServices, List<int>> vendorPorts
+          in sendToIsolate.portByVendor!.entries) {
+        final VendorsAndServices vendor = vendorPorts.key;
+        for (final int port in vendorPorts.value) {
+          final stream2 = HostScanner.scanDevicesForSinglePort(
             subnet,
-            50054,
-          ),
-        );
+            port,
+          );
+
+          stream2.listen(
+            (activeHost) async {
+              final BackFromIsolate backFromIsolate = BackFromIsolate(
+                vendor,
+                await INetworkUtilities.instance.activeHostToEntity(activeHost),
+              );
+              sendPort.send(backFromIsolate);
+            },
+          );
+        }
       }
-    }
-    return bindingStream;
+    });
   }
 
   // /// Searching for mqtt devices

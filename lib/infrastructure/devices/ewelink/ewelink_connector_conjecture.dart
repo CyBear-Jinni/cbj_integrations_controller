@@ -4,7 +4,6 @@ import 'dart:collection';
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_switch/ewelink_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
@@ -15,16 +14,14 @@ class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
     return _instance;
   }
 
-  EwelinkConnectorConjecture._singletonContractor();
+  EwelinkConnectorConjecture._singletonContractor()
+      : super(
+          vendorsAndServices: VendorsAndServices.sonoffEweLink,
+          mdnsVendorUniqueTypes: ['_ewelink._tcp'],
+        );
 
   static final EwelinkConnectorConjecture _instance =
       EwelinkConnectorConjecture._singletonContractor();
-
-  @override
-  VendorsAndServices get vendorsAndServices => VendorsAndServices.sonoffEweLink;
-
-  @override
-  final List<String> mdnsVendorUniqueTypes = ['_ewelink._tcp'];
 
   Ewelink? ewelink;
 
@@ -59,29 +56,6 @@ class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   Future<bool>? didRequestLogin;
-
-  @override
-  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
-    DeviceEntityBase? nonGenericDevice;
-    if (ewelink == null || vendorEntities.isEmpty) {
-      await waitUntilConnectionEstablished(0);
-    }
-    if (deviceEntity is EwelinkSwitchEntity) {
-      nonGenericDevice = EwelinkSwitchEntity.fromGeneric(deviceEntity);
-    }
-
-    if (nonGenericDevice == null) {
-      icLogger.w('EweLink device could not get loaded from the server');
-      return;
-    }
-
-    vendorEntities.addEntries([
-      MapEntry(
-        '${nonGenericDevice.deviceUniqueId.getOrCrash()}-${nonGenericDevice.entityUniqueId.getOrCrash()}',
-        nonGenericDevice,
-      ),
-    ]);
-  }
 
   Future<void> waitUntilConnectionEstablished(int executed) async {
     if (executed > 20 || ewelink != null) {

@@ -11,13 +11,11 @@ class WizConnectorConjecture extends VendorConnectorConjectureService {
     return _instance;
   }
 
-  WizConnectorConjecture._singletonContractor();
+  WizConnectorConjecture._singletonContractor()
+      : super(vendorsAndServices: VendorsAndServices.xiaomi);
 
   static final WizConnectorConjecture _instance =
       WizConnectorConjecture._singletonContractor();
-
-  @override
-  VendorsAndServices get vendorsAndServices => VendorsAndServices.wiz;
 
   Future<String> accountLogin(GenericWizLoginDE genericWizLoginDE) async {
     // wizClient = WizClient(genericWizLoginDE.wizApiKey.getOrCrash());
@@ -134,9 +132,6 @@ class WizConnectorConjecture extends VendorConnectorConjectureService {
   // }
   // }
   // }
-
-  @override
-  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {}
 
   @override
   Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(

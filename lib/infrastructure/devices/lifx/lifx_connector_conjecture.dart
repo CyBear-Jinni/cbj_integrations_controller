@@ -9,7 +9,6 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
@@ -18,13 +17,11 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
     return _instance;
   }
 
-  LifxConnectorConjecture._singletonContractor();
+  LifxConnectorConjecture._singletonContractor()
+      : super(vendorsAndServices: VendorsAndServices.lifx);
 
   static final LifxConnectorConjecture _instance =
       LifxConnectorConjecture._singletonContractor();
-
-  @override
-  VendorsAndServices get vendorsAndServices => VendorsAndServices.lifx;
 
   // TODO: Convert search from cloud into connector conjector
   Future<String> accountLogin(GenericLifxLoginDE genericLifxLoginDE) async {
@@ -85,24 +82,6 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
         await Future.delayed(const Duration(minutes: 1));
       }
     }
-  }
-
-  @override
-  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {
-    DeviceEntityBase? nonGenericDevice;
-
-    if (deviceEntity is GenericDimmableLightDE) {
-      nonGenericDevice = LifxWhiteEntity.fromGeneric(deviceEntity);
-    }
-
-    if (nonGenericDevice == null) {
-      icLogger.w('Switcher device could not get loaded from the server');
-      return;
-    }
-
-    vendorEntities.addEntries([
-      MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
-    ]);
   }
 
   @override

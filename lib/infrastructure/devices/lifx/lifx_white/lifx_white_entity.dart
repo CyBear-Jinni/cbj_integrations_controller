@@ -5,7 +5,6 @@ import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/pr
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_value_objects.dart';
 import 'package:dartz/dartz.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
@@ -79,8 +78,6 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
 
   @override
   Future<Either<CoreFailure, Unit>> turnOnLight() async {
-    lightSwitchState =
-        GenericDimmableLightSwitchState(EntityActions.on.toString());
     try {
       final setStateBodyResponse =
           await LifxConnectorConjecture().lifxClient?.setState(
@@ -103,9 +100,6 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
 
   @override
   Future<Either<CoreFailure, Unit>> turnOffLight() async {
-    lightSwitchState =
-        GenericDimmableLightSwitchState(EntityActions.off.toString());
-
     try {
       final setStateBodyResponse =
           await LifxConnectorConjecture().lifxClient?.setState(
@@ -126,15 +120,13 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> setBrightness(String brightness) async {
-    lightBrightness = GenericDimmableLightBrightness(brightness);
-
+  Future<Either<CoreFailure, Unit>> setBrightness(int value) async {
     try {
       final setStateBodyResponse =
           await LifxConnectorConjecture().lifxClient?.setState(
                 Selector.id(entityUniqueId.getOrCrash()),
                 fast: true,
-                brightness: lightBrightness.backToDecimalPointBrightness(),
+                brightness: backToDecimalPointBrightness(value),
               );
       if (setStateBodyResponse == null) {
         throw 'setStateBodyResponse is null';

@@ -414,7 +414,7 @@ class _$RoutineCbjDtosImpl extends _RoutineCbjDtos {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RoutineCbjDtosImpl &&

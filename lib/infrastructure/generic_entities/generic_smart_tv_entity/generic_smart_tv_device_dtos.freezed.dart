@@ -653,7 +653,7 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GenericSmartTvDeviceDtosImpl &&

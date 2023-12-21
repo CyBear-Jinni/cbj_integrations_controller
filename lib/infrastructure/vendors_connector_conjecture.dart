@@ -8,7 +8,6 @@ import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_
 import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/esphome/esphome_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/google_connector_conjecture.dart';
@@ -21,12 +20,14 @@ import 'package:cbj_integrations_controller/infrastructure/devices/sonoff_diy/so
 import 'package:cbj_integrations_controller/infrastructure/devices/switcher/switcher_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/infrastructure/devices/unseported_vendor_or_device/unseported_vendor_or_device.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/wiz/wiz_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/xiaomi_io/xiaomi_io_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_empty_entity/generic_empty_entity.dart';
@@ -37,6 +38,7 @@ class VendorsConnectorConjecture {
   }
 
   VendorsConnectorConjecture._singletonConstructor() {
+    UnseportedVendorOrDeviceConnectorConjecture();
     YeelightConnectorConjecture();
     XiaomiIoConnectorConjecture();
     WizConnectorConjecture();
@@ -57,37 +59,6 @@ class VendorsConnectorConjecture {
 
   static final VendorsConnectorConjecture _instance =
       VendorsConnectorConjecture._singletonConstructor();
-
-  void addAllDevicesToItsRepos(
-    Map<String, DeviceEntityBase> allDevices,
-  ) {
-    for (final MapEntry<String, DeviceEntityBase> deviceId
-        in allDevices.entries) {
-      addDeviceToItsRepo(deviceId);
-    }
-  }
-
-  void addDeviceToItsRepo(
-    MapEntry<String, DeviceEntityBase> deviceEntityBase,
-  ) {
-    final MapEntry<String, DeviceEntityBase> devicesEntry =
-        MapEntry<String, DeviceEntityBase>(
-      deviceEntityBase.key,
-      deviceEntityBase.value,
-    );
-
-    final String deviceVendor =
-        deviceEntityBase.value.cbjDeviceVendor.getOrCrash();
-
-    final VendorConnectorConjectureService? companyConnectorConjecture =
-        vendorStringToCompanyConnectorConjecture(deviceVendor);
-
-    if (companyConnectorConjecture != null) {
-      companyConnectorConjecture.setUpEntityFromDb(devicesEntry.value);
-    } else {
-      icLogger.w('Cannot add device entity to its repo, type not supported');
-    }
-  }
 
   // DeviceEntityBase addDiscoveredDeviceToHub(
   //   DeviceEntityBase deviceEntity,
@@ -120,15 +91,14 @@ class VendorsConnectorConjecture {
   /// The correct company.
   Future setMdnsDeviceByCompany(GenericUnsupportedDE entity) async {
     final String? mdnsDeviceIp = entity.deviceLastKnownIp.getOrCrash();
-    if (mdnsDeviceIp == null) {
+    final String? mdnsName = entity.deviceMdns.getOrCrash();
+
+    if (mdnsDeviceIp == null || mdnsName == null) {
       return;
     }
-    final String? mdnsName = entity.deviceMdns.getOrCrash();
-    final String? startOfMdnsName =
-        mdnsName?.substring(0, mdnsName.indexOf('.'));
-    final String startOfMdnsNameLower = startOfMdnsName!.toLowerCase();
+    final String startOfMdnsName = mdnsName.substring(0, mdnsName.indexOf('.'));
+    final String startOfMdnsNameLower = startOfMdnsName.toLowerCase();
 
-    final String? port = entity.devicePort.getOrCrash();
     String? serviceType;
 
     final List<String>? ptrNameSplit =
@@ -190,31 +160,11 @@ class VendorsConnectorConjecture {
       }
     }
 
-    HashMap<String, DeviceEntityBase>? handeldEntities;
-
-    if (companyConnectorConjecture != null) {
-      handeldEntities = await companyConnectorConjecture.foundEntity(entity);
-    }
-
-    if (handeldEntities == null) {
-      icLogger.e(
-        'Entity failed to load mdns device ${entity.deviceMdns.getOrCrash()}',
-      );
-      final String address = entity.deviceLastKnownIp.getOrCrash()!;
-      icLogger.t(
-        'Entity service type $serviceType is not supported\n IP: $address, Port: $port,\n'
-        'ServiceType: $serviceType, mDNS device ${entity.deviceMdns.getOrCrash()}',
-      );
-      handeldEntities = HashMap();
-      handeldEntities.addEntries(
-        [MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity)],
-      );
-      return;
-    } else if (handeldEntities.isEmpty) {
-      /// Device exists
+    if (companyConnectorConjecture == null) {
       return;
     }
-    DevicesService().discovedEntity(handeldEntities);
+
+    foundEntityOfVendor(companyConnectorConjecture, entity, mdnsName);
   }
 
   Future<void> setHostNameDeviceByCompany(GenericUnsupportedDE entity) async {
@@ -224,114 +174,85 @@ class VendorsConnectorConjecture {
       return;
     }
 
-    HashMap<String, DeviceEntityBase>? handeldEntities;
     VendorsAndServices? vendor;
 
     if (deviceHostNameLowerCase.contains('tasmota')) {
       vendor = VendorsAndServices.tasmota;
     } else if (deviceHostNameLowerCase.contains('xiaomi') ||
-        deviceHostNameLowerCase.contains('yeelink') ||
         deviceHostNameLowerCase.contains('xiao')) {
       vendor = VendorsAndServices.xiaomi;
+    } else if (deviceHostNameLowerCase.contains('yeelink')) {
+      // TODO: Check if yeelink -> yeelight is ok
+      vendor = VendorsAndServices.yeelight;
     } else if (deviceHostNameLowerCase.startsWith('wiz')) {
       vendor = VendorsAndServices.wiz;
     }
 
+    VendorConnectorConjectureService? companyConnectorConjecture;
+
     if (vendor != null) {
-      final VendorConnectorConjectureService? companyConnectorConjecture =
-          vendorStringToCompanyConnectorConjecture(vendor.name);
-      handeldEntities = await companyConnectorConjecture?.foundEntity(entity);
-    } else {
-      final GenericUnsupportedDE? entityTemp =
-          await CbjSmartDeviceClient.checkIfDeviceIsCbjSmartDevice();
-      if (entityTemp != null) {
-        handeldEntities =
-            await CbjDevicesConnectorConjecture().foundEntity(entityTemp);
-      } else {
-        icLogger.i('Found unseported pingable device $deviceHostNameLowerCase');
-        handeldEntities = HashMap();
-        handeldEntities.addEntries(
-          [MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity)],
-        );
-      }
+      companyConnectorConjecture = getVendorConnectorConjecture(vendor);
     }
-    if (handeldEntities == null) {
-      icLogger.e(
-        'Entity failed to load company name device $deviceHostNameLowerCase',
-      );
-      return;
-    } else if (handeldEntities.isEmpty) {
+    if (companyConnectorConjecture == null) {
       return;
     }
-    DevicesService().discovedEntity(handeldEntities);
+
+    foundEntityOfVendor(
+      companyConnectorConjecture,
+      entity,
+      deviceHostNameLowerCase,
+    );
   }
 
-  List<Stream<DeviceEntityBase?>> searchOfBindingIntoSocketsList() =>
-      SwitcherConnectorConjecture().bindSocketSearchStream();
+  Future<void> setHostNameDeviceByPort(
+    VendorsAndServices vendor,
+    GenericUnsupportedDE entity,
+  ) async {
+    final VendorConnectorConjectureService? vendorConnectorConjectureService =
+        getVendorConnectorConjecture(vendor);
+    final String? port = entity.devicePort.getOrCrash();
+    if (vendorConnectorConjectureService == null || port == null) {
+      return;
+    }
 
-  Future<void> foundBindingDevice(DeviceEntityBase entity) async {
+    foundEntityOfVendor(vendorConnectorConjectureService, entity, port);
+  }
+
+  // Bad practice
+  void customeSearch(HashMap<String, DeviceEntityBase> value) {
+    if (value.isEmpty) {
+      return;
+    }
+    DevicesService().discovedEntity(value);
+  }
+
+  Future<void> foundEntityOfVendor(
+    VendorConnectorConjectureService vendorConnectorConjectureService,
+    DeviceEntityBase entity,
+    String deviceCbjUniqueId,
+  ) async {
     HashMap<String, DeviceEntityBase>? handeldEntities;
 
-    final String deviceVendor = entity.cbjDeviceVendor.getOrCrash();
-    final VendorConnectorConjectureService? companyConnectorConjecture =
-        vendorStringToCompanyConnectorConjecture(deviceVendor);
-
-    if (companyConnectorConjecture != null) {
-      handeldEntities = await companyConnectorConjecture.foundEntity(entity);
-    } else {
-      icLogger.w(
-        'Cannot send device changes to its repo, company not supported $deviceVendor',
-      );
-    }
+    handeldEntities =
+        await vendorConnectorConjectureService.foundEntity(entity);
 
     if (handeldEntities == null) {
-      icLogger.i('Found unseported socket device $entity');
-      return;
-    } else if (handeldEntities.isEmpty) {
+      icLogger.i('Found unseported device $entity');
+      handeldEntities = handeldEntities =
+          await UnseportedVendorOrDeviceConnectorConjecture().foundEntity(
+        entity
+          ..deviceCbjUniqueId =
+              CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+      );
+    }
+    if (handeldEntities == null || handeldEntities.isEmpty) {
       return;
     }
     DevicesService().discovedEntity(handeldEntities);
   }
 
-  VendorConnectorConjectureService? vendorStringToCompanyConnectorConjecture(
-    String vendorName,
-  ) {
-    //TODO: convert vendorName to type and then use switch case
-
-    if (vendorName == VendorsAndServices.espHome.toString()) {
-      return EspHomeConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.switcherSmartHome.toString()) {
-      return SwitcherConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.lifx.toString()) {
-      return LifxConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.yeelight.toString()) {
-      return YeelightConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.philipsHue.toString()) {
-      return PhilipsHueConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.sonoffDiy.toString()) {
-      return SonoffDiyConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.google.toString()) {
-      return GoogleConnectorConjecture();
-    } else if (vendorName ==
-        VendorsAndServices.cbjDeviceSmartEntity.toString()) {
-      return CbjDevicesConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.shelly.toString()) {
-      return ShellyConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.hp.toString()) {
-      return HpConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.miHome.toString()) {
-      return XiaomiIoConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.tasmota.toString()) {
-      return TasmotaIpConnectorConjecture();
-    } else if (vendorName == VendorsAndServices.sonoffEweLink.toString()) {
-      return EwelinkConnectorConjecture();
-    }
-
-    icLogger.w(
-      'Please add vendor to support string $vendorName to connector conjecture',
-    );
-
-    return null;
+  HashMap<VendorsAndServices, List<int>>? portsToScen() {
+    return VendorConnectorConjectureService.portsUsedByVendor;
   }
 
   VendorConnectorConjectureService? getVendorConnectorConjecture(

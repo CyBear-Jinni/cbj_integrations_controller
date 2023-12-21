@@ -4,16 +4,42 @@ import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
+import 'package:meta/meta.dart';
 
 abstract class VendorConnectorConjectureService {
-  VendorConnectorConjectureService() {
+  VendorConnectorConjectureService({
+    required this.vendorsAndServices,
+    this.ports = const [],
+    this.mdnsVendorUniqueTypes = const [],
+    this.mdnsTypes = const [],
+    this.uniqueIdentifierNameInMdns = const [],
+  }) {
     vendorConnectorConjectureClass.add(this);
+    addToPortByVendor(vendorsAndServices, ports);
   }
 
   static HashSet<VendorConnectorConjectureService>
       vendorConnectorConjectureClass = HashSet();
 
-  VendorsAndServices get vendorsAndServices;
+  /// Ports used by each vendor
+  static final HashMap<VendorsAndServices, List<int>> _portsUsedByVendor =
+      HashMap();
+
+  static HashMap<VendorsAndServices, List<int>> get portsUsedByVendor =>
+      _portsUsedByVendor;
+
+  static void addToPortByVendor(
+    VendorsAndServices vendorsAndServices,
+    List<int> ports,
+  ) {
+    _portsUsedByVendor.addEntries([MapEntry(vendorsAndServices, ports)]);
+  }
+
+  @nonVirtual
+  final VendorsAndServices vendorsAndServices;
+
+  /// Ports used by each vendor
+  final List<int> ports;
 
   /// Stores all devices for the each vendor, devices will be stored as the
   /// vendor implementation and not as generic devices
@@ -21,19 +47,18 @@ abstract class VendorConnectorConjectureService {
   /// key is entityUniqueId so that it can both use it quickly to not add the
   /// same device twice and to manage requests of actions from the app since
   /// the action already arrives with entityUniqueId value
-  Map<String, DeviceEntityBase> vendorEntities = {};
+  HashMap<String, DeviceEntityBase> vendorEntities = HashMap();
 
   /// Exists only for the vendor devices
-  List<String> get mdnsVendorUniqueTypes => [];
+  @nonVirtual
+  final List<String> mdnsVendorUniqueTypes;
 
   /// Can be found on more then one vendor
-  List<String> get mdnsTypes => [];
+  @nonVirtual
+  final List<String> mdnsTypes;
 
-  List<String> get uniqueIdentifierNameInMdns => [];
-
-  /// Will set up device for this vendor into the connector conjecture,
-  /// will be called for each saved device of this vendor
-  Future<void> setUpEntityFromDb(DeviceEntityBase entity);
+  @nonVirtual
+  final List<String> uniqueIdentifierNameInMdns;
 
   Future<HashMap<String, DeviceEntityBase>?> foundEntity(
     DeviceEntityBase entity,

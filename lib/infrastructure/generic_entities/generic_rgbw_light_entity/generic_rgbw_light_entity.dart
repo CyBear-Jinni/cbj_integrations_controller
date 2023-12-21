@@ -200,9 +200,14 @@ class GenericRgbwLightDE extends DeviceEntityBase {
     required EntityActions action,
     HashMap<ActionValues, dynamic>? value,
   }) async {
-    if (property == EntityProperties.lightBrightness) {
-      // TODO: add support for json values
-      // return  setBrightness(value.toString());
+    if (property == EntityProperties.lightBrightness &&
+        value != null &&
+        value[ActionValues.brightness] != null) {
+      final dynamic brightness = value[ActionValues.brightness];
+      if (brightness is! int) {
+        return const Left(CoreFailure.unexpected());
+      }
+      return setBrightness(brightness);
     }
 
     switch (action) {
@@ -238,7 +243,7 @@ class GenericRgbwLightDE extends DeviceEntityBase {
       pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> setBrightness(String brightness) async =>
+  Future<Either<CoreFailure, Unit>> setBrightness(int value) async =>
       pleaseOverrideMessage();
 
   /// Please override the following methods

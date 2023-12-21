@@ -11,26 +11,15 @@ class LgConnectorConjecture extends VendorConnectorConjectureService {
     return _instance;
   }
 
-  LgConnectorConjecture._singletonContractor();
+  LgConnectorConjecture._singletonContractor()
+      : super(
+          vendorsAndServices: VendorsAndServices.lg,
+          uniqueIdentifierNameInMdns: ['lg', 'webos'],
+          mdnsTypes: ['_hap._tcp', '_display._tcp', '_airplay._tcp'],
+        );
 
   static final LgConnectorConjecture _instance =
       LgConnectorConjecture._singletonContractor();
-
-  @override
-  VendorsAndServices get vendorsAndServices => VendorsAndServices.lg;
-
-  @override
-  final List<String> mdnsTypes = [
-    '_hap._tcp',
-    '_display._tcp',
-    '_airplay._tcp',
-  ];
-
-  @override
-  final List<String> uniqueIdentifierNameInMdns = ['lg', 'webos'];
-
-  @override
-  Future<void> setUpEntityFromDb(DeviceEntityBase deviceEntity) async {}
 
   @override
   Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
