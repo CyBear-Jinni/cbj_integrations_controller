@@ -237,7 +237,7 @@ class VendorsConnectorConjecture {
         await vendorConnectorConjectureService.foundEntity(entity);
 
     if (handeldEntities == null) {
-      icLogger.i('Found unseported device $entity');
+      icLogger.i('Found unseported device $deviceCbjUniqueId');
       handeldEntities = handeldEntities =
           await UnseportedVendorOrDeviceConnectorConjecture().foundEntity(
         entity

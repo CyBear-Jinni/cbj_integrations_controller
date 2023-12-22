@@ -11,17 +11,17 @@ abstract class RoomEntityDtos implements _$RoomEntityDtos {
     required String uniqueId,
     required String cbjEntityName,
     required String background,
-    required List<String> roomTypes,
-    required List<String> roomDevicesId,
-    required List<String> roomScenesId,
-    required List<String> roomRoutinesId,
-    required List<String> roomBindingsId,
+    required Set<String> roomTypes,
+    required Set<String> roomDevicesId,
+    required Set<String> roomScenesId,
+    required Set<String> roomRoutinesId,
+    required Set<String> roomBindingsId,
 
     /// Who is using this room
-    required List<String> roomMostUsedBy,
+    required Set<String> roomMostUsedBy,
 
     /// Room permissions by users id
-    required List<String> roomPermissions,
+    required Set<String> roomPermissions,
 
     // required ServerTimestampConverter() FieldValue serverTimeStamp,
   }) = _RoomEntityDtos;

@@ -12,25 +12,25 @@ _$RoomEntityDtosImpl _$$RoomEntityDtosImplFromJson(Map<String, dynamic> json) =>
       cbjEntityName: json['cbjEntityName'] as String,
       background: json['background'] as String,
       roomTypes:
-          (json['roomTypes'] as List<dynamic>).map((e) => e as String).toList(),
+          (json['roomTypes'] as List<dynamic>).map((e) => e as String).toSet(),
       roomDevicesId: (json['roomDevicesId'] as List<dynamic>)
           .map((e) => e as String)
-          .toList(),
+          .toSet(),
       roomScenesId: (json['roomScenesId'] as List<dynamic>)
           .map((e) => e as String)
-          .toList(),
+          .toSet(),
       roomRoutinesId: (json['roomRoutinesId'] as List<dynamic>)
           .map((e) => e as String)
-          .toList(),
+          .toSet(),
       roomBindingsId: (json['roomBindingsId'] as List<dynamic>)
           .map((e) => e as String)
-          .toList(),
+          .toSet(),
       roomMostUsedBy: (json['roomMostUsedBy'] as List<dynamic>)
           .map((e) => e as String)
-          .toList(),
+          .toSet(),
       roomPermissions: (json['roomPermissions'] as List<dynamic>)
           .map((e) => e as String)
-          .toList(),
+          .toSet(),
     );
 
 Map<String, dynamic> _$$RoomEntityDtosImplToJson(
@@ -39,11 +39,11 @@ Map<String, dynamic> _$$RoomEntityDtosImplToJson(
       'uniqueId': instance.uniqueId,
       'cbjEntityName': instance.cbjEntityName,
       'background': instance.background,
-      'roomTypes': instance.roomTypes,
-      'roomDevicesId': instance.roomDevicesId,
-      'roomScenesId': instance.roomScenesId,
-      'roomRoutinesId': instance.roomRoutinesId,
-      'roomBindingsId': instance.roomBindingsId,
-      'roomMostUsedBy': instance.roomMostUsedBy,
-      'roomPermissions': instance.roomPermissions,
+      'roomTypes': instance.roomTypes.toList(),
+      'roomDevicesId': instance.roomDevicesId.toList(),
+      'roomScenesId': instance.roomScenesId.toList(),
+      'roomRoutinesId': instance.roomRoutinesId.toList(),
+      'roomBindingsId': instance.roomBindingsId.toList(),
+      'roomMostUsedBy': instance.roomMostUsedBy.toList(),
+      'roomPermissions': instance.roomPermissions.toList(),
     };

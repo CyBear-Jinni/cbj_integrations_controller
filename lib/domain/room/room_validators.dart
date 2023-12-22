@@ -43,20 +43,20 @@ Either<RoomFailure<String>, String> validateRoomMaxNameLength(
   }
 }
 
-Either<RoomFailure<List<String>>, List<String>> validateRoomTypesExist(
-  List<String> input,
+Either<RoomFailure<Set<String>>, Set<String>> validateRoomTypesExist(
+  Set<String> input,
 ) {
   return right(input);
 }
 
-Either<RoomFailure<List<String>>, List<String>> validateRoomTypsValid(
-  List<String> input,
+Either<RoomFailure<Set<String>>, Set<String>> validateRoomTypsValid(
+  Set<String> input,
 ) {
   return right(input);
 }
 
-Either<RoomFailure<List<String>>, List<String>> validateUserIdsValid(
-  List<String> input,
+Either<RoomFailure<Set<String>>, Set<String>> validateUserIdsValid(
+  Set<String> input,
 ) {
   return right(input);
 }

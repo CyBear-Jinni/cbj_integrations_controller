@@ -20,14 +20,15 @@ class DevicesService {
   /// from Vendor Connector Conjectore side (or nodeRED for the hub),
   /// this stream dose not include
   /// request for changes from the app!.
-  Stream watchDevices() => deviceChangesStream.stream;
+  Stream<MapEntry<String, DeviceEntityBase>> watchEntities() =>
+      entitiesChangesStream.stream;
 
   void discovedEntity(HashMap<String, DeviceEntityBase> entities) {
     // TODO: Save on db instead
     descoverdDeviceList.addAll(entities);
 
     for (final MapEntry<String, DeviceEntityBase> entry in entities.entries) {
-      deviceChangesStream.add(entry);
+      entitiesChangesStream.add(entry);
     }
   }
 
@@ -58,6 +59,6 @@ class DevicesService {
       // TODO: Should retreve all devics from the db
       descoverdDeviceList;
 
-  StreamController<MapEntry<String, DeviceEntityBase>> deviceChangesStream =
+  StreamController<MapEntry<String, DeviceEntityBase>> entitiesChangesStream =
       StreamController<MapEntry<String, DeviceEntityBase>>();
 }

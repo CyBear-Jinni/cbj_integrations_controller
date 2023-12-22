@@ -15,8 +15,8 @@ class _BindingCbjRepository implements IBindingCbjRepository {
   }
 
   @override
-  Future<List<BindingCbjEntity>> getAllBindingsAsList() async {
-    return _allBindings.values.toList();
+  Future<Set<BindingCbjEntity>> getAllBindingsAsList() async {
+    return _allBindings.values.toSet();
   }
 
   @override
@@ -27,7 +27,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
   @override
   Future<Either<LocalDbFailures, Unit>> saveAndActivateBindingToDb() async {
     return IDbRepository.instance.saveBindings(
-      bindingList: List<BindingCbjEntity>.from(_allBindings.values),
+      bindingList: Set<BindingCbjEntity>.from(_allBindings.values),
     );
   }
 
@@ -105,7 +105,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
     // );
     //
     //
-    // final KtList<String> bindingsActionsList = [
+    // final Set<String> bindingsActionsList = [
     //   'Gut Calling',
     //   'Out Side North',
     // ].toImmutableList();
@@ -160,7 +160,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
   Future<Either<BindingCbjFailure, BindingCbjEntity>>
       addOrUpdateNewBindingInHubFromDevicesPropertyActionList(
     String bindingName,
-    List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
+    Set<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         smartDevicesWithActionToAdd,
   ) async {
     final BindingCbjEntity newCbjBinding =
@@ -174,9 +174,9 @@ class _BindingCbjRepository implements IBindingCbjRepository {
 
   @override
   Future<Either<BindingCbjFailure, Unit>> activateBindings(
-    KtList<BindingCbjEntity> bindingsList,
+    Set<BindingCbjEntity> bindingsList,
   ) async {
-    for (final BindingCbjEntity bindingCbjEntity in bindingsList.asList()) {
+    for (final BindingCbjEntity bindingCbjEntity in bindingsList) {
       addOrUpdateNewBindingInHub(
         bindingCbjEntity.copyWith(
           entityStateGRPC: BindingCbjDeviceStateGRPC(
@@ -193,21 +193,21 @@ class _BindingCbjRepository implements IBindingCbjRepository {
     _allBindings[bindingCbj.uniqueId.getOrCrash()] = bindingCbj;
 
     bindingsResponseFromTheHubStreamController.sink
-        .add(_allBindings.values.toImmutableList());
+        .add(_allBindings.values.toSet());
   }
 
   @override
   Future<void> initiateHubConnection() async {}
 
   @override
-  Stream<Either<BindingCbjFailure, KtList<BindingCbjEntity>>>
+  Stream<Either<BindingCbjFailure, Set<BindingCbjEntity>>>
       watchAllBindings() async* {
     yield* bindingsResponseFromTheHubStreamController.stream
         .map((event) => right(event));
   }
 
   @override
-  BehaviorSubject<KtList<BindingCbjEntity>>
+  BehaviorSubject<Set<BindingCbjEntity>>
       bindingsResponseFromTheHubStreamController =
-      BehaviorSubject<KtList<BindingCbjEntity>>();
+      BehaviorSubject<Set<BindingCbjEntity>>();
 }

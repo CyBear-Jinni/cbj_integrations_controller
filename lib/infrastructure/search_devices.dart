@@ -237,6 +237,9 @@ class SearchDevices {
   Future<void> _searchAllByPorts(
     SendToIsolate sendToIsolate,
   ) async {
+    if (sendToIsolate.portByVendor == null) {
+      return;
+    }
     await configureNetworkTools(sendToIsolate.projectPath);
     final SendPort sendPort = sendToIsolate.sendPort;
 

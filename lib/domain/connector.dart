@@ -108,7 +108,7 @@ class Connector {
             HubRequestsToApp.streamRequestsToApp.sink
                 .add(savedDeviceWithSameIdAsMqtt.toInfrastructure());
             final RoomEntity? discoverRoom =
-                rooms[RoomUniqueId.discoveredRoomId().getOrCrash()];
+                rooms[RoomUniqueId.discovered().getOrCrash()];
             if (discoverRoom == null) {
               continue;
             }
@@ -117,7 +117,7 @@ class Connector {
                 .getOrCrash()
                 .contains(savedDeviceWithSameIdAsMqtt.uniqueId.getOrCrash())) {
               HubRequestsToApp.streamRequestsToApp.sink.add(
-                rooms[RoomUniqueId.discoveredRoomId().getOrCrash()]!
+                rooms[RoomUniqueId.discovered().getOrCrash()]!
                     .toInfrastructure(),
               );
             }

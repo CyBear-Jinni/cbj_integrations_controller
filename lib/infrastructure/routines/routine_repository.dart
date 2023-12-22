@@ -15,8 +15,8 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
   }
 
   @override
-  Future<List<RoutineCbjEntity>> getAllRoutinesAsList() async {
-    return _allRoutines.values.toList();
+  Future<Set<RoutineCbjEntity>> getAllRoutinesAsList() async {
+    return _allRoutines.values.toSet();
   }
 
   @override
@@ -27,7 +27,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
   @override
   Future<Either<LocalDbFailures, Unit>> saveAndActivateRoutineToDb() async {
     return IDbRepository.instance.saveRoutines(
-      routineList: List<RoutineCbjEntity>.from(_allRoutines.values),
+      routineList: Set<RoutineCbjEntity>.from(_allRoutines.values),
     );
   }
 
@@ -107,9 +107,9 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
 
   @override
   Future<Either<RoutineCbjFailure, Unit>> activateRoutines(
-    KtList<RoutineCbjEntity> routinesList,
+    Set<RoutineCbjEntity> routinesList,
   ) async {
-    for (final RoutineCbjEntity routineCbjEntity in routinesList.asList()) {
+    for (final RoutineCbjEntity routineCbjEntity in routinesList) {
       addOrUpdateNewRoutineInHub(
         routineCbjEntity.copyWith(
           entityStateGRPC: RoutineCbjDeviceStateGRPC(
@@ -126,23 +126,23 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
     _allRoutines[routineCbj.uniqueId.getOrCrash()] = routineCbj;
 
     routinesResponseFromTheHubStreamController.sink
-        .add(_allRoutines.values.toImmutableList());
+        .add(_allRoutines.values.toSet());
   }
 
   @override
   Future<void> initiateHubConnection() async {}
 
   @override
-  Stream<Either<RoutineCbjFailure, KtList<RoutineCbjEntity>>>
+  Stream<Either<RoutineCbjFailure, Set<RoutineCbjEntity>>>
       watchAllRoutines() async* {
     yield* routinesResponseFromTheHubStreamController.stream
         .map((event) => right(event));
   }
 
   @override
-  BehaviorSubject<KtList<RoutineCbjEntity>>
+  BehaviorSubject<Set<RoutineCbjEntity>>
       routinesResponseFromTheHubStreamController =
-      BehaviorSubject<KtList<RoutineCbjEntity>>();
+      BehaviorSubject<Set<RoutineCbjEntity>>();
 
   @override
   Future<Either<RoutineCbjFailure, RoutineCbjEntity>>
@@ -166,7 +166,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
   Future<Either<RoutineCbjFailure, RoutineCbjEntity>>
       addOrUpdateNewRoutineInHubFromDevicesPropertyActionList(
     String routineName,
-    List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
+    Set<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         smartDevicesWithActionToAdd,
     RoutineCbjRepeatDateDays daysToRepeat,
     RoutineCbjRepeatDateHour hourToRepeat,
@@ -197,7 +197,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
     // );
     //
     //
-    // final KtList<String> routinesActionsList = [
+    // final Set<String> routinesActionsList = [
     //   'Gut Calling',
     //   'Out Side North',
     // ].toImmutableList();

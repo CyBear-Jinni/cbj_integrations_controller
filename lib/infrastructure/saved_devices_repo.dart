@@ -61,8 +61,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
       ),
     );
 
-    final String discoveredRoomId =
-        RoomUniqueId.discoveredRoomId().getOrCrash();
+    final String discoveredRoomId = RoomUniqueId.discovered().getOrCrash();
     Connector().fromMqtt(
       MapEntry<String, RoomEntity>(
         discoveredRoomId,
@@ -116,7 +115,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
   Future<Either<LocalDbFailures, Unit>>
       saveAndActivateSmartDevicesToDb() async {
     return IDbRepository.instance.saveSmartDevices(
-      deviceList: List<DeviceEntityBase>.from(_allDevices.values),
+      deviceList: Set<DeviceEntityBase>.from(_allDevices.values),
     );
   }
 

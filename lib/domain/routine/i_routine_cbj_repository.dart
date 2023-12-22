@@ -17,8 +17,6 @@ import 'package:cbj_integrations_controller/infrastructure/hub_client/hub_client
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_converter.dart';
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:kt_dart/collection.dart';
-import 'package:kt_dart/kt.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'package:cbj_integrations_controller/infrastructure/routines/routine_repository.dart';
@@ -33,7 +31,7 @@ abstract class IRoutineCbjRepository {
   /// Setting up all routines from db
   Future<void> setUpAllFromDb();
 
-  Future<List<RoutineCbjEntity>> getAllRoutinesAsList();
+  Future<Set<RoutineCbjEntity>> getAllRoutinesAsList();
 
   Future<Map<String, RoutineCbjEntity>> getAllRoutinesAsMap();
 
@@ -54,8 +52,7 @@ abstract class IRoutineCbjRepository {
   /// Get entity and return the full MQTT path to it
   Future<String> getFullMqttPathOfRoutine(RoutineCbjEntity routineCbj);
 
-  Stream<Either<RoutineCbjFailure, KtList<RoutineCbjEntity>>>
-      watchAllRoutines();
+  Stream<Either<RoutineCbjFailure, Set<RoutineCbjEntity>>> watchAllRoutines();
 
   /// Sending the new routine to the hub to get added
   Future<Either<RoutineCbjFailure, RoutineCbjEntity>>
@@ -65,7 +62,7 @@ abstract class IRoutineCbjRepository {
 
   /// Activate action of all routine list
   Future<Either<RoutineCbjFailure, Unit>> activateRoutines(
-    KtList<RoutineCbjEntity> routinesList,
+    Set<RoutineCbjEntity> routinesList,
   );
 
   Future<Either<RoutineCbjFailure, RoutineCbjEntity>> getRoutine();
@@ -74,7 +71,7 @@ abstract class IRoutineCbjRepository {
   Future<Either<RoutineCbjFailure, RoutineCbjEntity>>
       addOrUpdateNewRoutineInHubFromDevicesPropertyActionList(
     String routineName,
-    List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
+    Set<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         smartDevicesWithActionToAdd,
     RoutineCbjRepeatDateDays daysToRepeat,
     RoutineCbjRepeatDateHour hourToRepeat,
@@ -88,7 +85,7 @@ abstract class IRoutineCbjRepository {
 
   Future<void> initiateHubConnection();
 
-  BehaviorSubject<KtList<RoutineCbjEntity>>
+  BehaviorSubject<Set<RoutineCbjEntity>>
       routinesResponseFromTheHubStreamController =
-      BehaviorSubject<KtList<RoutineCbjEntity>>();
+      BehaviorSubject<Set<RoutineCbjEntity>>();
 }

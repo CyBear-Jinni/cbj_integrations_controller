@@ -23,17 +23,17 @@ mixin _$RoomEntityDtos {
   String get uniqueId => throw _privateConstructorUsedError;
   String get cbjEntityName => throw _privateConstructorUsedError;
   String get background => throw _privateConstructorUsedError;
-  List<String> get roomTypes => throw _privateConstructorUsedError;
-  List<String> get roomDevicesId => throw _privateConstructorUsedError;
-  List<String> get roomScenesId => throw _privateConstructorUsedError;
-  List<String> get roomRoutinesId => throw _privateConstructorUsedError;
-  List<String> get roomBindingsId => throw _privateConstructorUsedError;
+  Set<String> get roomTypes => throw _privateConstructorUsedError;
+  Set<String> get roomDevicesId => throw _privateConstructorUsedError;
+  Set<String> get roomScenesId => throw _privateConstructorUsedError;
+  Set<String> get roomRoutinesId => throw _privateConstructorUsedError;
+  Set<String> get roomBindingsId => throw _privateConstructorUsedError;
 
   /// Who is using this room
-  List<String> get roomMostUsedBy => throw _privateConstructorUsedError;
+  Set<String> get roomMostUsedBy => throw _privateConstructorUsedError;
 
   /// Room permissions by users id
-  List<String> get roomPermissions => throw _privateConstructorUsedError;
+  Set<String> get roomPermissions => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,13 +51,13 @@ abstract class $RoomEntityDtosCopyWith<$Res> {
       {String uniqueId,
       String cbjEntityName,
       String background,
-      List<String> roomTypes,
-      List<String> roomDevicesId,
-      List<String> roomScenesId,
-      List<String> roomRoutinesId,
-      List<String> roomBindingsId,
-      List<String> roomMostUsedBy,
-      List<String> roomPermissions});
+      Set<String> roomTypes,
+      Set<String> roomDevicesId,
+      Set<String> roomScenesId,
+      Set<String> roomRoutinesId,
+      Set<String> roomBindingsId,
+      Set<String> roomMostUsedBy,
+      Set<String> roomPermissions});
 }
 
 /// @nodoc
@@ -100,31 +100,31 @@ class _$RoomEntityDtosCopyWithImpl<$Res, $Val extends RoomEntityDtos>
       roomTypes: null == roomTypes
           ? _value.roomTypes
           : roomTypes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomDevicesId: null == roomDevicesId
           ? _value.roomDevicesId
           : roomDevicesId // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomScenesId: null == roomScenesId
           ? _value.roomScenesId
           : roomScenesId // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomRoutinesId: null == roomRoutinesId
           ? _value.roomRoutinesId
           : roomRoutinesId // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomBindingsId: null == roomBindingsId
           ? _value.roomBindingsId
           : roomBindingsId // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomMostUsedBy: null == roomMostUsedBy
           ? _value.roomMostUsedBy
           : roomMostUsedBy // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomPermissions: null == roomPermissions
           ? _value.roomPermissions
           : roomPermissions // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
     ) as $Val);
   }
 }
@@ -141,13 +141,13 @@ abstract class _$$RoomEntityDtosImplCopyWith<$Res>
       {String uniqueId,
       String cbjEntityName,
       String background,
-      List<String> roomTypes,
-      List<String> roomDevicesId,
-      List<String> roomScenesId,
-      List<String> roomRoutinesId,
-      List<String> roomBindingsId,
-      List<String> roomMostUsedBy,
-      List<String> roomPermissions});
+      Set<String> roomTypes,
+      Set<String> roomDevicesId,
+      Set<String> roomScenesId,
+      Set<String> roomRoutinesId,
+      Set<String> roomBindingsId,
+      Set<String> roomMostUsedBy,
+      Set<String> roomPermissions});
 }
 
 /// @nodoc
@@ -188,31 +188,31 @@ class __$$RoomEntityDtosImplCopyWithImpl<$Res>
       roomTypes: null == roomTypes
           ? _value._roomTypes
           : roomTypes // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomDevicesId: null == roomDevicesId
           ? _value._roomDevicesId
           : roomDevicesId // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomScenesId: null == roomScenesId
           ? _value._roomScenesId
           : roomScenesId // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomRoutinesId: null == roomRoutinesId
           ? _value._roomRoutinesId
           : roomRoutinesId // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomBindingsId: null == roomBindingsId
           ? _value._roomBindingsId
           : roomBindingsId // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomMostUsedBy: null == roomMostUsedBy
           ? _value._roomMostUsedBy
           : roomMostUsedBy // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
       roomPermissions: null == roomPermissions
           ? _value._roomPermissions
           : roomPermissions // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
     ));
   }
 }
@@ -224,13 +224,13 @@ class _$RoomEntityDtosImpl extends _RoomEntityDtos {
       {required this.uniqueId,
       required this.cbjEntityName,
       required this.background,
-      required final List<String> roomTypes,
-      required final List<String> roomDevicesId,
-      required final List<String> roomScenesId,
-      required final List<String> roomRoutinesId,
-      required final List<String> roomBindingsId,
-      required final List<String> roomMostUsedBy,
-      required final List<String> roomPermissions})
+      required final Set<String> roomTypes,
+      required final Set<String> roomDevicesId,
+      required final Set<String> roomScenesId,
+      required final Set<String> roomRoutinesId,
+      required final Set<String> roomBindingsId,
+      required final Set<String> roomMostUsedBy,
+      required final Set<String> roomPermissions})
       : _roomTypes = roomTypes,
         _roomDevicesId = roomDevicesId,
         _roomScenesId = roomScenesId,
@@ -249,66 +249,66 @@ class _$RoomEntityDtosImpl extends _RoomEntityDtos {
   final String cbjEntityName;
   @override
   final String background;
-  final List<String> _roomTypes;
+  final Set<String> _roomTypes;
   @override
-  List<String> get roomTypes {
-    if (_roomTypes is EqualUnmodifiableListView) return _roomTypes;
+  Set<String> get roomTypes {
+    if (_roomTypes is EqualUnmodifiableSetView) return _roomTypes;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_roomTypes);
+    return EqualUnmodifiableSetView(_roomTypes);
   }
 
-  final List<String> _roomDevicesId;
+  final Set<String> _roomDevicesId;
   @override
-  List<String> get roomDevicesId {
-    if (_roomDevicesId is EqualUnmodifiableListView) return _roomDevicesId;
+  Set<String> get roomDevicesId {
+    if (_roomDevicesId is EqualUnmodifiableSetView) return _roomDevicesId;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_roomDevicesId);
+    return EqualUnmodifiableSetView(_roomDevicesId);
   }
 
-  final List<String> _roomScenesId;
+  final Set<String> _roomScenesId;
   @override
-  List<String> get roomScenesId {
-    if (_roomScenesId is EqualUnmodifiableListView) return _roomScenesId;
+  Set<String> get roomScenesId {
+    if (_roomScenesId is EqualUnmodifiableSetView) return _roomScenesId;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_roomScenesId);
+    return EqualUnmodifiableSetView(_roomScenesId);
   }
 
-  final List<String> _roomRoutinesId;
+  final Set<String> _roomRoutinesId;
   @override
-  List<String> get roomRoutinesId {
-    if (_roomRoutinesId is EqualUnmodifiableListView) return _roomRoutinesId;
+  Set<String> get roomRoutinesId {
+    if (_roomRoutinesId is EqualUnmodifiableSetView) return _roomRoutinesId;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_roomRoutinesId);
+    return EqualUnmodifiableSetView(_roomRoutinesId);
   }
 
-  final List<String> _roomBindingsId;
+  final Set<String> _roomBindingsId;
   @override
-  List<String> get roomBindingsId {
-    if (_roomBindingsId is EqualUnmodifiableListView) return _roomBindingsId;
+  Set<String> get roomBindingsId {
+    if (_roomBindingsId is EqualUnmodifiableSetView) return _roomBindingsId;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_roomBindingsId);
+    return EqualUnmodifiableSetView(_roomBindingsId);
   }
 
   /// Who is using this room
-  final List<String> _roomMostUsedBy;
+  final Set<String> _roomMostUsedBy;
 
   /// Who is using this room
   @override
-  List<String> get roomMostUsedBy {
-    if (_roomMostUsedBy is EqualUnmodifiableListView) return _roomMostUsedBy;
+  Set<String> get roomMostUsedBy {
+    if (_roomMostUsedBy is EqualUnmodifiableSetView) return _roomMostUsedBy;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_roomMostUsedBy);
+    return EqualUnmodifiableSetView(_roomMostUsedBy);
   }
 
   /// Room permissions by users id
-  final List<String> _roomPermissions;
+  final Set<String> _roomPermissions;
 
   /// Room permissions by users id
   @override
-  List<String> get roomPermissions {
-    if (_roomPermissions is EqualUnmodifiableListView) return _roomPermissions;
+  Set<String> get roomPermissions {
+    if (_roomPermissions is EqualUnmodifiableSetView) return _roomPermissions;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_roomPermissions);
+    return EqualUnmodifiableSetView(_roomPermissions);
   }
 
   @override
@@ -378,13 +378,13 @@ abstract class _RoomEntityDtos extends RoomEntityDtos {
       {required final String uniqueId,
       required final String cbjEntityName,
       required final String background,
-      required final List<String> roomTypes,
-      required final List<String> roomDevicesId,
-      required final List<String> roomScenesId,
-      required final List<String> roomRoutinesId,
-      required final List<String> roomBindingsId,
-      required final List<String> roomMostUsedBy,
-      required final List<String> roomPermissions}) = _$RoomEntityDtosImpl;
+      required final Set<String> roomTypes,
+      required final Set<String> roomDevicesId,
+      required final Set<String> roomScenesId,
+      required final Set<String> roomRoutinesId,
+      required final Set<String> roomBindingsId,
+      required final Set<String> roomMostUsedBy,
+      required final Set<String> roomPermissions}) = _$RoomEntityDtosImpl;
   _RoomEntityDtos._() : super._();
 
   factory _RoomEntityDtos.fromJson(Map<String, dynamic> json) =
@@ -397,23 +397,23 @@ abstract class _RoomEntityDtos extends RoomEntityDtos {
   @override
   String get background;
   @override
-  List<String> get roomTypes;
+  Set<String> get roomTypes;
   @override
-  List<String> get roomDevicesId;
+  Set<String> get roomDevicesId;
   @override
-  List<String> get roomScenesId;
+  Set<String> get roomScenesId;
   @override
-  List<String> get roomRoutinesId;
+  Set<String> get roomRoutinesId;
   @override
-  List<String> get roomBindingsId;
+  Set<String> get roomBindingsId;
   @override
 
   /// Who is using this room
-  List<String> get roomMostUsedBy;
+  Set<String> get roomMostUsedBy;
   @override
 
   /// Room permissions by users id
-  List<String> get roomPermissions;
+  Set<String> get roomPermissions;
   @override
   @JsonKey(ignore: true)
   _$$RoomEntityDtosImplCopyWith<_$RoomEntityDtosImpl> get copyWith =>

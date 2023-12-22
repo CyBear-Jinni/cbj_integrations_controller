@@ -16,8 +16,6 @@ import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_con
 import 'package:cbj_integrations_controller/infrastructure/node_red/node_red_repository.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/area_type_with_device_type_preset.dart';
 import 'package:dartz/dartz.dart';
-import 'package:kt_dart/collection.dart';
-import 'package:kt_dart/kt.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'package:cbj_integrations_controller/infrastructure/scenes/scene_repository.dart';
@@ -32,7 +30,7 @@ abstract class ISceneCbjRepository {
   /// Setting up all scenes from db
   Future<void> setUpAllFromDb();
 
-  Future<List<SceneCbjEntity>> getAllScenesAsList();
+  Future<Set<SceneCbjEntity>> getAllScenesAsList();
 
   Future<Map<String, SceneCbjEntity>> getAllScenesAsMap();
 
@@ -56,7 +54,7 @@ abstract class ISceneCbjRepository {
   /// Get entity and return the full MQTT path to it
   Future<String> getFullMqttPathOfScene(SceneCbjEntity sceneCbj);
 
-  Stream<Either<SceneCbjFailure, KtList<SceneCbjEntity>>> watchAllScenes();
+  Stream<Either<SceneCbjFailure, Set<SceneCbjEntity>>> watchAllScenes();
 
   /// Sending the new scene to the hub to get added
   Future<Either<SceneCbjFailure, SceneCbjEntity>> addOrUpdateNewSceneInHub(
@@ -65,14 +63,14 @@ abstract class ISceneCbjRepository {
 
   /// Activate action of all scene list
   Future<Either<SceneCbjFailure, Unit>> activateScenes(
-    KtList<SceneCbjEntity> scenesList,
+    Set<SceneCbjEntity> scenesList,
   );
 
   /// Sending the new scene to the hub to get added
   Future<Either<SceneCbjFailure, SceneCbjEntity>>
       addOrUpdateNewSceneInHubFromDevicesPropertyActionList(
     String sceneName,
-    List<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
+    Set<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         smartDevicesWithActionToAdd,
     AreaPurposesTypes areaPurposesTypes,
   );
@@ -81,16 +79,16 @@ abstract class ISceneCbjRepository {
   /// actions for that area type
   Future<Either<SceneCbjFailure, Unit>>
       addDevicesToMultipleScenesAreaTypeWithPreSetActions({
-    required List<String> devicesId,
-    required List<String> scenesId,
-    required List<String> areaTypes,
+    required Set<String> devicesId,
+    required Set<String> scenesId,
+    required Set<String> areaTypes,
   });
 
   /// Will add all the devices to area scene, for each device will use the preselected
   /// actions for that area type
   Future<Either<SceneCbjFailure, SceneCbjEntity>>
       addDevicesToSceneAreaTypeWithPreSetActions({
-    required List<String> devicesId,
+    required Set<String> devicesId,
     required String sceneId,
     required AreaPurposesTypes areaType,
   });
@@ -102,7 +100,7 @@ abstract class ISceneCbjRepository {
 
   Future<void> initiateHubConnection();
 
-  BehaviorSubject<KtList<SceneCbjEntity>>
+  BehaviorSubject<Set<SceneCbjEntity>>
       scenesResponseFromTheHubStreamController =
-      BehaviorSubject<KtList<SceneCbjEntity>>();
+      BehaviorSubject<Set<SceneCbjEntity>>();
 }

@@ -37,7 +37,7 @@ class EspHomeHelpers {
     return tempEspHomeNodeDeviceId;
   }
 
-  static Future<List<EspHomeDeviceEntityObject>> retrieveOnlyNewEntities({
+  static Future<Set<EspHomeDeviceEntityObject>> retrieveOnlyNewEntities({
     required String mDnsName,
     required String devicePassword,
     String? espHomeDeviceNodeId,
@@ -50,14 +50,14 @@ class EspHomeHelpers {
         );
 
     /// 2. Get all entities of this device
-    final List<EspHomeDeviceEntityObject> allEntities =
+    final Set<EspHomeDeviceEntityObject> allEntities =
         await EspHomeNodeRedServerApiCalls.getEspHomeDeviceEntities(
       espHomeDeviceNodeIdResult,
     );
 
     /// 3. Compere device entities with already added entities to retrieve
     ///  only the new once
-    final List<EspHomeDeviceEntityObject> tempAllEntities = [];
+    final Set<EspHomeDeviceEntityObject> tempAllEntities = {};
 
     for (final EspHomeDeviceEntityObject entity in allEntities) {
       if (!EspHomeConnectorConjecture()
@@ -86,7 +86,7 @@ class EspHomeHelpers {
     );
 
     /// Make sure we add only new entities
-    final List<EspHomeDeviceEntityObject> entitiesList =
+    final Set<EspHomeDeviceEntityObject> entitiesList =
         await retrieveOnlyNewEntities(
       mDnsName: mdnsName,
       devicePassword: devicePassword,
@@ -97,7 +97,7 @@ class EspHomeHelpers {
       return HashMap();
     }
 
-    // final List<DeviceEntityBase> deviceEntityList = [];
+    // final Set<DeviceEntityBase> deviceEntityList = {};
 
     // final EspHomeNodeRedApi espHomeNodeRedApi = EspHomeNodeRedApi(
     //   repository: getIt<NodeRedRepository>(),
@@ -125,7 +125,7 @@ class EspHomeHelpers {
       if (espHomeDeviceEntityObject.type == 'Light') {
         // TODO: Add support for more light types, I think the type is stored in supportedColorModList
         // final List supportedColorModList = espHomeDeviceEntityObject
-        //     .config['supportedColorModesList'] as List<dynamic>;
+        //     .config['supportedColorModesList'] as Set<dynamic>;
         // if (supportedColorModList.first == 1) {}
         final String deviceCbjUniqueId =
             espHomeDeviceEntityObject.config['uniqueId'] as String;

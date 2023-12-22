@@ -56,17 +56,16 @@ class HubClientDemo {
     /// Discovered Room
 
     final RoomEntity allRemoteCommandsRoomDiscovered = RoomEntity(
-      uniqueId:
-          RoomUniqueId.fromUniqueString('00000000-0000-0000-0000-000000000000'),
+      uniqueId: RoomUniqueId.discovered(),
       cbjEntityName: RoomDefaultName('Discovered'),
-      roomTypes: RoomTypes(const []),
+      roomTypes: RoomTypes(const {}),
       roomDevicesId:
-          RoomDevicesId(const ['65d84b10-434d-11ed-817a-7d350fb52f91']),
-      roomScenesId: RoomScenesId(const []),
-      roomRoutinesId: RoomRoutinesId(const []),
-      roomBindingsId: RoomBindingsId(const []),
-      roomMostUsedBy: RoomMostUsedBy(const []),
-      roomPermissions: RoomPermissions(const []),
+          RoomDevicesId(const {'65d84b10-434d-11ed-817a-7d350fb52f91'}),
+      roomScenesId: RoomScenesId(const {}),
+      roomRoutinesId: RoomRoutinesId(const {}),
+      roomBindingsId: RoomBindingsId(const {}),
+      roomMostUsedBy: RoomMostUsedBy(const {}),
+      roomPermissions: RoomPermissions(const {}),
       background: RoomBackground(
         'https://images.pexels.com/photos/459654/pexels-photo-459654.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       ),
@@ -87,23 +86,23 @@ class HubClientDemo {
       uniqueId:
           RoomUniqueId.fromUniqueString('23deb7f0-4193-11ed-9d1c-5747056d7848'),
       cbjEntityName: RoomDefaultName('Guy Room'),
-      roomTypes: RoomTypes([
+      roomTypes: RoomTypes({
         AreaPurposesTypes.bedroom.value.toString(),
         AreaPurposesTypes.studyRoom.value.toString(),
         AreaPurposesTypes.workRoom.value.toString(),
         AreaPurposesTypes.videoGames.value.toString(),
-      ]),
-      roomDevicesId: RoomDevicesId(const [
+      }),
+      roomDevicesId: RoomDevicesId(const {
         'a31523m6-463s-32ge-7426-g33c642r7m25',
         'c90137f2-419b-11ed-8246-e17a279f4d89',
         '96386cd0-419b-11ed-8246-e17a279f4d89',
-      ]),
+      }),
       roomScenesId:
-          RoomScenesId(const ['01bd6880-419b-11ed-af10-f75196d26a5e']),
-      roomRoutinesId: RoomRoutinesId(const []),
-      roomBindingsId: RoomBindingsId(const []),
-      roomMostUsedBy: RoomMostUsedBy(const []),
-      roomPermissions: RoomPermissions(const []),
+          RoomScenesId(const {'01bd6880-419b-11ed-af10-f75196d26a5e'}),
+      roomRoutinesId: RoomRoutinesId(const {}),
+      roomBindingsId: RoomBindingsId(const {}),
+      roomMostUsedBy: RoomMostUsedBy(const {}),
+      roomPermissions: RoomPermissions(const {}),
       background: RoomBackground(
         'https://images.pexels.com/photos/459654/pexels-photo-459654.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       ),
@@ -124,19 +123,19 @@ class HubClientDemo {
       uniqueId:
           RoomUniqueId.fromUniqueString('38b45780-419c-11ed-bce9-8dc09da0062f'),
       cbjEntityName: RoomDefaultName('Outside'),
-      roomTypes: RoomTypes([
+      roomTypes: RoomTypes({
         AreaPurposesTypes.bedroom.value.toString(),
         AreaPurposesTypes.studyRoom.value.toString(),
         AreaPurposesTypes.workRoom.value.toString(),
         AreaPurposesTypes.livingRoom.value.toString(),
-      ]),
+      }),
       roomDevicesId:
-          RoomDevicesId(const ['gcvweg3y-bv2s-cvwe-bdmf-7h4f3f2dw2d1']),
-      roomScenesId: RoomScenesId(const []),
-      roomRoutinesId: RoomRoutinesId(const []),
-      roomBindingsId: RoomBindingsId(const []),
-      roomMostUsedBy: RoomMostUsedBy(const []),
-      roomPermissions: RoomPermissions(const []),
+          RoomDevicesId(const {'gcvweg3y-bv2s-cvwe-bdmf-7h4f3f2dw2d1'}),
+      roomScenesId: RoomScenesId(const {}),
+      roomRoutinesId: RoomRoutinesId(const {}),
+      roomBindingsId: RoomBindingsId(const {}),
+      roomMostUsedBy: RoomMostUsedBy(const {}),
+      roomPermissions: RoomPermissions(const {}),
       background: RoomBackground(
         'https://images.pexels.com/photos/459654/pexels-photo-459654.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       ),
@@ -157,22 +156,22 @@ class HubClientDemo {
       uniqueId:
           RoomUniqueId.fromUniqueString('gai23tds-f3t7-vxa2-dvnn-hykkjty8567d'),
       cbjEntityName: RoomDefaultName('Ami Room'),
-      roomTypes: RoomTypes([
+      roomTypes: RoomTypes({
         AreaPurposesTypes.bedroom.value.toString(),
         AreaPurposesTypes.studyRoom.value.toString(),
         AreaPurposesTypes.workRoom.value.toString(),
         AreaPurposesTypes.livingRoom.value.toString(),
-      ]),
-      roomDevicesId: RoomDevicesId(const [
+      }),
+      roomDevicesId: RoomDevicesId(const {
         '7189ed76-4351-11ed-b249-63fd7e165c16',
         'sfds344t-sdf3-fd3d-24s4-bd2sdf3n5rfd',
         'wfdsg2w6-fgde-234s-vbz2-b234jmgvbfd6',
-      ]),
-      roomScenesId: RoomScenesId(const []),
-      roomRoutinesId: RoomRoutinesId(const []),
-      roomBindingsId: RoomBindingsId(const []),
-      roomMostUsedBy: RoomMostUsedBy(const []),
-      roomPermissions: RoomPermissions(const []),
+      }),
+      roomScenesId: RoomScenesId(const {}),
+      roomRoutinesId: RoomRoutinesId(const {}),
+      roomBindingsId: RoomBindingsId(const {}),
+      roomMostUsedBy: RoomMostUsedBy(const {}),
+      roomPermissions: RoomPermissions(const {}),
       background: RoomBackground(
         'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       ),
