@@ -1,7 +1,9 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:dartz/dartz.dart';
@@ -9,8 +11,8 @@ import 'package:uuid/uuid.dart';
 
 /// We are using the term entity to describe individual integrations on a single device
 /// So for example switch with three buttons will have three entities
-abstract class DeviceEntityAbstract {
-  DeviceEntityAbstract({
+abstract class DeviceEntityBase {
+  DeviceEntityBase({
     required this.uniqueId,
     required this.entityUniqueId,
     required this.cbjDeviceVendor,
@@ -124,60 +126,70 @@ abstract class DeviceEntityAbstract {
   /// Unique id that cbj creates for the device that the entity is stored on
   CoreUniqueId deviceCbjUniqueId;
 
-  String getDeviceId();
+  String get getCbjDeviceId => deviceCbjUniqueId.getOrCrash();
 
   /// Copy with device state to waiting or ack
-  DeviceEntityAbstract copyWithDeviceState(EntityStateGRPC entityStateGRPC) {
+  DeviceEntityBase copyWithDeviceState(EntityStateGRPC entityStateGRPC) {
     return this;
   }
 
   /// Copy with device action
-  DeviceEntityAbstract copyWithDeviceAction(EntityActions deviceActions) {
+  DeviceEntityBase copyWithDeviceAction(EntityActions deviceActions) {
     return this;
   }
 
   /// Copy with stateMassage
-  DeviceEntityAbstract copyWithStateMassage(String stateMassage) {
+  DeviceEntityBase copyWithStateMassage(String stateMassage) {
     return this;
   }
 
   /// Copy with senderDeviceOs
-  DeviceEntityAbstract copyWithSenderDeviceOs(String senderDeviceOs) {
+  DeviceEntityBase copyWithSenderDeviceOs(String senderDeviceOs) {
     return this;
   }
 
   /// Copy with deviceSenderDeviceModel
-  DeviceEntityAbstract copyWithDeviceSenderDeviceModel(
+  DeviceEntityBase copyWithDeviceSenderDeviceModel(
     String deviceSenderDeviceModel,
   ) {
     return this;
   }
 
   /// Copy with currentUserId
-  DeviceEntityAbstract copyWithSenderId(String userId) {
+  DeviceEntityBase copyWithSenderId(String userId) {
     return this;
   }
 
   /// Convert the device to the a dtos object in the infrastructure layer
-  DeviceEntityDtoAbstract toInfrastructure() {
-    return DeviceEntityDtoAbstract();
+  DeviceEntityDtoBase toInfrastructure() {
+    return DeviceEntityDtoBase();
   }
 
   Future<Either<CoreFailure, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    dynamic value,
+    HashMap<ActionValues, dynamic>? value,
   }) async {
     icLogger.e(
-      'executeAction is not implemented for device ${cbjDeviceVendor.getOrCrash()} ${entityTypes.getOrCrash()}',
+      'ExecuteAction is not implemented for device $_currentDeviceInfo '
+      'property ${property.name} action ${action.name} value $value',
     );
     return const Left(CoreFailure.unexpected());
   }
 
-  /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
-  });
+  String get _currentDeviceInfo =>
+      'cbjDeviceVendor ${cbjDeviceVendor.getOrCrash()}  entityTypes ${entityTypes.getOrCrash()}';
+
+  Either<CoreFailure<String>, Unit> pleaseOverrideMessage() {
+    icLogger.w(
+      'Please override this method in the non generic implementation $_currentDeviceInfo',
+    );
+    return left(
+      const CoreFailure.actionExcecuter(
+        failedValue: 'Action need to get overide',
+      ),
+    );
+  }
 
   /// Return a list of all valid actions for this device
   List<String> getAllValidActions();
@@ -208,9 +220,24 @@ abstract class DeviceEntityAbstract {
     }
     return true;
   }
+
+  /// From 100-0 will be converted to 1.0-0.0
+  double backToDecimalPointBrightness(int value) {
+    const int oldMax = 100;
+    const int oldMin = 0;
+    const int oldRange = oldMax - oldMin;
+
+    const double newMax = 1.0;
+    const double newMin = 0;
+    const double newRange = newMax - newMin;
+
+    final double newValue = (((value - oldMin) * newRange) / oldRange) + newMin;
+
+    return newValue;
+  }
 }
 
-class DeviceEntityNotAbstract extends DeviceEntityAbstract {
+class DeviceEntityNotAbstract extends DeviceEntityBase {
   DeviceEntityNotAbstract()
       : super(
           uniqueId: CoreUniqueId(),
@@ -227,7 +254,7 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
           deviceOriginalName: DeviceOriginalName(
             'Device original name that entity is exists on is empty',
           ),
-          entityTypes: EntityType(EntityTypes.light.toString()),
+          entityTypes: EntityType.type(EntityTypes.light),
           senderDeviceModel: DeviceSenderDeviceModel('a'),
           senderDeviceOs: DeviceSenderDeviceOs('b'),
           senderId: DeviceSenderId(),
@@ -252,27 +279,14 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
         );
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
-    return DeviceEntityDtoAbstract();
-  }
-
-  @override
-  String getDeviceId() {
-    throw UnimplementedError();
+  DeviceEntityDtoBase toInfrastructure() {
+    return DeviceEntityDtoBase();
   }
 
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {
     return [];
-  }
-
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
-  }) {
-    // TODO: implement executeDeviceAction
-    throw UnimplementedError();
   }
 
   @override
@@ -286,54 +300,8 @@ class DeviceEntityNotAbstract extends DeviceEntityAbstract {
   }
 }
 
-// class GenericGenericUnsupportedDE extends DeviceEntityAbstract {
-//   GenericGenericUnsupportedDE({
-//     required super.uniqueId,
-//     required super.entityUniqueId,
-//         required super.cbjDeviceVendor,
-    // required super.deviceVendor,
-    // required super.deviceNetworkLastUpdate,
-//     required super.entityTypes,
-//     required super.cbjEntityName,
-//     required super.stateMassage,
-//     required super.senderDeviceOs,
-//     required super.senderDeviceModel,
-//     required super.senderId,
-//     required super.compUuid,
-//     required super.entityStateGRPC,
-//     required super.entityOriginalName,
-//     required super.deviceOriginalName,
-//     required super.powerConsumption,
-//     required super.deviceUniqueId,
-//     required super.devicePort,
-//     required super.deviceLastKnownIp,
-//     required super.deviceHostName,
-//     required super.deviceMdns,
-//     required super.srvResourceRecord,
-//     required super.ptrResourceRecord,
-//     required super.devicesMacAddress,
-//     required super.entityKey,
-//     required super.requestTimeStamp,
-//     required super.lastResponseFromDeviceTimeStamp,
-//     required super.deviceCbjUniqueId,
-//   });
-
-//   @override
-//   Future<Either<CoreFailure, Unit>> executeDeviceAction({
-//     required DeviceEntityAbstract newEntity,
-//   }) async {
-//     return right(unit);
-//   }
-
-//   @override
-//   List<String> getAllValidActions() => [];
-
-//   @override
-//   String getDeviceId() => uniqueId.getOrCrash();
-
-//   @override
-//   List<EntityiesPropertiyes> getListOfPropertiesToChange() => [];
-
-//   @override
-//   bool replaceActionIfExist(String action) => false;
-// }
+enum ActionValues {
+  url,
+  brightness,
+  ;
+}

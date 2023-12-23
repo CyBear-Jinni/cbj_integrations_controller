@@ -13,7 +13,7 @@ import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:dartz/dartz.dart';
 
 part 'package:cbj_integrations_controller/infrastructure/room/saved_rooms_repo.dart';
@@ -33,7 +33,7 @@ abstract class ISavedRoomsRepo {
 
   /// Check if the device exist in one of the rooms, if not will add it to
   /// Discovered room
-  void addDeviceToRoomDiscoveredIfNotExist(DeviceEntityAbstract deviceEntity);
+  void addDeviceToRoomDiscoveredIfNotExist(DeviceEntityBase deviceEntity);
 
   /// Check if the scene exist in one of the rooms, if not will add it to
   /// Discovered room

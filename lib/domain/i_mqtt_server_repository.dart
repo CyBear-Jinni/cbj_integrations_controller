@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 // ignore: implementation_imports
@@ -64,7 +64,7 @@ abstract class IMqttServerRepository {
 
   /// Publish all device properties
   Future<void> publishDeviceEntity(
-    DeviceEntityAbstract deviceEntityDtoAbstract,
+    DeviceEntityBase deviceEntityDtoAbstract,
   );
 
   /// Read mqtt last massage in given topic
@@ -83,12 +83,12 @@ abstract class IMqttServerRepository {
   /// Post object from the Hub to the app through the mqtt, it insures that
   /// it is posted correctly, right path and right way to post each type
   Future<void> postToAppMqtt({
-    required DeviceEntityAbstract entityFromTheHub,
+    required DeviceEntityBase entityFromTheHub,
   });
 
   /// Post smart device from the Hub to the app through the mqtt, it insures that
   /// it is posted correctly, right path and right way to post each type
   Future<void> postSmartDeviceToAppMqtt({
-    required DeviceEntityAbstract entityFromTheHub,
+    required DeviceEntityBase entityFromTheHub,
   });
 }

@@ -1,8 +1,9 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_device_dtos.dart';
@@ -11,7 +12,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericBlinds that exist inside a computer, the
 /// implementations will be actual GenericBlinds like blinds blindss and more
-class GenericBlindsDE extends DeviceEntityAbstract {
+class GenericBlindsDE extends DeviceEntityBase {
   /// All public field of GenericBlinds entity
   GenericBlindsDE({
     required super.uniqueId,
@@ -43,7 +44,7 @@ class GenericBlindsDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.blindsSwitchState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.blinds.toString()),
+          entityTypes: EntityType.type(EntityTypes.blinds),
         );
 
   /// Empty instance of GenericBlindsEntity
@@ -103,9 +104,6 @@ class GenericBlindsDE extends DeviceEntityAbstract {
   //     .fold((f) => some(f), (_) => none());
   // }
 
-  @override
-  String getDeviceId() => uniqueId.getOrCrash();
-
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {
@@ -113,7 +111,7 @@ class GenericBlindsDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericBlindsDeviceDtos(
       deviceDtoClass: (GenericBlindsDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -149,48 +147,38 @@ class GenericBlindsDE extends DeviceEntityAbstract {
     );
   }
 
-  /// Please override the following methods
   @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    HashMap<ActionValues, dynamic>? value,
   }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
+    switch (action) {
+      case EntityActions.moveUp:
+        return moveUpBlinds();
+      case EntityActions.stop:
+        return stopBlinds();
+      case EntityActions.moveDown:
+        return moveDownBlinds();
+      default:
+        break;
+    }
+
+    return super
+        .executeAction(property: property, action: action, value: value);
   }
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> moveUpBlinds() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> moveUpBlinds() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> stopBlinds() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> stopBlinds() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> moveDownBlinds() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> moveDownBlinds() async =>
+      pleaseOverrideMessage();
 
   @override
   bool replaceActionIfExist(String action) {

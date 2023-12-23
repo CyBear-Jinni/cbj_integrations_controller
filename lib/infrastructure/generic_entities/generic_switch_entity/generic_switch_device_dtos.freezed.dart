@@ -589,7 +589,7 @@ class _$GenericSwitchDeviceDtosImpl extends _GenericSwitchDeviceDtos {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GenericSwitchDeviceDtosImpl &&

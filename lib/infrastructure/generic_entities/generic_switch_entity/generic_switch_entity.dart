@@ -1,8 +1,9 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_device_dtos.dart';
@@ -11,7 +12,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericSwitch that exist inside a computer, the
 /// implementations will be actual GenericSwitch like blinds switchs and more
-class GenericSwitchDE extends DeviceEntityAbstract {
+class GenericSwitchDE extends DeviceEntityBase {
   /// All public field of GenericSwitch entity
   GenericSwitchDE({
     required super.uniqueId,
@@ -43,7 +44,7 @@ class GenericSwitchDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.switchState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.switch_.toString()),
+          entityTypes: EntityType.type(EntityTypes.switch_),
         );
 
   /// Empty instance of GenericSwitchEntity
@@ -102,9 +103,6 @@ class GenericSwitchDE extends DeviceEntityAbstract {
   //     .fold((f) => some(f), (_) => none());
   // }
 
-  @override
-  String getDeviceId() => uniqueId.getOrCrash();
-
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {
@@ -112,7 +110,7 @@ class GenericSwitchDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericSwitchDeviceDtos(
       deviceDtoClass: (GenericSwitchDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -148,38 +146,31 @@ class GenericSwitchDE extends DeviceEntityAbstract {
     );
   }
 
-  /// Please override the following methods
   @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    HashMap<ActionValues, dynamic>? value,
   }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
+    switch (action) {
+      case EntityActions.on:
+        return turnOnSwitch();
+      case EntityActions.off:
+        return turnOffSwitch();
+      default:
+        break;
+    }
+    return super
+        .executeAction(property: property, action: action, value: value);
   }
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOnSwitch() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOnSwitch() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOffSwitch() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOffSwitch() async =>
+      pleaseOverrideMessage();
 
   @override
   bool replaceActionIfExist(String action) {

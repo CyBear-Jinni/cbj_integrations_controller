@@ -3,7 +3,7 @@ import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/bed_room_area_actions.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/outside_area_actions.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/study_room_area_actions.dart';
@@ -19,12 +19,12 @@ class AreaTypeWithDeviceTypePreset {
     required AreaPurposesTypes areaPurposeType,
     required String brokerNodeId,
   }) async {
-    final Either<LocalDbFailures, DeviceEntityAbstract> dTemp =
+    final Either<LocalDbFailures, DeviceEntityBase> dTemp =
         await ISavedDevicesRepo.instance.getDeviceById(deviceId);
     if (dTemp.isLeft()) {
       return left(const SceneCbjFailure.unexpected());
     }
-    late DeviceEntityAbstract deviceEntity;
+    late DeviceEntityBase deviceEntity;
 
     dTemp.fold((l) => null, (r) {
       deviceEntity = r;

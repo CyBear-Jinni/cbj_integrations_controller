@@ -70,26 +70,4 @@ class GenericDimmableLightBrightness extends ValueObjectCore<String> {
 
     return newValue.toInt();
   }
-
-  /// From 100-0 will be converted to 1.0-0.0
-  double backToDecimalPointBrightness() {
-    return value.fold((l) {
-      throw Exception('Number is not valid $l');
-    }, (r) {
-      final int number = int.parse(r);
-
-      const int oldMax = 100;
-      const int oldMin = 0;
-      const int oldRange = oldMax - oldMin;
-
-      const double newMax = 1.0;
-      const double newMin = 0;
-      const double newRange = newMax - newMin;
-
-      final double newValue =
-          (((number - oldMin) * newRange) / oldRange) + newMin;
-
-      return newValue;
-    });
-  }
 }

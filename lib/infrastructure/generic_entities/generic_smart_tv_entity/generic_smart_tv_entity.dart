@@ -1,8 +1,9 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_tv_entity/generic_smart_tv_device_dtos.dart';
@@ -11,7 +12,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericSmartTv that exist inside a computer, the
 /// implementations will be actual GenericSmartTv like blinds smartTvs and more
-class GenericSmartTvDE extends DeviceEntityAbstract {
+class GenericSmartTvDE extends DeviceEntityBase {
   /// All public field of GenericSmartTv entity
   GenericSmartTvDE({
     required super.uniqueId,
@@ -47,7 +48,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
     this.skip,
     this.volume,
   }) : super(
-          entityTypes: EntityType(EntityTypes.smartTV.toString()),
+          entityTypes: EntityType.type(EntityTypes.smartTV),
         );
 
   /// Empty instance of GenericSmartTvEntity
@@ -90,29 +91,11 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
   GenericSmartTvSkipBackOrForward? skip;
   GenericSmartTvVolume? volume;
 
-  //
-  // /// Will return failure if any of the fields failed or return unit if fields
-  // /// have legit values
-  Option<CoreFailure<dynamic>> get failureOption =>
-      cbjEntityName.value.fold((f) => some(f), (_) => none());
-  //
-  // return body.failureOrUnit
-  //     .andThen(todos.failureOrUnit)
-  //     .andThen(
-  //       todos
-  //           .getOrCrash()
-  //           // Getting the failureOption from the TodoItem ENTITY - NOT a failureOrUnit from a VALUE OBJECT
-  //           .map((todoItem) => todoItem.failureOption)
-  //           .filter((o) => o.isSome())
-  //           // If we can't get the 0th element, the list is empty. In such a case, it's valid.
-  //           .getOrElse(0, (_) => none())
-  //           .fold(() => right(unit), (f) => left(f)),
-  //     )
-  //     .fold((f) => some(f), (_) => none());
-  // }
+  /// Precent of the volume up/down change
+  static const int volumeChangePrecent = 10;
+  static const double volumeMax = 1;
 
-  @override
-  String getDeviceId() => uniqueId.getOrCrash();
+  static const double _volumeChange = (volumeChangePrecent * volumeMax) / 100;
 
   /// Return a list of all valid actions for this device
   @override
@@ -121,7 +104,7 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericSmartTvDeviceDtos(
       deviceDtoClass: (GenericSmartTvDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -161,120 +144,102 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
     );
   }
 
-  /// Please override the following methods
   @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    HashMap<ActionValues, dynamic>? value,
   }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
+    switch (action) {
+      case EntityActions.on:
+        return turnOnSmartTv();
+      case EntityActions.off:
+        return turnOffSmartTv();
+      case EntityActions.open:
+        final dynamic url = value?[ActionValues.url];
+        if (url is! String) {
+          return const Left(CoreFailure.unexpected());
+        }
+        if (url == 'netflix') {
+          return openApp(OpenAppOnSmartTvEnum.netflix);
+        }
+        return sendUrlToDevice(url);
+      case EntityActions.pausePlay:
+        return togglePausePlay();
+      case EntityActions.pause:
+        return togglePause();
+      case EntityActions.play:
+        return togglePlay();
+      case EntityActions.stop:
+        return toggleStop();
+      case EntityActions.skipBackward:
+        return skipBackward();
+      case EntityActions.skipForeword:
+        return skipForeword();
+      case EntityActions.close:
+        return closeApp();
+      case EntityActions.volumeUp:
+        return volumeUp(GenericSmartTvDE._volumeChange);
+      case EntityActions.volumeDown:
+        return volumeDown(GenericSmartTvDE._volumeChange);
+      default:
+        break;
+    }
+
+    return super
+        .executeAction(property: property, action: action, value: value);
   }
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOnSmartTv() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> openApp(OpenAppOnSmartTvEnum value) async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOffSmartTv() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> volumeUp(double value) async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> sendUrlToDevice(String newUrl) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> volumeDown(double value) async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> togglePausePlay(
-    String toggleNewState,
-  ) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOnSmartTv() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> togglePause() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOffSmartTv() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> togglePlay() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> sendUrlToDevice(String newUrl) async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> toggleStop() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> togglePausePlay() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> queueNext() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> togglePause() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> queuePrev() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> togglePlay() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> closeApp() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> toggleStop() async =>
+      pleaseOverrideMessage();
+
+  /// Please override the following methods
+  Future<Either<CoreFailure, Unit>> skipForeword() async =>
+      pleaseOverrideMessage();
+
+  /// Please override the following methods
+  Future<Either<CoreFailure, Unit>> skipBackward() async =>
+      pleaseOverrideMessage();
+
+  /// Please override the following methods
+  Future<Either<CoreFailure, Unit>> closeApp() async => pleaseOverrideMessage();
 
   @override
   bool replaceActionIfExist(String action) {
@@ -294,4 +259,9 @@ class GenericSmartTvDE extends DeviceEntityAbstract {
       EntityProperties.volume,
     ];
   }
+}
+
+enum OpenAppOnSmartTvEnum {
+  netflix,
+  ;
 }

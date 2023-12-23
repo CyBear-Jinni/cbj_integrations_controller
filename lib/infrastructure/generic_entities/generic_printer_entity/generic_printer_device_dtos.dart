@@ -1,5 +1,5 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_printer_entity/generic_printer_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_printer_entity/generic_printer_value_objects.dart';
@@ -10,7 +10,7 @@ part 'generic_printer_device_dtos.g.dart';
 
 @freezed
 abstract class GenericPrinterDeviceDtos
-    implements _$GenericPrinterDeviceDtos, DeviceEntityDtoAbstract {
+    implements _$GenericPrinterDeviceDtos, DeviceEntityDtoBase {
   factory GenericPrinterDeviceDtos({
     // @JsonKey(ignore: true)
     required String id,
@@ -96,7 +96,7 @@ abstract class GenericPrinterDeviceDtos
   final String deviceDtoClassInstance = (GenericPrinterDeviceDtos).toString();
 
   @override
-  DeviceEntityAbstract toDomain() {
+  DeviceEntityBase toDomain() {
     return GenericPrinterDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),

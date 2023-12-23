@@ -1,55 +1,45 @@
+import 'dart:collection';
+import 'dart:convert';
+
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_api/tasmota_ip_api_components.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_switch/tasmota_ip_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
+import 'package:http/http.dart';
 
 class TasmotaIpHelpers {
-  static Future<List<DeviceEntityAbstract>> addDiscoveredDevice({
-    required DeviceEntityAbstract entity,
-    required List<CoreUniqueId?> uniqueDeviceIdList,
-    required List<String> componentInDeviceNumberLabelList,
-  }) async {
-    final List<CoreUniqueId> uniqueDeviceIdTempList = [];
+  static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
+    DeviceEntityBase entity,
+  ) async {
+    // TODO: Create list of CoreUniqueId and populate it with all the
+    //  components saved devices that already exist
+    final List<String> componentsInDevice =
+        await getAllComponentsOfDevice(entity);
 
-    for (int counter = 0;
-        counter < componentInDeviceNumberLabelList.length;
-        counter++) {
-      if (counter < uniqueDeviceIdList.length &&
-          uniqueDeviceIdList[counter] != null) {
-        uniqueDeviceIdTempList.add(uniqueDeviceIdList[counter]!);
-      } else {
-        uniqueDeviceIdTempList.add(CoreUniqueId());
-      }
-    }
+    final HashMap<String, DeviceEntityBase> entityToAdd = HashMap();
 
-    final List<DeviceEntityAbstract> devicesToAddTemp = [];
-
-    for (int counter = 0;
-        counter < componentInDeviceNumberLabelList.length;
-        counter++) {
-      final String componentInDeviceNumberLabel =
-          componentInDeviceNumberLabelList[counter];
-      final CoreUniqueId coreUniqueIdTemp = uniqueDeviceIdTempList[counter];
-      final DeviceEntityAbstract? deviceEntity = await addDeviceByTasmotaType(
+    for (int counter = 0; counter < componentsInDevice.length; counter++) {
+      final String componentInDeviceNumberLabel = componentsInDevice[counter];
+      final DeviceEntityBase? deviceEntity = await addDeviceByTasmotaType(
         componentInDeviceNumberLabel: componentInDeviceNumberLabel,
-        coreUniqueIdTemp: coreUniqueIdTemp,
         entity: entity,
       );
       if (deviceEntity != null) {
-        devicesToAddTemp.add(deviceEntity);
+        entityToAdd.addEntries([
+          MapEntry(deviceEntity.deviceCbjUniqueId.getOrCrash(), deviceEntity),
+        ]);
       }
     }
 
-    return devicesToAddTemp;
+    return entityToAdd;
   }
 
-  static Future<DeviceEntityAbstract?> addDeviceByTasmotaType({
+  static Future<DeviceEntityBase?> addDeviceByTasmotaType({
     required String componentInDeviceNumberLabel,
-    required DeviceEntityAbstract entity,
-    required CoreUniqueId coreUniqueIdTemp,
+    required DeviceEntityBase entity,
   }) async {
     final String? deviceHostName = entity.deviceHostName.getOrCrash();
 
@@ -69,7 +59,8 @@ class TasmotaIpHelpers {
     }
     final List<String>? componentInDeviceUiLabelAndComment =
         gpioOverviewTasmota[componentInDeviceNumberLabelAsInt];
-
+    final String deviceCbjUniqueId =
+        '$deviceHostName-$componentInDeviceNumberLabel}';
     if (componentInDeviceNumberLabelAsInt == 0) {
       // UI Label: None
       return null;
@@ -86,7 +77,7 @@ class TasmotaIpHelpers {
         componentInDeviceNumberLabelAsInt <= 251) {
       // UI Label: Relay
       return TasmotaIpSwitchEntity(
-        uniqueId: coreUniqueIdTemp,
+        uniqueId: entity.uniqueId,
         entityUniqueId: EntityUniqueId(
           '$deviceHostName-$componentInDeviceNumberLabel}',
         ),
@@ -99,31 +90,28 @@ class TasmotaIpHelpers {
         deviceOriginalName: DeviceOriginalName(
           '$deviceHostName-${componentInDeviceUiLabelAndComment[0]}',
         ),
-        entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
-        senderDeviceOs: DeviceSenderDeviceOs('Tasmota'),
-        deviceVendor: DeviceVendor(null),
-        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
-        senderDeviceModel: DeviceSenderDeviceModel('Tasmota'),
-        senderId: DeviceSenderId(),
-        compUuid: DeviceCompUuid('34asdfrsd23gggg'),
-        stateMassage: DeviceStateMassage('Hello World'),
-        powerConsumption: DevicePowerConsumption('0'),
+        entityStateGRPC: entity.entityStateGRPC,
+        senderDeviceOs: entity.senderDeviceOs,
+        deviceVendor: entity.deviceVendor,
+        deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,
+        senderDeviceModel: entity.senderDeviceModel,
+        senderId: entity.senderId,
+        compUuid: entity.compUuid,
+        stateMassage: entity.stateMassage,
+        powerConsumption: entity.powerConsumption,
         switchState: GenericSwitchSwitchState(EntityActions.off.toString()),
         deviceHostName: DeviceHostName(deviceHostName),
-        deviceLastKnownIp:
-            DeviceLastKnownIp(entity.devicesMacAddress.getOrCrash()),
-        deviceUniqueId: DeviceUniqueId('0'),
-        devicePort: DevicePort('0'),
-        deviceMdns: DeviceMdns('0'),
-        srvResourceRecord: DeviceSrvResourceRecord(),
-        ptrResourceRecord: DevicePtrResourceRecord(),
-        devicesMacAddress: DevicesMacAddress('0'),
-        entityKey: EntityKey('0'),
-        requestTimeStamp: RequestTimeStamp('0'),
-        lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(
-          '$deviceHostName-$componentInDeviceNumberLabel}',
-        ),
+        deviceLastKnownIp: entity.deviceLastKnownIp,
+        deviceUniqueId: entity.deviceUniqueId,
+        devicePort: entity.devicePort,
+        deviceMdns: entity.deviceMdns,
+        srvResourceRecord: entity.srvResourceRecord,
+        ptrResourceRecord: entity.ptrResourceRecord,
+        devicesMacAddress: entity.devicesMacAddress,
+        entityKey: entity.entityKey,
+        requestTimeStamp: entity.requestTimeStamp,
+        lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
+        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
       );
     } else if (componentInDeviceNumberLabelAsInt >= 256 &&
         componentInDeviceNumberLabelAsInt <= 283) {
@@ -140,5 +128,49 @@ class TasmotaIpHelpers {
       'Please add new Tasmota device type ${componentInDeviceUiLabelAndComment![0]}',
     );
     return null;
+  }
+
+  /// Getting all of the components/gpio configuration of the device.
+  /// Doc of all components: https://tasmota.github.io/docs/Components/#tasmota
+  static Future<List<String>> getAllComponentsOfDevice(
+    DeviceEntityBase entity,
+  ) async {
+    final String? deviceIp = entity.devicesMacAddress.getOrCrash();
+    const String getComponentsCommand = 'cm?cmnd=Gpio';
+
+    Map<String, Map<String, String>>? responseJson;
+    final List<String> componentTypeAndName = [];
+
+    try {
+      final Response response =
+          await get(Uri.parse('http://$deviceIp/$getComponentsCommand'));
+      final Map<String, dynamic> temp1ResponseJson =
+          json.decode(response.body) as Map<String, dynamic>;
+
+      final Map<String, Map<String, dynamic>> temp2ResponseJson =
+          temp1ResponseJson.map(
+        (key, value) => MapEntry(key, value as Map<String, dynamic>),
+      );
+
+      responseJson = temp2ResponseJson.map(
+        (key, Map<String, dynamic> value) => MapEntry(
+          key,
+          value.map(
+            (key, value) {
+              final MapEntry<String, String> tempEntry =
+                  MapEntry(key, value.toString());
+              componentTypeAndName.add(key);
+              return tempEntry;
+            },
+          ),
+        ),
+      );
+    } catch (e) {
+      icLogger.e(e);
+    }
+    if (responseJson == null || responseJson.isEmpty) {
+      return [];
+    }
+    return componentTypeAndName;
   }
 }

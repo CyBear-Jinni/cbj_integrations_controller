@@ -1,32 +1,37 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/yeelight/yeelight_1se/yeelight_1se_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
 import 'package:yeedart/yeedart.dart';
 
 class YeelightHelpers {
-  static DeviceEntityAbstract? addDiscoveredDevice({
+  static HashMap<String, DeviceEntityBase> addDiscoveredDevice({
     required DiscoveryResponse yeelightDevice,
-    required DeviceEntityAbstract entity,
+    required DeviceEntityBase entity,
   }) {
+    final HashMap<String, DeviceEntityBase> entitiesMap = HashMap();
+
     String deviceName;
-    if (yeelightDevice.name != null && yeelightDevice.name != '') {
+    if (yeelightDevice.name != null && yeelightDevice.name!.isNotEmpty) {
       deviceName = yeelightDevice.name!;
-    } else if (entity.deviceMdns.getOrCrash() != null) {
+    } else if (entity.deviceMdns.getOrCrash() != null &&
+        entity.deviceMdns.getOrCrash()!.isNotEmpty) {
       deviceName = entity.deviceMdns.getOrCrash()!;
     } else {
       deviceName = 'Yeelight device';
     }
 
     if (yeelightDevice.model == null) {
-      return null;
+      return entitiesMap;
     }
 
-    final DeviceEntityAbstract deviceEntity;
+    final String deviceCbjUniqueId = yeelightDevice.id.toString();
 
-    if (yeelightDevice.model == 'color4') {
-      deviceEntity = Yeelight1SeEntity(
+    if (yeelightDevice.model == 'color4' || yeelightDevice.model == 'colora') {
+      final DeviceEntityBase newEntity = Yeelight1SeEntity(
         uniqueId: entity.uniqueId,
         entityUniqueId: EntityUniqueId(yeelightDevice.id.toString()),
         cbjEntityName: CbjEntityName(deviceName),
@@ -52,8 +57,7 @@ class YeelightHelpers {
         entityKey: entity.entityKey,
         requestTimeStamp: entity.requestTimeStamp,
         lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-        deviceCbjUniqueId:
-            CoreUniqueId.fromUniqueString(yeelightDevice.id.toString()),
+        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
         lightSwitchState:
             GenericRgbwLightSwitchState(yeelightDevice.powered.toString()),
         lightColorTemperature: GenericRgbwLightColorTemperature(
@@ -68,13 +72,13 @@ class YeelightHelpers {
         ),
         lightColorValue: GenericRgbwLightColorValue('1.0'),
       );
+      entitiesMap.addEntries([MapEntry(deviceCbjUniqueId, newEntity)]);
     } else {
       icLogger.i(
         'Please add new Yeelight device type ${yeelightDevice.model}',
       );
-      return null;
     }
 
-    return deviceEntity;
+    return entitiesMap;
   }
 }

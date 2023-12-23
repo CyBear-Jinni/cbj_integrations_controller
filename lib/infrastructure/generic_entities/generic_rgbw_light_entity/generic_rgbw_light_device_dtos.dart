@@ -1,5 +1,5 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
@@ -10,7 +10,7 @@ part 'generic_rgbw_light_device_dtos.g.dart';
 
 @freezed
 abstract class GenericRgbwLightDeviceDtos
-    implements _$GenericRgbwLightDeviceDtos, DeviceEntityDtoAbstract {
+    implements _$GenericRgbwLightDeviceDtos, DeviceEntityDtoBase {
   factory GenericRgbwLightDeviceDtos({
     // @JsonKey(ignore: true)
     required String id,
@@ -106,7 +106,7 @@ abstract class GenericRgbwLightDeviceDtos
   final String deviceDtoClassInstance = (GenericRgbwLightDeviceDtos).toString();
 
   @override
-  DeviceEntityAbstract toDomain() {
+  DeviceEntityBase toDomain() {
     return GenericRgbwLightDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),

@@ -1,5 +1,5 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_ping_entity/generic_ping_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_ping_entity/generic_ping_value_objects.dart';
@@ -10,7 +10,7 @@ part 'generic_ping_device_dtos.g.dart';
 
 @freezed
 abstract class GenericPingDeviceDtos
-    implements _$GenericPingDeviceDtos, DeviceEntityDtoAbstract {
+    implements _$GenericPingDeviceDtos, DeviceEntityDtoBase {
   factory GenericPingDeviceDtos({
     // @JsonKey(ignore: true)
     required String id,
@@ -92,7 +92,7 @@ abstract class GenericPingDeviceDtos
   final String deviceDtoClassInstance = (GenericPingDeviceDtos).toString();
 
   @override
-  DeviceEntityAbstract toDomain() {
+  DeviceEntityBase toDomain() {
     return GenericPingDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),

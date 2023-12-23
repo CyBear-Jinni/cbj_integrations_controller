@@ -1,9 +1,10 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_light/shelly_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_relay_switch/shelly_relay_switch_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
@@ -11,16 +12,20 @@ import 'package:color/color.dart';
 import 'package:shelly/shelly.dart';
 
 class ShellyHelpers {
-  static Future<List<DeviceEntityAbstract>?> addDiscoveredDevice(
-    DeviceEntityAbstract entity,
+  static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
+    DeviceEntityBase entity,
   ) async {
-    final List<DeviceEntityAbstract> deviceEntityList = [];
     final String ip = entity.deviceLastKnownIp.getOrCrash()!;
     final String mDnsName = entity.deviceMdns.getOrCrash()!;
     final String? hostName = entity.deviceHostName.getOrCrash();
+
+    final HashMap<String, DeviceEntityBase> entitiesToAdd = HashMap();
+
     if (hostName == null) {
-      return null;
+      return entitiesToAdd;
     }
+    final String deviceCbjUniqueId = mDnsName;
+    DeviceEntityBase? tempEntity;
     try {
       // TODO: shelly duo bulb needs type that as the time of writing is
       // not supported, bulb + brightness + white temperature (not rgb).
@@ -67,8 +72,7 @@ class ShellyHelpers {
         // ignore: avoid_dynamic_calls
         final bool isOn = bulbLightProp['ison'] as bool;
 
-        final ShellyColorLightEntity shellyColorLightEntity =
-            ShellyColorLightEntity(
+        tempEntity = ShellyColorLightEntity(
           uniqueId: entity.uniqueId,
           entityUniqueId: EntityUniqueId(mDnsName),
           cbjEntityName: entity.cbjEntityName,
@@ -95,7 +99,7 @@ class ShellyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(mDnsName),
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
           lightSwitchState: GenericRgbwLightSwitchState(isOn ? 'on' : 'off'),
           lightColorTemperature:
               GenericRgbwLightColorTemperature(temp.toString()),
@@ -108,7 +112,6 @@ class ShellyHelpers {
           lightColorValue: GenericRgbwLightColorValue(hsvColor.v.toString()),
           bulbMode: shellyApiDeviceAbstract,
         );
-        deviceEntityList.add(shellyColorLightEntity);
       } else if (mDnsName.contains('BulbDuo')) {
         final ShellyApiColorBulb shellyApiDeviceAbstract = ShellyApiColorBulb(
           lastKnownIp: ip,
@@ -138,8 +141,7 @@ class ShellyHelpers {
         // ignore: avoid_dynamic_calls
         final bool isOn = bulbLightProp['ison'] as bool;
 
-        final ShellyColorLightEntity shellyColorLightEntity =
-            ShellyColorLightEntity(
+        tempEntity = ShellyColorLightEntity(
           uniqueId: entity.uniqueId,
           entityUniqueId: EntityUniqueId(mDnsName),
           cbjEntityName: entity.cbjEntityName,
@@ -166,7 +168,7 @@ class ShellyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(mDnsName),
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
           lightSwitchState: GenericRgbwLightSwitchState(isOn ? 'on' : 'off'),
           lightColorTemperature:
               GenericRgbwLightColorTemperature(temp.toString()),
@@ -178,7 +180,6 @@ class ShellyHelpers {
           lightColorValue: GenericRgbwLightColorValue('0'),
           bulbMode: shellyApiDeviceAbstract,
         );
-        deviceEntityList.add(shellyColorLightEntity);
       } else if (mDnsName.contains('shelly1-C45BBE78005D')) {
         final ShellyApiRelaySwitch shellyApiDeviceAbstract =
             ShellyApiRelaySwitch(
@@ -192,8 +193,7 @@ class ShellyHelpers {
         // ignore: avoid_dynamic_calls
         final String mac = responseAsJson['mac'] as String;
 
-        final ShellyRelaySwitchEntity shellyRelaySwitchEntity =
-            ShellyRelaySwitchEntity(
+        tempEntity = ShellyRelaySwitchEntity(
           uniqueId: entity.uniqueId,
           entityUniqueId: EntityUniqueId(mDnsName),
           cbjEntityName: entity.cbjEntityName,
@@ -220,10 +220,9 @@ class ShellyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(mDnsName),
+          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
           switchState: GenericSwitchSwitchState(false.toString()),
         );
-        deviceEntityList.add(shellyRelaySwitchEntity);
       } else {
         icLogger.i('Shelly device types is not supported');
       }
@@ -231,6 +230,10 @@ class ShellyHelpers {
       icLogger.e('Error setting shelly\n$e');
     }
 
-    return deviceEntityList;
+    if (tempEntity != null) {
+      entitiesToAdd.addEntries([MapEntry(deviceCbjUniqueId, tempEntity)]);
+    }
+
+    return entitiesToAdd;
   }
 }

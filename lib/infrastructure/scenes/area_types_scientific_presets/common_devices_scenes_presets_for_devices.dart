@@ -1,5 +1,5 @@
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_light_entity/generic_light_entity.dart';
@@ -16,7 +16,7 @@ class CommonDevicesScenesPresetsForDevices {
   /// Light preset
 
   static MapEntry<String, String> lightOnPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -32,7 +32,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> lightOffPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -50,7 +50,7 @@ class CommonDevicesScenesPresetsForDevices {
   /// Blinds preset
 
   static MapEntry<String, String> blindsUpPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -66,7 +66,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> blindsStopPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -82,7 +82,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> blindsDownPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -100,7 +100,7 @@ class CommonDevicesScenesPresetsForDevices {
   /// Boiler preset
 
   static MapEntry<String, String> boilerOnPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -116,7 +116,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> boilerOffPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -141,7 +141,7 @@ class CommonDevicesScenesPresetsForDevices {
   /// Switch_ preset
 
   static MapEntry<String, String> switchOnPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -157,7 +157,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> switchOffPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -178,7 +178,7 @@ class CommonDevicesScenesPresetsForDevices {
 
   /// RgbwLights preset
   static MapEntry<String, String> rgbwLightOnPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -194,7 +194,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> rgbwLightOffPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -210,7 +210,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> rgbLightOrangePreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -226,7 +226,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> rgbLightWhitePreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -242,7 +242,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> rgbLightBluePreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -258,7 +258,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> rgbLightMaxBrightnessPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -278,7 +278,7 @@ class CommonDevicesScenesPresetsForDevices {
   /// TODO: Add SmartTV preset
 
   static MapEntry<String, String> smartTvOffPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -294,7 +294,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> smartTvOnPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -338,7 +338,7 @@ class CommonDevicesScenesPresetsForDevices {
   /// SmartPlug preset
 
   static MapEntry<String, String> smartPlugOnPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -354,7 +354,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> smartPlugOffPreset(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =
@@ -370,7 +370,7 @@ class CommonDevicesScenesPresetsForDevices {
   }
 
   static MapEntry<String, String> smartComputerSuspend(
-    DeviceEntityAbstract deviceEntity,
+    DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) {
     final String property =

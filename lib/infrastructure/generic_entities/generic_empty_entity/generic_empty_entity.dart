@@ -1,8 +1,7 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_empty_entity/generic_empty_device_dtos.dart';
@@ -10,7 +9,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericEmpty that exist inside a computer, the
 /// implementations will be actual GenericEmpty like blinds emptys and more
-class GenericUnsupportedDE extends DeviceEntityAbstract {
+class GenericUnsupportedDE extends DeviceEntityBase {
   /// All public field of GenericEmpty entity
   GenericUnsupportedDE({
     required super.uniqueId,
@@ -41,7 +40,7 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
     required super.lastResponseFromDeviceTimeStamp,
     required super.deviceCbjUniqueId,
   }) : super(
-          entityTypes: EntityType(EntityTypes.emptyEntity.toString()),
+          entityTypes: EntityType.type(EntityTypes.emptyEntity),
         );
 
   /// Empty instance of GenericEmptyEntity
@@ -49,14 +48,14 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
         cbjDeviceVendor: CbjDeviceVendor(
           VendorsAndServices.vendorsAndServicesNotSupported.toString(),
         ),
-        deviceVendor: DeviceVendor(null),
-        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+        deviceVendor: DeviceVendor(''),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(''),
         uniqueId: CoreUniqueId(),
-        entityUniqueId: EntityUniqueId(''),
+        entityUniqueId: EntityUniqueId('Test'),
         cbjEntityName: CbjEntityName('Empty device'),
         entityOriginalName: EntityOriginalName('Missing entity original name'),
         deviceOriginalName: DeviceOriginalName('Missing device original name'),
-        entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
+        entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
         senderDeviceOs: DeviceSenderDeviceOs('Hub'),
         senderDeviceModel: DeviceSenderDeviceModel('Hub'),
         stateMassage: DeviceStateMassage('Test'),
@@ -98,9 +97,6 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
   //     .fold((f) => some(f), (_) => none());
   // }
 
-  @override
-  String getDeviceId() => uniqueId.getOrCrash();
-
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {
@@ -108,7 +104,7 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericUnsupportedDeviceDtos(
       deviceDtoClass: (GenericUnsupportedDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -144,37 +140,12 @@ class GenericUnsupportedDE extends DeviceEntityAbstract {
   }
 
   /// Please override the following methods
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
-  }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOnEmpty() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOnEmpty() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
-
-  /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOffEmpty() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOffEmpty() async =>
+      pleaseOverrideMessage();
 
   @override
   bool replaceActionIfExist(String action) {

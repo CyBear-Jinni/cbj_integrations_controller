@@ -114,9 +114,9 @@ class _HiveRepository extends IDbRepository {
         lifxVendorCredentialsBoxName,
       );
 
-      final List<LifxVendorCredentialsHiveModel>
+      final Set<LifxVendorCredentialsHiveModel>
           lifxVendorCredentialsModelFromDb = lifxVendorCredentialsBox!.values
-              .toList()
+              .toSet()
               .cast<LifxVendorCredentialsHiveModel>();
       await lifxVendorCredentialsBox?.close();
 
@@ -140,10 +140,10 @@ class _HiveRepository extends IDbRepository {
         espHomeVendorCredentialsBoxName,
       );
 
-      final List<EspHomeVendorCredentialsHiveModel>
+      final Set<EspHomeVendorCredentialsHiveModel>
           espHomeVendorCredentialsModelFromDb = espHomeVendorCredentialsBox!
               .values
-              .toList()
+              .toSet()
               .cast<EspHomeVendorCredentialsHiveModel>();
       await espHomeVendorCredentialsBox?.close();
 
@@ -169,10 +169,10 @@ class _HiveRepository extends IDbRepository {
         xiaomiMiVendorCredentialsBoxName,
       );
 
-      final List<XiaomiMiVendorCredentialsHiveModel>
+      final Set<XiaomiMiVendorCredentialsHiveModel>
           xiaomiMiVendorCredentialsModelFromDb = xiaomiMiVendorCredentialsBox!
               .values
-              .toList()
+              .toSet()
               .cast<XiaomiMiVendorCredentialsHiveModel>();
       await xiaomiMiVendorCredentialsBox?.close();
 
@@ -198,10 +198,10 @@ class _HiveRepository extends IDbRepository {
         ewelinkVendorCredentialsBoxName,
       );
 
-      final List<EwelinkVendorCredentialsHiveModel>
+      final Set<EwelinkVendorCredentialsHiveModel>
           ewelinkVendorCredentialsModelFromDb = ewelinkVendorCredentialsBox!
               .values
-              .toList()
+              .toSet()
               .cast<EwelinkVendorCredentialsHiveModel>();
       await ewelinkVendorCredentialsBox?.close();
 
@@ -227,14 +227,14 @@ class _HiveRepository extends IDbRepository {
   }
 
   @override
-  Future<Either<LocalDbFailures, List<RoomEntity>>> getRoomsFromDb() async {
-    final List<RoomEntity> rooms = <RoomEntity>[];
+  Future<Either<LocalDbFailures, Set<RoomEntity>>> getRoomsFromDb() async {
+    final Set<RoomEntity> rooms = <RoomEntity>{};
 
     try {
       await roomsBox?.close();
       roomsBox = await Hive.openBox<RoomsHiveModel>(roomsBoxName);
-      final List<RoomsHiveModel> roomsHiveModelFromDb =
-          roomsBox!.values.toList().cast<RoomsHiveModel>();
+      final Set<RoomsHiveModel> roomsHiveModelFromDb =
+          roomsBox!.values.toSet().cast<RoomsHiveModel>();
 
       await roomsBox?.close();
       for (final RoomsHiveModel roomHive in roomsHiveModelFromDb) {
@@ -262,27 +262,27 @@ class _HiveRepository extends IDbRepository {
   }
 
   @override
-  Future<Either<LocalDbFailures, List<DeviceEntityAbstract>>>
+  Future<Either<LocalDbFailures, Set<DeviceEntityBase>>>
       getSmartDevicesFromDb() async {
-    final List<DeviceEntityAbstract> devices = <DeviceEntityAbstract>[];
+    final Set<DeviceEntityBase> devices = {};
 
     try {
       await devicesBox?.close();
       devicesBox = await Hive.openBox<DevicesHiveModel>(devicesBoxName);
 
-      final List<DevicesHiveModel> devicesHiveModelFromDb =
-          devicesBox!.values.toList().cast<DevicesHiveModel>();
+      final Set<DevicesHiveModel> devicesHiveModelFromDb =
+          devicesBox!.values.toSet().cast<DevicesHiveModel>();
 
       await devicesBox?.close();
 
       for (final DevicesHiveModel deviceHive in devicesHiveModelFromDb) {
-        final DeviceEntityAbstract deviceEntity =
+        final DeviceEntityBase deviceEntity =
             DeviceHelper.convertJsonStringToDomain(deviceHive.deviceStringJson);
 
         devices.add(
           deviceEntity
             ..entityStateGRPC =
-                EntityState(EntityStateGRPC.waitingInComp.toString()),
+                EntityState.state(EntityStateGRPC.waitingInComp),
         );
       }
       return right(devices);
@@ -295,13 +295,13 @@ class _HiveRepository extends IDbRepository {
   @override
   Future<Either<LocalDbFailures, GenericLifxLoginDE>>
       getLifxVendorLoginCredentials({
-    required List<LifxVendorCredentialsHiveModel>
+    required Set<LifxVendorCredentialsHiveModel>
         lifxVendorCredentialsModelFromDb,
   }) async {
     try {
       if (lifxVendorCredentialsModelFromDb.isNotEmpty) {
         final LifxVendorCredentialsHiveModel firstLifxVendorFromDB =
-            lifxVendorCredentialsModelFromDb[0];
+            lifxVendorCredentialsModelFromDb.elementAt(0);
 
         final String? senderUniqueId = firstLifxVendorFromDB.senderUniqueId;
         final String lifxApiKey = firstLifxVendorFromDB.lifxApiKey;
@@ -328,13 +328,13 @@ class _HiveRepository extends IDbRepository {
   @override
   Future<Either<LocalDbFailures, GenericEspHomeLoginDE>>
       getEspHomeVendorLoginCredentials({
-    required List<EspHomeVendorCredentialsHiveModel>
+    required Set<EspHomeVendorCredentialsHiveModel>
         espHomeVendorCredentialsModelFromDb,
   }) async {
     try {
       if (espHomeVendorCredentialsModelFromDb.isNotEmpty) {
         final EspHomeVendorCredentialsHiveModel firstEspHomeVendorFromDB =
-            espHomeVendorCredentialsModelFromDb[0];
+            espHomeVendorCredentialsModelFromDb.elementAt(0);
 
         final String? senderUniqueId = firstEspHomeVendorFromDB.senderUniqueId;
         final String espHomeDevicePass =
@@ -364,13 +364,13 @@ class _HiveRepository extends IDbRepository {
   @override
   Future<Either<LocalDbFailures, GenericXiaomiMiLoginDE>>
       getXiaomiMiVendorLoginCredentials({
-    required List<XiaomiMiVendorCredentialsHiveModel>
+    required Set<XiaomiMiVendorCredentialsHiveModel>
         xiaomiMiVendorCredentialsModelFromDb,
   }) async {
     try {
       if (xiaomiMiVendorCredentialsModelFromDb.isNotEmpty) {
         final XiaomiMiVendorCredentialsHiveModel firstXiaomiMiVendorFromDB =
-            xiaomiMiVendorCredentialsModelFromDb[0];
+            xiaomiMiVendorCredentialsModelFromDb.elementAt(0);
 
         final String? senderUniqueId = firstXiaomiMiVendorFromDB.senderUniqueId;
         final String xiaomiMiAccountEmail =
@@ -403,13 +403,13 @@ class _HiveRepository extends IDbRepository {
   @override
   Future<Either<LocalDbFailures, GenericEwelinkLoginDE>>
       getEwelinkVendorLoginCredentials({
-    required List<EwelinkVendorCredentialsHiveModel>
+    required Set<EwelinkVendorCredentialsHiveModel>
         ewelinkVendorCredentialsModelFromDb,
   }) async {
     try {
       if (ewelinkVendorCredentialsModelFromDb.isNotEmpty) {
         final EwelinkVendorCredentialsHiveModel firstEwelinkVendorFromDB =
-            ewelinkVendorCredentialsModelFromDb[0];
+            ewelinkVendorCredentialsModelFromDb.elementAt(0);
 
         final String? senderUniqueId = firstEwelinkVendorFromDB.senderUniqueId;
         final String ewelinkAccountEmail =
@@ -444,13 +444,13 @@ class _HiveRepository extends IDbRepository {
       await remotePipesBox?.close();
       remotePipesBox =
           await Hive.openBox<RemotePipesHiveModel>(remotePipesBoxName);
-      final List<RemotePipesHiveModel> remotePipesHiveModelFromDb =
-          remotePipesBox!.values.toList().cast<RemotePipesHiveModel>();
+      final Set<RemotePipesHiveModel> remotePipesHiveModelFromDb =
+          remotePipesBox!.values.toSet().cast<RemotePipesHiveModel>();
       await remotePipesBox?.close();
 
       if (remotePipesHiveModelFromDb.isNotEmpty) {
         final String remotePipesDnsName =
-            remotePipesHiveModelFromDb[0].domainName;
+            remotePipesHiveModelFromDb.elementAt(0).domainName;
 
         icLogger.i(
           'Remote pipes domain name is: '
@@ -467,12 +467,12 @@ class _HiveRepository extends IDbRepository {
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveSmartDevices({
-    required List<DeviceEntityAbstract> deviceList,
+    required Set<DeviceEntityBase> deviceList,
   }) async {
     try {
-      final List<DevicesHiveModel> devicesHiveList = [];
+      final Set<DevicesHiveModel> devicesHiveList = {};
 
-      final List<String> devicesListStringJson = List<String>.from(
+      final Set<String> devicesListStringJson = Set<String>.from(
         deviceList.map((e) => DeviceHelper.convertDomainToJsonString(e)),
       );
 
@@ -499,13 +499,13 @@ class _HiveRepository extends IDbRepository {
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveRoomsToDb({
-    required List<RoomEntity> roomsList,
+    required Set<RoomEntity> roomsList,
   }) async {
     try {
-      final List<RoomsHiveModel> rommsHiveList = [];
+      final Set<RoomsHiveModel> rommsHiveList = {};
 
-      final List<RoomEntityDtos> roomsListDto =
-          List<RoomEntityDtos>.from(roomsList.map((e) => e.toInfrastructure()));
+      final Set<RoomEntityDtos> roomsListDto =
+          Set<RoomEntityDtos>.from(roomsList.map((e) => e.toInfrastructure()));
 
       for (final RoomEntityDtos roomEntityDtos in roomsListDto) {
         final RoomsHiveModel roomsHiveModel = RoomsHiveModel()
@@ -757,21 +757,20 @@ class _HiveRepository extends IDbRepository {
   }
 
   Future<void> deleteAllSavedRooms() async {
-    await saveRoomsToDb(roomsList: []);
+    await saveRoomsToDb(roomsList: {});
   }
 
   @override
-  Future<Either<LocalDbFailures, List<SceneCbjEntity>>>
-      getScenesFromDb() async {
-    final List<SceneCbjEntity> scenes = <SceneCbjEntity>[];
+  Future<Either<LocalDbFailures, Set<SceneCbjEntity>>> getScenesFromDb() async {
+    final Set<SceneCbjEntity> scenes = <SceneCbjEntity>{};
 
     try {
       await scenesBox?.close();
 
       scenesBox = await Hive.openBox<ScenesHiveModel>(scenesBoxName);
 
-      final List<ScenesHiveModel> scenesHiveModelFromDb =
-          scenesBox!.values.toList().cast<ScenesHiveModel>();
+      final Set<ScenesHiveModel> scenesHiveModelFromDb =
+          scenesBox!.values.toSet().cast<ScenesHiveModel>();
 
       await scenesBox?.close();
 
@@ -796,16 +795,16 @@ class _HiveRepository extends IDbRepository {
   }
 
   @override
-  Future<Either<LocalDbFailures, List<RoutineCbjEntity>>>
+  Future<Either<LocalDbFailures, Set<RoutineCbjEntity>>>
       getRoutinesFromDb() async {
-    final List<RoutineCbjEntity> routines = <RoutineCbjEntity>[];
+    final Set<RoutineCbjEntity> routines = <RoutineCbjEntity>{};
 
     try {
       await routinesBox?.close();
       routinesBox = await Hive.openBox<RoutinesHiveModel>(routinesBoxName);
 
-      final List<RoutinesHiveModel> routinesHiveModelFromDb =
-          routinesBox!.values.toList().cast<RoutinesHiveModel>();
+      final Set<RoutinesHiveModel> routinesHiveModelFromDb =
+          routinesBox!.values.toSet().cast<RoutinesHiveModel>();
 
       await routinesBox?.close();
 
@@ -830,16 +829,16 @@ class _HiveRepository extends IDbRepository {
   }
 
   @override
-  Future<Either<LocalDbFailures, List<BindingCbjEntity>>>
+  Future<Either<LocalDbFailures, Set<BindingCbjEntity>>>
       getBindingsFromDb() async {
-    final List<BindingCbjEntity> bindings = <BindingCbjEntity>[];
+    final Set<BindingCbjEntity> bindings = <BindingCbjEntity>{};
 
     try {
       await bindingsBox?.close();
       bindingsBox = await Hive.openBox<BindingsHiveModel>(bindingsBoxName);
 
-      final List<BindingsHiveModel> bindingsHiveModelFromDb =
-          bindingsBox!.values.toList().cast<BindingsHiveModel>();
+      final Set<BindingsHiveModel> bindingsHiveModelFromDb =
+          bindingsBox!.values.toSet().cast<BindingsHiveModel>();
 
       await bindingsBox?.close();
 
@@ -865,12 +864,12 @@ class _HiveRepository extends IDbRepository {
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveScenes({
-    required List<SceneCbjEntity> sceneList,
+    required Set<SceneCbjEntity> sceneList,
   }) async {
     try {
-      final List<ScenesHiveModel> scenesHiveList = [];
+      final Set<ScenesHiveModel> scenesHiveList = {};
 
-      final List<String> scenesListStringJson = List<String>.from(
+      final Set<String> scenesListStringJson = Set<String>.from(
         sceneList.map((e) => jsonEncode(e.toInfrastructure().toJson())),
       );
 
@@ -898,12 +897,12 @@ class _HiveRepository extends IDbRepository {
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveRoutines({
-    required List<RoutineCbjEntity> routineList,
+    required Set<RoutineCbjEntity> routineList,
   }) async {
     try {
-      final List<RoutinesHiveModel> routinesHiveList = [];
+      final Set<RoutinesHiveModel> routinesHiveList = {};
 
-      final List<String> routinesListStringJson = List<String>.from(
+      final Set<String> routinesListStringJson = Set<String>.from(
         routineList.map((e) => jsonEncode(e.toInfrastructure().toJson())),
       );
 
@@ -932,12 +931,12 @@ class _HiveRepository extends IDbRepository {
 
   @override
   Future<Either<LocalDbFailures, Unit>> saveBindings({
-    required List<BindingCbjEntity> bindingList,
+    required Set<BindingCbjEntity> bindingList,
   }) async {
     try {
-      final List<BindingsHiveModel> bindingsHiveList = [];
+      final Set<BindingsHiveModel> bindingsHiveList = {};
 
-      final List<String> bindingsListStringJson = List<String>.from(
+      final Set<String> bindingsListStringJson = Set<String>.from(
         bindingList.map((e) => jsonEncode(e.toInfrastructure().toJson())),
       );
 
@@ -967,10 +966,10 @@ class _HiveRepository extends IDbRepository {
 
   // @override
   // Future<String> getHomeId() async {
-  //   final List<HomeEntityIsarModel> homeEntityIsarModelList =
+  //   final Set<HomeEntityIsarModel> homeEntityIsarModelList =
   //       await isar.homeEntityIsarModels.where().findAll();
   //
-  //   return homeEntityIsarModelList[0].homeId;
+  //   return homeEntityIsarModelList.elementAt(0).homeId;
   // }
   //
   // @override

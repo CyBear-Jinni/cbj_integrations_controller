@@ -1,6 +1,5 @@
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_printer_entity/generic_printer_entity.dart';
 import 'package:dartz/dartz.dart';
@@ -35,7 +34,7 @@ class HpPrinterEntity extends GenericPrinterDE {
     required super.deviceCbjUniqueId,
     required super.printerSwitchState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.hp.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.hp),
         );
 
   factory HpPrinterEntity.fromGeneric(GenericPrinterDE genericDevice) {
@@ -69,29 +68,6 @@ class HpPrinterEntity extends GenericPrinterDE {
       deviceCbjUniqueId: genericDevice.deviceCbjUniqueId,
       printerSwitchState: genericDevice.printerSwitchState,
     );
-  }
-
-  static const List<String> mdnsTypes = [
-    '_ipp._tcp',
-  ];
-
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
-  }) async {
-    // logger.i('Currently printer does not support any action');
-    // entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
-    //
-    // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-    //   entityFromTheHub: this,
-    // );
-
-    // entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
-    // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-    //   entityFromTheHub: this,
-    // );
-
-    return right(unit);
   }
 
   @override

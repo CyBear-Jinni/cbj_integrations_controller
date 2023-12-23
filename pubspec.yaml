@@ -1,6 +1,6 @@
 name: cbj_integrations_controller
 description: A sample command-line application.
-version: 1.0.8
+version: 1.0.9
 # repository: https://github.com/CyBear-Jinni/cbj_integrations_controller
 publish_to: none
 
@@ -11,6 +11,11 @@ environment:
 dependencies:
   # Contains utility classes in the style of dart:async to work with asynchronous computations.
   async: ^2.11.0
+  # Discover and connect with Chromecast devices 
+  cast: 
+    git: 
+      url: "https://github.com/guyluz11/flutter_cast.git"
+      ref: "multicast_version"
   collection: ^1.17.2
   # Package to create, convert, alter, and compare colors in a variety of colorspaces.
   color: ^3.0.0

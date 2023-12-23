@@ -1,8 +1,9 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_printer_entity/generic_printer_device_dtos.dart';
@@ -11,7 +12,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericPrinter that exist inside a computer, the
 /// implementations will be actual GenericPrinter like blinds printers and more
-class GenericPrinterDE extends DeviceEntityAbstract {
+class GenericPrinterDE extends DeviceEntityBase {
   /// All public field of GenericPrinter entity
   GenericPrinterDE({
     required super.uniqueId,
@@ -43,7 +44,7 @@ class GenericPrinterDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.printerSwitchState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.printer.toString()),
+          entityTypes: EntityType.type(EntityTypes.printer),
         );
 
   /// Empty instance of GenericPrinterEntity
@@ -104,7 +105,22 @@ class GenericPrinterDE extends DeviceEntityAbstract {
   // }
 
   @override
-  String getDeviceId() => uniqueId.getOrCrash();
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    HashMap<ActionValues, dynamic>? value,
+  }) async {
+    switch (action) {
+      case EntityActions.on:
+        return turnOnPrinter();
+      case EntityActions.off:
+        return turnOffPrinter();
+      default:
+        break;
+    }
+    return super
+        .executeAction(property: property, action: action, value: value);
+  }
 
   /// Return a list of all valid actions for this device
   @override
@@ -113,7 +129,7 @@ class GenericPrinterDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericPrinterDeviceDtos(
       deviceDtoClass: (GenericPrinterDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -151,37 +167,12 @@ class GenericPrinterDE extends DeviceEntityAbstract {
   }
 
   /// Please override the following methods
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
-  }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOnPrinter() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOnPrinter() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
-
-  /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOffPrinter() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOffPrinter() async =>
+      pleaseOverrideMessage();
 
   @override
   bool replaceActionIfExist(String action) {

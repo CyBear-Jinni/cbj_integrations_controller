@@ -13,8 +13,8 @@ import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_login_abstract/login_entity_dto_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/remote_pipes/remote_pipes_dtos.dart';
@@ -36,7 +36,7 @@ class DeviceHelperMethods {
   RequestsAndStatusFromHub dynamicToRequestsAndStatusFromHub(
     dynamic entityDto,
   ) {
-    if (entityDto is DeviceEntityDtoAbstract) {
+    if (entityDto is DeviceEntityDtoBase) {
       return RequestsAndStatusFromHub(
         sendingType: SendingType.entityType,
         allRemoteCommands: DeviceHelper.convertDtoToJsonString(entityDto),
@@ -116,13 +116,13 @@ class DeviceHelperMethods {
     final dynamic dtoEntity =
         clientStatusRequestsToItsDtoType(clientStatusRequests);
 
-    if (dtoEntity is DeviceEntityDtoAbstract) {
-      final DeviceEntityAbstract deviceEntityAbstract = dtoEntity.toDomain();
-      deviceEntityAbstract.entityStateGRPC =
-          EntityState(EntityStateGRPC.waitingInComp.toString());
+    if (dtoEntity is DeviceEntityDtoBase) {
+      final DeviceEntityBase deviceEntityBase = dtoEntity.toDomain();
+      deviceEntityBase.entityStateGRPC =
+          EntityState.state(EntityStateGRPC.waitingInComp);
 
       IMqttServerRepository.instance.postToHubMqtt(
-        entityFromTheApp: deviceEntityAbstract,
+        entityFromTheApp: deviceEntityBase,
         gotFromApp: true,
       );
     } else if (dtoEntity is RoomEntityDtos) {

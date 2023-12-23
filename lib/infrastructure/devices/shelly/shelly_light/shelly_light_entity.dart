@@ -1,9 +1,7 @@
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
 import 'package:color/color.dart';
@@ -47,13 +45,12 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
     required super.lightBrightness,
     ShellyApiColorBulb? bulbMode,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.shelly.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.shelly),
         ) {
-    shellyColorBulb = bulbMode ??
+    api = bulbMode ??
         ShellyApiColorBulb(
           lastKnownIp: deviceLastKnownIp.getOrCrash()!,
-          mDnsName: deviceMdns.getOrCrash(),
+          mDnsName: deviceMdns.getOrCrash()!,
           hostName: deviceHostName.getOrCrash() ?? '',
         );
   }
@@ -96,117 +93,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
       lightColorValue: genericDevice.lightColorValue,
     );
   }
-  late ShellyApiColorBulb shellyColorBulb;
-
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
-  }) async {
-    if (newEntity is! GenericRgbwLightDE) {
-      return left(
-        const CoreFailure.actionExcecuter(
-          failedValue: 'Not the correct type',
-        ),
-      );
-    }
-
-    try {
-      // if (entityStateGRPC.getOrCrash() == EntityStateGRPC.ack.toString()) {
-      //   return right(unit);
-      // }
-
-      if (newEntity.lightSwitchState.getOrCrash() !=
-          lightSwitchState.getOrCrash()) {
-        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.lightSwitchState.getOrCrash(),
-        );
-
-        if (actionToPreform == EntityActions.on) {
-          (await turnOnLight()).fold((l) {
-            icLogger.e('Error turning Shelly light on');
-            throw l;
-          }, (r) {
-            icLogger.i('Shelly light turn on success');
-          });
-        } else if (actionToPreform == EntityActions.off) {
-          (await turnOffLight()).fold((l) {
-            icLogger.e('Error turning Shelly light off');
-            throw l;
-          }, (r) {
-            icLogger.i('Shelly light turn off success');
-          });
-        } else {
-          icLogger.e('actionToPreform is not set correctly Shelly light');
-        }
-      }
-
-      if (newEntity.lightColorTemperature.getOrCrash() !=
-          lightColorTemperature.getOrCrash()) {
-        (await changeColorTemperature(
-          lightColorTemperatureNewValue:
-              newEntity.lightColorTemperature.getOrCrash(),
-        ))
-            .fold(
-          (l) {
-            icLogger.e('Error changing Shelly temperature\n$l');
-            throw l;
-          },
-          (r) {
-            icLogger.i('Shelly changed temperature successfully');
-          },
-        );
-      }
-
-      if (newEntity.lightColorAlpha.getOrCrash() !=
-              lightColorAlpha.getOrCrash() ||
-          newEntity.lightColorHue.getOrCrash() != lightColorHue.getOrCrash() ||
-          newEntity.lightColorSaturation.getOrCrash() !=
-              lightColorSaturation.getOrCrash() ||
-          newEntity.lightColorValue.getOrCrash() !=
-              lightColorValue.getOrCrash()) {
-        (await changeColorHsv(
-          lightColorAlphaNewValue: newEntity.lightColorAlpha.getOrCrash(),
-          lightColorHueNewValue: newEntity.lightColorHue.getOrCrash(),
-          lightColorSaturationNewValue:
-              newEntity.lightColorSaturation.getOrCrash(),
-          lightColorValueNewValue: newEntity.lightColorValue.getOrCrash(),
-        ))
-            .fold(
-          (l) {
-            icLogger.e('Error changing Shelly light color\n$l');
-            throw l;
-          },
-          (r) {
-            icLogger.i('Shelly changed color successfully');
-          },
-        );
-      }
-
-      if (newEntity.lightBrightness.getOrCrash() !=
-          lightBrightness.getOrCrash()) {
-        (await setBrightness(newEntity.lightBrightness.getOrCrash())).fold(
-          (l) {
-            icLogger.e('Error changing Shelly brightness\n$l');
-            throw l;
-          },
-          (r) {
-            icLogger.i('Shelly changed brightness successfully');
-          },
-        );
-      }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return right(unit);
-    } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return left(const CoreFailure.unexpected());
-    }
-  }
+  late ShellyApiColorBulb api;
 
   @override
   Future<Either<CoreFailure, Unit>> turnOnLight() async {
@@ -214,7 +101,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
 
     try {
       icLogger.t('Turn on Shelly device');
-      shellyColorBulb.turnOn();
+      api.turnOn();
       return right(unit);
     } catch (e) {
       return left(const CoreFailure.unexpected());
@@ -228,7 +115,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
 
     try {
       icLogger.t('Turn off Shelly device');
-      await shellyColorBulb.turnOff();
+      await api.turnOff();
       return right(unit);
     } catch (exception) {
       return left(const CoreFailure.unexpected());
@@ -254,7 +141,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
       lightColorTemperature =
           GenericRgbwLightColorTemperature(temperatureInt.toString());
 
-      await shellyColorBulb.changTemperature(
+      await api.changTemperature(
         temperature: lightColorTemperature.getOrCrash(),
       );
 
@@ -265,13 +152,9 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> setBrightness(String brightness) async {
-    lightBrightness = GenericRgbwLightBrightness(brightness);
-
+  Future<Either<CoreFailure, Unit>> setBrightness(int value) async {
     try {
-      await shellyColorBulb.changBrightness(
-        brightness: brightness,
-      );
+      await api.changBrightness(brightness: value.toString());
 
       return right(unit);
     } catch (e) {
@@ -305,7 +188,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
 
       final RgbColor rgbColor = hsvColor.toRgbColor();
 
-      await shellyColorBulb.changeColor(
+      await api.changeColor(
         red: rgbColor.r.toString(),
         green: rgbColor.g.toString(),
         blue: rgbColor.b.toString(),

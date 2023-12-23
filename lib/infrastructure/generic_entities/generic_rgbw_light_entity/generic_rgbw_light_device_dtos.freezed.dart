@@ -687,7 +687,7 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GenericRgbwLightDeviceDtosImpl &&

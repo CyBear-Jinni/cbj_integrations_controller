@@ -1,11 +1,8 @@
 import 'dart:convert';
 
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 import 'package:dartz/dartz.dart';
@@ -53,8 +50,7 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.tasmota.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.tasmota),
         );
 
   factory TasmotaIpSwitchEntity.fromGeneric(GenericSwitchDE genericDevice) {
@@ -88,65 +84,6 @@ class TasmotaIpSwitchEntity extends GenericSwitchDE {
       deviceCbjUniqueId: genericDevice.deviceCbjUniqueId,
       switchState: genericDevice.switchState,
     );
-  }
-
-  /// Please override the following methods
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
-  }) async {
-    if (newEntity is! GenericSwitchDE) {
-      return left(
-        const CoreFailure.actionExcecuter(
-          failedValue: 'Not the correct type',
-        ),
-      );
-    }
-
-    try {
-      if (newEntity.switchState.getOrCrash() != switchState.getOrCrash() ||
-          entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.switchState.getOrCrash(),
-        );
-
-        if (actionToPreform == EntityActions.on) {
-          (await turnOnSwitch()).fold(
-            (l) {
-              icLogger.e('Error turning TasmotaIp switch on');
-              throw l;
-            },
-            (r) {
-              icLogger.i('TasmotaIp switch turn on success');
-            },
-          );
-        } else if (actionToPreform == EntityActions.off) {
-          (await turnOffSwitch()).fold(
-            (l) {
-              icLogger.e('Error turning TasmotaIp switch off');
-              throw l;
-            },
-            (r) {
-              icLogger.i('TasmotaIp switch turn off success');
-            },
-          );
-        } else {
-          icLogger
-              .e('actionToPreform is not set correctly on TasmotaIp Switch');
-        }
-      }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return right(unit);
-    } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return left(const CoreFailure.unexpected());
-    }
   }
 
   @override

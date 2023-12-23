@@ -62,7 +62,11 @@ enum EntityProperties {
       case EntityProperties.smartPlugState:
         return action == EntityActions.on || action == EntityActions.off;
       case EntityProperties.smartTvSwitchState:
-        return action == EntityActions.on || action == EntityActions.off;
+        return action == EntityActions.on ||
+            action == EntityActions.off ||
+            action == EntityActions.play ||
+            action == EntityActions.pause ||
+            action == EntityActions.close;
       case EntityProperties.openUrl:
         return action == EntityActions.open;
       case EntityProperties.skip:

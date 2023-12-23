@@ -1,10 +1,7 @@
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 import 'package:dartz/dartz.dart';
@@ -40,8 +37,7 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.espHome.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.espHome),
         );
 
   factory EspHomeSwitchEntity.fromGeneric(GenericSwitchDE genericDevice) {
@@ -75,59 +71,6 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
       deviceCbjUniqueId: genericDevice.deviceCbjUniqueId,
       switchState: genericDevice.switchState,
     );
-  }
-
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
-  }) async {
-    if (newEntity is! GenericSwitchDE) {
-      return left(
-        const CoreFailure.actionExcecuter(
-          failedValue: 'Not the correct type',
-        ),
-      );
-    }
-
-    try {
-      if (newEntity.switchState.getOrCrash() != switchState.getOrCrash() ||
-          entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.switchState.getOrCrash(),
-        );
-
-        if (actionToPreform == EntityActions.on) {
-          (await turnOnSwitch()).fold((l) {
-            icLogger.e('Error turning ESPHome switch on');
-            throw l;
-          }, (r) {
-            icLogger.i('ESPHome switch turn on success');
-          });
-        } else if (actionToPreform == EntityActions.off) {
-          (await turnOffSwitch()).fold((l) {
-            icLogger.e('Error turning ESPHome switch off');
-            throw l;
-          }, (r) {
-            icLogger.i('ESPHome switch turn off success');
-          });
-        } else {
-          icLogger.e('actionToPreform is not set correctly ESPHome switch');
-        }
-      }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return right(unit);
-    } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
-      //
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-
-      return left(const CoreFailure.unexpected());
-    }
   }
 
   @override

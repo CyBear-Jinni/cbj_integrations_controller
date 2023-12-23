@@ -591,7 +591,7 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GenericSmartPlugDeviceDtosImpl &&

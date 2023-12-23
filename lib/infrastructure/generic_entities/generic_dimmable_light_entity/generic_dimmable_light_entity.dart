@@ -1,8 +1,9 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_device_dtos.dart';
@@ -11,7 +12,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericLightWithBrightness that exist inside a computer, the
 /// implementations will be actual GenericLightWithBrightness like blinds lights and more
-class GenericDimmableLightDE extends DeviceEntityAbstract {
+class GenericDimmableLightDE extends DeviceEntityBase {
   /// All public field of GenericLightWithBrightness entity
   GenericDimmableLightDE({
     required super.uniqueId,
@@ -44,7 +45,7 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
     required this.lightSwitchState,
     required this.lightBrightness,
   }) : super(
-          entityTypes: EntityType(EntityTypes.dimmableLight.toString()),
+          entityTypes: EntityType.type(EntityTypes.dimmableLight),
         );
 
   /// Empty instance of GenericLightWithBrightnessEntity
@@ -110,9 +111,6 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
   //     .fold((f) => some(f), (_) => none());
   // }
 
-  @override
-  String getDeviceId() => uniqueId.getOrCrash();
-
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {
@@ -120,7 +118,7 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericDimmableLightDeviceDtos(
       deviceDtoClass: (GenericDimmableLightDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -157,48 +155,40 @@ class GenericDimmableLightDE extends DeviceEntityAbstract {
     );
   }
 
-  /// Please override the following methods
   @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    HashMap<ActionValues, dynamic>? value,
   }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
+    if (property == EntityProperties.lightBrightness) {
+      // TODO: add support for json
+      // return setBrightness(value);
+    }
+
+    switch (action) {
+      case EntityActions.on:
+        return turnOnLight();
+      case EntityActions.off:
+        return turnOffLight();
+      default:
+        break;
+    }
+    return super
+        .executeAction(property: property, action: action, value: value);
   }
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOnLight() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOnLight() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> turnOffLight() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> turnOffLight() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> setBrightness(String brightness) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> setBrightness(int value) async =>
+      pleaseOverrideMessage();
 
   @override
   bool replaceActionIfExist(String action) {

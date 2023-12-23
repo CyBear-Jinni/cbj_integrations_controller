@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
 import 'package:dartz/dartz.dart';
@@ -41,76 +39,16 @@ class ShellyRelaySwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor(VendorsAndServices.shelly.toString()),
+          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.shelly),
         ) {
     shellyRelaySwitch = ShellyApiRelaySwitch(
       lastKnownIp: deviceLastKnownIp.getOrCrash()!,
-      mDnsName: deviceMdns.getOrCrash(),
+      mDnsName: deviceMdns.getOrCrash()!,
       hostName: deviceHostName.getOrCrash() ?? '',
     );
   }
 
   late ShellyApiRelaySwitch shellyRelaySwitch;
-
-  @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
-  }) async {
-    if (newEntity is! GenericSwitchDE) {
-      return left(
-        const CoreFailure.actionExcecuter(
-          failedValue: 'Not the correct type',
-        ),
-      );
-    }
-
-    try {
-      if (newEntity.switchState.getOrCrash() != switchState.getOrCrash() ||
-          entityStateGRPC.getOrCrash() != EntityStateGRPC.ack.toString()) {
-        final EntityActions? actionToPreform = EntityUtils.stringToDeviceAction(
-          newEntity.switchState.getOrCrash(),
-        );
-
-        if (actionToPreform == EntityActions.on) {
-          (await turnOnSwitch()).fold(
-            (l) {
-              icLogger.e('Error turning Shelly switch on\n$l');
-              throw l;
-            },
-            (r) {
-              icLogger.i('Shelly switch turn on success');
-            },
-          );
-        } else if (actionToPreform == EntityActions.off) {
-          (await turnOffSwitch()).fold(
-            (l) {
-              icLogger.e('Error turning Shelly off\n$l');
-              throw l;
-            },
-            (r) {
-              icLogger.i('Shelly switch turn off success');
-            },
-          );
-        } else {
-          icLogger.w(
-            'actionToPreform is not set correctly on Shelly Switch',
-          );
-        }
-      }
-      entityStateGRPC = EntityState(EntityStateGRPC.ack.toString());
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return right(unit);
-    } catch (e) {
-      entityStateGRPC = EntityState(EntityStateGRPC.newStateFailed.toString());
-      // IMqttServerRepository.instance.postSmartDeviceToAppMqtt(
-      //   entityFromTheHub: this,
-      // );
-      return left(const CoreFailure.unexpected());
-    }
-  }
 
   @override
   Future<Either<CoreFailure, Unit>> turnOnSwitch() async {

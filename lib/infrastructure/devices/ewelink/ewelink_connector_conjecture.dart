@@ -1,30 +1,27 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_helpers.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_switch/ewelink_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
 
-class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
+class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
   factory EwelinkConnectorConjecture() {
     return _instance;
   }
 
-  EwelinkConnectorConjecture._singletonContractor();
+  EwelinkConnectorConjecture._singletonContractor()
+      : super(
+          vendorsAndServices: VendorsAndServices.sonoffEweLink,
+          mdnsVendorUniqueTypes: ['_ewelink._tcp'],
+        );
 
   static final EwelinkConnectorConjecture _instance =
       EwelinkConnectorConjecture._singletonContractor();
-
-  @override
-  VendorsAndServices get vendorsAndServices => VendorsAndServices.sonoffEweLink;
-
-  static const List<String> mdnsTypes = ['_ewelink._tcp'];
 
   Ewelink? ewelink;
 
@@ -60,14 +57,19 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
 
   Future<bool>? didRequestLogin;
 
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
-  ) async {
-    if (didRequestLogin != null) {
-      return null;
+  Future<void> waitUntilConnectionEstablished(int executed) async {
+    if (executed > 20 || ewelink != null) {
+      await Future.delayed(const Duration(seconds: 50));
+      return;
     }
+    await Future.delayed(const Duration(seconds: 20));
+    return waitUntilConnectionEstablished(executed + 1);
+  }
 
+  @override
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
+  ) async {
     if (ewelink == null) {
       didRequestLogin = accountLogin(GenericEwelinkLoginDE.empty());
       if (!await didRequestLogin!) {
@@ -75,7 +77,7 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
         icLogger.w(
             'eWeLink device got found but missing a email and password, please add '
             'it in the app');
-        return null;
+        return HashMap();
       }
     }
     didRequestLogin = null;
@@ -84,90 +86,18 @@ class EwelinkConnectorConjecture extends AbstractVendorConnectorConjecture {
     try {
       devices = await ewelink!.getDevices();
     } catch (e) {
-      return null;
+      return HashMap();
     }
 
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
-
+    final HashMap<String, DeviceEntityBase> entityList = HashMap();
     for (final EwelinkDevice ewelinkDevice in devices) {
       // Getting device by id adds additional info in the result
       final EwelinkDevice ewelinkDeviceWithTag =
           await ewelink!.getDevice(deviceId: ewelinkDevice.deviceid);
 
-      final List<DeviceEntityAbstract> entityList =
-          EwelinkHelpers.addDiscoveredDevice(ewelinkDeviceWithTag);
-
-      for (final DeviceEntityAbstract deviceEntityAbstract in entityList) {
-        if (vendorEntities[
-                deviceEntityAbstract.deviceCbjUniqueId.getOrCrash()] !=
-            null) {
-          continue;
-        }
-
-        final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
-          deviceEntityAbstract.deviceCbjUniqueId.getOrCrash(),
-          deviceEntityAbstract,
-        );
-
-        addedDevice.addEntries([deviceAsEntry]);
-        vendorEntities.addEntries([deviceAsEntry]);
-
-        icLogger.i(
-          'New EweLink devices name:${deviceEntityAbstract.cbjEntityName.getOrCrash()}',
-        );
-      }
+      entityList
+          .addAll(EwelinkHelpers.addDiscoveredDevice(ewelinkDeviceWithTag));
     }
-    ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
-    return addedDevice;
-  }
-
-  @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract ewelinkDE,
-  ) async {
-    if (ewelink == null || vendorEntities.isEmpty) {
-      await waitUntilConnectionEstablished(0);
-    }
-
-    final DeviceEntityAbstract? device = vendorEntities[
-        '${ewelinkDE.deviceUniqueId.getOrCrash()}-${ewelinkDE.entityUniqueId.getOrCrash()}'];
-
-    if (device is EwelinkSwitchEntity) {
-      device.executeDeviceAction(newEntity: ewelinkDE);
-    } else {
-      icLogger.w('Ewelink device type does not exist');
-    }
-  }
-
-  @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
-    DeviceEntityAbstract? nonGenericDevice;
-    if (ewelink == null || vendorEntities.isEmpty) {
-      await waitUntilConnectionEstablished(0);
-    }
-    if (deviceEntity is EwelinkSwitchEntity) {
-      nonGenericDevice = EwelinkSwitchEntity.fromGeneric(deviceEntity);
-    }
-
-    if (nonGenericDevice == null) {
-      icLogger.w('EweLink device could not get loaded from the server');
-      return;
-    }
-
-    vendorEntities.addEntries([
-      MapEntry(
-        '${nonGenericDevice.deviceUniqueId.getOrCrash()}-${nonGenericDevice.entityUniqueId.getOrCrash()}',
-        nonGenericDevice,
-      ),
-    ]);
-  }
-
-  Future<void> waitUntilConnectionEstablished(int executed) async {
-    if (executed > 20 || ewelink != null) {
-      await Future.delayed(const Duration(seconds: 50));
-      return;
-    }
-    await Future.delayed(const Duration(seconds: 20));
-    return waitUntilConnectionEstablished(executed + 1);
+    return entityList;
   }
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
 
@@ -20,15 +20,15 @@ class DevicesService {
   /// from Vendor Connector Conjectore side (or nodeRED for the hub),
   /// this stream dose not include
   /// request for changes from the app!.
-  Stream watchDevices() => deviceChangesStream.stream;
+  Stream<MapEntry<String, DeviceEntityBase>> watchEntities() =>
+      entitiesChangesStream.stream;
 
-  void discovedEntity(HashMap<String, DeviceEntityAbstract> entities) {
+  void discovedEntity(HashMap<String, DeviceEntityBase> entities) {
     // TODO: Save on db instead
     descoverdDeviceList.addAll(entities);
 
-    for (final MapEntry<String, DeviceEntityAbstract> entry
-        in entities.entries) {
-      deviceChangesStream.add(entry);
+    for (final MapEntry<String, DeviceEntityBase> entry in entities.entries) {
+      entitiesChangesStream.add(entry);
     }
   }
 
@@ -36,7 +36,7 @@ class DevicesService {
     required HashMap<VendorsAndServices, HashSet<String>> uniqueIdByVendor,
     required EntityProperties property,
     required EntityActions action,
-    required dynamic value,
+    required HashMap<ActionValues, dynamic>? value,
   }) {
     VendorsConnectorConjecture().setEntityState(
       uniqueIdByVendor: uniqueIdByVendor,
@@ -53,12 +53,12 @@ class DevicesService {
   }
 
   // TODO: Gete devices from db instead
-  HashMap<String, DeviceEntityAbstract> descoverdDeviceList = HashMap();
+  HashMap<String, DeviceEntityBase> descoverdDeviceList = HashMap();
 
-  HashMap<String, DeviceEntityAbstract> getEntities() =>
+  HashMap<String, DeviceEntityBase> getEntities() =>
       // TODO: Should retreve all devics from the db
       descoverdDeviceList;
 
-  StreamController<MapEntry<String, DeviceEntityAbstract>> deviceChangesStream =
-      StreamController<MapEntry<String, DeviceEntityAbstract>>();
+  StreamController<MapEntry<String, DeviceEntityBase>> entitiesChangesStream =
+      StreamController<MapEntry<String, DeviceEntityBase>>.broadcast();
 }

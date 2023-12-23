@@ -1,5 +1,5 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
@@ -10,7 +10,7 @@ part 'generic_switch_device_dtos.g.dart';
 
 @freezed
 abstract class GenericSwitchDeviceDtos
-    implements _$GenericSwitchDeviceDtos, DeviceEntityDtoAbstract {
+    implements _$GenericSwitchDeviceDtos, DeviceEntityDtoBase {
   factory GenericSwitchDeviceDtos({
     // @JsonKey(ignore: true)
     required String id,
@@ -92,7 +92,7 @@ abstract class GenericSwitchDeviceDtos
   final String deviceDtoClassInstance = (GenericSwitchDeviceDtos).toString();
 
   @override
-  DeviceEntityAbstract toDomain() {
+  DeviceEntityBase toDomain() {
     return GenericSwitchDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),

@@ -28,7 +28,7 @@ import 'package:cbj_integrations_controller/infrastructure/bindings/binding_cbj_
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/bindings_hive_model.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/devices_hive_model.dart';
@@ -68,21 +68,21 @@ abstract class IDbRepository {
   Future<Either<LocalDbFailures, String>> getRemotePipesDnsName();
 
   /// Get all saved devices from local db
-  Future<Either<LocalDbFailures, List<DeviceEntityAbstract>>>
+  Future<Either<LocalDbFailures, Set<DeviceEntityBase>>>
       getSmartDevicesFromDb();
 
   /// Get all saved scenes from local db
-  Future<Either<LocalDbFailures, List<SceneCbjEntity>>> getScenesFromDb();
+  Future<Either<LocalDbFailures, Set<SceneCbjEntity>>> getScenesFromDb();
 
   /// Get all saved routines from local db
-  Future<Either<LocalDbFailures, List<RoutineCbjEntity>>> getRoutinesFromDb();
+  Future<Either<LocalDbFailures, Set<RoutineCbjEntity>>> getRoutinesFromDb();
 
   /// Get all saved bindings from local db
-  Future<Either<LocalDbFailures, List<BindingCbjEntity>>> getBindingsFromDb();
+  Future<Either<LocalDbFailures, Set<BindingCbjEntity>>> getBindingsFromDb();
 
   /// Will ger all rooms from db, if didn't find any will return discovered room
   /// without any devices
-  Future<Either<LocalDbFailures, List<RoomEntity>>> getRoomsFromDb();
+  Future<Either<LocalDbFailures, Set<RoomEntity>>> getRoomsFromDb();
 
   Future<Either<LocalDbFailures, Unit>> saveRemotePipes({
     required String remotePipesDomainName,
@@ -90,46 +90,46 @@ abstract class IDbRepository {
 
   Future<Either<LocalDbFailures, GenericLifxLoginDE>>
       getLifxVendorLoginCredentials({
-    required List<LifxVendorCredentialsHiveModel>
+    required Set<LifxVendorCredentialsHiveModel>
         lifxVendorCredentialsModelFromDb,
   });
 
   Future<Either<LocalDbFailures, GenericEspHomeLoginDE>>
       getEspHomeVendorLoginCredentials({
-    required List<EspHomeVendorCredentialsHiveModel>
+    required Set<EspHomeVendorCredentialsHiveModel>
         espHomeVendorCredentialsModelFromDb,
   });
 
   Future<Either<LocalDbFailures, GenericXiaomiMiLoginDE>>
       getXiaomiMiVendorLoginCredentials({
-    required List<XiaomiMiVendorCredentialsHiveModel>
+    required Set<XiaomiMiVendorCredentialsHiveModel>
         xiaomiMiVendorCredentialsModelFromDb,
   });
 
   Future<Either<LocalDbFailures, GenericEwelinkLoginDE>>
       getEwelinkVendorLoginCredentials({
-    required List<EwelinkVendorCredentialsHiveModel>
+    required Set<EwelinkVendorCredentialsHiveModel>
         ewelinkVendorCredentialsModelFromDb,
   });
 
   Future<Either<LocalDbFailures, Unit>> saveRoomsToDb({
-    required List<RoomEntity> roomsList,
+    required Set<RoomEntity> roomsList,
   });
 
   Future<Either<LocalDbFailures, Unit>> saveSmartDevices({
-    required List<DeviceEntityAbstract> deviceList,
+    required Set<DeviceEntityBase> deviceList,
   });
 
   Future<Either<LocalDbFailures, Unit>> saveScenes({
-    required List<SceneCbjEntity> sceneList,
+    required Set<SceneCbjEntity> sceneList,
   });
 
   Future<Either<LocalDbFailures, Unit>> saveRoutines({
-    required List<RoutineCbjEntity> routineList,
+    required Set<RoutineCbjEntity> routineList,
   });
 
   Future<Either<LocalDbFailures, Unit>> saveBindings({
-    required List<BindingCbjEntity> bindingList,
+    required Set<BindingCbjEntity> bindingList,
   });
 
   Future<Either<LocalDbFailures, Unit>> saveVendorLoginCredentials({

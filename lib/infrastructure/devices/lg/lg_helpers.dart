@@ -1,10 +1,12 @@
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'dart:collection';
+
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 
 class LgHelpers {
-  static List<DeviceEntityAbstract> addDiscoveredDevice(
-    DeviceEntityAbstract entity,
-  ) {
-    return [];
+  static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
+    DeviceEntityBase entity,
+  ) async {
+    return HashMap();
     // TODO: Add minimal LG TV api
     // CoreUniqueId uniqueDeviceIdTemp;
     //
@@ -18,7 +20,7 @@ class LgHelpers {
     //   uniqueId: uniqueDeviceIdTemp,
     //   entityUniqueId: EntityUniqueId.fromUniqueString(mDnsName),
     //   cbjEntityName: CbjEntityName('LG TV'),
-    //   entityStateGRPC: EntityState(EntityStateGRPC.ack.toString()),
+    //   entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
     //   senderDeviceOs: DeviceSenderDeviceOs('WebOs'),
     //   senderDeviceModel: DeviceSenderDeviceModel('UP7550PVG'),
     //   senderId: DeviceSenderId(),

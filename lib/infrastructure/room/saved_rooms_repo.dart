@@ -11,7 +11,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
         /// only a discovered room
         if (rooms.isEmpty) {
           final RoomEntity discoveredRoom = RoomEntity.empty().copyWith(
-            uniqueId: RoomUniqueId.discoveredRoomId(),
+            uniqueId: RoomUniqueId.discovered(),
             cbjEntityName: RoomDefaultName.discoveredRoomName(),
           );
           rooms.add(discoveredRoom);
@@ -28,8 +28,8 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
     return _allRooms;
   }
 
-  RoomEntity? getRoomDeviceExistIn(DeviceEntityAbstract deviceEntityAbstract) {
-    final String uniqueId = deviceEntityAbstract.uniqueId.getOrCrash();
+  RoomEntity? getRoomDeviceExistIn(DeviceEntityBase deviceEntityBase) {
+    final String uniqueId = deviceEntityBase.uniqueId.getOrCrash();
     for (final RoomEntity roomEntity in _allRooms.values) {
       if (roomEntity.roomDevicesId.getOrCrash().contains(uniqueId)) {
         return roomEntity;
@@ -72,61 +72,61 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
   RoomEntity addOrUpdateRoom(RoomEntity roomEntity) {
     RoomEntity newRoomEntity = roomEntity;
 
-    final RoomEntity? roomFromAllRoomsList =
+    final RoomEntity? roomFromAllRoomsSet =
         _allRooms[roomEntity.uniqueId.getOrCrash()];
 
     /// TODO: Check if this should only happen in discover room
-    if (roomFromAllRoomsList != null) {
+    if (roomFromAllRoomsSet != null) {
       /// For devices in the room
-      final List<String> allDevicesInNewRoom =
+      final Set<String> allDevicesInNewRoom =
           roomEntity.roomDevicesId.getOrCrash();
-      final List<String> allDevicesInExistingRoom =
-          roomFromAllRoomsList.roomDevicesId.getOrCrash();
+      final Set<String> allDevicesInExistingRoom =
+          roomFromAllRoomsSet.roomDevicesId.getOrCrash();
 
-      final HashSet<String> tempAddDevicesList = HashSet<String>();
-      tempAddDevicesList.addAll(allDevicesInNewRoom);
-      tempAddDevicesList.addAll(allDevicesInExistingRoom);
+      final HashSet<String> tempAddDevicesSet = HashSet<String>();
+      tempAddDevicesSet.addAll(allDevicesInNewRoom);
+      tempAddDevicesSet.addAll(allDevicesInExistingRoom);
       newRoomEntity = newRoomEntity.copyWith(
-        roomDevicesId: RoomDevicesId(List.from(tempAddDevicesList)),
+        roomDevicesId: RoomDevicesId(Set.from(tempAddDevicesSet)),
       );
 
       /// For scenes in the room
-      final List<String> allScenesInNewRoom =
+      final Set<String> allScenesInNewRoom =
           roomEntity.roomScenesId.getOrCrash();
-      final List<String> allScenesInExistingRoom =
-          roomFromAllRoomsList.roomDevicesId.getOrCrash();
+      final Set<String> allScenesInExistingRoom =
+          roomFromAllRoomsSet.roomDevicesId.getOrCrash();
 
-      final HashSet<String> tempAddScenesList = HashSet<String>();
-      tempAddScenesList.addAll(allScenesInNewRoom);
-      tempAddScenesList.addAll(allScenesInExistingRoom);
+      final HashSet<String> tempAddScenesSet = HashSet<String>();
+      tempAddScenesSet.addAll(allScenesInNewRoom);
+      tempAddScenesSet.addAll(allScenesInExistingRoom);
       newRoomEntity = newRoomEntity.copyWith(
-        roomScenesId: RoomScenesId(List.from(tempAddScenesList)),
+        roomScenesId: RoomScenesId(Set.from(tempAddScenesSet)),
       );
 
       /// For Routines in the room
-      final List<String> allRoutinesInNewRoom =
+      final Set<String> allRoutinesInNewRoom =
           roomEntity.roomRoutinesId.getOrCrash();
-      final List<String> allRoutinesInExistingRoom =
-          roomFromAllRoomsList.roomRoutinesId.getOrCrash();
+      final Set<String> allRoutinesInExistingRoom =
+          roomFromAllRoomsSet.roomRoutinesId.getOrCrash();
 
-      final HashSet<String> tempAddRoutinesList = HashSet<String>();
-      tempAddRoutinesList.addAll(allRoutinesInNewRoom);
-      tempAddRoutinesList.addAll(allRoutinesInExistingRoom);
+      final HashSet<String> tempAddRoutinesSet = HashSet<String>();
+      tempAddRoutinesSet.addAll(allRoutinesInNewRoom);
+      tempAddRoutinesSet.addAll(allRoutinesInExistingRoom);
       newRoomEntity = newRoomEntity.copyWith(
-        roomRoutinesId: RoomRoutinesId(List.from(tempAddRoutinesList)),
+        roomRoutinesId: RoomRoutinesId(Set.from(tempAddRoutinesSet)),
       );
 
       /// For Bindings in the room
-      final List<String> allBindingsInNewRoom =
+      final Set<String> allBindingsInNewRoom =
           roomEntity.roomBindingsId.getOrCrash();
-      final List<String> allBindingsInExistingRoom =
-          roomFromAllRoomsList.roomBindingsId.getOrCrash();
+      final Set<String> allBindingsInExistingRoom =
+          roomFromAllRoomsSet.roomBindingsId.getOrCrash();
 
-      final HashSet<String> tempAddBindingsList = HashSet<String>();
-      tempAddBindingsList.addAll(allBindingsInNewRoom);
-      tempAddBindingsList.addAll(allBindingsInExistingRoom);
+      final HashSet<String> tempAddBindingsSet = HashSet<String>();
+      tempAddBindingsSet.addAll(allBindingsInNewRoom);
+      tempAddBindingsSet.addAll(allBindingsInExistingRoom);
       newRoomEntity = newRoomEntity.copyWith(
-        roomBindingsId: RoomBindingsId(List.from(tempAddBindingsList)),
+        roomBindingsId: RoomBindingsId(Set.from(tempAddBindingsSet)),
       );
     }
 
@@ -140,7 +140,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
   }
 
   @override
-  void addDeviceToRoomDiscoveredIfNotExist(DeviceEntityAbstract deviceEntity) {
+  void addDeviceToRoomDiscoveredIfNotExist(DeviceEntityBase deviceEntity) {
     final RoomEntity? roomEntity = getRoomDeviceExistIn(deviceEntity);
     if (roomEntity != null) {
       return;
@@ -199,7 +199,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
 
     await removeSameDevicesFromOtherRooms(roomEntityTemp);
 
-    List<String> newDevicesList = roomEntityTemp.roomDevicesId.getOrCrash();
+    Set<String> newDevicesSet = roomEntityTemp.roomDevicesId.getOrCrash();
 
     bool newRoom = false;
     if (_allRooms[roomId] == null) {
@@ -211,14 +211,14 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
       newRoom = true;
     } else {
       final RoomEntity savedRoom = _allRooms[roomId]!;
-      newDevicesList = getOnlyWhatOnlyExistInFirsList(
+      newDevicesSet = getOnlyWhatOnlyExistInFirsSet(
         roomEntityTemp.roomDevicesId.getOrCrash(),
         savedRoom.roomDevicesId.getOrCrash(),
       );
 
       final RoomEntity roomEntityCombinedDevices = roomEntityTemp.copyWith(
         roomDevicesId: RoomDevicesId(
-          combineNoDuplicateListOfString(
+          combineNoDuplicateSetOfString(
             savedRoom.roomDevicesId.getOrCrash(),
             roomEntityTemp.roomDevicesId.getOrCrash(),
           ),
@@ -228,7 +228,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
           savedRoom.roomTypes.getOrCrash(),
         ),
         roomScenesId: RoomScenesId(
-          combineNoDuplicateListOfString(
+          combineNoDuplicateSetOfString(
             savedRoom.roomScenesId.getOrCrash(),
             roomEntityTemp.roomScenesId.getOrCrash(),
           ),
@@ -247,13 +247,13 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
 
     await ISceneCbjRepository.instance
         .addDevicesToMultipleScenesAreaTypeWithPreSetActions(
-      devicesId: newDevicesList,
+      devicesId: newDevicesSet,
       scenesId: _allRooms[roomId]!.roomScenesId.getOrCrash(),
       areaTypes: _allRooms[roomId]!.roomTypes.getOrCrash(),
     );
     final Future<Either<LocalDbFailures, Unit>> saveRoomToDbResponse =
         IDbRepository.instance.saveRoomsToDb(
-      roomsList: List<RoomEntity>.from(_allRooms.values),
+      roomsList: Set<RoomEntity>.from(_allRooms.values),
     );
 
     // TODO: Fix after new cbj_integrations_controller
@@ -268,36 +268,36 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
     bool newRoom = false,
   }) async {
     try {
-      // To make lists mutable
+      // To make Sets mutable
       final RoomEntity roomEntityTemp = roomEntity.copyWith(
-        roomTypes: RoomTypes(roomEntity.roomTypes.getOrCrash().toList()),
+        roomTypes: RoomTypes(roomEntity.roomTypes.getOrCrash().toSet()),
         roomDevicesId:
-            RoomDevicesId(roomEntity.roomDevicesId.getOrCrash().toList()),
+            RoomDevicesId(roomEntity.roomDevicesId.getOrCrash().toSet()),
         roomScenesId:
-            RoomScenesId(roomEntity.roomScenesId.getOrCrash().toList()),
+            RoomScenesId(roomEntity.roomScenesId.getOrCrash().toSet()),
         roomRoutinesId:
-            RoomRoutinesId(roomEntity.roomRoutinesId.getOrCrash().toList()),
+            RoomRoutinesId(roomEntity.roomRoutinesId.getOrCrash().toSet()),
         roomBindingsId:
-            RoomBindingsId(roomEntity.roomBindingsId.getOrCrash().toList()),
+            RoomBindingsId(roomEntity.roomBindingsId.getOrCrash().toSet()),
         roomMostUsedBy:
-            RoomMostUsedBy(roomEntity.roomMostUsedBy.getOrCrash().toList()),
+            RoomMostUsedBy(roomEntity.roomMostUsedBy.getOrCrash().toSet()),
         roomPermissions:
-            RoomPermissions(roomEntity.roomPermissions.getOrCrash().toList()),
+            RoomPermissions(roomEntity.roomPermissions.getOrCrash().toSet()),
       );
 
-      final List<String> tempList =
+      final Set<String> tempSet =
           _allRooms[roomEntityTemp.uniqueId.getOrCrash()]
                   ?.roomTypes
                   .getOrCrash() ??
-              [];
-      final List<String> roomTypesToAdd;
+              {};
+      final Set<String> roomTypesToAdd;
 
       if (newRoom) {
         roomTypesToAdd = roomEntity.roomTypes.getOrCrash();
       } else {
-        roomTypesToAdd = getOnlyWhatOnlyExistInFirsList(
+        roomTypesToAdd = getOnlyWhatOnlyExistInFirsSet(
           roomEntity.roomTypes.getOrCrash(),
-          tempList,
+          tempSet,
         );
       }
 
@@ -311,7 +311,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
             await ISceneCbjRepository.instance
                 .addOrUpdateNewSceneInHubFromDevicesPropertyActionList(
           areaNameEdited,
-          [],
+          {},
           areaPurposeType,
         );
         sceneOrFailure.fold(
@@ -332,8 +332,8 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
 
   /// Remove all devices in our room from all the rooms to prevent duplicate
   Future<void> removeSameDevicesFromOtherRooms(RoomEntity roomEntity) async {
-    final List<String> devicesIdInThePassedRoom =
-        List.from(roomEntity.roomDevicesId.getOrCrash());
+    final Set<String> devicesIdInThePassedRoom =
+        Set.from(roomEntity.roomDevicesId.getOrCrash());
     if (devicesIdInThePassedRoom.isEmpty) {
       return;
     }
@@ -342,15 +342,15 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
       if (roomEntityTemp.roomDevicesId.failureOrUnit != right(unit)) {
         continue;
       }
-      final List<String> devicesIdInTheRoom =
-          List.from(roomEntityTemp.roomDevicesId.getOrCrash());
+      final Set<String> devicesIdInTheRoom =
+          Set.from(roomEntityTemp.roomDevicesId.getOrCrash());
 
       for (final String deviceIdInTheRoom in devicesIdInTheRoom) {
-        final int indexOfDeviceId =
-            devicesIdInThePassedRoom.indexOf(deviceIdInTheRoom);
+        final bool indexOfDeviceId =
+            devicesIdInThePassedRoom.contains(deviceIdInTheRoom);
 
         /// If device id exist in other room than delete it from that room
-        if (indexOfDeviceId != -1) {
+        if (!indexOfDeviceId) {
           roomEntityTemp = roomEntityTemp.copyWith(
             roomDevicesId: roomEntityTemp.deleteIdIfExist(deviceIdInTheRoom),
           );
@@ -360,29 +360,29 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
     }
   }
 
-  List<String> combineNoDuplicateListOfString(
-    List<String> devicesId,
-    List<String> newDevicesId,
+  Set<String> combineNoDuplicateSetOfString(
+    Set<String> devicesId,
+    Set<String> newDevicesId,
   ) {
     final HashSet<String> hashSetDevicesId = HashSet<String>();
     hashSetDevicesId.addAll(devicesId);
     hashSetDevicesId.addAll(newDevicesId);
-    return List.from(hashSetDevicesId);
+    return Set.from(hashSetDevicesId);
   }
 
-  List<String> getOnlyWhatOnlyExistInFirsList(
-    List<String> firstList,
-    List<String> secondList,
+  Set<String> getOnlyWhatOnlyExistInFirsSet(
+    Set<String> firstSet,
+    Set<String> secondSet,
   ) {
-    final List<String> tempList = [];
+    final Set<String> tempSet = {};
 
-    for (final String stringText in firstList) {
-      if (!secondList.contains(stringText)) {
-        tempList.add(stringText);
+    for (final String stringText in firstSet) {
+      if (!secondSet.contains(stringText)) {
+        tempSet.add(stringText);
       }
     }
 
-    return tempList;
+    return tempSet;
   }
 
   String areaNameCapsWithSpaces(AreaPurposesTypes areaPurposeType) {
@@ -415,7 +415,7 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
   }
 
   String pickRoomImage() {
-    final List<String> roomImages = [
+    final Set<String> roomImages = HashSet.from([
       'https://live.staticflickr.com/5220/5486044345_f67abff3e9_h.jpg',
       'https://live.staticflickr.com/7850/31597166847_486557e555_h.jpg',
       'https://images.pexels.com/photos/459654/pexels-photo-459654.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
@@ -428,15 +428,14 @@ class _SavedRoomsRepo extends ISavedRoomsRepo {
       'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       'https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       'https://images.unsplash.com/photo-1564829439675-0eec72f0b695?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=700&q=80',
-    ];
+    ]);
 
-    return roomImages[Random().nextInt(roomImages.length - 1)];
+    return roomImages.elementAt(Random().nextInt(roomImages.length - 1));
   }
 
   /// Create discovered room if not exist and returns it.
   RoomEntity createRoomDiscoverIfNotExist() {
-    final String discoveredRoomId =
-        RoomUniqueId.discoveredRoomId().getOrCrash();
+    final String discoveredRoomId = RoomUniqueId.discovered().getOrCrash();
 
     if (_allRooms[discoveredRoomId] == null) {
       _allRooms.addEntries([

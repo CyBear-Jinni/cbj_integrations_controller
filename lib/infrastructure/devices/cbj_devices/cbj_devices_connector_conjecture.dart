@@ -7,34 +7,32 @@ import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/c
 import 'package:cbj_integrations_controller/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_device_server.pbgrpc.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/abstract_vendor_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_computer_entity/generic_smart_computer_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 
-class CbjDevicesConnectorConjecture extends AbstractVendorConnectorConjecture {
+class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
   factory CbjDevicesConnectorConjecture() {
     return _instance;
   }
 
-  CbjDevicesConnectorConjecture._singletonContractor();
+  CbjDevicesConnectorConjecture._singletonContractor()
+      : super(
+          vendorsAndServices: VendorsAndServices.cbjDeviceSmartEntity,
+          ports: [50054],
+        );
 
   static final CbjDevicesConnectorConjecture _instance =
       CbjDevicesConnectorConjecture._singletonContractor();
 
   @override
-  VendorsAndServices get vendorsAndServices =>
-      VendorsAndServices.cbjDeviceSmartEntity;
-
-  @override
-  Future<HashMap<String, DeviceEntityAbstract>?> foundEntity(
-    DeviceEntityAbstract entity,
+  Future<HashMap<String, DeviceEntityBase>?> foundEntity(
+    DeviceEntityBase entity,
   ) async {
     final String? hostName = entity.deviceHostName.getOrCrash();
     if (hostName == null) {
       return null;
     }
-    for (final DeviceEntityAbstract savedDevice in vendorEntities.values) {
+    for (final DeviceEntityBase savedDevice in vendorEntities.values) {
       if ((savedDevice is CbjSmartComputerEntity) &&
           hostName == savedDevice.entityUniqueId.getOrCrash()) {
         return null;
@@ -48,7 +46,7 @@ class CbjDevicesConnectorConjecture extends AbstractVendorConnectorConjecture {
     final List<CbjSmartDeviceInfo?> componentsInDevice =
         await getAllComponentsOfDevice(entity);
     final String address = entity.deviceLastKnownIp.getOrCrash()!;
-    final List<DeviceEntityAbstract> devicesList =
+    final List<DeviceEntityBase> devicesList =
         CbjDevicesHelpers.addDiscoveredDevice(
       componentsInDevice: componentsInDevice,
       deviceAddress: address,
@@ -57,10 +55,10 @@ class CbjDevicesConnectorConjecture extends AbstractVendorConnectorConjecture {
       return null;
     }
 
-    final HashMap<String, DeviceEntityAbstract> addedDevice = HashMap();
+    final HashMap<String, DeviceEntityBase> addedDevice = HashMap();
 
-    for (final DeviceEntityAbstract entityAsDevice in devicesList) {
-      final MapEntry<String, DeviceEntityAbstract> deviceAsEntry = MapEntry(
+    for (final DeviceEntityBase entityAsDevice in devicesList) {
+      final MapEntry<String, DeviceEntityBase> deviceAsEntry = MapEntry(
         entityAsDevice.deviceCbjUniqueId.getOrCrash(),
         entityAsDevice,
       );
@@ -75,35 +73,8 @@ class CbjDevicesConnectorConjecture extends AbstractVendorConnectorConjecture {
     return addedDevice;
   }
 
-  @override
-  Future<void> manageHubRequestsForDevice(
-    DeviceEntityAbstract cbjDevicesDE,
-  ) async {
-    final DeviceEntityAbstract? device =
-        vendorEntities[cbjDevicesDE.entityUniqueId.getOrCrash()];
-
-    // if (device == null) {
-    //   setTheSameDeviceFromAllDevices(cbjDevicesDE);
-    //   device =
-    //   companyDevices[cbjDevicesDE.entityUniqueId.getOrCrash();
-    // }
-
-    if (device != null && (device is CbjSmartComputerEntity)) {
-      device.executeDeviceAction(newEntity: cbjDevicesDE);
-    } else {
-      icLogger.w('CbjDevices device type ${device.runtimeType} does not exist');
-    }
-  }
-  //
-  // // Future<void> setTheSameDeviceFromAllDevices(
-  // //   DeviceEntityAbstract cbjDevicesDE,
-  // // ) async {
-  // //   final String deviceEntityUniqueId = cbjDevicesDE.entityUniqueId.getOrCrash();
-  // //   for(a)
-  // // }
-
   Future<List<CbjSmartDeviceInfo?>> getAllComponentsOfDevice(
-    DeviceEntityAbstract entity,
+    DeviceEntityBase entity,
   ) async {
     final List<CbjSmartDeviceInfo?> devicesInfo =
         await CbjSmartDeviceClient.getCbjSmartDeviceHostDevicesInfo(entity);
@@ -111,30 +82,8 @@ class CbjDevicesConnectorConjecture extends AbstractVendorConnectorConjecture {
   }
 
   @override
-  Future<void> setUpEntityFromDb(DeviceEntityAbstract deviceEntity) async {
-    DeviceEntityAbstract? nonGenericDevice;
-
-    if (deviceEntity is GenericSmartComputerDE) {
-      nonGenericDevice = CbjSmartComputerEntity.fromGeneric(deviceEntity);
-    }
-
-    if (nonGenericDevice == null) {
-      icLogger.w('Switcher device could not get loaded from the server');
-      return;
-    }
-
-    vendorEntities.addEntries([
-      MapEntry(nonGenericDevice.entityUniqueId.getOrCrash(), nonGenericDevice),
-    ]);
-  }
-
-  @override
-  Future setEntityState({
-    required HashSet<String> ids,
-    required EntityProperties property,
-    required EntityActions action,
-    required dynamic value,
-  }) async {
-    icLogger.e('setEntityState need to get writen');
-  }
+  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+    DeviceEntityBase entity,
+  ) async =>
+      HashMap();
 }

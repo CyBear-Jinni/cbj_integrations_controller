@@ -1,8 +1,9 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_device_dtos.dart';
@@ -11,7 +12,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericBoiler that exist inside a computer, the
 /// implementations will be actual GenericBoiler like boiler boilers and more
-class GenericBoilerDE extends DeviceEntityAbstract {
+class GenericBoilerDE extends DeviceEntityBase {
   /// All public field of GenericBoiler entity
   GenericBoilerDE({
     required super.uniqueId,
@@ -43,7 +44,7 @@ class GenericBoilerDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.boilerSwitchState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.boiler.toString()),
+          entityTypes: EntityType.type(EntityTypes.boiler),
         );
 
   /// Empty instance of GenericBoilerEntity
@@ -103,9 +104,6 @@ class GenericBoilerDE extends DeviceEntityAbstract {
   //     .fold((f) => some(f), (_) => none());
   // }
 
-  @override
-  String getDeviceId() => uniqueId.getOrCrash();
-
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {
@@ -113,7 +111,7 @@ class GenericBoilerDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericBoilerDeviceDtos(
       deviceDtoClass: (GenericBoilerDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -149,38 +147,30 @@ class GenericBoilerDE extends DeviceEntityAbstract {
     );
   }
 
-  /// Please override the following methods
   @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    HashMap<ActionValues, dynamic>? value,
   }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
+    switch (action) {
+      case EntityActions.on:
+        return boilerOn();
+      case EntityActions.off:
+        return boilerOff();
+      default:
+        break;
+    }
+
+    return const Left(CoreFailure.unexpected());
   }
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> boilerOn() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> boilerOn() async => pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> boilerOff() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> boilerOff() async =>
+      pleaseOverrideMessage();
 
   @override
   bool replaceActionIfExist(String action) {

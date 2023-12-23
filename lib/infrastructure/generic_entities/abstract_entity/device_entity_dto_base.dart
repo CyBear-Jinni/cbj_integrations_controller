@@ -1,6 +1,6 @@
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_blinds_entity/generic_blinds_device_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_boiler_entity/generic_boiler_device_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_dimmable_light_entity/generic_dimmable_light_device_dtos.dart';
@@ -15,16 +15,16 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/gene
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_smart_type_type_not_supported_entity/generic_smart_type_not_supported_device_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_device_dtos.dart';
 
-class DeviceEntityDtoAbstract {
-  DeviceEntityDtoAbstract();
+class DeviceEntityDtoBase {
+  DeviceEntityDtoBase();
 
-  factory DeviceEntityDtoAbstract.fromDomain() {
+  factory DeviceEntityDtoBase.fromDomain() {
     icLogger.t('DeviceEntityDtoAbstract.fromDomain');
-    return DeviceEntityDtoAbstract();
+    return DeviceEntityDtoBase();
   }
 
-  factory DeviceEntityDtoAbstract.fromJson(Map<String, dynamic> json) {
-    DeviceEntityDtoAbstract deviceEntityDtoAbstract = DeviceEntityDtoAbstract();
+  factory DeviceEntityDtoBase.fromJson(Map<String, dynamic> json) {
+    DeviceEntityDtoBase deviceEntityDtoAbstract = DeviceEntityDtoBase();
     final String jsonDeviceDtoClass = json['deviceDtoClass'].toString();
 
     if (jsonDeviceDtoClass == (GenericLightDeviceDtos).toString() ||
@@ -77,14 +77,14 @@ class DeviceEntityDtoAbstract {
     return deviceEntityDtoAbstract;
   }
 
-  final String deviceDtoClassInstance = (DeviceEntityDtoAbstract).toString();
+  final String deviceDtoClassInstance = (DeviceEntityDtoBase).toString();
 
   Map<String, dynamic> toJson() {
     icLogger.t('DeviceEntityDtoAbstract to Json');
     return {};
   }
 
-  DeviceEntityAbstract toDomain() {
+  DeviceEntityBase toDomain() {
     icLogger.t('ToDomain');
     return DeviceEntityNotAbstract();
   }

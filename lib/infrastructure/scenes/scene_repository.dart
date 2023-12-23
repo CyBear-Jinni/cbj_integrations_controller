@@ -15,8 +15,8 @@ class _SceneCbjRepository implements ISceneCbjRepository {
   }
 
   @override
-  Future<List<SceneCbjEntity>> getAllScenesAsList() async {
-    return _allScenes.values.toList();
+  Future<Set<SceneCbjEntity>> getAllScenesAsList() async {
+    return _allScenes.values.toSet();
   }
 
   @override
@@ -30,7 +30,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
     await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
 
     return IDbRepository.instance.saveScenes(
-      sceneList: List<SceneCbjEntity>.from(_allScenes.values),
+      sceneList: Set<SceneCbjEntity>.from(_allScenes.values),
     );
   }
 
@@ -160,7 +160,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
   Future<Either<SceneCbjFailure, SceneCbjEntity>>
       addOrUpdateNewSceneInHubFromDevicesPropertyActionList(
     String sceneName,
-    List<MapEntry<DeviceEntityAbstract, MapEntry<String?, String?>>>
+    Set<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         smartDevicesWithActionToAdd,
     AreaPurposesTypes areaPurposesTypes,
   ) async {
@@ -177,9 +177,9 @@ class _SceneCbjRepository implements ISceneCbjRepository {
 
   @override
   Future<Either<SceneCbjFailure, Unit>> activateScenes(
-    KtList<SceneCbjEntity> scenesList,
+    Set<SceneCbjEntity> scenesList,
   ) async {
-    for (final SceneCbjEntity sceneCbjEntity in scenesList.asList()) {
+    for (final SceneCbjEntity sceneCbjEntity in scenesList) {
       addOrUpdateNewSceneInHub(
         sceneCbjEntity.copyWith(
           entityStateGRPC: SceneCbjDeviceStateGRPC(
@@ -196,33 +196,31 @@ class _SceneCbjRepository implements ISceneCbjRepository {
     _allScenes[sceneCbj.uniqueId.getOrCrash()] = sceneCbj;
 
     scenesResponseFromTheHubStreamController.sink
-        .add(_allScenes.values.toImmutableList());
+        .add(_allScenes.values.toSet());
   }
 
   @override
   Future<void> initiateHubConnection() async {}
 
   @override
-  Stream<Either<SceneCbjFailure, KtList<SceneCbjEntity>>>
-      watchAllScenes() async* {
+  Stream<Either<SceneCbjFailure, Set<SceneCbjEntity>>> watchAllScenes() async* {
     yield* scenesResponseFromTheHubStreamController.stream
         .map((event) => right(event));
   }
 
   @override
-  BehaviorSubject<KtList<SceneCbjEntity>>
+  BehaviorSubject<Set<SceneCbjEntity>>
       scenesResponseFromTheHubStreamController =
-      BehaviorSubject<KtList<SceneCbjEntity>>();
+      BehaviorSubject<Set<SceneCbjEntity>>();
 
   @override
   Future<Either<SceneCbjFailure, Unit>>
       addDevicesToMultipleScenesAreaTypeWithPreSetActions({
-    required List<String> devicesId,
-    required List<String> scenesId,
-    required List<String> areaTypes,
+    required Set<String> devicesId,
+    required Set<String> scenesId,
+    required Set<String> areaTypes,
   }) async {
-    final List<MapEntry<String, AreaPurposesTypes>> areaTypeWithSceneIdList =
-        [];
+    final Set<MapEntry<String, AreaPurposesTypes>> areaTypeWithSceneIdList = {};
 
     for (final String sceneId in scenesId) {
       if (_allScenes[sceneId] == null) {
@@ -256,7 +254,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
   @override
   Future<Either<SceneCbjFailure, SceneCbjEntity>>
       addDevicesToSceneAreaTypeWithPreSetActions({
-    required List<String> devicesId,
+    required Set<String> devicesId,
     required String sceneId,
     required AreaPurposesTypes areaType,
   }) async {
@@ -282,11 +280,11 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       icLogger.e('Error decoding automation string\n$sceneAutomationString');
     }
     final Map<String, String> nodeActionsMap = {};
-    final List<String> nodeRedFuncNodesIds = [];
+    final Set<String> nodeRedFuncNodesIds = {};
 
     for (final String deviceId in devicesId) {
       if (!scene.automationString.getOrCrash()!.contains(deviceId)) {
-        // TODO: change to List<Map<String, String> so that each type will be able to create multiple scenes
+        // TODO: change to Set<Map<String, String> so that each type will be able to create multiple scenes
         final Either<SceneCbjFailure, Map<String, String>>
             actionForDevicesInArea = await AreaTypeWithDeviceTypePreset
                 .getPreDefineActionForDeviceInArea(
@@ -318,9 +316,9 @@ class _SceneCbjRepository implements ISceneCbjRepository {
     //   "wires": []
     // }, ...,     {
     // "id": ,
-    List<String> nodActionsMapValues = [];
+    Set<String> nodActionsMapValues = {};
     if (nodeActionsMap.values.isNotEmpty) {
-      nodActionsMapValues = nodeActionsMap.values.toList();
+      nodActionsMapValues = nodeActionsMap.values.toSet();
     }
 
     String mapAutomationFixed = '';
@@ -392,10 +390,10 @@ class _SceneCbjRepository implements ISceneCbjRepository {
     String keyToGetFromNode,
   ) {
     try {
-      final List<Map<String, dynamic>> sceneAutomationJson =
+      final Set<Map<String, dynamic>> sceneAutomationJson =
           (jsonDecode(sceneAutomationString) as List)
               .map((e) => e as Map<String, dynamic>)
-              .toList();
+              .toSet();
       for (final Map<String, dynamic> fullNode in sceneAutomationJson) {
         if (fullNode['type'] == nodeType) {
           return fullNode[keyToGetFromNode].toString();

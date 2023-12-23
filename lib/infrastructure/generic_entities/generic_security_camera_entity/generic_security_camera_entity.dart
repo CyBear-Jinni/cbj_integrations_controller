@@ -1,8 +1,9 @@
-import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_abstract.dart';
-import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_abstract.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_security_camera_entity/generic_security_camera_device_dtos.dart';
@@ -11,7 +12,7 @@ import 'package:dartz/dartz.dart';
 
 /// Abstract smart GenericSecurityCamera that exist inside a computer, the
 /// implementations will be actual GenericSecurityCamera like blinds securityCameras and more
-class GenericSecurityCameraDE extends DeviceEntityAbstract {
+class GenericSecurityCameraDE extends DeviceEntityBase {
   /// All public field of GenericSecurityCamera entity
   GenericSecurityCameraDE({
     required super.uniqueId,
@@ -43,7 +44,7 @@ class GenericSecurityCameraDE extends DeviceEntityAbstract {
     required super.deviceCbjUniqueId,
     required this.securityCameraSuspendState,
   }) : super(
-          entityTypes: EntityType(EntityTypes.securityCamera.toString()),
+          entityTypes: EntityType.type(EntityTypes.securityCamera),
         );
 
   /// Empty instance of GenericSecurityCameraEntity
@@ -104,9 +105,6 @@ class GenericSecurityCameraDE extends DeviceEntityAbstract {
   //     .fold((f) => some(f), (_) => none());
   // }
 
-  @override
-  String getDeviceId() => uniqueId.getOrCrash();
-
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {
@@ -114,7 +112,7 @@ class GenericSecurityCameraDE extends DeviceEntityAbstract {
   }
 
   @override
-  DeviceEntityDtoAbstract toInfrastructure() {
+  DeviceEntityDtoBase toInfrastructure() {
     return GenericSecurityCameraDeviceDtos(
       deviceDtoClass: (GenericSecurityCameraDeviceDtos).toString(),
       id: uniqueId.getOrCrash(),
@@ -150,38 +148,32 @@ class GenericSecurityCameraDE extends DeviceEntityAbstract {
     );
   }
 
-  /// Please override the following methods
   @override
-  Future<Either<CoreFailure, Unit>> executeDeviceAction({
-    required DeviceEntityAbstract newEntity,
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
+    required EntityProperties property,
+    required EntityActions action,
+    HashMap<ActionValues, dynamic>? value,
   }) async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
+    switch (action) {
+      case EntityActions.shutdown:
+        return shutDownSecurityCamera();
+      case EntityActions.suspend:
+        return suspendSecurityCamera();
+      default:
+        break;
+    }
+
+    return super
+        .executeAction(property: property, action: action, value: value);
   }
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> suspendSecurityCamera() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> suspendSecurityCamera() async =>
+      pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> shutDownSecurityCamera() async {
-    icLogger.w('Please override this method in the non generic implementation');
-    return left(
-      const CoreFailure.actionExcecuter(
-        failedValue: 'Action does not exist',
-      ),
-    );
-  }
+  Future<Either<CoreFailure, Unit>> shutDownSecurityCamera() async =>
+      pleaseOverrideMessage();
 
   @override
   bool replaceActionIfExist(String action) {

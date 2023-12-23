@@ -49,7 +49,7 @@ Either<CoreFailure<String>, String> validateWiFiNameNotEmpty(String input) {
   return right(input);
 }
 
-Either<CoreFailure<String>, String> validatePortNotEmpty(String input) {
+Either<CoreFailure<String?>, String?> validatePortNotEmpty(String? input) {
   return right(input);
 }
 
