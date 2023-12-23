@@ -242,13 +242,13 @@ class _HiveRepository extends IDbRepository {
           uniqueId: RoomUniqueId.fromUniqueString(roomHive.roomUniqueId),
           cbjEntityName: RoomDefaultName(roomHive.roomDefaultName),
           background: RoomBackground(roomHive.roomBackground),
-          roomTypes: RoomTypes(roomHive.roomTypes),
-          roomDevicesId: RoomDevicesId(roomHive.roomDevicesId),
-          roomScenesId: RoomScenesId(roomHive.roomScenesId),
-          roomRoutinesId: RoomRoutinesId(roomHive.roomRoutinesId),
-          roomBindingsId: RoomBindingsId(roomHive.roomBindingsId),
-          roomMostUsedBy: RoomMostUsedBy(roomHive.roomMostUsedBy),
-          roomPermissions: RoomPermissions(roomHive.roomPermissions),
+          roomTypes: RoomTypes(roomHive.roomTypes.toSet()),
+          roomDevicesId: RoomDevicesId(roomHive.roomDevicesId.toSet()),
+          roomScenesId: RoomScenesId(roomHive.roomScenesId.toSet()),
+          roomRoutinesId: RoomRoutinesId(roomHive.roomRoutinesId.toSet()),
+          roomBindingsId: RoomBindingsId(roomHive.roomBindingsId.toSet()),
+          roomMostUsedBy: RoomMostUsedBy(roomHive.roomMostUsedBy.toSet()),
+          roomPermissions: RoomPermissions(roomHive.roomPermissions.toSet()),
         );
         rooms.add(roomEntity);
       }
@@ -512,13 +512,13 @@ class _HiveRepository extends IDbRepository {
           ..roomUniqueId = roomEntityDtos.uniqueId
           ..roomDefaultName = roomEntityDtos.cbjEntityName
           ..roomBackground = roomEntityDtos.background
-          ..roomDevicesId = roomEntityDtos.roomDevicesId
-          ..roomScenesId = roomEntityDtos.roomScenesId
-          ..roomRoutinesId = roomEntityDtos.roomRoutinesId
-          ..roomBindingsId = roomEntityDtos.roomBindingsId
-          ..roomMostUsedBy = roomEntityDtos.roomMostUsedBy
-          ..roomPermissions = roomEntityDtos.roomPermissions
-          ..roomTypes = roomEntityDtos.roomTypes;
+          ..roomDevicesId = roomEntityDtos.roomDevicesId.toList()
+          ..roomScenesId = roomEntityDtos.roomScenesId.toList()
+          ..roomRoutinesId = roomEntityDtos.roomRoutinesId.toList()
+          ..roomBindingsId = roomEntityDtos.roomBindingsId.toList()
+          ..roomMostUsedBy = roomEntityDtos.roomMostUsedBy.toList()
+          ..roomPermissions = roomEntityDtos.roomPermissions.toList()
+          ..roomTypes = roomEntityDtos.roomTypes.toList();
         rommsHiveList.add(roomsHiveModel);
       }
 
