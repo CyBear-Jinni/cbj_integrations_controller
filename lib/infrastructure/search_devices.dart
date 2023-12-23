@@ -25,13 +25,13 @@ class BackFromIsolate {
 }
 
 class SearchDevices {
-  factory SearchDevices() {
-    return _instance;
+  void dispose() {
+    for (final Isolate isolate in isolates) {
+      isolate.kill();
+    }
   }
 
-  SearchDevices._singletonConstructor();
-
-  static final SearchDevices _instance = SearchDevices._singletonConstructor();
+  List<Isolate> isolates = [];
 
   Future<void> startSearchIsolate() async {
     final String projectPath = await SystemCommandsManager().getLocalDbPath();
@@ -54,6 +54,7 @@ class SearchDevices {
     mdnsIsolate.errors.listen((event) {
       icLogger.f('Mdns isolate had crashed $event');
     });
+    isolates.add(mdnsIsolate);
 
     // TODO: Does not work on Android https://github.com/osociety/network_tools_flutter/issues/31
     if (!Platform.isAndroid) {
@@ -74,12 +75,18 @@ class SearchDevices {
       pingIsolate.errors.listen((event) {
         icLogger.f('Ping isolate had crashed $event');
       });
+      isolates.add(pingIsolate);
     }
 
     /// For port search
-    searchDevices.portByVendor = VendorsConnectorConjecture().portsToScen();
+    final HashMap<VendorsAndServices, List<int>>? ports =
+        VendorsConnectorConjecture().portsToScen();
     final ReceivePort portReceivePort = ReceivePort();
-    searchDevices = SendToIsolate(portReceivePort.sendPort, projectPath);
+    searchDevices = SendToIsolate(
+      portReceivePort.sendPort,
+      projectPath,
+      portByVendor: ports,
+    );
 
     final Isolate portIsolate = await Isolate.spawn(
       _searchAllByPorts,
@@ -97,6 +104,7 @@ class SearchDevices {
     portIsolate.errors.listen((event) {
       icLogger.f('Port isolate had crashed $event');
     });
+    isolates.add(portIsolate);
   }
 
   Future<void> _searchAllMdnsDevicesAndSetThemUp(
@@ -124,10 +132,6 @@ class SearchDevices {
         }
         final List<ActiveHost> activeHostList = await _searchMdnsDevices();
         for (final ActiveHost activeHost in activeHostList) {
-          icLogger.i(
-            'Device Name ${await activeHost.hostName}, ${await activeHost.deviceName}',
-          );
-
           final GenericUnsupportedDE entity =
               await INetworkUtilities.instance.activeHostToEntity(activeHost);
           sendPort.send(entity);
@@ -146,6 +150,7 @@ class SearchDevices {
   ) async {
     await configureNetworkTools(sendToIsolate.projectPath);
     final SendPort sendPort = sendToIsolate.sendPort;
+
     while (true) {
       await searchForAdress((subnet) async {
         try {
@@ -174,7 +179,7 @@ class SearchDevices {
         }
       });
 
-      await Future.delayed(const Duration(minutes: 5));
+      await Future.delayed(const Duration(seconds: 5));
     }
   }
 
@@ -242,29 +247,32 @@ class SearchDevices {
     }
     await configureNetworkTools(sendToIsolate.projectPath);
     final SendPort sendPort = sendToIsolate.sendPort;
+    while (true) {
+      await searchForAdress((subnet) async {
+        for (final MapEntry<VendorsAndServices, List<int>> vendorPorts
+            in sendToIsolate.portByVendor!.entries) {
+          final VendorsAndServices vendor = vendorPorts.key;
+          for (final int port in vendorPorts.value) {
+            final stream2 = HostScanner.scanDevicesForSinglePort(
+              subnet,
+              port,
+            );
 
-    await searchForAdress((subnet) async {
-      for (final MapEntry<VendorsAndServices, List<int>> vendorPorts
-          in sendToIsolate.portByVendor!.entries) {
-        final VendorsAndServices vendor = vendorPorts.key;
-        for (final int port in vendorPorts.value) {
-          final stream2 = HostScanner.scanDevicesForSinglePort(
-            subnet,
-            port,
-          );
-
-          stream2.listen(
-            (activeHost) async {
-              final BackFromIsolate backFromIsolate = BackFromIsolate(
-                vendor,
-                await INetworkUtilities.instance.activeHostToEntity(activeHost),
-              );
-              sendPort.send(backFromIsolate);
-            },
-          );
+            stream2.listen(
+              (activeHost) async {
+                final BackFromIsolate backFromIsolate = BackFromIsolate(
+                  vendor,
+                  await INetworkUtilities.instance
+                      .activeHostToEntity(activeHost),
+                );
+                sendPort.send(backFromIsolate);
+              },
+            );
+          }
         }
-      }
-    });
+        await Future.delayed(const Duration(seconds: 3));
+      });
+    }
   }
 
   // /// Searching for mqtt devices

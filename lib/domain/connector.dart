@@ -70,7 +70,7 @@ class Connector {
     // String? deviceStateValue;
 
     for (final DeviceEntityBase d in allDevices.values) {
-      if (d.getDeviceId() == deviceChangeFromMqtt.key) {
+      if (d.getCbjDeviceId == deviceChangeFromMqtt.key) {
         final Map<String, dynamic> deviceAsJson = d.toInfrastructure().toJson();
 
         for (final String property in devicePropertyAndValues.keys) {

@@ -32,6 +32,9 @@ abstract class VendorConnectorConjectureService {
     VendorsAndServices vendorsAndServices,
     List<int> ports,
   ) {
+    if (ports.isEmpty) {
+      return;
+    }
     _portsUsedByVendor.addEntries([MapEntry(vendorsAndServices, ports)]);
   }
 

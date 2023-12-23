@@ -16,7 +16,7 @@ class HpConnectorConjecture extends VendorConnectorConjectureService {
           vendorsAndServices: VendorsAndServices.hp,
           mdnsVendorUniqueTypes: ['_hplib._tcp'],
           mdnsTypes: ['_ipp._tcp'],
-          uniqueIdentifierNameInMdns: ['hp'],
+          uniqueIdentifierNameInMdns: ['HP'],
         );
 
   static final HpConnectorConjecture _instance =

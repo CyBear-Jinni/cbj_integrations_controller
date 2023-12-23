@@ -97,9 +97,6 @@ class GenericSmartTvDE extends DeviceEntityBase {
 
   static const double _volumeChange = (volumeChangePrecent * volumeMax) / 100;
 
-  @override
-  String getDeviceId() => uniqueId.getOrCrash();
-
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {

@@ -48,7 +48,7 @@ class _SavedDevicesRepo extends ISavedDevicesRepo {
       return deviceEntity;
     }
 
-    final String entityId = deviceEntity.getDeviceId();
+    final String entityId = deviceEntity.getCbjDeviceId;
 
     /// If it is new device
     _allDevices[entityId] = deviceEntity;

@@ -14,8 +14,8 @@ class LgConnectorConjecture extends VendorConnectorConjectureService {
   LgConnectorConjecture._singletonContractor()
       : super(
           vendorsAndServices: VendorsAndServices.lg,
-          uniqueIdentifierNameInMdns: ['lg', 'webos'],
           mdnsTypes: ['_hap._tcp', '_display._tcp', '_airplay._tcp'],
+          uniqueIdentifierNameInMdns: ['LG', 'webos'],
         );
 
   static final LgConnectorConjecture _instance =

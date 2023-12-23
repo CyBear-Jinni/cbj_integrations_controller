@@ -122,9 +122,6 @@ class GenericPrinterDE extends DeviceEntityBase {
         .executeAction(property: property, action: action, value: value);
   }
 
-  @override
-  String getDeviceId() => uniqueId.getOrCrash();
-
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {

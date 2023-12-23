@@ -103,9 +103,6 @@ class GenericSwitchDE extends DeviceEntityBase {
   //     .fold((f) => some(f), (_) => none());
   // }
 
-  @override
-  String getDeviceId() => uniqueId.getOrCrash();
-
   /// Return a list of all valid actions for this device
   @override
   List<String> getAllValidActions() {

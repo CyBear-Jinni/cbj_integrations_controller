@@ -126,7 +126,7 @@ abstract class DeviceEntityBase {
   /// Unique id that cbj creates for the device that the entity is stored on
   CoreUniqueId deviceCbjUniqueId;
 
-  String getDeviceId();
+  String get getCbjDeviceId => deviceCbjUniqueId.getOrCrash();
 
   /// Copy with device state to waiting or ack
   DeviceEntityBase copyWithDeviceState(EntityStateGRPC entityStateGRPC) {
@@ -281,11 +281,6 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
   @override
   DeviceEntityDtoBase toInfrastructure() {
     return DeviceEntityDtoBase();
-  }
-
-  @override
-  String getDeviceId() {
-    throw UnimplementedError();
   }
 
   /// Return a list of all valid actions for this device

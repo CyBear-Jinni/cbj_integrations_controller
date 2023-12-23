@@ -60,5 +60,5 @@ class DevicesService {
       descoverdDeviceList;
 
   StreamController<MapEntry<String, DeviceEntityBase>> entitiesChangesStream =
-      StreamController<MapEntry<String, DeviceEntityBase>>();
+      StreamController<MapEntry<String, DeviceEntityBase>>.broadcast();
 }

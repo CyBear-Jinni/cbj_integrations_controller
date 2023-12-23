@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:cbj_integrations_controller/domain/local_db/i_local_db_repository.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/injection.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/search_devices.dart';
 import 'package:cbj_integrations_controller/infrastructure/shared_variables.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/device_pin_manager.dart';
 import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
@@ -34,6 +33,4 @@ Future initializeIntegrationsController({
 
 Future setupIntegrationsController() async {
   VendorsConnectorConjecture();
-
-  SearchDevices().startSearchIsolate();
 }

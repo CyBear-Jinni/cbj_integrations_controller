@@ -97,7 +97,7 @@ class VendorsConnectorConjecture {
       return;
     }
     final String startOfMdnsName = mdnsName.substring(0, mdnsName.indexOf('.'));
-    final String startOfMdnsNameLower = startOfMdnsName.toLowerCase();
+    // final String startOfMdnsNameLower = startOfMdnsName.toLowerCase();
 
     String? serviceType;
 
@@ -148,7 +148,7 @@ class VendorsConnectorConjecture {
 
       for (final String uniqueNameInMdns
           in connectorConjecture.uniqueIdentifierNameInMdns) {
-        if (startOfMdnsNameLower.contains(uniqueNameInMdns)) {
+        if (startOfMdnsName.startsWith(uniqueNameInMdns)) {
           containStartOfMdns = true;
           break;
         }
