@@ -46,7 +46,7 @@ class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
       icLogger.e('invalid access token');
       return false;
     } on EwelinkOfflineDeviceException {
-      icLogger.e('device is offline');
+      icLogger.e('Entity is offline');
       return false;
     } catch (e) {
       icLogger.e('EweLink error: $e');
