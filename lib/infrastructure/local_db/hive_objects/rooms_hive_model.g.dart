@@ -19,13 +19,13 @@ class RoomsHiveModelAdapter extends TypeAdapter<RoomsHiveModel> {
     return RoomsHiveModel()
       ..roomUniqueId = fields[0] as String
       ..roomDefaultName = fields[1] as String
-      ..roomDevicesId = (fields[2] as Set).cast<String>()
-      ..roomScenesId = (fields[3] as Set).cast<String>()
-      ..roomRoutinesId = (fields[4] as Set).cast<String>()
-      ..roomBindingsId = (fields[5] as Set).cast<String>()
-      ..roomMostUsedBy = (fields[6] as Set).cast<String>()
-      ..roomPermissions = (fields[7] as Set).cast<String>()
-      ..roomTypes = (fields[8] as Set).cast<String>()
+      ..roomDevicesId = (fields[2] as List).cast<String>()
+      ..roomScenesId = (fields[3] as List).cast<String>()
+      ..roomRoutinesId = (fields[4] as List).cast<String>()
+      ..roomBindingsId = (fields[5] as List).cast<String>()
+      ..roomMostUsedBy = (fields[6] as List).cast<String>()
+      ..roomPermissions = (fields[7] as List).cast<String>()
+      ..roomTypes = (fields[8] as List).cast<String>()
       ..roomBackground = fields[9] as String;
   }
 
@@ -38,19 +38,19 @@ class RoomsHiveModelAdapter extends TypeAdapter<RoomsHiveModel> {
       ..writeByte(1)
       ..write(obj.roomDefaultName)
       ..writeByte(2)
-      ..write(obj.roomDevicesId.toSet())
+      ..write(obj.roomDevicesId)
       ..writeByte(3)
-      ..write(obj.roomScenesId.toSet())
+      ..write(obj.roomScenesId)
       ..writeByte(4)
-      ..write(obj.roomRoutinesId.toSet())
+      ..write(obj.roomRoutinesId)
       ..writeByte(5)
-      ..write(obj.roomBindingsId.toSet())
+      ..write(obj.roomBindingsId)
       ..writeByte(6)
-      ..write(obj.roomMostUsedBy.toSet())
+      ..write(obj.roomMostUsedBy)
       ..writeByte(7)
-      ..write(obj.roomPermissions.toSet())
+      ..write(obj.roomPermissions)
       ..writeByte(8)
-      ..write(obj.roomTypes.toSet())
+      ..write(obj.roomTypes)
       ..writeByte(9)
       ..write(obj.roomBackground);
   }

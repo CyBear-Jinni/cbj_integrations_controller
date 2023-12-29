@@ -54,7 +54,7 @@ class _NetworkUtilities implements INetworkUtilities {
       senderDeviceModel: DeviceSenderDeviceModel(''),
       senderId: DeviceSenderId(),
       compUuid: DeviceCompUuid(''),
-      entityStateGRPC: EntityState(''),
+      entityStateGRPC: EntityState.state(EntityStateGRPC.stateNotSupported),
       entityOriginalName: EntityOriginalName(''),
       deviceOriginalName: DeviceOriginalName(deviceName),
       powerConsumption: DevicePowerConsumption(''),

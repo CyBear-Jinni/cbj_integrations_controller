@@ -245,14 +245,13 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           cbjDeviceVendor: CbjDeviceVendor(
             VendorsAndServices.vendorsAndServicesNotSupported.toString(),
           ),
-          entityStateGRPC:
-              EntityState(EntityTypes.smartTypeNotSupported.toString()),
+          entityStateGRPC: EntityState.state(EntityStateGRPC.stateNotSupported),
           compUuid: DeviceCompUuid(const Uuid().v1()),
           cbjEntityName: CbjEntityName('Cbj entity Name is empty'),
           entityOriginalName:
               EntityOriginalName('Entity original name is empty'),
           deviceOriginalName: DeviceOriginalName(
-            'Device original name that entity is exists on is empty',
+            'Entity original name that entity is exists on is empty',
           ),
           entityTypes: EntityType.type(EntityTypes.light),
           senderDeviceModel: DeviceSenderDeviceModel('a'),
@@ -260,7 +259,7 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           senderId: DeviceSenderId(),
           stateMassage: DeviceStateMassage('go'),
           powerConsumption: DevicePowerConsumption('0'),
-          deviceUniqueId: DeviceUniqueId('Device unique id is empty'),
+          deviceUniqueId: DeviceUniqueId('Entiy unique id is empty'),
           devicePort: DevicePort('1'),
           deviceLastKnownIp: DeviceLastKnownIp('1.1.1.1'),
           deviceHostName: DeviceHostName('deviceHostName is empty'),
