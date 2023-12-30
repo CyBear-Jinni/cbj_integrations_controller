@@ -206,7 +206,7 @@ class VendorsConnectorConjecture {
 
   Future<void> setHostNameDeviceByPort(
     VendorsAndServices vendor,
-    GenericUnsupportedDE entity,
+    DeviceEntityBase entity,
   ) async {
     final VendorConnectorConjectureService? vendorConnectorConjectureService =
         getVendorConnectorConjecture(vendor);
