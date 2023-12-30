@@ -117,7 +117,7 @@ class NetworkUtilities implements INetworkUtilities {
         final String? mdnsSrvTarget = mdnsInfo?.mdnsSrvTarget;
         if (mdnsSrvTarget == null) {
           continue;
-        }dfs
+        }
 
         final String? deviceIp = await SystemCommandsManager()
             .getIpFromMdnsName(mdnsSrvTarget, mdnsInfo!.mdnsServiceType);
