@@ -14,8 +14,8 @@ class ShellyConnectorConjecture extends VendorConnectorConjectureService {
   ShellyConnectorConjecture._singletonContractor()
       : super(
           vendorsAndServices: VendorsAndServices.shelly,
-          uniqueIdentifierNameInMdns: ['shelly'],
           mdnsTypes: ['_http._tcp'],
+          uniqueIdentifierNameInMdns: ['shelly'],
         );
 
   static final ShellyConnectorConjecture _instance =

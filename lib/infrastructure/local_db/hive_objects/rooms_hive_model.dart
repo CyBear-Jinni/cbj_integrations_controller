@@ -9,19 +9,19 @@ class RoomsHiveModel extends HiveObject {
   @HiveField(1)
   late String roomDefaultName;
   @HiveField(2)
-  late Set<String> roomDevicesId;
+  late List<String> roomDevicesId;
   @HiveField(3)
-  late Set<String> roomScenesId;
+  late List<String> roomScenesId;
   @HiveField(4)
-  late Set<String> roomRoutinesId;
+  late List<String> roomRoutinesId;
   @HiveField(5)
-  late Set<String> roomBindingsId;
+  late List<String> roomBindingsId;
   @HiveField(6)
-  late Set<String> roomMostUsedBy;
+  late List<String> roomMostUsedBy;
   @HiveField(7)
-  late Set<String> roomPermissions;
+  late List<String> roomPermissions;
   @HiveField(8)
-  late Set<String> roomTypes;
+  late List<String> roomTypes;
   @HiveField(9)
   late String roomBackground;
 }
