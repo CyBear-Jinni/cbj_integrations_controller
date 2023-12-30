@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_empty_entity/generic_empty_entity.dart';
+import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:multicast_dns/multicast_dns.dart';
-import 'package:network_tools/network_tools.dart';
+import 'package:network_tools/network_tools.dart' as network;
 
 part 'package:cbj_integrations_controller/infrastructure/network_utilities.dart';
 
@@ -12,12 +16,26 @@ abstract class INetworkUtilities {
   static INetworkUtilities? _instance;
 
   static INetworkUtilities get instance {
-    return _instance ??= _NetworkUtilities();
+    return _instance ??= NetworkUtilities();
   }
 
-  Future<GenericUnsupportedDE> activeHostToEntity(
-    ActiveHost activeHost,
+  static set instance(INetworkUtilities? instance) {
+    _instance = instance;
+  }
+
+  Stream<DeviceEntityBase> searchMdnsDevices();
+
+  Stream<DeviceEntityBase> scanDevicesForSinglePort(
+    String subnet,
+    int port,
   );
+  Stream<DeviceEntityBase> getAllPingableDevicesAsync(
+    String subnet, {
+    int? firstHostId,
+    int? lastHostId,
+  });
+
+  Future configureNetworkTools(String dbDirectory);
 
   Future<GenericUnsupportedDE?> deviceFromPort(String address, int port);
 }

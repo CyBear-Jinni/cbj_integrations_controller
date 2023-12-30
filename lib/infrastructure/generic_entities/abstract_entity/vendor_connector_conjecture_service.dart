@@ -21,7 +21,6 @@ abstract class VendorConnectorConjectureService {
   static HashSet<VendorConnectorConjectureService>
       vendorConnectorConjectureClass = HashSet();
 
-  /// Ports used by each vendor
   static final HashMap<VendorsAndServices, List<int>> _portsUsedByVendor =
       HashMap();
 
@@ -41,7 +40,6 @@ abstract class VendorConnectorConjectureService {
   @nonVirtual
   final VendorsAndServices vendorsAndServices;
 
-  /// Ports used by each vendor
   final List<int> ports;
 
   /// Stores all devices for the each vendor, devices will be stored as the

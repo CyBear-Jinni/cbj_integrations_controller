@@ -5,23 +5,29 @@ import 'dart:isolate';
 import 'package:cbj_integrations_controller/domain/i_network_utilities.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_empty_entity/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/infrastructure/vendors_connector_conjecture.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:network_tools/network_tools.dart';
 
 class SendToIsolate {
-  SendToIsolate(this.sendPort, this.projectPath, {this.portByVendor});
+  SendToIsolate(
+    this.sendPort,
+    this.projectPath,
+    this.networkUtilitiesType, {
+    this.portByVendor,
+  });
   SendPort sendPort;
   String projectPath;
   HashMap<VendorsAndServices, List<int>>? portByVendor;
+  INetworkUtilities? networkUtilitiesType;
 }
 
 class BackFromIsolate {
   BackFromIsolate(this.vendorsAndServices, this.genericUnsupportedDE);
   VendorsAndServices vendorsAndServices;
-  GenericUnsupportedDE genericUnsupportedDE;
+  DeviceEntityBase genericUnsupportedDE;
 }
 
 class SearchDevices {
@@ -33,13 +39,18 @@ class SearchDevices {
 
   List<Isolate> isolates = [];
 
-  Future<void> startSearchIsolate() async {
+  Future<void> startSearchIsolate(
+    INetworkUtilities? networkUtilitiesType,
+  ) async {
     final String projectPath = await SystemCommandsManager().getLocalDbPath();
 
     /// For mdns search
     final mdnsReceivePort = ReceivePort();
-    SendToIsolate searchDevices =
-        SendToIsolate(mdnsReceivePort.sendPort, projectPath);
+    SendToIsolate searchDevices = SendToIsolate(
+      mdnsReceivePort.sendPort,
+      projectPath,
+      networkUtilitiesType,
+    );
     final Isolate mdnsIsolate = await Isolate.spawn(
       _searchAllMdnsDevicesAndSetThemUp,
       searchDevices,
@@ -57,26 +68,30 @@ class SearchDevices {
     isolates.add(mdnsIsolate);
 
     // TODO: Does not work on Android https://github.com/osociety/network_tools_flutter/issues/31
-    if (!Platform.isAndroid) {
-      /// For ping search
-      final ReceivePort pingReceivePort = ReceivePort();
-      searchDevices = SendToIsolate(pingReceivePort.sendPort, projectPath);
+    // if (!Platform.isAndroid) {
+    /// For ping search
+    final ReceivePort pingReceivePort = ReceivePort();
+    searchDevices = SendToIsolate(
+      pingReceivePort.sendPort,
+      projectPath,
+      networkUtilitiesType,
+    );
 
-      final Isolate pingIsolate = await Isolate.spawn(
-        _searchPingableDevicesAndSetThemUpByHostName,
-        searchDevices,
-      );
+    final Isolate pingIsolate = await Isolate.spawn(
+      _searchPingableDevicesAndSetThemUpByHostName,
+      searchDevices,
+    );
 
-      pingReceivePort.listen((data) {
-        if (data is GenericUnsupportedDE) {
-          VendorsConnectorConjecture().setHostNameDeviceByCompany(data);
-        }
-      });
-      pingIsolate.errors.listen((event) {
-        icLogger.f('Ping isolate had crashed $event');
-      });
-      isolates.add(pingIsolate);
-    }
+    pingReceivePort.listen((data) {
+      if (data is GenericUnsupportedDE) {
+        VendorsConnectorConjecture().setHostNameDeviceByCompany(data);
+      }
+    });
+    pingIsolate.errors.listen((event) {
+      icLogger.f('Ping isolate had crashed $event');
+    });
+    isolates.add(pingIsolate);
+    // }
 
     /// For port search
     final HashMap<VendorsAndServices, List<int>>? ports =
@@ -85,6 +100,7 @@ class SearchDevices {
     searchDevices = SendToIsolate(
       portReceivePort.sendPort,
       projectPath,
+      networkUtilitiesType,
       portByVendor: ports,
     );
 
@@ -110,7 +126,11 @@ class SearchDevices {
   Future<void> _searchAllMdnsDevicesAndSetThemUp(
     SendToIsolate sendToIsolate,
   ) async {
-    await configureNetworkTools(sendToIsolate.projectPath);
+    INetworkUtilities.instance = sendToIsolate.networkUtilitiesType;
+
+    await INetworkUtilities.instance
+        .configureNetworkTools(sendToIsolate.projectPath);
+
     final SendPort sendPort = sendToIsolate.sendPort;
     try {
       while (true) {
@@ -130,14 +150,11 @@ class SearchDevices {
               ' search mdns in the network');
           await Future.delayed(const Duration(minutes: 2));
         }
-        final List<ActiveHost> activeHostList = await _searchMdnsDevices();
-        for (final ActiveHost activeHost in activeHostList) {
-          final GenericUnsupportedDE entity =
-              await INetworkUtilities.instance.activeHostToEntity(activeHost);
+
+        await for (final DeviceEntityBase entity
+            in INetworkUtilities.instance.searchMdnsDevices()) {
           sendPort.send(entity);
         }
-
-        await Future.delayed(const Duration(minutes: 2));
       }
     } catch (e) {
       icLogger.e('Mdns search error\n$e');
@@ -148,31 +165,28 @@ class SearchDevices {
   Future<void> _searchPingableDevicesAndSetThemUpByHostName(
     SendToIsolate sendToIsolate,
   ) async {
-    await configureNetworkTools(sendToIsolate.projectPath);
+    INetworkUtilities.instance = sendToIsolate.networkUtilitiesType;
+    await INetworkUtilities.instance
+        .configureNetworkTools(sendToIsolate.projectPath);
+
     final SendPort sendPort = sendToIsolate.sendPort;
 
     while (true) {
       await searchForAdress((subnet) async {
         try {
-          await for (final ActiveHost activeHost
-              in HostScanner.getAllPingableDevicesAsync(
-            subnet,
-            lastHostId: 126,
-          )) {
-            sendPort.send(
-              await INetworkUtilities.instance.activeHostToEntity(activeHost),
-            );
+          final Stream<DeviceEntityBase> pingStream1 = INetworkUtilities
+              .instance
+              .getAllPingableDevicesAsync(subnet, lastHostId: 126);
+          await for (final DeviceEntityBase entity in pingStream1) {
+            sendPort.send(entity);
           }
 
           // Spits to 2 requests to fix error in snap https://github.com/CyBear-Jinni-user/CBJ_Hub_Snap/issues/2
-          await for (final ActiveHost activeHost
-              in HostScanner.getAllPingableDevicesAsync(
-            subnet,
-            firstHostId: 127,
-          )) {
-            sendPort.send(
-              await INetworkUtilities.instance.activeHostToEntity(activeHost),
-            );
+          final Stream<DeviceEntityBase> pingStream2 = INetworkUtilities
+              .instance
+              .getAllPingableDevicesAsync(subnet, firstHostId: 127);
+          await for (final DeviceEntityBase entity in pingStream2) {
+            sendPort.send(entity);
           }
         } catch (e) {
           icLogger.i('Ping search Error $e');
@@ -199,53 +213,16 @@ class SearchDevices {
     }
   }
 
-  Future<List<ActiveHost>> _searchMdnsDevices() async {
-    final List<ActiveHost> activeHostList = [];
-
-    for (ActiveHost activeHost in await MdnsScanner.searchMdnsDevices(
-      forceUseOfSavedSrvRecordList: true,
-    )) {
-      // In some cases for some reason we get empty result when trying to
-      // resolve mdns name to ip, the only way we found to fix that is to
-      // use resolve it using avahi-resolve-host-name
-      // TODO: Check if this part can be deleted after pr https://github.com/osociety/network_tools/pull/165#issuecomment-1826405925
-
-      if (activeHost.address == '0.0.0.0') {
-        final MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
-
-        final String? mdnsSrvTarget = mdnsInfo?.mdnsSrvTarget;
-        if (mdnsSrvTarget == null) {
-          continue;
-        }
-
-        final String? deviceIp = await SystemCommandsManager()
-            .getIpFromMdnsName(mdnsSrvTarget, mdnsInfo!.mdnsServiceType);
-        if (deviceIp == null) {
-          continue;
-        }
-        try {
-          activeHost = activeHost..internetAddress = InternetAddress(deviceIp);
-        } catch (e) {
-          icLogger.e('Error setting internet address $e');
-        }
-      }
-
-      final MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
-
-      if (mdnsInfo != null) {
-        activeHostList.add(activeHost);
-      }
-    }
-    return activeHostList;
-  }
-
   Future<void> _searchAllByPorts(
     SendToIsolate sendToIsolate,
   ) async {
     if (sendToIsolate.portByVendor == null) {
       return;
     }
-    await configureNetworkTools(sendToIsolate.projectPath);
+    INetworkUtilities.instance = sendToIsolate.networkUtilitiesType;
+    await INetworkUtilities.instance
+        .configureNetworkTools(sendToIsolate.projectPath);
+
     final SendPort sendPort = sendToIsolate.sendPort;
     while (true) {
       await searchForAdress((subnet) async {
@@ -253,21 +230,15 @@ class SearchDevices {
             in sendToIsolate.portByVendor!.entries) {
           final VendorsAndServices vendor = vendorPorts.key;
           for (final int port in vendorPorts.value) {
-            final stream2 = HostScanner.scanDevicesForSinglePort(
-              subnet,
-              port,
-            );
-
-            stream2.listen(
-              (activeHost) async {
-                final BackFromIsolate backFromIsolate = BackFromIsolate(
-                  vendor,
-                  await INetworkUtilities.instance
-                      .activeHostToEntity(activeHost),
-                );
-                sendPort.send(backFromIsolate);
-              },
-            );
+            INetworkUtilities.instance
+                .scanDevicesForSinglePort(subnet, port)
+                .listen((event) {
+              final BackFromIsolate backFromIsolate = BackFromIsolate(
+                vendor,
+                event,
+              );
+              sendPort.send(backFromIsolate);
+            });
           }
         }
         await Future.delayed(const Duration(seconds: 3));
