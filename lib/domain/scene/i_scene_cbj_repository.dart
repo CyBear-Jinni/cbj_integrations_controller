@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 
+import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
 import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';

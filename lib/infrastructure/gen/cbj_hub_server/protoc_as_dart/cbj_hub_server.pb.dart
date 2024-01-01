@@ -1218,10 +1218,10 @@ class CloudAccountInformation extends $pb.GeneratedMessage {
 
 class EntityTypesActions extends $pb.GeneratedMessage {
   factory EntityTypesActions({
-    EntityTypes? entityType,
-    EntityActions? entityAction,
-    EntityStateGRPC? entityStateGRPC,
-    VendorsAndServices? vendorsAndServices,
+    $core.String? entityType,
+    $core.String? entityAction,
+    $core.String? entityStateGRPC,
+    $core.String? vendorsAndServices,
   }) {
     final $result = create();
     if (entityType != null) {
@@ -1243,10 +1243,10 @@ class EntityTypesActions extends $pb.GeneratedMessage {
   factory EntityTypesActions.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'EntityTypesActions', package: const $pb.PackageName(_omitMessageNames ? '' : 'CbjHub'), createEmptyInstance: create)
-    ..e<EntityTypes>(35, _omitFieldNames ? '' : 'entityType', $pb.PbFieldType.OE, protoName: 'entityType', defaultOrMaker: EntityTypes.smartTypeNotSupported, valueOf: EntityTypes.valueOf, enumValues: EntityTypes.values)
-    ..e<EntityActions>(36, _omitFieldNames ? '' : 'entityAction', $pb.PbFieldType.OE, protoName: 'entityAction', defaultOrMaker: EntityActions.actionNotSupported, valueOf: EntityActions.valueOf, enumValues: EntityActions.values)
-    ..e<EntityStateGRPC>(37, _omitFieldNames ? '' : 'entityStateGRPC', $pb.PbFieldType.OE, protoName: 'entityStateGRPC', defaultOrMaker: EntityStateGRPC.stateNotSupported, valueOf: EntityStateGRPC.valueOf, enumValues: EntityStateGRPC.values)
-    ..e<VendorsAndServices>(46, _omitFieldNames ? '' : 'vendorsAndServices', $pb.PbFieldType.OE, protoName: 'vendorsAndServices', defaultOrMaker: VendorsAndServices.vendorsAndServicesNotSupported, valueOf: VendorsAndServices.valueOf, enumValues: VendorsAndServices.values)
+    ..aOS(35, _omitFieldNames ? '' : 'entityType', protoName: 'entityType')
+    ..aOS(36, _omitFieldNames ? '' : 'entityAction', protoName: 'entityAction')
+    ..aOS(37, _omitFieldNames ? '' : 'entityStateGRPC', protoName: 'entityStateGRPC')
+    ..aOS(46, _omitFieldNames ? '' : 'vendorsAndServices', protoName: 'vendorsAndServices')
     ..hasRequiredFields = false
   ;
 
@@ -1272,36 +1272,36 @@ class EntityTypesActions extends $pb.GeneratedMessage {
   static EntityTypesActions? _defaultInstance;
 
   @$pb.TagNumber(35)
-  EntityTypes get entityType => $_getN(0);
+  $core.String get entityType => $_getSZ(0);
   @$pb.TagNumber(35)
-  set entityType(EntityTypes v) { setField(35, v); }
+  set entityType($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(35)
   $core.bool hasEntityType() => $_has(0);
   @$pb.TagNumber(35)
   void clearEntityType() => clearField(35);
 
   @$pb.TagNumber(36)
-  EntityActions get entityAction => $_getN(1);
+  $core.String get entityAction => $_getSZ(1);
   @$pb.TagNumber(36)
-  set entityAction(EntityActions v) { setField(36, v); }
+  set entityAction($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(36)
   $core.bool hasEntityAction() => $_has(1);
   @$pb.TagNumber(36)
   void clearEntityAction() => clearField(36);
 
   @$pb.TagNumber(37)
-  EntityStateGRPC get entityStateGRPC => $_getN(2);
+  $core.String get entityStateGRPC => $_getSZ(2);
   @$pb.TagNumber(37)
-  set entityStateGRPC(EntityStateGRPC v) { setField(37, v); }
+  set entityStateGRPC($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(37)
   $core.bool hasEntityStateGRPC() => $_has(2);
   @$pb.TagNumber(37)
   void clearEntityStateGRPC() => clearField(37);
 
   @$pb.TagNumber(46)
-  VendorsAndServices get vendorsAndServices => $_getN(3);
+  $core.String get vendorsAndServices => $_getSZ(3);
   @$pb.TagNumber(46)
-  set vendorsAndServices(VendorsAndServices v) { setField(46, v); }
+  set vendorsAndServices($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(46)
   $core.bool hasVendorsAndServices() => $_has(3);
   @$pb.TagNumber(46)

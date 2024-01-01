@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/binding/i_binding_cbj_repository.dart';
 import 'package:cbj_integrations_controller/domain/binding/value_objects_routine_cbj.dart';
+import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
 import 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
@@ -27,7 +28,6 @@ import 'package:cbj_integrations_controller/domain/vendors/xiaomi_mi_login/gener
 import 'package:cbj_integrations_controller/infrastructure/bindings/binding_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/device_helper/device_helper.dart';
-import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/local_db/hive_objects/bindings_hive_model.dart';

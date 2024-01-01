@@ -1,5 +1,5 @@
+import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_failures.dart';
-import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/common_devices_scenes_presets_for_devices.dart';
 import 'package:dartz/dartz.dart';
@@ -17,7 +17,7 @@ class VideoGamesAreaAction {
     final Map<String, String> actionsList = <String, String>{};
 
     switch (deviceType) {
-      case EntityTypes.AirConditioner:
+      case EntityTypes.airConditioner:
         // TODO: Handle this case.
         break;
       case EntityTypes.babyMonitor:

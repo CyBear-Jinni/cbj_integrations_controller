@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 import 'package:cbj_integrations_controller/domain/vendors/wiz_login/generic_wiz_login_entity.dart';
-import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbenum.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 
@@ -12,7 +12,7 @@ class WizConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   WizConnectorConjecture._singletonContractor()
-      : super(vendorsAndServices: VendorsAndServices.xiaomi);
+      : super(vendorsAndServices: VendorsAndServices.wiz);
 
   static final WizConnectorConjecture _instance =
       WizConnectorConjecture._singletonContractor();

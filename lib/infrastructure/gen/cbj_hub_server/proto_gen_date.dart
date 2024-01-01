@@ -1,1 +1,1 @@
-const hubServerProtocGenDate = '25/11/23';
+const hubServerProtocGenDate = '01/01/24';

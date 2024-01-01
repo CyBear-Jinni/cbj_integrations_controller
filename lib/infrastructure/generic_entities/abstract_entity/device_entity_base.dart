@@ -1,9 +1,10 @@
 import 'dart:collection';
 
+import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
+import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/general_api.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/entity_type_utils.dart';
 import 'package:dartz/dartz.dart';
@@ -129,41 +130,28 @@ abstract class DeviceEntityBase {
   String get getCbjDeviceId => deviceCbjUniqueId.getOrCrash();
 
   /// Copy with device state to waiting or ack
-  DeviceEntityBase copyWithDeviceState(EntityStateGRPC entityStateGRPC) {
-    return this;
-  }
+  DeviceEntityBase copyWithDeviceState(EntityStateGRPC entityStateGRPC) => this;
 
   /// Copy with device action
-  DeviceEntityBase copyWithDeviceAction(EntityActions deviceActions) {
-    return this;
-  }
+  DeviceEntityBase copyWithDeviceAction(EntityActions deviceActions) => this;
 
   /// Copy with stateMassage
-  DeviceEntityBase copyWithStateMassage(String stateMassage) {
-    return this;
-  }
+  DeviceEntityBase copyWithStateMassage(String stateMassage) => this;
 
   /// Copy with senderDeviceOs
-  DeviceEntityBase copyWithSenderDeviceOs(String senderDeviceOs) {
-    return this;
-  }
+  DeviceEntityBase copyWithSenderDeviceOs(String senderDeviceOs) => this;
 
   /// Copy with deviceSenderDeviceModel
   DeviceEntityBase copyWithDeviceSenderDeviceModel(
     String deviceSenderDeviceModel,
-  ) {
-    return this;
-  }
+  ) =>
+      this;
 
   /// Copy with currentUserId
-  DeviceEntityBase copyWithSenderId(String userId) {
-    return this;
-  }
+  DeviceEntityBase copyWithSenderId(String userId) => this;
 
   /// Convert the device to the a dtos object in the infrastructure layer
-  DeviceEntityDtoBase toInfrastructure() {
-    return DeviceEntityDtoBase();
-  }
+  DeviceEntityDtoBase toInfrastructure() => DeviceEntityDtoBase();
 
   Future<Either<CoreFailure, Unit>> executeAction({
     required EntityProperties property,
@@ -235,6 +223,11 @@ abstract class DeviceEntityBase {
 
     return newValue;
   }
+
+  Future wakeOnLan() => GeneralApiUtils.wakeOnLan(
+        mac: devicesMacAddress.getOrCrash(),
+        address: deviceLastKnownIp.getOrCrash(),
+      );
 }
 
 class DeviceEntityNotAbstract extends DeviceEntityBase {
@@ -278,25 +271,17 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
         );
 
   @override
-  DeviceEntityDtoBase toInfrastructure() {
-    return DeviceEntityDtoBase();
-  }
+  DeviceEntityDtoBase toInfrastructure() => DeviceEntityDtoBase();
 
   /// Return a list of all valid actions for this device
   @override
-  List<String> getAllValidActions() {
-    return [];
-  }
+  List<String> getAllValidActions() => [];
 
   @override
-  bool replaceActionIfExist(String action) {
-    return false;
-  }
+  bool replaceActionIfExist(String action) => false;
 
   @override
-  List<EntityProperties> getListOfPropertiesToChange() {
-    return [];
-  }
+  List<EntityProperties> getListOfPropertiesToChange() => [];
 }
 
 enum ActionValues {

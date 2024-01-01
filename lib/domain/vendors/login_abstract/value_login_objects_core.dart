@@ -1,3 +1,4 @@
+import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/core_login_failures.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/core_login_validators.dart';
 import 'package:cbj_integrations_controller/domain/vendors/vendor_errors.dart';
@@ -53,14 +54,24 @@ class CoreLoginSenderId extends ValueObjectCoreLogin<String?> {
 }
 
 class CoreLoginVendor extends ValueObjectCoreLogin<String> {
-  factory CoreLoginVendor(String? input) {
+  // factory CoreLoginVendor(String? input) {
+  //   assert(input != null);
+  //   return CoreLoginVendor._(
+  //     validateLoginNotEmpty(input!),
+  //   );
+  // }
+
+  factory CoreLoginVendor(VendorsAndServices? input) {
     assert(input != null);
     return CoreLoginVendor._(
-      validateLoginNotEmpty(input!),
+      input!,
+      validateLoginNotEmpty(input.name),
     );
   }
 
-  const CoreLoginVendor._(this.value);
+  const CoreLoginVendor._(this.vendor, this.value);
+
+  final VendorsAndServices vendor;
 
   @override
   final Either<CoreLoginFailure<String>, String> value;

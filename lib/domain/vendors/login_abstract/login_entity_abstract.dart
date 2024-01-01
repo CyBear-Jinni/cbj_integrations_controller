@@ -1,5 +1,5 @@
+import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/value_login_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_login_abstract/login_entity_dto_abstract.dart';
 
 abstract class LoginEntityAbstract {
@@ -59,7 +59,7 @@ class LoginEntityEmpty extends LoginEntityAbstract {
       : super(
           senderUniqueId: CoreLoginSenderId(),
           loginVendor: CoreLoginVendor(
-            VendorsAndServices.vendorsAndServicesNotSupported.toString(),
+            VendorsAndServices.vendorsAndServicesNotSupported,
           ),
         );
 }

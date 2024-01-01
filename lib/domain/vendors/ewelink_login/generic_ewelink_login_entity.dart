@@ -1,8 +1,8 @@
+import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 import 'package:cbj_integrations_controller/domain/vendors/ewelink_login/generic_ewelink_login_value_objects.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/core_login_failures.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/login_entity_abstract.dart';
 import 'package:cbj_integrations_controller/domain/vendors/login_abstract/value_login_objects_core.dart';
-import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_ewelink_login/generic_ewelink_login_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_vendors_login/generic_login_abstract/login_entity_dto_abstract.dart';
 import 'package:dartz/dartz.dart';
@@ -16,7 +16,7 @@ class GenericEwelinkLoginDE extends LoginEntityAbstract {
     required this.ewelinkAccountEmail,
     required this.ewelinkAccountPass,
   }) : super(
-          loginVendor: CoreLoginVendor(VendorsAndServices.sonoffEweLink.name),
+          loginVendor: CoreLoginVendor(VendorsAndServices.sonoffEweLink),
         );
 
   /// Empty instance of GenericEwelinkEntity

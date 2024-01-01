@@ -1,11 +1,11 @@
 import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/binding/value_objects_routine_cbj.dart';
+import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 import 'package:cbj_integrations_controller/domain/core/value_objects.dart';
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/routine/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
-import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:nodered/nodered.dart';
 import 'package:uuid/uuid.dart';
