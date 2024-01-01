@@ -77,7 +77,7 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('c90137f2-419b-11ed-8246-e17a279f4d89'),
       entityUniqueId: EntityUniqueId('67600068c44f33f5b515'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.tuyaSmart),
+      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lifx),
       deviceVendor: DeviceVendor(null),
       deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Guy Ceiling Button'),
@@ -124,7 +124,7 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('a31523m6-463s-32ge-7426-g33c642r7m25'),
       entityUniqueId: EntityUniqueId('67600068c44f33f5b515'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.tuyaSmart),
+      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lifx),
       deviceVendor: DeviceVendor(null),
       deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Guy Bedroom Button'),
@@ -221,7 +221,7 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('7189ed76-4351-11ed-b249-63fd7e165c16'),
       entityUniqueId: EntityUniqueId('bf4bccdaf68347e31dhiut'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.tuyaSmart),
+      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lifx),
       deviceVendor: DeviceVendor(null),
       deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
       cbjEntityName: CbjEntityName('Dining Room Ceiling'),

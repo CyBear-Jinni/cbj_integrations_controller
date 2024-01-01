@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 import 'package:cbj_integrations_controller/domain/i_app_communication_repository.dart';
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
-import 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';
 import 'package:cbj_integrations_controller/domain/routine/i_routine_cbj_repository.dart';
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/routine/value_objects_routine_cbj.dart';
@@ -127,19 +125,19 @@ class DeviceHelperMethods {
         gotFromApp: true,
       );
     } else if (dtoEntity is RoomEntityDtos) {
-      ISavedRoomsRepo.instance.saveAndActiveRoomToDb(
-        roomEntity: dtoEntity.toDomain(),
-      );
+      // ISavedRoomsRepo.instance.saveAndActiveRoomToDb(
+      // roomEntity: dtoEntity.toDomain(),
+      // );
 
       IMqttServerRepository.instance.postToHubMqtt(
         entityFromTheApp: dtoEntity,
         gotFromApp: true,
       );
     } else if (dtoEntity is LoginEntityDtoAbstract) {
-      ISavedDevicesRepo.instance
-          .saveAndActivateVendorLoginCredentialsDomainToDb(
-        loginEntity: dtoEntity.toDomain(),
-      );
+      // ISavedDevicesRepo.instance
+      // .saveAndActivateVendorLoginCredentialsDomainToDb(
+      // loginEntity: dtoEntity.toDomain(),
+      // );
     } else if (clientStatusRequests.sendingType ==
         SendingType.firstConnection) {
       IAppCommunicationRepository.instance.sendAllRoomsFromHubRequestsStream();
@@ -147,9 +145,9 @@ class DeviceHelperMethods {
           .sendAllDevicesFromHubRequestsStream();
       IAppCommunicationRepository.instance.sendAllScenesFromHubRequestsStream();
     } else if (dtoEntity is RemotePipesDtos) {
-      ISavedDevicesRepo.instance.saveAndActivateRemotePipesDomainToDb(
-        remotePipes: dtoEntity.toDomain(),
-      );
+      // ISavedDevicesRepo.instance.saveAndActivateRemotePipesDomainToDb(
+      // remotePipes: dtoEntity.toDomain(),
+      // );
     } else if (dtoEntity is SceneCbjDtos) {
       final SceneCbjEntity sceneCbj = dtoEntity.toDomain();
 

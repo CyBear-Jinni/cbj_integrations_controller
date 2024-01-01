@@ -13,7 +13,6 @@ import 'package:cbj_integrations_controller/infrastructure/devices/esphome/espho
 import 'package:cbj_integrations_controller/infrastructure/devices/ewelink/ewelink_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/google/google_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/hp/hp_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/infrastructure/devices/lg/lg_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/lifx/lifx_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/philips_hue/philips_hue_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/infrastructure/devices/shelly/shelly_connector_conjecture.dart';
@@ -49,7 +48,6 @@ class VendorsConnectorConjecture {
     ShellyConnectorConjecture();
     PhilipsHueConnectorConjecture();
     LifxConnectorConjecture();
-    LgConnectorConjecture();
     HpConnectorConjecture();
     GoogleConnectorConjecture();
     EwelinkConnectorConjecture();

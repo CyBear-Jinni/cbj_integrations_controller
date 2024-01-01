@@ -48,8 +48,8 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
       /// If it is new routine
       _allRoutines[entityId] = tempRoutineCbj;
 
-      ISavedRoomsRepo.instance
-          .addRoutineToRoomDiscoveredIfNotExist(tempRoutineCbj);
+      // ISavedRoomsRepo.instance
+      // .addRoutineToRoomDiscoveredIfNotExist(tempRoutineCbj);
 
       final String routineNodeRedFlowId =
           await NodeRedRepository().createNewNodeRedRoutine(tempRoutineCbj);
@@ -68,7 +68,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
     RoutineCbjEntity routineCbj,
   ) async {
     await addNewRoutine(routineCbj);
-    await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
+    // await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
     await saveAndActivateRoutineToDb();
 
     return right(unit);

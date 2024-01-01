@@ -13,44 +13,12 @@ class _VendorsRepository implements IVendorsRepository {
               VendorsAndServices.vendorsAndServicesNotSupported.name ||
           vendorName == VendorsAndServices.miHome.name ||
           vendorName == VendorsAndServices.sonoffDiy.name ||
-          vendorName == VendorsAndServices.ikea.name ||
-          vendorName == VendorsAndServices.wink.name ||
-          vendorName == VendorsAndServices.lg.name ||
-          vendorName == VendorsAndServices.spotify.name ||
-          vendorName == VendorsAndServices.homeAssistant.name ||
           vendorName == VendorsAndServices.yeelink.name ||
           vendorName == VendorsAndServices.xiaomi.name ||
           vendorName == VendorsAndServices.xiaomiMi.name ||
           vendorName == VendorsAndServices.wiz.name ||
-          vendorName == VendorsAndServices.switchBot.name ||
-          vendorName == VendorsAndServices.somfy.name ||
-          vendorName == VendorsAndServices.tuyaSmart.name ||
-          vendorName == VendorsAndServices.smartLife.name ||
-          vendorName == VendorsAndServices.jinvooSmart.name ||
           vendorName == VendorsAndServices.cbjDeviceSmartEntity.name ||
           vendorName == VendorsAndServices.sensibo.name ||
-          vendorName == VendorsAndServices.aqara.name ||
-          vendorName == VendorsAndServices.matter.name ||
-          vendorName == VendorsAndServices.nest.name ||
-          vendorName == VendorsAndServices.uniFi.name ||
-          vendorName == VendorsAndServices.ring.name ||
-          vendorName == VendorsAndServices.myQ.name ||
-          vendorName == VendorsAndServices.wemo.name ||
-          vendorName == VendorsAndServices.tpLink.name ||
-          vendorName == VendorsAndServices.nuki.name ||
-          vendorName == VendorsAndServices.homebridge.name ||
-          vendorName == VendorsAndServices.homeKit.name ||
-          vendorName == VendorsAndServices.twinkly.name ||
-          vendorName == VendorsAndServices.samsung.name ||
-          vendorName == VendorsAndServices.tizen.name ||
-          vendorName == VendorsAndServices.zigbee.name ||
-          vendorName == VendorsAndServices.zWave.name ||
-          vendorName == VendorsAndServices.ffmpeg.name ||
-          vendorName == VendorsAndServices.lightwaveRf.name ||
-          vendorName == VendorsAndServices.cololight.name ||
-          vendorName == VendorsAndServices.broadlink.name ||
-          vendorName == VendorsAndServices.switchBee.name ||
-          vendorName == VendorsAndServices.mycroft.name ||
           vendorName == VendorsAndServices.cyBearJinniAppSmartEntity.name ||
           vendorName == VendorsAndServices.securityBear.name ||
           vendorName == VendorsAndServices.jinniAssistant.name) {

@@ -15,15 +15,6 @@ class OutsideAreaAction {
     final Map<String, String> actionsList = <String, String>{};
 
     switch (deviceType) {
-      case EntityTypes.airConditioner:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.babyMonitor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.bed:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.blinds:
         actionsList.addEntries([
           CommonDevicesScenesPresetsForDevices.blindsDownPreset(
@@ -39,13 +30,7 @@ class OutsideAreaAction {
       case EntityTypes.button:
         // TODO: Handle this case.
         break;
-      case EntityTypes.buttonWithLight:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.cctLight:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.coffeeMachine:
         // TODO: Handle this case.
         break;
       case EntityTypes.computerApp:
@@ -54,16 +39,7 @@ class OutsideAreaAction {
       case EntityTypes.dimmableLight:
         // TODO: Handle this case.
         break;
-      case EntityTypes.dishwasher:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.hub:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.humiditySensor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.kettle:
         // TODO: Handle this case.
         break;
       case EntityTypes.light:
@@ -73,21 +49,6 @@ class OutsideAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.lightSensor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.microphone:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.motionSensor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.oven:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.oxygenSensor:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.phoneApp:
         // TODO: Handle this case.
         break;
@@ -95,9 +56,6 @@ class OutsideAreaAction {
         // TODO: Handle this case.
         break;
       case EntityTypes.printerWithScanner:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.refrigerator:
         // TODO: Handle this case.
         break;
       case EntityTypes.rgbLights:
@@ -126,9 +84,6 @@ class OutsideAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.smartSpeakers:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.smartTV:
         actionsList.addEntries([
           CommonDevicesScenesPresetsForDevices.smartTvOffPreset(
@@ -136,21 +91,6 @@ class OutsideAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.smartWatch:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.smartWaterBottle:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.smokeDetector:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.smokeSensor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.soundSensor:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.switch_:
         actionsList.addEntries([
           CommonDevicesScenesPresetsForDevices.switchOffPreset(
@@ -158,15 +98,6 @@ class OutsideAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.teapot:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.temperatureSensor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.toaster:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.smartTypeNotSupported:
         // TODO: Handle this case.
         break;
@@ -174,12 +105,6 @@ class OutsideAreaAction {
         // TODO: Handle this case.
         break;
       case EntityTypes.pingEntity:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.vacuumCleaner:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.washingMachine:
         // TODO: Handle this case.
         break;
       case EntityTypes.smartComputer:

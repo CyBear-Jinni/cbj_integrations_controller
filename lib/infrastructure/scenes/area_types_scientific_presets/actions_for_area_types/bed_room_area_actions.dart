@@ -15,15 +15,6 @@ class BedRoomAreaAction {
     final Map<String, String> actionsList = <String, String>{};
 
     switch (deviceType) {
-      case EntityTypes.airConditioner:
-        // TODO: Turn on on sleep mode?.
-        break;
-      case EntityTypes.babyMonitor:
-        // TODO: Open and ready.
-        break;
-      case EntityTypes.bed:
-        // TODO: Change angle to be straight for sleep (not with angle for reading).
-        break;
       case EntityTypes.blinds:
         actionsList.addEntries([
           CommonDevicesScenesPresetsForDevices.blindsDownPreset(
@@ -39,14 +30,8 @@ class BedRoomAreaAction {
       case EntityTypes.button:
         // TODO: Handle this case.
         break;
-      case EntityTypes.buttonWithLight:
-        // TODO: Turn off button light for better sleep? or turn on so that it will be easy to find the button at the dart.
-        break;
       case EntityTypes.cctLight:
         // TODO: Turn off dim light in case it turned on in the night.
-        break;
-      case EntityTypes.coffeeMachine:
-        // TODO: Turn off.
         break;
       case EntityTypes.computerApp:
         // TODO: Turn sleep mode.
@@ -54,17 +39,8 @@ class BedRoomAreaAction {
       case EntityTypes.dimmableLight:
         // TODO: Turn off dim light in case it turned on in the night.
         break;
-      case EntityTypes.dishwasher:
-        // TODO: Turn off.
-        break;
       case EntityTypes.hub:
         // TODO: Handle this case.
-        break;
-      case EntityTypes.humiditySensor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.kettle:
-        // TODO: Turn off.
         break;
       case EntityTypes.light:
         actionsList.addEntries([
@@ -73,21 +49,6 @@ class BedRoomAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.lightSensor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.microphone:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.motionSensor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.oven:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.oxygenSensor:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.phoneApp:
         // TODO: Put phone on sleep mode, gray screen as well as quite and maybe set alarm clock for the morning.
         break;
@@ -96,9 +57,6 @@ class BedRoomAreaAction {
         break;
       case EntityTypes.printerWithScanner:
         // TODO: Postpone maintenance.
-        break;
-      case EntityTypes.refrigerator:
-        // TODO: Handle this case.
         break;
       case EntityTypes.rgbLights:
         // TODO: Turn off and dim light in case it turned on in the night.
@@ -126,9 +84,6 @@ class BedRoomAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.smartSpeakers:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.smartTV:
         actionsList.addEntries([
           CommonDevicesScenesPresetsForDevices.smartTvOffPreset(
@@ -136,21 +91,6 @@ class BedRoomAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.smartWatch:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.smartWaterBottle:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.smokeDetector:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.smokeSensor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.soundSensor:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.switch_:
         actionsList.addEntries([
           CommonDevicesScenesPresetsForDevices.switchOffPreset(
@@ -158,23 +98,8 @@ class BedRoomAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.teapot:
-        // TODO: Turn off.
-        break;
-      case EntityTypes.temperatureSensor:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.toaster:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.smartTypeNotSupported:
         // TODO: Handle this case.
-        break;
-      case EntityTypes.vacuumCleaner:
-        // TODO: Turn off.
-        break;
-      case EntityTypes.washingMachine:
-        // TODO: Turn off.
         break;
       case EntityTypes.emptyEntity:
         // TODO: Handle this case.

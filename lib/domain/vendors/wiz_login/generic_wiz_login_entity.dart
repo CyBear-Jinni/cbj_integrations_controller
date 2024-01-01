@@ -15,7 +15,7 @@ class GenericWizLoginDE extends LoginEntityAbstract {
     required super.senderUniqueId,
     required this.wizApiKey,
   }) : super(
-          loginVendor: CoreLoginVendor(VendorsAndServices.tuyaSmart),
+          loginVendor: CoreLoginVendor(VendorsAndServices.wiz),
         );
 
   /// Empty instance of GenericWizEntity

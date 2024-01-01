@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:cbj_integrations_controller/domain/colors.dart';
 import 'package:cbj_integrations_controller/domain/core/value_objects.dart';
 import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
-import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
-import 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';
 import 'package:cbj_integrations_controller/domain/local_db/i_local_db_repository.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
 import 'package:cbj_integrations_controller/domain/routine/routine_cbj_entity.dart';

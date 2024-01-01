@@ -4,8 +4,6 @@ import 'package:cbj_integrations_controller/domain/binding/binding_cbj_entity.da
 import 'package:cbj_integrations_controller/domain/binding/i_binding_cbj_repository.dart';
 import 'package:cbj_integrations_controller/domain/binding/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/domain/core/request_types.dart';
-import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
-import 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';
 import 'package:cbj_integrations_controller/domain/local_db/local_db_failures.dart';
 import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
 import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';

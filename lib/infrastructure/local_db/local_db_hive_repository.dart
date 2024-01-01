@@ -219,11 +219,11 @@ class _HiveRepository extends IDbRepository {
     }
 
     // Rooms need to stay first one
-    await ISavedRoomsRepo.instance.setUpAllFromDb();
+    // await ISavedRoomsRepo.instance.setUpAllFromDb();
     await ISceneCbjRepository.instance.setUpAllFromDb();
     await IRoutineCbjRepository.instance.setUpAllFromDb();
     await IBindingCbjRepository.instance.setUpAllFromDb();
-    await ISavedDevicesRepo.instance.setUpAllFromDb();
+    // await ISavedDevicesRepo.instance.setUpAllFromDb();
   }
 
   @override
