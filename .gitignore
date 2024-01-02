@@ -60,7 +60,7 @@ app.*.map.json
 /dev/devicelab/ABresults*.json
 /dev/docs/doc/
 /dev/docs/flutter.docs.zip
-/dev/docs/lib/
+/dev/docs/lib/src/
 /dev/docs/pubspec.yaml
 /dev/integration_tests/**/xcuserdata
 /dev/integration_tests/**/Pods
@@ -88,10 +88,10 @@ libisar.so
 saved_cast_state.json
 
 # Privat data
-lib/infrastructure/core/constant_credentials.dart
+lib/src/infrastructure/core/constant_credentials.dart
 
 # Web related
-lib/generated_plugin_registrant.dart
+lib/src/generated_plugin_registrant.dart
 
 # Network tools
 network_tools_db/*

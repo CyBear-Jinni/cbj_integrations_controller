@@ -17,7 +17,7 @@ analyzer:
     - "**/*.pbjson.dart"
     - "**/*.gr.dart"
     - "**/*.config.dart"
-    - "lib/infrastructure/gen/**"
+    - "lib/src/infrastructure/gen/**"
     - "**/*.py"
 
 linter:
