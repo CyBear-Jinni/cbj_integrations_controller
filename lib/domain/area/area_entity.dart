@@ -2,31 +2,26 @@ import 'package:cbj_integrations_controller/domain/area/area_failures.dart';
 import 'package:cbj_integrations_controller/domain/area/value_objects_area.dart';
 import 'package:cbj_integrations_controller/infrastructure/area/area_entity_dtos.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
+import 'package:cbj_integrations_controller/src/wow.dart';
 import 'package:dartz/dartz.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'area_entity.freezed.dart';
-
-@unfreezed
-abstract class AreaEntity implements _$AreaEntity {
-  factory AreaEntity({
-    required AreaUniqueId uniqueId,
-    required AreaDefaultName cbjEntityName,
-    required AreaBackground background,
-    required AreaTypes areaTypes,
-    required AreaDevicesId areaDevicesId,
-    required AreaScenesId areaScenesId,
-    required AreaRoutinesId areaRoutinesId,
-    required AreaBindingsId areaBindingsId,
+class AreaEntity {
+  AreaEntity({
+    required this.uniqueId,
+    required this.cbjEntityName,
+    required this.background,
+    required this.areaTypes,
+    required this.areaDevicesId,
+    required this.areaScenesId,
+    required this.areaRoutinesId,
+    required this.areaBindingsId,
 
     /// Who is using this area
-    required AreaMostUsedBy areaMostUsedBy,
+    required this.areaMostUsedBy,
 
     /// Area permissions by users id
-    required AreaPermissions areaPermissions,
-  }) = _AreaEntity;
-
-  const AreaEntity._();
+    required this.areaPermissions,
+  });
 
   factory AreaEntity.empty() => AreaEntity(
         uniqueId: AreaUniqueId(),
@@ -42,6 +37,21 @@ abstract class AreaEntity implements _$AreaEntity {
         areaPermissions: AreaPermissions(const {}),
         areaTypes: AreaTypes(const {}),
       );
+
+  AreaUniqueId uniqueId;
+  AreaDefaultName cbjEntityName;
+  AreaBackground background;
+  AreaTypes areaTypes;
+  AreaDevicesId areaDevicesId;
+  AreaScenesId areaScenesId;
+  AreaRoutinesId areaRoutinesId;
+  AreaBindingsId areaBindingsId;
+
+  /// Who is using this area
+  AreaMostUsedBy areaMostUsedBy;
+
+  /// Area permissions by users id
+  AreaPermissions areaPermissions;
 
   /// Will add new device id to the devices in the area list
   void addDeviceId(String newDeviceId) {
@@ -92,7 +102,6 @@ abstract class AreaEntity implements _$AreaEntity {
   AreaDevicesId deleteIdIfExist(String id) {
     final Set<String> tempList = Set.from(areaDevicesId.getOrCrash());
     tempList.removeWhere((element) => element == id);
-
     return AreaDevicesId(tempList);
   }
 
