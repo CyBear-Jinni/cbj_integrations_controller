@@ -11,70 +11,70 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/gene
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 import 'package:color/color.dart';
 
-class SmartRoomObject {
-  SmartRoomObject(
-    this._roomName,
+class SmartAreaObject {
+  SmartAreaObject(
+    this._areaName,
     this.grediantColor, {
-    this.lightsInTheRoom,
-    this.rgbwLightsInTheRoom,
-    this.switchesInTheRoom,
-    this.blindsInTheRoom,
-    this.boilersInTheRoom,
-    this.smartPlugsInTheRoom,
-    this.smartComputersInTheRoom,
-    this.smartTvsInTheRoom,
-    this.printersInTheRoom,
+    this.lightsInTheArea,
+    this.rgbwLightsInTheArea,
+    this.switchesInTheArea,
+    this.blindsInTheArea,
+    this.boilersInTheArea,
+    this.smartPlugsInTheArea,
+    this.smartComputersInTheArea,
+    this.smartTvsInTheArea,
+    this.printersInTheArea,
   });
 
-  final String _roomName;
-  final List<GenericLightDE>? lightsInTheRoom;
-  final List<GenericRgbwLightDE>? rgbwLightsInTheRoom;
-  final List<GenericSwitchDE>? switchesInTheRoom;
-  final List<GenericSmartPlugDE>? smartPlugsInTheRoom;
-  final List<GenericSmartComputerDE>? smartComputersInTheRoom;
-  final List<GenericSmartTvDE>? smartTvsInTheRoom;
+  final String _areaName;
+  final List<GenericLightDE>? lightsInTheArea;
+  final List<GenericRgbwLightDE>? rgbwLightsInTheArea;
+  final List<GenericSwitchDE>? switchesInTheArea;
+  final List<GenericSmartPlugDE>? smartPlugsInTheArea;
+  final List<GenericSmartComputerDE>? smartComputersInTheArea;
+  final List<GenericSmartTvDE>? smartTvsInTheArea;
   final List<Color> grediantColor;
-  final List<GenericBlindsDE>? blindsInTheRoom;
-  final List<GenericBoilerDE>? boilersInTheRoom;
-  final List<GenericPrinterDE>? printersInTheRoom;
+  final List<GenericBlindsDE>? blindsInTheArea;
+  final List<GenericBoilerDE>? boilersInTheArea;
+  final List<GenericPrinterDE>? printersInTheArea;
 
-  String getRoomName() {
-    return _roomName;
+  String getAreaName() {
+    return _areaName;
   }
 
   List<GenericLightDE>? getLights() {
-    return lightsInTheRoom;
+    return lightsInTheArea;
   }
 
   List<GenericRgbwLightDE>? getRgbwLightsColor() {
-    return rgbwLightsInTheRoom;
+    return rgbwLightsInTheArea;
   }
 
   List<GenericSwitchDE>? getSwitches() {
-    return switchesInTheRoom;
+    return switchesInTheArea;
   }
 
   List<GenericSmartPlugDE>? getSmartPlugs() {
-    return smartPlugsInTheRoom;
+    return smartPlugsInTheArea;
   }
 
   List<GenericSmartComputerDE>? getSmartComputers() {
-    return smartComputersInTheRoom;
+    return smartComputersInTheArea;
   }
 
   List<GenericSmartTvDE>? getSmartTvs() {
-    return smartTvsInTheRoom;
+    return smartTvsInTheArea;
   }
 
   List<GenericBlindsDE>? getBlinds() {
-    return blindsInTheRoom;
+    return blindsInTheArea;
   }
 
   List<GenericBoilerDE>? getBoilers() {
-    return boilersInTheRoom;
+    return boilersInTheArea;
   }
 
   List<GenericPrinterDE>? getPrinters() {
-    return printersInTheRoom;
+    return printersInTheArea;
   }
 }

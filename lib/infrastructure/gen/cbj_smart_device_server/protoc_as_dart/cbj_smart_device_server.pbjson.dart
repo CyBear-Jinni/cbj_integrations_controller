@@ -119,7 +119,14 @@ final $typed_data.Uint8List cbjDeviceStateGRPCDescriptor = $convert.base64Decode
 const CbjClientStatusRequests$json = {
   '1': 'CbjClientStatusRequests',
   '2': [
-    {'1': 'allRemoteCommands', '3': 41, '4': 1, '5': 11, '6': '.CbjSmartDeviceConnections.CbjAllRemoteCommands', '10': 'allRemoteCommands'},
+    {
+      '1': 'allRemoteCommands',
+      '3': 41,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjAllRemoteCommands',
+      '10': 'allRemoteCommands'
+    },
   ],
 };
 
@@ -133,21 +140,36 @@ final $typed_data.Uint8List cbjClientStatusRequestsDescriptor = $convert.base64D
 const CbjRequestsAndStatusFromHub$json = {
   '1': 'CbjRequestsAndStatusFromHub',
   '2': [
-    {'1': 'allRemoteCommands', '3': 42, '4': 1, '5': 11, '6': '.CbjSmartDeviceConnections.CbjAllRemoteCommands', '10': 'allRemoteCommands'},
+    {
+      '1': 'allRemoteCommands',
+      '3': 42,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjAllRemoteCommands',
+      '10': 'allRemoteCommands'
+    },
   ],
 };
 
 /// Descriptor for `CbjRequestsAndStatusFromHub`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List cbjRequestsAndStatusFromHubDescriptor = $convert.base64Decode(
-    'ChtDYmpSZXF1ZXN0c0FuZFN0YXR1c0Zyb21IdWISXQoRYWxsUmVtb3RlQ29tbWFuZHMYKiABKA'
-    'syLy5DYmpTbWFydERldmljZUNvbm5lY3Rpb25zLkNiakFsbFJlbW90ZUNvbW1hbmRzUhFhbGxS'
-    'ZW1vdGVDb21tYW5kcw==');
+final $typed_data.Uint8List cbjRequestsAndStatusFromHubDescriptor =
+    $convert.base64Decode(
+        'ChtDYmpSZXF1ZXN0c0FuZFN0YXR1c0Zyb21IdWISXQoRYWxsUmVtb3RlQ29tbWFuZHMYKiABKA'
+        'syLy5DYmpTbWFydERldmljZUNvbm5lY3Rpb25zLkNiakFsbFJlbW90ZUNvbW1hbmRzUhFhbGxS'
+        'ZW1vdGVDb21tYW5kcw==');
 
 @$core.Deprecated('Use cbjAllRemoteCommandsDescriptor instead')
 const CbjAllRemoteCommands$json = {
   '1': 'CbjAllRemoteCommands',
   '2': [
-    {'1': 'smartDeviceInfo', '3': 40, '4': 1, '5': 11, '6': '.CbjSmartDeviceConnections.CbjSmartDeviceInfo', '10': 'smartDeviceInfo'},
+    {
+      '1': 'smartDeviceInfo',
+      '3': 40,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjSmartDeviceInfo',
+      '10': 'smartDeviceInfo'
+    },
   ],
 };
 
@@ -160,8 +182,22 @@ final $typed_data.Uint8List cbjAllRemoteCommandsDescriptor = $convert.base64Deco
 const CbjFirstSetupMessage$json = {
   '1': 'CbjFirstSetupMessage',
   '2': [
-    {'1': 'compInfo', '3': 38, '4': 1, '5': 11, '6': '.CbjSmartDeviceConnections.CbjCompSmartDeviceInfo', '10': 'compInfo'},
-    {'1': 'firebaseAccountInformation', '3': 39, '4': 1, '5': 11, '6': '.CbjSmartDeviceConnections.CbjFirebaseAccountInformation', '10': 'firebaseAccountInformation'},
+    {
+      '1': 'compInfo',
+      '3': 38,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjCompSmartDeviceInfo',
+      '10': 'compInfo'
+    },
+    {
+      '1': 'firebaseAccountInformation',
+      '3': 39,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjFirebaseAccountInformation',
+      '10': 'firebaseAccountInformation'
+    },
   ],
 };
 
@@ -177,8 +213,22 @@ final $typed_data.Uint8List cbjFirstSetupMessageDescriptor = $convert.base64Deco
 const CbjCompSmartDeviceInfo$json = {
   '1': 'CbjCompSmartDeviceInfo',
   '2': [
-    {'1': 'compSpecs', '3': 21, '4': 1, '5': 11, '6': '.CbjSmartDeviceConnections.CbjCompSpecs', '10': 'compSpecs'},
-    {'1': 'smartDevicesInComp', '3': 28, '4': 3, '5': 11, '6': '.CbjSmartDeviceConnections.CbjSmartDeviceInfo', '10': 'smartDevicesInComp'},
+    {
+      '1': 'compSpecs',
+      '3': 21,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjCompSpecs',
+      '10': 'compSpecs'
+    },
+    {
+      '1': 'smartDevicesInComp',
+      '3': 28,
+      '4': 3,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjSmartDeviceInfo',
+      '10': 'smartDevicesInComp'
+    },
   ],
 };
 
@@ -198,7 +248,13 @@ const CbjCompSpecs$json = {
     {'1': 'compOs', '3': 24, '4': 1, '5': 9, '10': 'compOs'},
     {'1': 'compModel', '3': 25, '4': 1, '5': 9, '10': 'compModel'},
     {'1': 'compType', '3': 26, '4': 1, '5': 9, '10': 'compType'},
-    {'1': 'pubspecYamlVersion', '3': 27, '4': 1, '5': 9, '10': 'pubspecYamlVersion'},
+    {
+      '1': 'pubspecYamlVersion',
+      '3': 27,
+      '4': 1,
+      '5': 9,
+      '10': 'pubspecYamlVersion'
+    },
   ],
 };
 
@@ -213,8 +269,20 @@ final $typed_data.Uint8List cbjCompSpecsDescriptor = $convert.base64Decode(
 const CbjMicrocontrollerSpecs$json = {
   '1': 'CbjMicrocontrollerSpecs',
   '2': [
-    {'1': 'microcontrollerModel', '3': 31, '4': 1, '5': 9, '10': 'microcontrollerModel'},
-    {'1': 'microcontrollerType', '3': 32, '4': 1, '5': 9, '10': 'microcontrollerType'},
+    {
+      '1': 'microcontrollerModel',
+      '3': 31,
+      '4': 1,
+      '5': 9,
+      '10': 'microcontrollerModel'
+    },
+    {
+      '1': 'microcontrollerType',
+      '3': 32,
+      '4': 1,
+      '5': 9,
+      '10': 'microcontrollerType'
+    },
     {'1': 'softwareVersion', '3': 33, '4': 1, '5': 9, '10': 'softwareVersion'},
   ],
 };
@@ -233,16 +301,43 @@ const CbjSmartDeviceInfo$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'state', '3': 3, '4': 1, '5': 9, '10': 'state'},
     {'1': 'defaultName', '3': 14, '4': 1, '5': 9, '10': 'defaultName'},
-    {'1': 'roomId', '3': 15, '4': 1, '5': 9, '10': 'roomId'},
-    {'1': 'senderDeviceModel', '3': 16, '4': 1, '5': 9, '10': 'senderDeviceModel'},
+    {'1': 'areaId', '3': 15, '4': 1, '5': 9, '10': 'areaId'},
+    {
+      '1': 'senderDeviceModel',
+      '3': 16,
+      '4': 1,
+      '5': 9,
+      '10': 'senderDeviceModel'
+    },
     {'1': 'senderDeviceOs', '3': 17, '4': 1, '5': 9, '10': 'senderDeviceOs'},
     {'1': 'senderId', '3': 18, '4': 1, '5': 9, '10': 'senderId'},
     {'1': 'serverTimeStamp', '3': 19, '4': 1, '5': 9, '10': 'serverTimeStamp'},
     {'1': 'stateMassage', '3': 20, '4': 1, '5': 9, '10': 'stateMassage'},
     {'1': 'isComputer', '3': 29, '4': 1, '5': 8, '10': 'isComputer'},
-    {'1': 'compSpecs', '3': 30, '4': 1, '5': 11, '6': '.CbjSmartDeviceConnections.CbjCompSpecs', '10': 'compSpecs'},
-    {'1': 'microcontrollerSpecsSpecs', '3': 31, '4': 1, '5': 11, '6': '.CbjSmartDeviceConnections.CbjMicrocontrollerSpecs', '10': 'microcontrollerSpecsSpecs'},
-    {'1': 'deviceTypesActions', '3': 34, '4': 1, '5': 11, '6': '.CbjSmartDeviceConnections.CbjDeviceTypesActions', '10': 'deviceTypesActions'},
+    {
+      '1': 'compSpecs',
+      '3': 30,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjCompSpecs',
+      '10': 'compSpecs'
+    },
+    {
+      '1': 'microcontrollerSpecsSpecs',
+      '3': 31,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjMicrocontrollerSpecs',
+      '10': 'microcontrollerSpecsSpecs'
+    },
+    {
+      '1': 'deviceTypesActions',
+      '3': 34,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjDeviceTypesActions',
+      '10': 'deviceTypesActions'
+    },
   ],
 };
 
@@ -289,22 +384,36 @@ final $typed_data.Uint8List cbjCommendStatusDescriptor = $convert.base64Decode(
 const CbjSmartDeviceUpdateDetails$json = {
   '1': 'CbjSmartDeviceUpdateDetails',
   '2': [
-    {'1': 'smartDevice', '3': 6, '4': 1, '5': 11, '6': '.CbjSmartDeviceConnections.CbjSmartDeviceInfo', '10': 'smartDevice'},
+    {
+      '1': 'smartDevice',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjSmartDeviceConnections.CbjSmartDeviceInfo',
+      '10': 'smartDevice'
+    },
     {'1': 'newName', '3': 7, '4': 1, '5': 9, '10': 'newName'},
   ],
 };
 
 /// Descriptor for `CbjSmartDeviceUpdateDetails`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List cbjSmartDeviceUpdateDetailsDescriptor = $convert.base64Decode(
-    'ChtDYmpTbWFydERldmljZVVwZGF0ZURldGFpbHMSTwoLc21hcnREZXZpY2UYBiABKAsyLS5DYm'
-    'pTbWFydERldmljZUNvbm5lY3Rpb25zLkNialNtYXJ0RGV2aWNlSW5mb1ILc21hcnREZXZpY2US'
-    'GAoHbmV3TmFtZRgHIAEoCVIHbmV3TmFtZQ==');
+final $typed_data.Uint8List cbjSmartDeviceUpdateDetailsDescriptor =
+    $convert.base64Decode(
+        'ChtDYmpTbWFydERldmljZVVwZGF0ZURldGFpbHMSTwoLc21hcnREZXZpY2UYBiABKAsyLS5DYm'
+        'pTbWFydERldmljZUNvbm5lY3Rpb25zLkNialNtYXJ0RGV2aWNlSW5mb1ILc21hcnREZXZpY2US'
+        'GAoHbmV3TmFtZRgHIAEoCVIHbmV3TmFtZQ==');
 
 @$core.Deprecated('Use cbjFirebaseAccountInformationDescriptor instead')
 const CbjFirebaseAccountInformation$json = {
   '1': 'CbjFirebaseAccountInformation',
   '2': [
-    {'1': 'fireBaseProjectId', '3': 8, '4': 1, '5': 9, '10': 'fireBaseProjectId'},
+    {
+      '1': 'fireBaseProjectId',
+      '3': 8,
+      '4': 1,
+      '5': 9,
+      '10': 'fireBaseProjectId'
+    },
     {'1': 'fireBaseApiKey', '3': 9, '4': 1, '5': 9, '10': 'fireBaseApiKey'},
     {'1': 'userEmail', '3': 10, '4': 1, '5': 9, '10': 'userEmail'},
     {'1': 'userPassword', '3': 11, '4': 1, '5': 9, '10': 'userPassword'},
@@ -323,9 +432,30 @@ final $typed_data.Uint8List cbjFirebaseAccountInformationDescriptor = $convert.b
 const CbjDeviceTypesActions$json = {
   '1': 'CbjDeviceTypesActions',
   '2': [
-    {'1': 'deviceType', '3': 35, '4': 1, '5': 14, '6': '.CbjSmartDeviceConnections.CbjDeviceTypes', '10': 'deviceType'},
-    {'1': 'deviceAction', '3': 36, '4': 1, '5': 14, '6': '.CbjSmartDeviceConnections.CbjDeviceActions', '10': 'deviceAction'},
-    {'1': 'deviceStateGRPC', '3': 37, '4': 1, '5': 14, '6': '.CbjSmartDeviceConnections.CbjDeviceStateGRPC', '10': 'deviceStateGRPC'},
+    {
+      '1': 'deviceType',
+      '3': 35,
+      '4': 1,
+      '5': 14,
+      '6': '.CbjSmartDeviceConnections.CbjDeviceTypes',
+      '10': 'deviceType'
+    },
+    {
+      '1': 'deviceAction',
+      '3': 36,
+      '4': 1,
+      '5': 14,
+      '6': '.CbjSmartDeviceConnections.CbjDeviceActions',
+      '10': 'deviceAction'
+    },
+    {
+      '1': 'deviceStateGRPC',
+      '3': 37,
+      '4': 1,
+      '5': 14,
+      '6': '.CbjSmartDeviceConnections.CbjDeviceStateGRPC',
+      '10': 'deviceStateGRPC'
+    },
   ],
 };
 
@@ -336,4 +466,3 @@ final $typed_data.Uint8List cbjDeviceTypesActionsDescriptor = $convert.base64Dec
     'aW9uGCQgASgOMisuQ2JqU21hcnREZXZpY2VDb25uZWN0aW9ucy5DYmpEZXZpY2VBY3Rpb25zUg'
     'xkZXZpY2VBY3Rpb24SVwoPZGV2aWNlU3RhdGVHUlBDGCUgASgOMi0uQ2JqU21hcnREZXZpY2VD'
     'b25uZWN0aW9ucy5DYmpEZXZpY2VTdGF0ZUdSUENSD2RldmljZVN0YXRlR1JQQw==');
-

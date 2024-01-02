@@ -15,7 +15,7 @@ abstract class IAppCommunicationRepository {
     String remotePipesDomain,
   );
 
-  Future<void> sendAllRoomsFromHubRequestsStream();
+  Future<void> sendAllAreasFromHubRequestsStream();
   Future<void> sendAllDevicesFromHubRequestsStream();
   Future<void> sendAllScenesFromHubRequestsStream();
 }

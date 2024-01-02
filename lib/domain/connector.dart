@@ -4,9 +4,9 @@
 // import 'package:cbj_integrations_controller/domain/core/request_types.dart';
 // import 'package:cbj_integrations_controller/domain/i_mqtt_server_repository.dart';
 // import 'package:cbj_integrations_controller/domain/i_saved_devices_repo.dart';
-// import 'package:cbj_integrations_controller/domain/i_saved_rooms_repo.dart';
-// import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
-// import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
+// import 'package:cbj_integrations_controller/domain/i_saved_areas_repo.dart';
+// import 'package:cbj_integrations_controller/domain/area/area_entity.dart';
+// import 'package:cbj_integrations_controller/domain/area/value_objects_area.dart';
 // import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
 // import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
 // import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_dto_base.dart';
@@ -29,9 +29,9 @@
 //       /// the mqtt with this path
 //       await IMqttServerRepository.instance
 //           .publishDeviceEntity(entityForMqtt.value as DeviceEntityBase);
-//     } else if (entityForMqtt.value is RoomEntity) {
-//       // TODO: Create MQTT support for rooms
-//       icLogger.w('Please create MQTT support for Room Entity');
+//     } else if (entityForMqtt.value is AreaEntity) {
+//       // TODO: Create MQTT support for areas
+//       icLogger.w('Please create MQTT support for Area Entity');
 //     } else {
 //       icLogger.w('Entity type to send to MQTT is not supported');
 //     }
@@ -102,22 +102,22 @@
 
 //           if (property == 'entityStateGRPC' &&
 //               propertyValueString == EntityStateGRPC.ack.toString()) {
-//             final Map<String, RoomEntity> rooms =
-//                 ISavedRoomsRepo.instance.getAllRooms();
+//             final Map<String, AreaEntity> areas =
+//                 ISavedAreasRepo.instance.getAllAreas();
 
 //             HubRequestsToApp.streamRequestsToApp.sink
 //                 .add(savedDeviceWithSameIdAsMqtt.toInfrastructure());
-//             final RoomEntity? discoverRoom =
-//                 rooms[RoomUniqueId.discovered().getOrCrash()];
-//             if (discoverRoom == null) {
+//             final AreaEntity? discoverArea =
+//                 areas[AreaUniqueId.discovered().getOrCrash()];
+//             if (discoverArea == null) {
 //               continue;
 //             }
 
-//             if (discoverRoom.roomDevicesId
+//             if (discoverArea.areaDevicesId
 //                 .getOrCrash()
 //                 .contains(savedDeviceWithSameIdAsMqtt.uniqueId.getOrCrash())) {
 //               HubRequestsToApp.streamRequestsToApp.sink.add(
-//                 rooms[RoomUniqueId.discovered().getOrCrash()]!
+//                 areas[AreaUniqueId.discovered().getOrCrash()]!
 //                     .toInfrastructure(),
 //               );
 //             }

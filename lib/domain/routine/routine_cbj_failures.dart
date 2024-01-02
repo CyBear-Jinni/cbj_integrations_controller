@@ -27,11 +27,11 @@ class RoutineCbjFailure<T> {
   const factory RoutineCbjFailure.powerConsumptionIsNotNumber() =
       _PowerConsumptionIsNotNumber;
 
-  const factory RoutineCbjFailure.roomsActionDoesNotExist() =
-      _RoomsActionDoesNotExist;
+  const factory RoutineCbjFailure.areasActionDoesNotExist() =
+      _AreasActionDoesNotExist;
 
-  const factory RoutineCbjFailure.roomsTypeDoesNotExist() =
-      _RoomsTypeDoesNotExist;
+  const factory RoutineCbjFailure.areasTypeDoesNotExist() =
+      _AreasTypeDoesNotExist;
 
   const factory RoutineCbjFailure.routineStateDoesNotExist() =
       _RoutineStateDoesNotExist;

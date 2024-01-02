@@ -5,8 +5,8 @@ class _HiveRepository extends IDbRepository {
   /// Name of the box that stores Remote Pipes credentials
   String remotePipesBoxName = 'remotePipesBox';
 
-  /// Name of the box that stores all the rooms
-  String roomsBoxName = 'roomsBox';
+  /// Name of the box that stores all the areas
+  String areasBoxName = 'areasBox';
 
   /// Name of the box that stores all the devices in form of string json
   String devicesBoxName = 'devicesBox';
@@ -63,7 +63,7 @@ class _HiveRepository extends IDbRepository {
     }
 
     Hive.registerAdapter(RemotePipesHiveModelAdapter());
-    Hive.registerAdapter(RoomsHiveModelAdapter());
+    Hive.registerAdapter(AreasHiveModelAdapter());
     Hive.registerAdapter(DevicesHiveModelAdapter());
     Hive.registerAdapter(ScenesHiveModelAdapter());
     Hive.registerAdapter(RoutinesHiveModelAdapter());
@@ -84,7 +84,7 @@ class _HiveRepository extends IDbRepository {
     await loadFromDb();
   }
 
-  Box<RoomsHiveModel>? roomsBox;
+  Box<AreasHiveModel>? areasBox;
   Box<DevicesHiveModel>? devicesBox;
   Box<RemotePipesHiveModel>? remotePipesBox;
   Box<ScenesHiveModel>? scenesBox;
@@ -218,8 +218,8 @@ class _HiveRepository extends IDbRepository {
       });
     }
 
-    // Rooms need to stay first one
-    // await ISavedRoomsRepo.instance.setUpAllFromDb();
+    // Areas need to stay first one
+    // await ISavedAreasRepo.instance.setUpAllFromDb();
     await ISceneCbjRepository.instance.setUpAllFromDb();
     await IRoutineCbjRepository.instance.setUpAllFromDb();
     await IBindingCbjRepository.instance.setUpAllFromDb();
@@ -227,38 +227,38 @@ class _HiveRepository extends IDbRepository {
   }
 
   @override
-  Future<Either<LocalDbFailures, Set<RoomEntity>>> getRoomsFromDb() async {
-    final Set<RoomEntity> rooms = <RoomEntity>{};
+  Future<Either<LocalDbFailures, Set<AreaEntity>>> getAreasFromDb() async {
+    final Set<AreaEntity> areas = <AreaEntity>{};
 
     try {
-      await roomsBox?.close();
-      roomsBox = await Hive.openBox<RoomsHiveModel>(roomsBoxName);
-      final Set<RoomsHiveModel> roomsHiveModelFromDb =
-          roomsBox!.values.toSet().cast<RoomsHiveModel>();
+      await areasBox?.close();
+      areasBox = await Hive.openBox<AreasHiveModel>(areasBoxName);
+      final Set<AreasHiveModel> areasHiveModelFromDb =
+          areasBox!.values.toSet().cast<AreasHiveModel>();
 
-      await roomsBox?.close();
-      for (final RoomsHiveModel roomHive in roomsHiveModelFromDb) {
-        final RoomEntity roomEntity = RoomEntity(
-          uniqueId: RoomUniqueId.fromUniqueString(roomHive.roomUniqueId),
-          cbjEntityName: RoomDefaultName(roomHive.roomDefaultName),
-          background: RoomBackground(roomHive.roomBackground),
-          roomTypes: RoomTypes(roomHive.roomTypes.toSet()),
-          roomDevicesId: RoomDevicesId(roomHive.roomDevicesId.toSet()),
-          roomScenesId: RoomScenesId(roomHive.roomScenesId.toSet()),
-          roomRoutinesId: RoomRoutinesId(roomHive.roomRoutinesId.toSet()),
-          roomBindingsId: RoomBindingsId(roomHive.roomBindingsId.toSet()),
-          roomMostUsedBy: RoomMostUsedBy(roomHive.roomMostUsedBy.toSet()),
-          roomPermissions: RoomPermissions(roomHive.roomPermissions.toSet()),
+      await areasBox?.close();
+      for (final AreasHiveModel areaHive in areasHiveModelFromDb) {
+        final AreaEntity areaEntity = AreaEntity(
+          uniqueId: AreaUniqueId.fromUniqueString(areaHive.areaUniqueId),
+          cbjEntityName: AreaDefaultName(areaHive.areaDefaultName),
+          background: AreaBackground(areaHive.areaBackground),
+          areaTypes: AreaTypes(areaHive.areaTypes.toSet()),
+          areaDevicesId: AreaDevicesId(areaHive.areaDevicesId.toSet()),
+          areaScenesId: AreaScenesId(areaHive.areaScenesId.toSet()),
+          areaRoutinesId: AreaRoutinesId(areaHive.areaRoutinesId.toSet()),
+          areaBindingsId: AreaBindingsId(areaHive.areaBindingsId.toSet()),
+          areaMostUsedBy: AreaMostUsedBy(areaHive.areaMostUsedBy.toSet()),
+          areaPermissions: AreaPermissions(areaHive.areaPermissions.toSet()),
         );
-        rooms.add(roomEntity);
+        areas.add(areaEntity);
       }
     } catch (e) {
-      icLogger.e('Local DB hive error while getting rooms: $e');
+      icLogger.e('Local DB hive error while getting areas: $e');
       // TODO: Check why hive crash stop this from working
-      await deleteAllSavedRooms();
+      await deleteAllSavedAreas();
     }
 
-    return right(rooms);
+    return right(areas);
   }
 
   @override
@@ -498,40 +498,40 @@ class _HiveRepository extends IDbRepository {
   }
 
   @override
-  Future<Either<LocalDbFailures, Unit>> saveRoomsToDb({
-    required Set<RoomEntity> roomsList,
+  Future<Either<LocalDbFailures, Unit>> saveAreasToDb({
+    required Set<AreaEntity> areasList,
   }) async {
     try {
-      final Set<RoomsHiveModel> rommsHiveList = {};
+      final Set<AreasHiveModel> rommsHiveList = {};
 
-      final Set<RoomEntityDtos> roomsListDto =
-          Set<RoomEntityDtos>.from(roomsList.map((e) => e.toInfrastructure()));
+      final Set<AreaEntityDtos> areasListDto =
+          Set<AreaEntityDtos>.from(areasList.map((e) => e.toInfrastructure()));
 
-      for (final RoomEntityDtos roomEntityDtos in roomsListDto) {
-        final RoomsHiveModel roomsHiveModel = RoomsHiveModel()
-          ..roomUniqueId = roomEntityDtos.uniqueId
-          ..roomDefaultName = roomEntityDtos.cbjEntityName
-          ..roomBackground = roomEntityDtos.background
-          ..roomDevicesId = roomEntityDtos.roomDevicesId.toList()
-          ..roomScenesId = roomEntityDtos.roomScenesId.toList()
-          ..roomRoutinesId = roomEntityDtos.roomRoutinesId.toList()
-          ..roomBindingsId = roomEntityDtos.roomBindingsId.toList()
-          ..roomMostUsedBy = roomEntityDtos.roomMostUsedBy.toList()
-          ..roomPermissions = roomEntityDtos.roomPermissions.toList()
-          ..roomTypes = roomEntityDtos.roomTypes.toList();
-        rommsHiveList.add(roomsHiveModel);
+      for (final AreaEntityDtos areaEntityDtos in areasListDto) {
+        final AreasHiveModel areasHiveModel = AreasHiveModel()
+          ..areaUniqueId = areaEntityDtos.uniqueId
+          ..areaDefaultName = areaEntityDtos.cbjEntityName
+          ..areaBackground = areaEntityDtos.background
+          ..areaDevicesId = areaEntityDtos.areaDevicesId.toList()
+          ..areaScenesId = areaEntityDtos.areaScenesId.toList()
+          ..areaRoutinesId = areaEntityDtos.areaRoutinesId.toList()
+          ..areaBindingsId = areaEntityDtos.areaBindingsId.toList()
+          ..areaMostUsedBy = areaEntityDtos.areaMostUsedBy.toList()
+          ..areaPermissions = areaEntityDtos.areaPermissions.toList()
+          ..areaTypes = areaEntityDtos.areaTypes.toList();
+        rommsHiveList.add(areasHiveModel);
       }
 
-      await roomsBox?.close();
-      roomsBox = await Hive.openBox<RoomsHiveModel>(roomsBoxName);
+      await areasBox?.close();
+      areasBox = await Hive.openBox<AreasHiveModel>(areasBoxName);
 
-      await roomsBox?.clear();
-      await roomsBox?.addAll(rommsHiveList);
+      await areasBox?.clear();
+      await areasBox?.addAll(rommsHiveList);
 
-      await roomsBox?.close();
-      icLogger.i('Rooms got saved to local storage');
+      await areasBox?.close();
+      icLogger.i('Areas got saved to local storage');
     } catch (e) {
-      icLogger.e('Error saving Rooms to local storage\n$e');
+      icLogger.e('Error saving Areas to local storage\n$e');
       return left(const LocalDbFailures.unexpected());
     }
 
@@ -756,8 +756,8 @@ class _HiveRepository extends IDbRepository {
     return right(unit);
   }
 
-  Future<void> deleteAllSavedRooms() async {
-    await saveRoomsToDb(roomsList: {});
+  Future<void> deleteAllSavedAreas() async {
+    await saveAreasToDb(areasList: {});
   }
 
   @override

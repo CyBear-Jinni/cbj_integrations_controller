@@ -4,8 +4,8 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/abst
 import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/common_devices_scenes_presets_for_devices.dart';
 import 'package:dartz/dartz.dart';
 
-class WorkRoomAreaAction {
-  Future<Either<SceneCbjFailure, Map<String, String>>> workRoomDeviceAction(
+class StudyAreaAreaAction {
+  Future<Either<SceneCbjFailure, Map<String, String>>> studyAreaDeviceAction(
     DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) async {
@@ -67,7 +67,7 @@ class WorkRoomAreaAction {
         break;
       case EntityTypes.rgbwLights:
         actionsList.addEntries([
-          CommonDevicesScenesPresetsForDevices.rgbLightBluePreset(
+          CommonDevicesScenesPresetsForDevices.rgbLightWhitePreset(
             deviceEntity,
             brokerNodeId,
           ),
@@ -84,6 +84,7 @@ class WorkRoomAreaAction {
             brokerNodeId,
           ),
         ]);
+        return right(actionsList);
       case EntityTypes.scanner:
         // TODO: Handle this case.
         break;

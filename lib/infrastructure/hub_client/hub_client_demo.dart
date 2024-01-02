@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 
+import 'package:cbj_integrations_controller/domain/area/area_entity.dart';
+import 'package:cbj_integrations_controller/domain/area/value_objects_area.dart';
 import 'package:cbj_integrations_controller/domain/core/value_objects.dart';
-import 'package:cbj_integrations_controller/domain/room/room_entity.dart';
-import 'package:cbj_integrations_controller/domain/room/value_objects_room.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/domain/scene/value_objects_scene_cbj.dart';
 import 'package:cbj_integrations_controller/infrastructure/core/utils.dart';
@@ -25,8 +25,8 @@ class HubClientDemo {
   }
 
   static Future<void> firstConnection() async {
-    for (final RequestsAndStatusFromHub roomRequest in getAllRooms()) {
-      HubRequestsToApp.streamRequestsToApp.add(roomRequest);
+    for (final RequestsAndStatusFromHub areaRequest in getAllAreas()) {
+      HubRequestsToApp.streamRequestsToApp.add(areaRequest);
     }
 
     for (final RequestsAndStatusFromHub devicesRequest in getAllDevices()) {
@@ -38,145 +38,145 @@ class HubClientDemo {
     }
   }
 
-  static List<RequestsAndStatusFromHub> getAllRooms() {
-    final List<RequestsAndStatusFromHub> roomsList = [];
+  static List<RequestsAndStatusFromHub> getAllAreas() {
+    final List<RequestsAndStatusFromHub> areasList = [];
 
-    const SendingType sendingTypeRoom = SendingType.roomType;
+    const SendingType sendingTypeArea = SendingType.areaType;
 
-    /// Discovered Room
+    /// Discovered Area
 
-    final RoomEntity allRemoteCommandsRoomDiscovered = RoomEntity(
-      uniqueId: RoomUniqueId.discovered(),
-      cbjEntityName: RoomDefaultName('Discovered'),
-      roomTypes: RoomTypes(const {}),
-      roomDevicesId:
-          RoomDevicesId(const {'65d84b10-434d-11ed-817a-7d350fb52f91'}),
-      roomScenesId: RoomScenesId(const {}),
-      roomRoutinesId: RoomRoutinesId(const {}),
-      roomBindingsId: RoomBindingsId(const {}),
-      roomMostUsedBy: RoomMostUsedBy(const {}),
-      roomPermissions: RoomPermissions(const {}),
-      background: RoomBackground(
+    final AreaEntity allRemoteCommandsAreaDiscovered = AreaEntity(
+      uniqueId: AreaUniqueId.discovered(),
+      cbjEntityName: AreaDefaultName('Discovered'),
+      areaTypes: AreaTypes(const {}),
+      areaDevicesId:
+          AreaDevicesId(const {'65d84b10-434d-11ed-817a-7d350fb52f91'}),
+      areaScenesId: AreaScenesId(const {}),
+      areaRoutinesId: AreaRoutinesId(const {}),
+      areaBindingsId: AreaBindingsId(const {}),
+      areaMostUsedBy: AreaMostUsedBy(const {}),
+      areaPermissions: AreaPermissions(const {}),
+      background: AreaBackground(
         'https://images.pexels.com/photos/459654/pexels-photo-459654.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       ),
     );
 
-    final RequestsAndStatusFromHub requestsAndStatusFromHubRoomDiscovered =
+    final RequestsAndStatusFromHub requestsAndStatusFromHubAreaDiscovered =
         RequestsAndStatusFromHub(
-      sendingType: sendingTypeRoom,
+      sendingType: sendingTypeArea,
       allRemoteCommands: jsonEncode(
-        allRemoteCommandsRoomDiscovered.toInfrastructure().toJson(),
+        allRemoteCommandsAreaDiscovered.toInfrastructure().toJson(),
       ),
     );
-    roomsList.add(requestsAndStatusFromHubRoomDiscovered);
+    areasList.add(requestsAndStatusFromHubAreaDiscovered);
 
-    /// Guy Room
+    /// Guy Area
 
-    final RoomEntity allRemoteCommandsRoomGuy = RoomEntity(
+    final AreaEntity allRemoteCommandsAreaGuy = AreaEntity(
       uniqueId:
-          RoomUniqueId.fromUniqueString('23deb7f0-4193-11ed-9d1c-5747056d7848'),
-      cbjEntityName: RoomDefaultName('Guy Room'),
-      roomTypes: RoomTypes({
-        AreaPurposesTypes.bedroom.value.toString(),
-        AreaPurposesTypes.studyRoom.value.toString(),
-        AreaPurposesTypes.workRoom.value.toString(),
+          AreaUniqueId.fromUniqueString('23deb7f0-4193-11ed-9d1c-5747056d7848'),
+      cbjEntityName: AreaDefaultName('Guy Area'),
+      areaTypes: AreaTypes({
+        AreaPurposesTypes.bedarea.value.toString(),
+        AreaPurposesTypes.studyArea.value.toString(),
+        AreaPurposesTypes.workArea.value.toString(),
         AreaPurposesTypes.videoGames.value.toString(),
       }),
-      roomDevicesId: RoomDevicesId(const {
+      areaDevicesId: AreaDevicesId(const {
         'a31523m6-463s-32ge-7426-g33c642r7m25',
         'c90137f2-419b-11ed-8246-e17a279f4d89',
         '96386cd0-419b-11ed-8246-e17a279f4d89',
       }),
-      roomScenesId:
-          RoomScenesId(const {'01bd6880-419b-11ed-af10-f75196d26a5e'}),
-      roomRoutinesId: RoomRoutinesId(const {}),
-      roomBindingsId: RoomBindingsId(const {}),
-      roomMostUsedBy: RoomMostUsedBy(const {}),
-      roomPermissions: RoomPermissions(const {}),
-      background: RoomBackground(
+      areaScenesId:
+          AreaScenesId(const {'01bd6880-419b-11ed-af10-f75196d26a5e'}),
+      areaRoutinesId: AreaRoutinesId(const {}),
+      areaBindingsId: AreaBindingsId(const {}),
+      areaMostUsedBy: AreaMostUsedBy(const {}),
+      areaPermissions: AreaPermissions(const {}),
+      background: AreaBackground(
         'https://images.pexels.com/photos/459654/pexels-photo-459654.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       ),
     );
 
-    final RequestsAndStatusFromHub requestsAndStatusFromHubRoomGuy =
+    final RequestsAndStatusFromHub requestsAndStatusFromHubAreaGuy =
         RequestsAndStatusFromHub(
-      sendingType: sendingTypeRoom,
+      sendingType: sendingTypeArea,
       allRemoteCommands: jsonEncode(
-        allRemoteCommandsRoomGuy.toInfrastructure().toJson(),
+        allRemoteCommandsAreaGuy.toInfrastructure().toJson(),
       ),
     );
-    roomsList.add(requestsAndStatusFromHubRoomGuy);
+    areasList.add(requestsAndStatusFromHubAreaGuy);
 
-    /// Out Side Room
+    /// Out Side Area
 
-    final RoomEntity allRemoteCommandsRoomOutSide = RoomEntity(
+    final AreaEntity allRemoteCommandsAreaOutSide = AreaEntity(
       uniqueId:
-          RoomUniqueId.fromUniqueString('38b45780-419c-11ed-bce9-8dc09da0062f'),
-      cbjEntityName: RoomDefaultName('Outside'),
-      roomTypes: RoomTypes({
-        AreaPurposesTypes.bedroom.value.toString(),
-        AreaPurposesTypes.studyRoom.value.toString(),
-        AreaPurposesTypes.workRoom.value.toString(),
-        AreaPurposesTypes.livingRoom.value.toString(),
+          AreaUniqueId.fromUniqueString('38b45780-419c-11ed-bce9-8dc09da0062f'),
+      cbjEntityName: AreaDefaultName('Outside'),
+      areaTypes: AreaTypes({
+        AreaPurposesTypes.bedarea.value.toString(),
+        AreaPurposesTypes.studyArea.value.toString(),
+        AreaPurposesTypes.workArea.value.toString(),
+        AreaPurposesTypes.livingArea.value.toString(),
       }),
-      roomDevicesId:
-          RoomDevicesId(const {'gcvweg3y-bv2s-cvwe-bdmf-7h4f3f2dw2d1'}),
-      roomScenesId: RoomScenesId(const {}),
-      roomRoutinesId: RoomRoutinesId(const {}),
-      roomBindingsId: RoomBindingsId(const {}),
-      roomMostUsedBy: RoomMostUsedBy(const {}),
-      roomPermissions: RoomPermissions(const {}),
-      background: RoomBackground(
+      areaDevicesId:
+          AreaDevicesId(const {'gcvweg3y-bv2s-cvwe-bdmf-7h4f3f2dw2d1'}),
+      areaScenesId: AreaScenesId(const {}),
+      areaRoutinesId: AreaRoutinesId(const {}),
+      areaBindingsId: AreaBindingsId(const {}),
+      areaMostUsedBy: AreaMostUsedBy(const {}),
+      areaPermissions: AreaPermissions(const {}),
+      background: AreaBackground(
         'https://images.pexels.com/photos/459654/pexels-photo-459654.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       ),
     );
 
-    final RequestsAndStatusFromHub requestsAndStatusFromHubRoomOutSide =
+    final RequestsAndStatusFromHub requestsAndStatusFromHubAreaOutSide =
         RequestsAndStatusFromHub(
-      sendingType: sendingTypeRoom,
+      sendingType: sendingTypeArea,
       allRemoteCommands: jsonEncode(
-        allRemoteCommandsRoomOutSide.toInfrastructure().toJson(),
+        allRemoteCommandsAreaOutSide.toInfrastructure().toJson(),
       ),
     );
-    roomsList.add(requestsAndStatusFromHubRoomOutSide);
+    areasList.add(requestsAndStatusFromHubAreaOutSide);
 
-    /// Out Side Room
+    /// Out Side Area
 
-    final RoomEntity allRemoteCommandsRoomAmi = RoomEntity(
+    final AreaEntity allRemoteCommandsAreaAmi = AreaEntity(
       uniqueId:
-          RoomUniqueId.fromUniqueString('gai23tds-f3t7-vxa2-dvnn-hykkjty8567d'),
-      cbjEntityName: RoomDefaultName('Ami Room'),
-      roomTypes: RoomTypes({
-        AreaPurposesTypes.bedroom.value.toString(),
-        AreaPurposesTypes.studyRoom.value.toString(),
-        AreaPurposesTypes.workRoom.value.toString(),
-        AreaPurposesTypes.livingRoom.value.toString(),
+          AreaUniqueId.fromUniqueString('gai23tds-f3t7-vxa2-dvnn-hykkjty8567d'),
+      cbjEntityName: AreaDefaultName('Ami Area'),
+      areaTypes: AreaTypes({
+        AreaPurposesTypes.bedarea.value.toString(),
+        AreaPurposesTypes.studyArea.value.toString(),
+        AreaPurposesTypes.workArea.value.toString(),
+        AreaPurposesTypes.livingArea.value.toString(),
       }),
-      roomDevicesId: RoomDevicesId(const {
+      areaDevicesId: AreaDevicesId(const {
         '7189ed76-4351-11ed-b249-63fd7e165c16',
         'sfds344t-sdf3-fd3d-24s4-bd2sdf3n5rfd',
         'wfdsg2w6-fgde-234s-vbz2-b234jmgvbfd6',
       }),
-      roomScenesId: RoomScenesId(const {}),
-      roomRoutinesId: RoomRoutinesId(const {}),
-      roomBindingsId: RoomBindingsId(const {}),
-      roomMostUsedBy: RoomMostUsedBy(const {}),
-      roomPermissions: RoomPermissions(const {}),
-      background: RoomBackground(
+      areaScenesId: AreaScenesId(const {}),
+      areaRoutinesId: AreaRoutinesId(const {}),
+      areaBindingsId: AreaBindingsId(const {}),
+      areaMostUsedBy: AreaMostUsedBy(const {}),
+      areaPermissions: AreaPermissions(const {}),
+      background: AreaBackground(
         'https://images.pexels.com/photos/1457842/pexels-photo-1457842.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260',
       ),
     );
 
-    final RequestsAndStatusFromHub requestsAndStatusFromHubRoomAmi =
+    final RequestsAndStatusFromHub requestsAndStatusFromHubAreaAmi =
         RequestsAndStatusFromHub(
-      sendingType: sendingTypeRoom,
+      sendingType: sendingTypeArea,
       allRemoteCommands: jsonEncode(
-        allRemoteCommandsRoomAmi.toInfrastructure().toJson(),
+        allRemoteCommandsAreaAmi.toInfrastructure().toJson(),
       ),
     );
-    roomsList.add(requestsAndStatusFromHubRoomAmi);
+    areasList.add(requestsAndStatusFromHubAreaAmi);
 
-    return roomsList;
+    return areasList;
   }
 
   static List<RequestsAndStatusFromHub> getAllDevices() {

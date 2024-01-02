@@ -27,11 +27,11 @@ class BindingCbjFailure<T> {
   const factory BindingCbjFailure.powerConsumptionIsNotNumber() =
       _PowerConsumptionIsNotNumber;
 
-  const factory BindingCbjFailure.roomsActionDoesNotExist() =
-      _RoomsActionDoesNotExist;
+  const factory BindingCbjFailure.areasActionDoesNotExist() =
+      _AreasActionDoesNotExist;
 
-  const factory BindingCbjFailure.roomsTypeDoesNotExist() =
-      _RoomsTypeDoesNotExist;
+  const factory BindingCbjFailure.areasTypeDoesNotExist() =
+      _AreasTypeDoesNotExist;
 
   const factory BindingCbjFailure.bindingStateDoesNotExist() =
       _BindingStateDoesNotExist;

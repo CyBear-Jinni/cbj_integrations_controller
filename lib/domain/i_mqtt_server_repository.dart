@@ -56,7 +56,7 @@ abstract class IMqttServerRepository {
   /// notify the needed devices
   Future<void> allHubDevicesSubscriptions();
 
-  /// Send requests back to the app, from updated device state to new rooms
+  /// Send requests back to the app, from updated device state to new areas
   Future<void> sendToApp();
 
   /// Publish message to a specific topic

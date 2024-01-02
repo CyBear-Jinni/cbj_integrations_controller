@@ -2,11 +2,11 @@ import 'package:cbj_integrations_controller/domain/colors.dart';
 import 'package:cbj_integrations_controller/domain/scene/scene_cbj_failures.dart';
 import 'package:cbj_integrations_controller/infrastructure/gen/cbj_hub_server/protoc_as_dart/cbj_hub_server.pbgrpc.dart';
 import 'package:cbj_integrations_controller/infrastructure/generic_entities/abstract_entity/device_entity_base.dart';
-import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/bed_room_area_actions.dart';
+import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/bed_area_actions.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/outside_area_actions.dart';
-import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/study_room_area_actions.dart';
+import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/study_area_actions.dart';
 import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/video_games_area_actions.dart';
-import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/work_room_area_actions.dart';
+import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/work_area_actions.dart';
 import 'package:dartz/dartz.dart';
 
 /// Pre define actions for each device in each area type
@@ -35,19 +35,19 @@ class AreaTypeWithDeviceTypePreset {
       case AreaPurposesTypes.bathtub:
         // TODO: Handle this case.
         break;
-      case AreaPurposesTypes.bedroom:
-        return BedRoomAreaAction()
-            .bedRoomSleepDeviceAction(deviceEntity, brokerNodeId);
+      case AreaPurposesTypes.bedarea:
+        return BedAreaAreaAction()
+            .bedAreaSleepDeviceAction(deviceEntity, brokerNodeId);
       case AreaPurposesTypes.boardGames:
         // TODO: Handle this case.
         break;
-      case AreaPurposesTypes.childrenRoom:
+      case AreaPurposesTypes.childrenArea:
         // TODO: Handle this case.
         break;
-      case AreaPurposesTypes.cinemaRoom:
+      case AreaPurposesTypes.cinemaArea:
         // TODO: Handle this case.
         break;
-      case AreaPurposesTypes.diningRoom:
+      case AreaPurposesTypes.diningArea:
         // TODO: Handle this case.
         break;
       case AreaPurposesTypes.holidayCabin:
@@ -56,10 +56,10 @@ class AreaTypeWithDeviceTypePreset {
       case AreaPurposesTypes.kitchen:
         // TODO: Handle this case.
         break;
-      case AreaPurposesTypes.laundryRoom:
+      case AreaPurposesTypes.laundryArea:
         // TODO: Handle this case.
         break;
-      case AreaPurposesTypes.livingRoom:
+      case AreaPurposesTypes.livingArea:
         // TODO: Handle this case.
         break;
       case AreaPurposesTypes.meditation:
@@ -80,7 +80,7 @@ class AreaTypeWithDeviceTypePreset {
       case AreaPurposesTypes.romantic:
         // TODO: Handle this case.
         break;
-      case AreaPurposesTypes.safeRoom:
+      case AreaPurposesTypes.safeArea:
         // TODO: Handle this case.
         break;
       case AreaPurposesTypes.shower:
@@ -92,24 +92,24 @@ class AreaTypeWithDeviceTypePreset {
       case AreaPurposesTypes.stairsOutside:
         // TODO: Handle this case.
         break;
-      case AreaPurposesTypes.studyRoom:
-        return StudyRoomAreaAction()
-            .studyRoomDeviceAction(deviceEntity, brokerNodeId);
-      case AreaPurposesTypes.toiletRoom:
+      case AreaPurposesTypes.studyArea:
+        return StudyAreaAreaAction()
+            .studyAreaDeviceAction(deviceEntity, brokerNodeId);
+      case AreaPurposesTypes.toiletArea:
         // TODO: Handle this case.
         break;
-      case AreaPurposesTypes.trainingRoom:
+      case AreaPurposesTypes.trainingArea:
         // TODO: Handle this case.
         break;
-      case AreaPurposesTypes.tvRoom:
+      case AreaPurposesTypes.tvArea:
         // TODO: Handle this case.
         break;
       case AreaPurposesTypes.videoGames:
         return VideoGamesAreaAction()
             .videoGamesRgbModDeviceAction(deviceEntity, brokerNodeId);
-      case AreaPurposesTypes.workRoom:
-        return WorkRoomAreaAction()
-            .workRoomDeviceAction(deviceEntity, brokerNodeId);
+      case AreaPurposesTypes.workArea:
+        return WorkAreaAreaAction()
+            .workAreaDeviceAction(deviceEntity, brokerNodeId);
     }
     return left(const SceneCbjFailure.unexpected());
   }
@@ -122,23 +122,23 @@ class AreaTypeWithDeviceTypePreset {
         color = Colors.amberAccent;
       case AreaPurposesTypes.bathtub:
         color = Colors.lightBlue;
-      case AreaPurposesTypes.bedroom:
+      case AreaPurposesTypes.bedarea:
         color = Colors.cyan;
       case AreaPurposesTypes.boardGames:
         color = Colors.brown;
-      case AreaPurposesTypes.childrenRoom:
+      case AreaPurposesTypes.childrenArea:
         color = Colors.lightBlueAccent;
-      case AreaPurposesTypes.cinemaRoom:
+      case AreaPurposesTypes.cinemaArea:
         color = Colors.pink;
-      case AreaPurposesTypes.diningRoom:
+      case AreaPurposesTypes.diningArea:
         color = Colors.amber;
       case AreaPurposesTypes.holidayCabin:
         color = Colors.lightGreen;
       case AreaPurposesTypes.kitchen:
         color = Colors.redAccent;
-      case AreaPurposesTypes.laundryRoom:
+      case AreaPurposesTypes.laundryArea:
         color = Colors.white12;
-      case AreaPurposesTypes.livingRoom:
+      case AreaPurposesTypes.livingArea:
         color = Colors.orangeAccent;
       case AreaPurposesTypes.meditation:
         color = Colors.purple;
@@ -152,7 +152,7 @@ class AreaTypeWithDeviceTypePreset {
         color = Colors.blueGrey;
       case AreaPurposesTypes.romantic:
         color = Colors.pinkAccent;
-      case AreaPurposesTypes.safeRoom:
+      case AreaPurposesTypes.safeArea:
         color = Colors.indigo;
       case AreaPurposesTypes.shower:
         color = Colors.blueAccent;
@@ -160,17 +160,17 @@ class AreaTypeWithDeviceTypePreset {
         color = Colors.brown;
       case AreaPurposesTypes.stairsOutside:
         color = Colors.brown;
-      case AreaPurposesTypes.studyRoom:
+      case AreaPurposesTypes.studyArea:
         color = Colors.deepPurpleAccent;
-      case AreaPurposesTypes.toiletRoom:
+      case AreaPurposesTypes.toiletArea:
         color = Colors.green;
-      case AreaPurposesTypes.trainingRoom:
+      case AreaPurposesTypes.trainingArea:
         color = Colors.redAccent;
-      case AreaPurposesTypes.tvRoom:
+      case AreaPurposesTypes.tvArea:
         color = Colors.deepPurple;
       case AreaPurposesTypes.videoGames:
         color = Colors.tealAccent;
-      case AreaPurposesTypes.workRoom:
+      case AreaPurposesTypes.workArea:
         color = Colors.blue;
     }
     return color.value;

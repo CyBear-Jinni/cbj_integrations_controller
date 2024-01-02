@@ -49,8 +49,8 @@ class _BindingCbjRepository implements IBindingCbjRepository {
       _allBindings[entityId] = tempBindingCbj;
 
       // await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
-      // ISavedRoomsRepo.instance
-      // .addBindingToRoomDiscoveredIfNotExist(tempBindingCbj);
+      // ISavedAreasRepo.instance
+      // .addBindingToAreaDiscoveredIfNotExist(tempBindingCbj);
       final String bindingNodeRedFlowId =
           await NodeRedRepository().createNewNodeRedBinding(tempBindingCbj);
       if (bindingNodeRedFlowId.isNotEmpty) {

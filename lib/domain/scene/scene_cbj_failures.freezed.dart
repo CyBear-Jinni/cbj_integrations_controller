@@ -25,8 +25,8 @@ mixin _$SceneCbjFailure<T> {
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) =>
       throw _privateConstructorUsedError;
@@ -39,8 +39,8 @@ mixin _$SceneCbjFailure<T> {
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) =>
       throw _privateConstructorUsedError;
@@ -53,8 +53,8 @@ mixin _$SceneCbjFailure<T> {
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) =>
@@ -70,10 +70,10 @@ mixin _$SceneCbjFailure<T> {
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) =>
@@ -88,9 +88,9 @@ mixin _$SceneCbjFailure<T> {
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) =>
       throw _privateConstructorUsedError;
@@ -104,9 +104,9 @@ mixin _$SceneCbjFailure<T> {
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) =>
@@ -176,8 +176,8 @@ class _$UnexpectedImpl<T> implements _Unexpected<T> {
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) {
     return unexpected();
@@ -193,8 +193,8 @@ class _$UnexpectedImpl<T> implements _Unexpected<T> {
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) {
     return unexpected?.call();
@@ -210,8 +210,8 @@ class _$UnexpectedImpl<T> implements _Unexpected<T> {
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -233,10 +233,10 @@ class _$UnexpectedImpl<T> implements _Unexpected<T> {
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) {
@@ -254,9 +254,9 @@ class _$UnexpectedImpl<T> implements _Unexpected<T> {
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) {
     return unexpected?.call(this);
@@ -273,9 +273,9 @@ class _$UnexpectedImpl<T> implements _Unexpected<T> {
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -339,8 +339,8 @@ class _$InsufficientPermissionImpl<T> implements _InsufficientPermission<T> {
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) {
     return insufficientPermission();
@@ -356,8 +356,8 @@ class _$InsufficientPermissionImpl<T> implements _InsufficientPermission<T> {
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) {
     return insufficientPermission?.call();
@@ -373,8 +373,8 @@ class _$InsufficientPermissionImpl<T> implements _InsufficientPermission<T> {
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -396,10 +396,10 @@ class _$InsufficientPermissionImpl<T> implements _InsufficientPermission<T> {
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) {
@@ -417,9 +417,9 @@ class _$InsufficientPermissionImpl<T> implements _InsufficientPermission<T> {
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) {
     return insufficientPermission?.call(this);
@@ -436,9 +436,9 @@ class _$InsufficientPermissionImpl<T> implements _InsufficientPermission<T> {
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -498,8 +498,8 @@ class _$UnableToUpdateImpl<T> implements _UnableToUpdate<T> {
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) {
     return unableToUpdate();
@@ -515,8 +515,8 @@ class _$UnableToUpdateImpl<T> implements _UnableToUpdate<T> {
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) {
     return unableToUpdate?.call();
@@ -532,8 +532,8 @@ class _$UnableToUpdateImpl<T> implements _UnableToUpdate<T> {
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -555,10 +555,10 @@ class _$UnableToUpdateImpl<T> implements _UnableToUpdate<T> {
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) {
@@ -576,9 +576,9 @@ class _$UnableToUpdateImpl<T> implements _UnableToUpdate<T> {
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) {
     return unableToUpdate?.call(this);
@@ -595,9 +595,9 @@ class _$UnableToUpdateImpl<T> implements _UnableToUpdate<T> {
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -685,8 +685,8 @@ class _$EmptyImpl<T> implements _Empty<T> {
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) {
     return empty(failedValue);
@@ -702,8 +702,8 @@ class _$EmptyImpl<T> implements _Empty<T> {
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) {
     return empty?.call(failedValue);
@@ -719,8 +719,8 @@ class _$EmptyImpl<T> implements _Empty<T> {
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -742,10 +742,10 @@ class _$EmptyImpl<T> implements _Empty<T> {
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) {
@@ -763,9 +763,9 @@ class _$EmptyImpl<T> implements _Empty<T> {
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) {
     return empty?.call(this);
@@ -782,9 +782,9 @@ class _$EmptyImpl<T> implements _Empty<T> {
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -878,8 +878,8 @@ class _$ActionExcecuterImpl<T> implements _ActionExcecuter<T> {
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) {
     return actionExcecuter(failedValue);
@@ -895,8 +895,8 @@ class _$ActionExcecuterImpl<T> implements _ActionExcecuter<T> {
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) {
     return actionExcecuter?.call(failedValue);
@@ -912,8 +912,8 @@ class _$ActionExcecuterImpl<T> implements _ActionExcecuter<T> {
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -935,10 +935,10 @@ class _$ActionExcecuterImpl<T> implements _ActionExcecuter<T> {
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) {
@@ -956,9 +956,9 @@ class _$ActionExcecuterImpl<T> implements _ActionExcecuter<T> {
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) {
     return actionExcecuter?.call(this);
@@ -975,9 +975,9 @@ class _$ActionExcecuterImpl<T> implements _ActionExcecuter<T> {
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -1080,8 +1080,8 @@ class _$ExceedingLengthImpl<T> implements _ExceedingLength<T> {
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) {
     return exceedingLength(failedValue, max);
@@ -1097,8 +1097,8 @@ class _$ExceedingLengthImpl<T> implements _ExceedingLength<T> {
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) {
     return exceedingLength?.call(failedValue, max);
@@ -1114,8 +1114,8 @@ class _$ExceedingLengthImpl<T> implements _ExceedingLength<T> {
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -1137,10 +1137,10 @@ class _$ExceedingLengthImpl<T> implements _ExceedingLength<T> {
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) {
@@ -1158,9 +1158,9 @@ class _$ExceedingLengthImpl<T> implements _ExceedingLength<T> {
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) {
     return exceedingLength?.call(this);
@@ -1177,9 +1177,9 @@ class _$ExceedingLengthImpl<T> implements _ExceedingLength<T> {
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -1252,8 +1252,8 @@ class _$PowerConsumptionIsNotNumberImpl<T>
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) {
     return powerConsumptionIsNotNumber();
@@ -1269,8 +1269,8 @@ class _$PowerConsumptionIsNotNumberImpl<T>
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) {
     return powerConsumptionIsNotNumber?.call();
@@ -1286,8 +1286,8 @@ class _$PowerConsumptionIsNotNumberImpl<T>
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -1309,10 +1309,10 @@ class _$PowerConsumptionIsNotNumberImpl<T>
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) {
@@ -1330,9 +1330,9 @@ class _$PowerConsumptionIsNotNumberImpl<T>
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) {
     return powerConsumptionIsNotNumber?.call(this);
@@ -1349,9 +1349,9 @@ class _$PowerConsumptionIsNotNumberImpl<T>
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -1368,39 +1368,39 @@ abstract class _PowerConsumptionIsNotNumber<T> implements SceneCbjFailure<T> {
 }
 
 /// @nodoc
-abstract class _$$RoomsActionDoesNotExistImplCopyWith<T, $Res> {
-  factory _$$RoomsActionDoesNotExistImplCopyWith(
-          _$RoomsActionDoesNotExistImpl<T> value,
-          $Res Function(_$RoomsActionDoesNotExistImpl<T>) then) =
-      __$$RoomsActionDoesNotExistImplCopyWithImpl<T, $Res>;
+abstract class _$$AreasActionDoesNotExistImplCopyWith<T, $Res> {
+  factory _$$AreasActionDoesNotExistImplCopyWith(
+          _$AreasActionDoesNotExistImpl<T> value,
+          $Res Function(_$AreasActionDoesNotExistImpl<T>) then) =
+      __$$AreasActionDoesNotExistImplCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class __$$RoomsActionDoesNotExistImplCopyWithImpl<T, $Res>
+class __$$AreasActionDoesNotExistImplCopyWithImpl<T, $Res>
     extends _$SceneCbjFailureCopyWithImpl<T, $Res,
-        _$RoomsActionDoesNotExistImpl<T>>
-    implements _$$RoomsActionDoesNotExistImplCopyWith<T, $Res> {
-  __$$RoomsActionDoesNotExistImplCopyWithImpl(
-      _$RoomsActionDoesNotExistImpl<T> _value,
-      $Res Function(_$RoomsActionDoesNotExistImpl<T>) _then)
+        _$AreasActionDoesNotExistImpl<T>>
+    implements _$$AreasActionDoesNotExistImplCopyWith<T, $Res> {
+  __$$AreasActionDoesNotExistImplCopyWithImpl(
+      _$AreasActionDoesNotExistImpl<T> _value,
+      $Res Function(_$AreasActionDoesNotExistImpl<T>) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$RoomsActionDoesNotExistImpl<T> implements _RoomsActionDoesNotExist<T> {
-  const _$RoomsActionDoesNotExistImpl();
+class _$AreasActionDoesNotExistImpl<T> implements _AreasActionDoesNotExist<T> {
+  const _$AreasActionDoesNotExistImpl();
 
   @override
   String toString() {
-    return 'SceneCbjFailure<$T>.roomsActionDoesNotExist()';
+    return 'SceneCbjFailure<$T>.areasActionDoesNotExist()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RoomsActionDoesNotExistImpl<T>);
+            other is _$AreasActionDoesNotExistImpl<T>);
   }
 
   @override
@@ -1416,11 +1416,11 @@ class _$RoomsActionDoesNotExistImpl<T> implements _RoomsActionDoesNotExist<T> {
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) {
-    return roomsActionDoesNotExist();
+    return areasActionDoesNotExist();
   }
 
   @override
@@ -1433,11 +1433,11 @@ class _$RoomsActionDoesNotExistImpl<T> implements _RoomsActionDoesNotExist<T> {
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) {
-    return roomsActionDoesNotExist?.call();
+    return areasActionDoesNotExist?.call();
   }
 
   @override
@@ -1450,13 +1450,13 @@ class _$RoomsActionDoesNotExistImpl<T> implements _RoomsActionDoesNotExist<T> {
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
-    if (roomsActionDoesNotExist != null) {
-      return roomsActionDoesNotExist();
+    if (areasActionDoesNotExist != null) {
+      return areasActionDoesNotExist();
     }
     return orElse();
   }
@@ -1473,14 +1473,14 @@ class _$RoomsActionDoesNotExistImpl<T> implements _RoomsActionDoesNotExist<T> {
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) {
-    return roomsActionDoesNotExist(this);
+    return areasActionDoesNotExist(this);
   }
 
   @override
@@ -1494,12 +1494,12 @@ class _$RoomsActionDoesNotExistImpl<T> implements _RoomsActionDoesNotExist<T> {
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) {
-    return roomsActionDoesNotExist?.call(this);
+    return areasActionDoesNotExist?.call(this);
   }
 
   @override
@@ -1513,57 +1513,57 @@ class _$RoomsActionDoesNotExistImpl<T> implements _RoomsActionDoesNotExist<T> {
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
-    if (roomsActionDoesNotExist != null) {
-      return roomsActionDoesNotExist(this);
+    if (areasActionDoesNotExist != null) {
+      return areasActionDoesNotExist(this);
     }
     return orElse();
   }
 }
 
-abstract class _RoomsActionDoesNotExist<T> implements SceneCbjFailure<T> {
-  const factory _RoomsActionDoesNotExist() = _$RoomsActionDoesNotExistImpl<T>;
+abstract class _AreasActionDoesNotExist<T> implements SceneCbjFailure<T> {
+  const factory _AreasActionDoesNotExist() = _$AreasActionDoesNotExistImpl<T>;
 }
 
 /// @nodoc
-abstract class _$$RoomsTypeDoesNotExistImplCopyWith<T, $Res> {
-  factory _$$RoomsTypeDoesNotExistImplCopyWith(
-          _$RoomsTypeDoesNotExistImpl<T> value,
-          $Res Function(_$RoomsTypeDoesNotExistImpl<T>) then) =
-      __$$RoomsTypeDoesNotExistImplCopyWithImpl<T, $Res>;
+abstract class _$$AreasTypeDoesNotExistImplCopyWith<T, $Res> {
+  factory _$$AreasTypeDoesNotExistImplCopyWith(
+          _$AreasTypeDoesNotExistImpl<T> value,
+          $Res Function(_$AreasTypeDoesNotExistImpl<T>) then) =
+      __$$AreasTypeDoesNotExistImplCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class __$$RoomsTypeDoesNotExistImplCopyWithImpl<T, $Res>
+class __$$AreasTypeDoesNotExistImplCopyWithImpl<T, $Res>
     extends _$SceneCbjFailureCopyWithImpl<T, $Res,
-        _$RoomsTypeDoesNotExistImpl<T>>
-    implements _$$RoomsTypeDoesNotExistImplCopyWith<T, $Res> {
-  __$$RoomsTypeDoesNotExistImplCopyWithImpl(
-      _$RoomsTypeDoesNotExistImpl<T> _value,
-      $Res Function(_$RoomsTypeDoesNotExistImpl<T>) _then)
+        _$AreasTypeDoesNotExistImpl<T>>
+    implements _$$AreasTypeDoesNotExistImplCopyWith<T, $Res> {
+  __$$AreasTypeDoesNotExistImplCopyWithImpl(
+      _$AreasTypeDoesNotExistImpl<T> _value,
+      $Res Function(_$AreasTypeDoesNotExistImpl<T>) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$RoomsTypeDoesNotExistImpl<T> implements _RoomsTypeDoesNotExist<T> {
-  const _$RoomsTypeDoesNotExistImpl();
+class _$AreasTypeDoesNotExistImpl<T> implements _AreasTypeDoesNotExist<T> {
+  const _$AreasTypeDoesNotExistImpl();
 
   @override
   String toString() {
-    return 'SceneCbjFailure<$T>.roomsTypeDoesNotExist()';
+    return 'SceneCbjFailure<$T>.areasTypeDoesNotExist()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RoomsTypeDoesNotExistImpl<T>);
+            other is _$AreasTypeDoesNotExistImpl<T>);
   }
 
   @override
@@ -1579,11 +1579,11 @@ class _$RoomsTypeDoesNotExistImpl<T> implements _RoomsTypeDoesNotExist<T> {
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) {
-    return roomsTypeDoesNotExist();
+    return areasTypeDoesNotExist();
   }
 
   @override
@@ -1596,11 +1596,11 @@ class _$RoomsTypeDoesNotExistImpl<T> implements _RoomsTypeDoesNotExist<T> {
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) {
-    return roomsTypeDoesNotExist?.call();
+    return areasTypeDoesNotExist?.call();
   }
 
   @override
@@ -1613,13 +1613,13 @@ class _$RoomsTypeDoesNotExistImpl<T> implements _RoomsTypeDoesNotExist<T> {
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
-    if (roomsTypeDoesNotExist != null) {
-      return roomsTypeDoesNotExist();
+    if (areasTypeDoesNotExist != null) {
+      return areasTypeDoesNotExist();
     }
     return orElse();
   }
@@ -1636,14 +1636,14 @@ class _$RoomsTypeDoesNotExistImpl<T> implements _RoomsTypeDoesNotExist<T> {
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) {
-    return roomsTypeDoesNotExist(this);
+    return areasTypeDoesNotExist(this);
   }
 
   @override
@@ -1657,12 +1657,12 @@ class _$RoomsTypeDoesNotExistImpl<T> implements _RoomsTypeDoesNotExist<T> {
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) {
-    return roomsTypeDoesNotExist?.call(this);
+    return areasTypeDoesNotExist?.call(this);
   }
 
   @override
@@ -1676,21 +1676,21 @@ class _$RoomsTypeDoesNotExistImpl<T> implements _RoomsTypeDoesNotExist<T> {
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
-    if (roomsTypeDoesNotExist != null) {
-      return roomsTypeDoesNotExist(this);
+    if (areasTypeDoesNotExist != null) {
+      return areasTypeDoesNotExist(this);
     }
     return orElse();
   }
 }
 
-abstract class _RoomsTypeDoesNotExist<T> implements SceneCbjFailure<T> {
-  const factory _RoomsTypeDoesNotExist() = _$RoomsTypeDoesNotExistImpl<T>;
+abstract class _AreasTypeDoesNotExist<T> implements SceneCbjFailure<T> {
+  const factory _AreasTypeDoesNotExist() = _$AreasTypeDoesNotExistImpl<T>;
 }
 
 /// @nodoc
@@ -1742,8 +1742,8 @@ class _$SceneStateDoesNotExistImpl<T> implements _SceneStateDoesNotExist<T> {
     required TResult Function(T failedValue) actionExcecuter,
     required TResult Function(T failedValue, int max) exceedingLength,
     required TResult Function() powerConsumptionIsNotNumber,
-    required TResult Function() roomsActionDoesNotExist,
-    required TResult Function() roomsTypeDoesNotExist,
+    required TResult Function() areasActionDoesNotExist,
+    required TResult Function() areasTypeDoesNotExist,
     required TResult Function() sceneStateDoesNotExist,
   }) {
     return sceneStateDoesNotExist();
@@ -1759,8 +1759,8 @@ class _$SceneStateDoesNotExistImpl<T> implements _SceneStateDoesNotExist<T> {
     TResult? Function(T failedValue)? actionExcecuter,
     TResult? Function(T failedValue, int max)? exceedingLength,
     TResult? Function()? powerConsumptionIsNotNumber,
-    TResult? Function()? roomsActionDoesNotExist,
-    TResult? Function()? roomsTypeDoesNotExist,
+    TResult? Function()? areasActionDoesNotExist,
+    TResult? Function()? areasTypeDoesNotExist,
     TResult? Function()? sceneStateDoesNotExist,
   }) {
     return sceneStateDoesNotExist?.call();
@@ -1776,8 +1776,8 @@ class _$SceneStateDoesNotExistImpl<T> implements _SceneStateDoesNotExist<T> {
     TResult Function(T failedValue)? actionExcecuter,
     TResult Function(T failedValue, int max)? exceedingLength,
     TResult Function()? powerConsumptionIsNotNumber,
-    TResult Function()? roomsActionDoesNotExist,
-    TResult Function()? roomsTypeDoesNotExist,
+    TResult Function()? areasActionDoesNotExist,
+    TResult Function()? areasTypeDoesNotExist,
     TResult Function()? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {
@@ -1799,10 +1799,10 @@ class _$SceneStateDoesNotExistImpl<T> implements _SceneStateDoesNotExist<T> {
     required TResult Function(_ExceedingLength<T> value) exceedingLength,
     required TResult Function(_PowerConsumptionIsNotNumber<T> value)
         powerConsumptionIsNotNumber,
-    required TResult Function(_RoomsActionDoesNotExist<T> value)
-        roomsActionDoesNotExist,
-    required TResult Function(_RoomsTypeDoesNotExist<T> value)
-        roomsTypeDoesNotExist,
+    required TResult Function(_AreasActionDoesNotExist<T> value)
+        areasActionDoesNotExist,
+    required TResult Function(_AreasTypeDoesNotExist<T> value)
+        areasTypeDoesNotExist,
     required TResult Function(_SceneStateDoesNotExist<T> value)
         sceneStateDoesNotExist,
   }) {
@@ -1820,9 +1820,9 @@ class _$SceneStateDoesNotExistImpl<T> implements _SceneStateDoesNotExist<T> {
     TResult? Function(_ExceedingLength<T> value)? exceedingLength,
     TResult? Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult? Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult? Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult? Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult? Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult? Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
   }) {
     return sceneStateDoesNotExist?.call(this);
@@ -1839,9 +1839,9 @@ class _$SceneStateDoesNotExistImpl<T> implements _SceneStateDoesNotExist<T> {
     TResult Function(_ExceedingLength<T> value)? exceedingLength,
     TResult Function(_PowerConsumptionIsNotNumber<T> value)?
         powerConsumptionIsNotNumber,
-    TResult Function(_RoomsActionDoesNotExist<T> value)?
-        roomsActionDoesNotExist,
-    TResult Function(_RoomsTypeDoesNotExist<T> value)? roomsTypeDoesNotExist,
+    TResult Function(_AreasActionDoesNotExist<T> value)?
+        areasActionDoesNotExist,
+    TResult Function(_AreasTypeDoesNotExist<T> value)? areasTypeDoesNotExist,
     TResult Function(_SceneStateDoesNotExist<T> value)? sceneStateDoesNotExist,
     required TResult orElse(),
   }) {

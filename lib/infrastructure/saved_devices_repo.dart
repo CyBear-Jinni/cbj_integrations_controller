@@ -53,7 +53,7 @@
 //     /// If it is new device
 //     _allDevices[entityId] = deviceEntity;
 
-//     ISavedRoomsRepo.instance.addDeviceToRoomDiscoveredIfNotExist(deviceEntity);
+//     ISavedAreasRepo.instance.addDeviceToAreaDiscoveredIfNotExist(deviceEntity);
 //     Connector().fromMqtt(
 //       MapEntry<String, DeviceEntityBase>(
 //         entityId,
@@ -61,11 +61,11 @@
 //       ),
 //     );
 
-//     final String discoveredRoomId = RoomUniqueId.discovered().getOrCrash();
+//     final String discoveredAreaId = AreaUniqueId.discovered().getOrCrash();
 //     Connector().fromMqtt(
-//       MapEntry<String, RoomEntity>(
-//         discoveredRoomId,
-//         ISavedRoomsRepo.instance.getAllRooms()[discoveredRoomId]!,
+//       MapEntry<String, AreaEntity>(
+//         discoveredAreaId,
+//         ISavedAreasRepo.instance.getAllAreas()[discoveredAreaId]!,
 //       ),
 //     );
 //     return deviceEntity;

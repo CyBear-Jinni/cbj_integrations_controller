@@ -4,8 +4,8 @@ import 'package:cbj_integrations_controller/infrastructure/generic_entities/abst
 import 'package:cbj_integrations_controller/infrastructure/scenes/area_types_scientific_presets/common_devices_scenes_presets_for_devices.dart';
 import 'package:dartz/dartz.dart';
 
-class BedRoomAreaAction {
-  Future<Either<SceneCbjFailure, Map<String, String>>> bedRoomSleepDeviceAction(
+class BedAreaAreaAction {
+  Future<Either<SceneCbjFailure, Map<String, String>>> bedAreaSleepDeviceAction(
     DeviceEntityBase deviceEntity,
     String brokerNodeId,
   ) async {

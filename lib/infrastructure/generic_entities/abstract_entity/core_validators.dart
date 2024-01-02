@@ -37,7 +37,7 @@ Either<CoreFailure<String>, String> validatePowerConsumptionNotEmpty(
   }
 }
 
-Either<CoreFailure<String>, String> validateRoomNameNotEmpty(String input) {
+Either<CoreFailure<String>, String> validateAreaNameNotEmpty(String input) {
   return right(input);
 }
 

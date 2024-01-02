@@ -27,11 +27,11 @@ class SceneCbjFailure<T> {
   const factory SceneCbjFailure.powerConsumptionIsNotNumber() =
       _PowerConsumptionIsNotNumber;
 
-  const factory SceneCbjFailure.roomsActionDoesNotExist() =
-      _RoomsActionDoesNotExist;
+  const factory SceneCbjFailure.areasActionDoesNotExist() =
+      _AreasActionDoesNotExist;
 
-  const factory SceneCbjFailure.roomsTypeDoesNotExist() =
-      _RoomsTypeDoesNotExist;
+  const factory SceneCbjFailure.areasTypeDoesNotExist() =
+      _AreasTypeDoesNotExist;
 
   const factory SceneCbjFailure.sceneStateDoesNotExist() =
       _SceneStateDoesNotExist;

@@ -31,7 +31,7 @@ const SendingType$json = {
     {'1': 'remotePipesInformation', '2': 11},
     {'1': 'getHubEntityInfo', '2': 12},
     {'1': 'responseHubEntityInfo', '2': 13},
-    {'1': 'roomType', '2': 14},
+    {'1': 'areaType', '2': 14},
     {'1': 'location', '2': 15},
   ],
 };
@@ -49,31 +49,31 @@ final $typed_data.Uint8List sendingTypeDescriptor = $convert.base64Decode(
 const AreaPurposesTypes$json = {
   '1': 'AreaPurposesTypes',
   '2': [
-    {'1': 'bedroom', '2': 0},
-    {'1': 'studyRoom', '2': 1},
-    {'1': 'workRoom', '2': 2},
-    {'1': 'tvRoom', '2': 3},
+    {'1': 'bedarea', '2': 0},
+    {'1': 'studyArea', '2': 1},
+    {'1': 'workArea', '2': 2},
+    {'1': 'tvArea', '2': 3},
     {'1': 'videoGames', '2': 4},
-    {'1': 'livingRoom', '2': 5},
-    {'1': 'diningRoom', '2': 6},
+    {'1': 'livingArea', '2': 5},
+    {'1': 'diningArea', '2': 6},
     {'1': 'kitchen', '2': 7},
     {'1': 'outside', '2': 8},
     {'1': 'outsidePrimary', '2': 9},
     {'1': 'outsideNotPrimary', '2': 10},
-    {'1': 'toiletRoom', '2': 11},
+    {'1': 'toiletArea', '2': 11},
     {'1': 'shower', '2': 12},
-    {'1': 'trainingRoom', '2': 13},
+    {'1': 'trainingArea', '2': 13},
     {'1': 'meditation', '2': 14},
     {'1': 'romantic', '2': 15},
     {'1': 'stairsInside', '2': 16},
     {'1': 'stairsOutside', '2': 17},
-    {'1': 'childrenRoom', '2': 18},
-    {'1': 'cinemaRoom', '2': 19},
+    {'1': 'childrenArea', '2': 18},
+    {'1': 'cinemaArea', '2': 19},
     {'1': 'boardGames', '2': 20},
     {'1': 'bathtub', '2': 21},
-    {'1': 'laundryRoom', '2': 22},
+    {'1': 'laundryArea', '2': 22},
     {'1': 'protectedSpace', '2': 23},
-    {'1': 'safeRoom', '2': 24},
+    {'1': 'safeArea', '2': 24},
     {'1': 'attic', '2': 25},
     {'1': 'holidayCabin', '2': 26},
   ],
@@ -95,8 +95,21 @@ final $typed_data.Uint8List areaPurposesTypesDescriptor = $convert.base64Decode(
 const ClientStatusRequests$json = {
   '1': 'ClientStatusRequests',
   '2': [
-    {'1': 'sendingType', '3': 41, '4': 1, '5': 14, '6': '.CbjHub.SendingType', '10': 'sendingType'},
-    {'1': 'allRemoteCommands', '3': 42, '4': 1, '5': 9, '10': 'allRemoteCommands'},
+    {
+      '1': 'sendingType',
+      '3': 41,
+      '4': 1,
+      '5': 14,
+      '6': '.CbjHub.SendingType',
+      '10': 'sendingType'
+    },
+    {
+      '1': 'allRemoteCommands',
+      '3': 42,
+      '4': 1,
+      '5': 9,
+      '10': 'allRemoteCommands'
+    },
   ],
 };
 
@@ -110,8 +123,21 @@ final $typed_data.Uint8List clientStatusRequestsDescriptor = $convert.base64Deco
 const RequestsAndStatusFromHub$json = {
   '1': 'RequestsAndStatusFromHub',
   '2': [
-    {'1': 'sendingType', '3': 43, '4': 1, '5': 14, '6': '.CbjHub.SendingType', '10': 'sendingType'},
-    {'1': 'allRemoteCommands', '3': 44, '4': 1, '5': 9, '10': 'allRemoteCommands'},
+    {
+      '1': 'sendingType',
+      '3': 43,
+      '4': 1,
+      '5': 14,
+      '6': '.CbjHub.SendingType',
+      '10': 'sendingType'
+    },
+    {
+      '1': 'allRemoteCommands',
+      '3': 44,
+      '4': 1,
+      '5': 9,
+      '10': 'allRemoteCommands'
+    },
   ],
 };
 
@@ -125,7 +151,14 @@ final $typed_data.Uint8List requestsAndStatusFromHubDescriptor = $convert.base64
 const AllRemoteCommands$json = {
   '1': 'AllRemoteCommands',
   '2': [
-    {'1': 'smartEntityInfo', '3': 40, '4': 1, '5': 11, '6': '.CbjHub.SmartEntityInfo', '10': 'smartEntityInfo'},
+    {
+      '1': 'smartEntityInfo',
+      '3': 40,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjHub.SmartEntityInfo',
+      '10': 'smartEntityInfo'
+    },
   ],
 };
 
@@ -138,8 +171,22 @@ final $typed_data.Uint8List allRemoteCommandsDescriptor = $convert.base64Decode(
 const FirstSetupMessage$json = {
   '1': 'FirstSetupMessage',
   '2': [
-    {'1': 'compInfo', '3': 38, '4': 1, '5': 11, '6': '.CbjHub.CompHubInfo', '10': 'compInfo'},
-    {'1': 'cloudAccountInformation', '3': 39, '4': 1, '5': 11, '6': '.CbjHub.CloudAccountInformation', '10': 'cloudAccountInformation'},
+    {
+      '1': 'compInfo',
+      '3': 38,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjHub.CompHubInfo',
+      '10': 'compInfo'
+    },
+    {
+      '1': 'cloudAccountInformation',
+      '3': 39,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjHub.CloudAccountInformation',
+      '10': 'cloudAccountInformation'
+    },
   ],
 };
 
@@ -153,8 +200,22 @@ final $typed_data.Uint8List firstSetupMessageDescriptor = $convert.base64Decode(
 const CompHubInfo$json = {
   '1': 'CompHubInfo',
   '2': [
-    {'1': 'cbjInfo', '3': 47, '4': 1, '5': 11, '6': '.CbjHub.CbjHubIno', '10': 'cbjInfo'},
-    {'1': 'compSpecs', '3': 21, '4': 1, '5': 11, '6': '.CbjHub.CompHubSpecs', '10': 'compSpecs'},
+    {
+      '1': 'cbjInfo',
+      '3': 47,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjHub.CbjHubIno',
+      '10': 'cbjInfo'
+    },
+    {
+      '1': 'compSpecs',
+      '3': 21,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjHub.CompHubSpecs',
+      '10': 'compSpecs'
+    },
   ],
 };
 
@@ -168,9 +229,27 @@ const CbjHubIno$json = {
   '1': 'CbjHubIno',
   '2': [
     {'1': 'entityName', '3': 48, '4': 1, '5': 9, '10': 'entityName'},
-    {'1': 'pubspecYamlVersion', '3': 27, '4': 1, '5': 9, '10': 'pubspecYamlVersion'},
-    {'1': 'pubspecYamlBuildNumber', '3': 51, '4': 1, '5': 9, '10': 'pubspecYamlBuildNumber'},
-    {'1': 'protoLastGenDate', '3': 49, '4': 1, '5': 9, '10': 'protoLastGenDate'},
+    {
+      '1': 'pubspecYamlVersion',
+      '3': 27,
+      '4': 1,
+      '5': 9,
+      '10': 'pubspecYamlVersion'
+    },
+    {
+      '1': 'pubspecYamlBuildNumber',
+      '3': 51,
+      '4': 1,
+      '5': 9,
+      '10': 'pubspecYamlBuildNumber'
+    },
+    {
+      '1': 'protoLastGenDate',
+      '3': 49,
+      '4': 1,
+      '5': 9,
+      '10': 'protoLastGenDate'
+    },
     {'1': 'dartSdkVersion', '3': 52, '4': 1, '5': 9, '10': 'dartSdkVersion'},
   ],
 };
@@ -207,8 +286,20 @@ final $typed_data.Uint8List compHubSpecsDescriptor = $convert.base64Decode(
 const MicrocontrollerSpecs$json = {
   '1': 'MicrocontrollerSpecs',
   '2': [
-    {'1': 'microcontrollerModel', '3': 31, '4': 1, '5': 9, '10': 'microcontrollerModel'},
-    {'1': 'microcontrollerType', '3': 32, '4': 1, '5': 9, '10': 'microcontrollerType'},
+    {
+      '1': 'microcontrollerModel',
+      '3': 31,
+      '4': 1,
+      '5': 9,
+      '10': 'microcontrollerModel'
+    },
+    {
+      '1': 'microcontrollerType',
+      '3': 32,
+      '4': 1,
+      '5': 9,
+      '10': 'microcontrollerType'
+    },
     {'1': 'softwareVersion', '3': 33, '4': 1, '5': 9, '10': 'softwareVersion'},
   ],
 };
@@ -227,17 +318,51 @@ const SmartEntityInfo$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'state', '3': 3, '4': 1, '5': 9, '10': 'state'},
     {'1': 'defaultName', '3': 14, '4': 1, '5': 9, '10': 'defaultName'},
-    {'1': 'roomId', '3': 15, '4': 1, '5': 9, '10': 'roomId'},
-    {'1': 'senderDeviceModel', '3': 16, '4': 1, '5': 9, '10': 'senderDeviceModel'},
+    {'1': 'areaId', '3': 15, '4': 1, '5': 9, '10': 'areaId'},
+    {
+      '1': 'senderDeviceModel',
+      '3': 16,
+      '4': 1,
+      '5': 9,
+      '10': 'senderDeviceModel'
+    },
     {'1': 'senderDeviceOs', '3': 17, '4': 1, '5': 9, '10': 'senderDeviceOs'},
     {'1': 'senderId', '3': 18, '4': 1, '5': 9, '10': 'senderId'},
     {'1': 'serverTimeStamp', '3': 19, '4': 1, '5': 9, '10': 'serverTimeStamp'},
     {'1': 'stateMassage', '3': 20, '4': 1, '5': 9, '10': 'stateMassage'},
-    {'1': 'mqttMassage', '3': 43, '4': 1, '5': 11, '6': '.CbjHub.MqttMassage', '10': 'mqttMassage'},
+    {
+      '1': 'mqttMassage',
+      '3': 43,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjHub.MqttMassage',
+      '10': 'mqttMassage'
+    },
     {'1': 'isComputer', '3': 29, '4': 1, '5': 8, '10': 'isComputer'},
-    {'1': 'compSpecs', '3': 30, '4': 1, '5': 11, '6': '.CbjHub.CompHubSpecs', '10': 'compSpecs'},
-    {'1': 'microcontrollerSpecsSpecs', '3': 31, '4': 1, '5': 11, '6': '.CbjHub.MicrocontrollerSpecs', '10': 'microcontrollerSpecsSpecs'},
-    {'1': 'entityTypesActions', '3': 34, '4': 1, '5': 11, '6': '.CbjHub.EntityTypesActions', '10': 'entityTypesActions'},
+    {
+      '1': 'compSpecs',
+      '3': 30,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjHub.CompHubSpecs',
+      '10': 'compSpecs'
+    },
+    {
+      '1': 'microcontrollerSpecsSpecs',
+      '3': 31,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjHub.MicrocontrollerSpecs',
+      '10': 'microcontrollerSpecsSpecs'
+    },
+    {
+      '1': 'entityTypesActions',
+      '3': 34,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjHub.EntityTypesActions',
+      '10': 'entityTypesActions'
+    },
   ],
 };
 
@@ -291,23 +416,31 @@ const CommendStatus$json = {
 };
 
 /// Descriptor for `CommendStatus`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List commendStatusDescriptor = $convert.base64Decode(
-    'Cg1Db21tZW5kU3RhdHVzEhgKB3N1Y2Nlc3MYBSABKAhSB3N1Y2Nlc3M=');
+final $typed_data.Uint8List commendStatusDescriptor = $convert
+    .base64Decode('Cg1Db21tZW5kU3RhdHVzEhgKB3N1Y2Nlc3MYBSABKAhSB3N1Y2Nlc3M=');
 
 @$core.Deprecated('Use smartEntitiesUpdateDetailsDescriptor instead')
 const SmartEntitiesUpdateDetails$json = {
   '1': 'SmartEntitiesUpdateDetails',
   '2': [
-    {'1': 'smartEntity', '3': 6, '4': 1, '5': 11, '6': '.CbjHub.SmartEntityInfo', '10': 'smartEntity'},
+    {
+      '1': 'smartEntity',
+      '3': 6,
+      '4': 1,
+      '5': 11,
+      '6': '.CbjHub.SmartEntityInfo',
+      '10': 'smartEntity'
+    },
     {'1': 'newName', '3': 7, '4': 1, '5': 9, '10': 'newName'},
   ],
 };
 
 /// Descriptor for `SmartEntitiesUpdateDetails`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List smartEntitiesUpdateDetailsDescriptor = $convert.base64Decode(
-    'ChpTbWFydEVudGl0aWVzVXBkYXRlRGV0YWlscxI5CgtzbWFydEVudGl0eRgGIAEoCzIXLkNiak'
-    'h1Yi5TbWFydEVudGl0eUluZm9SC3NtYXJ0RW50aXR5EhgKB25ld05hbWUYByABKAlSB25ld05h'
-    'bWU=');
+final $typed_data.Uint8List smartEntitiesUpdateDetailsDescriptor =
+    $convert.base64Decode(
+        'ChpTbWFydEVudGl0aWVzVXBkYXRlRGV0YWlscxI5CgtzbWFydEVudGl0eRgGIAEoCzIXLkNiak'
+        'h1Yi5TbWFydEVudGl0eUluZm9SC3NtYXJ0RW50aXR5EhgKB25ld05hbWUYByABKAlSB25ld05h'
+        'bWU=');
 
 @$core.Deprecated('Use cloudAccountInformationDescriptor instead')
 const CloudAccountInformation$json = {
@@ -332,7 +465,13 @@ final $typed_data.Uint8List cloudAccountInformationDescriptor = $convert.base64D
 const EntityTypesActions$json = {
   '1': 'EntityTypesActions',
   '2': [
-    {'1': 'vendorsAndServices', '3': 46, '4': 1, '5': 9, '10': 'vendorsAndServices'},
+    {
+      '1': 'vendorsAndServices',
+      '3': 46,
+      '4': 1,
+      '5': 9,
+      '10': 'vendorsAndServices'
+    },
     {'1': 'entityType', '3': 35, '4': 1, '5': 9, '10': 'entityType'},
     {'1': 'entityAction', '3': 36, '4': 1, '5': 9, '10': 'entityAction'},
     {'1': 'entityStateGRPC', '3': 37, '4': 1, '5': 9, '10': 'entityStateGRPC'},
@@ -345,4 +484,3 @@ final $typed_data.Uint8List entityTypesActionsDescriptor = $convert.base64Decode
     'JzQW5kU2VydmljZXMSHgoKZW50aXR5VHlwZRgjIAEoCVIKZW50aXR5VHlwZRIiCgxlbnRpdHlB'
     'Y3Rpb24YJCABKAlSDGVudGl0eUFjdGlvbhIoCg9lbnRpdHlTdGF0ZUdSUEMYJSABKAlSD2VudG'
     'l0eVN0YXRlR1JQQw==');
-
