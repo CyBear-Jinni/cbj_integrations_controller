@@ -1,2 +1,6 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+
+
+# Shared logic to the App and Hub
+
+You can check the wiki for the diagram
+https://github.com/CyBear-Jinni/cbj_integrations_controller/wiki
