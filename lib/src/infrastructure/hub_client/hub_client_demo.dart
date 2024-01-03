@@ -39,8 +39,8 @@ class HubClientDemo {
       uniqueId: AreaUniqueId.discovered(),
       cbjEntityName: AreaDefaultName('Discovered'),
       areaTypes: AreaTypes(const {}),
-      areaDevicesId:
-          AreaDevicesId(const {'65d84b10-434d-11ed-817a-7d350fb52f91'}),
+      entitiesId:
+          AreaEntitiesId(const {'65d84b10-434d-11ed-817a-7d350fb52f91'}),
       areaScenesId: AreaScenesId(const {}),
       areaRoutinesId: AreaRoutinesId(const {}),
       areaBindingsId: AreaBindingsId(const {}),
@@ -72,7 +72,7 @@ class HubClientDemo {
         AreaPurposesTypes.workArea.value.toString(),
         AreaPurposesTypes.videoGames.value.toString(),
       }),
-      areaDevicesId: AreaDevicesId(const {
+      entitiesId: AreaEntitiesId(const {
         'a31523m6-463s-32ge-7426-g33c642r7m25',
         'c90137f2-419b-11ed-8246-e17a279f4d89',
         '96386cd0-419b-11ed-8246-e17a279f4d89',
@@ -109,8 +109,8 @@ class HubClientDemo {
         AreaPurposesTypes.workArea.value.toString(),
         AreaPurposesTypes.livingArea.value.toString(),
       }),
-      areaDevicesId:
-          AreaDevicesId(const {'gcvweg3y-bv2s-cvwe-bdmf-7h4f3f2dw2d1'}),
+      entitiesId:
+          AreaEntitiesId(const {'gcvweg3y-bv2s-cvwe-bdmf-7h4f3f2dw2d1'}),
       areaScenesId: AreaScenesId(const {}),
       areaRoutinesId: AreaRoutinesId(const {}),
       areaBindingsId: AreaBindingsId(const {}),
@@ -142,7 +142,7 @@ class HubClientDemo {
         AreaPurposesTypes.workArea.value.toString(),
         AreaPurposesTypes.livingArea.value.toString(),
       }),
-      areaDevicesId: AreaDevicesId(const {
+      entitiesId: AreaEntitiesId(const {
         '7189ed76-4351-11ed-b249-63fd7e165c16',
         'sfds344t-sdf3-fd3d-24s4-bd2sdf3n5rfd',
         'wfdsg2w6-fgde-234s-vbz2-b234jmgvbfd6',

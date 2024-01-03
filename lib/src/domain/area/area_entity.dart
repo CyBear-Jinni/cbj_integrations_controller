@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/src/domain/area/area_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/area/value_objects_area.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/area/area_entity_dtos.dart';
@@ -10,7 +12,7 @@ class AreaEntity {
     required this.cbjEntityName,
     required this.background,
     required this.areaTypes,
-    required this.areaDevicesId,
+    required this.entitiesId,
     required this.areaScenesId,
     required this.areaRoutinesId,
     required this.areaBindingsId,
@@ -28,7 +30,7 @@ class AreaEntity {
         background: AreaBackground(
           'https://live.staticflickr.com/5220/5486044345_f67abff3e9_h.jpg',
         ),
-        areaDevicesId: AreaDevicesId(const {}),
+        entitiesId: AreaEntitiesId(const {}),
         areaScenesId: AreaScenesId(const {}),
         areaRoutinesId: AreaRoutinesId(const {}),
         areaBindingsId: AreaBindingsId(const {}),
@@ -41,7 +43,7 @@ class AreaEntity {
   AreaDefaultName cbjEntityName;
   AreaBackground background;
   AreaTypes areaTypes;
-  AreaDevicesId areaDevicesId;
+  AreaEntitiesId entitiesId;
   AreaScenesId areaScenesId;
   AreaRoutinesId areaRoutinesId;
   AreaBindingsId areaBindingsId;
@@ -53,12 +55,12 @@ class AreaEntity {
   AreaPermissions areaPermissions;
 
   /// Will add new device id to the devices in the area list
-  void addDeviceId(String newDeviceId) {
+  void addEntities(HashSet<String> devices) {
     final Set<String> tempList = {};
-    tempList.addAll(areaDevicesId.getOrCrash());
-    tempList.add(newDeviceId);
+    tempList.addAll(entitiesId.getOrCrash());
+    tempList.addAll(devices);
     try {
-      areaDevicesId = AreaDevicesId(tempList);
+      entitiesId = AreaEntitiesId(tempList);
     } catch (e) {
       icLogger.e('addDeviceId will not work if list got created with const');
     }
@@ -98,10 +100,10 @@ class AreaEntity {
   }
 
   /// Return new AreaDevicesId object without id if it exist in areaDevicesId
-  AreaDevicesId deleteIdIfExist(String id) {
-    final Set<String> tempList = Set.from(areaDevicesId.getOrCrash());
+  AreaEntitiesId deleteIdIfExist(String id) {
+    final Set<String> tempList = Set.from(entitiesId.getOrCrash());
     tempList.removeWhere((element) => element == id);
-    return AreaDevicesId(tempList);
+    return AreaEntitiesId(tempList);
   }
 
   Option<AreaFailure<dynamic>> get failureOption {
@@ -114,7 +116,7 @@ class AreaEntity {
       cbjEntityName: cbjEntityName.getOrCrash(),
       background: background.getOrCrash(),
       areaTypes: areaTypes.getOrCrash(),
-      areaDevicesId: areaDevicesId.getOrCrash(),
+      areaDevicesId: entitiesId.getOrCrash(),
       areaScenesId: areaScenesId.getOrCrash(),
       areaRoutinesId: areaRoutinesId.getOrCrash(),
       areaBindingsId: areaBindingsId.getOrCrash(),

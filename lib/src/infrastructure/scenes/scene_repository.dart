@@ -7,18 +7,13 @@ class _SceneCbjRepository implements ISceneCbjRepository {
       BehaviorSubject<Set<SceneCbjEntity>>();
 
   @override
-  Future<bool> activateScene(SceneCbjEntity sceneCbj) {
-    // TODO: implement activateScene
-    throw UnimplementedError();
-  }
+  Future<bool> activateScene(SceneCbjEntity sceneCbj) async => false;
 
   @override
   Future<Either<SceneCbjFailure, Unit>> activateScenes(
     Set<SceneCbjEntity> scenesList,
-  ) {
-    // TODO: implement activateScenes
-    throw UnimplementedError();
-  }
+  ) async =>
+      const Left(SceneCbjFailure.unexpected());
 
   @override
   Future<Either<SceneCbjFailure, Unit>>
@@ -26,10 +21,8 @@ class _SceneCbjRepository implements ISceneCbjRepository {
     required Set<String> devicesId,
     required Set<String> scenesId,
     required Set<String> areaTypes,
-  }) {
-    // TODO: implement addDevicesToMultipleScenesAreaTypeWithPreSetActions
-    throw UnimplementedError();
-  }
+  }) async =>
+          const Left(SceneCbjFailure.unexpected());
 
   @override
   Future<Either<SceneCbjFailure, SceneCbjEntity>>
@@ -37,37 +30,29 @@ class _SceneCbjRepository implements ISceneCbjRepository {
     required Set<String> devicesId,
     required String sceneId,
     required AreaPurposesTypes areaType,
-  }) {
-    // TODO: implement addDevicesToSceneAreaTypeWithPreSetActions
-    throw UnimplementedError();
-  }
+  }) async =>
+          const Left(SceneCbjFailure.unexpected());
 
   @override
-  Future<Either<SceneCbjFailure, String>> addNewScene(SceneCbjEntity sceneCbj) {
-    // TODO: implement addNewScene
-    throw UnimplementedError();
-  }
+  Future<Either<SceneCbjFailure, String>> addNewScene(
+    SceneCbjEntity sceneCbj,
+  ) async =>
+      const Left(SceneCbjFailure.unexpected());
 
   @override
   Future<Either<SceneCbjFailure, String>> addNewSceneAndSaveInDb(
     SceneCbjEntity sceneCbj,
-  ) {
-    // TODO: implement addNewSceneAndSaveInDb
-    throw UnimplementedError();
-  }
+  ) async =>
+      const Left(SceneCbjFailure.unexpected());
 
   @override
-  void addOrUpdateNewSceneInApp(SceneCbjEntity sceneCbj) {
-    // TODO: implement addOrUpdateNewSceneInApp
-  }
+  void addOrUpdateNewSceneInApp(SceneCbjEntity sceneCbj) {}
 
   @override
   Future<Either<SceneCbjFailure, SceneCbjEntity>> addOrUpdateNewSceneInHub(
     SceneCbjEntity sceneCbjEntity,
-  ) {
-    // TODO: implement addOrUpdateNewSceneInHub
-    throw UnimplementedError();
-  }
+  ) async =>
+      const Left(SceneCbjFailure.unexpected());
 
   @override
   Future<Either<SceneCbjFailure, SceneCbjEntity>>
@@ -76,51 +61,34 @@ class _SceneCbjRepository implements ISceneCbjRepository {
     Set<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
         smartDevicesWithActionToAdd,
     AreaPurposesTypes areaPurposesTypes,
-  ) {
-    // TODO: implement addOrUpdateNewSceneInHubFromDevicesPropertyActionList
-    throw UnimplementedError();
+  ) async =>
+          const Left(SceneCbjFailure.unexpected());
+
+  @override
+  Future<Set<SceneCbjEntity>> getAllScenesAsList() async => {};
+
+  @override
+  Future<Map<String, SceneCbjEntity>> getAllScenesAsMap() async =>
+      <String, SceneCbjEntity>{};
+
+  @override
+  Future<String> getFullMqttPathOfScene(SceneCbjEntity sceneCbj) async {
+    return '';
   }
 
   @override
-  Future<Set<SceneCbjEntity>> getAllScenesAsList() {
-    // TODO: implement getAllScenesAsList
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Map<String, SceneCbjEntity>> getAllScenesAsMap() {
-    // TODO: implement getAllScenesAsMap
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<String> getFullMqttPathOfScene(SceneCbjEntity sceneCbj) {
-    // TODO: implement getFullMqttPathOfScene
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> initiateHubConnection() {
-    // TODO: implement initiateHubConnection
-    throw UnimplementedError();
-  }
+  Future<void> initiateHubConnection() async {}
 
   @override
   Future<Either<LocalDbFailures, Unit>>
-      saveAndActivateScenesAndSmartDevicesToDb() {
-    // TODO: implement saveAndActivateScenesAndSmartDevicesToDb
-    throw UnimplementedError();
+      saveAndActivateScenesAndSmartDevicesToDb() async {
+    return const Left(LocalDbFailures.unexpected());
   }
 
   @override
-  Future<void> setUpAllFromDb() {
-    // TODO: implement setUpAllFromDb
-    throw UnimplementedError();
-  }
+  Future<void> setUpAllFromDb() async {}
 
   @override
-  Stream<Either<SceneCbjFailure, Set<SceneCbjEntity>>> watchAllScenes() {
-    // TODO: implement watchAllScenes
-    throw UnimplementedError();
-  }
+  Stream<Either<SceneCbjFailure, Set<SceneCbjEntity>>>
+      watchAllScenes() async* {}
 }

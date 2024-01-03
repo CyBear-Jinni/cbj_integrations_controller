@@ -68,30 +68,30 @@ class SearchDevices {
     isolates.add(mdnsIsolate);
 
     // TODO: Does not work on Android https://github.com/osociety/network_tools_flutter/issues/31
-    // if (!Platform.isAndroid) {
-    /// For ping search
-    final ReceivePort pingReceivePort = ReceivePort();
-    searchDevices = SendToIsolate(
-      pingReceivePort.sendPort,
-      projectPath,
-      networkUtilitiesType,
-    );
+    if (!Platform.isAndroid) {
+      /// For ping search
+      final ReceivePort pingReceivePort = ReceivePort();
+      searchDevices = SendToIsolate(
+        pingReceivePort.sendPort,
+        projectPath,
+        networkUtilitiesType,
+      );
 
-    final Isolate pingIsolate = await Isolate.spawn(
-      _searchPingableDevicesAndSetThemUpByHostName,
-      searchDevices,
-    );
+      final Isolate pingIsolate = await Isolate.spawn(
+        _searchPingableDevicesAndSetThemUpByHostName,
+        searchDevices,
+      );
 
-    pingReceivePort.listen((data) {
-      if (data is GenericUnsupportedDE) {
-        VendorsConnectorConjecture().setHostNameDeviceByCompany(data);
-      }
-    });
-    pingIsolate.errors.listen((event) {
-      icLogger.f('Ping isolate had crashed $event');
-    });
-    isolates.add(pingIsolate);
-    // }
+      pingReceivePort.listen((data) {
+        if (data is GenericUnsupportedDE) {
+          VendorsConnectorConjecture().setHostNameDeviceByCompany(data);
+        }
+      });
+      pingIsolate.errors.listen((event) {
+        icLogger.f('Ping isolate had crashed $event');
+      });
+      isolates.add(pingIsolate);
+    }
 
     /// For port search
     final HashMap<VendorsAndServices, List<int>>? ports =

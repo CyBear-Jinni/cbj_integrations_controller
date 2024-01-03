@@ -102,12 +102,12 @@ class AreaTypes extends ValueObjectAreas<Set<String>> {
   final Either<AreaFailure<Set<String>>, Set<String>> value;
 }
 
-class AreaDevicesId extends ValueObjectAreas<Set<String>> {
-  factory AreaDevicesId(Set<String> input) {
-    return AreaDevicesId._(validateAreaTypsValid(input));
+class AreaEntitiesId extends ValueObjectAreas<Set<String>> {
+  factory AreaEntitiesId(Set<String> input) {
+    return AreaEntitiesId._(validateAreaTypsValid(input));
   }
 
-  const AreaDevicesId._(this.value);
+  const AreaEntitiesId._(this.value);
 
   @override
   final Either<AreaFailure<Set<String>>, Set<String>> value;

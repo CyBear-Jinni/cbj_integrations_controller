@@ -243,7 +243,7 @@ class _HiveRepository extends IDbRepository {
           cbjEntityName: AreaDefaultName(areaHive.areaDefaultName),
           background: AreaBackground(areaHive.areaBackground),
           areaTypes: AreaTypes(areaHive.areaTypes.toSet()),
-          areaDevicesId: AreaDevicesId(areaHive.areaDevicesId.toSet()),
+          entitiesId: AreaEntitiesId(areaHive.areaDevicesId.toSet()),
           areaScenesId: AreaScenesId(areaHive.areaScenesId.toSet()),
           areaRoutinesId: AreaRoutinesId(areaHive.areaRoutinesId.toSet()),
           areaBindingsId: AreaBindingsId(areaHive.areaBindingsId.toSet()),
