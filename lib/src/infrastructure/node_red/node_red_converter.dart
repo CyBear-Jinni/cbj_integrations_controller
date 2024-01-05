@@ -1,6 +1,6 @@
 import 'package:cbj_integrations_controller/src/domain/binding/binding_cbj_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/binding/value_objects_routine_cbj.dart';
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/core/value_objects.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/routine/routine_cbj_entity.dart';
@@ -68,6 +68,7 @@ class NodeRedConverter {
       senderId: SceneCbjSenderId(null),
       compUuid: SceneCbjCompUuid(null),
       stateMassage: SceneCbjStateMassage(null),
+      actions: [],
     );
   }
 

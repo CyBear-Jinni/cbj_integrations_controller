@@ -10,6 +10,7 @@ import 'package:rxdart/rxdart.dart';
 
 part 'package:cbj_integrations_controller/src/infrastructure/routines/routine_repository.dart';
 
+@Deprecated('New architecture. Moved to AutomationService')
 abstract class IRoutineCbjRepository {
   static IRoutineCbjRepository? _instance;
 

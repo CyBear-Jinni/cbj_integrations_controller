@@ -769,24 +769,21 @@ class _HiveRepository extends IDbRepository {
 
       scenesBox = await Hive.openBox<ScenesHiveModel>(scenesBoxName);
 
-      final Set<ScenesHiveModel> scenesHiveModelFromDb =
-          scenesBox!.values.toSet().cast<ScenesHiveModel>();
-
       await scenesBox?.close();
 
-      for (final ScenesHiveModel sceneHive in scenesHiveModelFromDb) {
-        final SceneCbjEntity sceneEntity = SceneCbjDtos.fromJson(
-          jsonDecode(sceneHive.scenesStringJson) as Map<String, dynamic>,
-        ).toDomain();
+      // for (final ScenesHiveModel sceneHive in scenesHiveModelFromDb) {
+      // final SceneCbjEntity sceneEntity = SceneCbjDtos.fromJson(
+      //   jsonDecode(sceneHive.scenesStringJson) as Map<String, dynamic>,
+      // ).toDomain();
 
-        scenes.add(
-          sceneEntity.copyWith(
-            entityStateGRPC: SceneCbjDeviceStateGRPC(
-              EntityStateGRPC.waitingInComp.toString(),
-            ),
-          ),
-        );
-      }
+      // scenes.add(
+      //   sceneEntity.copyWith(
+      //     entityStateGRPC: SceneCbjDeviceStateGRPC(
+      //       EntityStateGRPC.waitingInComp.toString(),
+      //     ),
+      //   ),
+      // );
+      // }
       return right(scenes);
     } catch (e) {
       icLogger.e('Local DB hive error while getting scenes: $e');

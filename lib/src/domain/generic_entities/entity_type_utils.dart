@@ -1,4 +1,6 @@
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'dart:collection';
+
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 
 enum EntityProperties {
   blindsSwitchState,
@@ -25,59 +27,113 @@ enum EntityProperties {
   ;
 
   bool containsAction(EntityActions action) {
-    final EntityProperties property = EntityProperties.values[index];
-    switch (property) {
-      case EntityProperties.blindsSwitchState:
-        return action == EntityActions.moveUp ||
-            action == EntityActions.stop ||
-            action == EntityActions.moveDown;
-      case EntityProperties.boilerSwitchState:
-        return action == EntityActions.on || action == EntityActions.off;
-      case EntityProperties.lightSwitchState:
-        return action == EntityActions.on || action == EntityActions.off;
-      case EntityProperties.lightColorTemperature:
-        return action == EntityActions.changeTemperature;
-      case EntityProperties.lightColorAlpha:
-        return action == EntityActions.changeTemperature;
-      case EntityProperties.lightColorHue:
-        return action == EntityActions.changeTemperature;
-      case EntityProperties.lightColorSaturation:
-        return action == EntityActions.changeTemperature;
-      case EntityProperties.lightColorValue:
-        return action == EntityActions.changeTemperature;
-      case EntityProperties.lightBrightness:
-        return action == EntityActions.changeTemperature;
-      case EntityProperties.pingSwitchState:
-        return action == EntityActions.on || action == EntityActions.off;
-      case EntityProperties.printerSwitchState:
-        return action == EntityActions.on || action == EntityActions.off;
-      case EntityProperties.securityCameraSuspendState:
-        return action == EntityActions.suspend;
-      case EntityProperties.securityCameraShutDownState:
-        return action == EntityActions.shutdown;
-      case EntityProperties.smartComputerSuspendState:
-        return action == EntityActions.suspend;
-      case EntityProperties.smartComputerShutDownState:
-        return action == EntityActions.shutdown;
-      case EntityProperties.smartPlugState:
-        return action == EntityActions.on || action == EntityActions.off;
-      case EntityProperties.smartTvSwitchState:
-        return action == EntityActions.on ||
-            action == EntityActions.off ||
-            action == EntityActions.play ||
-            action == EntityActions.pause ||
-            action == EntityActions.close;
-      case EntityProperties.openUrl:
-        return action == EntityActions.open;
-      case EntityProperties.skip:
-        return action == EntityActions.skip;
-      case EntityProperties.volume:
-        return action == EntityActions.volumeDown ||
-            action == EntityActions.volumeDown;
-      case EntityProperties.switchState:
-        return action == EntityActions.on || action == EntityActions.off;
-    }
+    return getActions.contains(action);
   }
+
+  HashSet<EntityActions> get getActions =>
+      propertiesActions[index] ?? HashSet();
+
+  static HashMap<int, HashSet<EntityActions>> propertiesActions =
+      HashMap<int, HashSet<EntityActions>>.fromEntries([
+    MapEntry(
+      EntityProperties.blindsSwitchState.index,
+      HashSet.from([
+        EntityActions.moveUp,
+        EntityActions.stop,
+        EntityActions.moveDown,
+      ]),
+    ),
+    MapEntry(
+      EntityProperties.switchState.index,
+      HashSet.from([EntityActions.on, EntityActions.off]),
+    ),
+    MapEntry(
+      EntityProperties.boilerSwitchState.index,
+      HashSet.from([EntityActions.on, EntityActions.off]),
+    ),
+    MapEntry(
+      EntityProperties.lightSwitchState.index,
+      HashSet.from([EntityActions.on, EntityActions.off]),
+    ),
+    MapEntry(
+      EntityProperties.pingSwitchState.index,
+      HashSet.from([EntityActions.on, EntityActions.off]),
+    ),
+    MapEntry(
+      EntityProperties.printerSwitchState.index,
+      HashSet.from([EntityActions.on, EntityActions.off]),
+    ),
+    MapEntry(
+      EntityProperties.smartPlugState.index,
+      HashSet.from([EntityActions.on, EntityActions.off]),
+    ),
+    MapEntry(
+      EntityProperties.smartTvSwitchState.index,
+      HashSet.from([
+        EntityActions.on,
+        EntityActions.off,
+        EntityActions.play,
+        EntityActions.pause,
+        EntityActions.close,
+      ]),
+    ),
+    MapEntry(
+      EntityProperties.lightColorTemperature.index,
+      HashSet.from([EntityActions.changeTemperature]),
+    ),
+    MapEntry(
+      EntityProperties.lightColorAlpha.index,
+      HashSet.from([EntityActions.changeTemperature]),
+    ),
+    MapEntry(
+      EntityProperties.lightColorHue.index,
+      HashSet.from([EntityActions.changeTemperature]),
+    ),
+    MapEntry(
+      EntityProperties.lightColorSaturation.index,
+      HashSet.from([EntityActions.changeTemperature]),
+    ),
+    MapEntry(
+      EntityProperties.lightColorValue.index,
+      HashSet.from([EntityActions.changeTemperature]),
+    ),
+    MapEntry(
+      EntityProperties.lightBrightness.index,
+      HashSet.from([EntityActions.changeTemperature]),
+    ),
+    MapEntry(
+      EntityProperties.securityCameraSuspendState.index,
+      HashSet.from([EntityActions.suspend]),
+    ),
+    MapEntry(
+      EntityProperties.securityCameraShutDownState.index,
+      HashSet.from([EntityActions.shutdown]),
+    ),
+    MapEntry(
+      EntityProperties.smartComputerSuspendState.index,
+      HashSet.from([EntityActions.suspend]),
+    ),
+    MapEntry(
+      EntityProperties.smartComputerShutDownState.index,
+      HashSet.from([EntityActions.shutdown]),
+    ),
+    MapEntry(
+      EntityProperties.openUrl.index,
+      HashSet.from([EntityActions.open]),
+    ),
+    MapEntry(
+      EntityProperties.skip.index,
+      HashSet.from([EntityActions.skip]),
+    ),
+    MapEntry(
+      EntityProperties.volume.index,
+      HashSet.from([EntityActions.volumeDown]),
+    ),
+    MapEntry(
+      EntityProperties.openUrl.index,
+      HashSet.from([EntityActions.open]),
+    ),
+  ]);
 }
 
 class EntityUtils {

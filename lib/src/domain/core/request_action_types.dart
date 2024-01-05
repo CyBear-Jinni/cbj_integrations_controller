@@ -154,3 +154,9 @@ enum WhenToExecute {
   atASpecificTime, // Example: Only on Sunday and Tuesday at 5:35
   ;
 }
+
+enum ActionValues {
+  url,
+  brightness,
+  ;
+}

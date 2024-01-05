@@ -1,8 +1,7 @@
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_object.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
-import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/src/domain/ic_synchronizer.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector_conjecture.dart';
 
@@ -21,19 +20,8 @@ class EntitiesService {
     IcSynchronizer().newEntity(entities);
   }
 
-  void setEntityState({
-    required HashMap<VendorsAndServices, HashSet<String>> uniqueIdByVendor,
-    required EntityProperties property,
-    required EntityActions action,
-    required HashMap<ActionValues, dynamic>? value,
-  }) {
-    VendorsConnectorConjecture().setEntityState(
-      uniqueIdByVendor: uniqueIdByVendor,
-      action: action,
-      property: property,
-      value: value,
-    );
-  }
+  void setEntitiesState(ActionObject action) =>
+      VendorsConnectorConjecture().setEntitiesState(action);
 
   void notifyDeviceState() {
     // Save on db

@@ -4,6 +4,7 @@ import 'package:rxdart/rxdart.dart';
 
 part 'package:cbj_integrations_controller/src/infrastructure/scenes/scene_repository.dart';
 
+@Deprecated('New architecture. Moved to AutomationService')
 abstract class ISceneCbjRepository {
   static ISceneCbjRepository? _instance;
 
@@ -48,15 +49,6 @@ abstract class ISceneCbjRepository {
   /// Activate action of all scene list
   Future<Either<SceneCbjFailure, Unit>> activateScenes(
     Set<SceneCbjEntity> scenesList,
-  );
-
-  /// Sending the new scene to the hub to get added
-  Future<Either<SceneCbjFailure, SceneCbjEntity>>
-      addOrUpdateNewSceneInHubFromDevicesPropertyActionList(
-    String sceneName,
-    Set<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
-        smartDevicesWithActionToAdd,
-    AreaPurposesTypes areaPurposesTypes,
   );
 
   /// Will add all the devices to area scene, for each device will use the preselected

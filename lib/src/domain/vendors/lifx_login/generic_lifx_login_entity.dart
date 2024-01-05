@@ -1,4 +1,4 @@
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/vendors/lifx_login/generic_lifx_login_value_objects.dart';
 import 'package:cbj_integrations_controller/src/domain/vendors/login_abstract/core_login_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/vendors/login_abstract/login_entity_abstract.dart';

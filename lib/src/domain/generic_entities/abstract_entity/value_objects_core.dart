@@ -1,4 +1,4 @@
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_errors.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_validators.dart';

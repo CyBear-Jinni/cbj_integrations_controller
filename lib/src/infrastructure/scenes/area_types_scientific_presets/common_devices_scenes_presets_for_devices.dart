@@ -1,4 +1,4 @@
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_blinds_entity/generic_blinds_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_boiler_entity/generic_boiler_entity.dart';

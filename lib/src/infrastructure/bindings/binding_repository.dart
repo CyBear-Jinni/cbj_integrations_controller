@@ -1,5 +1,6 @@
 part of 'package:cbj_integrations_controller/src/domain/binding/i_binding_cbj_repository.dart';
 
+@Deprecated('New architecture. Moved to AutomationService')
 class _BindingCbjRepository implements IBindingCbjRepository {
   final Map<String, BindingCbjEntity> _allBindings = {};
 

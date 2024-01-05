@@ -1,5 +1,6 @@
 part of 'package:cbj_integrations_controller/src/domain/routine/i_routine_cbj_repository.dart';
 
+@Deprecated('New architecture. Moved to AutomationService')
 class _RoutineCbjRepository implements IRoutineCbjRepository {
   final Map<String, RoutineCbjEntity> _allRoutines = {};
 
