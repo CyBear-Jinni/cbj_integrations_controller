@@ -10,8 +10,8 @@ abstract class VendorConnectorConjectureService {
   VendorConnectorConjectureService({
     required this.vendorsAndServices,
     this.ports = const [],
-    this.mdnsVendorUniqueTypes = const [],
-    this.mdnsTypes = const [],
+    this.uniqeMdnsList = const [],
+    this.mdnsList = const [],
     this.uniqueIdentifierNameInMdns = const [],
   }) {
     vendorConnectorConjectureClass.add(this);
@@ -52,11 +52,11 @@ abstract class VendorConnectorConjectureService {
 
   /// Exists only for the vendor devices
   @nonVirtual
-  final List<String> mdnsVendorUniqueTypes;
+  final List<String> uniqeMdnsList;
 
   /// Can be found on more then one vendor
   @nonVirtual
-  final List<String> mdnsTypes;
+  final List<String> mdnsList;
 
   @nonVirtual
   final List<String> uniqueIdentifierNameInMdns;
@@ -101,7 +101,7 @@ abstract class VendorConnectorConjectureService {
         );
         continue;
       }
-      entity.executeAction(property: property, action: action, value: value);
+      entity.executeAction(property: property, action: action, values: value);
     }
   }
 }

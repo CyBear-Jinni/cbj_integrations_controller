@@ -115,17 +115,17 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
       pleaseOverrideMessage();
 
   @override
-  Future<Either<CoreFailure, Unit>> changeColorTemperature({
-    required String lightColorTemperatureNewValue,
-  }) async =>
+  Future<Either<CoreFailure, Unit>> changeColorTemperature(
+    int lightColorTemperatureNewValue,
+  ) async =>
       pleaseOverrideMessage();
 
   @override
   Future<Either<CoreFailure, Unit>> changeColorHsv({
-    required String lightColorAlphaNewValue,
-    required String lightColorHueNewValue,
-    required String lightColorSaturationNewValue,
-    required String lightColorValueNewValue,
+    required double value,
+    required double hue,
+    required double saturation,
+    required double alpha,
   }) async =>
       pleaseOverrideMessage();
 }

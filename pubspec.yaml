@@ -75,7 +75,8 @@ dependencies:
   # Extends the capabilities of Dart Streams and StreamControllers.
   rxdart: ^0.27.7
   # Communicate with Shelly smart devices
-  shelly: ^1.0.0
+  shelly:
+    git: "https://github.com/CyBear-Jinni/shelly.git"
   # # Python Environment Manager and Executor for dart and flutter
   # python_shell:
   #   git: 'https://github.com/guyluz11/python_shell.dart.git'

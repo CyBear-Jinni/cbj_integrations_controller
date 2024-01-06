@@ -87,7 +87,7 @@ class VendorsConnectorConjecture {
 
   /// Getting ActiveHost that contain MdnsInfo property and activate it inside
   /// The correct company.
-  Future setMdnsDeviceByCompany(GenericUnsupportedDE entity) async {
+  Future setMdnsDevice(GenericUnsupportedDE entity) async {
     final String? mdnsDeviceIp = entity.deviceLastKnownIp.getOrCrash();
     final String? mdnsName = entity.deviceMdns.getOrCrash();
 
@@ -123,7 +123,7 @@ class VendorsConnectorConjecture {
     for (final VendorConnectorConjectureService connectorConjecture
         in VendorConnectorConjectureService.vendorConnectorConjectureClass) {
       final bool containUniqueType =
-          connectorConjecture.mdnsVendorUniqueTypes.contains(serviceType);
+          connectorConjecture.uniqeMdnsList.contains(serviceType);
 
       if (containUniqueType) {
         companyConnectorConjecture = connectorConjecture;
@@ -131,7 +131,7 @@ class VendorsConnectorConjecture {
       }
 
       final bool containServiceType =
-          connectorConjecture.mdnsTypes.contains(serviceType);
+          connectorConjecture.mdnsList.contains(serviceType);
       if (!containServiceType) {
         continue;
       }

@@ -20,17 +20,13 @@ class ShellyHelpers {
     final String? hostName = entity.deviceHostName.getOrCrash();
 
     final HashMap<String, DeviceEntityBase> entitiesToAdd = HashMap();
-
-    if (hostName == null) {
-      return entitiesToAdd;
-    }
     final String deviceCbjUniqueId = mDnsName;
     DeviceEntityBase? tempEntity;
     try {
       // TODO: shelly duo bulb needs type that as the time of writing is
       // not supported, bulb + brightness + white temperature (not rgb).
       // Lets create new type and add it.
-      if (entity.deviceMdns.getOrCrash()!.contains('colorbulb')) {
+      if (mDnsName.contains('colorbulb')) {
         final ShellyApiColorBulb shellyApiDeviceAbstract = ShellyApiColorBulb(
           lastKnownIp: ip,
           mDnsName: mDnsName,
@@ -180,7 +176,7 @@ class ShellyHelpers {
           lightColorValue: GenericRgbwLightColorValue('0'),
           bulbMode: shellyApiDeviceAbstract,
         );
-      } else if (mDnsName.contains('shelly1-C45BBE78005D')) {
+      } else if (mDnsName.contains('shelly1')) {
         final ShellyApiRelaySwitch shellyApiDeviceAbstract =
             ShellyApiRelaySwitch(
           lastKnownIp: ip,

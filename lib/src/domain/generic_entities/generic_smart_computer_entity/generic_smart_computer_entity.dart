@@ -160,7 +160,7 @@ class GenericSmartComputerDE extends DeviceEntityBase {
   Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
+    HashMap<ActionValues, dynamic>? values,
   }) async {
     switch (action) {
       case EntityActions.suspend:
@@ -172,7 +172,7 @@ class GenericSmartComputerDE extends DeviceEntityBase {
     }
 
     return super
-        .executeAction(property: property, action: action, value: value);
+        .executeAction(property: property, action: action, values: values);
   }
 
   /// Please override the following methods

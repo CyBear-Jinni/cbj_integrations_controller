@@ -156,11 +156,11 @@ abstract class DeviceEntityBase {
   Future<Either<CoreFailure, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
+    HashMap<ActionValues, dynamic>? values,
   }) async {
     icLogger.e(
       'ExecuteAction is not implemented for device $_currentDeviceInfo '
-      'property ${property.name} action ${action.name} value $value',
+      'property ${property.name} action ${action.name} value $values',
     );
     return const Left(CoreFailure.unexpected());
   }

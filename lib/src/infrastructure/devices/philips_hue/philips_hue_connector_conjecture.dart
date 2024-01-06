@@ -14,7 +14,7 @@ class PhilipsHueConnectorConjecture extends VendorConnectorConjectureService {
   PhilipsHueConnectorConjecture._singletonContractor()
       : super(
           vendorsAndServices: VendorsAndServices.philipsHue,
-          mdnsVendorUniqueTypes: ['_hue._tcp'],
+          uniqeMdnsList: ['_hue._tcp'],
         );
 
   static final PhilipsHueConnectorConjecture _instance =

@@ -151,7 +151,7 @@ class GenericBoilerDE extends DeviceEntityBase {
   Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
+    HashMap<ActionValues, dynamic>? values,
   }) async {
     switch (action) {
       case EntityActions.on:

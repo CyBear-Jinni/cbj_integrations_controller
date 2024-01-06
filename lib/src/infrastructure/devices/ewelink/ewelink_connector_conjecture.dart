@@ -17,7 +17,7 @@ class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
   EwelinkConnectorConjecture._singletonContractor()
       : super(
           vendorsAndServices: VendorsAndServices.sonoffEweLink,
-          mdnsVendorUniqueTypes: ['_ewelink._tcp'],
+          uniqeMdnsList: ['_ewelink._tcp'],
         );
 
   static final EwelinkConnectorConjecture _instance =

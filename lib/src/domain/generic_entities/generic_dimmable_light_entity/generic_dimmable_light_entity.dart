@@ -159,7 +159,7 @@ class GenericDimmableLightDE extends DeviceEntityBase {
   Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
+    HashMap<ActionValues, dynamic>? values,
   }) async {
     if (property == EntityProperties.lightBrightness) {
       // TODO: add support for json
@@ -175,7 +175,7 @@ class GenericDimmableLightDE extends DeviceEntityBase {
         break;
     }
     return super
-        .executeAction(property: property, action: action, value: value);
+        .executeAction(property: property, action: action, values: values);
   }
 
   /// Please override the following methods

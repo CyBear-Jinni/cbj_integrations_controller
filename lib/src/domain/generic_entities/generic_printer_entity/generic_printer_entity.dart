@@ -108,7 +108,7 @@ class GenericPrinterDE extends DeviceEntityBase {
   Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
+    HashMap<ActionValues, dynamic>? values,
   }) async {
     switch (action) {
       case EntityActions.on:
@@ -119,7 +119,7 @@ class GenericPrinterDE extends DeviceEntityBase {
         break;
     }
     return super
-        .executeAction(property: property, action: action, value: value);
+        .executeAction(property: property, action: action, values: values);
   }
 
   /// Return a list of all valid actions for this device

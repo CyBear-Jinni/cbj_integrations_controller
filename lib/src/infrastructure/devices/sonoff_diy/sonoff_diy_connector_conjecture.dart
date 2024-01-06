@@ -14,7 +14,7 @@ class SonoffDiyConnectorConjecture extends VendorConnectorConjectureService {
   SonoffDiyConnectorConjecture._singletonContractor()
       : super(
           vendorsAndServices: VendorsAndServices.sonoffDiy,
-          mdnsVendorUniqueTypes: ['_ewelink._tcp'],
+          uniqeMdnsList: ['_ewelink._tcp'],
         );
 
   static final SonoffDiyConnectorConjecture _instance =

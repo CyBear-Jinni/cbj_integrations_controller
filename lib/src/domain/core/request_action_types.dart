@@ -137,6 +137,7 @@ enum EntityActions {
   changeTemperature,
   changeMod,
   speek,
+  hsvColor,
   ;
 }
 
@@ -161,5 +162,10 @@ enum ActionValues {
   text,
   url,
   brightness,
+  alpha,
+  hue,
+  saturation,
+  value,
+  temperature,
   ;
 }

@@ -123,11 +123,11 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
   }
 
   @override
-  Future<Either<CoreFailure, Unit>> changeColorTemperature({
-    required String lightColorTemperatureNewValue,
-  }) async {
+  Future<Either<CoreFailure, Unit>> changeColorTemperature(
+    int lightColorTemperatureNewValue,
+  ) async {
     try {
-      int temperatureInt = int.parse(lightColorTemperatureNewValue);
+      int temperatureInt = lightColorTemperatureNewValue;
       if (temperatureInt < 3000) {
         temperatureInt = 3000;
       } else if (temperatureInt > 6465) {
@@ -164,16 +164,16 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
 
   @override
   Future<Either<CoreFailure, Unit>> changeColorHsv({
-    required String lightColorAlphaNewValue,
-    required String lightColorHueNewValue,
-    required String lightColorSaturationNewValue,
-    required String lightColorValueNewValue,
+    required double value,
+    required double hue,
+    required double saturation,
+    required double alpha,
   }) async {
-    lightColorAlpha = GenericRgbwLightColorAlpha(lightColorAlphaNewValue);
-    lightColorHue = GenericRgbwLightColorHue(lightColorHueNewValue);
+    lightColorAlpha = GenericRgbwLightColorAlpha(value.toString());
+    lightColorHue = GenericRgbwLightColorHue(hue.toString());
     lightColorSaturation =
-        GenericRgbwLightColorSaturation(lightColorSaturationNewValue);
-    lightColorValue = GenericRgbwLightColorValue(lightColorValueNewValue);
+        GenericRgbwLightColorSaturation(saturation.toString());
+    lightColorValue = GenericRgbwLightColorValue(alpha.toString());
 
     try {
       final HsvColor hsvColor = HsvColor(

@@ -195,12 +195,12 @@ class GenericRgbwLightDE extends DeviceEntityBase {
   Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
+    HashMap<ActionValues, dynamic>? values,
   }) async {
     if (property == EntityProperties.lightBrightness &&
-        value != null &&
-        value[ActionValues.brightness] != null) {
-      final dynamic brightness = value[ActionValues.brightness];
+        values != null &&
+        values[ActionValues.brightness] != null) {
+      final dynamic brightness = values[ActionValues.brightness];
       if (brightness is! int) {
         return const Left(CoreFailure.unexpected());
       }
@@ -213,22 +213,43 @@ class GenericRgbwLightDE extends DeviceEntityBase {
       case EntityActions.off:
         return turnOffLight();
       case EntityActions.changeTemperature:
+        final dynamic value = values?[ActionValues.temperature];
+        if (value is! int) {
+          return const Left(CoreFailure.unexpected());
+        }
+        return changeColorTemperature(value);
+      case EntityActions.hsvColor:
+        final dynamic alpha = values?[ActionValues.alpha];
+        final dynamic hue = values?[ActionValues.hue];
+        final dynamic saturation = values?[ActionValues.saturation];
+        final dynamic value = values?[ActionValues.value];
 
-        // TODO: add support for json values
-        // return await changeColorHsv(
-        //       lightColorAlphaNewValue: newEntity.lightColorAlpha.getOrCrash(),
-        //       lightColorHueNewValue: newEntity.lightColorHue.getOrCrash(),
-        //       lightColorSaturationNewValue:
-        //           newEntity.lightColorSaturation.getOrCrash(),
-        //       lightColorValueNewValue: newEntity.lightColorValue.getOrCrash(),
-        //     );
-        break;
+        if (alpha is! double ||
+            hue is! double ||
+            saturation is! double ||
+            value is! double) {
+          return const Left(CoreFailure.unexpected());
+        }
+        return changeColorHsv(
+          alpha: alpha,
+          hue: hue,
+          saturation: saturation,
+          value: value,
+        );
+      // TODO: add support for json values
+      // return await changeColorHsv(
+      //       lightColorAlphaNewValue: newEntity.lightColorAlpha.getOrCrash(),
+      //       lightColorHueNewValue: newEntity.lightColorHue.getOrCrash(),
+      //       lightColorSaturationNewValue:
+      //           newEntity.lightColorSaturation.getOrCrash(),
+      //       lightColorValueNewValue: newEntity.lightColorValue.getOrCrash(),
+      //     );
       default:
         break;
     }
 
     return super
-        .executeAction(property: property, action: action, value: value);
+        .executeAction(property: property, action: action, values: values);
   }
 
   /// Please override the following methods
@@ -244,17 +265,17 @@ class GenericRgbwLightDE extends DeviceEntityBase {
       pleaseOverrideMessage();
 
   /// Please override the following methods
-  Future<Either<CoreFailure, Unit>> changeColorTemperature({
-    required String lightColorTemperatureNewValue,
-  }) async =>
+  Future<Either<CoreFailure, Unit>> changeColorTemperature(
+    int temperature,
+  ) async =>
       pleaseOverrideMessage();
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> changeColorHsv({
-    required String lightColorAlphaNewValue,
-    required String lightColorHueNewValue,
-    required String lightColorSaturationNewValue,
-    required String lightColorValueNewValue,
+    required double value,
+    required double hue,
+    required double saturation,
+    required double alpha,
   }) async =>
       pleaseOverrideMessage();
 

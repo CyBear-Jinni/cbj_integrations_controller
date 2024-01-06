@@ -145,7 +145,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
   Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
+    HashMap<ActionValues, dynamic>? values,
   }) async {
     switch (action) {
       case EntityActions.on:
@@ -153,7 +153,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
       case EntityActions.off:
         return turnOffSmartTv();
       case EntityActions.open:
-        final dynamic url = value?[ActionValues.url];
+        final dynamic url = values?[ActionValues.url];
         if (url is! String) {
           return const Left(CoreFailure.unexpected());
         }
@@ -162,14 +162,14 @@ class GenericSmartTvDE extends DeviceEntityBase {
         }
         return sendUrlToDevice(url);
       case EntityActions.openUrl:
-        final dynamic url = value?[ActionValues.url];
+        final dynamic url = values?[ActionValues.url];
         if (url is! String) {
           return const Left(CoreFailure.unexpected());
         }
         return openUrl(url);
 
       case EntityActions.speek:
-        final dynamic text = value?[ActionValues.text];
+        final dynamic text = values?[ActionValues.text];
         if (text is! String) {
           return const Left(CoreFailure.unexpected());
         }
@@ -197,7 +197,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
     }
 
     return super
-        .executeAction(property: property, action: action, value: value);
+        .executeAction(property: property, action: action, values: values);
   }
 
   /// Please override the following methods

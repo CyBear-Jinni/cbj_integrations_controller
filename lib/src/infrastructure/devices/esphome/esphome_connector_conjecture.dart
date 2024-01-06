@@ -16,7 +16,7 @@ class EspHomeConnectorConjecture extends VendorConnectorConjectureService {
   EspHomeConnectorConjecture._singletonContractor()
       : super(
           vendorsAndServices: VendorsAndServices.espHome,
-          mdnsVendorUniqueTypes: ['_esphomelib._tcp'],
+          uniqeMdnsList: ['_esphomelib._tcp'],
         );
 
   static final EspHomeConnectorConjecture _instance =

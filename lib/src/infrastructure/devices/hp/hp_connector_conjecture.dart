@@ -14,8 +14,8 @@ class HpConnectorConjecture extends VendorConnectorConjectureService {
   HpConnectorConjecture._singletonContractor()
       : super(
           vendorsAndServices: VendorsAndServices.hp,
-          mdnsVendorUniqueTypes: ['_hplib._tcp'],
-          mdnsTypes: ['_ipp._tcp'],
+          uniqeMdnsList: ['_hplib._tcp'],
+          mdnsList: ['_ipp._tcp'],
           uniqueIdentifierNameInMdns: ['HP'],
         );
 

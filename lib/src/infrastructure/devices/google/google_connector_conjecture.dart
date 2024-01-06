@@ -14,8 +14,8 @@ class GoogleConnectorConjecture extends VendorConnectorConjectureService {
   GoogleConnectorConjecture._singletonContractor()
       : super(
           vendorsAndServices: VendorsAndServices.google,
-          mdnsVendorUniqueTypes: ['_googlecast._tcp', '_androidtvremote2._tcp'],
-          mdnsTypes: ['_rc._tcp'],
+          uniqeMdnsList: ['_googlecast._tcp', '_androidtvremote2._tcp'],
+          mdnsList: ['_rc._tcp'],
           uniqueIdentifierNameInMdns: ['google', 'android', 'chrome'],
         );
 

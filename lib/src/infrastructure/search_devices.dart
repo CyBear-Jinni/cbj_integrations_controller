@@ -58,7 +58,7 @@ class SearchDevices {
 
     mdnsReceivePort.listen((data) {
       if (data is GenericUnsupportedDE) {
-        VendorsConnectorConjecture().setMdnsDeviceByCompany(data);
+        VendorsConnectorConjecture().setMdnsDevice(data);
       }
     });
 

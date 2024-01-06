@@ -16,7 +16,7 @@ class YeelightConnectorConjecture extends VendorConnectorConjectureService {
       : super(
           vendorsAndServices: VendorsAndServices.yeelight,
           uniqueIdentifierNameInMdns: ['YL'],
-          mdnsTypes: ['_hap._tcp'],
+          mdnsList: ['_hap._tcp'],
         ) {
     // customeSearch();
   }
