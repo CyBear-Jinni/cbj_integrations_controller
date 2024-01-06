@@ -134,16 +134,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
         temperatureInt = 6465;
       }
 
-      if (lightColorTemperature.getOrCrash() == temperatureInt.toString()) {
-        return right(unit);
-      }
-
-      lightColorTemperature =
-          GenericRgbwLightColorTemperature(temperatureInt.toString());
-
-      await api.changTemperature(
-        temperature: lightColorTemperature.getOrCrash(),
-      );
+      await api.changTemperature(temperature: temperatureInt.toString());
 
       return right(unit);
     } catch (e) {
@@ -169,21 +160,11 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
     required double saturation,
     required double alpha,
   }) async {
-    lightColorAlpha = GenericRgbwLightColorAlpha(value.toString());
-    lightColorHue = GenericRgbwLightColorHue(hue.toString());
-    lightColorSaturation =
-        GenericRgbwLightColorSaturation(saturation.toString());
-    lightColorValue = GenericRgbwLightColorValue(alpha.toString());
-
     try {
       final HsvColor hsvColor = HsvColor(
-        double.parse(lightColorHue.getOrCrash()),
-        convertDecimalPresentagetToIntegerPercentage(
-          double.parse(lightColorSaturation.getOrCrash()),
-        ),
-        convertDecimalPresentagetToIntegerPercentage(
-          double.parse(lightColorValue.getOrCrash()),
-        ),
+        hue,
+        convertDecimalPresentagetToIntegerPercentage(saturation),
+        convertDecimalPresentagetToIntegerPercentage(value),
       );
 
       final RgbColor rgbColor = hsvColor.toRgbColor();
