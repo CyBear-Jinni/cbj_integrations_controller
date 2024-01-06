@@ -148,9 +148,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   Future<Either<CoreFailure, Unit>> setBrightness(int value) async {
     try {
       await api.setBrightness(
-        brightness: int.parse(
-          lightBrightness.getOrCrash(),
-        ),
+        brightness: value,
         duration: const Duration(milliseconds: 100),
       );
 
@@ -173,11 +171,18 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
       } else if (temperatureInt > 6500) {
         temperatureInt = 6500;
       }
+      try {
+        await api.setColorTemperature(
+          colorTemperature: temperatureInt,
+          duration: const Duration(
+            milliseconds: 100,
+          ),
+        );
+      } catch (e) {
+        icLogger.e('Error in Yeelight Device setting turn on\n$e');
 
-      lightColorTemperature =
-          GenericRgbwLightColorTemperature(temperatureInt.toString());
-
-      _sendChangeColorTemperature();
+        return left(const CoreFailure.unexpected());
+      }
 
       return right(unit);
     } catch (e) {
@@ -195,7 +200,22 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required double alpha,
   }) async {
     try {
-      await _sendChangeColorHsv();
+      int saturationValue;
+      if (saturation.toString().length <= 3 && saturation.toString() == '0.0') {
+        saturationValue = 0;
+      } else if (saturation.toString().length <= 3) {
+        saturationValue = 100;
+      } else {
+        saturationValue = int.parse(saturation.toString().substring(2, 4));
+      }
+
+      await api.setHSV(
+        hue: hue.toInt(),
+        saturation: saturationValue,
+        duration: const Duration(
+          milliseconds: 100,
+        ),
+      );
       return right(unit);
     } catch (e) {
       icLogger.e('Error in Yeelight Device setting color hue\n$e');
@@ -208,48 +228,4 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   /// This method will take care that commends will be sent in 1 second
   /// between each one
   Future<void> executeCurrentStatusWithConstDelay() async {}
-
-  Future<Either<CoreFailure, Unit>> _sendChangeColorTemperature() async {
-    try {
-      await api.setColorTemperature(
-        colorTemperature: int.parse(lightColorTemperature.getOrCrash()),
-        duration: const Duration(
-          milliseconds: 100,
-        ),
-      );
-      return right(unit);
-    } catch (e) {
-      icLogger.e('Error in Yeelight Device setting turn on\n$e');
-
-      return left(const CoreFailure.unexpected());
-    }
-  }
-
-  Future<Either<CoreFailure, Unit>> _sendChangeColorHsv() async {
-    try {
-      int saturationValue;
-      if (lightColorSaturation.getOrCrash().length <= 3 &&
-          lightColorSaturation.getOrCrash() == '0.0') {
-        saturationValue = 0;
-      } else if (lightColorSaturation.getOrCrash().length <= 3) {
-        saturationValue = 100;
-      } else {
-        saturationValue =
-            int.parse(lightColorSaturation.getOrCrash().substring(2, 4));
-      }
-
-      await api.setHSV(
-        hue: double.parse(lightColorHue.getOrCrash()).toInt(),
-        saturation: saturationValue,
-        duration: const Duration(
-          milliseconds: 100,
-        ),
-      );
-      return right(unit);
-    } catch (e) {
-      icLogger.e('Error in Yeelight Device setting turn on\n$e');
-
-      return left(const CoreFailure.unexpected());
-    }
-  }
 }
