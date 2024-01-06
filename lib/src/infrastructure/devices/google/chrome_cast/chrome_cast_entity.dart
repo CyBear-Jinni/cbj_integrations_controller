@@ -36,9 +36,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
     required super.lastResponseFromDeviceTimeStamp,
     required super.deviceCbjUniqueId,
     required super.smartTvSwitchState,
-    super.openUrl,
     super.pausePlayState,
-    super.skip,
     super.volume,
   }) : super(
           cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.google),
@@ -104,8 +102,23 @@ class ChromeCastEntity extends GenericSmartTvDE {
     await castDevice?.openMedia(
       url: url,
       title: 'Opend from CBJ App',
-      coverImage:
-          'https://raw.githubusercontent.com/CyBear-Jinni/cbj_app/master/assets/cbj_half_app_logo.png',
+      coverImage: coverImage,
+    );
+    return right(unit);
+  }
+
+  @override
+  Future<Either<CoreFailure, Unit>> openUrl(String url) async {
+    await castDevice?.openUrl(url);
+    return right(unit);
+  }
+
+  @override
+  Future<Either<CoreFailure, Unit>> tts(String text) async {
+    await castDevice?.tts(
+      text: text,
+      title: 'From CBJ App',
+      coverImage: coverImage,
     );
     return right(unit);
   }

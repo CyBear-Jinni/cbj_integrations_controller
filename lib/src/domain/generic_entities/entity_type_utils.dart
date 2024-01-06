@@ -24,6 +24,7 @@ enum EntityProperties {
   skip,
   volume,
   switchState,
+  speekers,
   ;
 
   bool containsAction(EntityActions action) {

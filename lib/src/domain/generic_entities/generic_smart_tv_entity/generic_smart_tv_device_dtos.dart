@@ -41,9 +41,7 @@ abstract class GenericSmartTvDeviceDtos
     required String? requestTimeStamp,
     required String? lastResponseFromDeviceTimeStamp,
     required String? deviceCbjUniqueId,
-    required String? openUrl,
     required String? pausePlayState,
-    required String? skip,
     required String? volume,
     String? deviceDtoClass,
     String? stateMassage
@@ -87,9 +85,7 @@ abstract class GenericSmartTvDeviceDtos
       requestTimeStamp: deviceDe.requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           deviceDe.lastResponseFromDeviceTimeStamp.getOrCrash(),
-      openUrl: deviceDe.openUrl?.getOrCrash(),
       pausePlayState: deviceDe.pausePlayState?.getOrCrash(),
-      skip: deviceDe.skip?.getOrCrash(),
       volume: deviceDe.volume?.getOrCrash(),
       deviceCbjUniqueId: deviceDe.deviceCbjUniqueId.getOrCrash(),
     );
@@ -119,11 +115,9 @@ abstract class GenericSmartTvDeviceDtos
       deviceNetworkLastUpdate: DeviceNetworkLastUpdate(deviceNetworkLastUpdate),
       compUuid: DeviceCompUuid(compUuid),
       smartTvSwitchState: GenericSmartTvSwitchState(smartTvSwitchState),
-      openUrl: openUrl == null ? null : GenericSmartTvOpenUrl(openUrl),
       pausePlayState: pausePlayState == null
           ? null
           : GenericSmartTvPausePlayState(pausePlayState),
-      skip: skip == null ? null : GenericSmartTvSkipBackOrForward(skip),
       volume: volume == null ? null : GenericSmartTvVolume(volume),
       powerConsumption: DevicePowerConsumption(powerConsumption),
       deviceUniqueId: DeviceUniqueId(deviceUniqueId),

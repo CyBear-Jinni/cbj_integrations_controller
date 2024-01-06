@@ -132,9 +132,11 @@ enum EntityActions {
   skipNextVid,
   skipPreviousVid,
   open,
+  openUrl,
   close,
   changeTemperature,
   changeMod,
+  speek,
   ;
 }
 
@@ -156,6 +158,7 @@ enum WhenToExecute {
 }
 
 enum ActionValues {
+  text,
   url,
   brightness,
   ;

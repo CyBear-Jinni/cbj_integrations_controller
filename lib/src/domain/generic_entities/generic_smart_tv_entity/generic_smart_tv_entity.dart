@@ -43,9 +43,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
     required super.lastResponseFromDeviceTimeStamp,
     required super.deviceCbjUniqueId,
     required this.smartTvSwitchState,
-    this.openUrl,
     this.pausePlayState,
-    this.skip,
     this.volume,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.smartTV),
@@ -86,10 +84,11 @@ class GenericSmartTvDE extends DeviceEntityBase {
 
   /// State of the smartTv on/off
   GenericSmartTvSwitchState? smartTvSwitchState;
-  GenericSmartTvOpenUrl? openUrl;
   GenericSmartTvPausePlayState? pausePlayState;
-  GenericSmartTvSkipBackOrForward? skip;
   GenericSmartTvVolume? volume;
+
+  final String coverImage =
+      'https://raw.githubusercontent.com/CyBear-Jinni/cbj_app/master/assets/cbj_half_app_logo.png';
 
   /// Precent of the volume up/down change
   static const int volumeChangePrecent = 10;
@@ -137,9 +136,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
       cbjDeviceVendor: cbjDeviceVendor.getOrCrash(),
       deviceVendor: deviceVendor.getOrCrash(),
       deviceNetworkLastUpdate: deviceNetworkLastUpdate.getOrCrash(),
-      openUrl: openUrl?.getOrCrash(),
       pausePlayState: pausePlayState?.getOrCrash(),
-      skip: skip?.getOrCrash(),
       volume: volume?.getOrCrash(),
     );
   }
@@ -164,6 +161,19 @@ class GenericSmartTvDE extends DeviceEntityBase {
           return openApp(OpenAppOnSmartTvEnum.netflix);
         }
         return sendUrlToDevice(url);
+      case EntityActions.openUrl:
+        final dynamic url = value?[ActionValues.url];
+        if (url is! String) {
+          return const Left(CoreFailure.unexpected());
+        }
+        return openUrl(url);
+
+      case EntityActions.speek:
+        final dynamic text = value?[ActionValues.text];
+        if (text is! String) {
+          return const Left(CoreFailure.unexpected());
+        }
+        return tts(text);
       case EntityActions.pausePlay:
         return togglePausePlay();
       case EntityActions.pause:
@@ -212,6 +222,14 @@ class GenericSmartTvDE extends DeviceEntityBase {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> sendUrlToDevice(String newUrl) async =>
+      pleaseOverrideMessage();
+
+  /// Please override the following methods
+  Future<Either<CoreFailure, Unit>> openUrl(String url) async =>
+      pleaseOverrideMessage();
+
+  /// Please override the following methods
+  Future<Either<CoreFailure, Unit>> tts(String text) async =>
       pleaseOverrideMessage();
 
   /// Please override the following methods
