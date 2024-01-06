@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_dto_base.dart';
@@ -43,9 +43,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
     required super.lastResponseFromDeviceTimeStamp,
     required super.deviceCbjUniqueId,
     required this.smartTvSwitchState,
-    this.openUrl,
     this.pausePlayState,
-    this.skip,
     this.volume,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.smartTV),
@@ -86,10 +84,11 @@ class GenericSmartTvDE extends DeviceEntityBase {
 
   /// State of the smartTv on/off
   GenericSmartTvSwitchState? smartTvSwitchState;
-  GenericSmartTvOpenUrl? openUrl;
   GenericSmartTvPausePlayState? pausePlayState;
-  GenericSmartTvSkipBackOrForward? skip;
   GenericSmartTvVolume? volume;
+
+  final String coverImage =
+      'https://raw.githubusercontent.com/CyBear-Jinni/cbj_app/master/assets/cbj_half_app_logo.png';
 
   /// Precent of the volume up/down change
   static const int volumeChangePrecent = 10;
@@ -137,9 +136,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
       cbjDeviceVendor: cbjDeviceVendor.getOrCrash(),
       deviceVendor: deviceVendor.getOrCrash(),
       deviceNetworkLastUpdate: deviceNetworkLastUpdate.getOrCrash(),
-      openUrl: openUrl?.getOrCrash(),
       pausePlayState: pausePlayState?.getOrCrash(),
-      skip: skip?.getOrCrash(),
       volume: volume?.getOrCrash(),
     );
   }
@@ -148,7 +145,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
   Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
+    HashMap<ActionValues, dynamic>? values,
   }) async {
     switch (action) {
       case EntityActions.on:
@@ -156,7 +153,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
       case EntityActions.off:
         return turnOffSmartTv();
       case EntityActions.open:
-        final dynamic url = value?[ActionValues.url];
+        final dynamic url = values?[ActionValues.url];
         if (url is! String) {
           return const Left(CoreFailure.unexpected());
         }
@@ -164,6 +161,19 @@ class GenericSmartTvDE extends DeviceEntityBase {
           return openApp(OpenAppOnSmartTvEnum.netflix);
         }
         return sendUrlToDevice(url);
+      case EntityActions.openUrl:
+        final dynamic url = values?[ActionValues.url];
+        if (url is! String) {
+          return const Left(CoreFailure.unexpected());
+        }
+        return openUrl(url);
+
+      case EntityActions.speek:
+        final dynamic text = values?[ActionValues.text];
+        if (text is! String) {
+          return const Left(CoreFailure.unexpected());
+        }
+        return tts(text);
       case EntityActions.pausePlay:
         return togglePausePlay();
       case EntityActions.pause:
@@ -187,7 +197,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
     }
 
     return super
-        .executeAction(property: property, action: action, value: value);
+        .executeAction(property: property, action: action, values: values);
   }
 
   /// Please override the following methods
@@ -212,6 +222,14 @@ class GenericSmartTvDE extends DeviceEntityBase {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> sendUrlToDevice(String newUrl) async =>
+      pleaseOverrideMessage();
+
+  /// Please override the following methods
+  Future<Either<CoreFailure, Unit>> openUrl(String url) async =>
+      pleaseOverrideMessage();
+
+  /// Please override the following methods
+  Future<Either<CoreFailure, Unit>> tts(String text) async =>
       pleaseOverrideMessage();
 
   /// Please override the following methods

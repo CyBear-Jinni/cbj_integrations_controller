@@ -22,25 +22,6 @@ class GenericSmartTvSwitchState extends ValueObjectCore<String> {
   }
 }
 
-class GenericSmartTvOpenUrl extends ValueObjectCore<String> {
-  factory GenericSmartTvOpenUrl(String? input) {
-    assert(input != null);
-    return GenericSmartTvOpenUrl._(
-      validateGenericSmartTvUrlValidation(input!),
-    );
-  }
-
-  const GenericSmartTvOpenUrl._(this.value);
-
-  @override
-  final Either<CoreFailure<String>, String> value;
-
-  /// All valid actions of smart tv state
-  static List<String> smartTvValidActions() {
-    return smartTvAllValidActions();
-  }
-}
-
 class GenericSmartTvPausePlayState extends ValueObjectCore<String> {
   factory GenericSmartTvPausePlayState(String? input) {
     assert(input != null);
@@ -50,25 +31,6 @@ class GenericSmartTvPausePlayState extends ValueObjectCore<String> {
   }
 
   const GenericSmartTvPausePlayState._(this.value);
-
-  @override
-  final Either<CoreFailure<String>, String> value;
-
-  /// All valid actions of smart tv state
-  static List<String> smartTvValidActions() {
-    return smartTvAllValidActions();
-  }
-}
-
-class GenericSmartTvSkipBackOrForward extends ValueObjectCore<String> {
-  factory GenericSmartTvSkipBackOrForward(String? input) {
-    assert(input != null);
-    return GenericSmartTvSkipBackOrForward._(
-      validateGenericSmartTvSkipBackOrForwardValidation(input!),
-    );
-  }
-
-  const GenericSmartTvSkipBackOrForward._(this.value);
 
   @override
   final Either<CoreFailure<String>, String> value;

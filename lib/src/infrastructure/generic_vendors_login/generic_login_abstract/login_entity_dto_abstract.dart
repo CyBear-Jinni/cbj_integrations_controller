@@ -1,4 +1,4 @@
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/vendors/login_abstract/login_entity_abstract.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/generic_vendors_login/generic_esphome_login/generic_esphome_login_dtos.dart';

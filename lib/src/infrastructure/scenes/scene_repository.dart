@@ -1,5 +1,6 @@
 part of 'package:cbj_integrations_controller/src/domain/scene/i_scene_cbj_repository.dart';
 
+@Deprecated('New architecture. Moved to AutomationService')
 class _SceneCbjRepository implements ISceneCbjRepository {
   @override
   BehaviorSubject<Set<SceneCbjEntity>>
@@ -53,16 +54,6 @@ class _SceneCbjRepository implements ISceneCbjRepository {
     SceneCbjEntity sceneCbjEntity,
   ) async =>
       const Left(SceneCbjFailure.unexpected());
-
-  @override
-  Future<Either<SceneCbjFailure, SceneCbjEntity>>
-      addOrUpdateNewSceneInHubFromDevicesPropertyActionList(
-    String sceneName,
-    Set<MapEntry<DeviceEntityBase, MapEntry<String?, String?>>>
-        smartDevicesWithActionToAdd,
-    AreaPurposesTypes areaPurposesTypes,
-  ) async =>
-          const Left(SceneCbjFailure.unexpected());
 
   @override
   Future<Set<SceneCbjEntity>> getAllScenesAsList() async => {};

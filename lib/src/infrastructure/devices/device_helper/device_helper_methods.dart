@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:cbj_integrations_controller/integrations_controller.dart';
-import 'package:cbj_integrations_controller/src/domain/routine/routine_cbj_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/generic_vendors_login/generic_login_abstract/login_entity_dto_abstract.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/remote_pipes/remote_pipes_dtos.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/routines/routine_cbj_dtos.dart';
@@ -134,39 +133,39 @@ class DeviceHelperMethods {
       // remotePipes: dtoEntity.toDomain(),
       // );
     } else if (dtoEntity is SceneCbjDtos) {
-      final SceneCbjEntity sceneCbj = dtoEntity.toDomain();
+      // final SceneCbjEntity sceneCbj = dtoEntity.toDomain();
 
-      final String sceneStateGrpcTemp = sceneCbj.entityStateGRPC.getOrCrash()!;
+      // final String sceneStateGrpcTemp = sceneCbj.entityStateGRPC.getOrCrash()!;
 
-      final SceneCbjEntity sceneCopy = sceneCbj.copyWith(
-        entityStateGRPC: SceneCbjDeviceStateGRPC(
-          EntityStateGRPC.waitingInComp.toString(),
-        ),
-      );
+      // final SceneCbjEntity sceneCopy = sceneCbj.copyWith(
+      //   entityStateGRPC: SceneCbjDeviceStateGRPC(
+      //     EntityStateGRPC.waitingInComp.toString(),
+      //   ),
+      // );
 
-      if (sceneStateGrpcTemp == EntityStateGRPC.addingNewScene.toString()) {
-        ISceneCbjRepository.instance.addNewSceneAndSaveInDb(sceneCopy);
-      } else {
-        ISceneCbjRepository.instance.activateScene(sceneCopy);
-      }
-    } else if (dtoEntity is RoutineCbjDtos) {
-      final RoutineCbjEntity routineCbj = dtoEntity.toDomain();
+      //   if (sceneStateGrpcTemp == EntityStateGRPC.addingNewScene.toString()) {
+      //     ISceneCbjRepository.instance.addNewSceneAndSaveInDb(sceneCopy);
+      //   } else {
+      //     ISceneCbjRepository.instance.activateScene(sceneCopy);
+      //   }
+      // } else if (dtoEntity is RoutineCbjDtos) {
+      //   final RoutineCbjEntity routineCbj = dtoEntity.toDomain();
 
-      final String routineStateGrpcTemp =
-          routineCbj.entityStateGRPC.getOrCrash()!;
+      //   final String routineStateGrpcTemp =
+      //       routineCbj.entityStateGRPC.getOrCrash()!;
 
-      if (routineStateGrpcTemp == EntityStateGRPC.addingNewRoutine.toString()) {
-        IRoutineCbjRepository.instance.addNewRoutineAndSaveItToLocalDb(
-          routineCbj.copyWith(
-            entityStateGRPC: RoutineCbjDeviceStateGRPC(
-              EntityStateGRPC.waitingInComp.toString(),
-            ),
-          ),
-        );
-      } else {
-        // For a way to active it manually
-        // IRoutineCbjRepository.instance.activateRoutine(routineCbj);
-      }
+      //   if (routineStateGrpcTemp == EntityStateGRPC.addingNewRoutine.toString()) {
+      //     IRoutineCbjRepository.instance.addNewRoutineAndSaveItToLocalDb(
+      //       routineCbj.copyWith(
+      //         entityStateGRPC: RoutineCbjDeviceStateGRPC(
+      //           EntityStateGRPC.waitingInComp.toString(),
+      //         ),
+      //       ),
+      //     );
+      //   } else {
+      //     // For a way to active it manually
+      //     // IRoutineCbjRepository.instance.activateRoutine(routineCbj);
+      //   }
     } else {
       icLogger.w('Request from app does not support this sending device type');
     }

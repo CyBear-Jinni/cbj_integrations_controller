@@ -132,9 +132,12 @@ enum EntityActions {
   skipNextVid,
   skipPreviousVid,
   open,
+  openUrl,
   close,
   changeTemperature,
   changeMod,
+  speek,
+  hsvColor,
   ;
 }
 
@@ -152,5 +155,17 @@ enum WhenToExecute {
   atHome,
   outOfHome,
   atASpecificTime, // Example: Only on Sunday and Tuesday at 5:35
+  ;
+}
+
+enum ActionValues {
+  text,
+  url,
+  brightness,
+  alpha,
+  hue,
+  saturation,
+  value,
+  temperature,
   ;
 }

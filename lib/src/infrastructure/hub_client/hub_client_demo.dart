@@ -213,6 +213,7 @@ class HubClientDemo {
       senderId: SceneCbjSenderId(null),
       compUuid: SceneCbjCompUuid(null),
       entityStateGRPC: SceneCbjDeviceStateGRPC('waitingInComp'),
+      actions: [],
     );
 
     final RequestsAndStatusFromHub requestsAndStatusFromHubSceneOpen =

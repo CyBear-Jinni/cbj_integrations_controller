@@ -51,9 +51,7 @@ mixin _$GenericSmartTvDeviceDtos {
   String? get lastResponseFromDeviceTimeStamp =>
       throw _privateConstructorUsedError;
   String? get deviceCbjUniqueId => throw _privateConstructorUsedError;
-  String? get openUrl => throw _privateConstructorUsedError;
   String? get pausePlayState => throw _privateConstructorUsedError;
-  String? get skip => throw _privateConstructorUsedError;
   String? get volume => throw _privateConstructorUsedError;
   String? get deviceDtoClass => throw _privateConstructorUsedError;
   String? get stateMassage => throw _privateConstructorUsedError;
@@ -99,9 +97,7 @@ abstract class $GenericSmartTvDeviceDtosCopyWith<$Res> {
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
       String? deviceCbjUniqueId,
-      String? openUrl,
       String? pausePlayState,
-      String? skip,
       String? volume,
       String? deviceDtoClass,
       String? stateMassage});
@@ -149,9 +145,7 @@ class _$GenericSmartTvDeviceDtosCopyWithImpl<$Res,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
     Object? deviceCbjUniqueId = freezed,
-    Object? openUrl = freezed,
     Object? pausePlayState = freezed,
-    Object? skip = freezed,
     Object? volume = freezed,
     Object? deviceDtoClass = freezed,
     Object? stateMassage = freezed,
@@ -270,17 +264,9 @@ class _$GenericSmartTvDeviceDtosCopyWithImpl<$Res,
           ? _value.deviceCbjUniqueId
           : deviceCbjUniqueId // ignore: cast_nullable_to_non_nullable
               as String?,
-      openUrl: freezed == openUrl
-          ? _value.openUrl
-          : openUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
       pausePlayState: freezed == pausePlayState
           ? _value.pausePlayState
           : pausePlayState // ignore: cast_nullable_to_non_nullable
-              as String?,
-      skip: freezed == skip
-          ? _value.skip
-          : skip // ignore: cast_nullable_to_non_nullable
               as String?,
       volume: freezed == volume
           ? _value.volume
@@ -336,9 +322,7 @@ abstract class _$$GenericSmartTvDeviceDtosImplCopyWith<$Res>
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
       String? deviceCbjUniqueId,
-      String? openUrl,
       String? pausePlayState,
-      String? skip,
       String? volume,
       String? deviceDtoClass,
       String? stateMassage});
@@ -385,9 +369,7 @@ class __$$GenericSmartTvDeviceDtosImplCopyWithImpl<$Res>
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
     Object? deviceCbjUniqueId = freezed,
-    Object? openUrl = freezed,
     Object? pausePlayState = freezed,
-    Object? skip = freezed,
     Object? volume = freezed,
     Object? deviceDtoClass = freezed,
     Object? stateMassage = freezed,
@@ -506,17 +488,9 @@ class __$$GenericSmartTvDeviceDtosImplCopyWithImpl<$Res>
           ? _value.deviceCbjUniqueId
           : deviceCbjUniqueId // ignore: cast_nullable_to_non_nullable
               as String?,
-      openUrl: freezed == openUrl
-          ? _value.openUrl
-          : openUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
       pausePlayState: freezed == pausePlayState
           ? _value.pausePlayState
           : pausePlayState // ignore: cast_nullable_to_non_nullable
-              as String?,
-      skip: freezed == skip
-          ? _value.skip
-          : skip // ignore: cast_nullable_to_non_nullable
               as String?,
       volume: freezed == volume
           ? _value.volume
@@ -566,9 +540,7 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
       required this.requestTimeStamp,
       required this.lastResponseFromDeviceTimeStamp,
       required this.deviceCbjUniqueId,
-      required this.openUrl,
       required this.pausePlayState,
-      required this.skip,
       required this.volume,
       this.deviceDtoClass,
       this.stateMassage})
@@ -635,11 +607,7 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
   @override
   final String? deviceCbjUniqueId;
   @override
-  final String? openUrl;
-  @override
   final String? pausePlayState;
-  @override
-  final String? skip;
   @override
   final String? volume;
   @override
@@ -649,7 +617,7 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
 
   @override
   String toString() {
-    return 'GenericSmartTvDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, smartTvSwitchState: $smartTvSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, openUrl: $openUrl, pausePlayState: $pausePlayState, skip: $skip, volume: $volume, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericSmartTvDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, smartTvSwitchState: $smartTvSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, pausePlayState: $pausePlayState, volume: $volume, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -715,10 +683,8 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
                     lastResponseFromDeviceTimeStamp) &&
             (identical(other.deviceCbjUniqueId, deviceCbjUniqueId) ||
                 other.deviceCbjUniqueId == deviceCbjUniqueId) &&
-            (identical(other.openUrl, openUrl) || other.openUrl == openUrl) &&
             (identical(other.pausePlayState, pausePlayState) ||
                 other.pausePlayState == pausePlayState) &&
-            (identical(other.skip, skip) || other.skip == skip) &&
             (identical(other.volume, volume) || other.volume == volume) &&
             (identical(other.deviceDtoClass, deviceDtoClass) ||
                 other.deviceDtoClass == deviceDtoClass) &&
@@ -758,9 +724,7 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
         requestTimeStamp,
         lastResponseFromDeviceTimeStamp,
         deviceCbjUniqueId,
-        openUrl,
         pausePlayState,
-        skip,
         volume,
         deviceDtoClass,
         stateMassage
@@ -811,9 +775,7 @@ abstract class _GenericSmartTvDeviceDtos extends GenericSmartTvDeviceDtos {
       required final String? requestTimeStamp,
       required final String? lastResponseFromDeviceTimeStamp,
       required final String? deviceCbjUniqueId,
-      required final String? openUrl,
       required final String? pausePlayState,
-      required final String? skip,
       required final String? volume,
       final String? deviceDtoClass,
       final String? stateMassage}) = _$GenericSmartTvDeviceDtosImpl;
@@ -879,11 +841,7 @@ abstract class _GenericSmartTvDeviceDtos extends GenericSmartTvDeviceDtos {
   @override
   String? get deviceCbjUniqueId;
   @override
-  String? get openUrl;
-  @override
   String? get pausePlayState;
-  @override
-  String? get skip;
   @override
   String? get volume;
   @override

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/src/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
@@ -17,7 +17,7 @@ class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
   EwelinkConnectorConjecture._singletonContractor()
       : super(
           vendorsAndServices: VendorsAndServices.sonoffEweLink,
-          mdnsVendorUniqueTypes: ['_ewelink._tcp'],
+          uniqeMdnsList: ['_ewelink._tcp'],
         );
 
   static final EwelinkConnectorConjecture _instance =

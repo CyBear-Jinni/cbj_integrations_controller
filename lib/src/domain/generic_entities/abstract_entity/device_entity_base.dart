@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/general_api.dart';
@@ -156,11 +156,11 @@ abstract class DeviceEntityBase {
   Future<Either<CoreFailure, Unit>> executeAction({
     required EntityProperties property,
     required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
+    HashMap<ActionValues, dynamic>? values,
   }) async {
     icLogger.e(
       'ExecuteAction is not implemented for device $_currentDeviceInfo '
-      'property ${property.name} action ${action.name} value $value',
+      'property ${property.name} action ${action.name} value $values',
     );
     return const Left(CoreFailure.unexpected());
   }
@@ -282,10 +282,4 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
 
   @override
   List<EntityProperties> getListOfPropertiesToChange() => [];
-}
-
-enum ActionValues {
-  url,
-  brightness,
-  ;
 }

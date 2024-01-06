@@ -5,7 +5,7 @@ import 'package:cbj_integrations_controller/src/domain/area/value_objects_area.d
 import 'package:cbj_integrations_controller/src/domain/binding/binding_cbj_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/binding/i_binding_cbj_repository.dart';
 import 'package:cbj_integrations_controller/src/domain/binding/value_objects_routine_cbj.dart';
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/local_db/local_db_failures.dart';
@@ -14,7 +14,6 @@ import 'package:cbj_integrations_controller/src/domain/routine/routine_cbj_entit
 import 'package:cbj_integrations_controller/src/domain/routine/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/i_scene_cbj_repository.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/scene/value_objects_scene_cbj.dart';
 import 'package:cbj_integrations_controller/src/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/vendors/esphome_login/generic_esphome_login_value_objects.dart';
 import 'package:cbj_integrations_controller/src/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
@@ -41,7 +40,6 @@ import 'package:cbj_integrations_controller/src/infrastructure/local_db/hive_obj
 import 'package:cbj_integrations_controller/src/infrastructure/local_db/hive_objects/scenes_hive_model.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/local_db/hive_objects/xiaomi_mi_vendor_credentials_hive_model.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/routines/routine_cbj_dtos.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/scenes/scene_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_manager_d.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector_conjecture.dart';
 import 'package:dartz/dartz.dart';

@@ -11,6 +11,7 @@ import 'package:rxdart/rxdart.dart';
 
 part 'package:cbj_integrations_controller/src/infrastructure/bindings/binding_repository.dart';
 
+@Deprecated('New architecture. Moved to AutomationService')
 abstract class IBindingCbjRepository {
   static IBindingCbjRepository? _instance;
 

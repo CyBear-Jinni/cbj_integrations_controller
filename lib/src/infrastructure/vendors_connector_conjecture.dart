@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_object.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
-import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_empty_entity/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
@@ -87,7 +87,7 @@ class VendorsConnectorConjecture {
 
   /// Getting ActiveHost that contain MdnsInfo property and activate it inside
   /// The correct company.
-  Future setMdnsDeviceByCompany(GenericUnsupportedDE entity) async {
+  Future setMdnsDevice(GenericUnsupportedDE entity) async {
     final String? mdnsDeviceIp = entity.deviceLastKnownIp.getOrCrash();
     final String? mdnsName = entity.deviceMdns.getOrCrash();
 
@@ -123,7 +123,7 @@ class VendorsConnectorConjecture {
     for (final VendorConnectorConjectureService connectorConjecture
         in VendorConnectorConjectureService.vendorConnectorConjectureClass) {
       final bool containUniqueType =
-          connectorConjecture.mdnsVendorUniqueTypes.contains(serviceType);
+          connectorConjecture.uniqeMdnsList.contains(serviceType);
 
       if (containUniqueType) {
         companyConnectorConjecture = connectorConjecture;
@@ -131,7 +131,7 @@ class VendorsConnectorConjecture {
       }
 
       final bool containServiceType =
-          connectorConjecture.mdnsTypes.contains(serviceType);
+          connectorConjecture.mdnsList.contains(serviceType);
       if (!containServiceType) {
         continue;
       }
@@ -269,20 +269,15 @@ class VendorsConnectorConjecture {
     return null;
   }
 
-  void setEntityState({
-    required HashMap<VendorsAndServices, HashSet<String>> uniqueIdByVendor,
-    required EntityProperties property,
-    required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
-  }) {
+  void setEntitiesState(ActionObject action) {
     for (final MapEntry<VendorsAndServices, HashSet<String>> entry
-        in uniqueIdByVendor.entries.toList()) {
+        in action.uniqueIdByVendor.entries.toList()) {
       final VendorsAndServices vendor = entry.key;
       getVendorConnectorConjecture(vendor)?.setEntityState(
         ids: entry.value,
-        action: action,
-        property: property,
-        value: value,
+        action: action.actionType,
+        property: action.property,
+        value: action.value,
       );
     }
   }

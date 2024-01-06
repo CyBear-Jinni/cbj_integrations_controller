@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:cbj_integrations_controller/src/domain/core/request_types.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
@@ -10,8 +10,8 @@ abstract class VendorConnectorConjectureService {
   VendorConnectorConjectureService({
     required this.vendorsAndServices,
     this.ports = const [],
-    this.mdnsVendorUniqueTypes = const [],
-    this.mdnsTypes = const [],
+    this.uniqeMdnsList = const [],
+    this.mdnsList = const [],
     this.uniqueIdentifierNameInMdns = const [],
   }) {
     vendorConnectorConjectureClass.add(this);
@@ -52,11 +52,11 @@ abstract class VendorConnectorConjectureService {
 
   /// Exists only for the vendor devices
   @nonVirtual
-  final List<String> mdnsVendorUniqueTypes;
+  final List<String> uniqeMdnsList;
 
   /// Can be found on more then one vendor
   @nonVirtual
-  final List<String> mdnsTypes;
+  final List<String> mdnsList;
 
   @nonVirtual
   final List<String> uniqueIdentifierNameInMdns;
@@ -101,7 +101,7 @@ abstract class VendorConnectorConjectureService {
         );
         continue;
       }
-      entity.executeAction(property: property, action: action, value: value);
+      entity.executeAction(property: property, action: action, values: value);
     }
   }
 }

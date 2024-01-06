@@ -72,6 +72,7 @@ abstract class SceneCbjDtos implements _$SceneCbjDtos {
       senderId: SceneCbjSenderId(senderId),
       compUuid: SceneCbjCompUuid(compUuid),
       stateMassage: SceneCbjStateMassage(stateMassage),
+      actions: [],
     );
   }
 }
