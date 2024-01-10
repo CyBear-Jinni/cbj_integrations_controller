@@ -14,7 +14,10 @@ class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
 
   CbjDevicesConnectorConjecture._singletonContractor()
       : super(
-          vendorsAndServices: VendorsAndServices.cbjDeviceSmartEntity,
+          VendorsAndServices.cbjDeviceSmartEntity,
+          displayName: 'CBJ',
+          imageUrl:
+              'https://github.com/CyBear-Jinni/CBJ_Site/blob/master/assets/images/cbj_app_icon_no_bg.png?raw=true',
           ports: [50054],
         );
 
@@ -79,7 +82,7 @@ class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+  Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) async =>
       HashMap();

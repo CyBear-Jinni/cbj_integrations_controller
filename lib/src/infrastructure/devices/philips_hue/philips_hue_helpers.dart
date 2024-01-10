@@ -70,7 +70,7 @@ class PhilipsHueHelpers {
               entity.lastResponseFromDeviceTimeStamp,
           deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
           lightSwitchState: GenericDimmableLightSwitchState(
-            lightState != null && lightState.on != null && lightState.on == true
+            lightState != null && lightState.on != null && lightState.on!
                 ? EntityActions.on.toString()
                 : EntityActions.off.toString(),
           ),

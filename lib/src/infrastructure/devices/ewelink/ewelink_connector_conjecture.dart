@@ -4,7 +4,6 @@ import 'dart:collection';
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/ewelink/ewelink_helpers.dart';
 import 'package:dart_ewelink_api/dart_ewelink_api.dart';
@@ -16,7 +15,11 @@ class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
 
   EwelinkConnectorConjecture._singletonContractor()
       : super(
-          vendorsAndServices: VendorsAndServices.sonoffEweLink,
+          VendorsAndServices.sonoffEweLink,
+          displayName: 'Sonoff eWeLink',
+          imageUrl:
+              'https://play-lh.googleusercontent.com/nfDq8xm5ueWPIZswiRD8PxzjmFAmOBgByV1CpFfAhau1_D_XCP2jW0EZ3VMEtZwbVRk=s180',
+          loginType: VendorLoginTypes.emailAndPassword,
           uniqeMdnsList: ['_ewelink._tcp'],
         );
 
@@ -25,16 +28,9 @@ class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
 
   Ewelink? ewelink;
 
-  Future<bool> accountLogin(
-    GenericEwelinkLoginDE loginDE,
-  ) async {
+  @override
+  Future loginEmailAndPassword(String email, String password) async {
     try {
-      final String email = loginDE.ewelinkAccountEmail.getOrCrash();
-      final String password = loginDE.ewelinkAccountPass.getOrCrash();
-      if (email.isEmpty || password.isEmpty) {
-        return false;
-      }
-
       ewelink = Ewelink(
         email: email,
         password: password,
@@ -55,8 +51,6 @@ class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
     return true;
   }
 
-  Future<bool>? didRequestLogin;
-
   Future<void> waitUntilConnectionEstablished(int executed) async {
     if (executed > 20 || ewelink != null) {
       await Future.delayed(const Duration(seconds: 50));
@@ -67,20 +61,12 @@ class EwelinkConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+  Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) async {
     if (ewelink == null) {
-      didRequestLogin = accountLogin(GenericEwelinkLoginDE.empty());
-      if (!await didRequestLogin!) {
-        didRequestLogin = null;
-        icLogger.w(
-            'eWeLink device got found but missing a email and password, please add '
-            'it in the app');
-        return HashMap();
-      }
+      return HashMap();
     }
-    didRequestLogin = null;
 
     List<EwelinkDevice> devices;
     try {

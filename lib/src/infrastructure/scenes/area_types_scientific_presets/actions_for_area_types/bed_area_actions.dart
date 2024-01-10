@@ -24,23 +24,8 @@ class BedAreaAreaAction {
         ]);
       case EntityTypes.boiler:
         break;
-      case EntityTypes.browserApp:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.button:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.cctLight:
-        // TODO: Turn off dim light in case it turned on in the night.
-        break;
-      case EntityTypes.computerApp:
-        // TODO: Turn sleep mode.
-        break;
       case EntityTypes.dimmableLight:
         // TODO: Turn off dim light in case it turned on in the night.
-        break;
-      case EntityTypes.hub:
-        // TODO: Handle this case.
         break;
       case EntityTypes.light:
         actionsList.addEntries([
@@ -49,20 +34,8 @@ class BedAreaAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.phoneApp:
-        // TODO: Put phone on sleep mode, gray screen as well as quite and maybe set alarm clock for the morning.
-        break;
       case EntityTypes.printer:
         // TODO: Postpone maintenance.
-        break;
-      case EntityTypes.printerWithScanner:
-        // TODO: Postpone maintenance.
-        break;
-      case EntityTypes.rgbLights:
-        // TODO: Turn off and dim light in case it turned on in the night.
-        break;
-      case EntityTypes.rgbcctLights:
-        // TODO: Turn off and dim light in case it turned on in the night.
         break;
       case EntityTypes.rgbwLights:
         actionsList.addEntries([
@@ -71,9 +44,6 @@ class BedAreaAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.scanner:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.securityCamera:
         // TODO: Handle this case.
         break;
@@ -114,15 +84,8 @@ class BedAreaAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.playerEntity:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.routerEntity:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.voiceAssistant:
-        // TODO: Handle this case.
-        break;
+      case EntityTypes.ac:
+      // TODO: Handle this case.
     }
     return right(actionsList);
   }

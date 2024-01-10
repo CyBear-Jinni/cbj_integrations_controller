@@ -14,16 +14,6 @@ import 'package:cbj_integrations_controller/src/domain/routine/routine_cbj_entit
 import 'package:cbj_integrations_controller/src/domain/routine/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/i_scene_cbj_repository.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/esphome_login/generic_esphome_login_value_objects.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/ewelink_login/generic_ewelink_login_value_objects.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/lifx_login/generic_lifx_login_value_objects.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/login_abstract/login_entity_abstract.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/login_abstract/value_login_objects_core.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_value_objects.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/area/area_entity_dtos.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/bindings/binding_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
@@ -41,7 +31,6 @@ import 'package:cbj_integrations_controller/src/infrastructure/local_db/hive_obj
 import 'package:cbj_integrations_controller/src/infrastructure/local_db/hive_objects/xiaomi_mi_vendor_credentials_hive_model.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/routines/routine_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_manager_d.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector_conjecture.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hive/hive.dart';
 
@@ -84,30 +73,6 @@ abstract class IDbRepository {
     required String remotePipesDomainName,
   });
 
-  Future<Either<LocalDbFailures, GenericLifxLoginDE>>
-      getLifxVendorLoginCredentials({
-    required Set<LifxVendorCredentialsHiveModel>
-        lifxVendorCredentialsModelFromDb,
-  });
-
-  Future<Either<LocalDbFailures, GenericEspHomeLoginDE>>
-      getEspHomeVendorLoginCredentials({
-    required Set<EspHomeVendorCredentialsHiveModel>
-        espHomeVendorCredentialsModelFromDb,
-  });
-
-  Future<Either<LocalDbFailures, GenericXiaomiMiLoginDE>>
-      getXiaomiMiVendorLoginCredentials({
-    required Set<XiaomiMiVendorCredentialsHiveModel>
-        xiaomiMiVendorCredentialsModelFromDb,
-  });
-
-  Future<Either<LocalDbFailures, GenericEwelinkLoginDE>>
-      getEwelinkVendorLoginCredentials({
-    required Set<EwelinkVendorCredentialsHiveModel>
-        ewelinkVendorCredentialsModelFromDb,
-  });
-
   Future<Either<LocalDbFailures, Unit>> saveAreasToDb({
     required Set<AreaEntity> areasList,
   });
@@ -126,9 +91,5 @@ abstract class IDbRepository {
 
   Future<Either<LocalDbFailures, Unit>> saveBindings({
     required Set<BindingCbjEntity> bindingList,
-  });
-
-  Future<Either<LocalDbFailures, Unit>> saveVendorLoginCredentials({
-    required LoginEntityAbstract loginEntityAbstract,
   });
 }

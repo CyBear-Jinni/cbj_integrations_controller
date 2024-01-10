@@ -6,7 +6,6 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_light_entity/generic_light_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/lifx/lifx_helpers.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/lifx/lifx_white/lifx_white_entity.dart';
@@ -18,16 +17,24 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   LifxConnectorConjecture._singletonContractor()
-      : super(vendorsAndServices: VendorsAndServices.lifx);
+      : super(
+          VendorsAndServices.lifx,
+          displayName: 'Lifx',
+          imageUrl:
+              'https://play-lh.googleusercontent.com/k61DT9oYt_BPdzjAFokLY5e-He-YSl7-eZHeieaVO45XDAwQ6ebegsS_ZsQytca2zWM=s180',
+          urlToLoginCredantials: 'https://cloud.lifx.com/',
+          loginType: VendorLoginTypes.apiKey,
+        );
 
   static final LifxConnectorConjecture _instance =
       LifxConnectorConjecture._singletonContractor();
 
   // TODO: Convert search from cloud into connector conjector
-  Future<String> accountLogin(GenericLifxLoginDE genericLifxLoginDE) async {
-    lifxClient = LIFXClient(genericLifxLoginDE.lifxApiKey.getOrCrash());
+
+  @override
+  Future loginApiKey(String value) async {
+    lifxClient = LIFXClient(value);
     _discoverNewDevices();
-    return 'Success';
   }
 
   LIFXClient? lifxClient;
@@ -85,7 +92,7 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+  Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) async =>
       HashMap();

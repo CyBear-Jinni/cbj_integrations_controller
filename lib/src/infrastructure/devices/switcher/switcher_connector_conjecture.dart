@@ -14,7 +14,12 @@ class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   SwitcherConnectorConjecture._singletonContractor()
-      : super(vendorsAndServices: VendorsAndServices.switcherSmartHome) {
+      : super(
+          VendorsAndServices.switcherSmartHome,
+          displayName: 'Switcher',
+          imageUrl:
+              'https://play-lh.googleusercontent.com/8L6vVAT2cC78V622nxSznr7Mm_MgMsH25TopH-ZIm5HMwAHRy0qTX29FlHF6_kbBsQ=s180',
+        ) {
     bindSocketSearchStream();
   }
 
@@ -45,7 +50,7 @@ class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   @override
-  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+  Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) async =>
       // It is getting converted in bindSocketSearchStream

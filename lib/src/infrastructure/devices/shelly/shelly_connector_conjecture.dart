@@ -12,8 +12,11 @@ class ShellyConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   ShellyConnectorConjecture._singletonContractor()
-      : super(
-          vendorsAndServices: VendorsAndServices.shelly,
+      : super(VendorsAndServices.shelly,
+                displayName: 'Shelly' ,
+        imageUrl: 
+            'https://play-lh.googleusercontent.com/cwAyt0LIs4cyXSs2jr79xjAxsuq4KoBTZNq__gpeQvupH-8PElGn6kiddx8-WfG8wEPl=s180',
+
           mdnsList: ['_http._tcp'],
           uniqueIdentifierNameInMdns: ['shelly'],
         );
@@ -22,7 +25,7 @@ class ShellyConnectorConjecture extends VendorConnectorConjectureService {
       ShellyConnectorConjecture._singletonContractor();
 
   @override
-  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+  Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) =>
       ShellyHelpers.addDiscoveredDevice(entity);

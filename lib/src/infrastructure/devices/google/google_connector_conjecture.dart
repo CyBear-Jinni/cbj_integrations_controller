@@ -13,7 +13,10 @@ class GoogleConnectorConjecture extends VendorConnectorConjectureService {
 
   GoogleConnectorConjecture._singletonContractor()
       : super(
-          vendorsAndServices: VendorsAndServices.google,
+          VendorsAndServices.google,
+          displayName: 'Google',
+          imageUrl:
+              'https://play-lh.googleusercontent.com/aFWiT2lTa9CYBpyPjfgfNHd0r5puwKRGj2rHpdPTNrz2N9LXgN_MbLjePd1OTc0E8Rl1=s180',
           uniqeMdnsList: ['_googlecast._tcp', '_androidtvremote2._tcp'],
           mdnsList: ['_rc._tcp'],
           uniqueIdentifierNameInMdns: ['google', 'android', 'chrome'],
@@ -23,7 +26,7 @@ class GoogleConnectorConjecture extends VendorConnectorConjectureService {
       GoogleConnectorConjecture._singletonContractor();
 
   @override
-  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+  Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) =>
       GoogleHelpers.addDiscoveredDevice(entity);
