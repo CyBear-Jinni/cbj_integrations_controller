@@ -3,23 +3,37 @@ import 'dart:collection';
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_type_utils.dart';
+import 'package:cbj_integrations_controller/src/domain/generic_entities/vendor_entity_information.dart';
+import 'package:cbj_integrations_controller/src/domain/vendor_login_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:meta/meta.dart';
 
 abstract class VendorConnectorConjectureService {
-  VendorConnectorConjectureService({
-    required this.vendorsAndServices,
+  VendorConnectorConjectureService(
+    this.vendorsAndServices, {
+    required String displayName,
+    required String imageUrl,
+    VendorLoginTypes loginType = VendorLoginTypes.notNeeded,
+    String? urlToLoginCredantials,
     this.ports = const [],
     this.uniqeMdnsList = const [],
     this.mdnsList = const [],
     this.uniqueIdentifierNameInMdns = const [],
+    this.deviceHostNameLowerCaseList = const [],
   }) {
-    vendorConnectorConjectureClass.add(this);
+    vendorEntityInformation = VendorEntityInformation(
+      vendorsAndServices,
+      loginType: loginType,
+      displayName: displayName,
+      imageUrl: imageUrl,
+      urlToLoginCredantials: urlToLoginCredantials,
+    );
+    instanceMapByType.addEntries([MapEntry(vendorsAndServices, this)]);
     addToPortByVendor(vendorsAndServices, ports);
   }
 
-  static HashSet<VendorConnectorConjectureService>
-      vendorConnectorConjectureClass = HashSet();
+  static HashMap<VendorsAndServices, VendorConnectorConjectureService>
+      instanceMapByType = HashMap();
 
   static final HashMap<VendorsAndServices, List<int>> _portsUsedByVendor =
       HashMap();
@@ -41,6 +55,14 @@ abstract class VendorConnectorConjectureService {
   final VendorsAndServices vendorsAndServices;
 
   final List<int> ports;
+
+  late final VendorEntityInformation vendorEntityInformation;
+  final List<String> deviceHostNameLowerCaseList;
+
+  // String? _userName;
+  // String? _password;
+  // String? _authToken;
+  String? apiKey;
 
   /// Stores all devices for the each vendor, devices will be stored as the
   /// vendor implementation and not as generic devices
@@ -65,7 +87,7 @@ abstract class VendorConnectorConjectureService {
     DeviceEntityBase entity,
   ) async {
     final HashMap<String, DeviceEntityBase> vendorEntityMap =
-        await convertToVendorDevice(entity);
+        await newEntityToVendorDevice(entity);
     if (vendorEntityMap.isEmpty) {
       return null;
     }
@@ -83,7 +105,8 @@ abstract class VendorConnectorConjectureService {
     return vendorEntityMap;
   }
 
-  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+  /// Converting new entity that got found into its vendor type
+  Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   );
 
@@ -102,6 +125,36 @@ abstract class VendorConnectorConjectureService {
         continue;
       }
       entity.executeAction(property: property, action: action, values: value);
+    }
+  }
+
+  void loginApiKey(String value) {}
+  void loginAuthToken(String value) {}
+  void loginEmailAndPassword(String email, String password) {}
+
+  void login(VendorLoginEntity vendorLoginService) {
+    switch (vendorEntityInformation.loginType) {
+      case VendorLoginTypes.notNeeded:
+        break;
+      case VendorLoginTypes.authToken:
+        if (vendorLoginService.authToken == null) {
+          return;
+        }
+        loginAuthToken(vendorLoginService.apiKey!);
+      case VendorLoginTypes.apiKey:
+        if (vendorLoginService.apiKey == null) {
+          return;
+        }
+        loginApiKey(vendorLoginService.apiKey!);
+      case VendorLoginTypes.emailAndPassword:
+        if (vendorLoginService.email == null ||
+            vendorLoginService.password == null) {
+          return;
+        }
+        loginEmailAndPassword(
+          vendorLoginService.email!,
+          vendorLoginService.password!,
+        );
     }
   }
 }

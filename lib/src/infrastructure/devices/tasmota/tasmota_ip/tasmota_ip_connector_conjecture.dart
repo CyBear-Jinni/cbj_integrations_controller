@@ -12,7 +12,12 @@ class TasmotaIpConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   TasmotaIpConnectorConjecture._singletonContractor()
-      : super(vendorsAndServices: VendorsAndServices.tasmota);
+      : super(
+          VendorsAndServices.tasmota,
+          displayName: 'Tasmota',
+          imageUrl: 'https://i.ibb.co/XZLGCRd/Tasmota-logo.png',
+          deviceHostNameLowerCaseList: ['tasmota'],
+        );
 
   static final TasmotaIpConnectorConjecture _instance =
       TasmotaIpConnectorConjecture._singletonContractor();
@@ -22,7 +27,7 @@ class TasmotaIpConnectorConjecture extends VendorConnectorConjectureService {
   // http://ip/cm?cmnd=MqttHost%200
 
   @override
-  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+  Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) =>
       TasmotaIpHelpers.addDiscoveredDevice(entity);

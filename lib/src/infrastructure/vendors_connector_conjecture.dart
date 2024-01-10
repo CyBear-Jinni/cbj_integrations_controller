@@ -7,27 +7,20 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_empty_entity/generic_empty_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/esphome_login/generic_esphome_login_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/ewelink_login/generic_ewelink_login_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/lifx_login/generic_lifx_login_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/login_abstract/login_entity_abstract.dart';
-import 'package:cbj_integrations_controller/src/domain/vendors/xiaomi_mi_login/generic_xiaomi_mi_login_entity.dart';
+import 'package:cbj_integrations_controller/src/domain/generic_entities/vendor_entity_information.dart';
+import 'package:cbj_integrations_controller/src/domain/vendor_login_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/devices/esphome/esphome_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/ewelink/ewelink_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/google/google_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/hp/hp_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/lifx/lifx_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/philips_hue/philips_hue_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/devices/sensibo/sensibo_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/shelly/shelly_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/devices/sonoff_diy/sonoff_diy_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/switcher/switcher_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/devices/tasmota/tasmota_mqtt/tasmota_mqtt_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/devices/unseported_vendor_or_device/unseported_vendor_or_device.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/devices/wiz/wiz_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/devices/xiaomi_io/xiaomi_io_connector_conjecture.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/devices/unseported_vendor_or_device/unseported_vendor_or_device_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/yeelight/yeelight_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/entities_service.dart';
 
@@ -39,20 +32,16 @@ class VendorsConnectorConjecture {
   VendorsConnectorConjecture._singletonConstructor() {
     UnseportedVendorOrDeviceConnectorConjecture();
     YeelightConnectorConjecture();
-    XiaomiIoConnectorConjecture();
-    WizConnectorConjecture();
-    TasmotaMqttConnectorConjecture();
     TasmotaIpConnectorConjecture();
     SwitcherConnectorConjecture();
-    SonoffDiyConnectorConjecture();
     ShellyConnectorConjecture();
     PhilipsHueConnectorConjecture();
     LifxConnectorConjecture();
     HpConnectorConjecture();
     GoogleConnectorConjecture();
     EwelinkConnectorConjecture();
-    EspHomeConnectorConjecture();
     CbjDevicesConnectorConjecture();
+    SensiboConnectorConjecture();
   }
 
   static final VendorsConnectorConjecture _instance =
@@ -70,20 +59,14 @@ class VendorsConnectorConjecture {
   //   return deviceEntityGotSaved;
   // }
 
-  void setVendorLoginCredentials(LoginEntityAbstract loginEntity) {
-    if (loginEntity is GenericLifxLoginDE) {
-      LifxConnectorConjecture().accountLogin(loginEntity);
-    } else if (loginEntity is GenericEspHomeLoginDE) {
-      EspHomeConnectorConjecture().accountLogin(loginEntity);
-    } else if (loginEntity is GenericXiaomiMiLoginDE) {
-      XiaomiIoConnectorConjecture().accountLogin(loginEntity);
-    } else if (loginEntity is GenericEwelinkLoginDE) {
-      EwelinkConnectorConjecture().accountLogin(loginEntity);
-    } else {
-      icLogger
-          .w('Vendor login type ${loginEntity.runtimeType} is not supported');
-    }
-  }
+  List<VendorEntityInformation> getVendors() =>
+      VendorConnectorConjectureService.instanceMapByType.values
+          .map((e) => e.vendorEntityInformation)
+          .toList();
+  void loginVendor(VendorLoginEntity vendorLoginService) =>
+      VendorConnectorConjectureService
+          .instanceMapByType[vendorLoginService.vendor]
+          ?.login(vendorLoginService);
 
   /// Getting ActiveHost that contain MdnsInfo property and activate it inside
   /// The correct company.
@@ -121,7 +104,7 @@ class VendorsConnectorConjecture {
     VendorConnectorConjectureService? companyConnectorConjecture;
 
     for (final VendorConnectorConjectureService connectorConjecture
-        in VendorConnectorConjectureService.vendorConnectorConjectureClass) {
+        in VendorConnectorConjectureService.instanceMapByType.values) {
       final bool containUniqueType =
           connectorConjecture.uniqeMdnsList.contains(serviceType);
 
@@ -172,25 +155,23 @@ class VendorsConnectorConjecture {
       return;
     }
 
-    VendorsAndServices? vendor;
-
-    if (deviceHostNameLowerCase.contains('tasmota')) {
-      vendor = VendorsAndServices.tasmota;
-    } else if (deviceHostNameLowerCase.contains('xiaomi') ||
-        deviceHostNameLowerCase.contains('xiao')) {
-      vendor = VendorsAndServices.xiaomi;
-    } else if (deviceHostNameLowerCase.contains('yeelink')) {
-      // TODO: Check if yeelink -> yeelight is ok
-      vendor = VendorsAndServices.yeelight;
-    } else if (deviceHostNameLowerCase.startsWith('wiz')) {
-      vendor = VendorsAndServices.wiz;
-    }
-
     VendorConnectorConjectureService? companyConnectorConjecture;
 
-    if (vendor != null) {
-      companyConnectorConjecture = getVendorConnectorConjecture(vendor);
+    for (final MapEntry<VendorsAndServices,
+            VendorConnectorConjectureService> vendorAndInstance
+        in VendorConnectorConjectureService.instanceMapByType.entries) {
+      for (final String adeviceHostNameLowerCase
+          in vendorAndInstance.value.deviceHostNameLowerCaseList) {
+        if (deviceHostNameLowerCase.contains(adeviceHostNameLowerCase)) {
+          companyConnectorConjecture = vendorAndInstance.value;
+          break;
+        }
+      }
+      if (companyConnectorConjecture != null) {
+        break;
+      }
     }
+
     if (companyConnectorConjecture == null) {
       return;
     }
@@ -216,15 +197,7 @@ class VendorsConnectorConjecture {
     foundEntityOfVendor(vendorConnectorConjectureService, entity, port);
   }
 
-  // Bad practice
-  void customeSearch(HashMap<String, DeviceEntityBase> value) {
-    if (value.isEmpty) {
-      return;
-    }
-    EntitiesService().discovedEntity(value);
-  }
-
-  Future<void> foundEntityOfVendor(
+  Future foundEntityOfVendor(
     VendorConnectorConjectureService vendorConnectorConjectureService,
     DeviceEntityBase entity,
     String deviceCbjUniqueId,
@@ -243,10 +216,11 @@ class VendorsConnectorConjecture {
               CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
       );
     }
+
     if (handeldEntities == null || handeldEntities.isEmpty) {
       return;
     }
-    EntitiesService().discovedEntity(handeldEntities);
+    EntitiesService().addDiscovedEntity(handeldEntities);
   }
 
   HashMap<VendorsAndServices, List<int>>? portsToScen() {
@@ -256,11 +230,10 @@ class VendorsConnectorConjecture {
   VendorConnectorConjectureService? getVendorConnectorConjecture(
     VendorsAndServices vendor,
   ) {
-    for (final VendorConnectorConjectureService vendorConnectorConjecture
-        in VendorConnectorConjectureService.vendorConnectorConjectureClass) {
-      if (vendorConnectorConjecture.vendorsAndServices == vendor) {
-        return vendorConnectorConjecture;
-      }
+    final VendorConnectorConjectureService? vendorInstance =
+        VendorConnectorConjectureService.instanceMapByType[vendor];
+    if (vendorInstance != null) {
+      return vendorInstance;
     }
 
     icLogger.w(

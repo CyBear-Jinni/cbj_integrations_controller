@@ -5,9 +5,12 @@ import 'package:cbj_integrations_controller/src/domain/area/area_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/area/i_area_repository.dart';
 import 'package:cbj_integrations_controller/src/domain/core/request_action_object.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/src/domain/generic_entities/vendor_entity_information.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_entity.dart';
+import 'package:cbj_integrations_controller/src/domain/vendor_login_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/automations_service.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/entities_service.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector_conjecture.dart';
 
 /// Creating a common front out side of integrations controller.
 /// Also makes sure to notefy the services for changes that relaye to each other
@@ -35,6 +38,12 @@ class IcSynchronizer {
 
   Future<HashMap<String, DeviceEntityBase>> getEntities() async =>
       EntitiesService().getEntities();
+
+  Future loginVendor(VendorLoginEntity value) async =>
+      VendorsConnectorConjecture().loginVendor(value);
+
+  List<VendorEntityInformation> getVendors() =>
+      VendorsConnectorConjecture().getVendors();
 
   //  -------------------- IAreaRepository --------------------
 

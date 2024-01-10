@@ -26,6 +26,7 @@ enum EntityProperties {
   switchState,
   speekers,
   color,
+  acSwitchState,
   ;
 
   bool containsAction(EntityActions action) {
@@ -166,7 +167,7 @@ class EntityUtils {
     return null;
   }
 
-  static VendorsAndServices? stringToDeviceVendor(String deviceVendorAsString) {
+  static VendorsAndServices stringToDeviceVendor(String deviceVendorAsString) {
     String deviceTypeAsStringTemp = deviceVendorAsString;
     if (deviceTypeAsStringTemp.contains('Object')) {
       deviceTypeAsStringTemp = deviceTypeAsStringTemp.substring(
@@ -179,7 +180,7 @@ class EntityUtils {
         return deviceType;
       }
     }
-    return null;
+    return VendorsAndServices.vendorsAndServicesNotSupported;
   }
 
   ///  Convert deviceAction to string

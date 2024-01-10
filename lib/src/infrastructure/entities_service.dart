@@ -15,7 +15,7 @@ class EntitiesService {
   static final EntitiesService _instance =
       EntitiesService._singletonConstractor();
 
-  void discovedEntity(HashMap<String, DeviceEntityBase> entities) {
+  void addDiscovedEntity(HashMap<String, DeviceEntityBase> entities) {
     descoverdDeviceList.addAll(entities);
     IcSynchronizer().newEntity(entities);
   }

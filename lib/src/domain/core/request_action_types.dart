@@ -33,7 +33,6 @@ enum EntityStateGRPC {
 
   /// Update hub entity object properties from the real entity
   updateHubEntityPropertiesFromRealEntity,
-  ;
 }
 
 enum VendorsAndServices {
@@ -59,7 +58,7 @@ enum VendorsAndServices {
   cyBearJinniAppSmartEntity,
   securityBear,
   jinniAssistant,
-  ;
+  apple,
 }
 
 enum EntityTypes {
@@ -67,41 +66,22 @@ enum EntityTypes {
   light,
   blinds,
   boiler,
-  button,
-  hub,
-
-  /// The app running on a phone.
-  phoneApp,
-
-  /// The app running on a computer.
-  computerApp,
 
   /// The app running on a browser.
-  browserApp,
   switch_,
   dimmableLight,
-  cctLight,
-  rgbLights,
   rgbwLights,
-  rgbcctLights,
   smartTV,
   securityCamera,
   smartPlug,
   printer,
-  scanner,
-  printerWithScanner,
 
   /// Entity with full computer excess like executing commands and checking
   /// process status.
   smartComputer,
   emptyEntity,
   pingEntity,
-  routerEntity,
-
-  /// Music player
-  playerEntity,
-  voiceAssistant,
-  ;
+  ac,
 }
 
 enum EntityActions {
@@ -138,7 +118,6 @@ enum EntityActions {
   changeMod,
   speek,
   hsvColor,
-  ;
 }
 
 enum WhenToExecute {
@@ -155,7 +134,6 @@ enum WhenToExecute {
   atHome,
   outOfHome,
   atASpecificTime, // Example: Only on Sunday and Tuesday at 5:35
-  ;
 }
 
 enum ActionValues {
@@ -167,5 +145,11 @@ enum ActionValues {
   saturation,
   value,
   temperature,
-  ;
+}
+
+enum VendorLoginTypes {
+  notNeeded,
+  authToken,
+  apiKey,
+  emailAndPassword,
 }

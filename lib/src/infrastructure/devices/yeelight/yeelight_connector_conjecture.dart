@@ -14,12 +14,14 @@ class YeelightConnectorConjecture extends VendorConnectorConjectureService {
 
   YeelightConnectorConjecture._singletonContractor()
       : super(
-          vendorsAndServices: VendorsAndServices.yeelight,
+          VendorsAndServices.yeelight,
+          displayName: 'Yeelight',
+          imageUrl:
+              'https://play-lh.googleusercontent.com/bteU9OSFF9z596eUOkGgM3XpWF2-b1VsKvmwWFitaI4qMwVPmx3lS09fHFDx8-CX3Q=s180',
           uniqueIdentifierNameInMdns: ['YL'],
           mdnsList: ['_hap._tcp'],
-        ) {
-    // customeSearch();
-  }
+          deviceHostNameLowerCaseList: ['yeelink'],
+        );
 
   static final YeelightConnectorConjecture _instance =
       YeelightConnectorConjecture._singletonContractor();
@@ -28,7 +30,7 @@ class YeelightConnectorConjecture extends VendorConnectorConjectureService {
   bool searchStarted = false;
 
   @override
-  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+  Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) async {
     final responses = await Yeelight.discover();

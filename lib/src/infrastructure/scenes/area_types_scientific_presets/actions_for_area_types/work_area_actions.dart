@@ -25,22 +25,7 @@ class WorkAreaAreaAction {
         ]);
       case EntityTypes.boiler:
         break;
-      case EntityTypes.browserApp:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.button:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.cctLight:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.computerApp:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.dimmableLight:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.hub:
         // TODO: Handle this case.
         break;
       case EntityTypes.light:
@@ -50,19 +35,7 @@ class WorkAreaAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.phoneApp:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.printer:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.printerWithScanner:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.rgbLights:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.rgbcctLights:
         // TODO: Handle this case.
         break;
       case EntityTypes.rgbwLights:
@@ -84,9 +57,6 @@ class WorkAreaAreaAction {
             brokerNodeId,
           ),
         ]);
-      case EntityTypes.scanner:
-        // TODO: Handle this case.
-        break;
       case EntityTypes.securityCamera:
         // TODO: Handle this case.
         break;
@@ -118,15 +88,8 @@ class WorkAreaAreaAction {
       case EntityTypes.smartComputer:
         // TODO: Handle this case.
         break;
-      case EntityTypes.playerEntity:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.routerEntity:
-        // TODO: Handle this case.
-        break;
-      case EntityTypes.voiceAssistant:
-        // TODO: Handle this case.
-        break;
+      case EntityTypes.ac:
+      // TODO: Handle this case.
     }
     return right(actionsList);
   }

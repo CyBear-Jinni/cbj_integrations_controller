@@ -74,6 +74,9 @@ dependencies:
   protobuf: ^3.1.0
   # Extends the capabilities of Dart Streams and StreamControllers.
   rxdart: ^0.27.7
+  # Control Sensibo accessories 
+  sensibo: 
+    git: "https://github.com/CyBear-Jinni/sensibo.git"
   # Communicate with Shelly smart devices
   shelly:
     git: "https://github.com/CyBear-Jinni/shelly.git"

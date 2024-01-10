@@ -13,8 +13,12 @@ class PhilipsHueConnectorConjecture extends VendorConnectorConjectureService {
 
   PhilipsHueConnectorConjecture._singletonContractor()
       : super(
-          vendorsAndServices: VendorsAndServices.philipsHue,
+          VendorsAndServices.philipsHue,
+          displayName: 'Philips Hue',
+          imageUrl:
+              'https://play-lh.googleusercontent.com/FUlW6h3cACamheiCHH1cE67irohAZq_dJ92irK92cryKwHUtY6ZTSv5d041qPZ9UOt3n=s180',
           uniqeMdnsList: ['_hue._tcp'],
+          // TODO: what type  loginType: VendorLoginTypes.,
         );
 
   static final PhilipsHueConnectorConjecture _instance =
@@ -23,7 +27,7 @@ class PhilipsHueConnectorConjecture extends VendorConnectorConjectureService {
   static bool gotHueHubIp = false;
 
   @override
-  Future<HashMap<String, DeviceEntityBase>> convertToVendorDevice(
+  Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) =>
       PhilipsHueHelpers.addDiscoveredDevice(entity);

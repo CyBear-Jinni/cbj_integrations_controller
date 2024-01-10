@@ -238,7 +238,7 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           cbjDeviceVendor: CbjDeviceVendor(
             VendorsAndServices.vendorsAndServicesNotSupported.toString(),
           ),
-          entityStateGRPC: EntityState.state(EntityStateGRPC.stateNotSupported),
+          entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
           compUuid: DeviceCompUuid(const Uuid().v1()),
           cbjEntityName: CbjEntityName('Cbj entity Name is empty'),
           entityOriginalName:
