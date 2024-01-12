@@ -3,12 +3,10 @@ import 'dart:collection';
 
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
-import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
-import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_light_entity/generic_light_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/lifx/lifx_helpers.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/devices/lifx/lifx_white/lifx_white_entity.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector_conjecture.dart';
 import 'package:lifx_http_api/lifx_http_api.dart';
 
 class LifxConnectorConjecture extends VendorConnectorConjectureService {
@@ -46,41 +44,14 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
             await lifxClient!.listLights(const Selector());
 
         for (final LIFXBulb lifxDevice in lights) {
-          CoreUniqueId? tempCoreUniqueId;
-          bool deviceExist = false;
-          for (final DeviceEntityBase savedDevice in vendorEntities.values) {
-            if (savedDevice is LifxWhiteEntity &&
-                lifxDevice.id == savedDevice.entityUniqueId.getOrCrash()) {
-              deviceExist = true;
-              break;
-            } else if (savedDevice is GenericLightDE &&
-                lifxDevice.id == savedDevice.entityUniqueId.getOrCrash()) {
-              tempCoreUniqueId = savedDevice.uniqueId;
-              break;
-            } else if (lifxDevice.id ==
-                savedDevice.entityUniqueId.getOrCrash()) {
-              icLogger.w(
-                'Lifx device type supported but implementation is missing here',
-              );
-              break;
-            }
-          }
-          if (!deviceExist) {
-            final DeviceEntityBase? addDevice = LifxHelpers.addDiscoveredDevice(
-              lifxDevice: lifxDevice,
-              uniqueDeviceId: tempCoreUniqueId,
+          final HashMap<String, DeviceEntityBase> addDevice =
+              LifxHelpers.addDiscoveredDevice(lifxDevice);
+          for (final DeviceEntityBase entity in addDevice.values) {
+            await VendorsConnectorConjecture().foundEntityOfVendor(
+              this,
+              entity,
+              entity.deviceCbjUniqueId.getOrCrash(),
             );
-
-            if (addDevice == null) {
-              continue;
-            }
-
-            final MapEntry<String, DeviceEntityBase> deviceAsEntry =
-                MapEntry(addDevice.entityUniqueId.getOrCrash(), addDevice);
-
-            vendorEntities.addEntries([deviceAsEntry]);
-
-            icLogger.i('New Lifx device got added');
           }
         }
         await Future.delayed(const Duration(minutes: 3));
@@ -95,5 +66,5 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) async =>
-      HashMap();
+      HashMap()..addEntries([MapEntry(entity.getCbjDeviceId, entity)]);
 }

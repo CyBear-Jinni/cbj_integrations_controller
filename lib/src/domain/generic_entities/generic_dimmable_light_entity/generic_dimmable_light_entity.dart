@@ -161,11 +161,15 @@ class GenericDimmableLightDE extends DeviceEntityBase {
     required EntityActions action,
     HashMap<ActionValues, dynamic>? values,
   }) async {
-    if (property == EntityProperties.lightBrightness) {
-      // TODO: add support for json
-      // return setBrightness(value);
+    if (property == EntityProperties.lightBrightness &&
+        values != null &&
+        values[ActionValues.brightness] != null) {
+      final dynamic brightness = values[ActionValues.brightness];
+      if (brightness is! int) {
+        return const Left(CoreFailure.unexpected());
+      }
+      return setBrightness(brightness);
     }
-
     switch (action) {
       case EntityActions.on:
         return turnOnLight();

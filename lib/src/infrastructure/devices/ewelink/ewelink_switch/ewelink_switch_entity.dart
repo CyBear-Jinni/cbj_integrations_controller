@@ -3,7 +3,6 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_switch_entity/generic_switch_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_switch_entity/generic_switch_value_objects.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/devices/ewelink/ewelink_connector_conjecture.dart';
 import 'package:dartz/dartz.dart';
 
 class EwelinkSwitchEntity extends GenericSwitchDE {
@@ -77,13 +76,13 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
   Future<Either<CoreFailure, Unit>> turnOnSwitch() async {
     switchState = GenericSwitchSwitchState(EntityActions.on.toString());
     try {
-      await EwelinkConnectorConjecture().ewelink?.setDevicePowerState(
-            deviceId: deviceUniqueId.getOrCrash(),
-            state: 'on',
-            // TODO: Bug in api, channel 1 get changed no matter the input
-            // https://github.com/ianmaciel/dart_ewelink_api/issues/21
-            channel: entityKey.getOrCrash(),
-          );
+      // await EwelinkConnectorConjecture().ewelink?.setDevicePowerState(
+      //       deviceId: deviceUniqueId.getOrCrash(),
+      //       state: 'on',
+      //       // TODO: Bug in api, channel 1 get changed no matter the input
+      //       // https://github.com/ianmaciel/dart_ewelink_api/issues/21
+      //       channel: entityKey.getOrCrash(),
+      //     );
     } catch (e) {
       return left(const CoreFailure.unexpected());
     }
@@ -94,13 +93,13 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
   Future<Either<CoreFailure, Unit>> turnOffSwitch() async {
     switchState = GenericSwitchSwitchState(EntityActions.off.toString());
     try {
-      await EwelinkConnectorConjecture().ewelink?.setDevicePowerState(
-            deviceId: deviceUniqueId.getOrCrash(),
-            state: 'off',
-            // TODO: Bug in api, channel 1 get changed no matter the input
-            // https://github.com/ianmaciel/dart_ewelink_api/issues/21
-            channel: entityKey.getOrCrash(),
-          );
+      // await EwelinkConnectorConjecture().ewelink?.setDevicePowerState(
+      //       deviceId: deviceUniqueId.getOrCrash(),
+      //       state: 'off',
+      //       // TODO: Bug in api, channel 1 get changed no matter the input
+      //       // https://github.com/ianmaciel/dart_ewelink_api/issues/21
+      //       channel: entityKey.getOrCrash(),
+      //     );
     } catch (e) {
       return left(const CoreFailure.unexpected());
     }

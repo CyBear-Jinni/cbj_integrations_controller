@@ -91,10 +91,11 @@ abstract class VendorConnectorConjectureService {
     if (vendorEntityMap.isEmpty) {
       return null;
     }
+    final int length = vendorEntityMap.length;
     vendorEntityMap
         .removeWhere((key, value) => vendorEntities.containsKey(key));
 
-    if (vendorEntityMap.isEmpty) {
+    if (vendorEntityMap.isEmpty && length <= 1) {
       return HashMap();
     }
 

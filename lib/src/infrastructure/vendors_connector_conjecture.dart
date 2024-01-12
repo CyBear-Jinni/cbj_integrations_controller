@@ -11,7 +11,6 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/vendor_e
 import 'package:cbj_integrations_controller/src/domain/vendor_login_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/cbj_devices/cbj_devices_connector_conjecture.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/devices/ewelink/ewelink_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/google/google_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/hp/hp_connector_conjecture.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/lifx/lifx_connector_conjecture.dart';
@@ -39,7 +38,7 @@ class VendorsConnectorConjecture {
     LifxConnectorConjecture();
     HpConnectorConjecture();
     GoogleConnectorConjecture();
-    EwelinkConnectorConjecture();
+    // EwelinkConnectorConjecture();
     CbjDevicesConnectorConjecture();
     SensiboConnectorConjecture();
   }
@@ -202,9 +201,7 @@ class VendorsConnectorConjecture {
     DeviceEntityBase entity,
     String deviceCbjUniqueId,
   ) async {
-    HashMap<String, DeviceEntityBase>? handeldEntities;
-
-    handeldEntities =
+    HashMap<String, DeviceEntityBase>? handeldEntities =
         await vendorConnectorConjectureService.foundEntity(entity);
 
     if (handeldEntities == null) {

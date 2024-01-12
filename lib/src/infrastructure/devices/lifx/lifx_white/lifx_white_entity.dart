@@ -83,7 +83,6 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
           await LifxConnectorConjecture().lifxClient?.setState(
                 Selector.id(entityUniqueId.getOrCrash()),
                 power: 'on',
-                fast: true,
               );
       if (setStateBodyResponse == null) {
         throw 'setStateBodyResponse is null';
@@ -105,7 +104,6 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
           await LifxConnectorConjecture().lifxClient?.setState(
                 Selector.id(entityUniqueId.getOrCrash()),
                 power: 'off',
-                fast: true,
               );
       if (setStateBodyResponse == null) {
         throw 'setStateBodyResponse is null';
@@ -125,7 +123,6 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
       final setStateBodyResponse =
           await LifxConnectorConjecture().lifxClient?.setState(
                 Selector.id(entityUniqueId.getOrCrash()),
-                fast: true,
                 brightness: backToDecimalPointBrightness(value),
               );
       if (setStateBodyResponse == null) {
