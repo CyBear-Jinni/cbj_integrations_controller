@@ -18,7 +18,7 @@ class HpHelpers {
       cbjEntityName: entity.cbjEntityName,
       entityOriginalName: entity.entityOriginalName,
       deviceOriginalName: entity.deviceOriginalName,
-      entityStateGRPC: entity.entityStateGRPC,
+      entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
       senderDeviceOs: entity.senderDeviceOs,
       deviceVendor: entity.deviceVendor,
       deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cbj_integrations_controller/integrations_controller.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/esphome/esphome_api/esphome_objects_as_dart_objects.dart';
 
 /// Client to interact with ESPHome device

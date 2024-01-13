@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:cbj_integrations_controller/integrations_controller.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 
 class HubClientDemo {
   ///  Creates a stream with the Hub

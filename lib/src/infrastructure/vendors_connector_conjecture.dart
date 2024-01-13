@@ -38,7 +38,6 @@ class VendorsConnectorConjecture {
     LifxConnectorConjecture();
     HpConnectorConjecture();
     GoogleConnectorConjecture();
-    // EwelinkConnectorConjecture();
     CbjDevicesConnectorConjecture();
     SensiboConnectorConjecture();
   }

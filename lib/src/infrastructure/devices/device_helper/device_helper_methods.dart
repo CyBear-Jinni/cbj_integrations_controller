@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cbj_integrations_controller/integrations_controller.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/remote_pipes/remote_pipes_dtos.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/routines/routine_cbj_dtos.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/vendor_login/vendor_login_entity_dtos.dart';
@@ -107,73 +108,41 @@ class DeviceHelperMethods {
     ClientStatusRequests clientStatusRequests,
   ) async {
     icLogger.i('Got From App');
+    if (clientStatusRequests.sendingType == SendingType.firstConnection) {
+      IAppCommunicationRepository.instance.sendAllAreasFromHubRequestsStream();
+      IAppCommunicationRepository.instance
+          .sendAllEntitiesFromHubRequestsStream();
+      IAppCommunicationRepository.instance.sendAllScenesFromHubRequestsStream();
+      return;
+    }
 
     final dynamic dtoEntity =
         clientStatusRequestsToItsDtoType(clientStatusRequests);
 
     if (dtoEntity is DeviceEntityDtoBase) {
-      final DeviceEntityBase deviceEntityBase = dtoEntity.toDomain();
-      deviceEntityBase.entityStateGRPC = EntityState.state(EntityStateGRPC.ack);
-
-      IMqttServerRepository.instance.postToHubMqtt(
-        entityFromTheApp: deviceEntityBase,
-        gotFromApp: true,
-      );
+      // final DeviceEntityBase deviceEntityBase = dtoEntity.toDomain();
+      //
+      // IMqttServerRepository.instance.postToHubMqtt(
+      //   entityFromTheApp: deviceEntityBase,
+      //   gotFromApp: true,
+      // );
     } else if (dtoEntity is AreaEntityDtos) {
       // ISavedAreasRepo.instance.saveAndActiveAreaToDb(
       // areaEntity: dtoEntity.toDomain(),
       // );
 
-      IMqttServerRepository.instance.postToHubMqtt(
-        entityFromTheApp: dtoEntity,
-        gotFromApp: true,
-      );
+      // IMqttServerRepository.instance.postToHubMqtt(
+      //   entityFromTheApp: dtoEntity,
+      //   gotFromApp: true,
+      // );
     } else if (dtoEntity is VendorLoginEntityDtos) {
       IcSynchronizer().loginVendor(dtoEntity.toDomain());
-    } else if (clientStatusRequests.sendingType ==
-        SendingType.firstConnection) {
-      IAppCommunicationRepository.instance.sendAllAreasFromHubRequestsStream();
-      IAppCommunicationRepository.instance
-          .sendAllDevicesFromHubRequestsStream();
-      IAppCommunicationRepository.instance.sendAllScenesFromHubRequestsStream();
     } else if (dtoEntity is RemotePipesDtos) {
       // ISavedDevicesRepo.instance.saveAndActivateRemotePipesDomainToDb(
       // remotePipes: dtoEntity.toDomain(),
       // );
     } else if (dtoEntity is SceneCbjDtos) {
-      // final SceneCbjEntity sceneCbj = dtoEntity.toDomain();
-
-      // final String sceneStateGrpcTemp = sceneCbj.entityStateGRPC.getOrCrash()!;
-
-      // final SceneCbjEntity sceneCopy = sceneCbj.copyWith(
-      //   entityStateGRPC: SceneCbjDeviceStateGRPC(
-      //     EntityStateGRPC.waitingInComp.toString(),
-      //   ),
-      // );
-
-      //   if (sceneStateGrpcTemp == EntityStateGRPC.addingNewScene.toString()) {
-      //     ISceneCbjRepository.instance.addNewSceneAndSaveInDb(sceneCopy);
-      //   } else {
-      //     ISceneCbjRepository.instance.activateScene(sceneCopy);
-      //   }
-      // } else if (dtoEntity is RoutineCbjDtos) {
-      //   final RoutineCbjEntity routineCbj = dtoEntity.toDomain();
-
-      //   final String routineStateGrpcTemp =
-      //       routineCbj.entityStateGRPC.getOrCrash()!;
-
-      //   if (routineStateGrpcTemp == EntityStateGRPC.addingNewRoutine.toString()) {
-      //     IRoutineCbjRepository.instance.addNewRoutineAndSaveItToLocalDb(
-      //       routineCbj.copyWith(
-      //         entityStateGRPC: RoutineCbjDeviceStateGRPC(
-      //           EntityStateGRPC.waitingInComp.toString(),
-      //         ),
-      //       ),
-      //     );
-      //   } else {
-      //     // For a way to active it manually
-      //     // IRoutineCbjRepository.instance.activateRoutine(routineCbj);
-      //   }
+      IcSynchronizer().activateScene(dtoEntity.uniqueId);
     } else {
       icLogger.w('Request from app does not support this sending device type');
     }

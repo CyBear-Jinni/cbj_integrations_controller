@@ -16,6 +16,6 @@ abstract class IAppCommunicationRepository {
   );
 
   Future<void> sendAllAreasFromHubRequestsStream();
-  Future<void> sendAllDevicesFromHubRequestsStream();
+  Future<void> sendAllEntitiesFromHubRequestsStream();
   Future<void> sendAllScenesFromHubRequestsStream();
 }

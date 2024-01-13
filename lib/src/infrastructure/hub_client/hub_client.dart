@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:async/async.dart';
 import 'package:cbj_integrations_controller/integrations_controller.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:grpc/grpc.dart';
 import 'package:rxdart/rxdart.dart';
 
+@Deprecated('Old architecutre')
 class HubClient {
   static ClientChannel? channel;
   static CbjHubClient? stub;

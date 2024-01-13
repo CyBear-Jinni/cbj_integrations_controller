@@ -3,6 +3,7 @@ import 'dart:collection';
 
 import 'package:cbj_integrations_controller/integrations_controller.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/cbj_devices/cbj_devices_helpers.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_device_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/cbj_devices/cbj_smart_device_client/cbj_smart_device_client.dart';

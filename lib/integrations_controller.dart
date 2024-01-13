@@ -68,7 +68,6 @@ export 'src/infrastructure/area/area_entity_dtos.dart';
 export 'src/infrastructure/core/initialize_integrations_controller.dart';
 export 'src/infrastructure/core/injection.config.dart';
 export 'src/infrastructure/core/injection.dart';
-export 'src/infrastructure/core/utils.dart';
 export 'src/infrastructure/demo_connection_service_integrations_controller.dart';
 export 'src/infrastructure/devices/device_helper/device_helper.dart';
 export 'src/infrastructure/devices/device_helper/device_helper_methods.dart';
