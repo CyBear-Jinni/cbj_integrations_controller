@@ -48,7 +48,7 @@ export 'src/domain/generic_entities/vendor_entity_information.dart';
 export 'src/domain/hub/hub_entity.dart';
 export 'src/domain/hub/hub_failures.dart';
 export 'src/domain/hub/hub_value_objects.dart';
-export 'src/domain/i_app_communication_repository.dart';
+export 'src/domain/i_hub_server_controller.dart';
 export 'src/domain/i_mqtt_server_repository.dart';
 export 'src/domain/i_network_utilities.dart';
 export 'src/domain/ic_synchronizer.dart';
@@ -81,7 +81,6 @@ export 'src/infrastructure/gen/cbj_smart_device_server/protoc_as_dart/cbj_smart_
 export 'src/infrastructure/gen/security_bear_server_d/proto_gen_date.dart';
 export 'src/infrastructure/gen/security_bear_server_d/protoc_as_dart/security_bear_connections.pbgrpc.dart';
 export 'src/infrastructure/hub_client/hub_client.dart';
-export 'src/infrastructure/hub_client/hub_client_demo.dart';
 export 'src/infrastructure/hub_client/hub_dtos.dart';
 export 'src/infrastructure/node_red/node_red_repository.dart';
 export 'src/infrastructure/scenes/scene_cbj_dtos.dart';

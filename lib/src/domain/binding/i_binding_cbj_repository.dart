@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cbj_integrations_controller/integrations_controller.dart';
 import 'package:cbj_integrations_controller/src/domain/binding/binding_cbj_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/binding/binding_cbj_failures.dart';
@@ -20,7 +18,7 @@ abstract class IBindingCbjRepository {
   }
 
   /// Setting up all bindings from db
-  Future<void> setUpAllFromDb();
+  Future setUpAllFromDb();
 
   Future<Set<BindingCbjEntity>> getAllBindingsAsList();
 
@@ -68,7 +66,7 @@ abstract class IBindingCbjRepository {
     BindingCbjEntity bindingCbj,
   );
 
-  Future<void> initiateHubConnection();
+  Future initiateHubConnection();
 
   BehaviorSubject<Set<BindingCbjEntity>>
       bindingsResponseFromTheHubStreamController =

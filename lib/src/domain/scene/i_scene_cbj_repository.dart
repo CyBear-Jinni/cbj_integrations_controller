@@ -13,7 +13,7 @@ abstract class ISceneCbjRepository {
   }
 
   /// Setting up all scenes from db
-  Future<void> setUpAllFromDb();
+  Future setUpAllFromDb();
 
   Future<Set<SceneCbjEntity>> getAllScenesAsList();
 
@@ -74,7 +74,7 @@ abstract class ISceneCbjRepository {
     SceneCbjEntity sceneCbj,
   );
 
-  Future<void> initiateHubConnection();
+  Future initiateHubConnection();
 
   BehaviorSubject<Set<SceneCbjEntity>>
       scenesResponseFromTheHubStreamController =

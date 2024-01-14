@@ -25,7 +25,7 @@ class AutomationService {
       return;
     }
     for (final ActionObjectSingle action in scene.actions) {
-      IcSynchronizer().setEntitiesState(ActionObject.fromSingle(action));
+      IcSynchronizer().setEntitiesState(RequestActionObject.fromSingle(action));
     }
   }
 }

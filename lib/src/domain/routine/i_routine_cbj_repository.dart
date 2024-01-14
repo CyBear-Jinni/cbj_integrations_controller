@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cbj_integrations_controller/integrations_controller.dart';
 import 'package:cbj_integrations_controller/src/domain/routine/routine_cbj_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/routine/routine_cbj_failures.dart';
@@ -19,7 +17,7 @@ abstract class IRoutineCbjRepository {
   }
 
   /// Setting up all routines from db
-  Future<void> setUpAllFromDb();
+  Future setUpAllFromDb();
 
   Future<Set<RoutineCbjEntity>> getAllRoutinesAsList();
 
@@ -73,7 +71,7 @@ abstract class IRoutineCbjRepository {
     RoutineCbjEntity routineCbj,
   );
 
-  Future<void> initiateHubConnection();
+  Future initiateHubConnection();
 
   BehaviorSubject<Set<RoutineCbjEntity>>
       routinesResponseFromTheHubStreamController =

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cbj_integrations_controller/integrations_controller.dart';
 import 'package:cbj_integrations_controller/src/domain/remote_pipes/remote_pipes_failures.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/remote_pipes/remote_pipes_dtos.dart';

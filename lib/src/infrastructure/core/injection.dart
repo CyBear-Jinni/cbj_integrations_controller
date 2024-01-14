@@ -9,7 +9,7 @@ final getItCbj = GetIt.instance;
 late String currentEnv;
 
 @injectableInit
-Future<void> configureInjection(String environment) async {
+Future configureInjection(String environment) async {
   currentEnv = environment;
   icLogger.i('Current CyBear Jinni Hub environment name: $currentEnv');
   getItCbj.init(environment: environment);

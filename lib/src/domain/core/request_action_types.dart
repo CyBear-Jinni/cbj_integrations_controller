@@ -61,6 +61,15 @@ enum VendorsAndServices {
   apple,
 }
 
+extension VendorsAndServicesExtension on VendorsAndServices {
+  static VendorsAndServices fromString(String typeAsString) {
+    return VendorsAndServices.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => VendorsAndServices.vendorsAndServicesNotSupported,
+    );
+  }
+}
+
 enum EntityTypes {
   smartTypeNotSupported,
   light,
@@ -120,6 +129,15 @@ enum EntityActions {
   hsvColor,
 }
 
+extension EntityActionsExtension on EntityActions {
+  static EntityActions fromString(String typeAsString) {
+    return EntityActions.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => EntityActions.actionNotSupported,
+    );
+  }
+}
+
 enum WhenToExecute {
   undefined,
   onOddNumberPress,
@@ -137,6 +155,7 @@ enum WhenToExecute {
 }
 
 enum ActionValues {
+  undefined,
   text,
   url,
   brightness,
@@ -147,9 +166,127 @@ enum ActionValues {
   temperature,
 }
 
+extension ActionValuesExtension on ActionValues {
+  static ActionValues fromString(String typeAsString) {
+    return ActionValues.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => ActionValues.undefined,
+    );
+  }
+}
+
 enum VendorLoginTypes {
   notNeeded,
   authToken,
   apiKey,
   emailAndPassword,
+}
+
+/// Being added to send data for explain the type that was sent
+enum SendingType {
+  /// Not sure what we sent or got
+  undefinedType,
+
+  /// String without any structure
+  stringType,
+
+  /// Partial entity data in the form of json
+  partialEntityType,
+
+  /// Entity object in the form of json
+  entityType,
+
+  /// Sending mqtt massage
+  mqttMassageType,
+
+  /// Scenes
+  sceneType,
+
+  /// Schedule
+  scheduleType,
+
+  /// Routine
+  routineType,
+
+  /// Bindings
+  bindingsType,
+
+  /// Type for login into other vendors
+  vendorLoginType,
+
+  /// First connection, for sending first connection info like all entities
+  /// status and more
+  firstConnection,
+
+  /// Remote Pipes Domain information
+  remotePipesInformation,
+
+  /// Request to get the entity and software info like proto file version and
+  /// more
+  getHubEntityInfo,
+
+  /// Response that contains entity and software info like proto file version
+  responseHubEntityInfo,
+
+  /// Response that contains area object
+  areaType,
+
+  /// Sending location of entity
+  location,
+
+  allEntities,
+  allAreas,
+  allScenes,
+  setEntitiesAction,
+  ;
+}
+
+extension SendingTypeExtension on SendingType {
+  static SendingType fromString(String typeAsString) {
+    return SendingType.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => SendingType.undefinedType,
+    );
+  }
+}
+
+/// List of purposes that each area in the home can have
+enum AreaPurposesTypes {
+  undefinedType,
+  bedarea,
+  studyArea,
+  workArea,
+  tvArea,
+  videoGames,
+  livingArea,
+  diningArea,
+  kitchen,
+  outside,
+  outsidePrimary,
+  outsideNotPrimary,
+  toiletArea,
+  shower,
+  trainingArea,
+  meditation,
+  romantic,
+  stairsInside,
+  stairsOutside,
+  childrenArea,
+  cinemaArea,
+  boardGames,
+  bathtub,
+  laundryArea,
+  protectedSpace,
+  safeArea,
+  attic,
+  holidayCabin,
+}
+
+extension AreaPurposesTypesExtension on AreaPurposesTypes {
+  static AreaPurposesTypes fromString(String typeAsString) {
+    return AreaPurposesTypes.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => AreaPurposesTypes.undefinedType,
+    );
+  }
 }

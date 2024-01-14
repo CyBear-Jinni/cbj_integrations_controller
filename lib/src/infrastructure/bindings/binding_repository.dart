@@ -5,7 +5,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
   final Map<String, BindingCbjEntity> _allBindings = {};
 
   @override
-  Future<void> setUpAllFromDb() async {
+  Future setUpAllFromDb() async {
     await IDbRepository.instance.getBindingsFromDb().then((value) {
       value.fold((l) => null, (r) async {
         for (final element in r) {
@@ -146,13 +146,13 @@ class _BindingCbjRepository implements IBindingCbjRepository {
   ) async {
     _allBindings[bindingCbjEntity.uniqueId.getOrCrash()] = bindingCbjEntity;
 
-    final ClientStatusRequests clientStatusRequests = ClientStatusRequests(
-      allRemoteCommands:
-          jsonEncode(bindingCbjEntity.toInfrastructure().toJson()),
-      sendingType: SendingType.bindingsType,
-    );
+    // final ClientStatusRequests clientStatusRequests = ClientStatusRequests(
+    //   allRemoteCommands:
+    //       jsonEncode(bindingCbjEntity.toInfrastructure().toJson()),
+    //   sendingType: SendingType.bindingsType.name,
+    // );
 
-    AppRequestsToHub.appRequestsToHubStreamController.add(clientStatusRequests);
+    // AppRequestsToHub.appRequestsToHubStreamController.add(clientStatusRequests);
 
     return right(bindingCbjEntity);
   }
@@ -198,7 +198,7 @@ class _BindingCbjRepository implements IBindingCbjRepository {
   }
 
   @override
-  Future<void> initiateHubConnection() async {}
+  Future initiateHubConnection() async {}
 
   @override
   Stream<Either<BindingCbjFailure, Set<BindingCbjEntity>>>

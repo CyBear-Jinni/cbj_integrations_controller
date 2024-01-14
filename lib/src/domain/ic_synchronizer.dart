@@ -33,7 +33,7 @@ class IcSynchronizer {
   StreamController<MapEntry<String, DeviceEntityBase>> entitiesChangesStream =
       StreamController<MapEntry<String, DeviceEntityBase>>.broadcast();
 
-  Future setEntitiesState(ActionObject action) async =>
+  Future setEntitiesState(RequestActionObject action) async =>
       EntitiesService().setEntitiesState(action);
 
   Future<HashMap<String, DeviceEntityBase>> getEntities() async =>

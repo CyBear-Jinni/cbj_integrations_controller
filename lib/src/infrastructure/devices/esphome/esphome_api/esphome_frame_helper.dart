@@ -15,11 +15,11 @@ class Packet {
 abstract class APIFrameHelper {
   /// aioesphomeapi:
   /// fName = close
-  Future<void> close();
+  Future close();
 
   /// aioesphomeapi:
   /// fName = write_packet
-  Future<void> writePacket(Packet packet);
+  Future writePacket(Packet packet);
 
   /// aioesphomeapi:
   /// fName = read_packet
@@ -37,7 +37,7 @@ class EspApiPlaintextFrameHelper extends APIFrameHelper {
   dynamic closedEvent;
 
   @override
-  Future<void> close() {
+  Future close() {
     // TODO: implement close
     throw UnimplementedError();
   }
@@ -45,7 +45,7 @@ class EspApiPlaintextFrameHelper extends APIFrameHelper {
   /// aioesphomeapi:
   /// fName = write_packet
   @override
-  Future<void> writePacket(Packet packet) async {
+  Future writePacket(Packet packet) async {
     // List<int> data = utf8.encode('\0');
     // data.addAll(EspHomeUtil.varuintToBytes(packet.data));
   }

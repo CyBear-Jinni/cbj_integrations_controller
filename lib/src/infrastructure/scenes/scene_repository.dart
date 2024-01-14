@@ -68,7 +68,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
   }
 
   @override
-  Future<void> initiateHubConnection() async {}
+  Future initiateHubConnection() async {}
 
   @override
   Future<Either<LocalDbFailures, Unit>>
@@ -77,7 +77,7 @@ class _SceneCbjRepository implements ISceneCbjRepository {
   }
 
   @override
-  Future<void> setUpAllFromDb() async {}
+  Future setUpAllFromDb() async {}
 
   @override
   Stream<Either<SceneCbjFailure, Set<SceneCbjEntity>>>

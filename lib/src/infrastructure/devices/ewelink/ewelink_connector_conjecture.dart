@@ -53,7 +53,7 @@
 //     return true;
 //   }
 
-//   Future<void> waitUntilConnectionEstablished(int executed) async {
+//   Future waitUntilConnectionEstablished(int executed) async {
 //     if (executed > 20 || ewelink != null) {
 //       await Future.delayed(const Duration(seconds: 50));
 //       return;

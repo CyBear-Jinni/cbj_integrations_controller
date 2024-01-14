@@ -108,6 +108,8 @@ class AreaTypeWithDeviceTypePreset {
       case AreaPurposesTypes.workArea:
         return WorkAreaAreaAction()
             .workAreaDeviceAction(deviceEntity, brokerNodeId);
+      case AreaPurposesTypes.undefinedType:
+      // TODO: Handle this case.
     }
     return left(const SceneCbjFailure.unexpected());
   }
@@ -170,6 +172,8 @@ class AreaTypeWithDeviceTypePreset {
         color = Colors.tealAccent;
       case AreaPurposesTypes.workArea:
         color = Colors.blue;
+      case AreaPurposesTypes.undefinedType:
+      // TODO: Handle this case.
     }
     return color.value;
   }

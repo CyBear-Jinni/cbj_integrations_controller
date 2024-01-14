@@ -37,7 +37,7 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
 
   LIFXClient? lifxClient;
 
-  Future<void> _discoverNewDevices() async {
+  Future _discoverNewDevices() async {
     while (true) {
       try {
         final Iterable<LIFXBulb> lights =

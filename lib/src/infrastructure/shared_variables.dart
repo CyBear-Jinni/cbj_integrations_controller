@@ -17,7 +17,7 @@ class SharedVariables {
   ///  Save the location of all the files that were created during the snapcraft
   String? _projectRootDirectoryPath;
 
-  Future<void> asyncConstructor(String projectRootDirectoryPath) async {
+  Future asyncConstructor(String projectRootDirectoryPath) async {
     _projectRootDirectoryPath = projectRootDirectoryPath;
     icLogger.t('PATH: $_projectRootDirectoryPath');
   }

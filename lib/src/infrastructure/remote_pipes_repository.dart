@@ -8,15 +8,15 @@ class _RemotePipesRepository implements IRemotePipesRepository {
     try {
       final RemotePipesDtos remotePipesDtos =
           remotePipesEntity.toInfrastructure();
-      final String remotePipesDtosAsJson = jsonEncode(remotePipesDtos.toJson());
+      // final String remotePipesDtosAsJson = jsonEncode(remotePipesDtos.toJson());
 
-      final ClientStatusRequests clientStatusRequests = ClientStatusRequests(
-        allRemoteCommands: remotePipesDtosAsJson,
-        sendingType: SendingType.remotePipesInformation,
-      );
+      // final ClientStatusRequests clientStatusRequests = ClientStatusRequests(
+      //   allRemoteCommands: remotePipesDtosAsJson,
+      //   sendingType: SendingType.remotePipesInformation.name,
+      // );
 
-      AppRequestsToHub.appRequestsToHubStreamController
-          .add(clientStatusRequests);
+      // AppRequestsToHub.appRequestsToHubStreamController
+      //     .add(clientStatusRequests);
 
       IDbRepository.instance
           .saveRemotePipes(remotePipesDomainName: remotePipesDtos.domainName);

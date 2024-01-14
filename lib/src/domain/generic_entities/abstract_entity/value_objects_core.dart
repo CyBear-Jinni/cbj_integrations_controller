@@ -272,7 +272,7 @@ class CbjDeviceVendor extends ValueObjectCore<String> {
   factory CbjDeviceVendor(String? input) {
     assert(input != null);
 
-    final VendorsAndServices? vendorsAndServices =
+    final VendorsAndServices vendorsAndServices =
         EntityUtils.stringToDeviceVendor(input!);
     return CbjDeviceVendor._(
       validateNotEmpty(input)

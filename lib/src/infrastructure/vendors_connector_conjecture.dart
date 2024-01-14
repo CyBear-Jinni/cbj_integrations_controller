@@ -146,7 +146,7 @@ class VendorsConnectorConjecture {
     foundEntityOfVendor(companyConnectorConjecture, entity, mdnsName);
   }
 
-  Future<void> setHostNameDeviceByCompany(GenericUnsupportedDE entity) async {
+  Future setHostNameDeviceByCompany(GenericUnsupportedDE entity) async {
     final String? deviceHostNameLowerCase =
         entity.deviceHostName.getOrCrash()?.toLowerCase();
     if (deviceHostNameLowerCase == null || deviceHostNameLowerCase.isEmpty) {
@@ -181,7 +181,7 @@ class VendorsConnectorConjecture {
     );
   }
 
-  Future<void> setHostNameDeviceByPort(
+  Future setHostNameDeviceByPort(
     VendorsAndServices vendor,
     DeviceEntityBase entity,
   ) async {
@@ -238,7 +238,7 @@ class VendorsConnectorConjecture {
     return null;
   }
 
-  void setEntitiesState(ActionObject action) {
+  void setEntitiesState(RequestActionObject action) {
     for (final MapEntry<VendorsAndServices, HashSet<String>> entry
         in action.uniqueIdByVendor.entries.toList()) {
       final VendorsAndServices vendor = entry.key;

@@ -227,5 +227,5 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   /// Yeelight connections are rate-limited to 60 per minute.
   /// This method will take care that commends will be sent in 1 second
   /// between each one
-  Future<void> executeCurrentStatusWithConstDelay() async {}
+  Future executeCurrentStatusWithConstDelay() async {}
 }
