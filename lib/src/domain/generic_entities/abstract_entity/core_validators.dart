@@ -3,18 +3,6 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_type_utils.dart';
 import 'package:dartz/dartz.dart';
 
-Either<CoreFailure<String>, String> validateNotEmpty(String input) {
-  if (input.isNotEmpty) {
-    return right(input);
-  } else {
-    return left(
-      CoreFailure.empty(
-        failedValue: input,
-      ),
-    );
-  }
-}
-
 Either<CoreFailure<String>, String> validateLastKnownIpNotEmpty(String input) {
   // if (input.isNotEmpty) {
   return right(input);

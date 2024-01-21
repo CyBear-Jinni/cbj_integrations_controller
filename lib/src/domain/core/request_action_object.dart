@@ -1,7 +1,6 @@
 import 'dart:collection';
 
 import 'package:cbj_integrations_controller/integrations_controller.dart';
-import 'package:cbj_integrations_controller/src/domain/core/request_action_object_dtos.dart';
 
 class RequestActionObject {
   RequestActionObject({
