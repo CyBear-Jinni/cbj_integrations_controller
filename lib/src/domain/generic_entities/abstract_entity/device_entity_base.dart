@@ -228,6 +228,13 @@ abstract class DeviceEntityBase {
         mac: devicesMacAddress.getOrCrash(),
         address: deviceLastKnownIp.getOrCrash(),
       );
+
+  Duration maxDurationBetweenRequsts = const Duration(milliseconds: 50);
+  DateTime? lastRequest;
+
+  bool canActivateAction() =>
+      lastRequest == null ||
+      DateTime.now().difference(lastRequest!) > maxDurationBetweenRequsts;
 }
 
 class DeviceEntityNotAbstract extends DeviceEntityBase {

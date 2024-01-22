@@ -126,6 +126,11 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
   Future<Either<CoreFailure, Unit>> changeColorTemperature(
     int lightColorTemperatureNewValue,
   ) async {
+    if (!canActivateAction()) {
+      return left(const CoreFailure.unexpected());
+    }
+    lastRequest = DateTime.now();
+
     try {
       int temperatureInt = lightColorTemperatureNewValue;
       if (temperatureInt < 3000) {
@@ -144,6 +149,11 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
 
   @override
   Future<Either<CoreFailure, Unit>> setBrightness(int value) async {
+    if (!canActivateAction()) {
+      return left(const CoreFailure.unexpected());
+    }
+    lastRequest = DateTime.now();
+
     try {
       await api.changBrightness(brightness: value.toString());
 
@@ -160,6 +170,11 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
     required double saturation,
     required double alpha,
   }) async {
+    if (!canActivateAction()) {
+      return left(const CoreFailure.unexpected());
+    }
+    lastRequest = DateTime.now();
+
     try {
       final HsvColor hsvColor = HsvColor(
         hue,
