@@ -108,11 +108,15 @@ class _HiveRepository extends IDbRepository {
           uniqueId: AreaUniqueId.fromUniqueString(areaHive.areaUniqueId),
           cbjEntityName: AreaDefaultName(areaHive.areaDefaultName),
           background: AreaBackground(areaHive.areaBackground),
-          areaTypes: AreaTypes(areaHive.areaTypes.toSet()),
+          purposes: AreaPurposes(
+            areaHive.areaTypes
+                .map((e) => AreaPurposesTypesExtension.fromString(e))
+                .toSet(),
+          ),
           entitiesId: AreaEntitiesId(areaHive.areaDevicesId.toSet()),
-          areaScenesId: AreaScenesId(areaHive.areaScenesId.toSet()),
-          areaRoutinesId: AreaRoutinesId(areaHive.areaRoutinesId.toSet()),
-          areaBindingsId: AreaBindingsId(areaHive.areaBindingsId.toSet()),
+          scenesId: AreaScenesId(areaHive.areaScenesId.toSet()),
+          routinesId: AreaRoutinesId(areaHive.areaRoutinesId.toSet()),
+          bindingsId: AreaBindingsId(areaHive.areaBindingsId.toSet()),
           areaMostUsedBy: AreaMostUsedBy(areaHive.areaMostUsedBy.toSet()),
           areaPermissions: AreaPermissions(areaHive.areaPermissions.toSet()),
         );

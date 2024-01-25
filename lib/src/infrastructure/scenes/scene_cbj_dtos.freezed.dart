@@ -30,6 +30,7 @@ mixin _$SceneCbjDtos {
   String? get senderId => throw _privateConstructorUsedError;
   String? get compUuid => throw _privateConstructorUsedError;
   String? get stateMassage => throw _privateConstructorUsedError;
+  String get areaPurposeType => throw _privateConstructorUsedError;
   String? get automationString => throw _privateConstructorUsedError;
   String? get nodeRedFlowId => throw _privateConstructorUsedError;
   String? get firstNodeId => throw _privateConstructorUsedError;
@@ -59,6 +60,7 @@ abstract class $SceneCbjDtosCopyWith<$Res> {
       String? senderId,
       String? compUuid,
       String? stateMassage,
+      String areaPurposeType,
       String? automationString,
       String? nodeRedFlowId,
       String? firstNodeId,
@@ -89,6 +91,7 @@ class _$SceneCbjDtosCopyWithImpl<$Res, $Val extends SceneCbjDtos>
     Object? senderId = freezed,
     Object? compUuid = freezed,
     Object? stateMassage = freezed,
+    Object? areaPurposeType = null,
     Object? automationString = freezed,
     Object? nodeRedFlowId = freezed,
     Object? firstNodeId = freezed,
@@ -133,6 +136,10 @@ class _$SceneCbjDtosCopyWithImpl<$Res, $Val extends SceneCbjDtos>
           ? _value.stateMassage
           : stateMassage // ignore: cast_nullable_to_non_nullable
               as String?,
+      areaPurposeType: null == areaPurposeType
+          ? _value.areaPurposeType
+          : areaPurposeType // ignore: cast_nullable_to_non_nullable
+              as String,
       automationString: freezed == automationString
           ? _value.automationString
           : automationString // ignore: cast_nullable_to_non_nullable
@@ -179,6 +186,7 @@ abstract class _$$SceneCbjDtosImplCopyWith<$Res>
       String? senderId,
       String? compUuid,
       String? stateMassage,
+      String areaPurposeType,
       String? automationString,
       String? nodeRedFlowId,
       String? firstNodeId,
@@ -207,6 +215,7 @@ class __$$SceneCbjDtosImplCopyWithImpl<$Res>
     Object? senderId = freezed,
     Object? compUuid = freezed,
     Object? stateMassage = freezed,
+    Object? areaPurposeType = null,
     Object? automationString = freezed,
     Object? nodeRedFlowId = freezed,
     Object? firstNodeId = freezed,
@@ -251,6 +260,10 @@ class __$$SceneCbjDtosImplCopyWithImpl<$Res>
           ? _value.stateMassage
           : stateMassage // ignore: cast_nullable_to_non_nullable
               as String?,
+      areaPurposeType: null == areaPurposeType
+          ? _value.areaPurposeType
+          : areaPurposeType // ignore: cast_nullable_to_non_nullable
+              as String,
       automationString: freezed == automationString
           ? _value.automationString
           : automationString // ignore: cast_nullable_to_non_nullable
@@ -292,6 +305,7 @@ class _$SceneCbjDtosImpl extends _SceneCbjDtos {
       required this.senderId,
       required this.compUuid,
       required this.stateMassage,
+      required this.areaPurposeType,
       this.automationString,
       this.nodeRedFlowId,
       this.firstNodeId,
@@ -323,6 +337,8 @@ class _$SceneCbjDtosImpl extends _SceneCbjDtos {
   @override
   final String? stateMassage;
   @override
+  final String areaPurposeType;
+  @override
   final String? automationString;
   @override
   final String? nodeRedFlowId;
@@ -337,7 +353,7 @@ class _$SceneCbjDtosImpl extends _SceneCbjDtos {
 
   @override
   String toString() {
-    return 'SceneCbjDtos(uniqueId: $uniqueId, name: $name, backgroundColor: $backgroundColor, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, compUuid: $compUuid, stateMassage: $stateMassage, automationString: $automationString, nodeRedFlowId: $nodeRedFlowId, firstNodeId: $firstNodeId, iconCodePoint: $iconCodePoint, image: $image, lastDateOfExecute: $lastDateOfExecute)';
+    return 'SceneCbjDtos(uniqueId: $uniqueId, name: $name, backgroundColor: $backgroundColor, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, compUuid: $compUuid, stateMassage: $stateMassage, areaPurposeType: $areaPurposeType, automationString: $automationString, nodeRedFlowId: $nodeRedFlowId, firstNodeId: $firstNodeId, iconCodePoint: $iconCodePoint, image: $image, lastDateOfExecute: $lastDateOfExecute)';
   }
 
   @override
@@ -362,6 +378,8 @@ class _$SceneCbjDtosImpl extends _SceneCbjDtos {
                 other.compUuid == compUuid) &&
             (identical(other.stateMassage, stateMassage) ||
                 other.stateMassage == stateMassage) &&
+            (identical(other.areaPurposeType, areaPurposeType) ||
+                other.areaPurposeType == areaPurposeType) &&
             (identical(other.automationString, automationString) ||
                 other.automationString == automationString) &&
             (identical(other.nodeRedFlowId, nodeRedFlowId) ||
@@ -388,6 +406,7 @@ class _$SceneCbjDtosImpl extends _SceneCbjDtos {
       senderId,
       compUuid,
       stateMassage,
+      areaPurposeType,
       automationString,
       nodeRedFlowId,
       firstNodeId,
@@ -420,6 +439,7 @@ abstract class _SceneCbjDtos extends SceneCbjDtos {
       required final String? senderId,
       required final String? compUuid,
       required final String? stateMassage,
+      required final String areaPurposeType,
       final String? automationString,
       final String? nodeRedFlowId,
       final String? firstNodeId,
@@ -449,6 +469,8 @@ abstract class _SceneCbjDtos extends SceneCbjDtos {
   String? get compUuid;
   @override
   String? get stateMassage;
+  @override
+  String get areaPurposeType;
   @override
   String? get automationString;
   @override

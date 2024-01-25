@@ -43,18 +43,6 @@ Either<AreaFailure<String>, String> validateAreaMaxNameLength(
   }
 }
 
-Either<AreaFailure<Set<String>>, Set<String>> validateAreaTypesExist(
-  Set<String> input,
-) {
-  return right(input);
-}
-
-Either<AreaFailure<Set<String>>, Set<String>> validateAreaTypsValid(
-  Set<String> input,
-) {
-  return right(input);
-}
-
 Either<AreaFailure<Set<String>>, Set<String>> validateUserIdsValid(
   Set<String> input,
 ) {

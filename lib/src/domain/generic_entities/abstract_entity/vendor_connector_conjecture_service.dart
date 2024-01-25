@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
-import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_type_utils.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/vendor_entity_information.dart';
 import 'package:cbj_integrations_controller/src/domain/vendor_login_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
@@ -113,9 +112,7 @@ abstract class VendorConnectorConjectureService {
 
   Future setEntityState({
     required HashSet<String> ids,
-    required EntityProperties property,
-    required EntityActions action,
-    HashMap<ActionValues, dynamic>? value,
+    required EntitySingleRequest request,
   }) async {
     for (final String id in ids) {
       final DeviceEntityBase? entity = vendorEntities[id];
@@ -125,7 +122,7 @@ abstract class VendorConnectorConjectureService {
         );
         continue;
       }
-      entity.executeAction(property: property, action: action, values: value);
+      entity.executeAction(request);
     }
   }
 

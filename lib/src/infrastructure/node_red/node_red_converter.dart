@@ -69,6 +69,7 @@ class NodeRedConverter {
       compUuid: SceneCbjCompUuid(null),
       stateMassage: SceneCbjStateMassage(null),
       actions: [],
+      areaPurposeType: AreaPurposesTypes.undefinedType,
     );
   }
 

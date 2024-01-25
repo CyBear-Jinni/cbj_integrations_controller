@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
@@ -153,14 +154,12 @@ abstract class DeviceEntityBase {
   /// Convert the device to the a dtos object in the infrastructure layer
   DeviceEntityDtoBase toInfrastructure() => DeviceEntityDtoBase();
 
-  Future<Either<CoreFailure, Unit>> executeAction({
-    required EntityProperties property,
-    required EntityActions action,
-    HashMap<ActionValues, dynamic>? values,
-  }) async {
+  Future<Either<CoreFailure, Unit>> executeAction(
+    EntitySingleRequest request,
+  ) async {
     icLogger.e(
       'ExecuteAction is not implemented for device $_currentDeviceInfo '
-      'property ${property.name} action ${action.name} value $values',
+      'property ${request.property.name} action ${request.action.name} value ${request.values}',
     );
     return const Left(CoreFailure.unexpected());
   }
@@ -232,9 +231,39 @@ abstract class DeviceEntityBase {
   Duration maxDurationBetweenRequsts = const Duration(milliseconds: 50);
   DateTime? lastRequest;
 
-  bool canActivateAction() =>
-      lastRequest == null ||
-      DateTime.now().difference(lastRequest!) > maxDurationBetweenRequsts;
+  final int maxRequestsStack = 10;
+  final Queue<EntitySingleRequest> _requestsQueue =
+      Queue<EntitySingleRequest>();
+
+  bool get isRequestsQueueEmpty => _requestsQueue.isEmpty;
+  EntitySingleRequest get popFirstRequestsQueue => _requestsQueue.removeFirst();
+
+  void addRequestInStack(EntitySingleRequest request) {
+    _requestsQueue.add(request);
+
+    if (_requestsQueue.length > 1 ||
+        _requestsQueue.length >= maxRequestsStack) {
+      return;
+    }
+
+    Timer.periodic(maxDurationBetweenRequsts, (Timer timer) {
+      executeAction(_requestsQueue.removeFirst());
+      if (_requestsQueue.isEmpty) {
+        timer.cancel();
+      }
+    });
+  }
+
+  bool canActivateAction(EntitySingleRequest request) {
+    final bool tempActiveAction = lastRequest == null ||
+        DateTime.now().difference(lastRequest!) > maxDurationBetweenRequsts;
+    if (!tempActiveAction) {
+      addRequestInStack(request);
+    } else {
+      lastRequest = DateTime.now();
+    }
+    return tempActiveAction;
+  }
 }
 
 class DeviceEntityNotAbstract extends DeviceEntityBase {
@@ -289,4 +318,16 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
 
   @override
   List<EntityProperties> getListOfPropertiesToChange() => [];
+}
+
+class EntitySingleRequest {
+  const EntitySingleRequest({
+    required this.property,
+    required this.action,
+    required this.values,
+  });
+
+  final EntityProperties property;
+  final EntityActions action;
+  final HashMap<ActionValues, dynamic>? values;
 }

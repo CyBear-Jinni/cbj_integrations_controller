@@ -4,6 +4,7 @@ import 'dart:collection';
 import 'package:cbj_integrations_controller/src/domain/area/area_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/area/i_area_repository.dart';
 import 'package:cbj_integrations_controller/src/domain/core/request_action_object.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/vendor_entity_information.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_entity.dart';
@@ -77,4 +78,23 @@ class IcSynchronizer {
       AutomationService().addScene(scene);
 
   Future activateScene(String id) => AutomationService().activateScene(id);
+
+  Future<HashSet<String>> createPresetScenesForAreaPurposes(
+    Set<AreaPurposesTypes> areaPurposes,
+  ) =>
+      AutomationService().createPresetScenesForAreaPurposes(areaPurposes);
+
+  Future updateAreaAutomation({
+    required Set<String> entitiesId,
+    required Set<String> scenesId,
+  }) async {
+    final HashMap<String, DeviceEntityBase> entities = await getEntities();
+    final HashMap<String, EntityTypes> entitiesWithType = HashMap.fromEntries(
+      entitiesId.map((e) => MapEntry(e, entities[e]!.entityTypes.type)),
+    );
+    AutomationService().updateAreaAutomation(
+      entitiesIdAndType: entitiesWithType,
+      scenesId: scenesId,
+    );
+  }
 }

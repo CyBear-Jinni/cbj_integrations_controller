@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
@@ -149,12 +147,10 @@ class GenericSecurityCameraDE extends DeviceEntityBase {
   }
 
   @override
-  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
-    required EntityProperties property,
-    required EntityActions action,
-    HashMap<ActionValues, dynamic>? values,
-  }) async {
-    switch (action) {
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction(
+    EntitySingleRequest request,
+  ) async {
+    switch (request.action) {
       case EntityActions.shutdown:
         return shutDownSecurityCamera();
       case EntityActions.suspend:
@@ -163,8 +159,7 @@ class GenericSecurityCameraDE extends DeviceEntityBase {
         break;
     }
 
-    return super
-        .executeAction(property: property, action: action, values: values);
+    return super.executeAction(request);
   }
 
   /// Please override the following methods

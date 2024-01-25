@@ -11,11 +11,11 @@ class AreaEntity {
     required this.uniqueId,
     required this.cbjEntityName,
     required this.background,
-    required this.areaTypes,
+    required this.purposes,
     required this.entitiesId,
-    required this.areaScenesId,
-    required this.areaRoutinesId,
-    required this.areaBindingsId,
+    required this.scenesId,
+    required this.routinesId,
+    required this.bindingsId,
 
     /// Who is using this area
     required this.areaMostUsedBy,
@@ -31,22 +31,22 @@ class AreaEntity {
           'https://live.staticflickr.com/5220/5486044345_f67abff3e9_h.jpg',
         ),
         entitiesId: AreaEntitiesId(const {}),
-        areaScenesId: AreaScenesId(const {}),
-        areaRoutinesId: AreaRoutinesId(const {}),
-        areaBindingsId: AreaBindingsId(const {}),
+        scenesId: AreaScenesId(const {}),
+        routinesId: AreaRoutinesId(const {}),
+        bindingsId: AreaBindingsId(const {}),
         areaMostUsedBy: AreaMostUsedBy(const {}),
         areaPermissions: AreaPermissions(const {}),
-        areaTypes: AreaTypes(const {}),
+        purposes: AreaPurposes(const {}),
       );
 
   AreaUniqueId uniqueId;
   AreaDefaultName cbjEntityName;
   AreaBackground background;
-  AreaTypes areaTypes;
+  AreaPurposes purposes;
   AreaEntitiesId entitiesId;
-  AreaScenesId areaScenesId;
-  AreaRoutinesId areaRoutinesId;
-  AreaBindingsId areaBindingsId;
+  AreaScenesId scenesId;
+  AreaRoutinesId routinesId;
+  AreaBindingsId bindingsId;
 
   /// Who is using this area
   AreaMostUsedBy areaMostUsedBy;
@@ -69,10 +69,10 @@ class AreaEntity {
   /// Will add new scene id to the scenes in the area list
   void addSceneId(String newSceneId) {
     final Set<String> tempList = {};
-    tempList.addAll(areaScenesId.getOrCrash());
+    tempList.addAll(scenesId.getOrCrash());
     tempList.add(newSceneId);
     try {
-      areaScenesId = AreaScenesId(tempList);
+      scenesId = AreaScenesId(tempList);
     } catch (e) {
       icLogger.e('addSceneId will not work if list got created with const');
     }
@@ -81,10 +81,10 @@ class AreaEntity {
   /// Will add new routine id to the scenes in the area list
   void addRoutineId(String newRoutineId) {
     final Set<String> tempList = {};
-    tempList.addAll(areaRoutinesId.getOrCrash());
+    tempList.addAll(routinesId.getOrCrash());
     tempList.add(newRoutineId);
     try {
-      areaRoutinesId = AreaRoutinesId(tempList);
+      routinesId = AreaRoutinesId(tempList);
     } catch (e) {
       icLogger.e('addRoutineId will not work if list got created with const');
     }
@@ -93,7 +93,7 @@ class AreaEntity {
   /// Will add new Binding id to the scenes in the area list
   void addBindingId(String newSceneId) {
     try {
-      areaBindingsId.getOrCrash().add(newSceneId);
+      bindingsId.getOrCrash().add(newSceneId);
     } catch (e) {
       icLogger.e('addBindingId will not work if list got created with const');
     }
@@ -115,11 +115,11 @@ class AreaEntity {
       uniqueId: uniqueId.getOrCrash(),
       cbjEntityName: cbjEntityName.getOrCrash(),
       background: background.getOrCrash(),
-      areaTypes: areaTypes.getOrCrash(),
+      areaTypes: purposes.getOrCrash(),
       areaDevicesId: entitiesId.getOrCrash(),
-      areaScenesId: areaScenesId.getOrCrash(),
-      areaRoutinesId: areaRoutinesId.getOrCrash(),
-      areaBindingsId: areaBindingsId.getOrCrash(),
+      areaScenesId: scenesId.getOrCrash(),
+      areaRoutinesId: routinesId.getOrCrash(),
+      areaBindingsId: bindingsId.getOrCrash(),
       areaMostUsedBy: areaMostUsedBy.getOrCrash(),
       areaPermissions: areaPermissions.getOrCrash(),
     );

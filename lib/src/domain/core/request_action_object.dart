@@ -4,7 +4,7 @@ import 'package:cbj_integrations_controller/integrations_controller.dart';
 
 class RequestActionObject {
   RequestActionObject({
-    required this.uniqueIdByVendor,
+    required this.entityIds,
     required this.property,
     required this.actionType,
     HashMap<ActionValues, dynamic>? value,
@@ -12,28 +12,14 @@ class RequestActionObject {
     this.value = value ?? HashMap();
   }
 
-  factory RequestActionObject.fromSingle(ActionObjectSingle singleAction) {
-    return RequestActionObject(
-      uniqueIdByVendor: HashMap.fromEntries([
-        MapEntry(singleAction.vendor, HashSet.from([singleAction.entityId])),
-      ]),
-      property: singleAction.property,
-      actionType: singleAction.actionType,
-    );
-  }
-
-  final HashMap<VendorsAndServices, HashSet<String>> uniqueIdByVendor;
+  final HashSet<String> entityIds;
   final EntityProperties property;
   final EntityActions actionType;
   late HashMap<ActionValues, dynamic> value;
 
   RequestActionObjectDtos toInfrastructure() {
     return RequestActionObjectDtos(
-      uniqueIdByVendor: HashMap<String, List<String>>.from(
-        uniqueIdByVendor.map(
-          (key, value) => MapEntry(key.name, value.toList()),
-        ),
-      ),
+      entitiesId: entityIds.toList(),
       property: property.name,
       actionType: actionType.name,
       value: HashMap<String, dynamic>.from(
@@ -43,20 +29,4 @@ class RequestActionObject {
       ),
     );
   }
-}
-
-class ActionObjectSingle {
-  ActionObjectSingle({
-    required this.vendor,
-    required this.entityId,
-    required this.property,
-    required this.actionType,
-    this.value,
-  });
-
-  final VendorsAndServices vendor;
-  final String entityId;
-  final EntityProperties property;
-  final EntityActions actionType;
-  HashMap<ActionValues, dynamic>? value;
 }

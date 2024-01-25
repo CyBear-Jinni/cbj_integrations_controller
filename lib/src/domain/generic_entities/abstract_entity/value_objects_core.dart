@@ -265,7 +265,7 @@ class CbjDeviceVendor extends ValueObjectCore<String> {
     );
   }
 
-  factory CbjDeviceVendor.vendor(VendorsAndServices? input) {
+  factory CbjDeviceVendor.vendor(VendorsAndServices input) {
     return CbjDeviceVendor._(
       validateDeviceVendorExist(input),
       input,
@@ -274,9 +274,9 @@ class CbjDeviceVendor extends ValueObjectCore<String> {
 
   const CbjDeviceVendor._(this.value, this._vendorsAndServices);
 
-  final VendorsAndServices? _vendorsAndServices;
+  final VendorsAndServices _vendorsAndServices;
 
-  VendorsAndServices? get vendorsAndServices => _vendorsAndServices;
+  VendorsAndServices get vendorsAndServices => _vendorsAndServices;
 
   @override
   final Either<CoreFailure<String>, String> value;

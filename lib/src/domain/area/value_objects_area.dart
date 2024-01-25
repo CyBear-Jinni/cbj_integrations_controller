@@ -1,6 +1,7 @@
 import 'package:cbj_integrations_controller/src/domain/area/area_errors.dart';
 import 'package:cbj_integrations_controller/src/domain/area/area_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/area/area_validators.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
@@ -91,12 +92,14 @@ class AreaBackground extends ValueObjectAreas<String> {
   final Either<AreaFailure<String>, String> value;
 }
 
-class AreaTypes extends ValueObjectAreas<Set<String>> {
-  factory AreaTypes(Set<String> input) {
-    return AreaTypes._(validateAreaTypesExist(input));
+class AreaPurposes extends ValueObjectAreas<Set<String>> {
+  factory AreaPurposes(Set<AreaPurposesTypes> input) {
+    return AreaPurposes._(input, right(input.map((e) => e.name).toSet()));
   }
 
-  const AreaTypes._(this.value);
+  const AreaPurposes._(this.types, this.value);
+
+  final Set<AreaPurposesTypes> types;
 
   @override
   final Either<AreaFailure<Set<String>>, Set<String>> value;
@@ -104,7 +107,7 @@ class AreaTypes extends ValueObjectAreas<Set<String>> {
 
 class AreaEntitiesId extends ValueObjectAreas<Set<String>> {
   factory AreaEntitiesId(Set<String> input) {
-    return AreaEntitiesId._(validateAreaTypsValid(input));
+    return AreaEntitiesId._(right(input));
   }
 
   const AreaEntitiesId._(this.value);
@@ -115,7 +118,7 @@ class AreaEntitiesId extends ValueObjectAreas<Set<String>> {
 
 class AreaScenesId extends ValueObjectAreas<Set<String>> {
   factory AreaScenesId(Set<String> input) {
-    return AreaScenesId._(validateAreaTypsValid(input));
+    return AreaScenesId._(right(input));
   }
 
   const AreaScenesId._(this.value);
@@ -126,7 +129,7 @@ class AreaScenesId extends ValueObjectAreas<Set<String>> {
 
 class AreaRoutinesId extends ValueObjectAreas<Set<String>> {
   factory AreaRoutinesId(Set<String> input) {
-    return AreaRoutinesId._(validateAreaTypsValid(input));
+    return AreaRoutinesId._(right(input));
   }
 
   const AreaRoutinesId._(this.value);
@@ -137,7 +140,7 @@ class AreaRoutinesId extends ValueObjectAreas<Set<String>> {
 
 class AreaBindingsId extends ValueObjectAreas<Set<String>> {
   factory AreaBindingsId(Set<String> input) {
-    return AreaBindingsId._(validateAreaTypsValid(input));
+    return AreaBindingsId._(right(input));
   }
 
   const AreaBindingsId._(this.value);

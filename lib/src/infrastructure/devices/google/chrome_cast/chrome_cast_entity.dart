@@ -88,14 +88,17 @@ class ChromeCastEntity extends GenericSmartTvDE {
   }
 
   CastDevice? castDevice;
-  CastSession? session;
   bool sessionIsClosing = false;
 
   @override
   Future<Either<CoreFailure, Unit>> turnOnSmartTv() async => right(unit);
 
   @override
-  Future<Either<CoreFailure, Unit>> turnOffSmartTv() async => right(unit);
+  Future<Either<CoreFailure, Unit>> turnOffSmartTv() async {
+    await castDevice?.close();
+
+    return right(unit);
+  }
 
   @override
   Future<Either<CoreFailure, Unit>> sendUrlToDevice(String url) async {

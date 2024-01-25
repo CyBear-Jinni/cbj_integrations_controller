@@ -127,6 +127,7 @@ enum EntityActions {
   changeMod,
   speek,
   hsvColor,
+  useValue,
 }
 
 extension EntityActionsExtension on EntityActions {
@@ -162,8 +163,8 @@ enum ActionValues {
   alpha,
   hue,
   saturation,
-  value,
-  temperature,
+  colorValue,
+  colorTemperature,
 }
 
 extension ActionValuesExtension on ActionValues {

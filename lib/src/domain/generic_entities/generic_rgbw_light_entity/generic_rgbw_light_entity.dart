@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
@@ -192,37 +190,39 @@ class GenericRgbwLightDE extends DeviceEntityBase {
   }
 
   @override
-  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
-    required EntityProperties property,
-    required EntityActions action,
-    HashMap<ActionValues, dynamic>? values,
-  }) async {
-    if (property == EntityProperties.lightBrightness &&
-        values != null &&
-        values[ActionValues.brightness] != null) {
-      final dynamic brightness = values[ActionValues.brightness];
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction(
+    EntitySingleRequest request,
+  ) async {
+    if (!canActivateAction(request)) {
+      return left(const CoreFailure.unexpected());
+    }
+
+    if (request.property == EntityProperties.lightBrightness &&
+        request.values != null &&
+        request.values![ActionValues.brightness] != null) {
+      final dynamic brightness = request.values![ActionValues.brightness];
       if (brightness is! int) {
         return const Left(CoreFailure.unexpected());
       }
       return setBrightness(brightness);
     }
 
-    switch (action) {
+    switch (request.action) {
       case EntityActions.on:
         return turnOnLight();
       case EntityActions.off:
         return turnOffLight();
       case EntityActions.changeTemperature:
-        final dynamic value = values?[ActionValues.temperature];
+        final dynamic value = request.values?[ActionValues.colorTemperature];
         if (value is! int) {
           return const Left(CoreFailure.unexpected());
         }
         return changeColorTemperature(value);
       case EntityActions.hsvColor:
-        final dynamic alpha = values?[ActionValues.alpha];
-        final dynamic hue = values?[ActionValues.hue];
-        final dynamic saturation = values?[ActionValues.saturation];
-        final dynamic value = values?[ActionValues.value];
+        final dynamic alpha = request.values?[ActionValues.alpha];
+        final dynamic hue = request.values?[ActionValues.hue];
+        final dynamic saturation = request.values?[ActionValues.saturation];
+        final dynamic value = request.values?[ActionValues.colorValue];
 
         if (alpha is! double ||
             hue is! double ||
@@ -248,8 +248,7 @@ class GenericRgbwLightDE extends DeviceEntityBase {
         break;
     }
 
-    return super
-        .executeAction(property: property, action: action, values: values);
+    return super.executeAction(request);
   }
 
   /// Please override the following methods

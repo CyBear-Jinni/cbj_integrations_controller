@@ -57,6 +57,8 @@ class VendorsConnectorConjecture {
   //   return deviceEntityGotSaved;
   // }
 
+  HashMap<String, VendorsAndServices> entitiesToVendor = HashMap();
+
   List<VendorEntityInformation> getVendors() =>
       VendorConnectorConjectureService.instanceMapByType.values
           .map((e) => e.vendorEntityInformation)
@@ -216,6 +218,13 @@ class VendorsConnectorConjecture {
     if (handeldEntities == null || handeldEntities.isEmpty) {
       return;
     }
+    for (final MapEntry<String, DeviceEntityBase> entity
+        in handeldEntities.entries) {
+      entitiesToVendor.addEntries([
+        MapEntry(entity.key, entity.value.cbjDeviceVendor.vendorsAndServices),
+      ]);
+    }
+
     EntitiesService().addDiscovedEntity(handeldEntities);
   }
 
@@ -239,14 +248,18 @@ class VendorsConnectorConjecture {
   }
 
   void setEntitiesState(RequestActionObject action) {
-    for (final MapEntry<VendorsAndServices, HashSet<String>> entry
-        in action.uniqueIdByVendor.entries.toList()) {
-      final VendorsAndServices vendor = entry.key;
+    for (final String entityId in action.entityIds) {
+      final VendorsAndServices? vendor = entitiesToVendor[entityId];
+      if (vendor == null) {
+        continue;
+      }
       getVendorConnectorConjecture(vendor)?.setEntityState(
-        ids: entry.value,
-        action: action.actionType,
-        property: action.property,
-        value: action.value,
+        ids: HashSet.from([entityId]),
+        request: EntitySingleRequest(
+          action: action.actionType,
+          property: action.property,
+          values: action.value,
+        ),
       );
     }
   }
