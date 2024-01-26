@@ -25,7 +25,27 @@ class AutomationService {
     if (scene == null) {
       return;
     }
-    for (final RequestActionObject action in scene.actions) {
+
+    final HashSet<String> entitysId =
+        HashSet.from(scene.actions.map((e) => e.entityIds.first));
+
+    for (final String entityId in entitysId) {
+      final List<RequestActionObject> actionsForEntity = scene.actions
+          .where((element) => element.entityIds.contains(entityId))
+          .toList();
+      activeAutomationsForEntity(actionsForEntity);
+    }
+  }
+
+  Future activeAutomationsForEntity(List<RequestActionObject> actions) async {
+    for (final RequestActionObject action in actions) {
+      if (action.property == EntityProperties.delay) {
+        final dynamic duration = action.value[ActionValues.duration];
+        if (duration != null && duration is int) {
+          await Future.delayed(Duration(milliseconds: duration));
+        }
+        continue;
+      }
       IcSynchronizer().setEntitiesState(action);
     }
   }

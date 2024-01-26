@@ -25,6 +25,45 @@ class CommonDevicesScenesPresetsForDevices {
         ),
       ];
 
+  static List<RequestActionObject> lightOffGradualyPreset(String entityId) {
+    int brightness = 40;
+    const int brightnessReduction = 2;
+    const int totalActionDuration = 600000; // 10 minutes
+    final int delayDuration =
+        totalActionDuration ~/ (brightness ~/ brightnessReduction);
+
+    final List<RequestActionObject> requestList = [];
+
+    while (brightness > 0) {
+      requestList.add(
+        RequestActionObject(
+          entityIds: HashSet.from([entityId]),
+          property: EntityProperties.lightBrightness,
+          actionType: EntityActions.useValue,
+          value: HashMap.from({ActionValues.brightness: brightness}),
+        ),
+      );
+      requestList.add(
+        RequestActionObject(
+          entityIds: HashSet.from([entityId]),
+          property: EntityProperties.delay,
+          actionType: EntityActions.useValue,
+          value: HashMap.from({ActionValues.duration: delayDuration}),
+        ),
+      );
+      brightness -= brightnessReduction;
+    }
+    requestList.add(
+      RequestActionObject(
+        entityIds: HashSet.from([entityId]),
+        property: EntityProperties.lightSwitchState,
+        actionType: EntityActions.off,
+      ),
+    );
+
+    return requestList;
+  }
+
   /// Blinds preset
 
   static List<RequestActionObject> blindsDownPreset(String entityId) => [

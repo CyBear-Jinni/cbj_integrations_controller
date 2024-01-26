@@ -28,15 +28,15 @@ class StudyAreaAreaAction {
         break;
       case EntityTypes.rgbwLights:
         actionsList.addAll(
+          CommonDevicesScenesPresetsForDevices.lightOnPreset(entityId),
+        );
+        actionsList.addAll(
           CommonDevicesScenesPresetsForDevices.rgbLightWhitePreset(entityId),
         );
         actionsList.addAll(
           CommonDevicesScenesPresetsForDevices.rgbLightMaxBrightnessPreset(
             entityId,
           ),
-        );
-        actionsList.addAll(
-          CommonDevicesScenesPresetsForDevices.lightOnPreset(entityId),
         );
       case EntityTypes.securityCamera:
         // TODO: Handle this case.

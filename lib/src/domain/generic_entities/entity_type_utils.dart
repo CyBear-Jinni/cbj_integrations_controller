@@ -28,6 +28,7 @@ enum EntityProperties {
   speekers,
   color,
   acSwitchState,
+  delay,
   ;
 
   bool containsAction(EntityActions action) {

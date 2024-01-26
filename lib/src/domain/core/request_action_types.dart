@@ -165,6 +165,9 @@ enum ActionValues {
   saturation,
   colorValue,
   colorTemperature,
+
+  /// in milliseconds
+  duration,
 }
 
 extension ActionValuesExtension on ActionValues {

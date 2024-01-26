@@ -16,17 +16,17 @@ class BedAreaAreaAction {
         );
       case EntityTypes.boiler:
         break;
-      case EntityTypes.dimmableLight:
-        // TODO: Turn off dim light in case it turned on in the night.
-        break;
-
       case EntityTypes.printer:
         // TODO: Postpone maintenance.
         break;
       case EntityTypes.light:
-      case EntityTypes.rgbwLights:
         actionsList.addAll(
           CommonDevicesScenesPresetsForDevices.lightOffPreset(entityId),
+        );
+      case EntityTypes.dimmableLight:
+      case EntityTypes.rgbwLights:
+        actionsList.addAll(
+          CommonDevicesScenesPresetsForDevices.lightOffGradualyPreset(entityId),
         );
       case EntityTypes.securityCamera:
         // TODO: Handle this case.
