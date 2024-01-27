@@ -31,7 +31,7 @@ abstract class IMqttServerRepository {
   Future<MqttServerClient> connect();
 
   /// Make sure that mqtt is connected state before continuing
-  Future<void> asyncConstructor();
+  Future asyncConstructor();
 
   /// Stream all subscription changes
   Stream<List<MqttReceivedMessage<MqttMessage?>>> streamOfAllSubscriptions();
@@ -54,16 +54,16 @@ abstract class IMqttServerRepository {
 
   /// Get hub subscription and for each device change it will call method to
   /// notify the needed devices
-  Future<void> allHubDevicesSubscriptions();
+  Future allHubDevicesSubscriptions();
 
   /// Send requests back to the app, from updated device state to new areas
-  Future<void> sendToApp();
+  Future sendToApp();
 
   /// Publish message to a specific topic
-  Future<void> publishMessage(String topic, String message);
+  Future publishMessage(String topic, String message);
 
   /// Publish all device properties
-  Future<void> publishDeviceEntity(
+  Future publishDeviceEntity(
     DeviceEntityBase deviceEntityDtoAbstract,
   );
 
@@ -71,24 +71,24 @@ abstract class IMqttServerRepository {
   Future<List<ChangeRecord>?> readingFromMqttOnce(String topic);
 
   /// Subscribe to changes in given topic
-  Future<void> subscribeToTopic(String topic);
+  Future subscribeToTopic(String topic);
 
   /// Post object from the app to the cbj hub through the mqtt, it insures that
   /// it is posted correctly, right path and right way to post each type
-  Future<void> postToHubMqtt({
+  Future postToHubMqtt({
     required dynamic entityFromTheApp,
     bool? gotFromApp,
   });
 
   /// Post object from the Hub to the app through the mqtt, it insures that
   /// it is posted correctly, right path and right way to post each type
-  Future<void> postToAppMqtt({
+  Future postToAppMqtt({
     required DeviceEntityBase entityFromTheHub,
   });
 
   /// Post smart device from the Hub to the app through the mqtt, it insures that
   /// it is posted correctly, right path and right way to post each type
-  Future<void> postSmartDeviceToAppMqtt({
+  Future postSmartDeviceToAppMqtt({
     required DeviceEntityBase entityFromTheHub,
   });
 }

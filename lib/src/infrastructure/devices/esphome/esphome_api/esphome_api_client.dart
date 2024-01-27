@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cbj_integrations_controller/integrations_controller.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/esphome/esphome_api/esphome_objects_as_dart_objects.dart';
 
 /// Client to interact with ESPHome device
@@ -43,7 +44,7 @@ class EspHomeApiClient {
     return _fSocket = await Socket.connect(addressOfServer, devicePort);
   }
 
-  Future<void> listenToResponses() async {
+  Future listenToResponses() async {
     final Socket socket = await getSocket();
 
     socket.listen(
@@ -391,7 +392,7 @@ class EspHomeApiClient {
     );
   }
 
-  Future<void> sendConnect() async {
+  Future sendConnect() async {
     final Socket socket = await getSocket();
 
     await _helloRequestToEsp();
@@ -432,14 +433,14 @@ class EspHomeApiClient {
     socket.add(message);
   }
 
-  Future<void> disconnect() async {
+  Future disconnect() async {
     await (await getSocket()).close();
   }
 
   /// aioesphomeapi:
   /// fName = _connect_hello
   /// Step 4 in connect process: send hello and get api version.
-  Future<void> _helloRequestToEsp() async {
+  Future _helloRequestToEsp() async {
     // connect to the socket server
     final Socket socket = await getSocket();
 
@@ -482,7 +483,7 @@ class EspHomeApiClient {
     socket.add(message);
   }
 
-  Future<void> connectRequestToEsp() async {
+  Future connectRequestToEsp() async {
     // connect to the socket server
     final socket = await getSocket();
 
@@ -527,7 +528,7 @@ class EspHomeApiClient {
   /// aioesphomeapi:
   /// fName = _connect_start_ping
   /// Step 5 in connect process: start the ping loop.
-  Future<void> ping() async {
+  Future ping() async {
     // connect to the socket server
     final socket = await getSocket();
     icLogger.t(
@@ -562,7 +563,7 @@ class EspHomeApiClient {
     socket.add(message);
   }
 
-  Future<void> deviceInfoRequestToEsp() async {
+  Future deviceInfoRequestToEsp() async {
     // connect to the socket server
     final socket = await getSocket();
     icLogger.t(
@@ -597,7 +598,7 @@ class EspHomeApiClient {
     socket.add(message);
   }
 
-  Future<void> subscribeStatesRequest() async {
+  Future subscribeStatesRequest() async {
     // connect to the socket server
     final socket = await getSocket();
     icLogger.t(
@@ -632,7 +633,7 @@ class EspHomeApiClient {
     socket.add(message);
   }
 
-  Future<void> switchCommandRequest(int deviceKey, bool changeTostate) async {
+  Future switchCommandRequest(int deviceKey, bool changeTostate) async {
     if (devicePass == null) {
       icLogger.t('Please call sendConnect, password is missing');
       return;
@@ -697,7 +698,7 @@ class EspHomeApiClient {
     await Future.delayed(const Duration(milliseconds: 1000));
   }
 
-  Future<void> listEntitiesRequest() async {
+  Future listEntitiesRequest() async {
     if (devicePass == null) {
       icLogger.t('Please call sendConnect, password is missing');
       return;
@@ -752,7 +753,7 @@ class EspHomeApiClient {
   /// aioesphomeapi:
   /// fName = _connect_init_frame_helper
   /// Step 3 in connect process: initialize the frame helper and init read loop.
-  Future<void> connectInitFrameHelper() async {
+  Future connectInitFrameHelper() async {
     await getSocket();
 
     await listenToResponses();

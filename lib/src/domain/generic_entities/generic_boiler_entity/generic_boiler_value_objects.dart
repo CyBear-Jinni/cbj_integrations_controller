@@ -8,8 +8,8 @@ import 'package:dartz/dartz.dart';
 class GenericBoilerSwitchState extends ValueObjectCore<String> {
   factory GenericBoilerSwitchState(String? input) {
     assert(input != null);
-    final EntityActions action = EntityUtils.stringToDeviceAction(input!) ??
-        EntityActions.actionNotSupported;
+    final EntityActions action =
+        EntityUtils.stringToDeviceAction(input!) ?? EntityActions.undefined;
 
     return GenericBoilerSwitchState._(
       validateGenericBoilerStateNotEmpty(input),

@@ -43,7 +43,9 @@ mixin _$GenericRgbwLightDeviceDtos {
   String? get deviceHostName => throw _privateConstructorUsedError;
   String? get deviceMdns => throw _privateConstructorUsedError;
   String? get srvResourceRecord => throw _privateConstructorUsedError;
+  String? get srvTarget => throw _privateConstructorUsedError;
   String? get ptrResourceRecord => throw _privateConstructorUsedError;
+  String? get mdnsServiceType => throw _privateConstructorUsedError;
   String? get devicesMacAddress => throw _privateConstructorUsedError;
   String? get entityKey => throw _privateConstructorUsedError;
   String? get requestTimeStamp => throw _privateConstructorUsedError;
@@ -57,6 +59,7 @@ mixin _$GenericRgbwLightDeviceDtos {
   String? get lightColorHue => throw _privateConstructorUsedError;
   String? get lightColorSaturation => throw _privateConstructorUsedError;
   String? get lightColorValue => throw _privateConstructorUsedError;
+  String get lightMode => throw _privateConstructorUsedError;
   String? get deviceDtoClass => throw _privateConstructorUsedError;
   String? get stateMassage => throw _privateConstructorUsedError;
 
@@ -95,7 +98,9 @@ abstract class $GenericRgbwLightDeviceDtosCopyWith<$Res> {
       String? deviceHostName,
       String? deviceMdns,
       String? srvResourceRecord,
+      String? srvTarget,
       String? ptrResourceRecord,
+      String? mdnsServiceType,
       String? devicesMacAddress,
       String? entityKey,
       String? requestTimeStamp,
@@ -108,6 +113,7 @@ abstract class $GenericRgbwLightDeviceDtosCopyWith<$Res> {
       String? lightColorHue,
       String? lightColorSaturation,
       String? lightColorValue,
+      String lightMode,
       String? deviceDtoClass,
       String? stateMassage});
 }
@@ -147,7 +153,9 @@ class _$GenericRgbwLightDeviceDtosCopyWithImpl<$Res,
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
     Object? srvResourceRecord = freezed,
+    Object? srvTarget = freezed,
     Object? ptrResourceRecord = freezed,
+    Object? mdnsServiceType = freezed,
     Object? devicesMacAddress = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
@@ -160,6 +168,7 @@ class _$GenericRgbwLightDeviceDtosCopyWithImpl<$Res,
     Object? lightColorHue = freezed,
     Object? lightColorSaturation = freezed,
     Object? lightColorValue = freezed,
+    Object? lightMode = null,
     Object? deviceDtoClass = freezed,
     Object? stateMassage = freezed,
   }) {
@@ -248,9 +257,17 @@ class _$GenericRgbwLightDeviceDtosCopyWithImpl<$Res,
           ? _value.srvResourceRecord
           : srvResourceRecord // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvTarget: freezed == srvTarget
+          ? _value.srvTarget
+          : srvTarget // ignore: cast_nullable_to_non_nullable
+              as String?,
       ptrResourceRecord: freezed == ptrResourceRecord
           ? _value.ptrResourceRecord
           : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mdnsServiceType: freezed == mdnsServiceType
+          ? _value.mdnsServiceType
+          : mdnsServiceType // ignore: cast_nullable_to_non_nullable
               as String?,
       devicesMacAddress: freezed == devicesMacAddress
           ? _value.devicesMacAddress
@@ -301,6 +318,10 @@ class _$GenericRgbwLightDeviceDtosCopyWithImpl<$Res,
           ? _value.lightColorValue
           : lightColorValue // ignore: cast_nullable_to_non_nullable
               as String?,
+      lightMode: null == lightMode
+          ? _value.lightMode
+          : lightMode // ignore: cast_nullable_to_non_nullable
+              as String,
       deviceDtoClass: freezed == deviceDtoClass
           ? _value.deviceDtoClass
           : deviceDtoClass // ignore: cast_nullable_to_non_nullable
@@ -344,7 +365,9 @@ abstract class _$$GenericRgbwLightDeviceDtosImplCopyWith<$Res>
       String? deviceHostName,
       String? deviceMdns,
       String? srvResourceRecord,
+      String? srvTarget,
       String? ptrResourceRecord,
+      String? mdnsServiceType,
       String? devicesMacAddress,
       String? entityKey,
       String? requestTimeStamp,
@@ -357,6 +380,7 @@ abstract class _$$GenericRgbwLightDeviceDtosImplCopyWith<$Res>
       String? lightColorHue,
       String? lightColorSaturation,
       String? lightColorValue,
+      String lightMode,
       String? deviceDtoClass,
       String? stateMassage});
 }
@@ -395,7 +419,9 @@ class __$$GenericRgbwLightDeviceDtosImplCopyWithImpl<$Res>
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
     Object? srvResourceRecord = freezed,
+    Object? srvTarget = freezed,
     Object? ptrResourceRecord = freezed,
+    Object? mdnsServiceType = freezed,
     Object? devicesMacAddress = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
@@ -408,6 +434,7 @@ class __$$GenericRgbwLightDeviceDtosImplCopyWithImpl<$Res>
     Object? lightColorHue = freezed,
     Object? lightColorSaturation = freezed,
     Object? lightColorValue = freezed,
+    Object? lightMode = null,
     Object? deviceDtoClass = freezed,
     Object? stateMassage = freezed,
   }) {
@@ -496,9 +523,17 @@ class __$$GenericRgbwLightDeviceDtosImplCopyWithImpl<$Res>
           ? _value.srvResourceRecord
           : srvResourceRecord // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvTarget: freezed == srvTarget
+          ? _value.srvTarget
+          : srvTarget // ignore: cast_nullable_to_non_nullable
+              as String?,
       ptrResourceRecord: freezed == ptrResourceRecord
           ? _value.ptrResourceRecord
           : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mdnsServiceType: freezed == mdnsServiceType
+          ? _value.mdnsServiceType
+          : mdnsServiceType // ignore: cast_nullable_to_non_nullable
               as String?,
       devicesMacAddress: freezed == devicesMacAddress
           ? _value.devicesMacAddress
@@ -549,6 +584,10 @@ class __$$GenericRgbwLightDeviceDtosImplCopyWithImpl<$Res>
           ? _value.lightColorValue
           : lightColorValue // ignore: cast_nullable_to_non_nullable
               as String?,
+      lightMode: null == lightMode
+          ? _value.lightMode
+          : lightMode // ignore: cast_nullable_to_non_nullable
+              as String,
       deviceDtoClass: freezed == deviceDtoClass
           ? _value.deviceDtoClass
           : deviceDtoClass // ignore: cast_nullable_to_non_nullable
@@ -586,7 +625,9 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
       required this.deviceHostName,
       required this.deviceMdns,
       required this.srvResourceRecord,
+      required this.srvTarget,
       required this.ptrResourceRecord,
+      required this.mdnsServiceType,
       required this.devicesMacAddress,
       required this.entityKey,
       required this.requestTimeStamp,
@@ -599,6 +640,7 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
       required this.lightColorHue,
       required this.lightColorSaturation,
       required this.lightColorValue,
+      required this.lightMode,
       this.deviceDtoClass,
       this.stateMassage})
       : super._();
@@ -651,7 +693,11 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
   @override
   final String? srvResourceRecord;
   @override
+  final String? srvTarget;
+  @override
   final String? ptrResourceRecord;
+  @override
+  final String? mdnsServiceType;
   @override
   final String? devicesMacAddress;
   @override
@@ -677,13 +723,15 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
   @override
   final String? lightColorValue;
   @override
+  final String lightMode;
+  @override
   final String? deviceDtoClass;
   @override
   final String? stateMassage;
 
   @override
   String toString() {
-    return 'GenericRgbwLightDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, lightSwitchState: $lightSwitchState, lightColorTemperature: $lightColorTemperature, lightBrightness: $lightBrightness, lightColorAlpha: $lightColorAlpha, lightColorHue: $lightColorHue, lightColorSaturation: $lightColorSaturation, lightColorValue: $lightColorValue, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericRgbwLightDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, lightSwitchState: $lightSwitchState, lightColorTemperature: $lightColorTemperature, lightBrightness: $lightBrightness, lightColorAlpha: $lightColorAlpha, lightColorHue: $lightColorHue, lightColorSaturation: $lightColorSaturation, lightColorValue: $lightColorValue, lightMode: $lightMode, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -732,8 +780,12 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
                 other.deviceMdns == deviceMdns) &&
             (identical(other.srvResourceRecord, srvResourceRecord) ||
                 other.srvResourceRecord == srvResourceRecord) &&
+            (identical(other.srvTarget, srvTarget) ||
+                other.srvTarget == srvTarget) &&
             (identical(other.ptrResourceRecord, ptrResourceRecord) ||
                 other.ptrResourceRecord == ptrResourceRecord) &&
+            (identical(other.mdnsServiceType, mdnsServiceType) ||
+                other.mdnsServiceType == mdnsServiceType) &&
             (identical(other.devicesMacAddress, devicesMacAddress) ||
                 other.devicesMacAddress == devicesMacAddress) &&
             (identical(other.entityKey, entityKey) ||
@@ -759,10 +811,9 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
                 other.lightColorSaturation == lightColorSaturation) &&
             (identical(other.lightColorValue, lightColorValue) ||
                 other.lightColorValue == lightColorValue) &&
-            (identical(other.deviceDtoClass, deviceDtoClass) ||
-                other.deviceDtoClass == deviceDtoClass) &&
-            (identical(other.stateMassage, stateMassage) ||
-                other.stateMassage == stateMassage));
+            (identical(other.lightMode, lightMode) || other.lightMode == lightMode) &&
+            (identical(other.deviceDtoClass, deviceDtoClass) || other.deviceDtoClass == deviceDtoClass) &&
+            (identical(other.stateMassage, stateMassage) || other.stateMassage == stateMassage));
   }
 
   @JsonKey(ignore: true)
@@ -790,7 +841,9 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
         deviceHostName,
         deviceMdns,
         srvResourceRecord,
+        srvTarget,
         ptrResourceRecord,
+        mdnsServiceType,
         devicesMacAddress,
         entityKey,
         requestTimeStamp,
@@ -803,6 +856,7 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
         lightColorHue,
         lightColorSaturation,
         lightColorValue,
+        lightMode,
         deviceDtoClass,
         stateMassage
       ]);
@@ -845,7 +899,9 @@ abstract class _GenericRgbwLightDeviceDtos extends GenericRgbwLightDeviceDtos {
       required final String? deviceHostName,
       required final String? deviceMdns,
       required final String? srvResourceRecord,
+      required final String? srvTarget,
       required final String? ptrResourceRecord,
+      required final String? mdnsServiceType,
       required final String? devicesMacAddress,
       required final String? entityKey,
       required final String? requestTimeStamp,
@@ -858,6 +914,7 @@ abstract class _GenericRgbwLightDeviceDtos extends GenericRgbwLightDeviceDtos {
       required final String? lightColorHue,
       required final String? lightColorSaturation,
       required final String? lightColorValue,
+      required final String lightMode,
       final String? deviceDtoClass,
       final String? stateMassage}) = _$GenericRgbwLightDeviceDtosImpl;
   _GenericRgbwLightDeviceDtos._() : super._();
@@ -908,7 +965,11 @@ abstract class _GenericRgbwLightDeviceDtos extends GenericRgbwLightDeviceDtos {
   @override
   String? get srvResourceRecord;
   @override
+  String? get srvTarget;
+  @override
   String? get ptrResourceRecord;
+  @override
+  String? get mdnsServiceType;
   @override
   String? get devicesMacAddress;
   @override
@@ -933,6 +994,8 @@ abstract class _GenericRgbwLightDeviceDtos extends GenericRgbwLightDeviceDtos {
   String? get lightColorSaturation;
   @override
   String? get lightColorValue;
+  @override
+  String get lightMode;
   @override
   String? get deviceDtoClass;
   @override

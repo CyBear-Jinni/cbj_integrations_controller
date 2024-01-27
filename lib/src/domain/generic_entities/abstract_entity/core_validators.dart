@@ -3,18 +3,6 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_type_utils.dart';
 import 'package:dartz/dartz.dart';
 
-Either<CoreFailure<String>, String> validateNotEmpty(String input) {
-  if (input.isNotEmpty) {
-    return right(input);
-  } else {
-    return left(
-      CoreFailure.empty(
-        failedValue: input,
-      ),
-    );
-  }
-}
-
 Either<CoreFailure<String>, String> validateLastKnownIpNotEmpty(String input) {
   // if (input.isNotEmpty) {
   return right(input);
@@ -71,13 +59,6 @@ Either<CoreFailure<String>, String> validateMaxNameLength(
       ),
     );
   }
-}
-
-Either<CoreFailure<String>, String> validateDeviceStateExist(String input) {
-  if (EntityUtils.stringToDeviceState(input) != null) {
-    return right(input);
-  }
-  return left(const CoreFailure.deviceActionDoesNotExist());
 }
 
 Either<CoreFailure<String>, String> validateDeviceActionExist(String input) {

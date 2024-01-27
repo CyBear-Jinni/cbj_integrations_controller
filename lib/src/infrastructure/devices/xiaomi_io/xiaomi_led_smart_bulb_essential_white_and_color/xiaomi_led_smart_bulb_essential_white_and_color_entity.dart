@@ -24,7 +24,9 @@ class XiaomiLedSmartBulbEssentialWhiteAndColorEntity
     required super.deviceHostName,
     required super.deviceMdns,
     required super.srvResourceRecord,
+    required super.srvTarget,
     required super.ptrResourceRecord,
+    required super.mdnsServiceType,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -37,5 +39,6 @@ class XiaomiLedSmartBulbEssentialWhiteAndColorEntity
     required super.lightColorSaturation,
     required super.lightColorValue,
     required super.lightBrightness,
+    required super.colorMode,
   });
 }

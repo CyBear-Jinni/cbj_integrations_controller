@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
@@ -39,7 +40,9 @@ abstract class DeviceEntityBase {
     required this.lastResponseFromDeviceTimeStamp,
     required this.deviceCbjUniqueId,
     required this.srvResourceRecord,
+    required this.srvTarget,
     required this.ptrResourceRecord,
+    required this.mdnsServiceType,
     required this.deviceVendor,
     required this.deviceNetworkLastUpdate,
   });
@@ -109,8 +112,10 @@ abstract class DeviceEntityBase {
   DeviceMdns deviceMdns;
 
   DeviceSrvResourceRecord srvResourceRecord;
-
+  DeviceSrvTarget srvTarget;
   DevicePtrResourceRecord ptrResourceRecord;
+
+  DevicemdnsServiceType mdnsServiceType;
 
   /// Mac address of the device
   DevicesMacAddress devicesMacAddress;
@@ -153,14 +158,12 @@ abstract class DeviceEntityBase {
   /// Convert the device to the a dtos object in the infrastructure layer
   DeviceEntityDtoBase toInfrastructure() => DeviceEntityDtoBase();
 
-  Future<Either<CoreFailure, Unit>> executeAction({
-    required EntityProperties property,
-    required EntityActions action,
-    HashMap<ActionValues, dynamic>? values,
-  }) async {
+  Future<Either<CoreFailure, Unit>> executeAction(
+    EntitySingleRequest request,
+  ) async {
     icLogger.e(
       'ExecuteAction is not implemented for device $_currentDeviceInfo '
-      'property ${property.name} action ${action.name} value $values',
+      'property ${request.property.name} action ${request.action.name} value ${request.values}',
     );
     return const Left(CoreFailure.unexpected());
   }
@@ -228,6 +231,52 @@ abstract class DeviceEntityBase {
         mac: devicesMacAddress.getOrCrash(),
         address: deviceLastKnownIp.getOrCrash(),
       );
+
+  Duration minDurationBetweenRequsts = const Duration(milliseconds: 50);
+  DateTime? lastRequest;
+
+  int maxRequestsStack = 5;
+  final Queue<EntitySingleRequest> _requestsQueue =
+      Queue<EntitySingleRequest>();
+
+  bool get isRequestsQueueEmpty => _requestsQueue.isEmpty;
+  EntitySingleRequest get popFirstRequestsQueue => _requestsQueue.removeFirst();
+
+  void addRequestInStack(EntitySingleRequest request) {
+    if (_requestsQueue.length > maxRequestsStack) {
+      _requestsQueue.removeLast();
+      _requestsQueue.add(request);
+      return;
+    }
+
+    _requestsQueue.add(request);
+
+    if (_requestsQueue.length > 1) {
+      return;
+    }
+
+    Timer.periodic(minDurationBetweenRequsts, (Timer timer) {
+      if (_requestsQueue.isEmpty) {
+        timer.cancel();
+        return;
+      }
+      executeAction(_requestsQueue.removeFirst());
+      if (_requestsQueue.isEmpty) {
+        timer.cancel();
+      }
+    });
+  }
+
+  bool canActivateAction(EntitySingleRequest request) {
+    final bool tempActiveAction = lastRequest == null ||
+        DateTime.now().difference(lastRequest!) > minDurationBetweenRequsts;
+    if (tempActiveAction) {
+      lastRequest = DateTime.now();
+    } else {
+      addRequestInStack(request);
+    }
+    return tempActiveAction;
+  }
 }
 
 class DeviceEntityNotAbstract extends DeviceEntityBase {
@@ -236,7 +285,7 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           uniqueId: CoreUniqueId(),
           entityUniqueId: EntityUniqueId('Entity unique id is empty'),
           cbjDeviceVendor: CbjDeviceVendor(
-            VendorsAndServices.vendorsAndServicesNotSupported.toString(),
+            VendorsAndServices.undefined.toString(),
           ),
           entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
           compUuid: DeviceCompUuid(const Uuid().v1()),
@@ -258,7 +307,9 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           deviceHostName: DeviceHostName('deviceHostName is empty'),
           deviceMdns: DeviceMdns('deviceMdns is empty'),
           srvResourceRecord: DeviceSrvResourceRecord(),
+          srvTarget: DeviceSrvTarget(),
           ptrResourceRecord: DevicePtrResourceRecord(),
+          mdnsServiceType: DevicemdnsServiceType(),
           devicesMacAddress: DevicesMacAddress('devicesMacAddress is empty'),
           entityKey: EntityKey('entityKey is empty'),
           requestTimeStamp: RequestTimeStamp('requestTimeStamp is empty'),
@@ -282,4 +333,16 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
 
   @override
   List<EntityProperties> getListOfPropertiesToChange() => [];
+}
+
+class EntitySingleRequest {
+  const EntitySingleRequest({
+    required this.property,
+    required this.action,
+    required this.values,
+  });
+
+  final EntityProperties property;
+  final EntityActions action;
+  final HashMap<ActionValues, dynamic>? values;
 }

@@ -1,5 +1,6 @@
 import 'package:cbj_integrations_controller/integrations_controller.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_security_camera_entity/generic_security_camera_value_objects.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_camera_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/cbj_devices/cbj_smart_device/cbj_smart_device_entity.dart';
 
@@ -37,7 +38,7 @@ class CbjDevicesHelpers {
           uniqueId: CoreUniqueId(),
           entityUniqueId: EntityUniqueId(deviceId),
           cbjEntityName: CbjEntityName(cbjEntityName),
-          entityStateGRPC: EntityState(deviceStateGrpc.toString()),
+          entityStateGRPC: EntityState(EntityStateGRPC.ack),
           stateMassage: DeviceStateMassage(deviceStateMassage),
           senderDeviceOs: DeviceSenderDeviceOs(deviceOs),
           deviceVendor: DeviceVendor(null),
@@ -60,7 +61,9 @@ class CbjDevicesHelpers {
           deviceHostName: DeviceHostName('0'),
           deviceMdns: DeviceMdns('0'),
           srvResourceRecord: DeviceSrvResourceRecord(),
+          mdnsServiceType: DevicemdnsServiceType(),
           ptrResourceRecord: DevicePtrResourceRecord(),
+          srvTarget: DeviceSrvTarget(),
           devicesMacAddress: DevicesMacAddress('0'),
           entityKey: EntityKey('0'),
           requestTimeStamp: RequestTimeStamp('0'),
@@ -72,7 +75,9 @@ class CbjDevicesHelpers {
           uniqueId: CoreUniqueId(),
           entityUniqueId: EntityUniqueId(deviceId),
           cbjEntityName: CbjEntityName(cbjEntityName),
-          entityStateGRPC: EntityState(deviceStateGrpc.toString()),
+          entityStateGRPC: EntityState(
+            EntityStateGRPCExtension.fromString(deviceStateGrpc.name),
+          ),
           stateMassage: DeviceStateMassage(deviceStateMassage),
           senderDeviceOs: DeviceSenderDeviceOs(deviceOs),
           deviceVendor: DeviceVendor(null),
@@ -92,7 +97,9 @@ class CbjDevicesHelpers {
           deviceHostName: DeviceHostName('0'),
           deviceMdns: DeviceMdns('0'),
           srvResourceRecord: DeviceSrvResourceRecord(),
+          mdnsServiceType: DevicemdnsServiceType(),
           ptrResourceRecord: DevicePtrResourceRecord(),
+          srvTarget: DeviceSrvTarget(),
           devicesMacAddress: DevicesMacAddress('0'),
           entityKey: EntityKey('0'),
           requestTimeStamp: RequestTimeStamp('0'),

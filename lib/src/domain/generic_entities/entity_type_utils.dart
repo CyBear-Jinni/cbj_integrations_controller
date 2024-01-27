@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 
 enum EntityProperties {
+  undefined,
   blindsSwitchState,
   boilerSwitchState,
   lightSwitchState,
@@ -27,6 +28,7 @@ enum EntityProperties {
   speekers,
   color,
   acSwitchState,
+  delay,
   ;
 
   bool containsAction(EntityActions action) {
@@ -139,6 +141,17 @@ enum EntityProperties {
   ]);
 }
 
+extension EntityPropertiesExtension on EntityProperties {
+  static EntityProperties fromString(String typeAsString) {
+    return EntityProperties.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => EntityProperties.undefined,
+    );
+  }
+}
+
+// TODO: Check again logic, (deviceType.toString().replaceAll('EntityState.', '');) probably does not work correctly
+
 class EntityUtils {
   static String dTToString(EntityTypes deviceType) {
     return deviceType.toString().replaceAll('EntityState.', '');
@@ -180,7 +193,7 @@ class EntityUtils {
         return deviceType;
       }
     }
-    return VendorsAndServices.vendorsAndServicesNotSupported;
+    return VendorsAndServices.undefined;
   }
 
   ///  Convert deviceAction to string

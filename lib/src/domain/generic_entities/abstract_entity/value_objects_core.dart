@@ -63,9 +63,7 @@ class CoreUniqueId extends ValueObjectCore<String> {
 class EntityUniqueId extends ValueObjectCore<String> {
   factory EntityUniqueId(String? input) {
     assert(input != null);
-    return EntityUniqueId._(
-      validateNotEmpty(input!),
-    );
+    return EntityUniqueId._(right(input!));
   }
 
   const EntityUniqueId._(this.value);
@@ -77,10 +75,7 @@ class EntityUniqueId extends ValueObjectCore<String> {
 class CbjEntityName extends ValueObjectCore<String?> {
   factory CbjEntityName(String? input) {
     return CbjEntityName._(
-      input == null
-          ? right(input)
-          : validateNotEmpty(input)
-              .flatMap((a) => validateMaxNameLength(input, maxLength)),
+      input == null ? right(input) : validateMaxNameLength(input, maxLength),
     );
   }
 
@@ -108,10 +103,7 @@ class EntityOriginalName extends ValueObjectCore<String> {
 class DeviceOriginalName extends ValueObjectCore<String?> {
   factory DeviceOriginalName(String? input) {
     return DeviceOriginalName._(
-      input == null
-          ? right(input)
-          : validateNotEmpty(input)
-              .flatMap((a) => validateMaxNameLength(input, maxLength)),
+      input == null ? right(input) : validateMaxNameLength(input, maxLength),
     );
   }
 
@@ -134,6 +126,17 @@ class DeviceSrvResourceRecord extends ValueObjectCore<String?> {
   final Either<CoreFailure<String?>, String?> value;
 }
 
+class DeviceSrvTarget extends ValueObjectCore<String?> {
+  factory DeviceSrvTarget({String? input}) {
+    return DeviceSrvTarget._(right(input));
+  }
+
+  const DeviceSrvTarget._(this.value);
+
+  @override
+  final Either<CoreFailure<String?>, String?> value;
+}
+
 class DevicePtrResourceRecord extends ValueObjectCore<String?> {
   factory DevicePtrResourceRecord({String? input}) {
     return DevicePtrResourceRecord._(right(input));
@@ -145,14 +148,22 @@ class DevicePtrResourceRecord extends ValueObjectCore<String?> {
   final Either<CoreFailure<String?>, String?> value;
 }
 
-class EntityState extends ValueObjectCore<String> {
-  factory EntityState(String? input) {
-    final EntityStateGRPC state = EntityUtils.stringToDeviceState(input!) ??
-        EntityStateGRPC.stateNotSupported;
+class DevicemdnsServiceType extends ValueObjectCore<String?> {
+  factory DevicemdnsServiceType({String? input}) {
+    return DevicemdnsServiceType._(right(input));
+  }
 
+  const DevicemdnsServiceType._(this.value);
+
+  @override
+  final Either<CoreFailure<String?>, String?> value;
+}
+
+class EntityState extends ValueObjectCore<String> {
+  factory EntityState(EntityStateGRPC input) {
     return EntityState._(
-      validateNotEmpty(input).flatMap((a) => validateDeviceStateExist(input)),
-      state,
+      right(input.name),
+      input,
     );
   }
 
@@ -176,9 +187,7 @@ class EntityState extends ValueObjectCore<String> {
 class DeviceSenderDeviceOs extends ValueObjectCore<String> {
   factory DeviceSenderDeviceOs(String? input) {
     assert(input != null);
-    return DeviceSenderDeviceOs._(
-      validateNotEmpty(input!),
-    );
+    return DeviceSenderDeviceOs._(right(input!));
   }
 
   const DeviceSenderDeviceOs._(this.value);
@@ -189,10 +198,8 @@ class DeviceSenderDeviceOs extends ValueObjectCore<String> {
 
 class DeviceStateMassage extends ValueObjectCore<String> {
   factory DeviceStateMassage(String? input) {
-    assert(input != null);
-    return DeviceStateMassage._(
-      validateNotEmpty(input!),
-    );
+    input ??= '';
+    return DeviceStateMassage._(right(input));
   }
 
   const DeviceStateMassage._(this.value);
@@ -204,9 +211,7 @@ class DeviceStateMassage extends ValueObjectCore<String> {
 class DeviceSenderDeviceModel extends ValueObjectCore<String> {
   factory DeviceSenderDeviceModel(String? input) {
     assert(input != null);
-    return DeviceSenderDeviceModel._(
-      validateNotEmpty(input!),
-    );
+    return DeviceSenderDeviceModel._(right(input!));
   }
 
   const DeviceSenderDeviceModel._(this.value);
@@ -241,8 +246,7 @@ class DeviceAction extends ValueObjectCore<String> {
       input = EntityActions.on.toString();
     }
     return DeviceAction._(
-      validateNotEmpty(input!)
-          .flatMap((a) => validateDeviceActionExist(input!)),
+      validateDeviceActionExist(input!),
     );
   }
 
@@ -272,16 +276,15 @@ class CbjDeviceVendor extends ValueObjectCore<String> {
   factory CbjDeviceVendor(String? input) {
     assert(input != null);
 
-    final VendorsAndServices? vendorsAndServices =
+    final VendorsAndServices vendorsAndServices =
         EntityUtils.stringToDeviceVendor(input!);
     return CbjDeviceVendor._(
-      validateNotEmpty(input)
-          .flatMap((a) => validateDeviceVendorExist(vendorsAndServices)),
+      validateDeviceVendorExist(vendorsAndServices),
       vendorsAndServices,
     );
   }
 
-  factory CbjDeviceVendor.vendor(VendorsAndServices? input) {
+  factory CbjDeviceVendor.vendor(VendorsAndServices input) {
     return CbjDeviceVendor._(
       validateDeviceVendorExist(input),
       input,
@@ -290,9 +293,9 @@ class CbjDeviceVendor extends ValueObjectCore<String> {
 
   const CbjDeviceVendor._(this.value, this._vendorsAndServices);
 
-  final VendorsAndServices? _vendorsAndServices;
+  final VendorsAndServices _vendorsAndServices;
 
-  VendorsAndServices? get vendorsAndServices => _vendorsAndServices;
+  VendorsAndServices get vendorsAndServices => _vendorsAndServices;
 
   @override
   final Either<CoreFailure<String>, String> value;
@@ -323,9 +326,7 @@ class DeviceNetworkLastUpdate extends ValueObjectCore<String?> {
 class DeviceCompUuid extends ValueObjectCore<String> {
   factory DeviceCompUuid(String? input) {
     assert(input != null);
-    return DeviceCompUuid._(
-      validateNotEmpty(input!),
-    );
+    return DeviceCompUuid._(right(input!));
   }
 
   const DeviceCompUuid._(this.value);
@@ -348,8 +349,9 @@ class DeviceLastKnownIp extends ValueObjectCore<String?> {
 class DevicePowerConsumption extends ValueObjectCore<String> {
   factory DevicePowerConsumption(String? input) {
     assert(input != null);
+    input = '0';
     return DevicePowerConsumption._(
-      validatePowerConsumptionNotEmpty(input!),
+      validatePowerConsumptionNotEmpty(input),
     );
   }
 
@@ -365,6 +367,10 @@ class DeviceMdns extends ValueObjectCore<String?> {
   }
 
   const DeviceMdns._(this.value);
+
+  String? get shortForm => value.isLeft()
+      ? null
+      : '${value.getOrElse(() => '')!.split('.').first}.local';
 
   @override
   final Either<CoreFailure<String?>, String?> value;
@@ -401,7 +407,7 @@ class DeviceUniqueId extends ValueObjectCore<String> {
   factory DeviceUniqueId(String? input) {
     assert(input != null);
     return DeviceUniqueId._(
-      validateNotEmpty(input!),
+      right(input!),
     );
   }
 
@@ -414,7 +420,7 @@ class DeviceUniqueId extends ValueObjectCore<String> {
 class DeviceHostName extends ValueObjectCore<String?> {
   factory DeviceHostName(String? input) {
     return DeviceHostName._(
-      input == null ? right(input) : validateNotEmpty(input),
+      right(input),
     );
   }
 
@@ -427,9 +433,7 @@ class DeviceHostName extends ValueObjectCore<String?> {
 class RequestTimeStamp extends ValueObjectCore<String> {
   factory RequestTimeStamp(String? input) {
     assert(input != null);
-    return RequestTimeStamp._(
-      validateNotEmpty(input!),
-    );
+    return RequestTimeStamp._(right(input!));
   }
 
   const RequestTimeStamp._(this.value);
@@ -441,9 +445,7 @@ class RequestTimeStamp extends ValueObjectCore<String> {
 class LastResponseFromDeviceTimeStamp extends ValueObjectCore<String> {
   factory LastResponseFromDeviceTimeStamp(String? input) {
     assert(input != null);
-    return LastResponseFromDeviceTimeStamp._(
-      validateNotEmpty(input!),
-    );
+    return LastResponseFromDeviceTimeStamp._(right(input!));
   }
 
   const LastResponseFromDeviceTimeStamp._(this.value);

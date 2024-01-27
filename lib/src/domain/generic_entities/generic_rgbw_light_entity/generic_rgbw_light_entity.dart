@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
@@ -36,7 +34,9 @@ class GenericRgbwLightDE extends DeviceEntityBase {
     required super.deviceHostName,
     required super.deviceMdns,
     required super.srvResourceRecord,
+    required super.srvTarget,
     required super.ptrResourceRecord,
+    required super.mdnsServiceType,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -49,6 +49,7 @@ class GenericRgbwLightDE extends DeviceEntityBase {
     required this.lightColorSaturation,
     required this.lightColorValue,
     required this.lightBrightness,
+    required this.colorMode,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.rgbwLights),
         );
@@ -60,7 +61,7 @@ class GenericRgbwLightDE extends DeviceEntityBase {
         cbjEntityName: CbjEntityName(''),
         entityOriginalName: EntityOriginalName(''),
         deviceOriginalName: DeviceOriginalName(''),
-        entityStateGRPC: EntityState.state(EntityStateGRPC.stateNotSupported),
+        entityStateGRPC: EntityState.state(EntityStateGRPC.undefined),
         senderDeviceOs: DeviceSenderDeviceOs(''),
         senderDeviceModel: DeviceSenderDeviceModel(''),
         stateMassage: DeviceStateMassage(''),
@@ -74,7 +75,9 @@ class GenericRgbwLightDE extends DeviceEntityBase {
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
         srvResourceRecord: DeviceSrvResourceRecord(),
+        mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
+        srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid(''),
         powerConsumption: DevicePowerConsumption(''),
         devicesMacAddress: DevicesMacAddress(''),
@@ -90,7 +93,10 @@ class GenericRgbwLightDE extends DeviceEntityBase {
         lightColorHue: GenericRgbwLightColorHue(''),
         lightColorSaturation: GenericRgbwLightColorSaturation(''),
         lightColorValue: GenericRgbwLightColorValue(''),
+        colorMode: GenericLightModeState(ColorMode.undefined),
       );
+
+  GenericLightModeState colorMode;
 
   /// State of the light on/off
   GenericRgbwLightSwitchState lightSwitchState;
@@ -175,7 +181,9 @@ class GenericRgbwLightDE extends DeviceEntityBase {
       deviceMdns: deviceMdns.getOrCrash(),
       devicesMacAddress: devicesMacAddress.getOrCrash(),
       srvResourceRecord: srvResourceRecord.getOrCrash(),
+      srvTarget: srvTarget.getOrCrash(),
       ptrResourceRecord: ptrResourceRecord.getOrCrash(),
+      mdnsServiceType: mdnsServiceType.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
@@ -188,41 +196,44 @@ class GenericRgbwLightDE extends DeviceEntityBase {
       lightColorHue: lightColorHue.getOrCrash(),
       lightColorSaturation: lightColorSaturation.getOrCrash(),
       lightColorValue: lightColorValue.getOrCrash(),
+      lightMode: colorMode.getOrCrash(),
     );
   }
 
   @override
-  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
-    required EntityProperties property,
-    required EntityActions action,
-    HashMap<ActionValues, dynamic>? values,
-  }) async {
-    if (property == EntityProperties.lightBrightness &&
-        values != null &&
-        values[ActionValues.brightness] != null) {
-      final dynamic brightness = values[ActionValues.brightness];
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction(
+    EntitySingleRequest request,
+  ) async {
+    if (!canActivateAction(request)) {
+      return left(const CoreFailure.unexpected());
+    }
+
+    if (request.property == EntityProperties.lightBrightness &&
+        request.values != null &&
+        request.values![ActionValues.brightness] != null) {
+      final dynamic brightness = request.values![ActionValues.brightness];
       if (brightness is! int) {
         return const Left(CoreFailure.unexpected());
       }
       return setBrightness(brightness);
     }
 
-    switch (action) {
+    switch (request.action) {
       case EntityActions.on:
         return turnOnLight();
       case EntityActions.off:
         return turnOffLight();
       case EntityActions.changeTemperature:
-        final dynamic value = values?[ActionValues.temperature];
+        final dynamic value = request.values?[ActionValues.colorTemperature];
         if (value is! int) {
           return const Left(CoreFailure.unexpected());
         }
         return changeColorTemperature(value);
       case EntityActions.hsvColor:
-        final dynamic alpha = values?[ActionValues.alpha];
-        final dynamic hue = values?[ActionValues.hue];
-        final dynamic saturation = values?[ActionValues.saturation];
-        final dynamic value = values?[ActionValues.value];
+        final dynamic alpha = request.values?[ActionValues.alpha];
+        final dynamic hue = request.values?[ActionValues.hue];
+        final dynamic saturation = request.values?[ActionValues.saturation];
+        final dynamic value = request.values?[ActionValues.colorValue];
 
         if (alpha is! double ||
             hue is! double ||
@@ -248,8 +259,7 @@ class GenericRgbwLightDE extends DeviceEntityBase {
         break;
     }
 
-    return super
-        .executeAction(property: property, action: action, values: values);
+    return super.executeAction(request);
   }
 
   /// Please override the following methods

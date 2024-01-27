@@ -7,8 +7,17 @@ class _AreaRepository implements IAreaRepository {
   Future<HashMap<String, AreaEntity>> getAreas() async => areas;
 
   @override
-  Future setNewArea(AreaEntity area) async =>
-      areas.addEntries([MapEntry(area.uniqueId.getOrCrash(), area)]);
+  Future setNewArea(AreaEntity area) async {
+    final HashSet<String> scenes = await IcSynchronizer()
+        .createPresetScenesForAreaPurposes(area.purposes.types);
+
+    areas.addEntries([
+      MapEntry(
+        area.uniqueId.getOrCrash(),
+        area..scenesId = AreaScenesId(scenes),
+      ),
+    ]);
+  }
 
   @override
   Future setEtitiesToArea(String areaId, HashSet<String> entities) async {
@@ -40,6 +49,11 @@ class _AreaRepository implements IAreaRepository {
       addEntitiesToDiscoverdArea(enititiesDeleted, synchronizer: false);
     }
 
+    final AreaEntity area = areas[areaId]!;
+    IcSynchronizer().updateAreaAutomation(
+      entitiesId: area.entitiesId.getOrCrash(),
+      scenesId: area.scenesId.getOrCrash(),
+    );
     onAreasUpdated(areasChanged);
   }
 

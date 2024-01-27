@@ -12,7 +12,7 @@ class UnseportedVendorOrDeviceConnectorConjecture
 
   UnseportedVendorOrDeviceConnectorConjecture._singletonContractor()
       : super(
-          VendorsAndServices.vendorsAndServicesNotSupported,
+          VendorsAndServices.undefined,
           displayName: 'Unseported vendor',
           imageUrl:
               'http://www.clker.com/cliparts/f/Z/G/4/h/Q/no-image-available-th.png',

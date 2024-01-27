@@ -39,7 +39,7 @@ class SearchDevices {
 
   List<Isolate> isolates = [];
 
-  Future<void> startSearchIsolate(
+  Future startSearchIsolate(
     INetworkUtilities? networkUtilitiesType,
   ) async {
     final String projectPath = await SystemCommandsManager().getLocalDbPath();
@@ -123,7 +123,7 @@ class SearchDevices {
     isolates.add(portIsolate);
   }
 
-  Future<void> _searchAllMdnsDevicesAndSetThemUp(
+  Future _searchAllMdnsDevicesAndSetThemUp(
     SendToIsolate sendToIsolate,
   ) async {
     INetworkUtilities.instance = sendToIsolate.networkUtilitiesType;
@@ -162,7 +162,7 @@ class SearchDevices {
   }
 
   /// Get all the host names in the connected networks and try to add the device
-  Future<void> _searchPingableDevicesAndSetThemUpByHostName(
+  Future _searchPingableDevicesAndSetThemUpByHostName(
     SendToIsolate sendToIsolate,
   ) async {
     INetworkUtilities.instance = sendToIsolate.networkUtilitiesType;
@@ -213,7 +213,7 @@ class SearchDevices {
     }
   }
 
-  Future<void> _searchAllByPorts(
+  Future _searchAllByPorts(
     SendToIsolate sendToIsolate,
   ) async {
     if (sendToIsolate.portByVendor == null) {
@@ -247,7 +247,7 @@ class SearchDevices {
   }
 
   // /// Searching for mqtt devices
-  // Future<void> _searchDevicesByMqttPath(SendPort sendPort) async {
+  // Future _searchDevicesByMqttPath(SendPort sendPort) async {
   //   // getIt<TasmotaMqttConnectorConjecture>().discoverNewDevices();
   // }
 
@@ -256,7 +256,8 @@ class SearchDevices {
   // /// We do implement here the start of the search for convince organization
   // /// and since putting it in the constructor of singleton will be called
   // /// before all of our program.
-  // Future<void> _notImplementedDevicesSearch(SendPort sendPort) async {
+  // Future
+  // _notImplementedDevicesSearch(SendPort sendPort) async {
   //   // YeelightConnectorConjecture().discoverNewDevices();
   // }
 }

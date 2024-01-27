@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:convert';
 
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
@@ -83,7 +84,9 @@ class ShellyHelpers {
           compUuid: entity.compUuid,
           deviceMdns: entity.deviceMdns,
           srvResourceRecord: entity.srvResourceRecord,
+          srvTarget: entity.srvTarget,
           ptrResourceRecord: entity.ptrResourceRecord,
+          mdnsServiceType: entity.mdnsServiceType,
           deviceLastKnownIp: entity.deviceLastKnownIp,
           stateMassage: entity.stateMassage,
           powerConsumption: entity.powerConsumption,
@@ -106,7 +109,7 @@ class ShellyHelpers {
           lightColorSaturation:
               GenericRgbwLightColorSaturation(hsvColor.s.toString()),
           lightColorValue: GenericRgbwLightColorValue(hsvColor.v.toString()),
-          bulbMode: shellyApiDeviceAbstract,
+          colorMode: GenericLightModeState(ColorMode.white),
         );
       } else if (mDnsName.contains('BulbDuo')) {
         final ShellyApiColorBulb shellyApiDeviceAbstract = ShellyApiColorBulb(
@@ -152,7 +155,9 @@ class ShellyHelpers {
           compUuid: entity.compUuid,
           deviceMdns: entity.deviceMdns,
           srvResourceRecord: entity.srvResourceRecord,
+          srvTarget: entity.srvTarget,
           ptrResourceRecord: entity.ptrResourceRecord,
+          mdnsServiceType: entity.mdnsServiceType,
           deviceLastKnownIp: entity.deviceLastKnownIp,
           stateMassage: entity.stateMassage,
           powerConsumption: entity.powerConsumption,
@@ -174,7 +179,7 @@ class ShellyHelpers {
           lightColorHue: GenericRgbwLightColorHue('0'),
           lightColorSaturation: GenericRgbwLightColorSaturation('0'),
           lightColorValue: GenericRgbwLightColorValue('0'),
-          bulbMode: shellyApiDeviceAbstract,
+          colorMode: GenericLightModeState(ColorMode.white),
         );
       } else if (mDnsName.contains('shelly1')) {
         final ShellyApiRelaySwitch shellyApiDeviceAbstract =
@@ -204,7 +209,9 @@ class ShellyHelpers {
           compUuid: entity.compUuid,
           deviceMdns: entity.deviceMdns,
           srvResourceRecord: entity.srvResourceRecord,
+          srvTarget: entity.srvTarget,
           ptrResourceRecord: entity.ptrResourceRecord,
+          mdnsServiceType: entity.mdnsServiceType,
           deviceLastKnownIp: entity.deviceLastKnownIp,
           stateMassage: entity.stateMassage,
           powerConsumption: entity.powerConsumption,

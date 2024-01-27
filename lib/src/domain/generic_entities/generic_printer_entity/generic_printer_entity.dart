@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
@@ -36,7 +34,9 @@ class GenericPrinterDE extends DeviceEntityBase {
     required super.deviceHostName,
     required super.deviceMdns,
     required super.srvResourceRecord,
+    required super.srvTarget,
     required super.ptrResourceRecord,
+    required super.mdnsServiceType,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -54,7 +54,7 @@ class GenericPrinterDE extends DeviceEntityBase {
         cbjEntityName: CbjEntityName(''),
         entityOriginalName: EntityOriginalName(''),
         deviceOriginalName: DeviceOriginalName(''),
-        entityStateGRPC: EntityState.state(EntityStateGRPC.stateNotSupported),
+        entityStateGRPC: EntityState.state(EntityStateGRPC.undefined),
         senderDeviceOs: DeviceSenderDeviceOs(''),
         senderDeviceModel: DeviceSenderDeviceModel(''),
         stateMassage: DeviceStateMassage(''),
@@ -68,7 +68,9 @@ class GenericPrinterDE extends DeviceEntityBase {
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
         srvResourceRecord: DeviceSrvResourceRecord(),
+        mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
+        srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid(''),
         powerConsumption: DevicePowerConsumption(''),
         devicesMacAddress: DevicesMacAddress(''),
@@ -105,12 +107,10 @@ class GenericPrinterDE extends DeviceEntityBase {
   // }
 
   @override
-  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
-    required EntityProperties property,
-    required EntityActions action,
-    HashMap<ActionValues, dynamic>? values,
-  }) async {
-    switch (action) {
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction(
+    EntitySingleRequest request,
+  ) async {
+    switch (request.action) {
       case EntityActions.on:
         return turnOnPrinter();
       case EntityActions.off:
@@ -118,8 +118,7 @@ class GenericPrinterDE extends DeviceEntityBase {
       default:
         break;
     }
-    return super
-        .executeAction(property: property, action: action, values: values);
+    return super.executeAction(request);
   }
 
   /// Return a list of all valid actions for this device
@@ -154,7 +153,9 @@ class GenericPrinterDE extends DeviceEntityBase {
       deviceHostName: deviceHostName.getOrCrash(),
       deviceMdns: deviceMdns.getOrCrash(),
       srvResourceRecord: srvResourceRecord.getOrCrash(),
+      srvTarget: srvTarget.getOrCrash(),
       ptrResourceRecord: ptrResourceRecord.getOrCrash(),
+      mdnsServiceType: mdnsServiceType.getOrCrash(),
       devicesMacAddress: devicesMacAddress.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),

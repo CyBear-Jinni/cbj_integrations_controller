@@ -5,22 +5,20 @@ import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/study_area_actions.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/video_games_area_actions.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/work_area_actions.dart';
-import 'package:dartz/dartz.dart';
 
 /// Pre define actions for each device in each area type
-class AreaTypeWithDeviceTypePreset {
-  static Future<Either<SceneCbjFailure, Map<String, String>>>
-      getPreDefineActionForDeviceInArea({
-    required String deviceId,
+class AreaTypeWithEntitiesTypePreset {
+  static List<RequestActionObject> getPreDefineActionForEntitiesInArea({
+    required String entityId,
+    required EntityTypes entityType,
     required AreaPurposesTypes areaPurposeType,
-    required String brokerNodeId,
-  }) async {
+  }) {
     // final Either<LocalDbFailures, DeviceEntityBase> dTemp =
-    //     await ISavedDevicesRepo.instance.getDeviceById(deviceId);
+    //     await ISavedDevicesRepo.instance.getDeviceById(entityId, entityType,);
     // if (dTemp.isLeft()) {
     //   return left(const SceneCbjFailure.unexpected());
     // }
-    final DeviceEntityBase deviceEntity = DeviceEntityNotAbstract();
+    // final DeviceEntityBase deviceEntity = DeviceEntityNotAbstract();
 
     // dTemp.fold((l) => null, (r) {
     // deviceEntity = r;
@@ -34,8 +32,10 @@ class AreaTypeWithDeviceTypePreset {
         // TODO: Handle this case.
         break;
       case AreaPurposesTypes.bedarea:
-        return BedAreaAreaAction()
-            .bedAreaSleepDeviceAction(deviceEntity, brokerNodeId);
+        return BedAreaAreaAction().bedAreaSleepDeviceAction(
+          entityId,
+          entityType,
+        );
       case AreaPurposesTypes.boardGames:
         // TODO: Handle this case.
         break;
@@ -64,8 +64,7 @@ class AreaTypeWithDeviceTypePreset {
         // TODO: Handle this case.
         break;
       case AreaPurposesTypes.outside:
-        return OutsideAreaAction()
-            .outsideOffDeviceAction(deviceEntity, brokerNodeId);
+        return OutsideAreaAction().outsideOffDeviceAction(entityId, entityType);
       case AreaPurposesTypes.outsideNotPrimary:
         // TODO: Handle this case.
         break;
@@ -92,7 +91,7 @@ class AreaTypeWithDeviceTypePreset {
         break;
       case AreaPurposesTypes.studyArea:
         return StudyAreaAreaAction()
-            .studyAreaDeviceAction(deviceEntity, brokerNodeId);
+            .studyAreaDeviceAction(entityId, entityType);
       case AreaPurposesTypes.toiletArea:
         // TODO: Handle this case.
         break;
@@ -104,12 +103,13 @@ class AreaTypeWithDeviceTypePreset {
         break;
       case AreaPurposesTypes.videoGames:
         return VideoGamesAreaAction()
-            .videoGamesRgbModDeviceAction(deviceEntity, brokerNodeId);
+            .videoGamesRgbModDeviceAction(entityId, entityType);
       case AreaPurposesTypes.workArea:
-        return WorkAreaAreaAction()
-            .workAreaDeviceAction(deviceEntity, brokerNodeId);
+        return WorkAreaAreaAction().workAreaEntityAction(entityId, entityType);
+      case AreaPurposesTypes.undefined:
+      // TODO: Handle this case.
     }
-    return left(const SceneCbjFailure.unexpected());
+    return [];
   }
 
   static String getColorForAreaType(AreaPurposesTypes areaPurposeType) {
@@ -170,6 +170,8 @@ class AreaTypeWithDeviceTypePreset {
         color = Colors.tealAccent;
       case AreaPurposesTypes.workArea:
         color = Colors.blue;
+      case AreaPurposesTypes.undefined:
+      // TODO: Handle this case.
     }
     return color.value;
   }

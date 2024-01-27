@@ -24,7 +24,7 @@ class _HiveRepository extends IDbRepository {
   String hubDevicesBox = 'hubDevicesBox';
 
   @override
-  Future<void> initializeDb({required bool isFlutter}) async {
+  Future initializeDb({required bool isFlutter}) async {
     if (!isFlutter) {
       String? localDbPath = await SystemCommandsManager().getLocalDbPath();
 
@@ -73,7 +73,7 @@ class _HiveRepository extends IDbRepository {
   Box<EwelinkVendorCredentialsHiveModel>? ewelinkVendorCredentialsBox;
 
   @override
-  Future<void> loadFromDb() async {
+  Future loadFromDb() async {
     (await getRemotePipesDnsName()).fold(
         (l) => icLogger
             .w('No Remote Pipes Dns name was found in the local storage'), (r) {
@@ -86,9 +86,9 @@ class _HiveRepository extends IDbRepository {
     // Areas need to stay first one
     // await ISavedAreasRepo.instance.setUpAllFromDb();
     // TODO can be deleted?
-    await ISceneCbjRepository.instance.setUpAllFromDb();
-    await IRoutineCbjRepository.instance.setUpAllFromDb();
-    await IBindingCbjRepository.instance.setUpAllFromDb();
+    // await ISceneCbjRepository.instance.setUpAllFromDb();
+    // await IRoutineCbjRepository.instance.setUpAllFromDb();
+    // await IBindingCbjRepository.instance.setUpAllFromDb();
     // await ISavedDevicesRepo.instance.setUpAllFromDb();
   }
 
@@ -108,11 +108,15 @@ class _HiveRepository extends IDbRepository {
           uniqueId: AreaUniqueId.fromUniqueString(areaHive.areaUniqueId),
           cbjEntityName: AreaDefaultName(areaHive.areaDefaultName),
           background: AreaBackground(areaHive.areaBackground),
-          areaTypes: AreaTypes(areaHive.areaTypes.toSet()),
+          purposes: AreaPurposes(
+            areaHive.areaTypes
+                .map((e) => AreaPurposesTypesExtension.fromString(e))
+                .toSet(),
+          ),
           entitiesId: AreaEntitiesId(areaHive.areaDevicesId.toSet()),
-          areaScenesId: AreaScenesId(areaHive.areaScenesId.toSet()),
-          areaRoutinesId: AreaRoutinesId(areaHive.areaRoutinesId.toSet()),
-          areaBindingsId: AreaBindingsId(areaHive.areaBindingsId.toSet()),
+          scenesId: AreaScenesId(areaHive.areaScenesId.toSet()),
+          routinesId: AreaRoutinesId(areaHive.areaRoutinesId.toSet()),
+          bindingsId: AreaBindingsId(areaHive.areaBindingsId.toSet()),
           areaMostUsedBy: AreaMostUsedBy(areaHive.areaMostUsedBy.toSet()),
           areaPermissions: AreaPermissions(areaHive.areaPermissions.toSet()),
         );
@@ -298,7 +302,7 @@ class _HiveRepository extends IDbRepository {
     return right(unit);
   }
 
-  Future<void> deleteAllSavedAreas() async {
+  Future deleteAllSavedAreas() async {
     await saveAreasToDb(areasList: {});
   }
 
@@ -512,7 +516,7 @@ class _HiveRepository extends IDbRepository {
   // }
   //
   // @override
-  // Future<void> setHomeId(String homeId) async {
+  // Future setHomeId(String homeId) async {
   //   final HomeEntityIsarModel homeEntityIsarModel = HomeEntityIsarModel()
   //     ..homeId = homeId;
   //   await isar.writeTxn(() async {

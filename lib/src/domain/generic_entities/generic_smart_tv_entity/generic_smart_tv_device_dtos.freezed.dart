@@ -45,7 +45,9 @@ mixin _$GenericSmartTvDeviceDtos {
   String? get deviceMdns => throw _privateConstructorUsedError;
   String? get devicesMacAddress => throw _privateConstructorUsedError;
   String? get srvResourceRecord => throw _privateConstructorUsedError;
+  String? get srvTarget => throw _privateConstructorUsedError;
   String? get ptrResourceRecord => throw _privateConstructorUsedError;
+  String? get mdnsServiceType => throw _privateConstructorUsedError;
   String? get entityKey => throw _privateConstructorUsedError;
   String? get requestTimeStamp => throw _privateConstructorUsedError;
   String? get lastResponseFromDeviceTimeStamp =>
@@ -92,7 +94,9 @@ abstract class $GenericSmartTvDeviceDtosCopyWith<$Res> {
       String? deviceMdns,
       String? devicesMacAddress,
       String? srvResourceRecord,
+      String? srvTarget,
       String? ptrResourceRecord,
+      String? mdnsServiceType,
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
@@ -140,7 +144,9 @@ class _$GenericSmartTvDeviceDtosCopyWithImpl<$Res,
     Object? deviceMdns = freezed,
     Object? devicesMacAddress = freezed,
     Object? srvResourceRecord = freezed,
+    Object? srvTarget = freezed,
     Object? ptrResourceRecord = freezed,
+    Object? mdnsServiceType = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
@@ -243,9 +249,17 @@ class _$GenericSmartTvDeviceDtosCopyWithImpl<$Res,
           ? _value.srvResourceRecord
           : srvResourceRecord // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvTarget: freezed == srvTarget
+          ? _value.srvTarget
+          : srvTarget // ignore: cast_nullable_to_non_nullable
+              as String?,
       ptrResourceRecord: freezed == ptrResourceRecord
           ? _value.ptrResourceRecord
           : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mdnsServiceType: freezed == mdnsServiceType
+          ? _value.mdnsServiceType
+          : mdnsServiceType // ignore: cast_nullable_to_non_nullable
               as String?,
       entityKey: freezed == entityKey
           ? _value.entityKey
@@ -317,7 +331,9 @@ abstract class _$$GenericSmartTvDeviceDtosImplCopyWith<$Res>
       String? deviceMdns,
       String? devicesMacAddress,
       String? srvResourceRecord,
+      String? srvTarget,
       String? ptrResourceRecord,
+      String? mdnsServiceType,
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
@@ -364,7 +380,9 @@ class __$$GenericSmartTvDeviceDtosImplCopyWithImpl<$Res>
     Object? deviceMdns = freezed,
     Object? devicesMacAddress = freezed,
     Object? srvResourceRecord = freezed,
+    Object? srvTarget = freezed,
     Object? ptrResourceRecord = freezed,
+    Object? mdnsServiceType = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
@@ -467,9 +485,17 @@ class __$$GenericSmartTvDeviceDtosImplCopyWithImpl<$Res>
           ? _value.srvResourceRecord
           : srvResourceRecord // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvTarget: freezed == srvTarget
+          ? _value.srvTarget
+          : srvTarget // ignore: cast_nullable_to_non_nullable
+              as String?,
       ptrResourceRecord: freezed == ptrResourceRecord
           ? _value.ptrResourceRecord
           : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mdnsServiceType: freezed == mdnsServiceType
+          ? _value.mdnsServiceType
+          : mdnsServiceType // ignore: cast_nullable_to_non_nullable
               as String?,
       entityKey: freezed == entityKey
           ? _value.entityKey
@@ -535,7 +561,9 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
       required this.deviceMdns,
       required this.devicesMacAddress,
       required this.srvResourceRecord,
+      required this.srvTarget,
       required this.ptrResourceRecord,
+      required this.mdnsServiceType,
       required this.entityKey,
       required this.requestTimeStamp,
       required this.lastResponseFromDeviceTimeStamp,
@@ -597,7 +625,11 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
   @override
   final String? srvResourceRecord;
   @override
+  final String? srvTarget;
+  @override
   final String? ptrResourceRecord;
+  @override
+  final String? mdnsServiceType;
   @override
   final String? entityKey;
   @override
@@ -617,7 +649,7 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
 
   @override
   String toString() {
-    return 'GenericSmartTvDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, smartTvSwitchState: $smartTvSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, pausePlayState: $pausePlayState, volume: $volume, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericSmartTvDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, smartTvSwitchState: $smartTvSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, pausePlayState: $pausePlayState, volume: $volume, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -671,8 +703,12 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
                 other.devicesMacAddress == devicesMacAddress) &&
             (identical(other.srvResourceRecord, srvResourceRecord) ||
                 other.srvResourceRecord == srvResourceRecord) &&
+            (identical(other.srvTarget, srvTarget) ||
+                other.srvTarget == srvTarget) &&
             (identical(other.ptrResourceRecord, ptrResourceRecord) ||
                 other.ptrResourceRecord == ptrResourceRecord) &&
+            (identical(other.mdnsServiceType, mdnsServiceType) ||
+                other.mdnsServiceType == mdnsServiceType) &&
             (identical(other.entityKey, entityKey) ||
                 other.entityKey == entityKey) &&
             (identical(other.requestTimeStamp, requestTimeStamp) ||
@@ -719,7 +755,9 @@ class _$GenericSmartTvDeviceDtosImpl extends _GenericSmartTvDeviceDtos {
         deviceMdns,
         devicesMacAddress,
         srvResourceRecord,
+        srvTarget,
         ptrResourceRecord,
+        mdnsServiceType,
         entityKey,
         requestTimeStamp,
         lastResponseFromDeviceTimeStamp,
@@ -770,7 +808,9 @@ abstract class _GenericSmartTvDeviceDtos extends GenericSmartTvDeviceDtos {
       required final String? deviceMdns,
       required final String? devicesMacAddress,
       required final String? srvResourceRecord,
+      required final String? srvTarget,
       required final String? ptrResourceRecord,
+      required final String? mdnsServiceType,
       required final String? entityKey,
       required final String? requestTimeStamp,
       required final String? lastResponseFromDeviceTimeStamp,
@@ -831,7 +871,11 @@ abstract class _GenericSmartTvDeviceDtos extends GenericSmartTvDeviceDtos {
   @override
   String? get srvResourceRecord;
   @override
+  String? get srvTarget;
+  @override
   String? get ptrResourceRecord;
+  @override
+  String? get mdnsServiceType;
   @override
   String? get entityKey;
   @override

@@ -1,3 +1,4 @@
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_dto_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
@@ -33,7 +34,9 @@ abstract class GenericUnsupportedDeviceDtos
     required String? deviceHostName,
     required String? deviceMdns,
     required String? srvResourceRecord,
+    required String? srvTarget,
     required String? ptrResourceRecord,
+    required String? mdnsServiceType,
     required String? devicesMacAddress,
     required String? entityKey,
     required String? requestTimeStamp,
@@ -74,7 +77,9 @@ abstract class GenericUnsupportedDeviceDtos
       deviceHostName: deviceDe.deviceHostName.getOrCrash(),
       deviceMdns: deviceDe.deviceMdns.getOrCrash(),
       srvResourceRecord: deviceDe.srvResourceRecord.getOrCrash(),
+      srvTarget: deviceDe.srvTarget.getOrCrash(),
       ptrResourceRecord: deviceDe.ptrResourceRecord.getOrCrash(),
+      mdnsServiceType: deviceDe.mdnsServiceType.getOrCrash(),
       devicesMacAddress: deviceDe.devicesMacAddress.getOrCrash(),
       entityKey: deviceDe.entityKey.getOrCrash(),
       requestTimeStamp: deviceDe.requestTimeStamp.getOrCrash(),
@@ -99,7 +104,11 @@ abstract class GenericUnsupportedDeviceDtos
       cbjEntityName: CbjEntityName(cbjEntityName),
       entityOriginalName: EntityOriginalName(entityOriginalName),
       deviceOriginalName: DeviceOriginalName(deviceOriginalName),
-      entityStateGRPC: EntityState(entityStateGRPC),
+      entityStateGRPC: EntityState(
+        entityStateGRPC == null
+            ? EntityStateGRPC.undefined
+            : EntityStateGRPCExtension.fromString(entityStateGRPC!),
+      ),
       stateMassage: DeviceStateMassage(stateMassage),
       senderDeviceOs: DeviceSenderDeviceOs(senderDeviceOs),
       senderDeviceModel: DeviceSenderDeviceModel(senderDeviceModel),
@@ -115,7 +124,9 @@ abstract class GenericUnsupportedDeviceDtos
       deviceHostName: DeviceHostName(deviceHostName),
       deviceMdns: DeviceMdns(deviceMdns),
       srvResourceRecord: DeviceSrvResourceRecord(input: srvResourceRecord),
+      srvTarget: DeviceSrvTarget(input: srvTarget),
       ptrResourceRecord: DevicePtrResourceRecord(input: ptrResourceRecord),
+      mdnsServiceType: DevicemdnsServiceType(input: mdnsServiceType),
       devicesMacAddress: DevicesMacAddress(devicesMacAddress),
       entityKey: EntityKey(entityKey),
       requestTimeStamp: RequestTimeStamp(requestTimeStamp),

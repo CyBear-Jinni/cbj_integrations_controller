@@ -46,7 +46,7 @@ class TasmotaMqttHelpers {
     /// dn = Device Name (Tasmotac)
     final String name = getValueFromMqttResult(pt, 'dn')!;
 
-    const EntityActions deviceActions = EntityActions.actionNotSupported;
+    const EntityActions deviceActions = EntityActions.undefined;
 
     if (supportedStatesOfDevice.contains('ON') &&
         supportedStatesOfDevice.contains('OFF')) {
@@ -73,7 +73,9 @@ class TasmotaMqttHelpers {
         deviceHostName: DeviceHostName('0'),
         deviceMdns: DeviceMdns('0'),
         srvResourceRecord: DeviceSrvResourceRecord(),
+        mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
+        srvTarget: DeviceSrvTarget(),
         devicesMacAddress: DevicesMacAddress('0'),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),

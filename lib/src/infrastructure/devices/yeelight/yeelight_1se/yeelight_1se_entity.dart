@@ -5,7 +5,6 @@ import 'package:cbj_integrations_controller/src/domain/core/request_action_types
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:yeedart/yeedart.dart';
@@ -32,7 +31,9 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required super.deviceHostName,
     required super.deviceMdns,
     required super.srvResourceRecord,
+    required super.srvTarget,
     required super.ptrResourceRecord,
+    required super.mdnsServiceType,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -45,68 +46,66 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required super.lightColorSaturation,
     required super.lightColorValue,
     required super.lightBrightness,
+    required super.colorMode,
   }) : super(
           cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.yeelight),
         ) {
+    minDurationBetweenRequsts = const Duration(milliseconds: 400);
+    maxRequestsStack = 3;
     final String? port = devicePort.getOrCrash();
     if (port == null) {
       return;
     }
+    // TODO: Transfer to address by host name when https://github.com/dart-lang/sdk/issues/54751 resolves
     api = Device(
       address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
       port: int.parse(port),
     );
   }
 
-  factory Yeelight1SeEntity.fromGeneric(GenericRgbwLightDE genericDevice) {
+  factory Yeelight1SeEntity.fromGeneric(GenericRgbwLightDE entity) {
     return Yeelight1SeEntity(
-      uniqueId: genericDevice.uniqueId,
-      entityUniqueId: genericDevice.entityUniqueId,
-      cbjEntityName: genericDevice.cbjEntityName,
-      entityOriginalName: genericDevice.entityOriginalName,
-      deviceOriginalName: genericDevice.deviceOriginalName,
-      deviceVendor: genericDevice.deviceVendor,
-      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
-      stateMassage: genericDevice.stateMassage,
-      senderDeviceOs: genericDevice.senderDeviceOs,
-      senderDeviceModel: genericDevice.senderDeviceModel,
-      senderId: genericDevice.senderId,
-      compUuid: genericDevice.compUuid,
-      entityStateGRPC: genericDevice.entityStateGRPC,
-      powerConsumption: genericDevice.powerConsumption,
-      deviceUniqueId: genericDevice.deviceUniqueId,
-      devicePort: genericDevice.devicePort,
-      deviceLastKnownIp: genericDevice.deviceLastKnownIp,
-      deviceHostName: genericDevice.deviceHostName,
-      deviceMdns: genericDevice.deviceMdns,
-      srvResourceRecord: genericDevice.srvResourceRecord,
-      ptrResourceRecord: genericDevice.ptrResourceRecord,
-      devicesMacAddress: genericDevice.devicesMacAddress,
-      entityKey: genericDevice.entityKey,
-      requestTimeStamp: genericDevice.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          genericDevice.lastResponseFromDeviceTimeStamp,
-      lightSwitchState: genericDevice.lightSwitchState,
-      deviceCbjUniqueId: genericDevice.deviceCbjUniqueId,
-      lightBrightness: genericDevice.lightBrightness,
-      lightColorTemperature: genericDevice.lightColorTemperature,
-      lightColorAlpha: genericDevice.lightColorAlpha,
-      lightColorHue: genericDevice.lightColorHue,
-      lightColorSaturation: genericDevice.lightColorSaturation,
-      lightColorValue: genericDevice.lightColorValue,
+      uniqueId: entity.uniqueId,
+      entityUniqueId: entity.entityUniqueId,
+      cbjEntityName: entity.cbjEntityName,
+      entityOriginalName: entity.entityOriginalName,
+      deviceOriginalName: entity.deviceOriginalName,
+      deviceVendor: entity.deviceVendor,
+      deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,
+      stateMassage: entity.stateMassage,
+      senderDeviceOs: entity.senderDeviceOs,
+      senderDeviceModel: entity.senderDeviceModel,
+      senderId: entity.senderId,
+      compUuid: entity.compUuid,
+      entityStateGRPC: entity.entityStateGRPC,
+      powerConsumption: entity.powerConsumption,
+      deviceUniqueId: entity.deviceUniqueId,
+      devicePort: entity.devicePort,
+      deviceLastKnownIp: entity.deviceLastKnownIp,
+      deviceHostName: entity.deviceHostName,
+      deviceMdns: entity.deviceMdns,
+      srvResourceRecord: entity.srvResourceRecord,
+      srvTarget: entity.srvTarget,
+      ptrResourceRecord: entity.ptrResourceRecord,
+      mdnsServiceType: entity.mdnsServiceType,
+      devicesMacAddress: entity.devicesMacAddress,
+      entityKey: entity.entityKey,
+      requestTimeStamp: entity.requestTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
+      lightSwitchState: entity.lightSwitchState,
+      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      lightBrightness: entity.lightBrightness,
+      lightColorTemperature: entity.lightColorTemperature,
+      lightColorAlpha: entity.lightColorAlpha,
+      lightColorHue: entity.lightColorHue,
+      lightColorSaturation: entity.lightColorSaturation,
+      lightColorValue: entity.lightColorValue,
+      colorMode: entity.colorMode,
     );
   }
 
   /// Yeelight package object require to close previews request before new one
   late Device api;
-
-  /// Timer to execute methods with min of 1 seconds between each other
-  Timer? executeStateTimer;
-
-  /// How much time to wait between execute of methods
-  // TODO: Test if we can lower this number to 1000 and requests do not
-  // get denied
-  final int sendNewRequestToDeviceEachMilliseconds = 1100;
 
   /// Fix to differentiate what value to change
   String? lightColorTemperatureLastValue;
@@ -119,9 +118,10 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
 
   String? lightBrightnessLastValue;
 
+  final Duration effectDuration = const Duration(milliseconds: 100);
+
   @override
   Future<Either<CoreFailure, Unit>> turnOnLight() async {
-    lightSwitchState = GenericRgbwLightSwitchState(EntityActions.on.toString());
     try {
       await api.turnOn();
 
@@ -149,7 +149,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     try {
       await api.setBrightness(
         brightness: value,
-        duration: const Duration(milliseconds: 100),
+        duration: effectDuration,
       );
 
       return right(unit);
@@ -162,10 +162,10 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
 
   @override
   Future<Either<CoreFailure, Unit>> changeColorTemperature(
-    int lightColorTemperatureNewValue,
+    int temperature,
   ) async {
     try {
-      int temperatureInt = lightColorTemperatureNewValue;
+      int temperatureInt = temperature;
       if (temperatureInt < 1700) {
         temperatureInt = 1700;
       } else if (temperatureInt > 6500) {
@@ -174,9 +174,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
       try {
         await api.setColorTemperature(
           colorTemperature: temperatureInt,
-          duration: const Duration(
-            milliseconds: 100,
-          ),
+          duration: effectDuration,
         );
       } catch (e) {
         icLogger.e('Error in Yeelight Device setting turn on\n$e');
@@ -212,9 +210,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
       await api.setHSV(
         hue: hue.toInt(),
         saturation: saturationValue,
-        duration: const Duration(
-          milliseconds: 100,
-        ),
+        duration: effectDuration,
       );
       return right(unit);
     } catch (e) {
@@ -227,5 +223,5 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
   /// Yeelight connections are rate-limited to 60 per minute.
   /// This method will take care that commends will be sent in 1 second
   /// between each one
-  Future<void> executeCurrentStatusWithConstDelay() async {}
+  Future executeCurrentStatusWithConstDelay() async {}
 }

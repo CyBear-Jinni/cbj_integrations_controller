@@ -84,7 +84,7 @@
 
 //   // static WizClient? wizClient;
 
-//   // Future<void> _discoverNewDevices() async {
+//   // Future _discoverNewDevices() async {
 //   // while (true) {
 //   // try {
 //   // final Iterable<WizBulb> lights =

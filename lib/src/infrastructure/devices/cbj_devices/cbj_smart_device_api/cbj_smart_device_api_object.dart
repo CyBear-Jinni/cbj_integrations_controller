@@ -181,18 +181,18 @@ class CbjDevicesApiObject {
     return sDevicesTypes;
   }
 
-  Future<void> turnOn({int duration = 0}) async {
+  Future turnOn({int duration = 0}) async {
     final String offCommand = '${onValue}00${_timerValue(duration)}';
 
     await _runPowerCommand(offCommand);
   }
 
-  Future<void> turnOff() async {
+  Future turnOff() async {
     const String offCommand = '${offValue}0000000000';
     await _runPowerCommand(offCommand);
   }
 
-  Future<void> _runPowerCommand(String commandType) async {
+  Future _runPowerCommand(String commandType) async {
     pSession = await _login();
     if (pSession == 'B') {
       icLogger.e('CbjDevices run power command error');
@@ -213,7 +213,7 @@ class CbjDevicesApiObject {
   }
 
   /// Stops the blinds
-  Future<void> stopBlinds() async {
+  Future stopBlinds() async {
     if (deviceType != CbjDevicesDevicesTypes.cbjDevicesRunner &&
         deviceType != CbjDevicesDevicesTypes.cbjDevicesRunnerMini) {
       icLogger.t('Stop blinds support only for blinds');
@@ -239,7 +239,7 @@ class CbjDevicesApiObject {
   }
 
   /// Sets the position of the blinds, 0 is down 100 is up
-  Future<void> setPosition({int pos = 0}) async {
+  Future setPosition({int pos = 0}) async {
     if (deviceType != CbjDevicesDevicesTypes.cbjDevicesRunner &&
         deviceType != CbjDevicesDevicesTypes.cbjDevicesRunnerMini) {
       icLogger.t('Set position support only blinds');
@@ -258,7 +258,7 @@ class CbjDevicesApiObject {
     return posAsHex;
   }
 
-  Future<void> _runPositionCommand(String positionCommand) async {
+  Future _runPositionCommand(String positionCommand) async {
     // final int pos = int.parse(positionCommand, radix: 16);
     pSession = await _login2();
     if (pSession == 'B') {

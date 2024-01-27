@@ -68,7 +68,7 @@ class DeviceEntityDtoBase {
       deviceEntityDtoAbstract = GenericPingDeviceDtos.fromJson(json);
     } else if (jsonDeviceDtoClass ==
             (GenericSmartTypeNotSupportedDeviceDtos).toString() ||
-        json['entityTypes'] == EntityTypes.smartTypeNotSupported.toString()) {
+        json['entityTypes'] == EntityTypes.undefined.toString()) {
       deviceEntityDtoAbstract =
           GenericSmartTypeNotSupportedDeviceDtos.fromJson(json);
     } else {

@@ -31,7 +31,9 @@ _$GenericSmartComputerDeviceDtosImpl
           deviceMdns: json['deviceMdns'] as String?,
           devicesMacAddress: json['devicesMacAddress'] as String?,
           srvResourceRecord: json['srvResourceRecord'] as String?,
+          srvTarget: json['srvTarget'] as String?,
           ptrResourceRecord: json['ptrResourceRecord'] as String?,
+          mdnsServiceType: json['mdnsServiceType'] as String?,
           entityKey: json['entityKey'] as String?,
           requestTimeStamp: json['requestTimeStamp'] as String?,
           lastResponseFromDeviceTimeStamp:
@@ -70,7 +72,9 @@ Map<String, dynamic> _$$GenericSmartComputerDeviceDtosImplToJson(
       'deviceMdns': instance.deviceMdns,
       'devicesMacAddress': instance.devicesMacAddress,
       'srvResourceRecord': instance.srvResourceRecord,
+      'srvTarget': instance.srvTarget,
       'ptrResourceRecord': instance.ptrResourceRecord,
+      'mdnsServiceType': instance.mdnsServiceType,
       'entityKey': instance.entityKey,
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':

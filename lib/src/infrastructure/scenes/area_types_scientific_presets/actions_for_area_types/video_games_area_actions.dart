@@ -1,83 +1,57 @@
+import 'package:cbj_integrations_controller/src/domain/core/request_action_object.dart';
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
-import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
-import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_failures.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/common_devices_scenes_presets_for_devices.dart';
-import 'package:dartz/dartz.dart';
 
 class VideoGamesAreaAction {
-  Future<Either<SceneCbjFailure, Map<String, String>>>
-      videoGamesRgbModDeviceAction(
-    DeviceEntityBase deviceEntity,
-    String brokerNodeId,
-  ) async {
-    final EntityTypes deviceType = EntityTypes.values.firstWhere(
-      (element) => element.name == deviceEntity.entityTypes.getOrCrash(),
-    );
+  List<RequestActionObject> videoGamesRgbModDeviceAction(
+    String entityId,
+    EntityTypes entityType,
+  ) {
+    final List<RequestActionObject> actionsList = [];
 
-    final Map<String, String> actionsList = <String, String>{};
-
-    switch (deviceType) {
+    switch (entityType) {
       case EntityTypes.blinds:
-        actionsList.addEntries([
-          CommonDevicesScenesPresetsForDevices.blindsUpPreset(
-            deviceEntity,
-            brokerNodeId,
-          ),
-        ]);
+        actionsList.addAll(
+          CommonDevicesScenesPresetsForDevices.blindsUpPreset(entityId),
+        );
       case EntityTypes.boiler:
         break;
       case EntityTypes.dimmableLight:
         // TODO: Handle this case.
         break;
       case EntityTypes.light:
-        actionsList.addEntries([
-          CommonDevicesScenesPresetsForDevices.lightOnPreset(
-            deviceEntity,
-            brokerNodeId,
-          ),
-        ]);
+        actionsList.addAll(
+          CommonDevicesScenesPresetsForDevices.lightOnPreset(entityId),
+        );
       case EntityTypes.printer:
         // TODO: Handle this case.
         break;
       case EntityTypes.rgbwLights:
-        actionsList.addEntries([
-          CommonDevicesScenesPresetsForDevices.rgbLightOrangePreset(
-            deviceEntity,
-            brokerNodeId,
-          ),
-        ]);
-        actionsList.addEntries([
+        actionsList.addAll(
+          CommonDevicesScenesPresetsForDevices.rgbLightOrangePreset(entityId),
+        );
+        actionsList.addAll(
           CommonDevicesScenesPresetsForDevices.rgbLightMaxBrightnessPreset(
-            deviceEntity,
-            brokerNodeId,
+            entityId,
           ),
-        ]);
-        actionsList.addEntries([
-          CommonDevicesScenesPresetsForDevices.rgbwLightOnPreset(
-            deviceEntity,
-            brokerNodeId,
-          ),
-        ]);
+        );
+        actionsList.addAll(
+          CommonDevicesScenesPresetsForDevices.lightOnPreset(entityId),
+        );
       case EntityTypes.securityCamera:
         // TODO: Handle this case.
         break;
       case EntityTypes.smartPlug:
         break;
       case EntityTypes.smartTV:
-        actionsList.addEntries([
-          CommonDevicesScenesPresetsForDevices.smartTvOffPreset(
-            deviceEntity,
-            brokerNodeId,
-          ),
-        ]);
+        actionsList.addAll(
+          CommonDevicesScenesPresetsForDevices.smartTvOffPreset(entityId),
+        );
       case EntityTypes.switch_:
-        actionsList.addEntries([
-          CommonDevicesScenesPresetsForDevices.switchOnPreset(
-            deviceEntity,
-            brokerNodeId,
-          ),
-        ]);
-      case EntityTypes.smartTypeNotSupported:
+        actionsList.addAll(
+          CommonDevicesScenesPresetsForDevices.switchOnPreset(entityId),
+        );
+      case EntityTypes.undefined:
         // TODO: Handle this case.
         break;
       case EntityTypes.emptyEntity:
@@ -92,6 +66,6 @@ class VideoGamesAreaAction {
       case EntityTypes.ac:
       // TODO: Handle this case.
     }
-    return right(actionsList);
+    return actionsList;
   }
 }

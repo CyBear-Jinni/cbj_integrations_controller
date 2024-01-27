@@ -45,7 +45,9 @@ mixin _$GenericDimmableLightDeviceDtos {
   String? get deviceHostName => throw _privateConstructorUsedError;
   String? get deviceMdns => throw _privateConstructorUsedError;
   String? get srvResourceRecord => throw _privateConstructorUsedError;
+  String? get srvTarget => throw _privateConstructorUsedError;
   String? get ptrResourceRecord => throw _privateConstructorUsedError;
+  String? get mdnsServiceType => throw _privateConstructorUsedError;
   String? get devicesMacAddress => throw _privateConstructorUsedError;
   String? get entityKey => throw _privateConstructorUsedError;
   String? get requestTimeStamp => throw _privateConstructorUsedError;
@@ -93,7 +95,9 @@ abstract class $GenericDimmableLightDeviceDtosCopyWith<$Res> {
       String? deviceHostName,
       String? deviceMdns,
       String? srvResourceRecord,
+      String? srvTarget,
       String? ptrResourceRecord,
+      String? mdnsServiceType,
       String? devicesMacAddress,
       String? entityKey,
       String? requestTimeStamp,
@@ -140,7 +144,9 @@ class _$GenericDimmableLightDeviceDtosCopyWithImpl<$Res,
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
     Object? srvResourceRecord = freezed,
+    Object? srvTarget = freezed,
     Object? ptrResourceRecord = freezed,
+    Object? mdnsServiceType = freezed,
     Object? devicesMacAddress = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
@@ -242,9 +248,17 @@ class _$GenericDimmableLightDeviceDtosCopyWithImpl<$Res,
           ? _value.srvResourceRecord
           : srvResourceRecord // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvTarget: freezed == srvTarget
+          ? _value.srvTarget
+          : srvTarget // ignore: cast_nullable_to_non_nullable
+              as String?,
       ptrResourceRecord: freezed == ptrResourceRecord
           ? _value.ptrResourceRecord
           : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mdnsServiceType: freezed == mdnsServiceType
+          ? _value.mdnsServiceType
+          : mdnsServiceType // ignore: cast_nullable_to_non_nullable
               as String?,
       devicesMacAddress: freezed == devicesMacAddress
           ? _value.devicesMacAddress
@@ -312,7 +326,9 @@ abstract class _$$GenericDimmableLightDeviceDtosImplCopyWith<$Res>
       String? deviceHostName,
       String? deviceMdns,
       String? srvResourceRecord,
+      String? srvTarget,
       String? ptrResourceRecord,
+      String? mdnsServiceType,
       String? devicesMacAddress,
       String? entityKey,
       String? requestTimeStamp,
@@ -358,7 +374,9 @@ class __$$GenericDimmableLightDeviceDtosImplCopyWithImpl<$Res>
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
     Object? srvResourceRecord = freezed,
+    Object? srvTarget = freezed,
     Object? ptrResourceRecord = freezed,
+    Object? mdnsServiceType = freezed,
     Object? devicesMacAddress = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
@@ -460,9 +478,17 @@ class __$$GenericDimmableLightDeviceDtosImplCopyWithImpl<$Res>
           ? _value.srvResourceRecord
           : srvResourceRecord // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvTarget: freezed == srvTarget
+          ? _value.srvTarget
+          : srvTarget // ignore: cast_nullable_to_non_nullable
+              as String?,
       ptrResourceRecord: freezed == ptrResourceRecord
           ? _value.ptrResourceRecord
           : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mdnsServiceType: freezed == mdnsServiceType
+          ? _value.mdnsServiceType
+          : mdnsServiceType // ignore: cast_nullable_to_non_nullable
               as String?,
       devicesMacAddress: freezed == devicesMacAddress
           ? _value.devicesMacAddress
@@ -525,7 +551,9 @@ class _$GenericDimmableLightDeviceDtosImpl
       required this.deviceHostName,
       required this.deviceMdns,
       required this.srvResourceRecord,
+      required this.srvTarget,
       required this.ptrResourceRecord,
+      required this.mdnsServiceType,
       required this.devicesMacAddress,
       required this.entityKey,
       required this.requestTimeStamp,
@@ -587,7 +615,11 @@ class _$GenericDimmableLightDeviceDtosImpl
   @override
   final String? srvResourceRecord;
   @override
+  final String? srvTarget;
+  @override
   final String? ptrResourceRecord;
+  @override
+  final String? mdnsServiceType;
   @override
   final String? devicesMacAddress;
   @override
@@ -605,7 +637,7 @@ class _$GenericDimmableLightDeviceDtosImpl
 
   @override
   String toString() {
-    return 'GenericDimmableLightDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, lightSwitchState: $lightSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, lightBrightness: $lightBrightness, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericDimmableLightDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, lightSwitchState: $lightSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, lightBrightness: $lightBrightness, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -659,8 +691,12 @@ class _$GenericDimmableLightDeviceDtosImpl
                 other.deviceMdns == deviceMdns) &&
             (identical(other.srvResourceRecord, srvResourceRecord) ||
                 other.srvResourceRecord == srvResourceRecord) &&
+            (identical(other.srvTarget, srvTarget) ||
+                other.srvTarget == srvTarget) &&
             (identical(other.ptrResourceRecord, ptrResourceRecord) ||
                 other.ptrResourceRecord == ptrResourceRecord) &&
+            (identical(other.mdnsServiceType, mdnsServiceType) ||
+                other.mdnsServiceType == mdnsServiceType) &&
             (identical(other.devicesMacAddress, devicesMacAddress) ||
                 other.devicesMacAddress == devicesMacAddress) &&
             (identical(other.entityKey, entityKey) ||
@@ -706,7 +742,9 @@ class _$GenericDimmableLightDeviceDtosImpl
         deviceHostName,
         deviceMdns,
         srvResourceRecord,
+        srvTarget,
         ptrResourceRecord,
+        mdnsServiceType,
         devicesMacAddress,
         entityKey,
         requestTimeStamp,
@@ -758,7 +796,9 @@ abstract class _GenericDimmableLightDeviceDtos
       required final String? deviceHostName,
       required final String? deviceMdns,
       required final String? srvResourceRecord,
+      required final String? srvTarget,
       required final String? ptrResourceRecord,
+      required final String? mdnsServiceType,
       required final String? devicesMacAddress,
       required final String? entityKey,
       required final String? requestTimeStamp,
@@ -818,7 +858,11 @@ abstract class _GenericDimmableLightDeviceDtos
   @override
   String? get srvResourceRecord;
   @override
+  String? get srvTarget;
+  @override
   String? get ptrResourceRecord;
+  @override
+  String? get mdnsServiceType;
   @override
   String? get devicesMacAddress;
   @override

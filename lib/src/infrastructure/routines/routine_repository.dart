@@ -5,7 +5,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
   final Map<String, RoutineCbjEntity> _allRoutines = {};
 
   @override
-  Future<void> setUpAllFromDb() async {
+  Future setUpAllFromDb() async {
     await IDbRepository.instance.getRoutinesFromDb().then((value) {
       value.fold((l) => null, (r) async {
         for (final element in r) {
@@ -131,7 +131,7 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
   }
 
   @override
-  Future<void> initiateHubConnection() async {}
+  Future initiateHubConnection() async {}
 
   @override
   Stream<Either<RoutineCbjFailure, Set<RoutineCbjEntity>>>
@@ -152,13 +152,13 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
   ) async {
     _allRoutines[routineCbjEntity.uniqueId.getOrCrash()] = routineCbjEntity;
 
-    final ClientStatusRequests clientStatusRequests = ClientStatusRequests(
-      allRemoteCommands:
-          jsonEncode(routineCbjEntity.toInfrastructure().toJson()),
-      sendingType: SendingType.routineType,
-    );
+    // final ClientStatusRequests clientStatusRequests = ClientStatusRequests(
+    //   allRemoteCommands:
+    //       jsonEncode(routineCbjEntity.toInfrastructure().toJson()),
+    //   sendingType: SendingType.routineType.name,
+    // );
 
-    AppRequestsToHub.appRequestsToHubStreamController.add(clientStatusRequests);
+    // AppRequestsToHub.appRequestsToHubStreamController.add(clientStatusRequests);
 
     return right(routineCbjEntity);
   }

@@ -1,5 +1,5 @@
 enum EntityStateGRPC {
-  stateNotSupported,
+  undefined,
 
   /// Cancel if not ack yet
   cancelStateInProcess,
@@ -35,8 +35,17 @@ enum EntityStateGRPC {
   updateHubEntityPropertiesFromRealEntity,
 }
 
+extension EntityStateGRPCExtension on EntityStateGRPC {
+  static EntityStateGRPC fromString(String typeAsString) {
+    return EntityStateGRPC.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => EntityStateGRPC.undefined,
+    );
+  }
+}
+
 enum VendorsAndServices {
-  vendorsAndServicesNotSupported,
+  undefined,
   espHome,
   switcherSmartHome,
   tasmota,
@@ -61,8 +70,17 @@ enum VendorsAndServices {
   apple,
 }
 
+extension VendorsAndServicesExtension on VendorsAndServices {
+  static VendorsAndServices fromString(String typeAsString) {
+    return VendorsAndServices.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => VendorsAndServices.undefined,
+    );
+  }
+}
+
 enum EntityTypes {
-  smartTypeNotSupported,
+  undefined,
   light,
   blinds,
   boiler,
@@ -85,7 +103,7 @@ enum EntityTypes {
 }
 
 enum EntityActions {
-  actionNotSupported,
+  undefined,
   on,
   off,
   moveUp,
@@ -118,6 +136,16 @@ enum EntityActions {
   changeMod,
   speek,
   hsvColor,
+  useValue,
+}
+
+extension EntityActionsExtension on EntityActions {
+  static EntityActions fromString(String typeAsString) {
+    return EntityActions.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => EntityActions.undefined,
+    );
+  }
 }
 
 enum WhenToExecute {
@@ -137,14 +165,27 @@ enum WhenToExecute {
 }
 
 enum ActionValues {
+  undefined,
   text,
   url,
   brightness,
   alpha,
   hue,
   saturation,
-  value,
-  temperature,
+  colorValue,
+  colorTemperature,
+
+  /// in milliseconds
+  duration,
+}
+
+extension ActionValuesExtension on ActionValues {
+  static ActionValues fromString(String typeAsString) {
+    return ActionValues.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => ActionValues.undefined,
+    );
+  }
 }
 
 enum VendorLoginTypes {
@@ -152,4 +193,129 @@ enum VendorLoginTypes {
   authToken,
   apiKey,
   emailAndPassword,
+}
+
+/// Being added to send data for explain the type that was sent
+enum SendingType {
+  /// Not sure what we sent or got
+  undefined,
+
+  /// String without any structure
+  stringType,
+
+  /// Partial entity data in the form of json
+  partialEntityType,
+
+  /// Entity object in the form of json
+  entityType,
+
+  /// Sending mqtt massage
+  mqttMassageType,
+
+  /// Scenes
+  sceneType,
+
+  /// Schedule
+  scheduleType,
+
+  /// Routine
+  routineType,
+
+  /// Bindings
+  bindingsType,
+
+  /// Type for login into other vendors
+  vendorLoginType,
+
+  /// First connection, for sending first connection info like all entities
+  /// status and more
+  firstConnection,
+
+  /// Remote Pipes Domain information
+  remotePipesInformation,
+
+  /// Request to get the entity and software info like proto file version and
+  /// more
+  getHubEntityInfo,
+
+  /// Response that contains entity and software info like proto file version
+  responseHubEntityInfo,
+
+  /// Response that contains area object
+  areaType,
+
+  /// Sending location of entity
+  location,
+
+  allEntities,
+  allAreas,
+  allScenes,
+  setEntitiesAction,
+  ;
+}
+
+extension SendingTypeExtension on SendingType {
+  static SendingType fromString(String typeAsString) {
+    return SendingType.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => SendingType.undefined,
+    );
+  }
+}
+
+/// List of purposes that each area in the home can have
+enum AreaPurposesTypes {
+  undefined,
+  bedarea,
+  studyArea,
+  workArea,
+  tvArea,
+  videoGames,
+  livingArea,
+  diningArea,
+  kitchen,
+  outside,
+  outsidePrimary,
+  outsideNotPrimary,
+  toiletArea,
+  shower,
+  trainingArea,
+  meditation,
+  romantic,
+  stairsInside,
+  stairsOutside,
+  childrenArea,
+  cinemaArea,
+  boardGames,
+  bathtub,
+  laundryArea,
+  protectedSpace,
+  safeArea,
+  attic,
+  holidayCabin,
+}
+
+extension AreaPurposesTypesExtension on AreaPurposesTypes {
+  static AreaPurposesTypes fromString(String typeAsString) {
+    return AreaPurposesTypes.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => AreaPurposesTypes.undefined,
+    );
+  }
+}
+
+/// Type of leds in use
+enum ColorMode {
+  undefined,
+  rgb,
+  white,
+}
+
+extension LightModeTypesExtension on ColorMode {
+  static ColorMode fromString(String typeAsString) {
+    return ColorMode.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => ColorMode.undefined,
+    );
+  }
 }

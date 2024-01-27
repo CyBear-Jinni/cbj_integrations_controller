@@ -1,5 +1,6 @@
 import 'package:cbj_integrations_controller/src/domain/area/area_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/area/value_objects_area.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'area_entity_dtos.freezed.dart';
@@ -33,11 +34,11 @@ abstract class AreaEntityDtos implements _$AreaEntityDtos {
       uniqueId: areaEntityDE.uniqueId.getOrCrash(),
       cbjEntityName: areaEntityDE.cbjEntityName.getOrCrash(),
       background: areaEntityDE.background.getOrCrash(),
-      areaTypes: areaEntityDE.areaTypes.getOrCrash(),
+      areaTypes: areaEntityDE.purposes.getOrCrash(),
       areaDevicesId: areaEntityDE.entitiesId.getOrCrash(),
-      areaScenesId: areaEntityDE.areaScenesId.getOrCrash(),
-      areaRoutinesId: areaEntityDE.areaRoutinesId.getOrCrash(),
-      areaBindingsId: areaEntityDE.areaBindingsId.getOrCrash(),
+      areaScenesId: areaEntityDE.scenesId.getOrCrash(),
+      areaRoutinesId: areaEntityDE.routinesId.getOrCrash(),
+      areaBindingsId: areaEntityDE.bindingsId.getOrCrash(),
       areaMostUsedBy: areaEntityDE.areaMostUsedBy.getOrCrash(),
       areaPermissions: areaEntityDE.areaPermissions.getOrCrash(),
     );
@@ -51,11 +52,13 @@ abstract class AreaEntityDtos implements _$AreaEntityDtos {
       uniqueId: AreaUniqueId.fromUniqueString(uniqueId),
       cbjEntityName: AreaDefaultName(cbjEntityName),
       background: AreaBackground(background),
-      areaTypes: AreaTypes(areaTypes),
+      purposes: AreaPurposes(
+        areaTypes.map((e) => AreaPurposesTypesExtension.fromString(e)).toSet(),
+      ),
       entitiesId: AreaEntitiesId(areaDevicesId),
-      areaScenesId: AreaScenesId(areaScenesId),
-      areaRoutinesId: AreaRoutinesId(areaRoutinesId),
-      areaBindingsId: AreaBindingsId(areaBindingsId),
+      scenesId: AreaScenesId(areaScenesId),
+      routinesId: AreaRoutinesId(areaRoutinesId),
+      bindingsId: AreaBindingsId(areaBindingsId),
       areaMostUsedBy: AreaMostUsedBy(areaMostUsedBy),
       areaPermissions: AreaPermissions(areaPermissions),
     );

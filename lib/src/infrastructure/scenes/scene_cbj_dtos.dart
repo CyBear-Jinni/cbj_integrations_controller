@@ -1,3 +1,4 @@
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/core/value_objects.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/value_objects_scene_cbj.dart';
@@ -19,6 +20,7 @@ abstract class SceneCbjDtos implements _$SceneCbjDtos {
     required String? senderId,
     required String? compUuid,
     required String? stateMassage,
+    required String areaPurposeType,
     String? automationString,
     String? nodeRedFlowId,
     String? firstNodeId,
@@ -47,6 +49,7 @@ abstract class SceneCbjDtos implements _$SceneCbjDtos {
       senderId: sceneCbj.senderId.getOrCrash(),
       compUuid: sceneCbj.compUuid.getOrCrash(),
       stateMassage: sceneCbj.stateMassage.getOrCrash(),
+      areaPurposeType: sceneCbj.areaPurposeType.name,
     );
   }
 
@@ -73,6 +76,7 @@ abstract class SceneCbjDtos implements _$SceneCbjDtos {
       compUuid: SceneCbjCompUuid(compUuid),
       stateMassage: SceneCbjStateMassage(stateMassage),
       actions: [],
+      areaPurposeType: AreaPurposesTypesExtension.fromString(areaPurposeType),
     );
   }
 }

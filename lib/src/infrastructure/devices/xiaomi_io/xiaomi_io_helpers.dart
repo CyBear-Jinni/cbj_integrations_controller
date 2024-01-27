@@ -37,7 +37,9 @@ class XiaomiIoHelpers {
       compUuid: DeviceCompUuid('34asdfrsd23gggg'),
       deviceMdns: DeviceMdns('yeelink-light-colora_miap9C52'),
       srvResourceRecord: DeviceSrvResourceRecord(),
+      srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
+      mdnsServiceType: DevicemdnsServiceType(),
       deviceLastKnownIp: DeviceLastKnownIp(xiaomiIoDevice.address.address),
       stateMassage: DeviceStateMassage('Hello World'),
       powerConsumption: DevicePowerConsumption('0'),
@@ -60,6 +62,7 @@ class XiaomiIoHelpers {
       entityKey: EntityKey('0'),
       requestTimeStamp: RequestTimeStamp('0'),
       lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
+      colorMode: GenericLightModeState(ColorMode.undefined),
     );
 
     return xiaomiIoDE;

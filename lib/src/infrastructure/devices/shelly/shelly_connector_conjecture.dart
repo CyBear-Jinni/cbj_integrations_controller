@@ -12,11 +12,11 @@ class ShellyConnectorConjecture extends VendorConnectorConjectureService {
   }
 
   ShellyConnectorConjecture._singletonContractor()
-      : super(VendorsAndServices.shelly,
-                displayName: 'Shelly' ,
-        imageUrl: 
-            'https://play-lh.googleusercontent.com/cwAyt0LIs4cyXSs2jr79xjAxsuq4KoBTZNq__gpeQvupH-8PElGn6kiddx8-WfG8wEPl=s180',
-
+      : super(
+          VendorsAndServices.shelly,
+          displayName: 'Shelly',
+          imageUrl:
+              'https://play-lh.googleusercontent.com/cwAyt0LIs4cyXSs2jr79xjAxsuq4KoBTZNq__gpeQvupH-8PElGn6kiddx8-WfG8wEPl=s180',
           mdnsList: ['_http._tcp'],
           uniqueIdentifierNameInMdns: ['shelly'],
         );

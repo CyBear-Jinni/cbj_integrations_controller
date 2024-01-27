@@ -20,7 +20,7 @@ class EntitiesService {
     IcSynchronizer().newEntity(entities);
   }
 
-  void setEntitiesState(ActionObject action) =>
+  void setEntitiesState(RequestActionObject action) =>
       VendorsConnectorConjecture().setEntitiesState(action);
 
   void notifyDeviceState() {

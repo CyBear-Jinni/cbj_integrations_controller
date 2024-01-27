@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
@@ -37,7 +35,9 @@ class GenericSmartTvDE extends DeviceEntityBase {
     required super.devicesMacAddress,
     required super.deviceMdns,
     required super.srvResourceRecord,
+    required super.srvTarget,
     required super.ptrResourceRecord,
+    required super.mdnsServiceType,
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
@@ -56,7 +56,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
         cbjEntityName: CbjEntityName(''),
         entityOriginalName: EntityOriginalName(''),
         deviceOriginalName: DeviceOriginalName(''),
-        entityStateGRPC: EntityState.state(EntityStateGRPC.stateNotSupported),
+        entityStateGRPC: EntityState.state(EntityStateGRPC.undefined),
         senderDeviceOs: DeviceSenderDeviceOs(''),
         senderDeviceModel: DeviceSenderDeviceModel(''),
         stateMassage: DeviceStateMassage(''),
@@ -70,7 +70,9 @@ class GenericSmartTvDE extends DeviceEntityBase {
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
         srvResourceRecord: DeviceSrvResourceRecord(),
+        mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
+        srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid(''),
         powerConsumption: DevicePowerConsumption(''),
         devicesMacAddress: DevicesMacAddress(''),
@@ -125,7 +127,9 @@ class GenericSmartTvDE extends DeviceEntityBase {
       deviceHostName: deviceHostName.getOrCrash(),
       deviceMdns: deviceMdns.getOrCrash(),
       srvResourceRecord: srvResourceRecord.getOrCrash(),
+      srvTarget: srvTarget.getOrCrash(),
       ptrResourceRecord: ptrResourceRecord.getOrCrash(),
+      mdnsServiceType: mdnsServiceType.getOrCrash(),
       devicesMacAddress: devicesMacAddress.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),
@@ -142,18 +146,16 @@ class GenericSmartTvDE extends DeviceEntityBase {
   }
 
   @override
-  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
-    required EntityProperties property,
-    required EntityActions action,
-    HashMap<ActionValues, dynamic>? values,
-  }) async {
-    switch (action) {
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction(
+    EntitySingleRequest request,
+  ) async {
+    switch (request.action) {
       case EntityActions.on:
         return turnOnSmartTv();
       case EntityActions.off:
         return turnOffSmartTv();
       case EntityActions.open:
-        final dynamic url = values?[ActionValues.url];
+        final dynamic url = request.values?[ActionValues.url];
         if (url is! String) {
           return const Left(CoreFailure.unexpected());
         }
@@ -162,14 +164,14 @@ class GenericSmartTvDE extends DeviceEntityBase {
         }
         return sendUrlToDevice(url);
       case EntityActions.openUrl:
-        final dynamic url = values?[ActionValues.url];
+        final dynamic url = request.values?[ActionValues.url];
         if (url is! String) {
           return const Left(CoreFailure.unexpected());
         }
         return openUrl(url);
 
       case EntityActions.speek:
-        final dynamic text = values?[ActionValues.text];
+        final dynamic text = request.values?[ActionValues.text];
         if (text is! String) {
           return const Left(CoreFailure.unexpected());
         }
@@ -196,8 +198,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
         break;
     }
 
-    return super
-        .executeAction(property: property, action: action, values: values);
+    return super.executeAction(request);
   }
 
   /// Please override the following methods

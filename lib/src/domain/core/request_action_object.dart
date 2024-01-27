@@ -2,42 +2,31 @@ import 'dart:collection';
 
 import 'package:cbj_integrations_controller/integrations_controller.dart';
 
-class ActionObject {
-  ActionObject({
-    required this.uniqueIdByVendor,
+class RequestActionObject {
+  RequestActionObject({
+    required this.entityIds,
     required this.property,
     required this.actionType,
-    this.value,
-  });
-
-  factory ActionObject.fromSingle(ActionObjectSingle singleAction) {
-    return ActionObject(
-      uniqueIdByVendor: HashMap.fromEntries([
-        MapEntry(singleAction.vendor, HashSet.from([singleAction.entityId])),
-      ]),
-      property: singleAction.property,
-      actionType: singleAction.actionType,
-    );
+    HashMap<ActionValues, dynamic>? value,
+  }) {
+    this.value = value ?? HashMap();
   }
 
-  final HashMap<VendorsAndServices, HashSet<String>> uniqueIdByVendor;
+  final HashSet<String> entityIds;
   final EntityProperties property;
   final EntityActions actionType;
-  HashMap<ActionValues, dynamic>? value;
-}
+  late HashMap<ActionValues, dynamic> value;
 
-class ActionObjectSingle {
-  ActionObjectSingle({
-    required this.vendor,
-    required this.entityId,
-    required this.property,
-    required this.actionType,
-    this.value,
-  });
-
-  final VendorsAndServices vendor;
-  final String entityId;
-  final EntityProperties property;
-  final EntityActions actionType;
-  HashMap<ActionValues, dynamic>? value;
+  RequestActionObjectDtos toInfrastructure() {
+    return RequestActionObjectDtos(
+      entitiesId: entityIds.toList(),
+      property: property.name,
+      actionType: actionType.name,
+      value: HashMap<String, dynamic>.from(
+        value.map(
+          (key, value) => MapEntry(key.name, value),
+        ),
+      ),
+    );
+  }
 }

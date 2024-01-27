@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
@@ -6,22 +8,14 @@ import 'package:cbj_integrations_controller/src/infrastructure/devices/lifx/lifx
 import 'package:lifx_http_api/lifx_http_api.dart';
 
 class LifxHelpers {
-  static DeviceEntityBase? addDiscoveredDevice({
-    required LIFXBulb lifxDevice,
-    required CoreUniqueId? uniqueDeviceId,
-  }) {
-    CoreUniqueId uniqueDeviceIdTemp;
-
-    if (uniqueDeviceId != null) {
-      uniqueDeviceIdTemp = uniqueDeviceId;
-    } else {
-      uniqueDeviceIdTemp = CoreUniqueId();
-    }
+  static HashMap<String, DeviceEntityBase> addDiscoveredDevice(
+    LIFXBulb lifxDevice,
+  ) {
     final String deviceName =
         lifxDevice.label != '' ? lifxDevice.label : 'Lifx test 2';
 
     final LifxWhiteEntity lifxDE = LifxWhiteEntity(
-      uniqueId: uniqueDeviceIdTemp,
+      uniqueId: CoreUniqueId(),
       entityUniqueId: EntityUniqueId(lifxDevice.id),
       cbjEntityName: CbjEntityName(deviceName),
       entityOriginalName: EntityOriginalName(deviceName),
@@ -33,28 +27,33 @@ class LifxHelpers {
       senderDeviceModel: DeviceSenderDeviceModel('Cloud'),
       senderId: DeviceSenderId(),
       compUuid: DeviceCompUuid(lifxDevice.uuid),
-      stateMassage: DeviceStateMassage('Hello World'),
-      powerConsumption: DevicePowerConsumption('0'),
+      stateMassage: DeviceStateMassage(''),
+      powerConsumption: DevicePowerConsumption(''),
       lightSwitchState: GenericDimmableLightSwitchState(
-        (lifxDevice.power == LIFXPower.on).toString(),
+        LIFXPower.on.name,
       ),
-      deviceUniqueId: DeviceUniqueId('0'),
-      devicePort: DevicePort('0'),
-      deviceLastKnownIp: DeviceLastKnownIp('0'),
-      deviceHostName: DeviceHostName('0'),
-      deviceMdns: DeviceMdns('0'),
+      deviceUniqueId: DeviceUniqueId(lifxDevice.id),
+      devicePort: DevicePort(''),
+      deviceLastKnownIp: DeviceLastKnownIp(''),
+      deviceHostName: DeviceHostName(''),
+      deviceMdns: DeviceMdns(''),
       srvResourceRecord: DeviceSrvResourceRecord(),
+      srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      devicesMacAddress: DevicesMacAddress('0'),
-      entityKey: EntityKey('0'),
-      requestTimeStamp: RequestTimeStamp('0'),
-      lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
+      mdnsServiceType: DevicemdnsServiceType(),
+      devicesMacAddress: DevicesMacAddress(''),
+      entityKey: EntityKey(''),
+      requestTimeStamp: RequestTimeStamp(''),
+      lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
       deviceCbjUniqueId: CoreUniqueId(),
       lightBrightness:
           GenericDimmableLightBrightness.fromDouble(lifxDevice.brightness),
     );
 
-    return lifxDE;
+    final HashMap<String, DeviceEntityBase> convertedEntites = HashMap();
+
+    return convertedEntites
+      ..addEntries([MapEntry(lifxDE.getCbjDeviceId, lifxDE)]);
 
     // TODO: Add if device type does not supported return null
     // logger.i(

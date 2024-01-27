@@ -1,4 +1,5 @@
 import 'package:cbj_integrations_controller/src/domain/core/request_action_object.dart';
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/core/value_objects.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/value_objects_scene_cbj.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/scene_cbj_dtos.dart';
@@ -33,6 +34,7 @@ class SceneCbjEntity {
     required this.compUuid,
     required this.entityStateGRPC,
     required this.actions,
+    required this.areaPurposeType,
   });
 
   final UniqueId uniqueId;
@@ -52,25 +54,46 @@ class SceneCbjEntity {
   final SceneCbjDeviceStateGRPC entityStateGRPC;
 
   /// {entityId, ActionObject}
-  final List<ActionObjectSingle> actions;
+  final List<RequestActionObject> actions;
+  final AreaPurposesTypes areaPurposeType;
 
-  SceneCbjDtos toInfrastructure() {
-    return SceneCbjDtos(
-      uniqueId: uniqueId.getOrCrash(),
-      name: name.getOrCrash(),
-      backgroundColor: backgroundColor.getOrCrash(),
-      automationString: automationString.getOrCrash(),
-      nodeRedFlowId: nodeRedFlowId.getOrCrash(),
-      firstNodeId: firstNodeId.getOrCrash(),
-      iconCodePoint: iconCodePoint.getOrCrash(),
-      image: image.getOrCrash(),
-      lastDateOfExecute: lastDateOfExecute.getOrCrash(),
-      entityStateGRPC: entityStateGRPC.getOrCrash(),
-      senderDeviceModel: senderDeviceModel.getOrCrash(),
-      senderDeviceOs: senderDeviceOs.getOrCrash(),
-      senderId: senderId.getOrCrash(),
-      compUuid: compUuid.getOrCrash(),
-      stateMassage: stateMassage.getOrCrash(),
-    );
-  }
+  SceneCbjEntity copyWithNewAction(List<RequestActionObject> actions) =>
+      SceneCbjEntity(
+        uniqueId: uniqueId,
+        name: name,
+        backgroundColor: backgroundColor,
+        automationString: automationString,
+        nodeRedFlowId: nodeRedFlowId,
+        firstNodeId: firstNodeId,
+        iconCodePoint: iconCodePoint,
+        image: image,
+        lastDateOfExecute: lastDateOfExecute,
+        stateMassage: stateMassage,
+        senderDeviceOs: senderDeviceOs,
+        senderDeviceModel: senderDeviceModel,
+        senderId: senderId,
+        compUuid: compUuid,
+        entityStateGRPC: entityStateGRPC,
+        actions: actions,
+        areaPurposeType: areaPurposeType,
+      );
+
+  SceneCbjDtos toInfrastructure() => SceneCbjDtos(
+        uniqueId: uniqueId.getOrCrash(),
+        name: name.getOrCrash(),
+        backgroundColor: backgroundColor.getOrCrash(),
+        automationString: automationString.getOrCrash(),
+        nodeRedFlowId: nodeRedFlowId.getOrCrash(),
+        firstNodeId: firstNodeId.getOrCrash(),
+        iconCodePoint: iconCodePoint.getOrCrash(),
+        image: image.getOrCrash(),
+        lastDateOfExecute: lastDateOfExecute.getOrCrash(),
+        entityStateGRPC: entityStateGRPC.getOrCrash(),
+        senderDeviceModel: senderDeviceModel.getOrCrash(),
+        senderDeviceOs: senderDeviceOs.getOrCrash(),
+        senderId: senderId.getOrCrash(),
+        compUuid: compUuid.getOrCrash(),
+        stateMassage: stateMassage.getOrCrash(),
+        areaPurposeType: areaPurposeType.name,
+      );
 }

@@ -3,16 +3,13 @@ import 'dart:convert';
 import 'package:cbj_integrations_controller/src/domain/area/area_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/area/value_objects_area.dart';
 import 'package:cbj_integrations_controller/src/domain/binding/binding_cbj_entity.dart';
-import 'package:cbj_integrations_controller/src/domain/binding/i_binding_cbj_repository.dart';
 import 'package:cbj_integrations_controller/src/domain/binding/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/local_db/local_db_failures.dart';
-import 'package:cbj_integrations_controller/src/domain/routine/i_routine_cbj_repository.dart';
 import 'package:cbj_integrations_controller/src/domain/routine/routine_cbj_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/routine/value_objects_routine_cbj.dart';
-import 'package:cbj_integrations_controller/src/domain/scene/i_scene_cbj_repository.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/area/area_entity_dtos.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/bindings/binding_cbj_dtos.dart';
@@ -45,10 +42,10 @@ abstract class IDbRepository {
   }
 
   /// Loading once all the data from the database
-  Future<void> initializeDb({required bool isFlutter});
+  Future initializeDb({required bool isFlutter});
 
   /// Will load all the local database content into the program
-  Future<void> loadFromDb();
+  Future loadFromDb();
 
   Future<Either<LocalDbFailures, String>> getRemotePipesDnsName();
 

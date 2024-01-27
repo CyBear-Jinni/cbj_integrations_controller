@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
@@ -36,7 +34,9 @@ class GenericDimmableLightDE extends DeviceEntityBase {
     required super.deviceHostName,
     required super.deviceMdns,
     required super.srvResourceRecord,
+    required super.srvTarget,
     required super.ptrResourceRecord,
+    required super.mdnsServiceType,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -55,7 +55,7 @@ class GenericDimmableLightDE extends DeviceEntityBase {
         cbjEntityName: CbjEntityName(''),
         entityOriginalName: EntityOriginalName(''),
         deviceOriginalName: DeviceOriginalName(''),
-        entityStateGRPC: EntityState.state(EntityStateGRPC.stateNotSupported),
+        entityStateGRPC: EntityState.state(EntityStateGRPC.undefined),
         senderDeviceOs: DeviceSenderDeviceOs(''),
         senderDeviceModel: DeviceSenderDeviceModel(''),
         stateMassage: DeviceStateMassage(''),
@@ -69,7 +69,9 @@ class GenericDimmableLightDE extends DeviceEntityBase {
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
         srvResourceRecord: DeviceSrvResourceRecord(),
+        mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
+        srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid(''),
         powerConsumption: DevicePowerConsumption(''),
         devicesMacAddress: DevicesMacAddress(''),
@@ -143,7 +145,9 @@ class GenericDimmableLightDE extends DeviceEntityBase {
       deviceHostName: deviceHostName.getOrCrash(),
       deviceMdns: deviceMdns.getOrCrash(),
       srvResourceRecord: srvResourceRecord.getOrCrash(),
+      srvTarget: srvTarget.getOrCrash(),
       ptrResourceRecord: ptrResourceRecord.getOrCrash(),
+      mdnsServiceType: mdnsServiceType.getOrCrash(),
       devicesMacAddress: devicesMacAddress.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),
@@ -156,17 +160,19 @@ class GenericDimmableLightDE extends DeviceEntityBase {
   }
 
   @override
-  Future<Either<CoreFailure<dynamic>, Unit>> executeAction({
-    required EntityProperties property,
-    required EntityActions action,
-    HashMap<ActionValues, dynamic>? values,
-  }) async {
-    if (property == EntityProperties.lightBrightness) {
-      // TODO: add support for json
-      // return setBrightness(value);
+  Future<Either<CoreFailure<dynamic>, Unit>> executeAction(
+    EntitySingleRequest request,
+  ) async {
+    if (request.property == EntityProperties.lightBrightness &&
+        request.values != null &&
+        request.values![ActionValues.brightness] != null) {
+      final dynamic brightness = request.values![ActionValues.brightness];
+      if (brightness is! int) {
+        return const Left(CoreFailure.unexpected());
+      }
+      return setBrightness(brightness);
     }
-
-    switch (action) {
+    switch (request.action) {
       case EntityActions.on:
         return turnOnLight();
       case EntityActions.off:
@@ -174,8 +180,7 @@ class GenericDimmableLightDE extends DeviceEntityBase {
       default:
         break;
     }
-    return super
-        .executeAction(property: property, action: action, values: values);
+    return super.executeAction(request);
   }
 
   /// Please override the following methods

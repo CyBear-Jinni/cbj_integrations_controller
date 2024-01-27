@@ -27,7 +27,7 @@
 //   static final TasmotaMqttConnectorConjecture _instance =
 //       TasmotaMqttConnectorConjecture._singletonContractor();
 
-//   // Future<void> addNewDeviceByHostInfo({
+//   // Future addNewDeviceByHostInfo({
 //   //   required ActiveHost activeHost,
 //   // }) async {
 //   //   String tempMqttTopic = (await activeHost.hostName)!.replaceAll('-', '_');
@@ -43,7 +43,8 @@
 //   //       .publishMessage('cmnd/$tasmotaMqttTopic/SetOption19', '0');
 //   // }
 
-//   Future<void> discoverNewDevices() async {
+//   Future
+// discoverNewDevices() async {
 //     IMqttServerRepository.instance
 //         .streamOfChosenSubscription('tasmota/discovery/+/config')
 //         .listen((mqttPublishMessage) async {
