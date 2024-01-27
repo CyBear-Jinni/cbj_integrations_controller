@@ -5,20 +5,37 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_t
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_validators.dart';
 import 'package:dartz/dartz.dart';
 
+class GenericLightModeState extends ValueObjectCore<String> {
+  factory GenericLightModeState(ColorMode input) {
+    return GenericLightModeState._(
+      validateGenericRgbwLightStateNotEmpty(input.name),
+      input,
+    );
+  }
+
+  const GenericLightModeState._(this.value, this.mode);
+
+  final ColorMode mode;
+
+  @override
+  final Either<CoreFailure<String>, String> value;
+}
+
 class GenericRgbwLightSwitchState extends ValueObjectCore<String> {
   factory GenericRgbwLightSwitchState(String? input) {
     assert(input != null);
+    EntityActions action;
     if (input!.toLowerCase() == true.toString()) {
-      input = EntityActions.on.toString();
+      action = EntityActions.on;
     } else if (input.toLowerCase() == false.toString()) {
-      input = EntityActions.off.toString();
+      action = EntityActions.off;
+    } else {
+      action =
+          EntityUtils.stringToDeviceAction(input) ?? EntityActions.undefined;
     }
 
-    final EntityActions action = EntityUtils.stringToDeviceAction(input) ??
-        EntityActions.actionNotSupported;
-
     return GenericRgbwLightSwitchState._(
-      validateGenericRgbwLightStateNotEmpty(input),
+      validateGenericRgbwLightStateNotEmpty(action.name),
       action,
     );
   }

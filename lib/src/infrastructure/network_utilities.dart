@@ -44,7 +44,10 @@ class NetworkUtilities implements INetworkUtilities {
     final String? hostName = await activeHost.hostName;
     final List<network.OpenPort> openPorts = activeHost.openPorts;
     final SrvResourceRecord? srvResourceRecord = mdns?.srvResourceRecord;
-    final PtrResourceRecord? ptrResourceRecord = mdns?.ptrResourceRecord;
+    final String? srvTarget = mdns?.mdnsSrvTarget;
+    final String? ptrResourceRecord = mdns?.ptrResourceRecord.name;
+
+    final String? mdnsServiceType = mdns?.mdnsServiceType;
 
     final int? port = openPorts.isNotEmpty
         ? openPorts.first.port
@@ -54,7 +57,7 @@ class NetworkUtilities implements INetworkUtilities {
       uniqueId: CoreUniqueId(),
       entityUniqueId: EntityUniqueId(arpData?.macAddress ?? activeHost.hostId),
       cbjDeviceVendor: CbjDeviceVendor(
-        VendorsAndServices.vendorsAndServicesNotSupported.name,
+        VendorsAndServices.undefined.name,
       ),
       cbjEntityName:
           CbjEntityName(deviceName ?? hostName ?? arpData?.hostname ?? ''),
@@ -65,7 +68,7 @@ class NetworkUtilities implements INetworkUtilities {
       senderDeviceModel: DeviceSenderDeviceModel(''),
       senderId: DeviceSenderId(),
       compUuid: DeviceCompUuid(''),
-      entityStateGRPC: EntityState.state(EntityStateGRPC.stateNotSupported),
+      entityStateGRPC: EntityState.state(EntityStateGRPC.undefined),
       entityOriginalName: EntityOriginalName(''),
       deviceOriginalName: DeviceOriginalName(deviceName),
       powerConsumption: DevicePowerConsumption(''),
@@ -76,8 +79,9 @@ class NetworkUtilities implements INetworkUtilities {
       deviceMdns: DeviceMdns(mdns?.mdnsDomainName),
       srvResourceRecord:
           DeviceSrvResourceRecord(input: srvResourceRecord?.name),
-      ptrResourceRecord:
-          DevicePtrResourceRecord(input: ptrResourceRecord?.name),
+      srvTarget: DeviceSrvTarget(input: srvTarget),
+      ptrResourceRecord: DevicePtrResourceRecord(input: ptrResourceRecord),
+      mdnsServiceType: DevicemdnsServiceType(input: mdnsServiceType),
       devicesMacAddress:
           DevicesMacAddress(arpData?.macAddress ?? vendor?.macPrefix),
       entityKey: EntityKey(''),
@@ -114,13 +118,13 @@ class NetworkUtilities implements INetworkUtilities {
       if (activeHost.address == '0.0.0.0') {
         final network.MdnsInfo? mdnsInfo = await activeHost.mdnsInfo;
 
-        final String? mdnsSrvTarget = mdnsInfo?.mdnsSrvTarget;
-        if (mdnsSrvTarget == null) {
+        final String? srvTarget = mdnsInfo?.mdnsSrvTarget;
+        if (srvTarget == null) {
           continue;
         }
 
         final String? deviceIp = await SystemCommandsManager()
-            .getIpFromMdnsName(mdnsSrvTarget, mdnsInfo!.mdnsServiceType);
+            .getIpFromMdnsName(srvTarget, mdnsInfo!.mdnsServiceType);
         if (deviceIp == null) {
           continue;
         }

@@ -106,7 +106,7 @@ class AreaTypeWithEntitiesTypePreset {
             .videoGamesRgbModDeviceAction(entityId, entityType);
       case AreaPurposesTypes.workArea:
         return WorkAreaAreaAction().workAreaEntityAction(entityId, entityType);
-      case AreaPurposesTypes.undefinedType:
+      case AreaPurposesTypes.undefined:
       // TODO: Handle this case.
     }
     return [];
@@ -170,7 +170,7 @@ class AreaTypeWithEntitiesTypePreset {
         color = Colors.tealAccent;
       case AreaPurposesTypes.workArea:
         color = Colors.blue;
-      case AreaPurposesTypes.undefinedType:
+      case AreaPurposesTypes.undefined:
       // TODO: Handle this case.
     }
     return color.value;

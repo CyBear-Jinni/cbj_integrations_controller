@@ -45,7 +45,7 @@ class OutsideAreaAction {
         actionsList.addAll(
           CommonDevicesScenesPresetsForDevices.switchOffPreset(entityId),
         );
-      case EntityTypes.smartTypeNotSupported:
+      case EntityTypes.undefined:
         // TODO: Handle this case.
         break;
       case EntityTypes.emptyEntity:

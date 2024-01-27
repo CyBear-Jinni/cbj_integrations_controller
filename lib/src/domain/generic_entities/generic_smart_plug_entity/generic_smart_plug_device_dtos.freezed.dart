@@ -45,7 +45,9 @@ mixin _$GenericSmartPlugDeviceDtos {
   String? get deviceMdns => throw _privateConstructorUsedError;
   String? get devicesMacAddress => throw _privateConstructorUsedError;
   String? get srvResourceRecord => throw _privateConstructorUsedError;
+  String? get srvTarget => throw _privateConstructorUsedError;
   String? get ptrResourceRecord => throw _privateConstructorUsedError;
+  String? get mdnsServiceType => throw _privateConstructorUsedError;
   String? get entityKey => throw _privateConstructorUsedError;
   String? get requestTimeStamp => throw _privateConstructorUsedError;
   String? get lastResponseFromDeviceTimeStamp =>
@@ -91,7 +93,9 @@ abstract class $GenericSmartPlugDeviceDtosCopyWith<$Res> {
       String? deviceMdns,
       String? devicesMacAddress,
       String? srvResourceRecord,
+      String? srvTarget,
       String? ptrResourceRecord,
+      String? mdnsServiceType,
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
@@ -137,7 +141,9 @@ class _$GenericSmartPlugDeviceDtosCopyWithImpl<$Res,
     Object? deviceMdns = freezed,
     Object? devicesMacAddress = freezed,
     Object? srvResourceRecord = freezed,
+    Object? srvTarget = freezed,
     Object? ptrResourceRecord = freezed,
+    Object? mdnsServiceType = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
@@ -238,9 +244,17 @@ class _$GenericSmartPlugDeviceDtosCopyWithImpl<$Res,
           ? _value.srvResourceRecord
           : srvResourceRecord // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvTarget: freezed == srvTarget
+          ? _value.srvTarget
+          : srvTarget // ignore: cast_nullable_to_non_nullable
+              as String?,
       ptrResourceRecord: freezed == ptrResourceRecord
           ? _value.ptrResourceRecord
           : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mdnsServiceType: freezed == mdnsServiceType
+          ? _value.mdnsServiceType
+          : mdnsServiceType // ignore: cast_nullable_to_non_nullable
               as String?,
       entityKey: freezed == entityKey
           ? _value.entityKey
@@ -304,7 +318,9 @@ abstract class _$$GenericSmartPlugDeviceDtosImplCopyWith<$Res>
       String? deviceMdns,
       String? devicesMacAddress,
       String? srvResourceRecord,
+      String? srvTarget,
       String? ptrResourceRecord,
+      String? mdnsServiceType,
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
@@ -349,7 +365,9 @@ class __$$GenericSmartPlugDeviceDtosImplCopyWithImpl<$Res>
     Object? deviceMdns = freezed,
     Object? devicesMacAddress = freezed,
     Object? srvResourceRecord = freezed,
+    Object? srvTarget = freezed,
     Object? ptrResourceRecord = freezed,
+    Object? mdnsServiceType = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
@@ -450,9 +468,17 @@ class __$$GenericSmartPlugDeviceDtosImplCopyWithImpl<$Res>
           ? _value.srvResourceRecord
           : srvResourceRecord // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvTarget: freezed == srvTarget
+          ? _value.srvTarget
+          : srvTarget // ignore: cast_nullable_to_non_nullable
+              as String?,
       ptrResourceRecord: freezed == ptrResourceRecord
           ? _value.ptrResourceRecord
           : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mdnsServiceType: freezed == mdnsServiceType
+          ? _value.mdnsServiceType
+          : mdnsServiceType // ignore: cast_nullable_to_non_nullable
               as String?,
       entityKey: freezed == entityKey
           ? _value.entityKey
@@ -510,7 +536,9 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
       required this.deviceMdns,
       required this.devicesMacAddress,
       required this.srvResourceRecord,
+      required this.srvTarget,
       required this.ptrResourceRecord,
+      required this.mdnsServiceType,
       required this.entityKey,
       required this.requestTimeStamp,
       required this.lastResponseFromDeviceTimeStamp,
@@ -571,7 +599,11 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
   @override
   final String? srvResourceRecord;
   @override
+  final String? srvTarget;
+  @override
   final String? ptrResourceRecord;
+  @override
+  final String? mdnsServiceType;
   @override
   final String? entityKey;
   @override
@@ -587,7 +619,7 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
 
   @override
   String toString() {
-    return 'GenericSmartPlugDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, smartPlugState: $smartPlugState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, ptrResourceRecord: $ptrResourceRecord, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericSmartPlugDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, smartPlugState: $smartPlugState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -641,8 +673,12 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
                 other.devicesMacAddress == devicesMacAddress) &&
             (identical(other.srvResourceRecord, srvResourceRecord) ||
                 other.srvResourceRecord == srvResourceRecord) &&
+            (identical(other.srvTarget, srvTarget) ||
+                other.srvTarget == srvTarget) &&
             (identical(other.ptrResourceRecord, ptrResourceRecord) ||
                 other.ptrResourceRecord == ptrResourceRecord) &&
+            (identical(other.mdnsServiceType, mdnsServiceType) ||
+                other.mdnsServiceType == mdnsServiceType) &&
             (identical(other.entityKey, entityKey) ||
                 other.entityKey == entityKey) &&
             (identical(other.requestTimeStamp, requestTimeStamp) ||
@@ -686,7 +722,9 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
         deviceMdns,
         devicesMacAddress,
         srvResourceRecord,
+        srvTarget,
         ptrResourceRecord,
+        mdnsServiceType,
         entityKey,
         requestTimeStamp,
         lastResponseFromDeviceTimeStamp,
@@ -735,7 +773,9 @@ abstract class _GenericSmartPlugDeviceDtos extends GenericSmartPlugDeviceDtos {
       required final String? deviceMdns,
       required final String? devicesMacAddress,
       required final String? srvResourceRecord,
+      required final String? srvTarget,
       required final String? ptrResourceRecord,
+      required final String? mdnsServiceType,
       required final String? entityKey,
       required final String? requestTimeStamp,
       required final String? lastResponseFromDeviceTimeStamp,
@@ -794,7 +834,11 @@ abstract class _GenericSmartPlugDeviceDtos extends GenericSmartPlugDeviceDtos {
   @override
   String? get srvResourceRecord;
   @override
+  String? get srvTarget;
+  @override
   String? get ptrResourceRecord;
+  @override
+  String? get mdnsServiceType;
   @override
   String? get entityKey;
   @override

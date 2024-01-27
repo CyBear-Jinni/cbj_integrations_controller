@@ -44,6 +44,10 @@ mixin _$GenericSmartTypeNotSupportedDeviceDtos {
   String? get deviceHostName => throw _privateConstructorUsedError;
   String? get deviceMdns => throw _privateConstructorUsedError;
   String? get devicesMacAddress => throw _privateConstructorUsedError;
+  String? get srvResourceRecord => throw _privateConstructorUsedError;
+  String? get srvTarget => throw _privateConstructorUsedError;
+  String? get ptrResourceRecord => throw _privateConstructorUsedError;
+  String? get mdnsServiceType => throw _privateConstructorUsedError;
   String? get entityKey => throw _privateConstructorUsedError;
   String? get requestTimeStamp => throw _privateConstructorUsedError;
   String? get lastResponseFromDeviceTimeStamp =>
@@ -89,6 +93,10 @@ abstract class $GenericSmartTypeNotSupportedDeviceDtosCopyWith<$Res> {
       String? deviceHostName,
       String? deviceMdns,
       String? devicesMacAddress,
+      String? srvResourceRecord,
+      String? srvTarget,
+      String? ptrResourceRecord,
+      String? mdnsServiceType,
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
@@ -132,6 +140,10 @@ class _$GenericSmartTypeNotSupportedDeviceDtosCopyWithImpl<$Res,
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
     Object? devicesMacAddress = freezed,
+    Object? srvResourceRecord = freezed,
+    Object? srvTarget = freezed,
+    Object? ptrResourceRecord = freezed,
+    Object? mdnsServiceType = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
@@ -224,6 +236,22 @@ class _$GenericSmartTypeNotSupportedDeviceDtosCopyWithImpl<$Res,
           ? _value.devicesMacAddress
           : devicesMacAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvResourceRecord: freezed == srvResourceRecord
+          ? _value.srvResourceRecord
+          : srvResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      srvTarget: freezed == srvTarget
+          ? _value.srvTarget
+          : srvTarget // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ptrResourceRecord: freezed == ptrResourceRecord
+          ? _value.ptrResourceRecord
+          : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mdnsServiceType: freezed == mdnsServiceType
+          ? _value.mdnsServiceType
+          : mdnsServiceType // ignore: cast_nullable_to_non_nullable
+              as String?,
       entityKey: freezed == entityKey
           ? _value.entityKey
           : entityKey // ignore: cast_nullable_to_non_nullable
@@ -284,6 +312,10 @@ abstract class _$$GenericSmartTypeNotSupportedDeviceDtosImplCopyWith<$Res>
       String? deviceHostName,
       String? deviceMdns,
       String? devicesMacAddress,
+      String? srvResourceRecord,
+      String? srvTarget,
+      String? ptrResourceRecord,
+      String? mdnsServiceType,
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
@@ -326,6 +358,10 @@ class __$$GenericSmartTypeNotSupportedDeviceDtosImplCopyWithImpl<$Res>
     Object? deviceHostName = freezed,
     Object? deviceMdns = freezed,
     Object? devicesMacAddress = freezed,
+    Object? srvResourceRecord = freezed,
+    Object? srvTarget = freezed,
+    Object? ptrResourceRecord = freezed,
+    Object? mdnsServiceType = freezed,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
@@ -418,6 +454,22 @@ class __$$GenericSmartTypeNotSupportedDeviceDtosImplCopyWithImpl<$Res>
           ? _value.devicesMacAddress
           : devicesMacAddress // ignore: cast_nullable_to_non_nullable
               as String?,
+      srvResourceRecord: freezed == srvResourceRecord
+          ? _value.srvResourceRecord
+          : srvResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      srvTarget: freezed == srvTarget
+          ? _value.srvTarget
+          : srvTarget // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ptrResourceRecord: freezed == ptrResourceRecord
+          ? _value.ptrResourceRecord
+          : ptrResourceRecord // ignore: cast_nullable_to_non_nullable
+              as String?,
+      mdnsServiceType: freezed == mdnsServiceType
+          ? _value.mdnsServiceType
+          : mdnsServiceType // ignore: cast_nullable_to_non_nullable
+              as String?,
       entityKey: freezed == entityKey
           ? _value.entityKey
           : entityKey // ignore: cast_nullable_to_non_nullable
@@ -473,6 +525,10 @@ class _$GenericSmartTypeNotSupportedDeviceDtosImpl
       required this.deviceHostName,
       required this.deviceMdns,
       required this.devicesMacAddress,
+      required this.srvResourceRecord,
+      required this.srvTarget,
+      required this.ptrResourceRecord,
+      required this.mdnsServiceType,
       required this.entityKey,
       required this.requestTimeStamp,
       required this.lastResponseFromDeviceTimeStamp,
@@ -529,6 +585,14 @@ class _$GenericSmartTypeNotSupportedDeviceDtosImpl
   @override
   final String? devicesMacAddress;
   @override
+  final String? srvResourceRecord;
+  @override
+  final String? srvTarget;
+  @override
+  final String? ptrResourceRecord;
+  @override
+  final String? mdnsServiceType;
+  @override
   final String? entityKey;
   @override
   final String? requestTimeStamp;
@@ -543,7 +607,7 @@ class _$GenericSmartTypeNotSupportedDeviceDtosImpl
 
   @override
   String toString() {
-    return 'GenericSmartTypeNotSupportedDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericSmartTypeNotSupportedDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -593,6 +657,14 @@ class _$GenericSmartTypeNotSupportedDeviceDtosImpl
                 other.deviceMdns == deviceMdns) &&
             (identical(other.devicesMacAddress, devicesMacAddress) ||
                 other.devicesMacAddress == devicesMacAddress) &&
+            (identical(other.srvResourceRecord, srvResourceRecord) ||
+                other.srvResourceRecord == srvResourceRecord) &&
+            (identical(other.srvTarget, srvTarget) ||
+                other.srvTarget == srvTarget) &&
+            (identical(other.ptrResourceRecord, ptrResourceRecord) ||
+                other.ptrResourceRecord == ptrResourceRecord) &&
+            (identical(other.mdnsServiceType, mdnsServiceType) ||
+                other.mdnsServiceType == mdnsServiceType) &&
             (identical(other.entityKey, entityKey) ||
                 other.entityKey == entityKey) &&
             (identical(other.requestTimeStamp, requestTimeStamp) ||
@@ -634,6 +706,10 @@ class _$GenericSmartTypeNotSupportedDeviceDtosImpl
         deviceHostName,
         deviceMdns,
         devicesMacAddress,
+        srvResourceRecord,
+        srvTarget,
+        ptrResourceRecord,
+        mdnsServiceType,
         entityKey,
         requestTimeStamp,
         lastResponseFromDeviceTimeStamp,
@@ -683,6 +759,10 @@ abstract class _GenericSmartTypeNotSupportedDeviceDtos
           required final String? deviceHostName,
           required final String? deviceMdns,
           required final String? devicesMacAddress,
+          required final String? srvResourceRecord,
+          required final String? srvTarget,
+          required final String? ptrResourceRecord,
+          required final String? mdnsServiceType,
           required final String? entityKey,
           required final String? requestTimeStamp,
           required final String? lastResponseFromDeviceTimeStamp,
@@ -738,6 +818,14 @@ abstract class _GenericSmartTypeNotSupportedDeviceDtos
   String? get deviceMdns;
   @override
   String? get devicesMacAddress;
+  @override
+  String? get srvResourceRecord;
+  @override
+  String? get srvTarget;
+  @override
+  String? get ptrResourceRecord;
+  @override
+  String? get mdnsServiceType;
   @override
   String? get entityKey;
   @override

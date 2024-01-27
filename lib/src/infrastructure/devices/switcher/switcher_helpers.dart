@@ -16,7 +16,7 @@ class SwitcherHelpers {
   ) {
     if (switcherDevice.deviceType == SwitcherDevicesTypes.switcherRunner ||
         switcherDevice.deviceType == SwitcherDevicesTypes.switcherRunnerMini) {
-      EntityActions deviceActions = EntityActions.actionNotSupported;
+      EntityActions deviceActions = EntityActions.undefined;
 
       if (switcherDevice.deviceDirection == SwitcherDeviceDirection.up) {
         deviceActions = EntityActions.moveUp;
@@ -53,9 +53,11 @@ class SwitcherHelpers {
         ),
         deviceUniqueId: DeviceUniqueId('0'),
         deviceHostName: DeviceHostName('0'),
-        deviceMdns: DeviceMdns('0'),
+        deviceMdns: DeviceMdns(null),
         srvResourceRecord: DeviceSrvResourceRecord(),
+        mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
+        srvTarget: DeviceSrvTarget(),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
@@ -69,7 +71,7 @@ class SwitcherHelpers {
         switcherDevice.deviceType == SwitcherDevicesTypes.switcherV2Esp ||
         switcherDevice.deviceType == SwitcherDevicesTypes.switcherV2qualcomm ||
         switcherDevice.deviceType == SwitcherDevicesTypes.switcherV4) {
-      EntityActions deviceActions = EntityActions.actionNotSupported;
+      EntityActions deviceActions = EntityActions.undefined;
       if (switcherDevice.deviceState == SwitcherDeviceState.on) {
         deviceActions = EntityActions.on;
       } else if (switcherDevice.deviceState == SwitcherDeviceState.off) {
@@ -98,9 +100,11 @@ class SwitcherHelpers {
         devicesMacAddress: DevicesMacAddress(switcherDevice.macAddress),
         deviceUniqueId: DeviceUniqueId('0'),
         deviceHostName: DeviceHostName('0'),
-        deviceMdns: DeviceMdns('0'),
+        deviceMdns: DeviceMdns(null),
         srvResourceRecord: DeviceSrvResourceRecord(),
+        mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
+        srvTarget: DeviceSrvTarget(),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
@@ -111,7 +115,7 @@ class SwitcherHelpers {
       return switcherV2De;
     } else if (switcherDevice.deviceType ==
         SwitcherDevicesTypes.switcherPowerPlug) {
-      EntityActions deviceActions = EntityActions.actionNotSupported;
+      EntityActions deviceActions = EntityActions.undefined;
       if (switcherDevice.deviceState == SwitcherDeviceState.on) {
         deviceActions = EntityActions.on;
       } else if (switcherDevice.deviceState == SwitcherDeviceState.off) {
@@ -140,9 +144,11 @@ class SwitcherHelpers {
         deviceUniqueId: DeviceUniqueId('0'),
         devicePort: DevicePort(switcherDevice.port.toString()),
         deviceHostName: DeviceHostName('0'),
-        deviceMdns: DeviceMdns('0'),
+        deviceMdns: DeviceMdns(null),
         srvResourceRecord: DeviceSrvResourceRecord(),
+        mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
+        srvTarget: DeviceSrvTarget(),
         devicesMacAddress: DevicesMacAddress(switcherDevice.macAddress),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),

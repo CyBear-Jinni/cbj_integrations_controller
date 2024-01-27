@@ -9,8 +9,8 @@ class GenericSwitchSwitchState extends ValueObjectCore<String> {
   factory GenericSwitchSwitchState(String? input) {
     assert(input != null);
 
-    final EntityActions action = EntityUtils.stringToDeviceAction(input!) ??
-        EntityActions.actionNotSupported;
+    final EntityActions action =
+        EntityUtils.stringToDeviceAction(input!) ?? EntityActions.undefined;
 
     return GenericSwitchSwitchState._(
       validateGenericSwitchStateNotEmpty(input),

@@ -1,5 +1,5 @@
 enum EntityStateGRPC {
-  stateNotSupported,
+  undefined,
 
   /// Cancel if not ack yet
   cancelStateInProcess,
@@ -35,8 +35,17 @@ enum EntityStateGRPC {
   updateHubEntityPropertiesFromRealEntity,
 }
 
+extension EntityStateGRPCExtension on EntityStateGRPC {
+  static EntityStateGRPC fromString(String typeAsString) {
+    return EntityStateGRPC.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => EntityStateGRPC.undefined,
+    );
+  }
+}
+
 enum VendorsAndServices {
-  vendorsAndServicesNotSupported,
+  undefined,
   espHome,
   switcherSmartHome,
   tasmota,
@@ -65,13 +74,13 @@ extension VendorsAndServicesExtension on VendorsAndServices {
   static VendorsAndServices fromString(String typeAsString) {
     return VendorsAndServices.values.firstWhere(
       (element) => element.toString().split('.').last == typeAsString,
-      orElse: () => VendorsAndServices.vendorsAndServicesNotSupported,
+      orElse: () => VendorsAndServices.undefined,
     );
   }
 }
 
 enum EntityTypes {
-  smartTypeNotSupported,
+  undefined,
   light,
   blinds,
   boiler,
@@ -94,7 +103,7 @@ enum EntityTypes {
 }
 
 enum EntityActions {
-  actionNotSupported,
+  undefined,
   on,
   off,
   moveUp,
@@ -134,7 +143,7 @@ extension EntityActionsExtension on EntityActions {
   static EntityActions fromString(String typeAsString) {
     return EntityActions.values.firstWhere(
       (element) => element.toString().split('.').last == typeAsString,
-      orElse: () => EntityActions.actionNotSupported,
+      orElse: () => EntityActions.undefined,
     );
   }
 }
@@ -189,7 +198,7 @@ enum VendorLoginTypes {
 /// Being added to send data for explain the type that was sent
 enum SendingType {
   /// Not sure what we sent or got
-  undefinedType,
+  undefined,
 
   /// String without any structure
   stringType,
@@ -249,14 +258,14 @@ extension SendingTypeExtension on SendingType {
   static SendingType fromString(String typeAsString) {
     return SendingType.values.firstWhere(
       (element) => element.toString().split('.').last == typeAsString,
-      orElse: () => SendingType.undefinedType,
+      orElse: () => SendingType.undefined,
     );
   }
 }
 
 /// List of purposes that each area in the home can have
 enum AreaPurposesTypes {
-  undefinedType,
+  undefined,
   bedarea,
   studyArea,
   workArea,
@@ -290,7 +299,23 @@ extension AreaPurposesTypesExtension on AreaPurposesTypes {
   static AreaPurposesTypes fromString(String typeAsString) {
     return AreaPurposesTypes.values.firstWhere(
       (element) => element.toString().split('.').last == typeAsString,
-      orElse: () => AreaPurposesTypes.undefinedType,
+      orElse: () => AreaPurposesTypes.undefined,
+    );
+  }
+}
+
+/// Type of leds in use
+enum ColorMode {
+  undefined,
+  rgb,
+  white,
+}
+
+extension LightModeTypesExtension on ColorMode {
+  static ColorMode fromString(String typeAsString) {
+    return ColorMode.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => ColorMode.undefined,
     );
   }
 }

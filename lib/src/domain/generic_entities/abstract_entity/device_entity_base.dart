@@ -40,7 +40,9 @@ abstract class DeviceEntityBase {
     required this.lastResponseFromDeviceTimeStamp,
     required this.deviceCbjUniqueId,
     required this.srvResourceRecord,
+    required this.srvTarget,
     required this.ptrResourceRecord,
+    required this.mdnsServiceType,
     required this.deviceVendor,
     required this.deviceNetworkLastUpdate,
   });
@@ -110,8 +112,10 @@ abstract class DeviceEntityBase {
   DeviceMdns deviceMdns;
 
   DeviceSrvResourceRecord srvResourceRecord;
-
+  DeviceSrvTarget srvTarget;
   DevicePtrResourceRecord ptrResourceRecord;
+
+  DevicemdnsServiceType mdnsServiceType;
 
   /// Mac address of the device
   DevicesMacAddress devicesMacAddress;
@@ -228,10 +232,10 @@ abstract class DeviceEntityBase {
         address: deviceLastKnownIp.getOrCrash(),
       );
 
-  Duration maxDurationBetweenRequsts = const Duration(milliseconds: 50);
+  Duration minDurationBetweenRequsts = const Duration(milliseconds: 50);
   DateTime? lastRequest;
 
-  final int maxRequestsStack = 10;
+  int maxRequestsStack = 5;
   final Queue<EntitySingleRequest> _requestsQueue =
       Queue<EntitySingleRequest>();
 
@@ -239,14 +243,23 @@ abstract class DeviceEntityBase {
   EntitySingleRequest get popFirstRequestsQueue => _requestsQueue.removeFirst();
 
   void addRequestInStack(EntitySingleRequest request) {
-    _requestsQueue.add(request);
-
-    if (_requestsQueue.length > 1 ||
-        _requestsQueue.length >= maxRequestsStack) {
+    if (_requestsQueue.length > maxRequestsStack) {
+      _requestsQueue.removeLast();
+      _requestsQueue.add(request);
       return;
     }
 
-    Timer.periodic(maxDurationBetweenRequsts, (Timer timer) {
+    _requestsQueue.add(request);
+
+    if (_requestsQueue.length > 1) {
+      return;
+    }
+
+    Timer.periodic(minDurationBetweenRequsts, (Timer timer) {
+      if (_requestsQueue.isEmpty) {
+        timer.cancel();
+        return;
+      }
       executeAction(_requestsQueue.removeFirst());
       if (_requestsQueue.isEmpty) {
         timer.cancel();
@@ -256,11 +269,11 @@ abstract class DeviceEntityBase {
 
   bool canActivateAction(EntitySingleRequest request) {
     final bool tempActiveAction = lastRequest == null ||
-        DateTime.now().difference(lastRequest!) > maxDurationBetweenRequsts;
-    if (!tempActiveAction) {
-      addRequestInStack(request);
-    } else {
+        DateTime.now().difference(lastRequest!) > minDurationBetweenRequsts;
+    if (tempActiveAction) {
       lastRequest = DateTime.now();
+    } else {
+      addRequestInStack(request);
     }
     return tempActiveAction;
   }
@@ -272,7 +285,7 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           uniqueId: CoreUniqueId(),
           entityUniqueId: EntityUniqueId('Entity unique id is empty'),
           cbjDeviceVendor: CbjDeviceVendor(
-            VendorsAndServices.vendorsAndServicesNotSupported.toString(),
+            VendorsAndServices.undefined.toString(),
           ),
           entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
           compUuid: DeviceCompUuid(const Uuid().v1()),
@@ -294,7 +307,9 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           deviceHostName: DeviceHostName('deviceHostName is empty'),
           deviceMdns: DeviceMdns('deviceMdns is empty'),
           srvResourceRecord: DeviceSrvResourceRecord(),
+          srvTarget: DeviceSrvTarget(),
           ptrResourceRecord: DevicePtrResourceRecord(),
+          mdnsServiceType: DevicemdnsServiceType(),
           devicesMacAddress: DevicesMacAddress('devicesMacAddress is empty'),
           entityKey: EntityKey('entityKey is empty'),
           requestTimeStamp: RequestTimeStamp('requestTimeStamp is empty'),

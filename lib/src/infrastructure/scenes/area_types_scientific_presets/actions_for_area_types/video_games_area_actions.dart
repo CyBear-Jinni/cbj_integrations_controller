@@ -51,7 +51,7 @@ class VideoGamesAreaAction {
         actionsList.addAll(
           CommonDevicesScenesPresetsForDevices.switchOnPreset(entityId),
         );
-      case EntityTypes.smartTypeNotSupported:
+      case EntityTypes.undefined:
         // TODO: Handle this case.
         break;
       case EntityTypes.emptyEntity:

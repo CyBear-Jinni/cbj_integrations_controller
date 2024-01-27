@@ -61,13 +61,6 @@ Either<CoreFailure<String>, String> validateMaxNameLength(
   }
 }
 
-Either<CoreFailure<String>, String> validateDeviceStateExist(String input) {
-  if (EntityUtils.stringToDeviceState(input) != null) {
-    return right(input);
-  }
-  return left(const CoreFailure.deviceActionDoesNotExist());
-}
-
 Either<CoreFailure<String>, String> validateDeviceActionExist(String input) {
   if (EntityUtils.stringToDeviceAction(input) != null) {
     return right(input);

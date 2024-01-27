@@ -15,7 +15,9 @@ class HpHelpers {
     final HpPrinterEntity lgDE = HpPrinterEntity(
       uniqueId: entity.uniqueId,
       entityUniqueId: entity.entityUniqueId,
-      cbjEntityName: entity.cbjEntityName,
+      cbjEntityName: CbjEntityName(
+        entity.srvResourceRecord.getOrCrash()?.split('.').first ?? 'Hp',
+      ),
       entityOriginalName: entity.entityOriginalName,
       deviceOriginalName: entity.deviceOriginalName,
       entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
@@ -27,7 +29,9 @@ class HpHelpers {
       compUuid: entity.compUuid,
       deviceMdns: entity.deviceMdns,
       srvResourceRecord: entity.srvResourceRecord,
+      srvTarget: entity.srvTarget,
       ptrResourceRecord: entity.ptrResourceRecord,
+      mdnsServiceType: entity.mdnsServiceType,
       deviceLastKnownIp: entity.deviceLastKnownIp,
       stateMassage: entity.stateMassage,
       powerConsumption: entity.powerConsumption,
@@ -40,7 +44,7 @@ class HpHelpers {
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
       printerSwitchState: GenericPrinterSwitchState(
-        EntityActions.actionNotSupported.toString(),
+        EntityActions.undefined.toString(),
       ),
     );
 

@@ -33,7 +33,9 @@ class GenericUnsupportedDE extends DeviceEntityBase {
     required super.deviceHostName,
     required super.deviceMdns,
     required super.srvResourceRecord,
+    required super.srvTarget,
     required super.ptrResourceRecord,
+    required super.mdnsServiceType,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -46,7 +48,7 @@ class GenericUnsupportedDE extends DeviceEntityBase {
   /// Empty instance of GenericEmptyEntity
   factory GenericUnsupportedDE.empty() => GenericUnsupportedDE(
         cbjDeviceVendor: CbjDeviceVendor(
-          VendorsAndServices.vendorsAndServicesNotSupported.toString(),
+          VendorsAndServices.undefined.toString(),
         ),
         deviceVendor: DeviceVendor(''),
         deviceNetworkLastUpdate: DeviceNetworkLastUpdate(''),
@@ -68,7 +70,9 @@ class GenericUnsupportedDE extends DeviceEntityBase {
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
         srvResourceRecord: DeviceSrvResourceRecord(),
+        mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
+        srvTarget: DeviceSrvTarget(),
         devicesMacAddress: DevicesMacAddress(''),
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
@@ -129,7 +133,9 @@ class GenericUnsupportedDE extends DeviceEntityBase {
       deviceHostName: deviceHostName.getOrCrash(),
       deviceMdns: deviceMdns.getOrCrash(),
       srvResourceRecord: srvResourceRecord.getOrCrash(),
+      srvTarget: srvTarget.getOrCrash(),
       ptrResourceRecord: ptrResourceRecord.getOrCrash(),
+      mdnsServiceType: mdnsServiceType.getOrCrash(),
       devicesMacAddress: devicesMacAddress.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),

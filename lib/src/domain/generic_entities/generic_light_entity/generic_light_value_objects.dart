@@ -9,8 +9,8 @@ class GenericLightSwitchState extends ValueObjectCore<String> {
   factory GenericLightSwitchState(String? input) {
     assert(input != null);
 
-    final EntityActions action = EntityUtils.stringToDeviceAction(input!) ??
-        EntityActions.actionNotSupported;
+    final EntityActions action =
+        EntityUtils.stringToDeviceAction(input!) ?? EntityActions.undefined;
     return GenericLightSwitchState._(
       validateGenericLightStateNotEmpty(input),
       action,

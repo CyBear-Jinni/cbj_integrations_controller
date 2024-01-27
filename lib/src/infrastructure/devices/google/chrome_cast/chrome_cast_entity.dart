@@ -29,7 +29,9 @@ class ChromeCastEntity extends GenericSmartTvDE {
     required super.deviceHostName,
     required super.deviceMdns,
     required super.srvResourceRecord,
+    required super.srvTarget,
     required super.ptrResourceRecord,
+    required super.mdnsServiceType,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -41,49 +43,45 @@ class ChromeCastEntity extends GenericSmartTvDE {
   }) : super(
           cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.google),
         ) {
-    final int? port = int.tryParse(devicePort.getOrCrash() ?? '');
-    final deviceLastKnownIp = this.deviceLastKnownIp.getOrCrash();
-    if (port == null || deviceLastKnownIp == null) {
-      return;
-    }
     castDevice = CastDevice(
-      serviceName: 'serviceName',
-      name: 'name',
-      host: deviceLastKnownIp,
-      port: port,
+      serviceName: devicesMacAddress.getOrCrash()!,
+      name: deviceOriginalName.getOrCrash()!,
+      host: srvTarget.getOrCrash() ?? deviceLastKnownIp.getOrCrash()!,
+      port: int.tryParse(devicePort.getOrCrash() ?? '')!,
     );
   }
 
-  factory ChromeCastEntity.fromGeneric(GenericSmartTvDE genericDevice) {
+  factory ChromeCastEntity.fromGeneric(GenericSmartTvDE entity) {
     return ChromeCastEntity(
-      uniqueId: genericDevice.uniqueId,
-      entityUniqueId: genericDevice.entityUniqueId,
-      cbjEntityName: genericDevice.cbjEntityName,
-      entityOriginalName: genericDevice.entityOriginalName,
-      deviceOriginalName: genericDevice.deviceOriginalName,
-      deviceVendor: genericDevice.deviceVendor,
-      deviceNetworkLastUpdate: genericDevice.deviceNetworkLastUpdate,
-      stateMassage: genericDevice.stateMassage,
-      senderDeviceOs: genericDevice.senderDeviceOs,
-      senderDeviceModel: genericDevice.senderDeviceModel,
-      senderId: genericDevice.senderId,
-      compUuid: genericDevice.compUuid,
-      entityStateGRPC: genericDevice.entityStateGRPC,
-      powerConsumption: genericDevice.powerConsumption,
-      deviceUniqueId: genericDevice.deviceUniqueId,
-      devicePort: genericDevice.devicePort,
-      deviceLastKnownIp: genericDevice.deviceLastKnownIp,
-      deviceHostName: genericDevice.deviceHostName,
-      deviceMdns: genericDevice.deviceMdns,
-      srvResourceRecord: genericDevice.srvResourceRecord,
-      ptrResourceRecord: genericDevice.ptrResourceRecord,
-      devicesMacAddress: genericDevice.devicesMacAddress,
-      entityKey: genericDevice.entityKey,
-      requestTimeStamp: genericDevice.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          genericDevice.lastResponseFromDeviceTimeStamp,
-      deviceCbjUniqueId: genericDevice.deviceCbjUniqueId,
-      smartTvSwitchState: genericDevice.smartTvSwitchState,
+      uniqueId: entity.uniqueId,
+      entityUniqueId: entity.entityUniqueId,
+      cbjEntityName: entity.cbjEntityName,
+      entityOriginalName: entity.entityOriginalName,
+      deviceOriginalName: entity.deviceOriginalName,
+      deviceVendor: entity.deviceVendor,
+      deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,
+      stateMassage: entity.stateMassage,
+      senderDeviceOs: entity.senderDeviceOs,
+      senderDeviceModel: entity.senderDeviceModel,
+      senderId: entity.senderId,
+      compUuid: entity.compUuid,
+      entityStateGRPC: entity.entityStateGRPC,
+      powerConsumption: entity.powerConsumption,
+      deviceUniqueId: entity.deviceUniqueId,
+      devicePort: entity.devicePort,
+      deviceLastKnownIp: entity.deviceLastKnownIp,
+      deviceHostName: entity.deviceHostName,
+      deviceMdns: entity.deviceMdns,
+      srvResourceRecord: entity.srvResourceRecord,
+      srvTarget: entity.srvTarget,
+      ptrResourceRecord: entity.ptrResourceRecord,
+      mdnsServiceType: entity.mdnsServiceType,
+      devicesMacAddress: entity.devicesMacAddress,
+      entityKey: entity.entityKey,
+      requestTimeStamp: entity.requestTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
+      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      smartTvSwitchState: entity.smartTvSwitchState,
     );
   }
 

@@ -10,16 +10,25 @@ class GoogleHelpers {
   static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
     DeviceEntityBase entity,
   ) async {
-    final String deviceCbjUniqueId =
-        entity.deviceMdns.getOrCrash() ?? CoreUniqueId().getOrCrash();
+    final String deviceCbjUniqueId = entity.devicesMacAddress.getOrCrash()!;
+    String name;
+    final String? deviceMdns = entity.deviceMdns.getOrCrash();
+    final String? srvTarget = entity.srvTarget.getOrCrash();
+    if (deviceMdns != null && deviceMdns.contains('-')) {
+      name = deviceMdns.split('-').first;
+    } else if (srvTarget != null) {
+      name = srvTarget;
+    } else {
+      name = entity.cbjEntityName.getOrCrash() ?? '';
+    }
 
     final ChromeCastEntity googleDE = ChromeCastEntity(
       uniqueId: entity.uniqueId,
-      entityUniqueId: EntityUniqueId(entity.deviceMdns.getOrCrash()),
-      cbjEntityName: entity.cbjEntityName,
+      entityUniqueId: EntityUniqueId(deviceMdns),
+      cbjEntityName: CbjEntityName(name),
       entityOriginalName: entity.entityOriginalName,
       deviceOriginalName: entity.deviceOriginalName,
-      entityStateGRPC: entity.entityStateGRPC,
+      entityStateGRPC: EntityState(EntityStateGRPC.ack),
       senderDeviceOs: entity.senderDeviceOs,
       deviceVendor: entity.deviceVendor,
       deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,
@@ -28,7 +37,9 @@ class GoogleHelpers {
       compUuid: entity.compUuid,
       deviceMdns: entity.deviceMdns,
       srvResourceRecord: entity.srvResourceRecord,
+      srvTarget: entity.srvTarget,
       ptrResourceRecord: entity.ptrResourceRecord,
+      mdnsServiceType: entity.mdnsServiceType,
       deviceLastKnownIp: entity.deviceLastKnownIp,
       stateMassage: entity.stateMassage,
       powerConsumption: entity.powerConsumption,
@@ -41,7 +52,7 @@ class GoogleHelpers {
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
       smartTvSwitchState: GenericSmartTvSwitchState(
-        EntityActions.actionNotSupported.toString(),
+        EntityActions.undefined.toString(),
       ),
     );
 

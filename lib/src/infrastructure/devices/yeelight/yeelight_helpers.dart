@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
@@ -15,13 +16,18 @@ class YeelightHelpers {
     final HashMap<String, DeviceEntityBase> entitiesMap = HashMap();
 
     String deviceName;
+    final String? deviceMdns = entity.deviceMdns.getOrCrash();
+
     if (yeelightDevice.name != null && yeelightDevice.name!.isNotEmpty) {
       deviceName = yeelightDevice.name!;
-    } else if (entity.deviceMdns.getOrCrash() != null &&
-        entity.deviceMdns.getOrCrash()!.isNotEmpty) {
-      deviceName = entity.deviceMdns.getOrCrash()!;
+    } else if (deviceMdns != null) {
+      if (deviceMdns.contains('-')) {
+        deviceName = deviceMdns.split('-').first;
+      } else {
+        deviceName = entity.deviceMdns.getOrCrash()!;
+      }
     } else {
-      deviceName = 'Yeelight device';
+      deviceName = entity.cbjEntityName.getOrCrash()!;
     }
 
     if (yeelightDevice.model == null) {
@@ -37,7 +43,7 @@ class YeelightHelpers {
         cbjEntityName: CbjEntityName(deviceName),
         entityOriginalName: EntityOriginalName(deviceName),
         deviceOriginalName: DeviceOriginalName(deviceName),
-        entityStateGRPC: entity.entityStateGRPC,
+        entityStateGRPC: EntityState(EntityStateGRPC.ack),
         senderDeviceOs: entity.senderDeviceOs,
         deviceVendor: entity.deviceVendor,
         deviceNetworkLastUpdate: entity.deviceNetworkLastUpdate,
@@ -46,7 +52,9 @@ class YeelightHelpers {
         compUuid: entity.compUuid,
         deviceMdns: entity.deviceMdns,
         srvResourceRecord: entity.srvResourceRecord,
+        srvTarget: entity.srvTarget,
         ptrResourceRecord: entity.ptrResourceRecord,
+        mdnsServiceType: entity.mdnsServiceType,
         deviceLastKnownIp: DeviceLastKnownIp(yeelightDevice.address.address),
         stateMassage: entity.stateMassage,
         powerConsumption: entity.powerConsumption,
@@ -71,6 +79,9 @@ class YeelightHelpers {
           yeelightDevice.sat.toString(),
         ),
         lightColorValue: GenericRgbwLightColorValue('1.0'),
+        colorMode: GenericLightModeState(
+          yeelightDevice.colorMode == 3 ? ColorMode.rgb : ColorMode.white,
+        ),
       );
       entitiesMap.addEntries([MapEntry(deviceCbjUniqueId, newEntity)]);
     } else {

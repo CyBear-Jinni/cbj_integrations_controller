@@ -9,8 +9,8 @@ class GenericSmartPlugState extends ValueObjectCore<String> {
   factory GenericSmartPlugState(String? input) {
     assert(input != null);
 
-    final EntityActions action = EntityUtils.stringToDeviceAction(input!) ??
-        EntityActions.actionNotSupported;
+    final EntityActions action =
+        EntityUtils.stringToDeviceAction(input!) ?? EntityActions.undefined;
 
     return GenericSmartPlugState._(
       validateGenericSmartPlugStateNotEmpty(input),

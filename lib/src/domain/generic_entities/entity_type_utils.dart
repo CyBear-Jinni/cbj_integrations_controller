@@ -193,7 +193,7 @@ class EntityUtils {
         return deviceType;
       }
     }
-    return VendorsAndServices.vendorsAndServicesNotSupported;
+    return VendorsAndServices.undefined;
   }
 
   ///  Convert deviceAction to string

@@ -126,6 +126,17 @@ class DeviceSrvResourceRecord extends ValueObjectCore<String?> {
   final Either<CoreFailure<String?>, String?> value;
 }
 
+class DeviceSrvTarget extends ValueObjectCore<String?> {
+  factory DeviceSrvTarget({String? input}) {
+    return DeviceSrvTarget._(right(input));
+  }
+
+  const DeviceSrvTarget._(this.value);
+
+  @override
+  final Either<CoreFailure<String?>, String?> value;
+}
+
 class DevicePtrResourceRecord extends ValueObjectCore<String?> {
   factory DevicePtrResourceRecord({String? input}) {
     return DevicePtrResourceRecord._(right(input));
@@ -137,14 +148,22 @@ class DevicePtrResourceRecord extends ValueObjectCore<String?> {
   final Either<CoreFailure<String?>, String?> value;
 }
 
-class EntityState extends ValueObjectCore<String> {
-  factory EntityState(String? input) {
-    final EntityStateGRPC state = EntityUtils.stringToDeviceState(input!) ??
-        EntityStateGRPC.stateNotSupported;
+class DevicemdnsServiceType extends ValueObjectCore<String?> {
+  factory DevicemdnsServiceType({String? input}) {
+    return DevicemdnsServiceType._(right(input));
+  }
 
+  const DevicemdnsServiceType._(this.value);
+
+  @override
+  final Either<CoreFailure<String?>, String?> value;
+}
+
+class EntityState extends ValueObjectCore<String> {
+  factory EntityState(EntityStateGRPC input) {
     return EntityState._(
-      validateDeviceStateExist(input),
-      state,
+      right(input.name),
+      input,
     );
   }
 
@@ -348,6 +367,10 @@ class DeviceMdns extends ValueObjectCore<String?> {
   }
 
   const DeviceMdns._(this.value);
+
+  String? get shortForm => value.isLeft()
+      ? null
+      : '${value.getOrElse(() => '')!.split('.').first}.local';
 
   @override
   final Either<CoreFailure<String?>, String?> value;

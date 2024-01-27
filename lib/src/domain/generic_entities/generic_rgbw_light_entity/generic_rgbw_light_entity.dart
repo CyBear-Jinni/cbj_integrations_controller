@@ -34,7 +34,9 @@ class GenericRgbwLightDE extends DeviceEntityBase {
     required super.deviceHostName,
     required super.deviceMdns,
     required super.srvResourceRecord,
+    required super.srvTarget,
     required super.ptrResourceRecord,
+    required super.mdnsServiceType,
     required super.devicesMacAddress,
     required super.entityKey,
     required super.requestTimeStamp,
@@ -47,6 +49,7 @@ class GenericRgbwLightDE extends DeviceEntityBase {
     required this.lightColorSaturation,
     required this.lightColorValue,
     required this.lightBrightness,
+    required this.colorMode,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.rgbwLights),
         );
@@ -58,7 +61,7 @@ class GenericRgbwLightDE extends DeviceEntityBase {
         cbjEntityName: CbjEntityName(''),
         entityOriginalName: EntityOriginalName(''),
         deviceOriginalName: DeviceOriginalName(''),
-        entityStateGRPC: EntityState.state(EntityStateGRPC.stateNotSupported),
+        entityStateGRPC: EntityState.state(EntityStateGRPC.undefined),
         senderDeviceOs: DeviceSenderDeviceOs(''),
         senderDeviceModel: DeviceSenderDeviceModel(''),
         stateMassage: DeviceStateMassage(''),
@@ -72,7 +75,9 @@ class GenericRgbwLightDE extends DeviceEntityBase {
         deviceHostName: DeviceHostName(''),
         deviceMdns: DeviceMdns(''),
         srvResourceRecord: DeviceSrvResourceRecord(),
+        mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
+        srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid(''),
         powerConsumption: DevicePowerConsumption(''),
         devicesMacAddress: DevicesMacAddress(''),
@@ -88,7 +93,10 @@ class GenericRgbwLightDE extends DeviceEntityBase {
         lightColorHue: GenericRgbwLightColorHue(''),
         lightColorSaturation: GenericRgbwLightColorSaturation(''),
         lightColorValue: GenericRgbwLightColorValue(''),
+        colorMode: GenericLightModeState(ColorMode.undefined),
       );
+
+  GenericLightModeState colorMode;
 
   /// State of the light on/off
   GenericRgbwLightSwitchState lightSwitchState;
@@ -173,7 +181,9 @@ class GenericRgbwLightDE extends DeviceEntityBase {
       deviceMdns: deviceMdns.getOrCrash(),
       devicesMacAddress: devicesMacAddress.getOrCrash(),
       srvResourceRecord: srvResourceRecord.getOrCrash(),
+      srvTarget: srvTarget.getOrCrash(),
       ptrResourceRecord: ptrResourceRecord.getOrCrash(),
+      mdnsServiceType: mdnsServiceType.getOrCrash(),
       entityKey: entityKey.getOrCrash(),
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
@@ -186,6 +196,7 @@ class GenericRgbwLightDE extends DeviceEntityBase {
       lightColorHue: lightColorHue.getOrCrash(),
       lightColorSaturation: lightColorSaturation.getOrCrash(),
       lightColorValue: lightColorValue.getOrCrash(),
+      lightMode: colorMode.getOrCrash(),
     );
   }
 
