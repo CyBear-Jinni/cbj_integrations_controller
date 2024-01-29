@@ -284,41 +284,40 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
       : super(
           uniqueId: CoreUniqueId(),
           entityUniqueId: EntityUniqueId('Entity unique id is empty'),
-          cbjDeviceVendor: CbjDeviceVendor(
-            VendorsAndServices.undefined.toString(),
-          ),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.undefined),
           entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
           compUuid: DeviceCompUuid(const Uuid().v1()),
-          cbjEntityName: CbjEntityName('Cbj entity Name is empty'),
+          cbjEntityName: CbjEntityName(value: 'Cbj entity Name is empty'),
           entityOriginalName:
               EntityOriginalName('Entity original name is empty'),
           deviceOriginalName: DeviceOriginalName(
-            'Entity original name that entity is exists on is empty',
+            value: 'Entity original name that entity is exists on is empty',
           ),
           entityTypes: EntityType.type(EntityTypes.light),
           senderDeviceModel: DeviceSenderDeviceModel('a'),
           senderDeviceOs: DeviceSenderDeviceOs('b'),
           senderId: DeviceSenderId(),
-          stateMassage: DeviceStateMassage('go'),
+          stateMassage: DeviceStateMassage(value: 'go'),
           powerConsumption: DevicePowerConsumption('0'),
           deviceUniqueId: DeviceUniqueId('Entiy unique id is empty'),
-          devicePort: DevicePort('1'),
-          deviceLastKnownIp: DeviceLastKnownIp('1.1.1.1'),
-          deviceHostName: DeviceHostName('deviceHostName is empty'),
-          deviceMdns: DeviceMdns('deviceMdns is empty'),
+          devicePort: DevicePort(value: '1'),
+          deviceLastKnownIp: DeviceLastKnownIp(value: '1.1.1.1'),
+          deviceHostName: DeviceHostName(value: 'deviceHostName is empty'),
+          deviceMdns: DeviceMdns(value: 'deviceMdns is empty'),
           srvResourceRecord: DeviceSrvResourceRecord(),
           srvTarget: DeviceSrvTarget(),
           ptrResourceRecord: DevicePtrResourceRecord(),
           mdnsServiceType: DevicemdnsServiceType(),
-          devicesMacAddress: DevicesMacAddress('devicesMacAddress is empty'),
+          devicesMacAddress:
+              DevicesMacAddress(value: 'devicesMacAddress is empty'),
           entityKey: EntityKey('entityKey is empty'),
           requestTimeStamp: RequestTimeStamp('requestTimeStamp is empty'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(
             'lastResponseFromDeviceTimeStamp is empty',
           ),
           deviceCbjUniqueId: CoreUniqueId(),
-          deviceVendor: DeviceVendor(null),
-          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+          deviceVendor: DeviceVendor(),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
         );
 
   @override

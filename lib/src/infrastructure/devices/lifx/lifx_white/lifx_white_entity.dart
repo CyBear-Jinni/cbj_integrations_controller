@@ -41,7 +41,7 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
     required super.lightSwitchState,
     required super.lightBrightness,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lifx),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lifx),
         );
 
   factory LifxWhiteEntity.fromGeneric(GenericDimmableLightDE entity) {
@@ -72,8 +72,7 @@ class LifxWhiteEntity extends GenericDimmableLightDE {
       devicesMacAddress: entity.devicesMacAddress,
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          entity.lastResponseFromDeviceTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       lightSwitchState: entity.lightSwitchState,
       deviceCbjUniqueId: entity.deviceCbjUniqueId,
       lightBrightness: entity.lightBrightness,

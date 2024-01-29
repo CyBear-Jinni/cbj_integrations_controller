@@ -39,7 +39,7 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.espHome),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.espHome),
         );
 
   factory EspHomeSwitchEntity.fromGeneric(GenericSwitchDE entity) {
@@ -70,8 +70,7 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
       devicesMacAddress: entity.devicesMacAddress,
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          entity.lastResponseFromDeviceTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       deviceCbjUniqueId: entity.deviceCbjUniqueId,
       switchState: entity.switchState,
     );

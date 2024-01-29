@@ -16,7 +16,7 @@ class HpHelpers {
       uniqueId: entity.uniqueId,
       entityUniqueId: entity.entityUniqueId,
       cbjEntityName: CbjEntityName(
-        entity.srvResourceRecord.getOrCrash()?.split('.').first ?? 'Hp',
+        value: entity.srvResourceRecord.getOrCrash()?.split('.').first ?? 'Hp',
       ),
       entityOriginalName: entity.entityOriginalName,
       deviceOriginalName: entity.deviceOriginalName,

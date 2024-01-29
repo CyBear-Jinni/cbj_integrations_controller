@@ -46,7 +46,7 @@ class PhilipsHueHelpers {
           entityUniqueId: EntityUniqueId(light.uniqueId.toString()),
           cbjEntityName: entity.cbjEntityName,
           entityOriginalName: EntityOriginalName(deviceName),
-          deviceOriginalName: DeviceOriginalName(deviceName),
+          deviceOriginalName: DeviceOriginalName(value: deviceName),
           entityStateGRPC: entity.entityStateGRPC,
           senderDeviceOs: entity.senderDeviceOs,
           deviceVendor: entity.deviceVendor,

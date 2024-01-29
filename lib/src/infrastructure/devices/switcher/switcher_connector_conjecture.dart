@@ -26,7 +26,8 @@ class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
   static final SwitcherConnectorConjecture _instance =
       SwitcherConnectorConjecture._singletonContractor();
 
-  void bindSocketSearchStream() {
+  Future bindSocketSearchStream() async {
+    await Future.delayed(const Duration(seconds: 3));
     SwitcherDiscover.discover20002Devices()
         .listen(sendNewDeviceToVendorConnectorConjecture);
 

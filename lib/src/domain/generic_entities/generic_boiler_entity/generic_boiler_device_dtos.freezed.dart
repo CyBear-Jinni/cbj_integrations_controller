@@ -34,7 +34,7 @@ mixin _$GenericBoilerDeviceDtos {
   String? get boilerSwitchState => throw _privateConstructorUsedError;
   String? get entityTypes => throw _privateConstructorUsedError;
   String? get compUuid => throw _privateConstructorUsedError;
-  String? get cbjDeviceVendor => throw _privateConstructorUsedError;
+  String get cbjDeviceVendor => throw _privateConstructorUsedError;
   String? get deviceVendor => throw _privateConstructorUsedError;
   String? get deviceNetworkLastUpdate => throw _privateConstructorUsedError;
   String? get powerConsumption => throw _privateConstructorUsedError;
@@ -81,7 +81,7 @@ abstract class $GenericBoilerDeviceDtosCopyWith<$Res> {
       String? boilerSwitchState,
       String? entityTypes,
       String? compUuid,
-      String? cbjDeviceVendor,
+      String cbjDeviceVendor,
       String? deviceVendor,
       String? deviceNetworkLastUpdate,
       String? powerConsumption,
@@ -129,7 +129,7 @@ class _$GenericBoilerDeviceDtosCopyWithImpl<$Res,
     Object? boilerSwitchState = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
-    Object? cbjDeviceVendor = freezed,
+    Object? cbjDeviceVendor = null,
     Object? deviceVendor = freezed,
     Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
@@ -199,10 +199,10 @@ class _$GenericBoilerDeviceDtosCopyWithImpl<$Res,
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
-      cbjDeviceVendor: freezed == cbjDeviceVendor
+      cbjDeviceVendor: null == cbjDeviceVendor
           ? _value.cbjDeviceVendor
           : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
@@ -306,7 +306,7 @@ abstract class _$$GenericBoilerDeviceDtosImplCopyWith<$Res>
       String? boilerSwitchState,
       String? entityTypes,
       String? compUuid,
-      String? cbjDeviceVendor,
+      String cbjDeviceVendor,
       String? deviceVendor,
       String? deviceNetworkLastUpdate,
       String? powerConsumption,
@@ -353,7 +353,7 @@ class __$$GenericBoilerDeviceDtosImplCopyWithImpl<$Res>
     Object? boilerSwitchState = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
-    Object? cbjDeviceVendor = freezed,
+    Object? cbjDeviceVendor = null,
     Object? deviceVendor = freezed,
     Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
@@ -423,10 +423,10 @@ class __$$GenericBoilerDeviceDtosImplCopyWithImpl<$Res>
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
-      cbjDeviceVendor: freezed == cbjDeviceVendor
+      cbjDeviceVendor: null == cbjDeviceVendor
           ? _value.cbjDeviceVendor
           : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
@@ -575,7 +575,7 @@ class _$GenericBoilerDeviceDtosImpl extends _GenericBoilerDeviceDtos {
   @override
   final String? compUuid;
   @override
-  final String? cbjDeviceVendor;
+  final String cbjDeviceVendor;
   @override
   final String? deviceVendor;
   @override
@@ -760,7 +760,7 @@ abstract class _GenericBoilerDeviceDtos extends GenericBoilerDeviceDtos {
       required final String? boilerSwitchState,
       required final String? entityTypes,
       required final String? compUuid,
-      required final String? cbjDeviceVendor,
+      required final String cbjDeviceVendor,
       required final String? deviceVendor,
       required final String? deviceNetworkLastUpdate,
       required final String? powerConsumption,
@@ -810,7 +810,7 @@ abstract class _GenericBoilerDeviceDtos extends GenericBoilerDeviceDtos {
   @override
   String? get compUuid;
   @override
-  String? get cbjDeviceVendor;
+  String get cbjDeviceVendor;
   @override
   String? get deviceVendor;
   @override

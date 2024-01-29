@@ -40,7 +40,7 @@ class WizWhiteEntity extends GenericLightDE {
     required super.deviceCbjUniqueId,
     required super.lightSwitchState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.wiz),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.wiz),
         );
 
   WizPort? wizPort;

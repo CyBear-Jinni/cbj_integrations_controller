@@ -40,7 +40,7 @@ class TasmotaMqttLedEntity extends GenericLightDE {
     required super.lightSwitchState,
     required this.tasmotaMqttDeviceTopicName,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.tasmota),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.tasmota),
         );
 
   TasmotaMqttDeviceTopicName tasmotaMqttDeviceTopicName;

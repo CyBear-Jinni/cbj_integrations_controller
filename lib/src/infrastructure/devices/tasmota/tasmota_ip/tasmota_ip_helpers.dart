@@ -82,13 +82,13 @@ class TasmotaIpHelpers {
           '$deviceHostName-$componentInDeviceNumberLabel}',
         ),
         cbjEntityName: CbjEntityName(
-          '$deviceHostName-${componentInDeviceUiLabelAndComment![0]}',
+          value: '$deviceHostName-${componentInDeviceUiLabelAndComment![0]}',
         ),
         entityOriginalName: EntityOriginalName(
           '$deviceHostName-${componentInDeviceUiLabelAndComment[0]}',
         ),
         deviceOriginalName: DeviceOriginalName(
-          '$deviceHostName-${componentInDeviceUiLabelAndComment[0]}',
+          value: '$deviceHostName-${componentInDeviceUiLabelAndComment[0]}',
         ),
         entityStateGRPC: entity.entityStateGRPC,
         senderDeviceOs: entity.senderDeviceOs,
@@ -100,7 +100,7 @@ class TasmotaIpHelpers {
         stateMassage: entity.stateMassage,
         powerConsumption: entity.powerConsumption,
         switchState: GenericSwitchSwitchState(EntityActions.off.toString()),
-        deviceHostName: DeviceHostName(deviceHostName),
+        deviceHostName: DeviceHostName(value: deviceHostName),
         deviceLastKnownIp: entity.deviceLastKnownIp,
         deviceUniqueId: entity.deviceUniqueId,
         devicePort: entity.devicePort,

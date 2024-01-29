@@ -132,11 +132,11 @@
 //         final DeviceEntityBase entityTemp = EspHomeLightEntity(
 //           uniqueId: entity.uniqueId,
 //           entityUniqueId: EntityUniqueId(deviceCbjUniqueId),
-//           cbjEntityName: CbjEntityName(espHomeDeviceEntityObject.name),
+//           cbjEntityName: CbjEntityName(value: espHomeDeviceEntityObject.name),
 //           entityOriginalName:
 //               EntityOriginalName(espHomeDeviceEntityObject.name),
 //           deviceOriginalName:
-//               DeviceOriginalName(espHomeDeviceEntityObject.name),
+//               DeviceOriginalName(value: espHomeDeviceEntityObject.name),
 //           entityStateGRPC: entity.entityStateGRPC,
 //           senderDeviceOs: entity.senderDeviceOs,
 //           deviceVendor: entity.deviceVendor,
@@ -171,11 +171,11 @@
 //         final DeviceEntityBase entityTemp = EspHomeSwitchEntity(
 //           uniqueId: entity.uniqueId,
 //           entityUniqueId: EntityUniqueId(deviceCbjUniqueId),
-//           cbjEntityName: CbjEntityName(espHomeDeviceEntityObject.name),
+//           cbjEntityName: CbjEntityName(value: espHomeDeviceEntityObject.name),
 //           entityOriginalName:
 //               EntityOriginalName(espHomeDeviceEntityObject.name),
 //           deviceOriginalName:
-//               DeviceOriginalName(espHomeDeviceEntityObject.name),
+//               DeviceOriginalName(value: espHomeDeviceEntityObject.name),
 //           entityStateGRPC: entity.entityStateGRPC,
 //           senderDeviceOs: entity.senderDeviceOs,
 //           deviceVendor: entity.deviceVendor,

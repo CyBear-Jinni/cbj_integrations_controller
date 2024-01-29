@@ -56,34 +56,34 @@ class NetworkUtilities implements INetworkUtilities {
     return GenericUnsupportedDE(
       uniqueId: CoreUniqueId(),
       entityUniqueId: EntityUniqueId(arpData?.macAddress ?? activeHost.hostId),
-      cbjDeviceVendor: CbjDeviceVendor(
-        VendorsAndServices.undefined.name,
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.undefined),
+      cbjEntityName: CbjEntityName(
+        value: deviceName ?? hostName ?? arpData?.hostname ?? '',
       ),
-      cbjEntityName:
-          CbjEntityName(deviceName ?? hostName ?? arpData?.hostname ?? ''),
-      deviceVendor: DeviceVendor(vendor?.vendorName),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(vendor?.lastUpdate),
-      stateMassage: DeviceStateMassage(''),
+      deviceVendor: DeviceVendor(value: vendor?.vendorName),
+      deviceNetworkLastUpdate:
+          DeviceNetworkLastUpdate(value: vendor?.lastUpdate),
+      stateMassage: DeviceStateMassage(value: ''),
       senderDeviceOs: DeviceSenderDeviceOs(''),
       senderDeviceModel: DeviceSenderDeviceModel(''),
       senderId: DeviceSenderId(),
       compUuid: DeviceCompUuid(''),
       entityStateGRPC: EntityState.state(EntityStateGRPC.undefined),
       entityOriginalName: EntityOriginalName(''),
-      deviceOriginalName: DeviceOriginalName(deviceName),
+      deviceOriginalName: DeviceOriginalName(value: deviceName),
       powerConsumption: DevicePowerConsumption(''),
       deviceUniqueId: DeviceUniqueId(arpData?.macAddress ?? activeHost.hostId),
-      devicePort: DevicePort(port?.toString()),
-      deviceLastKnownIp: DeviceLastKnownIp(activeHost.address),
-      deviceHostName: DeviceHostName(hostName),
-      deviceMdns: DeviceMdns(mdns?.mdnsDomainName),
+      devicePort: DevicePort(value: port?.toString()),
+      deviceLastKnownIp: DeviceLastKnownIp(value: activeHost.address),
+      deviceHostName: DeviceHostName(value: hostName),
+      deviceMdns: DeviceMdns(value: mdns?.mdnsDomainName),
       srvResourceRecord:
           DeviceSrvResourceRecord(input: srvResourceRecord?.name),
       srvTarget: DeviceSrvTarget(input: srvTarget),
       ptrResourceRecord: DevicePtrResourceRecord(input: ptrResourceRecord),
       mdnsServiceType: DevicemdnsServiceType(input: mdnsServiceType),
       devicesMacAddress:
-          DevicesMacAddress(arpData?.macAddress ?? vendor?.macPrefix),
+          DevicesMacAddress(value: arpData?.macAddress ?? vendor?.macPrefix),
       entityKey: EntityKey(''),
       requestTimeStamp: RequestTimeStamp(''),
       lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
@@ -183,6 +183,7 @@ class NetworkUtilities implements INetworkUtilities {
   }) =>
       network.HostScanner.getAllPingableDevicesAsync(
         subnet,
-        firstHostId: 127,
+        firstHostId: firstHostId ?? network.HostScanner.defaultFirstHostId,
+        lastHostId: lastHostId ?? network.HostScanner.defaultLastHostId,
       );
 }

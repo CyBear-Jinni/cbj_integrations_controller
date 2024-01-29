@@ -34,7 +34,7 @@ mixin _$GenericSmartTypeNotSupportedDeviceDtos {
   String? get senderId => throw _privateConstructorUsedError;
   String? get entityTypes => throw _privateConstructorUsedError;
   String? get compUuid => throw _privateConstructorUsedError;
-  String? get cbjDeviceVendor => throw _privateConstructorUsedError;
+  String get cbjDeviceVendor => throw _privateConstructorUsedError;
   String? get deviceVendor => throw _privateConstructorUsedError;
   String? get deviceNetworkLastUpdate => throw _privateConstructorUsedError;
   String? get powerConsumption => throw _privateConstructorUsedError;
@@ -83,7 +83,7 @@ abstract class $GenericSmartTypeNotSupportedDeviceDtosCopyWith<$Res> {
       String? senderId,
       String? entityTypes,
       String? compUuid,
-      String? cbjDeviceVendor,
+      String cbjDeviceVendor,
       String? deviceVendor,
       String? deviceNetworkLastUpdate,
       String? powerConsumption,
@@ -130,7 +130,7 @@ class _$GenericSmartTypeNotSupportedDeviceDtosCopyWithImpl<$Res,
     Object? senderId = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
-    Object? cbjDeviceVendor = freezed,
+    Object? cbjDeviceVendor = null,
     Object? deviceVendor = freezed,
     Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
@@ -196,10 +196,10 @@ class _$GenericSmartTypeNotSupportedDeviceDtosCopyWithImpl<$Res,
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
-      cbjDeviceVendor: freezed == cbjDeviceVendor
+      cbjDeviceVendor: null == cbjDeviceVendor
           ? _value.cbjDeviceVendor
           : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
@@ -302,7 +302,7 @@ abstract class _$$GenericSmartTypeNotSupportedDeviceDtosImplCopyWith<$Res>
       String? senderId,
       String? entityTypes,
       String? compUuid,
-      String? cbjDeviceVendor,
+      String cbjDeviceVendor,
       String? deviceVendor,
       String? deviceNetworkLastUpdate,
       String? powerConsumption,
@@ -348,7 +348,7 @@ class __$$GenericSmartTypeNotSupportedDeviceDtosImplCopyWithImpl<$Res>
     Object? senderId = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
-    Object? cbjDeviceVendor = freezed,
+    Object? cbjDeviceVendor = null,
     Object? deviceVendor = freezed,
     Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
@@ -414,10 +414,10 @@ class __$$GenericSmartTypeNotSupportedDeviceDtosImplCopyWithImpl<$Res>
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
-      cbjDeviceVendor: freezed == cbjDeviceVendor
+      cbjDeviceVendor: null == cbjDeviceVendor
           ? _value.cbjDeviceVendor
           : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
@@ -565,7 +565,7 @@ class _$GenericSmartTypeNotSupportedDeviceDtosImpl
   @override
   final String? compUuid;
   @override
-  final String? cbjDeviceVendor;
+  final String cbjDeviceVendor;
   @override
   final String? deviceVendor;
   @override
@@ -749,7 +749,7 @@ abstract class _GenericSmartTypeNotSupportedDeviceDtos
           required final String? senderId,
           required final String? entityTypes,
           required final String? compUuid,
-          required final String? cbjDeviceVendor,
+          required final String cbjDeviceVendor,
           required final String? deviceVendor,
           required final String? deviceNetworkLastUpdate,
           required final String? powerConsumption,
@@ -799,7 +799,7 @@ abstract class _GenericSmartTypeNotSupportedDeviceDtos
   @override
   String? get compUuid;
   @override
-  String? get cbjDeviceVendor;
+  String get cbjDeviceVendor;
   @override
   String? get deviceVendor;
   @override

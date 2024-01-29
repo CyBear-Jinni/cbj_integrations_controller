@@ -41,9 +41,7 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
     required super.lightBrightness,
     required this.philipsHueApiLight,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor(
-            VendorsAndServices.philipsHue.toString(),
-          ),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.philipsHue),
         );
 
   factory PhilipsHueE26Entity.fromGeneric(
@@ -76,8 +74,7 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
       devicesMacAddress: entity.devicesMacAddress,
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          entity.lastResponseFromDeviceTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       lightSwitchState: entity.lightSwitchState,
       deviceCbjUniqueId: entity.deviceCbjUniqueId,
       lightBrightness: entity.lightBrightness,

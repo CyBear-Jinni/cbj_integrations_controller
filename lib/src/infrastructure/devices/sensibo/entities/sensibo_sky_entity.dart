@@ -41,7 +41,7 @@ class SensiboSkyEntity extends GenericAcDE {
     required super.fanLevel,
     required super.light,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.sensibo),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.sensibo),
         );
 
   @override

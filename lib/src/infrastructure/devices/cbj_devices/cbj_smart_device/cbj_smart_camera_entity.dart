@@ -38,9 +38,8 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
     required super.deviceCbjUniqueId,
     required super.securityCameraSuspendState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor(
-            VendorsAndServices.cyBearJinniAppSmartEntity.toString(),
-          ),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.cyBearJinniAppSmartEntity),
         );
 
   factory CbjSecurityCameraEntity.fromGeneric(
@@ -73,8 +72,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
       devicesMacAddress: entity.devicesMacAddress,
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          entity.lastResponseFromDeviceTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       deviceCbjUniqueId: entity.deviceCbjUniqueId,
       securityCameraSuspendState: entity.securityCameraSuspendState,
     );

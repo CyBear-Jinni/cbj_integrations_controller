@@ -47,7 +47,7 @@
 //     required super.deviceCbjUniqueId,
 //     required super.lightSwitchState,
 //   }) : super(
-//           cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.tasmota),
+//           cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.tasmota),
 //         );
 
 //   factory TasmotaIpLedEntity.fromGeneric(GenericLightDE genericDevice) {

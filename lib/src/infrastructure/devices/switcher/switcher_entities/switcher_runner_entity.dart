@@ -41,7 +41,7 @@ class SwitcherRunnerEntity extends GenericBlindsDE {
     required super.devicePort,
   }) : super(
           cbjDeviceVendor:
-              CbjDeviceVendor.vendor(VendorsAndServices.switcherSmartHome),
+              CbjDeviceVendor(VendorsAndServices.switcherSmartHome),
         ) {
     switcherObject = SwitcherApiObject(
       deviceType: SwitcherDevicesTypes.switcherRunner,
@@ -82,8 +82,7 @@ class SwitcherRunnerEntity extends GenericBlindsDE {
       devicesMacAddress: entity.devicesMacAddress,
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          entity.lastResponseFromDeviceTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       deviceCbjUniqueId: entity.deviceCbjUniqueId,
       blindsSwitchState: entity.blindsSwitchState,
     );

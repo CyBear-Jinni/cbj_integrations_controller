@@ -46,9 +46,7 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
     required super.lightBrightness,
     required super.colorMode,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor(
-            VendorsAndServices.xiaomi.toString(),
-          ),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.xiaomi),
         );
 
   factory XiaomiIoGpx4021GlEntity.fromGeneric(

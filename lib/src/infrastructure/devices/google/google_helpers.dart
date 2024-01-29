@@ -10,7 +10,8 @@ class GoogleHelpers {
   static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
     DeviceEntityBase entity,
   ) async {
-    final String deviceCbjUniqueId = entity.devicesMacAddress.getOrCrash()!;
+    final String deviceCbjUniqueId = entity.devicesMacAddress.getOrCrash() ??
+        entity.deviceMdns.getOrCrash()!;
     String name;
     final String? deviceMdns = entity.deviceMdns.getOrCrash();
     final String? srvTarget = entity.srvTarget.getOrCrash();
@@ -25,7 +26,7 @@ class GoogleHelpers {
     final ChromeCastEntity googleDE = ChromeCastEntity(
       uniqueId: entity.uniqueId,
       entityUniqueId: EntityUniqueId(deviceMdns),
-      cbjEntityName: CbjEntityName(name),
+      cbjEntityName: CbjEntityName(value: name),
       entityOriginalName: entity.entityOriginalName,
       deviceOriginalName: entity.deviceOriginalName,
       entityStateGRPC: EntityState(EntityStateGRPC.ack),

@@ -93,7 +93,7 @@ class ShellyHelpers {
           devicePort: entity.devicePort,
           deviceUniqueId: entity.deviceUniqueId,
           deviceHostName: entity.deviceHostName,
-          devicesMacAddress: DevicesMacAddress(mac),
+          devicesMacAddress: DevicesMacAddress(value: mac),
           entityKey: entity.entityKey,
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
@@ -164,7 +164,7 @@ class ShellyHelpers {
           devicePort: entity.devicePort,
           deviceUniqueId: entity.deviceUniqueId,
           deviceHostName: entity.deviceHostName,
-          devicesMacAddress: DevicesMacAddress(mac),
+          devicesMacAddress: DevicesMacAddress(value: mac),
           entityKey: entity.entityKey,
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
@@ -218,7 +218,7 @@ class ShellyHelpers {
           devicePort: entity.devicePort,
           deviceUniqueId: entity.deviceUniqueId,
           deviceHostName: entity.deviceHostName,
-          devicesMacAddress: DevicesMacAddress(mac),
+          devicesMacAddress: DevicesMacAddress(value: mac),
           entityKey: entity.entityKey,
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:

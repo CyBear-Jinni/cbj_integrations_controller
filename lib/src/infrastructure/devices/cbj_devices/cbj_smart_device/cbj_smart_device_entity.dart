@@ -39,9 +39,8 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
     required super.smartComputerShutDownState,
     required super.smartComputerSuspendState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor(
-            VendorsAndServices.cyBearJinniAppSmartEntity.toString(),
-          ),
+          cbjDeviceVendor:
+              CbjDeviceVendor(VendorsAndServices.cyBearJinniAppSmartEntity),
         );
 
   factory CbjSmartComputerEntity.fromGeneric(
@@ -74,8 +73,7 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
       devicesMacAddress: entity.devicesMacAddress,
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          entity.lastResponseFromDeviceTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       deviceCbjUniqueId: entity.deviceCbjUniqueId,
       smartComputerShutDownState: entity.smartComputerShutDownState,
       smartComputerSuspendState: entity.smartComputerSuspendState,

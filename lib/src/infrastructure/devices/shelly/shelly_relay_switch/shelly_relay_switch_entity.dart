@@ -41,7 +41,7 @@ class ShellyRelaySwitchEntity extends GenericSwitchDE {
     required super.deviceCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.shelly),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.shelly),
         ) {
     shellyRelaySwitch = ShellyApiRelaySwitch(
       lastKnownIp: deviceLastKnownIp.getOrCrash()!,

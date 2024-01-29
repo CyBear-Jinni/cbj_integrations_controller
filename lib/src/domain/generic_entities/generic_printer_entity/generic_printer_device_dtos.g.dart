@@ -22,7 +22,7 @@ _$GenericPrinterDeviceDtosImpl _$$GenericPrinterDeviceDtosImplFromJson(
       lastKnownIp: json['lastKnownIp'] as String?,
       entityTypes: json['entityTypes'] as String?,
       compUuid: json['compUuid'] as String?,
-      cbjDeviceVendor: json['cbjDeviceVendor'] as String?,
+      cbjDeviceVendor: json['cbjDeviceVendor'] as String,
       deviceVendor: json['deviceVendor'] as String?,
       deviceNetworkLastUpdate: json['deviceNetworkLastUpdate'] as String?,
       powerConsumption: json['powerConsumption'] as String?,
