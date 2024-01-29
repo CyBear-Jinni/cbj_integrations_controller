@@ -356,10 +356,6 @@ class DeviceMdns extends ValueObjectCore<String?> {
 
   const DeviceMdns._(this.value);
 
-  String? get shortForm => value.isLeft()
-      ? null
-      : '${value.getOrElse(() => '')!.split('.').first}.local';
-
   @override
   final Either<CoreFailure<String?>, String?> value;
 }

@@ -83,9 +83,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
   Future asyncConstactor() async {
     final String? srvTargetTemp = srvTarget.getOrCrash();
 
-    if (srvTargetTemp != null &&
-        srvTargetTemp.isNotEmpty &&
-        !Platform.isAndroid) {
+    if (srvTargetTemp != null && srvTargetTemp.isNotEmpty) {
       final String address =
           (await InternetAddress.lookup(srvTargetTemp)).first.address;
       if (address.isNotEmpty) {
