@@ -17,9 +17,6 @@ abstract class IBindingCbjRepository {
     return _instance ??= _BindingCbjRepository();
   }
 
-  /// Setting up all bindings from db
-  Future setUpAllFromDb();
-
   Future<Set<BindingCbjEntity>> getAllBindingsAsList();
 
   Future<Map<String, BindingCbjEntity>> getAllBindingsAsMap();
@@ -41,8 +38,6 @@ abstract class IBindingCbjRepository {
   Future<Either<BindingCbjFailure, Unit>> addNewBinding(
     BindingCbjEntity bindingCbj,
   );
-
-  Future<Either<LocalDbFailures, Unit>> saveAndActivateBindingToDb();
 
   Future<bool> activateBinding(
     BindingCbjEntity bindingCbj,

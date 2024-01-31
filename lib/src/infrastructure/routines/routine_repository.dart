@@ -5,17 +5,6 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
   final Map<String, RoutineCbjEntity> _allRoutines = {};
 
   @override
-  Future setUpAllFromDb() async {
-    await IDbRepository.instance.getRoutinesFromDb().then((value) {
-      value.fold((l) => null, (r) async {
-        for (final element in r) {
-          await addNewRoutine(element);
-        }
-      });
-    });
-  }
-
-  @override
   Future<Set<RoutineCbjEntity>> getAllRoutinesAsList() async {
     return _allRoutines.values.toSet();
   }
@@ -23,13 +12,6 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
   @override
   Future<Map<String, RoutineCbjEntity>> getAllRoutinesAsMap() async {
     return _allRoutines;
-  }
-
-  @override
-  Future<Either<LocalDbFailures, Unit>> saveAndActivateRoutineToDb() async {
-    return IDbRepository.instance.saveRoutines(
-      routineList: Set<RoutineCbjEntity>.from(_allRoutines.values),
-    );
   }
 
   @override
@@ -61,17 +43,6 @@ class _RoutineCbjRepository implements IRoutineCbjRepository {
       }
       return left(const RoutineCbjFailure.unableToUpdate());
     }
-    return right(unit);
-  }
-
-  @override
-  Future<Either<RoutineCbjFailure, Unit>> addNewRoutineAndSaveItToLocalDb(
-    RoutineCbjEntity routineCbj,
-  ) async {
-    await addNewRoutine(routineCbj);
-    // await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
-    await saveAndActivateRoutineToDb();
-
     return right(unit);
   }
 

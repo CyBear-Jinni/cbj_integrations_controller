@@ -123,7 +123,7 @@ class NetworkUtilities implements INetworkUtilities {
           continue;
         }
 
-        final String? deviceIp = await SystemCommandsManager()
+        final String? deviceIp = await SystemCommandsBaseClassD.instance
             .getIpFromMdnsName(srvTarget, mdnsInfo!.mdnsServiceType);
         if (deviceIp == null) {
           continue;

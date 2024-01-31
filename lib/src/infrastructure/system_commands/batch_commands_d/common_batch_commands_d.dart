@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_base_class_d.dart';
 
-class CommonBatchCommandsD implements SystemCommandsBaseClassD {
+class CommonBatchCommandsD extends SystemCommandsBaseClassD {
   String? currentUserName;
   String? currentDriveLetter;
 
@@ -118,9 +118,7 @@ class CommonBatchCommandsD implements SystemCommandsBaseClassD {
   }
 
   @override
-  Future<String> getLocalDbPath(
-    Future<String?> currentUserName,
-  ) async {
+  Future<String> getLocalDbPath() async {
     final String cbjFullPath = (await getCurrentDriveLetter()) +
         r'\Users\' +
         (await getCurrentUserName()) +
@@ -129,19 +127,14 @@ class CommonBatchCommandsD implements SystemCommandsBaseClassD {
   }
 
   @override
-  Future<String> getProjectFilesLocation() async {
-    return Directory.current.path;
-  }
+  Future<String> getProjectFilesLocation() async => Directory.current.path;
 
   @override
-  Future<String?> suspendComputer() {
-    // TODO: implement goToSleep
-    throw UnimplementedError();
-  }
+  Future<String?> suspendComputer() async => null;
 
   @override
-  Future<String?> shutdownComputer() {
-    // TODO: implement shutdownComputer
-    throw UnimplementedError();
-  }
+  Future<String?> shutdownComputer() async => null;
+
+  @override
+  Future<String?> getRaspberryPiDeviceVersion() async => null;
 }

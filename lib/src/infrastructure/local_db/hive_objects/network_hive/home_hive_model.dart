@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
 
-part 'areas_hive_model.g.dart';
+part 'home_hive_model.g.dart';
 
-@HiveType(typeId: 3)
-class AreasHiveModel extends HiveObject {
+@HiveType(typeId: 8)
+class HomeHiveModel extends HiveObject {
   @HiveField(0)
   late String areaUniqueId;
   @HiveField(1)

@@ -13,17 +13,6 @@ class AreaTypeWithEntitiesTypePreset {
     required EntityTypes entityType,
     required AreaPurposesTypes areaPurposeType,
   }) {
-    // final Either<LocalDbFailures, DeviceEntityBase> dTemp =
-    //     await ISavedDevicesRepo.instance.getDeviceById(entityId, entityType,);
-    // if (dTemp.isLeft()) {
-    //   return left(const SceneCbjFailure.unexpected());
-    // }
-    // final DeviceEntityBase deviceEntity = DeviceEntityNotAbstract();
-
-    // dTemp.fold((l) => null, (r) {
-    // deviceEntity = r;
-    // });
-
     switch (areaPurposeType) {
       case AreaPurposesTypes.attic:
         // TODO: Handle this case.

@@ -5,17 +5,6 @@ class _BindingCbjRepository implements IBindingCbjRepository {
   final Map<String, BindingCbjEntity> _allBindings = {};
 
   @override
-  Future setUpAllFromDb() async {
-    await IDbRepository.instance.getBindingsFromDb().then((value) {
-      value.fold((l) => null, (r) async {
-        for (final element in r) {
-          await addNewBinding(element);
-        }
-      });
-    });
-  }
-
-  @override
   Future<Set<BindingCbjEntity>> getAllBindingsAsList() async {
     return _allBindings.values.toSet();
   }
@@ -23,13 +12,6 @@ class _BindingCbjRepository implements IBindingCbjRepository {
   @override
   Future<Map<String, BindingCbjEntity>> getAllBindingsAsMap() async {
     return _allBindings;
-  }
-
-  @override
-  Future<Either<LocalDbFailures, Unit>> saveAndActivateBindingToDb() async {
-    return IDbRepository.instance.saveBindings(
-      bindingList: Set<BindingCbjEntity>.from(_allBindings.values),
-    );
   }
 
   @override
@@ -49,9 +31,6 @@ class _BindingCbjRepository implements IBindingCbjRepository {
       /// If it is new binding
       _allBindings[entityId] = tempBindingCbj;
 
-      // await ISavedDevicesRepo.instance.saveAndActivateSmartDevicesToDb();
-      // ISavedAreasRepo.instance
-      // .addBindingToAreaDiscoveredIfNotExist(tempBindingCbj);
       final String bindingNodeRedFlowId =
           await NodeRedRepository().createNewNodeRedBinding(tempBindingCbj);
       if (bindingNodeRedFlowId.isNotEmpty) {
@@ -59,7 +38,6 @@ class _BindingCbjRepository implements IBindingCbjRepository {
           nodeRedFlowId: BindingCbjNodeRedFlowId(bindingNodeRedFlowId),
         );
       }
-      await saveAndActivateBindingToDb();
     }
     return right(unit);
   }

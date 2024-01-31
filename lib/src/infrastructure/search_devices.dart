@@ -8,7 +8,7 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_
 import 'package:cbj_integrations_controller/src/domain/i_network_utilities.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/shared_variables.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_manager_d.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_base_class_d.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector_conjecture.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
@@ -45,7 +45,8 @@ class SearchDevices {
   Future startSearchIsolate(
     INetworkUtilities? networkUtilitiesType,
   ) async {
-    final String projectPath = await SystemCommandsManager().getLocalDbPath();
+    final String projectPath =
+        await SystemCommandsBaseClassD.instance.getLocalDbPath();
     final bool isSnap =
         SharedVariables().getProjectRootDirectoryPath()?.contains('snap') ??
             false;

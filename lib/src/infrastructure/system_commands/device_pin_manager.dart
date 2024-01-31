@@ -1,6 +1,6 @@
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/system_commands/computer_type_utility.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_manager_d.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_base_class_d.dart';
 
 ///  This class save all the configuration of the pins per device,
 ///  every device have different pin for each task,
@@ -34,7 +34,8 @@ class DevicePinListManager extends DevicePinListManagerAbstract {
     // TODO: check if this can be done using
     // https://pub.dev/packages/flutter_gpiod or by using
     // https://pub.dev/packages/linux_system_info
-    final SystemCommandsManager systemCommandsManager = SystemCommandsManager();
+    final SystemCommandsBaseClassD systemCommandsManager =
+        SystemCommandsBaseClassD.instance;
     final String etcReleaseOutput =
         await systemCommandsManager.getAllEtcReleaseFilesText();
 

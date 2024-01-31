@@ -45,18 +45,6 @@ class VendorsConnectorConjecture {
   static final VendorsConnectorConjecture _instance =
       VendorsConnectorConjecture._singletonConstructor();
 
-  // DeviceEntityBase addDiscoveredDeviceToHub(
-  //   DeviceEntityBase deviceEntity,
-  // ) {
-  //   final DeviceEntityBase deviceEntityGotSaved =
-  //       ISavedDevicesRepo.instance.addOrUpdateDevice(deviceEntity);
-
-  //   IMqttServerRepository.instance
-  //       .postSmartDeviceToAppMqtt(entityFromTheHub: deviceEntityGotSaved);
-
-  //   return deviceEntityGotSaved;
-  // }
-
   HashMap<String, VendorsAndServices> entitiesToVendor = HashMap();
 
   List<VendorEntityInformation> getVendors() =>

@@ -7,6 +7,7 @@ import 'package:cbj_integrations_controller/src/domain/core/request_action_objec
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/vendor_entity_information.dart';
+import 'package:cbj_integrations_controller/src/domain/i_local_db_repository.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/vendor_login_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/automations_service.dart';
@@ -24,6 +25,10 @@ class IcSynchronizer {
 
   static final IcSynchronizer _instance =
       IcSynchronizer._singletonConstractor();
+
+  static Future initializeIntegrationsController() async {
+    await IDbRepository.instance.asyncConstractor();
+  }
 
   //  -------------------- EntitiesService --------------------
 

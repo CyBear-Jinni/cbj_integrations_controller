@@ -1,30 +1,31 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'routines_hive_model.dart';
+part of 'network_hive_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class RoutinesHiveModelAdapter extends TypeAdapter<RoutinesHiveModel> {
+class NetworkHiveModelAdapter extends TypeAdapter<NetworkHiveModel> {
   @override
-  final int typeId = 6;
+  final int typeId = 8;
 
   @override
-  RoutinesHiveModel read(BinaryReader reader) {
+  NetworkHiveModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return RoutinesHiveModel()..routinesStringJson = fields[0] as String;
+    return NetworkHiveModel()
+      ..networks = (fields[0] as List).cast<NetworkObject>();
   }
 
   @override
-  void write(BinaryWriter writer, RoutinesHiveModel obj) {
+  void write(BinaryWriter writer, NetworkHiveModel obj) {
     writer
       ..writeByte(1)
       ..writeByte(0)
-      ..write(obj.routinesStringJson);
+      ..write(obj.networks);
   }
 
   @override
@@ -33,7 +34,7 @@ class RoutinesHiveModelAdapter extends TypeAdapter<RoutinesHiveModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is RoutinesHiveModelAdapter &&
+      other is NetworkHiveModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
