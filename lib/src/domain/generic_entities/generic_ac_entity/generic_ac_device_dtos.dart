@@ -43,7 +43,7 @@ abstract class GenericAcDeviceDtos
     required String? entityKey,
     required String? requestTimeStamp,
     required String? lastResponseFromDeviceTimeStamp,
-    required String? deviceCbjUniqueId,
+    required String? entitiyCbjUniqueId,
     required String? deviceDtoClass,
     required String? stateMassage,
     required String? mode,
@@ -88,7 +88,7 @@ abstract class GenericAcDeviceDtos
       requestTimeStamp: deviceDe.requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           deviceDe.lastResponseFromDeviceTimeStamp.getOrCrash(),
-      deviceCbjUniqueId: deviceDe.deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: deviceDe.entitiyCbjUniqueId.getOrCrash(),
       mode: deviceDe.mode.getOrCrash(),
       fanLevel: deviceDe.fanLevel.getOrCrash(),
       light: deviceDe.light.getOrCrash(),
@@ -141,7 +141,7 @@ abstract class GenericAcDeviceDtos
       requestTimeStamp: RequestTimeStamp(requestTimeStamp),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp(lastResponseFromDeviceTimeStamp),
-      deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId!),
+      entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId!),
       mode: GenericAcMode(mode),
       fanLevel: GenericAcFanLevel(fanLevel),
       light: GenericAcLight(light),

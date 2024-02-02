@@ -42,7 +42,7 @@ abstract class GenericRgbwLightDeviceDtos
     required String? entityKey,
     required String? requestTimeStamp,
     required String? lastResponseFromDeviceTimeStamp,
-    required String? deviceCbjUniqueId,
+    required String? entitiyCbjUniqueId,
     required String? lightSwitchState,
     required String? lightColorTemperature,
     required String? lightBrightness,
@@ -101,7 +101,7 @@ abstract class GenericRgbwLightDeviceDtos
       lightColorHue: deviceDe.lightColorHue.getOrCrash(),
       lightColorSaturation: deviceDe.lightColorSaturation.getOrCrash(),
       lightColorValue: deviceDe.lightColorValue.getOrCrash(),
-      deviceCbjUniqueId: deviceDe.deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: deviceDe.entitiyCbjUniqueId.getOrCrash(),
       lightMode: deviceDe.colorMode.getOrCrash(),
     );
   }
@@ -129,7 +129,9 @@ abstract class GenericRgbwLightDeviceDtos
       senderDeviceOs: DeviceSenderDeviceOs(senderDeviceOs),
       senderDeviceModel: DeviceSenderDeviceModel(senderDeviceModel),
       senderId: DeviceSenderId.fromUniqueString(senderId),
-          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServicesExtension.fromString(cbjDeviceVendor)),
+      cbjDeviceVendor: CbjDeviceVendor(
+        VendorsAndServicesExtension.fromString(cbjDeviceVendor),
+      ),
       deviceVendor: DeviceVendor(value: deviceVendor),
       deviceNetworkLastUpdate:
           DeviceNetworkLastUpdate(value: deviceNetworkLastUpdate),
@@ -158,7 +160,7 @@ abstract class GenericRgbwLightDeviceDtos
       requestTimeStamp: RequestTimeStamp(requestTimeStamp),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp(lastResponseFromDeviceTimeStamp),
-      deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId!),
+      entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId!),
       colorMode:
           GenericLightModeState(LightModeTypesExtension.fromString(lightMode)),
     );

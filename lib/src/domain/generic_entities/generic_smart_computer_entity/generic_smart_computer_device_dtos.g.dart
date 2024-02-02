@@ -38,7 +38,7 @@ _$GenericSmartComputerDeviceDtosImpl
           requestTimeStamp: json['requestTimeStamp'] as String?,
           lastResponseFromDeviceTimeStamp:
               json['lastResponseFromDeviceTimeStamp'] as String?,
-          deviceCbjUniqueId: json['deviceCbjUniqueId'] as String?,
+          entitiyCbjUniqueId: json['entitiyCbjUniqueId'] as String?,
           smartComputerSuspendState:
               json['smartComputerSuspendState'] as String?,
           smartComputerShutDownState:
@@ -79,7 +79,7 @@ Map<String, dynamic> _$$GenericSmartComputerDeviceDtosImplToJson(
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':
           instance.lastResponseFromDeviceTimeStamp,
-      'deviceCbjUniqueId': instance.deviceCbjUniqueId,
+      'entitiyCbjUniqueId': instance.entitiyCbjUniqueId,
       'smartComputerSuspendState': instance.smartComputerSuspendState,
       'smartComputerShutDownState': instance.smartComputerShutDownState,
       'deviceDtoClass': instance.deviceDtoClass,

@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:cbj_integrations_controller/integrations_controller.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/area_type_with_device_type_preset.dart';
@@ -17,8 +18,37 @@ class AutomationService {
 
   HashMap<String, SceneCbjEntity> getScenes() => _scenes;
 
-  void addScene(SceneCbjEntity scene) =>
+  void addScene(SceneCbjEntity scene) {
+    _scenes.addEntries([MapEntry(scene.uniqueId.getOrCrash(), scene)]);
+    saveScenesToDb();
+  }
+
+  void loadFromDb(String homeId) {
+    loadScenesFromDb(homeId);
+  }
+
+  void loadScenesFromDb(String homeId) {
+    final List<String> scenesString = IDbRepository.instance.getScenes(homeId);
+    for (final String sceneString in scenesString) {
+      final SceneCbjEntity scene = SceneCbjDtos.fromJson(
+        jsonDecode(sceneString) as Map<String, dynamic>,
+      ).toDomain();
       _scenes.addEntries([MapEntry(scene.uniqueId.getOrCrash(), scene)]);
+    }
+  }
+
+  void saveScenesToDb() {
+    final List<String> automationsJsonString = [];
+
+    for (final SceneCbjEntity scene in _scenes.values) {
+      final String sceneAsJsonString =
+          jsonEncode(scene.toInfrastructure().toJson());
+      automationsJsonString.add(sceneAsJsonString);
+    }
+    final String homeBoxName = NetworksManager().currentNetwork!.uniqueId;
+
+    IDbRepository.instance.saveScenes(homeBoxName, automationsJsonString);
+  }
 
   Future activateScene(String id) async {
     final SceneCbjEntity? scene = _scenes[id];

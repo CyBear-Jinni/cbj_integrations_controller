@@ -43,7 +43,7 @@ abstract class GenericSmartTvDeviceDtos
     required String? entityKey,
     required String? requestTimeStamp,
     required String? lastResponseFromDeviceTimeStamp,
-    required String? deviceCbjUniqueId,
+    required String? entitiyCbjUniqueId,
     required String? pausePlayState,
     required String? volume,
     String? deviceDtoClass,
@@ -92,7 +92,7 @@ abstract class GenericSmartTvDeviceDtos
           deviceDe.lastResponseFromDeviceTimeStamp.getOrCrash(),
       pausePlayState: deviceDe.pausePlayState?.getOrCrash(),
       volume: deviceDe.volume?.getOrCrash(),
-      deviceCbjUniqueId: deviceDe.deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: deviceDe.entitiyCbjUniqueId.getOrCrash(),
     );
   }
 
@@ -119,7 +119,9 @@ abstract class GenericSmartTvDeviceDtos
       senderDeviceOs: DeviceSenderDeviceOs(senderDeviceOs),
       senderDeviceModel: DeviceSenderDeviceModel(senderDeviceModel),
       senderId: DeviceSenderId.fromUniqueString(senderId),
-           cbjDeviceVendor: CbjDeviceVendor(VendorsAndServicesExtension.fromString(cbjDeviceVendor)),
+      cbjDeviceVendor: CbjDeviceVendor(
+        VendorsAndServicesExtension.fromString(cbjDeviceVendor),
+      ),
       deviceVendor: DeviceVendor(value: deviceVendor),
       deviceNetworkLastUpdate:
           DeviceNetworkLastUpdate(value: deviceNetworkLastUpdate),
@@ -144,7 +146,7 @@ abstract class GenericSmartTvDeviceDtos
       requestTimeStamp: RequestTimeStamp(requestTimeStamp),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp(lastResponseFromDeviceTimeStamp),
-      deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId!),
+      entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId!),
     );
   }
 }

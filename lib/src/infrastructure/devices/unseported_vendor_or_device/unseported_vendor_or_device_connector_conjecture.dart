@@ -27,6 +27,6 @@ class UnseportedVendorOrDeviceConnectorConjecture
   ) async =>
       HashMap()
         ..addEntries([
-          MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity),
+          MapEntry(entity.entitiyCbjUniqueId.getOrCrash(), entity),
         ]);
 }

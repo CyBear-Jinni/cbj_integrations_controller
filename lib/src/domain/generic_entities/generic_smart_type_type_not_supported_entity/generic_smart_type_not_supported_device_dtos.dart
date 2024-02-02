@@ -41,7 +41,7 @@ abstract class GenericSmartTypeNotSupportedDeviceDtos
     required String? entityKey,
     required String? requestTimeStamp,
     required String? lastResponseFromDeviceTimeStamp,
-    required String? deviceCbjUniqueId,
+    required String? entitiyCbjUniqueId,
     String? deviceDtoClass,
     String? stateMassage,
 
@@ -85,7 +85,7 @@ abstract class GenericSmartTypeNotSupportedDeviceDtos
       requestTimeStamp: deviceDe.requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           deviceDe.lastResponseFromDeviceTimeStamp.getOrCrash(),
-      deviceCbjUniqueId: deviceDe.deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: deviceDe.entitiyCbjUniqueId.getOrCrash(),
     );
   }
 
@@ -115,7 +115,9 @@ abstract class GenericSmartTypeNotSupportedDeviceDtos
       senderDeviceOs: DeviceSenderDeviceOs(senderDeviceOs),
       senderDeviceModel: DeviceSenderDeviceModel(senderDeviceModel),
       senderId: DeviceSenderId.fromUniqueString(senderId),
-           cbjDeviceVendor: CbjDeviceVendor(VendorsAndServicesExtension.fromString(cbjDeviceVendor)),
+      cbjDeviceVendor: CbjDeviceVendor(
+        VendorsAndServicesExtension.fromString(cbjDeviceVendor),
+      ),
       deviceVendor: DeviceVendor(value: deviceVendor),
       deviceNetworkLastUpdate:
           DeviceNetworkLastUpdate(value: deviceNetworkLastUpdate),
@@ -135,7 +137,7 @@ abstract class GenericSmartTypeNotSupportedDeviceDtos
       requestTimeStamp: RequestTimeStamp(requestTimeStamp),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp(lastResponseFromDeviceTimeStamp),
-      deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId!),
+      entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId!),
     );
   }
 }

@@ -188,18 +188,18 @@ class VendorsConnectorConjecture {
   Future foundEntityOfVendor(
     VendorConnectorConjectureService vendorConnectorConjectureService,
     DeviceEntityBase entity,
-    String deviceCbjUniqueId,
+    String entitiyCbjUniqueId,
   ) async {
     HashMap<String, DeviceEntityBase>? handeldEntities =
         await vendorConnectorConjectureService.foundEntity(entity);
 
     if (handeldEntities == null) {
-      icLogger.i('Found unseported device $deviceCbjUniqueId');
+      icLogger.i('Found unseported device $entitiyCbjUniqueId');
       handeldEntities = handeldEntities =
           await UnseportedVendorOrDeviceConnectorConjecture().foundEntity(
         entity
-          ..deviceCbjUniqueId =
-              CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          ..entitiyCbjUniqueId =
+              CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
       );
     }
 

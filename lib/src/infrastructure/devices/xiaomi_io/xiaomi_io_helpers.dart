@@ -46,7 +46,7 @@ class XiaomiIoHelpers {
       powerConsumption: DevicePowerConsumption('0'),
       deviceUniqueId: DeviceUniqueId(xiaomiIoDevice.id.toString()),
       devicePort: DevicePort(value: xiaomiIoDevice.port.toString()),
-      deviceCbjUniqueId: CoreUniqueId(),
+      entitiyCbjUniqueId: CoreUniqueId(),
       lightSwitchState:
           GenericRgbwLightSwitchState(xiaomiIoDevice.powered.toString()),
       lightColorTemperature: GenericRgbwLightColorTemperature(

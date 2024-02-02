@@ -37,7 +37,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.smartTvSwitchState,
     super.pausePlayState,
     super.volume,
@@ -76,7 +76,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
       smartTvSwitchState: entity.smartTvSwitchState,
     );
   }

@@ -50,7 +50,7 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
             await VendorsConnectorConjecture().foundEntityOfVendor(
               this,
               entity,
-              entity.deviceCbjUniqueId.getOrCrash(),
+              entity.entitiyCbjUniqueId.getOrCrash(),
             );
           }
         }
@@ -66,5 +66,5 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
     DeviceEntityBase entity,
   ) async =>
-      HashMap()..addEntries([MapEntry(entity.getCbjDeviceId, entity)]);
+      HashMap()..addEntries([MapEntry(entity.getCbjEntityId, entity)]);
 }

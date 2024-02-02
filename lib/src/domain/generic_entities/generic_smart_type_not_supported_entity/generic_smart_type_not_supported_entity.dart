@@ -40,7 +40,7 @@ class GenericSmartTypeNotSupportedDE extends DeviceEntityBase {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.undefined),
         );
@@ -76,7 +76,7 @@ class GenericSmartTypeNotSupportedDE extends DeviceEntityBase {
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-        deviceCbjUniqueId: CoreUniqueId(),
+        entitiyCbjUniqueId: CoreUniqueId(),
       );
 
   //
@@ -140,7 +140,7 @@ class GenericSmartTypeNotSupportedDE extends DeviceEntityBase {
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
-      deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: entitiyCbjUniqueId.getOrCrash(),
     );
   }
 

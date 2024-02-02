@@ -14,10 +14,11 @@ class EwelinkHelpers {
     final HashMap<String, DeviceEntityBase> addEntities = HashMap();
 
     DeviceEntityBase? tempDevice;
-    String? deviceCbjUniqueId;
+    String? entitiyCbjUniqueId;
 
     if (ewelinkDevice.type == 'a9') {
-      deviceCbjUniqueId = '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}';
+      entitiyCbjUniqueId =
+          '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}';
 
       tempDevice = EwelinkSwitchEntity(
         uniqueId: CoreUniqueId(),
@@ -47,7 +48,7 @@ class EwelinkHelpers {
         entityKey: EntityKey('1'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+        entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
         switchState: GenericSwitchSwitchState('off'),
         entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
       );
@@ -78,7 +79,7 @@ class EwelinkHelpers {
         // else {
         //   // Devices without tags at all are legit and will be added only once
         // }
-        deviceCbjUniqueId =
+        entitiyCbjUniqueId =
             '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}-$outletNumber';
 
         tempDevice = EwelinkSwitchEntity(
@@ -119,7 +120,7 @@ class EwelinkHelpers {
           entityKey: EntityKey(outletNumber),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
           switchState:
               GenericSwitchSwitchState(switchParam['switch'] as String),
           entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
@@ -130,8 +131,8 @@ class EwelinkHelpers {
       }
     }
 
-    if (tempDevice != null && deviceCbjUniqueId != null) {
-      addEntities.addEntries([MapEntry(deviceCbjUniqueId, tempDevice)]);
+    if (tempDevice != null && entitiyCbjUniqueId != null) {
+      addEntities.addEntries([MapEntry(entitiyCbjUniqueId, tempDevice)]);
     }
     return addEntities;
   }

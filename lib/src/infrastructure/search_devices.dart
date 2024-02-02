@@ -13,18 +13,20 @@ import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class SendToIsolate {
-  SendToIsolate(
-    this.sendPort,
-    this.projectPath,
-    this.networkUtilitiesType,
-    this.isSnap, {
+  SendToIsolate({
+    required this.sendPort,
+    required this.projectPath,
+    required this.networkUtilitiesType,
+    required this.isSnap,
     this.portByVendor,
+    this.systemCommands,
   });
   bool isSnap;
   SendPort sendPort;
   String projectPath;
   HashMap<VendorsAndServices, List<int>>? portByVendor;
   INetworkUtilities? networkUtilitiesType;
+  SystemCommandsBaseClassD? systemCommands;
 }
 
 class BackFromIsolate {
@@ -42,9 +44,15 @@ class SearchDevices {
 
   List<Isolate> isolates = [];
 
-  Future startSearchIsolate(
+  Future startSearchIsolate({
     INetworkUtilities? networkUtilitiesType,
-  ) async {
+    SystemCommandsBaseClassD? systemCommands,
+  }) async {
+    final INetworkUtilities networkUtilitiesTypeTemp =
+        networkUtilitiesType ?? NetworkUtilities();
+    final SystemCommandsBaseClassD? systemCommandsTemp =
+        systemCommands ?? await setInstanceForDartNative();
+
     final String projectPath =
         await SystemCommandsBaseClassD.instance.getLocalDbPath();
     final bool isSnap =
@@ -54,10 +62,11 @@ class SearchDevices {
     /// For mdns search
     final mdnsReceivePort = ReceivePort();
     SendToIsolate searchDevices = SendToIsolate(
-      mdnsReceivePort.sendPort,
-      projectPath,
-      networkUtilitiesType,
-      isSnap,
+      sendPort: mdnsReceivePort.sendPort,
+      projectPath: projectPath,
+      networkUtilitiesType: networkUtilitiesTypeTemp,
+      isSnap: isSnap,
+      systemCommands: systemCommandsTemp,
     );
     final Isolate mdnsIsolate = await Isolate.spawn(
       _searchAllMdnsDevicesAndSetThemUp,
@@ -80,10 +89,11 @@ class SearchDevices {
       /// For ping search
       final ReceivePort pingReceivePort = ReceivePort();
       searchDevices = SendToIsolate(
-        pingReceivePort.sendPort,
-        projectPath,
-        networkUtilitiesType,
-        isSnap,
+        sendPort: pingReceivePort.sendPort,
+        projectPath: projectPath,
+        networkUtilitiesType: networkUtilitiesTypeTemp,
+        isSnap: isSnap,
+        systemCommands: systemCommandsTemp,
       );
 
       final Isolate pingIsolate = await Isolate.spawn(
@@ -107,11 +117,12 @@ class SearchDevices {
         VendorsConnectorConjecture().portsToScen();
     final ReceivePort portReceivePort = ReceivePort();
     searchDevices = SendToIsolate(
-      portReceivePort.sendPort,
-      projectPath,
-      networkUtilitiesType,
-      isSnap,
+      sendPort: portReceivePort.sendPort,
+      projectPath: projectPath,
+      networkUtilitiesType: networkUtilitiesTypeTemp,
+      isSnap: isSnap,
       portByVendor: ports,
+      systemCommands: systemCommandsTemp,
     );
 
     final Isolate portIsolate = await Isolate.spawn(
@@ -137,7 +148,10 @@ class SearchDevices {
     SendToIsolate sendToIsolate,
   ) async {
     INetworkUtilities.instance = sendToIsolate.networkUtilitiesType;
-
+    if (sendToIsolate.systemCommands == null) {
+      return;
+    }
+    SystemCommandsBaseClassD.instance = sendToIsolate.systemCommands!;
     await INetworkUtilities.instance
         .configureNetworkTools(sendToIsolate.projectPath);
 

@@ -81,7 +81,7 @@ abstract class SystemCommandsBaseClassD {
   }
 }
 
-Future setInstanceForDartNative() async {
+Future<SystemCommandsBaseClassD?> setInstanceForDartNative() async {
   if (Platform.isLinux) {
     icLogger.t('Linux platform detected in SystemCommandsManager');
     SystemCommandsBaseClassD.instance = CommonBashCommandsD();
@@ -97,4 +97,5 @@ Future setInstanceForDartNative() async {
     );
     throw '${Platform.operatingSystem} os is not supported';
   }
+  return null;
 }

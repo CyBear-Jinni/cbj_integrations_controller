@@ -52,7 +52,7 @@ mixin _$GenericSmartPlugDeviceDtos {
   String? get requestTimeStamp => throw _privateConstructorUsedError;
   String? get lastResponseFromDeviceTimeStamp =>
       throw _privateConstructorUsedError;
-  String? get deviceCbjUniqueId => throw _privateConstructorUsedError;
+  String? get entitiyCbjUniqueId => throw _privateConstructorUsedError;
   String? get deviceDtoClass => throw _privateConstructorUsedError;
   String? get stateMassage => throw _privateConstructorUsedError;
 
@@ -99,7 +99,7 @@ abstract class $GenericSmartPlugDeviceDtosCopyWith<$Res> {
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
-      String? deviceCbjUniqueId,
+      String? entitiyCbjUniqueId,
       String? deviceDtoClass,
       String? stateMassage});
 }
@@ -147,7 +147,7 @@ class _$GenericSmartPlugDeviceDtosCopyWithImpl<$Res,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
-    Object? deviceCbjUniqueId = freezed,
+    Object? entitiyCbjUniqueId = freezed,
     Object? deviceDtoClass = freezed,
     Object? stateMassage = freezed,
   }) {
@@ -269,9 +269,9 @@ class _$GenericSmartPlugDeviceDtosCopyWithImpl<$Res,
           ? _value.lastResponseFromDeviceTimeStamp
           : lastResponseFromDeviceTimeStamp // ignore: cast_nullable_to_non_nullable
               as String?,
-      deviceCbjUniqueId: freezed == deviceCbjUniqueId
-          ? _value.deviceCbjUniqueId
-          : deviceCbjUniqueId // ignore: cast_nullable_to_non_nullable
+      entitiyCbjUniqueId: freezed == entitiyCbjUniqueId
+          ? _value.entitiyCbjUniqueId
+          : entitiyCbjUniqueId // ignore: cast_nullable_to_non_nullable
               as String?,
       deviceDtoClass: freezed == deviceDtoClass
           ? _value.deviceDtoClass
@@ -324,7 +324,7 @@ abstract class _$$GenericSmartPlugDeviceDtosImplCopyWith<$Res>
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
-      String? deviceCbjUniqueId,
+      String? entitiyCbjUniqueId,
       String? deviceDtoClass,
       String? stateMassage});
 }
@@ -371,7 +371,7 @@ class __$$GenericSmartPlugDeviceDtosImplCopyWithImpl<$Res>
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
-    Object? deviceCbjUniqueId = freezed,
+    Object? entitiyCbjUniqueId = freezed,
     Object? deviceDtoClass = freezed,
     Object? stateMassage = freezed,
   }) {
@@ -493,9 +493,9 @@ class __$$GenericSmartPlugDeviceDtosImplCopyWithImpl<$Res>
           ? _value.lastResponseFromDeviceTimeStamp
           : lastResponseFromDeviceTimeStamp // ignore: cast_nullable_to_non_nullable
               as String?,
-      deviceCbjUniqueId: freezed == deviceCbjUniqueId
-          ? _value.deviceCbjUniqueId
-          : deviceCbjUniqueId // ignore: cast_nullable_to_non_nullable
+      entitiyCbjUniqueId: freezed == entitiyCbjUniqueId
+          ? _value.entitiyCbjUniqueId
+          : entitiyCbjUniqueId // ignore: cast_nullable_to_non_nullable
               as String?,
       deviceDtoClass: freezed == deviceDtoClass
           ? _value.deviceDtoClass
@@ -542,7 +542,7 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
       required this.entityKey,
       required this.requestTimeStamp,
       required this.lastResponseFromDeviceTimeStamp,
-      required this.deviceCbjUniqueId,
+      required this.entitiyCbjUniqueId,
       this.deviceDtoClass,
       this.stateMassage})
       : super._();
@@ -611,7 +611,7 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
   @override
   final String? lastResponseFromDeviceTimeStamp;
   @override
-  final String? deviceCbjUniqueId;
+  final String? entitiyCbjUniqueId;
   @override
   final String? deviceDtoClass;
   @override
@@ -619,7 +619,7 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
 
   @override
   String toString() {
-    return 'GenericSmartPlugDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, smartPlugState: $smartPlugState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericSmartPlugDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, smartPlugState: $smartPlugState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, entitiyCbjUniqueId: $entitiyCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -687,8 +687,8 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
                     lastResponseFromDeviceTimeStamp) ||
                 other.lastResponseFromDeviceTimeStamp ==
                     lastResponseFromDeviceTimeStamp) &&
-            (identical(other.deviceCbjUniqueId, deviceCbjUniqueId) ||
-                other.deviceCbjUniqueId == deviceCbjUniqueId) &&
+            (identical(other.entitiyCbjUniqueId, entitiyCbjUniqueId) ||
+                other.entitiyCbjUniqueId == entitiyCbjUniqueId) &&
             (identical(other.deviceDtoClass, deviceDtoClass) ||
                 other.deviceDtoClass == deviceDtoClass) &&
             (identical(other.stateMassage, stateMassage) ||
@@ -728,7 +728,7 @@ class _$GenericSmartPlugDeviceDtosImpl extends _GenericSmartPlugDeviceDtos {
         entityKey,
         requestTimeStamp,
         lastResponseFromDeviceTimeStamp,
-        deviceCbjUniqueId,
+        entitiyCbjUniqueId,
         deviceDtoClass,
         stateMassage
       ]);
@@ -779,7 +779,7 @@ abstract class _GenericSmartPlugDeviceDtos extends GenericSmartPlugDeviceDtos {
       required final String? entityKey,
       required final String? requestTimeStamp,
       required final String? lastResponseFromDeviceTimeStamp,
-      required final String? deviceCbjUniqueId,
+      required final String? entitiyCbjUniqueId,
       final String? deviceDtoClass,
       final String? stateMassage}) = _$GenericSmartPlugDeviceDtosImpl;
   _GenericSmartPlugDeviceDtos._() : super._();
@@ -846,7 +846,7 @@ abstract class _GenericSmartPlugDeviceDtos extends GenericSmartPlugDeviceDtos {
   @override
   String? get lastResponseFromDeviceTimeStamp;
   @override
-  String? get deviceCbjUniqueId;
+  String? get entitiyCbjUniqueId;
   @override
   String? get deviceDtoClass;
   @override

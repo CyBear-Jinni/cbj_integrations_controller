@@ -40,7 +40,7 @@ _$GenericDimmableLightDeviceDtosImpl
           requestTimeStamp: json['requestTimeStamp'] as String?,
           lastResponseFromDeviceTimeStamp:
               json['lastResponseFromDeviceTimeStamp'] as String?,
-          deviceCbjUniqueId: json['deviceCbjUniqueId'] as String?,
+          entitiyCbjUniqueId: json['entitiyCbjUniqueId'] as String?,
           deviceDtoClass: json['deviceDtoClass'] as String?,
           stateMassage: json['stateMassage'] as String?,
         );
@@ -79,7 +79,7 @@ Map<String, dynamic> _$$GenericDimmableLightDeviceDtosImplToJson(
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':
           instance.lastResponseFromDeviceTimeStamp,
-      'deviceCbjUniqueId': instance.deviceCbjUniqueId,
+      'entitiyCbjUniqueId': instance.entitiyCbjUniqueId,
       'deviceDtoClass': instance.deviceDtoClass,
       'stateMassage': instance.stateMassage,
     };

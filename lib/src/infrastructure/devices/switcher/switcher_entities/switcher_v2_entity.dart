@@ -37,7 +37,7 @@ class SwitcherV2Entity extends GenericBoilerDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.boilerSwitchState,
   }) : super(
           cbjDeviceVendor:
@@ -82,7 +82,7 @@ class SwitcherV2Entity extends GenericBoilerDE {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
       boilerSwitchState: entity.boilerSwitchState,
     );
   }

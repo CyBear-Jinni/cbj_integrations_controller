@@ -53,7 +53,7 @@ class SensiboHelpers {
           entityKey: EntityKey(''),
           requestTimeStamp: RequestTimeStamp(''),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(id),
+          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(id),
           acSwitchState: GenericAcSwitchState(
             (acState['on'] as bool) ? EntityActions.on : EntityActions.off,
           ),
@@ -62,7 +62,7 @@ class SensiboHelpers {
           light: GenericAcLight(acState['light'].toString()),
         );
         convertedEntites.addEntries([
-          MapEntry(googleDE.deviceCbjUniqueId.getOrCrash(), googleDE),
+          MapEntry(googleDE.entitiyCbjUniqueId.getOrCrash(), googleDE),
         ]);
       case SensiboProductModels.elements:
         break;

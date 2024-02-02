@@ -35,7 +35,7 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.smartComputerShutDownState,
     required super.smartComputerSuspendState,
   }) : super(
@@ -74,7 +74,7 @@ class CbjSmartComputerEntity extends GenericSmartComputerDE {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
       smartComputerShutDownState: entity.smartComputerShutDownState,
       smartComputerSuspendState: entity.smartComputerSuspendState,
     );

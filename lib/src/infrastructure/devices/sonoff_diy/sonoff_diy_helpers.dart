@@ -22,7 +22,7 @@ class SonoffDiyHelpers {
 
     try {
       if (mDnsName.contains('sonoffDiy1-C45BBE78005D')) {
-        final String deviceCbjUniqueId = mDnsName;
+        final String entitiyCbjUniqueId = mDnsName;
 
         final SonoffDiyRelaySwitchEntity sonoffDiyRelaySwitchEntity =
             SonoffDiyRelaySwitchEntity(
@@ -55,10 +55,10 @@ class SonoffDiyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
         );
         entitiesToAdd.addEntries([
-          MapEntry(deviceCbjUniqueId, sonoffDiyRelaySwitchEntity),
+          MapEntry(entitiyCbjUniqueId, sonoffDiyRelaySwitchEntity),
         ]);
       } else {
         icLogger.i('SonoffDiy device types is not supported');

@@ -41,7 +41,7 @@ class GenericSmartComputerDE extends DeviceEntityBase {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required this.smartComputerSuspendState,
     required this.smartComputerShutDownState,
   }) : super(
@@ -78,7 +78,7 @@ class GenericSmartComputerDE extends DeviceEntityBase {
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-        deviceCbjUniqueId: CoreUniqueId(),
+        entitiyCbjUniqueId: CoreUniqueId(),
         smartComputerSuspendState: GenericSmartComputerSuspendState(
           EntityActions.itIsFalse.toString(),
         ),
@@ -154,7 +154,7 @@ class GenericSmartComputerDE extends DeviceEntityBase {
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
-      deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: entitiyCbjUniqueId.getOrCrash(),
       smartComputerSuspendState: smartComputerSuspendState!.getOrCrash(),
       smartComputerShutDownState: smartComputerShutDownState!.getOrCrash(),
     );

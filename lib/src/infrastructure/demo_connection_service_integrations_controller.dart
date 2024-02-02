@@ -60,14 +60,14 @@ class DemoConnectionController {
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('n5sdf1sf-df53-v2sd-ge46-hhjlywawq166'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsBlinds.getCbjDeviceId,
+          allRemoteCommandsBlinds.getCbjEntityId,
           allRemoteCommandsBlinds,
         ),
       ],
@@ -109,14 +109,14 @@ class DemoConnectionController {
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('b0gaseh2-u7f4-1g42-vdf2-dfnertaku3fs'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsButton.getCbjDeviceId,
+          allRemoteCommandsButton.getCbjEntityId,
           allRemoteCommandsButton,
         ),
       ],
@@ -158,14 +158,14 @@ class DemoConnectionController {
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('654wdf2u-rge2-ffh2-gn22-rthweru521rs'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsButton2.getCbjDeviceId,
+          allRemoteCommandsButton2.getCbjEntityId,
           allRemoteCommandsButton2,
         ),
       ],
@@ -210,14 +210,14 @@ class DemoConnectionController {
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('id2erfdd-g34a-uhj5-fdfa-sdf5y3wsdfhs'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsBoiler.getCbjDeviceId,
+          allRemoteCommandsBoiler.getCbjEntityId,
           allRemoteCommandsBoiler,
         ),
       ],
@@ -266,7 +266,7 @@ class DemoConnectionController {
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('sd3fgbns-64as-1gd2-gfdw-dgghks325as6'),
       colorMode: GenericLightModeState(ColorMode.white),
     );
@@ -274,7 +274,7 @@ class DemoConnectionController {
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsRgbLight.getCbjDeviceId,
+          allRemoteCommandsRgbLight.getCbjEntityId,
           allRemoteCommandsRgbLight,
         ),
       ],
@@ -319,14 +319,14 @@ class DemoConnectionController {
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('dgh4nsdg-fd2d-df32-vn4g-dfgw2dvvnrrg'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsDimmableLight1.getCbjDeviceId,
+          allRemoteCommandsDimmableLight1.getCbjEntityId,
           allRemoteCommandsDimmableLight1,
         ),
       ],
@@ -369,14 +369,14 @@ class DemoConnectionController {
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('nbfsgsdf-34f3-631w-125f-324f23567731'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsDimmableLight2.getCbjDeviceId,
+          allRemoteCommandsDimmableLight2.getCbjEntityId,
           allRemoteCommandsDimmableLight2,
         ),
       ],
@@ -418,14 +418,14 @@ class DemoConnectionController {
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('sgeryjmn-gfn3-bf3v-et24-fvd22445jng3'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsLight.getCbjDeviceId,
+          allRemoteCommandsLight.getCbjEntityId,
           allRemoteCommandsLight,
         ),
       ],

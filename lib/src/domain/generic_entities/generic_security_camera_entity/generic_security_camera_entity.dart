@@ -41,7 +41,7 @@ class GenericSecurityCameraDE extends DeviceEntityBase {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required this.securityCameraSuspendState,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.securityCamera),
@@ -77,7 +77,7 @@ class GenericSecurityCameraDE extends DeviceEntityBase {
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-        deviceCbjUniqueId: CoreUniqueId(),
+        entitiyCbjUniqueId: CoreUniqueId(),
         securityCameraSuspendState: GenericSecurityCameraSuspendState(
           EntityActions.itIsFalse.toString(),
         ),
@@ -147,7 +147,7 @@ class GenericSecurityCameraDE extends DeviceEntityBase {
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
-      deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: entitiyCbjUniqueId.getOrCrash(),
       securityCameraSuspendState: securityCameraSuspendState!.getOrCrash(),
     );
   }

@@ -60,7 +60,7 @@ class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
 
     for (final DeviceEntityBase entityAsDevice in devicesList) {
       final MapEntry<String, DeviceEntityBase> deviceAsEntry = MapEntry(
-        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice.entitiyCbjUniqueId.getOrCrash(),
         entityAsDevice,
       );
 

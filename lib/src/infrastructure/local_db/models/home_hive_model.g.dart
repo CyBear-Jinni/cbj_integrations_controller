@@ -8,7 +8,7 @@ part of 'home_hive_model.dart';
 
 class HomeHiveModelAdapter extends TypeAdapter<HomeHiveModel> {
   @override
-  final int typeId = 8;
+  final int typeId = 1;
 
   @override
   HomeHiveModel read(BinaryReader reader) {
@@ -17,42 +17,48 @@ class HomeHiveModelAdapter extends TypeAdapter<HomeHiveModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return HomeHiveModel()
-      ..areaUniqueId = fields[0] as String
-      ..areaDefaultName = fields[1] as String
-      ..areaDevicesId = (fields[2] as List).cast<String>()
-      ..areaScenesId = (fields[3] as List).cast<String>()
-      ..areaRoutinesId = (fields[4] as List).cast<String>()
-      ..areaBindingsId = (fields[5] as List).cast<String>()
-      ..areaMostUsedBy = (fields[6] as List).cast<String>()
-      ..areaPermissions = (fields[7] as List).cast<String>()
-      ..areaTypes = (fields[8] as List).cast<String>()
-      ..areaBackground = fields[9] as String;
+      ..uniqueId = fields[1] as String
+      ..name = fields[2] as String
+      ..areas = (fields[3] as List).cast<String>()
+      ..entities = (fields[4] as List).cast<String>()
+      ..scenes = (fields[5] as List).cast<String>()
+      ..routines = (fields[6] as List).cast<String>()
+      ..bindings = (fields[7] as List).cast<String>()
+      ..mostUsedBy = (fields[8] as List).cast<String>()
+      ..permissions = (fields[9] as List).cast<String>()
+      ..types = (fields[10] as List).cast<String>()
+      ..background = fields[11] as String
+      ..network = fields[12] as String;
   }
 
   @override
   void write(BinaryWriter writer, HomeHiveModel obj) {
     writer
-      ..writeByte(10)
-      ..writeByte(0)
-      ..write(obj.areaUniqueId)
+      ..writeByte(12)
       ..writeByte(1)
-      ..write(obj.areaDefaultName)
+      ..write(obj.uniqueId)
       ..writeByte(2)
-      ..write(obj.areaDevicesId)
+      ..write(obj.name)
       ..writeByte(3)
-      ..write(obj.areaScenesId)
+      ..write(obj.areas)
       ..writeByte(4)
-      ..write(obj.areaRoutinesId)
+      ..write(obj.entities)
       ..writeByte(5)
-      ..write(obj.areaBindingsId)
+      ..write(obj.scenes)
       ..writeByte(6)
-      ..write(obj.areaMostUsedBy)
+      ..write(obj.routines)
       ..writeByte(7)
-      ..write(obj.areaPermissions)
+      ..write(obj.bindings)
       ..writeByte(8)
-      ..write(obj.areaTypes)
+      ..write(obj.mostUsedBy)
       ..writeByte(9)
-      ..write(obj.areaBackground);
+      ..write(obj.permissions)
+      ..writeByte(10)
+      ..write(obj.types)
+      ..writeByte(11)
+      ..write(obj.background)
+      ..writeByte(12)
+      ..write(obj.network);
   }
 
   @override

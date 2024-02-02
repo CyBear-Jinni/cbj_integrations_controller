@@ -43,7 +43,7 @@ abstract class GenericLightDeviceDtos
     required String? entityKey,
     required String? requestTimeStamp,
     required String? lastResponseFromDeviceTimeStamp,
-    required String? deviceCbjUniqueId,
+    required String? entitiyCbjUniqueId,
     String? deviceDtoClass,
     String? stateMassage,
 
@@ -86,7 +86,7 @@ abstract class GenericLightDeviceDtos
       requestTimeStamp: deviceDe.requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           deviceDe.lastResponseFromDeviceTimeStamp.getOrCrash(),
-      deviceCbjUniqueId: deviceDe.deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: deviceDe.entitiyCbjUniqueId.getOrCrash(),
     );
   }
 
@@ -136,7 +136,7 @@ abstract class GenericLightDeviceDtos
       requestTimeStamp: RequestTimeStamp(requestTimeStamp),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp(lastResponseFromDeviceTimeStamp),
-      deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId!),
+      entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId!),
     );
   }
 }

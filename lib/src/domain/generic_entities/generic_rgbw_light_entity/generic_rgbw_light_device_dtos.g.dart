@@ -38,7 +38,7 @@ _$GenericRgbwLightDeviceDtosImpl _$$GenericRgbwLightDeviceDtosImplFromJson(
       requestTimeStamp: json['requestTimeStamp'] as String?,
       lastResponseFromDeviceTimeStamp:
           json['lastResponseFromDeviceTimeStamp'] as String?,
-      deviceCbjUniqueId: json['deviceCbjUniqueId'] as String?,
+      entitiyCbjUniqueId: json['entitiyCbjUniqueId'] as String?,
       lightSwitchState: json['lightSwitchState'] as String?,
       lightColorTemperature: json['lightColorTemperature'] as String?,
       lightBrightness: json['lightBrightness'] as String?,
@@ -83,7 +83,7 @@ Map<String, dynamic> _$$GenericRgbwLightDeviceDtosImplToJson(
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':
           instance.lastResponseFromDeviceTimeStamp,
-      'deviceCbjUniqueId': instance.deviceCbjUniqueId,
+      'entitiyCbjUniqueId': instance.entitiyCbjUniqueId,
       'lightSwitchState': instance.lightSwitchState,
       'lightColorTemperature': instance.lightColorTemperature,
       'lightBrightness': instance.lightBrightness,

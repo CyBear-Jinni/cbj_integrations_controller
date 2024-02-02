@@ -87,7 +87,7 @@ class NetworkUtilities implements INetworkUtilities {
       entityKey: EntityKey(''),
       requestTimeStamp: RequestTimeStamp(''),
       lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-      deviceCbjUniqueId: CoreUniqueId(),
+      entitiyCbjUniqueId: CoreUniqueId(),
     );
   }
 

@@ -45,7 +45,7 @@ class LifxHelpers {
       entityKey: EntityKey(''),
       requestTimeStamp: RequestTimeStamp(''),
       lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-      deviceCbjUniqueId: CoreUniqueId(),
+      entitiyCbjUniqueId: CoreUniqueId(),
       lightBrightness:
           GenericDimmableLightBrightness.fromDouble(lifxDevice.brightness),
     );
@@ -53,7 +53,7 @@ class LifxHelpers {
     final HashMap<String, DeviceEntityBase> convertedEntites = HashMap();
 
     return convertedEntites
-      ..addEntries([MapEntry(lifxDE.getCbjDeviceId, lifxDE)]);
+      ..addEntries([MapEntry(lifxDE.getCbjEntityId, lifxDE)]);
 
     // TODO: Add if device type does not supported return null
     // logger.i(

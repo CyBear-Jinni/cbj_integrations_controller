@@ -34,7 +34,7 @@ class YeelightHelpers {
       return entitiesMap;
     }
 
-    final String deviceCbjUniqueId = yeelightDevice.id.toString();
+    final String entitiyCbjUniqueId = yeelightDevice.id.toString();
 
     if (yeelightDevice.model == 'color4' || yeelightDevice.model == 'colora') {
       final DeviceEntityBase newEntity = Yeelight1SeEntity(
@@ -66,7 +66,7 @@ class YeelightHelpers {
         entityKey: entity.entityKey,
         requestTimeStamp: entity.requestTimeStamp,
         lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+        entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
         lightSwitchState:
             GenericRgbwLightSwitchState(yeelightDevice.powered.toString()),
         lightColorTemperature: GenericRgbwLightColorTemperature(
@@ -84,7 +84,7 @@ class YeelightHelpers {
           yeelightDevice.colorMode == 3 ? ColorMode.rgb : ColorMode.white,
         ),
       );
-      entitiesMap.addEntries([MapEntry(deviceCbjUniqueId, newEntity)]);
+      entitiesMap.addEntries([MapEntry(entitiyCbjUniqueId, newEntity)]);
     } else {
       icLogger.i(
         'Please add new Yeelight device type ${yeelightDevice.model}',
@@ -102,7 +102,7 @@ class YeelightHelpers {
       return entitiesMap;
     }
 
-    final String deviceCbjUniqueId = yeelightDevice.id.toString();
+    final String entitiyCbjUniqueId = yeelightDevice.id.toString();
 
     if (yeelightDevice.model == 'color4' || yeelightDevice.model == 'colora') {
       String deviceName = 'Yeelight bulbe';
@@ -139,7 +139,7 @@ class YeelightHelpers {
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+        entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
         lightSwitchState:
             GenericRgbwLightSwitchState(yeelightDevice.powered.toString()),
         lightColorTemperature: GenericRgbwLightColorTemperature(
@@ -157,7 +157,7 @@ class YeelightHelpers {
           yeelightDevice.colorMode == 3 ? ColorMode.rgb : ColorMode.white,
         ),
       );
-      entitiesMap.addEntries([MapEntry(deviceCbjUniqueId, newEntity)]);
+      entitiesMap.addEntries([MapEntry(entitiyCbjUniqueId, newEntity)]);
     } else {
       icLogger.i(
         'Please add new Yeelight device type ${yeelightDevice.model}',

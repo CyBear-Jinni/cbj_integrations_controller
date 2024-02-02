@@ -59,7 +59,7 @@ class YeelightConnectorConjecture extends VendorConnectorConjectureService {
       await VendorsConnectorConjecture().foundEntityOfVendor(
         this,
         entery.value,
-        entery.value.deviceCbjUniqueId.getOrCrash(),
+        entery.value.entitiyCbjUniqueId.getOrCrash(),
       );
     }
   }
@@ -69,7 +69,7 @@ class YeelightConnectorConjecture extends VendorConnectorConjectureService {
     DeviceEntityBase entity,
   ) async {
     if (Platform.isAndroid) {
-      return HashMap.fromEntries([MapEntry(entity.getCbjDeviceId, entity)]);
+      return HashMap.fromEntries([MapEntry(entity.getCbjEntityId, entity)]);
     }
 
     final responses = await Yeelight.discover();

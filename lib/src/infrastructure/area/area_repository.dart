@@ -10,13 +10,13 @@ class _AreaRepository implements IAreaRepository {
   Future setNewArea(AreaEntity area) async {
     final HashSet<String> scenes = await IcSynchronizer()
         .createPresetScenesForAreaPurposes(area.purposes.types);
+    final MapEntry<String, AreaEntity> areaEnery = MapEntry(
+      area.uniqueId.getOrCrash(),
+      area..scenesId = AreaScenesId(scenes),
+    );
 
-    areas.addEntries([
-      MapEntry(
-        area.uniqueId.getOrCrash(),
-        area..scenesId = AreaScenesId(scenes),
-      ),
-    ]);
+    areas.addEntries([areaEnery]);
+    saveAreasToDb();
   }
 
   @override
@@ -81,9 +81,39 @@ class _AreaRepository implements IAreaRepository {
   Future onAreasUpdated(HashSet<String> areasId) async {
     final Iterable<MapEntry<String, AreaEntity>> areasTemp =
         areas.entries.where((element) => areasId.contains(element.key));
+    saveAreasToDb();
 
     for (final MapEntry<String, AreaEntity> areaChanged in areasTemp) {
       IcSynchronizer().areasChangesStream.add(areaChanged);
+    }
+  }
+
+  @override
+  bool saveAreasToDb() {
+    final List<String> areasJsonString = [];
+    for (final AreaEntity area in areas.values) {
+      final String areaAsJsonString =
+          jsonEncode(area.toInfrastructure().toJson());
+      areasJsonString.add(areaAsJsonString);
+    }
+    final String? homeBoxName = NetworksManager().currentNetwork?.uniqueId;
+    if (homeBoxName == null) {
+      return false;
+    }
+    icLogger.i('areasJsonString $areasJsonString');
+
+    IDbRepository.instance.saveAreas(homeBoxName, areasJsonString);
+    return true;
+  }
+
+  @override
+  void loadFromDb(String homeId) {
+    final List<String> areasString = IDbRepository.instance.getAreas(homeId);
+    for (final String areaString in areasString) {
+      final AreaEntity entity = AreaEntityDtos.fromJson(
+        jsonDecode(areaString) as Map<String, dynamic>,
+      ).toDomain();
+      areas.addEntries([MapEntry(entity.uniqueId.getOrCrash(), entity)]);
     }
   }
 }

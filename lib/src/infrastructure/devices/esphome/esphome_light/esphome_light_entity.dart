@@ -36,7 +36,7 @@ class EspHomeLightEntity extends GenericLightDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.lightSwitchState,
   }) : super(
           cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.espHome),
@@ -72,7 +72,7 @@ class EspHomeLightEntity extends GenericLightDE {
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       lightSwitchState: entity.lightSwitchState,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
     );
   }
 

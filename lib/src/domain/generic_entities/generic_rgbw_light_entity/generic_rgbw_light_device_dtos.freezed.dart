@@ -51,7 +51,7 @@ mixin _$GenericRgbwLightDeviceDtos {
   String? get requestTimeStamp => throw _privateConstructorUsedError;
   String? get lastResponseFromDeviceTimeStamp =>
       throw _privateConstructorUsedError;
-  String? get deviceCbjUniqueId => throw _privateConstructorUsedError;
+  String? get entitiyCbjUniqueId => throw _privateConstructorUsedError;
   String? get lightSwitchState => throw _privateConstructorUsedError;
   String? get lightColorTemperature => throw _privateConstructorUsedError;
   String? get lightBrightness => throw _privateConstructorUsedError;
@@ -105,7 +105,7 @@ abstract class $GenericRgbwLightDeviceDtosCopyWith<$Res> {
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
-      String? deviceCbjUniqueId,
+      String? entitiyCbjUniqueId,
       String? lightSwitchState,
       String? lightColorTemperature,
       String? lightBrightness,
@@ -160,7 +160,7 @@ class _$GenericRgbwLightDeviceDtosCopyWithImpl<$Res,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
-    Object? deviceCbjUniqueId = freezed,
+    Object? entitiyCbjUniqueId = freezed,
     Object? lightSwitchState = freezed,
     Object? lightColorTemperature = freezed,
     Object? lightBrightness = freezed,
@@ -286,9 +286,9 @@ class _$GenericRgbwLightDeviceDtosCopyWithImpl<$Res,
           ? _value.lastResponseFromDeviceTimeStamp
           : lastResponseFromDeviceTimeStamp // ignore: cast_nullable_to_non_nullable
               as String?,
-      deviceCbjUniqueId: freezed == deviceCbjUniqueId
-          ? _value.deviceCbjUniqueId
-          : deviceCbjUniqueId // ignore: cast_nullable_to_non_nullable
+      entitiyCbjUniqueId: freezed == entitiyCbjUniqueId
+          ? _value.entitiyCbjUniqueId
+          : entitiyCbjUniqueId // ignore: cast_nullable_to_non_nullable
               as String?,
       lightSwitchState: freezed == lightSwitchState
           ? _value.lightSwitchState
@@ -372,7 +372,7 @@ abstract class _$$GenericRgbwLightDeviceDtosImplCopyWith<$Res>
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
-      String? deviceCbjUniqueId,
+      String? entitiyCbjUniqueId,
       String? lightSwitchState,
       String? lightColorTemperature,
       String? lightBrightness,
@@ -426,7 +426,7 @@ class __$$GenericRgbwLightDeviceDtosImplCopyWithImpl<$Res>
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
-    Object? deviceCbjUniqueId = freezed,
+    Object? entitiyCbjUniqueId = freezed,
     Object? lightSwitchState = freezed,
     Object? lightColorTemperature = freezed,
     Object? lightBrightness = freezed,
@@ -552,9 +552,9 @@ class __$$GenericRgbwLightDeviceDtosImplCopyWithImpl<$Res>
           ? _value.lastResponseFromDeviceTimeStamp
           : lastResponseFromDeviceTimeStamp // ignore: cast_nullable_to_non_nullable
               as String?,
-      deviceCbjUniqueId: freezed == deviceCbjUniqueId
-          ? _value.deviceCbjUniqueId
-          : deviceCbjUniqueId // ignore: cast_nullable_to_non_nullable
+      entitiyCbjUniqueId: freezed == entitiyCbjUniqueId
+          ? _value.entitiyCbjUniqueId
+          : entitiyCbjUniqueId // ignore: cast_nullable_to_non_nullable
               as String?,
       lightSwitchState: freezed == lightSwitchState
           ? _value.lightSwitchState
@@ -632,7 +632,7 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
       required this.entityKey,
       required this.requestTimeStamp,
       required this.lastResponseFromDeviceTimeStamp,
-      required this.deviceCbjUniqueId,
+      required this.entitiyCbjUniqueId,
       required this.lightSwitchState,
       required this.lightColorTemperature,
       required this.lightBrightness,
@@ -707,7 +707,7 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
   @override
   final String? lastResponseFromDeviceTimeStamp;
   @override
-  final String? deviceCbjUniqueId;
+  final String? entitiyCbjUniqueId;
   @override
   final String? lightSwitchState;
   @override
@@ -731,7 +731,7 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
 
   @override
   String toString() {
-    return 'GenericRgbwLightDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, lightSwitchState: $lightSwitchState, lightColorTemperature: $lightColorTemperature, lightBrightness: $lightBrightness, lightColorAlpha: $lightColorAlpha, lightColorHue: $lightColorHue, lightColorSaturation: $lightColorSaturation, lightColorValue: $lightColorValue, lightMode: $lightMode, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericRgbwLightDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, entitiyCbjUniqueId: $entitiyCbjUniqueId, lightSwitchState: $lightSwitchState, lightColorTemperature: $lightColorTemperature, lightBrightness: $lightBrightness, lightColorAlpha: $lightColorAlpha, lightColorHue: $lightColorHue, lightColorSaturation: $lightColorSaturation, lightColorValue: $lightColorValue, lightMode: $lightMode, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -795,8 +795,8 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
             (identical(other.lastResponseFromDeviceTimeStamp, lastResponseFromDeviceTimeStamp) ||
                 other.lastResponseFromDeviceTimeStamp ==
                     lastResponseFromDeviceTimeStamp) &&
-            (identical(other.deviceCbjUniqueId, deviceCbjUniqueId) ||
-                other.deviceCbjUniqueId == deviceCbjUniqueId) &&
+            (identical(other.entitiyCbjUniqueId, entitiyCbjUniqueId) ||
+                other.entitiyCbjUniqueId == entitiyCbjUniqueId) &&
             (identical(other.lightSwitchState, lightSwitchState) ||
                 other.lightSwitchState == lightSwitchState) &&
             (identical(other.lightColorTemperature, lightColorTemperature) ||
@@ -848,7 +848,7 @@ class _$GenericRgbwLightDeviceDtosImpl extends _GenericRgbwLightDeviceDtos {
         entityKey,
         requestTimeStamp,
         lastResponseFromDeviceTimeStamp,
-        deviceCbjUniqueId,
+        entitiyCbjUniqueId,
         lightSwitchState,
         lightColorTemperature,
         lightBrightness,
@@ -906,7 +906,7 @@ abstract class _GenericRgbwLightDeviceDtos extends GenericRgbwLightDeviceDtos {
       required final String? entityKey,
       required final String? requestTimeStamp,
       required final String? lastResponseFromDeviceTimeStamp,
-      required final String? deviceCbjUniqueId,
+      required final String? entitiyCbjUniqueId,
       required final String? lightSwitchState,
       required final String? lightColorTemperature,
       required final String? lightBrightness,
@@ -979,7 +979,7 @@ abstract class _GenericRgbwLightDeviceDtos extends GenericRgbwLightDeviceDtos {
   @override
   String? get lastResponseFromDeviceTimeStamp;
   @override
-  String? get deviceCbjUniqueId;
+  String? get entitiyCbjUniqueId;
   @override
   String? get lightSwitchState;
   @override

@@ -62,7 +62,7 @@ class SwitcherHelpers {
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId:
+        entitiyCbjUniqueId:
             CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 
@@ -110,7 +110,7 @@ class SwitcherHelpers {
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId:
+        entitiyCbjUniqueId:
             CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 
@@ -156,7 +156,7 @@ class SwitcherHelpers {
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId:
+        entitiyCbjUniqueId:
             CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 

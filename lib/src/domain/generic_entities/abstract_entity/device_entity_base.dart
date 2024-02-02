@@ -38,7 +38,7 @@ abstract class DeviceEntityBase {
     required this.entityKey,
     required this.requestTimeStamp,
     required this.lastResponseFromDeviceTimeStamp,
-    required this.deviceCbjUniqueId,
+    required this.entitiyCbjUniqueId,
     required this.srvResourceRecord,
     required this.srvTarget,
     required this.ptrResourceRecord,
@@ -130,9 +130,9 @@ abstract class DeviceEntityBase {
   LastResponseFromDeviceTimeStamp lastResponseFromDeviceTimeStamp;
 
   /// Unique id that cbj creates for the device that the entity is stored on
-  CoreUniqueId deviceCbjUniqueId;
+  CoreUniqueId entitiyCbjUniqueId;
 
-  String get getCbjDeviceId => deviceCbjUniqueId.getOrCrash();
+  String get getCbjEntityId => entitiyCbjUniqueId.getOrCrash();
 
   /// Copy with device state to waiting or ack
   DeviceEntityBase copyWithDeviceState(EntityStateGRPC entityStateGRPC) => this;
@@ -315,7 +315,7 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(
             'lastResponseFromDeviceTimeStamp is empty',
           ),
-          deviceCbjUniqueId: CoreUniqueId(),
+          entitiyCbjUniqueId: CoreUniqueId(),
           deviceVendor: DeviceVendor(),
           deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
         );

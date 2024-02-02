@@ -29,7 +29,7 @@ class TasmotaIpHelpers {
       );
       if (deviceEntity != null) {
         entityToAdd.addEntries([
-          MapEntry(deviceEntity.deviceCbjUniqueId.getOrCrash(), deviceEntity),
+          MapEntry(deviceEntity.entitiyCbjUniqueId.getOrCrash(), deviceEntity),
         ]);
       }
     }
@@ -59,7 +59,7 @@ class TasmotaIpHelpers {
     }
     final List<String>? componentInDeviceUiLabelAndComment =
         gpioOverviewTasmota[componentInDeviceNumberLabelAsInt];
-    final String deviceCbjUniqueId =
+    final String entitiyCbjUniqueId =
         '$deviceHostName-$componentInDeviceNumberLabel}';
     if (componentInDeviceNumberLabelAsInt == 0) {
       // UI Label: None
@@ -113,7 +113,7 @@ class TasmotaIpHelpers {
         entityKey: entity.entityKey,
         requestTimeStamp: entity.requestTimeStamp,
         lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+        entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
       );
     } else if (componentInDeviceNumberLabelAsInt >= 256 &&
         componentInDeviceNumberLabelAsInt <= 283) {

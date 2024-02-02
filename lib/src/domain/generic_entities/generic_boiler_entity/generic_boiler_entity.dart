@@ -41,7 +41,7 @@ class GenericBoilerDE extends DeviceEntityBase {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required this.boilerSwitchState,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.boiler),
@@ -77,7 +77,7 @@ class GenericBoilerDE extends DeviceEntityBase {
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-        deviceCbjUniqueId: CoreUniqueId(),
+        entitiyCbjUniqueId: CoreUniqueId(),
         boilerSwitchState:
             GenericBoilerSwitchState(EntityActions.off.toString()),
       );
@@ -146,7 +146,7 @@ class GenericBoilerDE extends DeviceEntityBase {
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
-      deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: entitiyCbjUniqueId.getOrCrash(),
       boilerSwitchState: boilerSwitchState.getOrCrash(),
     );
   }

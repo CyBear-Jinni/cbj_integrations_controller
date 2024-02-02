@@ -39,7 +39,7 @@ _$GenericSmartTvDeviceDtosImpl _$$GenericSmartTvDeviceDtosImplFromJson(
       requestTimeStamp: json['requestTimeStamp'] as String?,
       lastResponseFromDeviceTimeStamp:
           json['lastResponseFromDeviceTimeStamp'] as String?,
-      deviceCbjUniqueId: json['deviceCbjUniqueId'] as String?,
+      entitiyCbjUniqueId: json['entitiyCbjUniqueId'] as String?,
       pausePlayState: json['pausePlayState'] as String?,
       volume: json['volume'] as String?,
       deviceDtoClass: json['deviceDtoClass'] as String?,
@@ -79,7 +79,7 @@ Map<String, dynamic> _$$GenericSmartTvDeviceDtosImplToJson(
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':
           instance.lastResponseFromDeviceTimeStamp,
-      'deviceCbjUniqueId': instance.deviceCbjUniqueId,
+      'entitiyCbjUniqueId': instance.entitiyCbjUniqueId,
       'pausePlayState': instance.pausePlayState,
       'volume': instance.volume,
       'deviceDtoClass': instance.deviceDtoClass,
