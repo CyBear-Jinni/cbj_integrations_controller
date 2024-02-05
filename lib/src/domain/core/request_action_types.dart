@@ -1,6 +1,8 @@
 enum EntityStateGRPC {
   undefined,
 
+  loadingFromDb,
+
   /// Cancel if not ack yet
   cancelStateInProcess,
 

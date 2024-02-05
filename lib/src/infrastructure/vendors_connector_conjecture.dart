@@ -193,16 +193,35 @@ class VendorsConnectorConjecture {
     );
   }
 
+  Future loadEntitiesFromDb({
+    required VendorConnectorConjectureService vendorConnectorConjectureService,
+    required DeviceEntityBase entity,
+    required String entitiyCbjUniqueId,
+  }) async {
+    final HashMap<String, DeviceEntityBase>? handeldEntities =
+        await vendorConnectorConjectureService.loadFromDb(
+      entity,
+    );
+
+    if (handeldEntities == null || handeldEntities.isEmpty) {
+      return;
+    }
+    for (final MapEntry<String, DeviceEntityBase> entity
+        in handeldEntities.entries) {
+      entitiesToVendor.addEntries([
+        MapEntry(entity.key, entity.value.cbjDeviceVendor.vendorsAndServices),
+      ]);
+    }
+  }
+
   Future foundEntityOfVendor({
     required VendorConnectorConjectureService vendorConnectorConjectureService,
     required DeviceEntityBase entity,
     required String entitiyCbjUniqueId,
-    bool fromDb = false,
   }) async {
     HashMap<String, DeviceEntityBase>? handeldEntities =
         await vendorConnectorConjectureService.foundEntity(
       entity,
-      fromDb: fromDb,
     );
 
     if (handeldEntities == null) {
@@ -212,7 +231,6 @@ class VendorsConnectorConjecture {
         entity
           ..entitiyCbjUniqueId =
               CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
-        fromDb: fromDb,
       );
     }
 
@@ -264,4 +282,27 @@ class VendorsConnectorConjecture {
       );
     }
   }
+
+  HashMap<String, DeviceEntityBase> getEntities() =>
+      VendorConnectorConjectureService.instanceMapByType.values.fold(
+        HashMap<String, DeviceEntityBase>(),
+        (previousValue, element) =>
+            previousValue..addAll(element.vendorEntities),
+      );
+
+  HashMap<String, EntityTypes> getTypesForEntities(HashSet<String> entities) =>
+      entities
+          .map(
+            (e) => MapEntry(
+              e,
+              getVendorConnectorConjecture(entitiesToVendor[e]!)!
+                  .vendorEntities[e]!
+                  .entityTypes
+                  .type,
+            ),
+          )
+          .fold(
+            HashMap<String, EntityTypes>(),
+            (previousValue, element) => previousValue..addEntries([element]),
+          );
 }

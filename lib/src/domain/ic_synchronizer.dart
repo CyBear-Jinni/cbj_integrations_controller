@@ -61,6 +61,11 @@ class IcSynchronizer {
   List<VendorEntityInformation> getVendors() =>
       VendorsConnectorConjecture().getVendors();
 
+  static HashMap<String, EntityTypes> getTypesForEntities(
+    HashSet<String> entities,
+  ) =>
+      VendorsConnectorConjecture().getTypesForEntities(entities);
+
   //  -------------------- IAreaRepository --------------------
 
   /// Each time area get changed it will be sent here, could be new area got created
@@ -105,17 +110,21 @@ class IcSynchronizer {
   ) =>
       AutomationService().createPresetScenesForAreaPurposes(areaPurposes);
 
-  Future updateAreaAutomation({
+  Future addEntitiesToAutomaticScene({
+    required String sceneId,
     required Set<String> entitiesId,
-    required Set<String> scenesId,
-  }) async {
-    final HashMap<String, DeviceEntityBase> entities = await getEntities();
-    final HashMap<String, EntityTypes> entitiesWithType = HashMap.fromEntries(
-      entitiesId.map((e) => MapEntry(e, entities[e]!.entityTypes.type)),
-    );
-    AutomationService().updateAreaAutomation(
-      entitiesIdAndType: entitiesWithType,
-      scenesId: scenesId,
-    );
-  }
+  }) async =>
+      AutomationService().addEntitiesToAutomaticScene(
+        entities: entitiesId,
+        sceneId: sceneId,
+      );
+
+  Future deleteEntitiesFromAutomaticScene({
+    required String sceneId,
+    required Set<String> entitiesId,
+  }) async =>
+      AutomationService().deleteEntitiesFromAutomaticScene(
+        entities: entitiesId,
+        sceneId: sceneId,
+      );
 }

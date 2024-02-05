@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
+import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/vendor_entity_information.dart';
 import 'package:cbj_integrations_controller/src/domain/vendor_login_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
@@ -53,6 +54,26 @@ abstract class VendorConnectorConjectureService {
   @nonVirtual
   final VendorsAndServices vendorsAndServices;
 
+  @nonVirtual
+  HashSet<String> notFullyLoadedEntities = HashSet();
+
+  @nonVirtual
+  Future<HashMap<String, DeviceEntityBase>?> loadFromDb(
+    DeviceEntityBase entity,
+  ) async {
+    entity.entityStateGRPC = EntityState(EntityStateGRPC.loadingFromDb);
+
+    final HashMap<String, DeviceEntityBase> mapEntities =
+        HashMap.fromEntries([MapEntry(entity.getCbjEntityId, entity)]);
+    vendorEntities.addAll(mapEntities);
+    newEntityToVendorDevice(entity, fromDb: true)
+        .then((HashMap<String, DeviceEntityBase> entities) {
+      vendorEntities.addAll(entities);
+    });
+
+    return mapEntities;
+  }
+
   final List<int> ports;
 
   late final VendorEntityInformation vendorEntityInformation;
@@ -83,11 +104,12 @@ abstract class VendorConnectorConjectureService {
   final List<String> uniqueIdentifierNameInMdns;
 
   Future<HashMap<String, DeviceEntityBase>?> foundEntity(
-    DeviceEntityBase entity, {
-    bool fromDb = false,
-  }) async {
+    DeviceEntityBase entity,
+  ) async {
     final HashMap<String, DeviceEntityBase> vendorEntityMap =
-        await newEntityToVendorDevice(entity, fromDb: fromDb);
+        await newEntityToVendorDevice(
+      entity,
+    );
     if (vendorEntityMap.isEmpty) {
       return null;
     }

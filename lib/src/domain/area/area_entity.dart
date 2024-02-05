@@ -99,13 +99,6 @@ class AreaEntity {
     }
   }
 
-  /// Return new AreaDevicesId object without id if it exist in areaDevicesId
-  AreaEntitiesId deleteIdIfExist(String id) {
-    final Set<String> tempList = Set.from(entitiesId.getOrCrash());
-    tempList.removeWhere((element) => element == id);
-    return AreaEntitiesId(tempList);
-  }
-
   Option<AreaFailure<dynamic>> get failureOption {
     return cbjEntityName.value.fold((f) => some(f), (_) => none());
   }
@@ -124,4 +117,29 @@ class AreaEntity {
       areaPermissions: areaPermissions.getOrCrash(),
     );
   }
+
+  AreaEntity copy({
+    AreaUniqueId? uniqueId,
+    AreaDefaultName? cbjEntityName,
+    AreaBackground? background,
+    AreaPurposes? purposes,
+    AreaEntitiesId? entitiesId,
+    AreaScenesId? scenesId,
+    AreaRoutinesId? routinesId,
+    AreaBindingsId? bindingsId,
+    AreaMostUsedBy? areaMostUsedBy,
+    AreaPermissions? areaPermissions,
+  }) =>
+      AreaEntity(
+        uniqueId: uniqueId ?? this.uniqueId,
+        cbjEntityName: cbjEntityName ?? this.cbjEntityName,
+        background: background ?? this.background,
+        purposes: purposes ?? this.purposes,
+        entitiesId: entitiesId ?? this.entitiesId,
+        scenesId: scenesId ?? this.scenesId,
+        routinesId: routinesId ?? this.routinesId,
+        bindingsId: bindingsId ?? this.bindingsId,
+        areaMostUsedBy: areaMostUsedBy ?? this.areaMostUsedBy,
+        areaPermissions: areaPermissions ?? this.areaPermissions,
+      );
 }

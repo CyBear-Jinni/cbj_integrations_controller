@@ -13,9 +13,6 @@ class SceneCbjEntity {
     required this.name,
     required this.backgroundColor,
 
-    /// All the automation as string.
-    required this.automationString,
-
     /// Node-Red flow id of the scene
     required this.nodeRedFlowId,
 
@@ -35,12 +32,12 @@ class SceneCbjEntity {
     required this.entityStateGRPC,
     required this.actions,
     required this.areaPurposeType,
+    required this.entitiesWithAutomaticPurpose,
   });
 
   final UniqueId uniqueId;
   final SceneCbjName name;
   final SceneCbjBackgroundColor backgroundColor;
-  final SceneCbjAutomationString automationString;
   final SceneCbjNodeRedFlowId nodeRedFlowId;
   final SceneCbjFirstNodeId firstNodeId;
   final SceneCbjIconCodePoint iconCodePoint;
@@ -53,36 +50,54 @@ class SceneCbjEntity {
   final SceneCbjCompUuid compUuid;
   final SceneCbjDeviceStateGRPC entityStateGRPC;
 
-  /// {entityId, ActionObject}
   final List<RequestActionObject> actions;
   final AreaPurposesTypes areaPurposeType;
+  final EntitiesWithAutomaticPurpose entitiesWithAutomaticPurpose;
 
-  SceneCbjEntity copyWithNewAction(List<RequestActionObject> actions) =>
+  SceneCbjEntity copyWith({
+    UniqueId? uniqueId,
+    SceneCbjName? name,
+    SceneCbjBackgroundColor? backgroundColor,
+    SceneCbjNodeRedFlowId? nodeRedFlowId,
+    SceneCbjFirstNodeId? firstNodeId,
+    SceneCbjIconCodePoint? iconCodePoint,
+    SceneCbjBackgroundImage? image,
+    SceneCbjLastDateOfExecute? lastDateOfExecute,
+    SceneCbjStateMassage? stateMassage,
+    SceneCbjSenderDeviceOs? senderDeviceOs,
+    SceneCbjSenderDeviceModel? senderDeviceModel,
+    SceneCbjSenderId? senderId,
+    SceneCbjCompUuid? compUuid,
+    SceneCbjDeviceStateGRPC? entityStateGRPC,
+    List<RequestActionObject>? actions,
+    AreaPurposesTypes? areaPurposeType,
+    EntitiesWithAutomaticPurpose? entitiesWithAutomaticPurpose,
+  }) =>
       SceneCbjEntity(
-        uniqueId: uniqueId,
-        name: name,
-        backgroundColor: backgroundColor,
-        automationString: automationString,
-        nodeRedFlowId: nodeRedFlowId,
-        firstNodeId: firstNodeId,
-        iconCodePoint: iconCodePoint,
-        image: image,
-        lastDateOfExecute: lastDateOfExecute,
-        stateMassage: stateMassage,
-        senderDeviceOs: senderDeviceOs,
-        senderDeviceModel: senderDeviceModel,
-        senderId: senderId,
-        compUuid: compUuid,
-        entityStateGRPC: entityStateGRPC,
-        actions: actions,
-        areaPurposeType: areaPurposeType,
+        uniqueId: uniqueId ?? this.uniqueId,
+        name: name ?? this.name,
+        backgroundColor: backgroundColor ?? this.backgroundColor,
+        nodeRedFlowId: nodeRedFlowId ?? this.nodeRedFlowId,
+        firstNodeId: firstNodeId ?? this.firstNodeId,
+        iconCodePoint: iconCodePoint ?? this.iconCodePoint,
+        image: image ?? this.image,
+        lastDateOfExecute: lastDateOfExecute ?? this.lastDateOfExecute,
+        stateMassage: stateMassage ?? this.stateMassage,
+        senderDeviceOs: senderDeviceOs ?? this.senderDeviceOs,
+        senderDeviceModel: senderDeviceModel ?? this.senderDeviceModel,
+        senderId: senderId ?? this.senderId,
+        compUuid: compUuid ?? this.compUuid,
+        entityStateGRPC: entityStateGRPC ?? this.entityStateGRPC,
+        actions: actions ?? this.actions,
+        areaPurposeType: areaPurposeType ?? this.areaPurposeType,
+        entitiesWithAutomaticPurpose:
+            entitiesWithAutomaticPurpose ?? this.entitiesWithAutomaticPurpose,
       );
 
   SceneCbjDtos toInfrastructure() => SceneCbjDtos(
         uniqueId: uniqueId.getOrCrash(),
         name: name.getOrCrash(),
         backgroundColor: backgroundColor.getOrCrash(),
-        automationString: automationString.getOrCrash(),
         nodeRedFlowId: nodeRedFlowId.getOrCrash(),
         firstNodeId: firstNodeId.getOrCrash(),
         iconCodePoint: iconCodePoint.getOrCrash(),
@@ -95,5 +110,7 @@ class SceneCbjEntity {
         compUuid: compUuid.getOrCrash(),
         stateMassage: stateMassage.getOrCrash(),
         areaPurposeType: areaPurposeType.name,
+        entitiesWithAutomaticPurpose:
+            entitiesWithAutomaticPurpose.getOrCrash().toList(),
       );
 }

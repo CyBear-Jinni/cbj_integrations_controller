@@ -20,35 +20,34 @@ class EntitiesService {
   static final EntitiesService _instance =
       EntitiesService._singletonConstractor();
 
-  HashMap<String, DeviceEntityBase> entitiesMap = HashMap();
-
   void addDiscovedEntity(HashMap<String, DeviceEntityBase> entities) {
-    final HashMap<String, DeviceEntityBase> newEntities = HashMap();
-    for (final MapEntry<String, DeviceEntityBase> entiery in entities.entries) {
-      if (!entitiesMap.containsKey(entiery.key)) {
-        newEntities.addEntries([entiery]);
-      } else {
-        entitiesMap[entiery.key] = entiery.value;
-      }
-    }
-    if (newEntities.isEmpty) {
-      return;
-    }
+    // final HashMap<String, DeviceEntityBase> newEntities = HashMap();
+    // for (final MapEntry<String, DeviceEntityBase> entiery in entities.entries) {
+    //   if (!entitiesMap.containsKey(entiery.key)) {
+    //     newEntities.addEntries([entiery]);
+    //   } else {
+    //     entitiesMap[entiery.key] = entiery.value;
+    //   }
+    // }
+    // if (newEntities.isEmpty) {
+    //   return;
+    // }
 
-    entitiesMap.addAll(newEntities);
+    // entitiesMap.addAll(newEntities);
     saveToDb();
-    IcSynchronizer().newEntity(newEntities);
+    IcSynchronizer().newEntity(entities);
   }
 
   void setEntitiesState(RequestActionObject action) =>
       VendorsConnectorConjecture().setEntitiesState(action);
 
-  HashMap<String, DeviceEntityBase> getEntities() => entitiesMap;
+  HashMap<String, DeviceEntityBase> getEntities() =>
+      VendorsConnectorConjecture().getEntities();
 
   void saveToDb() {
     final List<String> entitiesJsonString = [];
 
-    for (final DeviceEntityBase entity in entitiesMap.values) {
+    for (final DeviceEntityBase entity in getEntities().values) {
       final String entityAsJsonString =
           jsonEncode(entity.toInfrastructure().toJson());
       entitiesJsonString.add(entityAsJsonString);
@@ -71,12 +70,11 @@ class EntitiesService {
       if (vendor == null) {
         return;
       }
-      entitiesMap.addEntries([MapEntry(entity.getCbjEntityId, entity)]);
-      await VendorsConnectorConjecture().foundEntityOfVendor(
+      // entitiesMap.addEntries([MapEntry(entity.getCbjEntityId, entity)]);
+      VendorsConnectorConjecture().loadEntitiesFromDb(
         vendorConnectorConjectureService: vendor,
         entity: entity,
         entitiyCbjUniqueId: entity.getCbjEntityId,
-        fromDb: true,
       );
     }
   }

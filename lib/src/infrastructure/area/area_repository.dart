@@ -33,14 +33,21 @@ class _AreaRepository implements IAreaRepository {
 
     for (final AreaEntity area in areas.values) {
       final String areaId = area.uniqueId.getOrCrash();
-      final Set<String> devicesInArea =
+      final Set<String> removedEntities =
           area.entitiesId.getOrCrash().intersection(entities);
-      if (devicesInArea.isEmpty) {
+      if (removedEntities.isEmpty) {
         continue;
       }
       areasChanged.add(areaId);
-      area.entitiesId.getOrCrash().removeAll(devicesInArea);
-      areas[areaId] = area;
+      final Set<String> entitiesToAdd =
+          area.entitiesId.getOrCrash().difference(removedEntities);
+      areas[areaId] = area.copy(entitiesId: AreaEntitiesId(entitiesToAdd));
+      for (final String sceneId in area.scenesId.getOrCrash()) {
+        IcSynchronizer().deleteEntitiesFromAutomaticScene(
+          sceneId: sceneId,
+          entitiesId: removedEntities,
+        );
+      }
     }
     areas[areaId]?.entitiesId = AreaEntitiesId(entities);
 
@@ -50,10 +57,13 @@ class _AreaRepository implements IAreaRepository {
     }
 
     final AreaEntity area = areas[areaId]!;
-    IcSynchronizer().updateAreaAutomation(
-      entitiesId: area.entitiesId.getOrCrash(),
-      scenesId: area.scenesId.getOrCrash(),
-    );
+    for (final String sceneId in area.scenesId.getOrCrash()) {
+      IcSynchronizer().addEntitiesToAutomaticScene(
+        sceneId: sceneId,
+        entitiesId: area.entitiesId.getOrCrash(),
+      );
+    }
+
     onAreasUpdated(areasChanged);
   }
 

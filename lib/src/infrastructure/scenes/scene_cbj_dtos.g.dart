@@ -18,7 +18,10 @@ _$SceneCbjDtosImpl _$$SceneCbjDtosImplFromJson(Map<String, dynamic> json) =>
       compUuid: json['compUuid'] as String?,
       stateMassage: json['stateMassage'] as String?,
       areaPurposeType: json['areaPurposeType'] as String,
-      automationString: json['automationString'] as String?,
+      entitiesWithAutomaticPurpose:
+          (json['entitiesWithAutomaticPurpose'] as List<dynamic>)
+              .map((e) => e as String)
+              .toList(),
       nodeRedFlowId: json['nodeRedFlowId'] as String?,
       firstNodeId: json['firstNodeId'] as String?,
       iconCodePoint: json['iconCodePoint'] as String?,
@@ -38,7 +41,7 @@ Map<String, dynamic> _$$SceneCbjDtosImplToJson(_$SceneCbjDtosImpl instance) =>
       'compUuid': instance.compUuid,
       'stateMassage': instance.stateMassage,
       'areaPurposeType': instance.areaPurposeType,
-      'automationString': instance.automationString,
+      'entitiesWithAutomaticPurpose': instance.entitiesWithAutomaticPurpose,
       'nodeRedFlowId': instance.nodeRedFlowId,
       'firstNodeId': instance.firstNodeId,
       'iconCodePoint': instance.iconCodePoint,

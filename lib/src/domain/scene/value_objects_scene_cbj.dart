@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_errors.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_validators.dart';
@@ -86,19 +88,6 @@ class SceneCbjBackgroundColor extends ValueObjectScenesCbj<String> {
 
   @override
   final Either<SceneCbjFailure<String>, String> value;
-}
-
-class SceneCbjAutomationString extends ValueObjectScenesCbj<String?> {
-  factory SceneCbjAutomationString(String? input) {
-    return SceneCbjAutomationString._(
-      validateSceneCbjAutomationStringLugit(input),
-    );
-  }
-
-  const SceneCbjAutomationString._(this.value);
-
-  @override
-  final Either<SceneCbjFailure<String?>, String?> value;
 }
 
 class SceneCbjNodeRedFlowId extends ValueObjectScenesCbj<String?> {
@@ -225,4 +214,16 @@ class SceneCbjDeviceStateGRPC extends ValueObjectScenesCbj<String?> {
 
   @override
   final Either<SceneCbjFailure<String?>, String?> value;
+}
+
+class EntitiesWithAutomaticPurpose
+    extends ValueObjectScenesCbj<HashSet<String>> {
+  factory EntitiesWithAutomaticPurpose(HashSet<String> input) {
+    return EntitiesWithAutomaticPurpose._(right(input));
+  }
+
+  const EntitiesWithAutomaticPurpose._(this.value);
+
+  @override
+  final Either<SceneCbjFailure<HashSet<String>>, HashSet<String>> value;
 }
