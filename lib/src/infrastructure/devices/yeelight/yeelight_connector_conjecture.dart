@@ -57,18 +57,19 @@ class YeelightConnectorConjecture extends VendorConnectorConjectureService {
     for (final MapEntry<String, DeviceEntityBase> entery
         in enitityList.entries) {
       await VendorsConnectorConjecture().foundEntityOfVendor(
-        this,
-        entery.value,
-        entery.value.entitiyCbjUniqueId.getOrCrash(),
+        vendorConnectorConjectureService: this,
+        entity: entery.value,
+        entitiyCbjUniqueId: entery.value.entitiyCbjUniqueId.getOrCrash(),
       );
     }
   }
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) async {
-    if (Platform.isAndroid) {
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async {
+    if (Platform.isAndroid && fromDb == false) {
       return HashMap.fromEntries([MapEntry(entity.getCbjEntityId, entity)]);
     }
 

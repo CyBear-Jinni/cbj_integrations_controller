@@ -28,7 +28,8 @@ class PhilipsHueConnectorConjecture extends VendorConnectorConjectureService {
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) =>
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) =>
       PhilipsHueHelpers.addDiscoveredDevice(entity);
 }

@@ -27,8 +27,9 @@ class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
 
   @override
   Future<HashMap<String, DeviceEntityBase>?> foundEntity(
-    DeviceEntityBase entity,
-  ) async {
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async {
     final String? hostName = entity.deviceHostName.getOrCrash();
     if (hostName == null) {
       return null;
@@ -84,7 +85,8 @@ class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) async =>
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async =>
       HashMap();
 }

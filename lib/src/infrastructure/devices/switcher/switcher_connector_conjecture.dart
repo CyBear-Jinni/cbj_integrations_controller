@@ -44,19 +44,28 @@ class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
       return;
     }
     VendorsConnectorConjecture().foundEntityOfVendor(
-      this,
-      entity,
-      entity.entitiyCbjUniqueId.getOrCrash(),
+      vendorConnectorConjectureService: this,
+      entity: entity,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId.getOrCrash(),
     );
   }
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) async =>
-      // It is getting converted in bindSocketSearchStream
-      HashMap()
-        ..addEntries(
-          [MapEntry(entity.entitiyCbjUniqueId.getOrCrash(), entity)],
-        );
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async {
+    DeviceEntityBase? entityTemp = entity;
+    if (fromDb) {
+      entityTemp = SwitcherHelpers.entityToType(entity);
+      if (entityTemp == null) {
+        return HashMap();
+      }
+    }
+    // It is getting converted in bindSocketSearchStream
+    return HashMap()
+      ..addEntries(
+        [MapEntry(entityTemp.entitiyCbjUniqueId.getOrCrash(), entityTemp)],
+      );
+  }
 }

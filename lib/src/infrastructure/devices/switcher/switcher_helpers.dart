@@ -1,8 +1,11 @@
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
+import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_blinds_entity/generic_blinds_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_blinds_entity/generic_blinds_value_objects.dart';
+import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_boiler_entity/generic_boiler_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_boiler_entity/generic_boiler_value_objects.dart';
+import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_smart_plug_entity/generic_smart_plug_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_smart_plug_entity/generic_smart_plug_value_objects.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/switcher/switcher_entities/switcher_runner_entity.dart';
@@ -166,6 +169,20 @@ class SwitcherHelpers {
     icLogger.i(
       'Please add new Switcher device type ${switcherDevice.deviceType}',
     );
+    return null;
+  }
+
+  static DeviceEntityBase? entityToType(DeviceEntityBase entity) {
+    if (entity is GenericBoilerDE) {
+      return SwitcherV2Entity.fromGeneric(entity);
+    } else if (entity is GenericSmartPlugDE) {
+      return SwitcherSmartPlugEntity.fromGeneric(entity);
+    } else if (entity is SwitcherV2Entity) {
+      return SwitcherV2Entity.fromGeneric(entity);
+    } else if (entity is GenericBlindsDE) {
+      return SwitcherRunnerEntity.fromGeneric(entity);
+    }
+
     return null;
   }
 }

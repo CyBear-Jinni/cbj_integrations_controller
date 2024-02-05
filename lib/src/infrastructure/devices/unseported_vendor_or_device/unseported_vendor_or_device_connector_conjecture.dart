@@ -23,8 +23,9 @@ class UnseportedVendorOrDeviceConnectorConjecture
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) async =>
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async =>
       HashMap()
         ..addEntries([
           MapEntry(entity.entitiyCbjUniqueId.getOrCrash(), entity),

@@ -26,7 +26,8 @@ class ShellyConnectorConjecture extends VendorConnectorConjectureService {
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) =>
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) =>
       ShellyHelpers.addDiscoveredDevice(entity);
 }

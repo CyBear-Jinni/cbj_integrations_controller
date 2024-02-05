@@ -133,7 +133,11 @@ class VendorsConnectorConjecture {
       return;
     }
 
-    foundEntityOfVendor(companyConnectorConjecture, entity, mdnsName);
+    foundEntityOfVendor(
+      vendorConnectorConjectureService: companyConnectorConjecture,
+      entity: entity,
+      entitiyCbjUniqueId: mdnsName,
+    );
   }
 
   Future setHostNameDeviceByCompany(GenericUnsupportedDE entity) async {
@@ -165,9 +169,9 @@ class VendorsConnectorConjecture {
     }
 
     foundEntityOfVendor(
-      companyConnectorConjecture,
-      entity,
-      deviceHostNameLowerCase,
+      vendorConnectorConjectureService: companyConnectorConjecture,
+      entity: entity,
+      entitiyCbjUniqueId: deviceHostNameLowerCase,
     );
   }
 
@@ -182,16 +186,24 @@ class VendorsConnectorConjecture {
       return;
     }
 
-    foundEntityOfVendor(vendorConnectorConjectureService, entity, port);
+    foundEntityOfVendor(
+      vendorConnectorConjectureService: vendorConnectorConjectureService,
+      entity: entity,
+      entitiyCbjUniqueId: port,
+    );
   }
 
-  Future foundEntityOfVendor(
-    VendorConnectorConjectureService vendorConnectorConjectureService,
-    DeviceEntityBase entity,
-    String entitiyCbjUniqueId,
-  ) async {
+  Future foundEntityOfVendor({
+    required VendorConnectorConjectureService vendorConnectorConjectureService,
+    required DeviceEntityBase entity,
+    required String entitiyCbjUniqueId,
+    bool fromDb = false,
+  }) async {
     HashMap<String, DeviceEntityBase>? handeldEntities =
-        await vendorConnectorConjectureService.foundEntity(entity);
+        await vendorConnectorConjectureService.foundEntity(
+      entity,
+      fromDb: fromDb,
+    );
 
     if (handeldEntities == null) {
       icLogger.i('Found unseported device $entitiyCbjUniqueId');
@@ -200,6 +212,7 @@ class VendorsConnectorConjecture {
         entity
           ..entitiyCbjUniqueId =
               CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+        fromDb: fromDb,
       );
     }
 

@@ -73,9 +73,10 @@ class EntitiesService {
       }
       entitiesMap.addEntries([MapEntry(entity.getCbjEntityId, entity)]);
       await VendorsConnectorConjecture().foundEntityOfVendor(
-        vendor,
-        entity,
-        entity.getCbjEntityId,
+        vendorConnectorConjectureService: vendor,
+        entity: entity,
+        entitiyCbjUniqueId: entity.getCbjEntityId,
+        fromDb: true,
       );
     }
   }

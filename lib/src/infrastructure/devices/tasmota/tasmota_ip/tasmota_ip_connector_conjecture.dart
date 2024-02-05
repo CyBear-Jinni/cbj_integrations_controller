@@ -28,7 +28,8 @@ class TasmotaIpConnectorConjecture extends VendorConnectorConjectureService {
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) =>
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) =>
       TasmotaIpHelpers.addDiscoveredDevice(entity);
 }

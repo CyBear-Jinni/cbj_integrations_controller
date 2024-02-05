@@ -83,10 +83,11 @@ abstract class VendorConnectorConjectureService {
   final List<String> uniqueIdentifierNameInMdns;
 
   Future<HashMap<String, DeviceEntityBase>?> foundEntity(
-    DeviceEntityBase entity,
-  ) async {
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async {
     final HashMap<String, DeviceEntityBase> vendorEntityMap =
-        await newEntityToVendorDevice(entity);
+        await newEntityToVendorDevice(entity, fromDb: fromDb);
     if (vendorEntityMap.isEmpty) {
       return null;
     }
@@ -107,8 +108,9 @@ abstract class VendorConnectorConjectureService {
 
   /// Converting new entity that got found into its vendor type
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  );
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  });
 
   Future setEntityState({
     required HashSet<String> ids,
