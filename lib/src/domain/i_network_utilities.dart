@@ -6,7 +6,7 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_empty_entity/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_manager_d.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_base_class_d.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 import 'package:network_tools/network_tools.dart' as network;
 

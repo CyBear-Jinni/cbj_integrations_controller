@@ -58,8 +58,8 @@ class RequestActionObjectDtos {
 
   final String deviceDtoClassInstance = (RequestActionObjectDtos).toString();
 
-  RequestActionObject toDomain() {
-    return RequestActionObject(
+  RequestActionObject toDomain() =>
+     RequestActionObject(
       entityIds: HashSet.from(entitiesId),
       property: EntityPropertiesExtension.fromString(property),
       actionType: EntityActionsExtension.fromString(actionType),
@@ -70,5 +70,5 @@ class RequestActionObjectDtos {
         ),
       ),
     );
-  }
+  
 }

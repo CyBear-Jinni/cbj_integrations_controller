@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/shared_variables.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/system_commands/bash_commands_d/bash_commands_for_raspberry_pi_d.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_base_class_d.dart';
 
-class CommonBashCommandsD implements SystemCommandsBaseClassD {
+class CommonBashCommandsD extends SystemCommandsBaseClassD {
   @override
   Future<String> getCurrentUserName() async {
     final String whoami =
@@ -116,15 +117,13 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
   }
 
   @override
-  Future<String> getLocalDbPath(
-    Future<String?> currentUserName,
-  ) async {
+  Future<String> getLocalDbPath() async {
     String localDbFolderPath;
 
     final String? snapCommonEnvironmentVariable =
         SharedVariables().getSnapCommonEnvironmentVariable();
     if (snapCommonEnvironmentVariable == null) {
-      localDbFolderPath = '/home/${await currentUserName}/';
+      localDbFolderPath = '/home/${await getCurrentUserName()}/';
     } else {
       // /var/snap/cbj-hub/common/isar
       localDbFolderPath = snapCommonEnvironmentVariable;
@@ -181,4 +180,8 @@ class CommonBashCommandsD implements SystemCommandsBaseClassD {
     }
     return commandResult;
   }
+
+  @override
+  Future<String?> getRaspberryPiDeviceVersion() =>
+      BashCommandsForRaspberryPi.getRaspberryPiDeviceVersion();
 }

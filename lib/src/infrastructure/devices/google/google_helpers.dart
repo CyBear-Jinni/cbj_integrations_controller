@@ -10,7 +10,8 @@ class GoogleHelpers {
   static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
     DeviceEntityBase entity,
   ) async {
-    final String deviceCbjUniqueId = entity.devicesMacAddress.getOrCrash()!;
+    final String entitiyCbjUniqueId = entity.devicesMacAddress.getOrCrash() ??
+        entity.deviceMdns.getOrCrash()!;
     String name;
     final String? deviceMdns = entity.deviceMdns.getOrCrash();
     final String? srvTarget = entity.srvTarget.getOrCrash();
@@ -25,7 +26,7 @@ class GoogleHelpers {
     final ChromeCastEntity googleDE = ChromeCastEntity(
       uniqueId: entity.uniqueId,
       entityUniqueId: EntityUniqueId(deviceMdns),
-      cbjEntityName: CbjEntityName(name),
+      cbjEntityName: CbjEntityName(value: name),
       entityOriginalName: entity.entityOriginalName,
       deviceOriginalName: entity.deviceOriginalName,
       entityStateGRPC: EntityState(EntityStateGRPC.ack),
@@ -50,7 +51,7 @@ class GoogleHelpers {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+      entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
       smartTvSwitchState: GenericSmartTvSwitchState(
         EntityActions.undefined.toString(),
       ),
@@ -58,7 +59,7 @@ class GoogleHelpers {
 
     return HashMap()
       ..addEntries([
-        MapEntry(deviceCbjUniqueId, googleDE),
+        MapEntry(entitiyCbjUniqueId, googleDE),
       ]);
   }
 }

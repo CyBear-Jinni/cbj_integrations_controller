@@ -37,7 +37,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.lightSwitchState,
     required super.lightColorTemperature,
     required super.lightColorAlpha,
@@ -47,10 +47,12 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
     required super.lightBrightness,
     required super.colorMode,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.shelly),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.shelly),
         ) {
     api = ShellyApiColorBulb(
-      lastKnownIp: deviceMdns.shortForm ?? deviceLastKnownIp.getOrCrash()!,
+      lastKnownIp:
+          // srvTarget.getOrCrash() ??
+          deviceLastKnownIp.getOrCrash()!,
       mDnsName: deviceMdns.getOrCrash()!,
       hostName: deviceHostName.getOrCrash() ?? '',
     );
@@ -86,7 +88,7 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       lightSwitchState: entity.lightSwitchState,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
       lightBrightness: entity.lightBrightness,
       lightColorTemperature: entity.lightColorTemperature,
       lightColorAlpha: entity.lightColorAlpha,

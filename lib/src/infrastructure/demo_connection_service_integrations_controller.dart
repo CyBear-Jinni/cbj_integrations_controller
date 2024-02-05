@@ -26,16 +26,16 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('96386cd0-419b-11ed-8246-e17a279f4d89'),
       entityUniqueId: EntityUniqueId('63b298'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(
+      cbjDeviceVendor: CbjDeviceVendor(
         VendorsAndServices.switcherSmartHome,
       ),
-      deviceVendor: DeviceVendor(null),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
-      cbjEntityName: CbjEntityName('Guy Blinds'),
+      deviceVendor: DeviceVendor(),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
+      cbjEntityName: CbjEntityName(value: 'Guy Blinds'),
       entityOriginalName: EntityOriginalName('Guy Blinds'),
-      deviceOriginalName: DeviceOriginalName('Guy Blinds'),
+      deviceOriginalName: DeviceOriginalName(value: 'Guy Blinds'),
       entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
-      stateMassage: DeviceStateMassage('Hello World'),
+      stateMassage: DeviceStateMassage(value: 'Hello World'),
       senderDeviceOs: DeviceSenderDeviceOs('switcher'),
       senderDeviceModel:
           DeviceSenderDeviceModel('SwitcherDevicesTypes.switcherRunner'),
@@ -47,27 +47,27 @@ class DemoConnectionController {
           GenericBlindsSwitchState(EntityActions.stop.toString()),
       powerConsumption: DevicePowerConsumption('0'),
       deviceUniqueId: DeviceUniqueId('deviceUniqueId'),
-      devicePort: DevicePort('devicePort'),
-      deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
-      deviceHostName: DeviceHostName('deviceHostName'),
-      deviceMdns: DeviceMdns('deviceMdns'),
+      devicePort: DevicePort(value: 'devicePort'),
+      deviceLastKnownIp: DeviceLastKnownIp(value: 'deviceLastKnownIp'),
+      deviceHostName: DeviceHostName(value: 'deviceHostName'),
+      deviceMdns: DeviceMdns(value: 'deviceMdns'),
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
       mdnsServiceType: DevicemdnsServiceType(),
-      devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
+      devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('n5sdf1sf-df53-v2sd-ge46-hhjlywawq166'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsBlinds.getCbjDeviceId,
+          allRemoteCommandsBlinds.getCbjEntityId,
           allRemoteCommandsBlinds,
         ),
       ],
@@ -79,14 +79,14 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('c90137f2-419b-11ed-8246-e17a279f4d89'),
       entityUniqueId: EntityUniqueId('67600068c44f33f5b515'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lifx),
-      deviceVendor: DeviceVendor(null),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
-      cbjEntityName: CbjEntityName('Guy Ceiling Button'),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lifx),
+      deviceVendor: DeviceVendor(),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
+      cbjEntityName: CbjEntityName(value: 'Guy Ceiling Button'),
       entityOriginalName: EntityOriginalName('Guy Ceiling Button'),
-      deviceOriginalName: DeviceOriginalName('Guy Ceiling Button'),
+      deviceOriginalName: DeviceOriginalName(value: 'Guy Ceiling Button'),
       entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
-      stateMassage: DeviceStateMassage('Hello World'),
+      stateMassage: DeviceStateMassage(value: 'Hello World'),
       senderDeviceOs: DeviceSenderDeviceOs('switcher'),
       senderDeviceModel: DeviceSenderDeviceModel('Cloud'),
       senderId: DeviceSenderId.fromUniqueString(
@@ -96,27 +96,27 @@ class DemoConnectionController {
       switchState: GenericSwitchSwitchState(EntityActions.on.toString()),
       powerConsumption: DevicePowerConsumption('0'),
       deviceUniqueId: DeviceUniqueId('deviceUniqueId'),
-      devicePort: DevicePort('devicePort'),
-      deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
-      deviceHostName: DeviceHostName('deviceHostName'),
-      deviceMdns: DeviceMdns('deviceMdns'),
+      devicePort: DevicePort(value: 'devicePort'),
+      deviceLastKnownIp: DeviceLastKnownIp(value: 'deviceLastKnownIp'),
+      deviceHostName: DeviceHostName(value: 'deviceHostName'),
+      deviceMdns: DeviceMdns(value: 'deviceMdns'),
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
       mdnsServiceType: DevicemdnsServiceType(),
-      devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
+      devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('b0gaseh2-u7f4-1g42-vdf2-dfnertaku3fs'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsButton.getCbjDeviceId,
+          allRemoteCommandsButton.getCbjEntityId,
           allRemoteCommandsButton,
         ),
       ],
@@ -128,14 +128,14 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('a31523m6-463s-32ge-7426-g33c642r7m25'),
       entityUniqueId: EntityUniqueId('67600068c44f33f5b515'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lifx),
-      deviceVendor: DeviceVendor(null),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
-      cbjEntityName: CbjEntityName('Guy Bedarea Button'),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lifx),
+      deviceVendor: DeviceVendor(),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
+      cbjEntityName: CbjEntityName(value: 'Guy Bedarea Button'),
       entityOriginalName: EntityOriginalName('Guy Bedarea Button'),
-      deviceOriginalName: DeviceOriginalName('Guy Bedarea Button'),
+      deviceOriginalName: DeviceOriginalName(value: 'Guy Bedarea Button'),
       entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
-      stateMassage: DeviceStateMassage('Hello World'),
+      stateMassage: DeviceStateMassage(value: 'Hello World'),
       senderDeviceOs: DeviceSenderDeviceOs('switcher'),
       senderDeviceModel: DeviceSenderDeviceModel('Cloud'),
       senderId: DeviceSenderId.fromUniqueString(
@@ -145,27 +145,27 @@ class DemoConnectionController {
       switchState: GenericSwitchSwitchState(EntityActions.on.toString()),
       powerConsumption: DevicePowerConsumption('0'),
       deviceUniqueId: DeviceUniqueId('deviceUniqueId'),
-      devicePort: DevicePort('devicePort'),
-      deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
-      deviceHostName: DeviceHostName('deviceHostName'),
-      deviceMdns: DeviceMdns('deviceMdns'),
+      devicePort: DevicePort(value: 'devicePort'),
+      deviceLastKnownIp: DeviceLastKnownIp(value: 'deviceLastKnownIp'),
+      deviceHostName: DeviceHostName(value: 'deviceHostName'),
+      deviceMdns: DeviceMdns(value: 'deviceMdns'),
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
       mdnsServiceType: DevicemdnsServiceType(),
-      devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
+      devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('654wdf2u-rge2-ffh2-gn22-rthweru521rs'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsButton2.getCbjDeviceId,
+          allRemoteCommandsButton2.getCbjEntityId,
           allRemoteCommandsButton2,
         ),
       ],
@@ -177,16 +177,16 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('65d84b10-434d-11ed-817a-7d350fb52f91'),
       entityUniqueId: EntityUniqueId('65fd2f'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(
+      cbjDeviceVendor: CbjDeviceVendor(
         VendorsAndServices.switcherSmartHome,
       ),
-      deviceVendor: DeviceVendor(null),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
-      cbjEntityName: CbjEntityName('Boiler'),
+      deviceVendor: DeviceVendor(),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
+      cbjEntityName: CbjEntityName(value: 'Boiler'),
       entityOriginalName: EntityOriginalName('Boiler'),
-      deviceOriginalName: DeviceOriginalName('Boiler'),
+      deviceOriginalName: DeviceOriginalName(value: 'Boiler'),
       entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
-      stateMassage: DeviceStateMassage('Hello World'),
+      stateMassage: DeviceStateMassage(value: 'Hello World'),
       senderDeviceOs: DeviceSenderDeviceOs('switcher'),
       senderDeviceModel:
           DeviceSenderDeviceModel('SwitcherDevicesTypes.switcherV2Esp'),
@@ -197,27 +197,27 @@ class DemoConnectionController {
       boilerSwitchState: GenericBoilerSwitchState(EntityActions.off.toString()),
       powerConsumption: DevicePowerConsumption('0'),
       deviceUniqueId: DeviceUniqueId('deviceUniqueId'),
-      devicePort: DevicePort('devicePort'),
-      deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
-      deviceHostName: DeviceHostName('deviceHostName'),
-      deviceMdns: DeviceMdns('deviceMdns'),
+      devicePort: DevicePort(value: 'devicePort'),
+      deviceLastKnownIp: DeviceLastKnownIp(value: 'deviceLastKnownIp'),
+      deviceHostName: DeviceHostName(value: 'deviceHostName'),
+      deviceMdns: DeviceMdns(value: 'deviceMdns'),
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
       mdnsServiceType: DevicemdnsServiceType(),
-      devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
+      devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('id2erfdd-g34a-uhj5-fdfa-sdf5y3wsdfhs'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsBoiler.getCbjDeviceId,
+          allRemoteCommandsBoiler.getCbjEntityId,
           allRemoteCommandsBoiler,
         ),
       ],
@@ -229,14 +229,14 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('7189ed76-4351-11ed-b249-63fd7e165c16'),
       entityUniqueId: EntityUniqueId('bf4bccdaf68347e31dhiut'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lifx),
-      deviceVendor: DeviceVendor(null),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
-      cbjEntityName: CbjEntityName('Dining Area Ceiling'),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lifx),
+      deviceVendor: DeviceVendor(),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
+      cbjEntityName: CbjEntityName(value: 'Dining Area Ceiling'),
       entityOriginalName: EntityOriginalName('Dining Area Ceiling'),
-      deviceOriginalName: DeviceOriginalName('Dining Area Ceiling'),
+      deviceOriginalName: DeviceOriginalName(value: 'Dining Area Ceiling'),
       entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
-      stateMassage: DeviceStateMassage('Hello World'),
+      stateMassage: DeviceStateMassage(value: 'Hello World'),
       senderDeviceOs: DeviceSenderDeviceOs('tuya_smart'),
       senderDeviceModel: DeviceSenderDeviceModel('1SE'),
       senderId: DeviceSenderId.fromUniqueString(
@@ -253,20 +253,20 @@ class DemoConnectionController {
       lightColorValue: GenericRgbwLightColorValue('1.0'),
       powerConsumption: DevicePowerConsumption('0'),
       deviceUniqueId: DeviceUniqueId('deviceUniqueId'),
-      devicePort: DevicePort('devicePort'),
-      deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
-      deviceHostName: DeviceHostName('deviceHostName'),
-      deviceMdns: DeviceMdns('deviceMdns'),
+      devicePort: DevicePort(value: 'devicePort'),
+      deviceLastKnownIp: DeviceLastKnownIp(value: 'deviceLastKnownIp'),
+      deviceHostName: DeviceHostName(value: 'deviceHostName'),
+      deviceMdns: DeviceMdns(value: 'deviceMdns'),
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
       mdnsServiceType: DevicemdnsServiceType(),
-      devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
+      devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('sd3fgbns-64as-1gd2-gfdw-dgghks325as6'),
       colorMode: GenericLightModeState(ColorMode.white),
     );
@@ -274,7 +274,7 @@ class DemoConnectionController {
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsRgbLight.getCbjDeviceId,
+          allRemoteCommandsRgbLight.getCbjEntityId,
           allRemoteCommandsRgbLight,
         ),
       ],
@@ -287,14 +287,14 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('sfds344t-sdf3-fd3d-24s4-bd2sdf3n5rfd'),
       entityUniqueId: EntityUniqueId('dn2fs1sgnxzzx34sh53qdf'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lifx),
-      deviceVendor: DeviceVendor(null),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
-      cbjEntityName: CbjEntityName('Dining Area Stove'),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lifx),
+      deviceVendor: DeviceVendor(),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
+      cbjEntityName: CbjEntityName(value: 'Dining Area Stove'),
       entityOriginalName: EntityOriginalName('Dining Area Light 1'),
-      deviceOriginalName: DeviceOriginalName('Dining Area Light 1'),
+      deviceOriginalName: DeviceOriginalName(value: 'Dining Area Light 1'),
       entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
-      stateMassage: DeviceStateMassage('Hello World'),
+      stateMassage: DeviceStateMassage(value: 'Hello World'),
       senderDeviceOs: DeviceSenderDeviceOs('lifx'),
       senderDeviceModel: DeviceSenderDeviceModel('1SE'),
       senderId: DeviceSenderId.fromUniqueString(
@@ -306,27 +306,27 @@ class DemoConnectionController {
       lightBrightness: GenericDimmableLightBrightness('100'),
       powerConsumption: DevicePowerConsumption('0'),
       deviceUniqueId: DeviceUniqueId('deviceUniqueId'),
-      devicePort: DevicePort('devicePort'),
-      deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
-      deviceHostName: DeviceHostName('deviceHostName'),
-      deviceMdns: DeviceMdns('deviceMdns'),
+      devicePort: DevicePort(value: 'devicePort'),
+      deviceLastKnownIp: DeviceLastKnownIp(value: 'deviceLastKnownIp'),
+      deviceHostName: DeviceHostName(value: 'deviceHostName'),
+      deviceMdns: DeviceMdns(value: 'deviceMdns'),
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
       mdnsServiceType: DevicemdnsServiceType(),
-      devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
+      devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('dgh4nsdg-fd2d-df32-vn4g-dfgw2dvvnrrg'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsDimmableLight1.getCbjDeviceId,
+          allRemoteCommandsDimmableLight1.getCbjEntityId,
           allRemoteCommandsDimmableLight1,
         ),
       ],
@@ -337,14 +337,14 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('gcvweg3y-bv2s-cvwe-bdmf-7h4f3f2dw2d1'),
       entityUniqueId: EntityUniqueId('4gj76jykeg3fsdf2dsq11f'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.lifx),
-      deviceVendor: DeviceVendor(null),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
-      cbjEntityName: CbjEntityName('Ami Area Ceiling'),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.lifx),
+      deviceVendor: DeviceVendor(),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
+      cbjEntityName: CbjEntityName(value: 'Ami Area Ceiling'),
       entityOriginalName: EntityOriginalName('Ami Workshop Light'),
-      deviceOriginalName: DeviceOriginalName('Ami Workshop Light'),
+      deviceOriginalName: DeviceOriginalName(value: 'Ami Workshop Light'),
       entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
-      stateMassage: DeviceStateMassage('Hello World'),
+      stateMassage: DeviceStateMassage(value: 'Hello World'),
       senderDeviceOs: DeviceSenderDeviceOs('lifx'),
       senderDeviceModel: DeviceSenderDeviceModel('1SE'),
       senderId: DeviceSenderId.fromUniqueString(
@@ -356,27 +356,27 @@ class DemoConnectionController {
       lightBrightness: GenericDimmableLightBrightness('100'),
       powerConsumption: DevicePowerConsumption('0'),
       deviceUniqueId: DeviceUniqueId('deviceUniqueId'),
-      devicePort: DevicePort('devicePort'),
-      deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
-      deviceHostName: DeviceHostName('deviceHostName'),
-      deviceMdns: DeviceMdns('deviceMdns'),
+      devicePort: DevicePort(value: 'devicePort'),
+      deviceLastKnownIp: DeviceLastKnownIp(value: 'deviceLastKnownIp'),
+      deviceHostName: DeviceHostName(value: 'deviceHostName'),
+      deviceMdns: DeviceMdns(value: 'deviceMdns'),
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
       mdnsServiceType: DevicemdnsServiceType(),
-      devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
+      devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('nbfsgsdf-34f3-631w-125f-324f23567731'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsDimmableLight2.getCbjDeviceId,
+          allRemoteCommandsDimmableLight2.getCbjEntityId,
           allRemoteCommandsDimmableLight2,
         ),
       ],
@@ -388,14 +388,14 @@ class DemoConnectionController {
       uniqueId:
           CoreUniqueId.fromUniqueString('wfdsg2w6-fgde-234s-vbz2-b234jmgvbfd6'),
       entityUniqueId: EntityUniqueId('cb3rdfh2ttgl9dgbvnsudt'),
-      cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.espHome),
-      deviceVendor: DeviceVendor(null),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
-      cbjEntityName: CbjEntityName('Dining Area Light 2'),
+      cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.espHome),
+      deviceVendor: DeviceVendor(),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
+      cbjEntityName: CbjEntityName(value: 'Dining Area Light 2'),
       entityOriginalName: EntityOriginalName('Dining Area Light 2'),
-      deviceOriginalName: DeviceOriginalName('Dining Area Light 2'),
+      deviceOriginalName: DeviceOriginalName(value: 'Dining Area Light 2'),
       entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
-      stateMassage: DeviceStateMassage('Hello World'),
+      stateMassage: DeviceStateMassage(value: 'Hello World'),
       senderDeviceOs: DeviceSenderDeviceOs('espHome'),
       senderDeviceModel: DeviceSenderDeviceModel('esp8266'),
       senderId: DeviceSenderId.fromUniqueString(
@@ -405,27 +405,27 @@ class DemoConnectionController {
       lightSwitchState: GenericLightSwitchState(EntityActions.off.toString()),
       powerConsumption: DevicePowerConsumption('0'),
       deviceUniqueId: DeviceUniqueId('deviceUniqueId'),
-      devicePort: DevicePort('devicePort'),
-      deviceLastKnownIp: DeviceLastKnownIp('deviceLastKnownIp'),
-      deviceHostName: DeviceHostName('deviceHostName'),
-      deviceMdns: DeviceMdns('deviceMdns'),
+      devicePort: DevicePort(value: 'devicePort'),
+      deviceLastKnownIp: DeviceLastKnownIp(value: 'deviceLastKnownIp'),
+      deviceHostName: DeviceHostName(value: 'deviceHostName'),
+      deviceMdns: DeviceMdns(value: 'deviceMdns'),
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
       mdnsServiceType: DevicemdnsServiceType(),
-      devicesMacAddress: DevicesMacAddress('devicesMacAddress'),
+      devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      deviceCbjUniqueId:
+      entitiyCbjUniqueId:
           CoreUniqueId.fromUniqueString('sgeryjmn-gfn3-bf3v-et24-fvd22445jng3'),
     );
 
     devicesList.addEntries(
       [
         MapEntry(
-          allRemoteCommandsLight.getCbjDeviceId,
+          allRemoteCommandsLight.getCbjEntityId,
           allRemoteCommandsLight,
         ),
       ],

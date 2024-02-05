@@ -20,7 +20,7 @@ _$GenericSecurityCameraDeviceDtosImpl
           senderId: json['senderId'] as String?,
           entityTypes: json['entityTypes'] as String?,
           compUuid: json['compUuid'] as String?,
-          cbjDeviceVendor: json['cbjDeviceVendor'] as String?,
+          cbjDeviceVendor: json['cbjDeviceVendor'] as String,
           deviceVendor: json['deviceVendor'] as String?,
           deviceNetworkLastUpdate: json['deviceNetworkLastUpdate'] as String?,
           powerConsumption: json['powerConsumption'] as String?,
@@ -38,7 +38,7 @@ _$GenericSecurityCameraDeviceDtosImpl
           requestTimeStamp: json['requestTimeStamp'] as String?,
           lastResponseFromDeviceTimeStamp:
               json['lastResponseFromDeviceTimeStamp'] as String?,
-          deviceCbjUniqueId: json['deviceCbjUniqueId'] as String?,
+          entitiyCbjUniqueId: json['entitiyCbjUniqueId'] as String?,
           securityCameraSuspendState:
               json['securityCameraSuspendState'] as String?,
           deviceDtoClass: json['deviceDtoClass'] as String?,
@@ -77,7 +77,7 @@ Map<String, dynamic> _$$GenericSecurityCameraDeviceDtosImplToJson(
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':
           instance.lastResponseFromDeviceTimeStamp,
-      'deviceCbjUniqueId': instance.deviceCbjUniqueId,
+      'entitiyCbjUniqueId': instance.entitiyCbjUniqueId,
       'securityCameraSuspendState': instance.securityCameraSuspendState,
       'deviceDtoClass': instance.deviceDtoClass,
       'stateMassage': instance.stateMassage,

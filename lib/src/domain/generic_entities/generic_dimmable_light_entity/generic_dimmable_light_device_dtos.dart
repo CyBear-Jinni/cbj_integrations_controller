@@ -26,7 +26,7 @@ abstract class GenericDimmableLightDeviceDtos
     required String? lightSwitchState,
     required String? entityTypes,
     required String? compUuid,
-    required String? cbjDeviceVendor,
+    required String cbjDeviceVendor,
     required String? deviceVendor,
     required String? deviceNetworkLastUpdate,
     required String? powerConsumption,
@@ -44,7 +44,7 @@ abstract class GenericDimmableLightDeviceDtos
     required String? entityKey,
     required String? requestTimeStamp,
     required String? lastResponseFromDeviceTimeStamp,
-    required String? deviceCbjUniqueId,
+    required String? entitiyCbjUniqueId,
     String? deviceDtoClass,
     String? stateMassage,
 
@@ -90,7 +90,7 @@ abstract class GenericDimmableLightDeviceDtos
       requestTimeStamp: deviceDe.requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           deviceDe.lastResponseFromDeviceTimeStamp.getOrCrash(),
-      deviceCbjUniqueId: deviceDe.deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: deviceDe.entitiyCbjUniqueId.getOrCrash(),
     );
   }
 
@@ -106,40 +106,43 @@ abstract class GenericDimmableLightDeviceDtos
     return GenericDimmableLightDE(
       uniqueId: CoreUniqueId.fromUniqueString(id),
       entityUniqueId: EntityUniqueId(entityUniqueId),
-      cbjEntityName: CbjEntityName(cbjEntityName),
+      cbjEntityName: CbjEntityName(value: cbjEntityName),
       entityOriginalName: EntityOriginalName(entityOriginalName),
-      deviceOriginalName: DeviceOriginalName(deviceOriginalName),
+      deviceOriginalName: DeviceOriginalName(value: deviceOriginalName),
       entityStateGRPC: EntityState(
         entityStateGRPC == null
             ? EntityStateGRPC.undefined
             : EntityStateGRPCExtension.fromString(entityStateGRPC!),
       ),
-      stateMassage: DeviceStateMassage(stateMassage),
+      stateMassage: DeviceStateMassage(value: stateMassage),
       senderDeviceOs: DeviceSenderDeviceOs(senderDeviceOs),
       senderDeviceModel: DeviceSenderDeviceModel(senderDeviceModel),
       senderId: DeviceSenderId.fromUniqueString(senderId),
-      cbjDeviceVendor: CbjDeviceVendor(cbjDeviceVendor),
-      deviceVendor: DeviceVendor(deviceVendor),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(deviceNetworkLastUpdate),
+      cbjDeviceVendor: CbjDeviceVendor(
+        VendorsAndServicesExtension.fromString(cbjDeviceVendor),
+      ),
+      deviceVendor: DeviceVendor(value: deviceVendor),
+      deviceNetworkLastUpdate:
+          DeviceNetworkLastUpdate(value: deviceNetworkLastUpdate),
       compUuid: DeviceCompUuid(compUuid),
       lightSwitchState: GenericDimmableLightSwitchState(lightSwitchState),
       lightBrightness: GenericDimmableLightBrightness(lightBrightness),
       powerConsumption: DevicePowerConsumption(powerConsumption),
       deviceUniqueId: DeviceUniqueId(deviceUniqueId),
-      devicePort: DevicePort(devicePort),
-      deviceLastKnownIp: DeviceLastKnownIp(deviceLastKnownIp),
-      deviceHostName: DeviceHostName(deviceHostName),
-      deviceMdns: DeviceMdns(deviceMdns),
+      devicePort: DevicePort(value: devicePort),
+      deviceLastKnownIp: DeviceLastKnownIp(value: deviceLastKnownIp),
+      deviceHostName: DeviceHostName(value: deviceHostName),
+      deviceMdns: DeviceMdns(value: deviceMdns),
       srvResourceRecord: DeviceSrvResourceRecord(input: srvResourceRecord),
       srvTarget: DeviceSrvTarget(input: srvTarget),
       ptrResourceRecord: DevicePtrResourceRecord(input: ptrResourceRecord),
       mdnsServiceType: DevicemdnsServiceType(input: mdnsServiceType),
-      devicesMacAddress: DevicesMacAddress(devicesMacAddress),
+      devicesMacAddress: DevicesMacAddress(value: devicesMacAddress),
       entityKey: EntityKey(entityKey),
       requestTimeStamp: RequestTimeStamp(requestTimeStamp),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp(lastResponseFromDeviceTimeStamp),
-      deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId!),
+      entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId!),
     );
   }
 }

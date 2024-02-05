@@ -20,7 +20,7 @@ _$GenericRgbwLightDeviceDtosImpl _$$GenericRgbwLightDeviceDtosImplFromJson(
       senderId: json['senderId'] as String?,
       entityTypes: json['entityTypes'] as String?,
       compUuid: json['compUuid'] as String?,
-      cbjDeviceVendor: json['cbjDeviceVendor'] as String?,
+      cbjDeviceVendor: json['cbjDeviceVendor'] as String,
       deviceVendor: json['deviceVendor'] as String?,
       deviceNetworkLastUpdate: json['deviceNetworkLastUpdate'] as String?,
       powerConsumption: json['powerConsumption'] as String?,
@@ -38,7 +38,7 @@ _$GenericRgbwLightDeviceDtosImpl _$$GenericRgbwLightDeviceDtosImplFromJson(
       requestTimeStamp: json['requestTimeStamp'] as String?,
       lastResponseFromDeviceTimeStamp:
           json['lastResponseFromDeviceTimeStamp'] as String?,
-      deviceCbjUniqueId: json['deviceCbjUniqueId'] as String?,
+      entitiyCbjUniqueId: json['entitiyCbjUniqueId'] as String?,
       lightSwitchState: json['lightSwitchState'] as String?,
       lightColorTemperature: json['lightColorTemperature'] as String?,
       lightBrightness: json['lightBrightness'] as String?,
@@ -83,7 +83,7 @@ Map<String, dynamic> _$$GenericRgbwLightDeviceDtosImplToJson(
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':
           instance.lastResponseFromDeviceTimeStamp,
-      'deviceCbjUniqueId': instance.deviceCbjUniqueId,
+      'entitiyCbjUniqueId': instance.entitiyCbjUniqueId,
       'lightSwitchState': instance.lightSwitchState,
       'lightColorTemperature': instance.lightColorTemperature,
       'lightBrightness': instance.lightBrightness,

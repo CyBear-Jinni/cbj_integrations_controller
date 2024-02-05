@@ -29,7 +29,7 @@ class SensiboSkyEntity extends GenericAcDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.srvResourceRecord,
     required super.srvTarget,
     required super.ptrResourceRecord,
@@ -41,7 +41,7 @@ class SensiboSkyEntity extends GenericAcDE {
     required super.fanLevel,
     required super.light,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.sensibo),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.sensibo),
         );
 
   @override

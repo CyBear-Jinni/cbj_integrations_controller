@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cast/cast.dart';
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
@@ -36,19 +37,14 @@ class ChromeCastEntity extends GenericSmartTvDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.smartTvSwitchState,
     super.pausePlayState,
     super.volume,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.google),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.google),
         ) {
-    castDevice = CastDevice(
-      serviceName: devicesMacAddress.getOrCrash()!,
-      name: deviceOriginalName.getOrCrash()!,
-      host: srvTarget.getOrCrash() ?? deviceLastKnownIp.getOrCrash()!,
-      port: int.tryParse(devicePort.getOrCrash() ?? '')!,
-    );
+    asyncConstactor();
   }
 
   factory ChromeCastEntity.fromGeneric(GenericSmartTvDE entity) {
@@ -80,13 +76,30 @@ class ChromeCastEntity extends GenericSmartTvDE {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
       smartTvSwitchState: entity.smartTvSwitchState,
+    );
+  }
+  Future asyncConstactor() async {
+    final String? srvTargetTemp = srvTarget.getOrCrash();
+
+    if (srvTargetTemp != null && srvTargetTemp.isNotEmpty) {
+      final String address =
+          (await InternetAddress.lookup(srvTargetTemp)).first.address;
+      if (address.isNotEmpty) {
+        deviceLastKnownIp = DeviceLastKnownIp(value: address);
+      }
+    }
+
+    castDevice = CastDevice(
+      serviceName: devicesMacAddress.getOrCrash() ?? '',
+      name: deviceOriginalName.getOrCrash() ?? '',
+      host: deviceLastKnownIp.getOrCrash()!,
+      port: int.tryParse(devicePort.getOrCrash() ?? '')!,
     );
   }
 
   CastDevice? castDevice;
-  bool sessionIsClosing = false;
 
   @override
   Future<Either<CoreFailure, Unit>> turnOnSmartTv() async => right(unit);

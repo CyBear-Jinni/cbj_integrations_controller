@@ -34,7 +34,7 @@ mixin _$GenericPingDeviceDtos {
   String? get pingSwitchState => throw _privateConstructorUsedError;
   String? get entityTypes => throw _privateConstructorUsedError;
   String? get compUuid => throw _privateConstructorUsedError;
-  String? get cbjDeviceVendor => throw _privateConstructorUsedError;
+  String get cbjDeviceVendor => throw _privateConstructorUsedError;
   String? get deviceVendor => throw _privateConstructorUsedError;
   String? get deviceNetworkLastUpdate => throw _privateConstructorUsedError;
   String? get powerConsumption => throw _privateConstructorUsedError;
@@ -52,7 +52,7 @@ mixin _$GenericPingDeviceDtos {
   String? get requestTimeStamp => throw _privateConstructorUsedError;
   String? get lastResponseFromDeviceTimeStamp =>
       throw _privateConstructorUsedError;
-  String? get deviceCbjUniqueId => throw _privateConstructorUsedError;
+  String? get entitiyCbjUniqueId => throw _privateConstructorUsedError;
   String? get deviceDtoClass => throw _privateConstructorUsedError;
   String? get stateMassage => throw _privateConstructorUsedError;
 
@@ -81,7 +81,7 @@ abstract class $GenericPingDeviceDtosCopyWith<$Res> {
       String? pingSwitchState,
       String? entityTypes,
       String? compUuid,
-      String? cbjDeviceVendor,
+      String cbjDeviceVendor,
       String? deviceVendor,
       String? deviceNetworkLastUpdate,
       String? powerConsumption,
@@ -98,7 +98,7 @@ abstract class $GenericPingDeviceDtosCopyWith<$Res> {
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
-      String? deviceCbjUniqueId,
+      String? entitiyCbjUniqueId,
       String? deviceDtoClass,
       String? stateMassage});
 }
@@ -129,7 +129,7 @@ class _$GenericPingDeviceDtosCopyWithImpl<$Res,
     Object? pingSwitchState = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
-    Object? cbjDeviceVendor = freezed,
+    Object? cbjDeviceVendor = null,
     Object? deviceVendor = freezed,
     Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
@@ -146,7 +146,7 @@ class _$GenericPingDeviceDtosCopyWithImpl<$Res,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
-    Object? deviceCbjUniqueId = freezed,
+    Object? entitiyCbjUniqueId = freezed,
     Object? deviceDtoClass = freezed,
     Object? stateMassage = freezed,
   }) {
@@ -199,10 +199,10 @@ class _$GenericPingDeviceDtosCopyWithImpl<$Res,
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
-      cbjDeviceVendor: freezed == cbjDeviceVendor
+      cbjDeviceVendor: null == cbjDeviceVendor
           ? _value.cbjDeviceVendor
           : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
@@ -268,9 +268,9 @@ class _$GenericPingDeviceDtosCopyWithImpl<$Res,
           ? _value.lastResponseFromDeviceTimeStamp
           : lastResponseFromDeviceTimeStamp // ignore: cast_nullable_to_non_nullable
               as String?,
-      deviceCbjUniqueId: freezed == deviceCbjUniqueId
-          ? _value.deviceCbjUniqueId
-          : deviceCbjUniqueId // ignore: cast_nullable_to_non_nullable
+      entitiyCbjUniqueId: freezed == entitiyCbjUniqueId
+          ? _value.entitiyCbjUniqueId
+          : entitiyCbjUniqueId // ignore: cast_nullable_to_non_nullable
               as String?,
       deviceDtoClass: freezed == deviceDtoClass
           ? _value.deviceDtoClass
@@ -306,7 +306,7 @@ abstract class _$$GenericPingDeviceDtosImplCopyWith<$Res>
       String? pingSwitchState,
       String? entityTypes,
       String? compUuid,
-      String? cbjDeviceVendor,
+      String cbjDeviceVendor,
       String? deviceVendor,
       String? deviceNetworkLastUpdate,
       String? powerConsumption,
@@ -323,7 +323,7 @@ abstract class _$$GenericPingDeviceDtosImplCopyWith<$Res>
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
-      String? deviceCbjUniqueId,
+      String? entitiyCbjUniqueId,
       String? deviceDtoClass,
       String? stateMassage});
 }
@@ -352,7 +352,7 @@ class __$$GenericPingDeviceDtosImplCopyWithImpl<$Res>
     Object? pingSwitchState = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
-    Object? cbjDeviceVendor = freezed,
+    Object? cbjDeviceVendor = null,
     Object? deviceVendor = freezed,
     Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
@@ -369,7 +369,7 @@ class __$$GenericPingDeviceDtosImplCopyWithImpl<$Res>
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
-    Object? deviceCbjUniqueId = freezed,
+    Object? entitiyCbjUniqueId = freezed,
     Object? deviceDtoClass = freezed,
     Object? stateMassage = freezed,
   }) {
@@ -422,10 +422,10 @@ class __$$GenericPingDeviceDtosImplCopyWithImpl<$Res>
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
-      cbjDeviceVendor: freezed == cbjDeviceVendor
+      cbjDeviceVendor: null == cbjDeviceVendor
           ? _value.cbjDeviceVendor
           : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
@@ -491,9 +491,9 @@ class __$$GenericPingDeviceDtosImplCopyWithImpl<$Res>
           ? _value.lastResponseFromDeviceTimeStamp
           : lastResponseFromDeviceTimeStamp // ignore: cast_nullable_to_non_nullable
               as String?,
-      deviceCbjUniqueId: freezed == deviceCbjUniqueId
-          ? _value.deviceCbjUniqueId
-          : deviceCbjUniqueId // ignore: cast_nullable_to_non_nullable
+      entitiyCbjUniqueId: freezed == entitiyCbjUniqueId
+          ? _value.entitiyCbjUniqueId
+          : entitiyCbjUniqueId // ignore: cast_nullable_to_non_nullable
               as String?,
       deviceDtoClass: freezed == deviceDtoClass
           ? _value.deviceDtoClass
@@ -540,7 +540,7 @@ class _$GenericPingDeviceDtosImpl extends _GenericPingDeviceDtos {
       required this.entityKey,
       required this.requestTimeStamp,
       required this.lastResponseFromDeviceTimeStamp,
-      required this.deviceCbjUniqueId,
+      required this.entitiyCbjUniqueId,
       this.deviceDtoClass,
       this.stateMassage})
       : super._();
@@ -574,7 +574,7 @@ class _$GenericPingDeviceDtosImpl extends _GenericPingDeviceDtos {
   @override
   final String? compUuid;
   @override
-  final String? cbjDeviceVendor;
+  final String cbjDeviceVendor;
   @override
   final String? deviceVendor;
   @override
@@ -608,7 +608,7 @@ class _$GenericPingDeviceDtosImpl extends _GenericPingDeviceDtos {
   @override
   final String? lastResponseFromDeviceTimeStamp;
   @override
-  final String? deviceCbjUniqueId;
+  final String? entitiyCbjUniqueId;
   @override
   final String? deviceDtoClass;
   @override
@@ -616,7 +616,7 @@ class _$GenericPingDeviceDtosImpl extends _GenericPingDeviceDtos {
 
   @override
   String toString() {
-    return 'GenericPingDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, pingSwitchState: $pingSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericPingDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, pingSwitchState: $pingSwitchState, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, devicesMacAddress: $devicesMacAddress, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, entitiyCbjUniqueId: $entitiyCbjUniqueId, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -684,8 +684,8 @@ class _$GenericPingDeviceDtosImpl extends _GenericPingDeviceDtos {
                     lastResponseFromDeviceTimeStamp) ||
                 other.lastResponseFromDeviceTimeStamp ==
                     lastResponseFromDeviceTimeStamp) &&
-            (identical(other.deviceCbjUniqueId, deviceCbjUniqueId) ||
-                other.deviceCbjUniqueId == deviceCbjUniqueId) &&
+            (identical(other.entitiyCbjUniqueId, entitiyCbjUniqueId) ||
+                other.entitiyCbjUniqueId == entitiyCbjUniqueId) &&
             (identical(other.deviceDtoClass, deviceDtoClass) ||
                 other.deviceDtoClass == deviceDtoClass) &&
             (identical(other.stateMassage, stateMassage) ||
@@ -725,7 +725,7 @@ class _$GenericPingDeviceDtosImpl extends _GenericPingDeviceDtos {
         entityKey,
         requestTimeStamp,
         lastResponseFromDeviceTimeStamp,
-        deviceCbjUniqueId,
+        entitiyCbjUniqueId,
         deviceDtoClass,
         stateMassage
       ]);
@@ -759,7 +759,7 @@ abstract class _GenericPingDeviceDtos extends GenericPingDeviceDtos {
       required final String? pingSwitchState,
       required final String? entityTypes,
       required final String? compUuid,
-      required final String? cbjDeviceVendor,
+      required final String cbjDeviceVendor,
       required final String? deviceVendor,
       required final String? deviceNetworkLastUpdate,
       required final String? powerConsumption,
@@ -776,7 +776,7 @@ abstract class _GenericPingDeviceDtos extends GenericPingDeviceDtos {
       required final String? entityKey,
       required final String? requestTimeStamp,
       required final String? lastResponseFromDeviceTimeStamp,
-      required final String? deviceCbjUniqueId,
+      required final String? entitiyCbjUniqueId,
       final String? deviceDtoClass,
       final String? stateMassage}) = _$GenericPingDeviceDtosImpl;
   _GenericPingDeviceDtos._() : super._();
@@ -809,7 +809,7 @@ abstract class _GenericPingDeviceDtos extends GenericPingDeviceDtos {
   @override
   String? get compUuid;
   @override
-  String? get cbjDeviceVendor;
+  String get cbjDeviceVendor;
   @override
   String? get deviceVendor;
   @override
@@ -843,7 +843,7 @@ abstract class _GenericPingDeviceDtos extends GenericPingDeviceDtos {
   @override
   String? get lastResponseFromDeviceTimeStamp;
   @override
-  String? get deviceCbjUniqueId;
+  String? get entitiyCbjUniqueId;
   @override
   String? get deviceDtoClass;
   @override

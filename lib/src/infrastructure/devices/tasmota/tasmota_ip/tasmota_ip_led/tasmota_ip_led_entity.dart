@@ -44,10 +44,10 @@
 //     required super.entityKey,
 //     required super.requestTimeStamp,
 //     required super.lastResponseFromDeviceTimeStamp,
-//     required super.deviceCbjUniqueId,
+//     required super.entitiyCbjUniqueId,
 //     required super.lightSwitchState,
 //   }) : super(
-//           cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.tasmota),
+//           cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.tasmota),
 //         );
 
 //   factory TasmotaIpLedEntity.fromGeneric(GenericLightDE genericDevice) {
@@ -79,7 +79,7 @@
 //       lastResponseFromDeviceTimeStamp:
 //           genericDevice.lastResponseFromDeviceTimeStamp,
 //       lightSwitchState: genericDevice.lightSwitchState,
-//       deviceCbjUniqueId: genericDevice.deviceCbjUniqueId,
+//       entitiyCbjUniqueId: genericDevice.entitiyCbjUniqueId,
 //     );
 //   }
 

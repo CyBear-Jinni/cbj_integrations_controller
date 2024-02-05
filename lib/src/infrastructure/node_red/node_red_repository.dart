@@ -43,7 +43,8 @@ class NodeRedRepository {
       }
       final Response response = await nodeRedRepositoryService.postFlow(
         label: sceneCbj.name.getOrCrash(),
-        nodes: sceneCbj.automationString.getOrCrash()!,
+        // nodes: sceneCbj.automationString.getOrCrash()!,
+        nodes: '',
         flowId: sceneCbj.uniqueId.getOrCrash(),
       );
       if (response.statusCode == 200) {

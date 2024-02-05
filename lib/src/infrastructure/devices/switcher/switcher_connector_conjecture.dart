@@ -26,7 +26,8 @@ class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
   static final SwitcherConnectorConjecture _instance =
       SwitcherConnectorConjecture._singletonContractor();
 
-  void bindSocketSearchStream() {
+  Future bindSocketSearchStream() async {
+    await Future.delayed(const Duration(seconds: 3));
     SwitcherDiscover.discover20002Devices()
         .listen(sendNewDeviceToVendorConnectorConjecture);
 
@@ -43,17 +44,28 @@ class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
       return;
     }
     VendorsConnectorConjecture().foundEntityOfVendor(
-      this,
-      entity,
-      entity.deviceCbjUniqueId.getOrCrash(),
+      vendorConnectorConjectureService: this,
+      entity: entity,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId.getOrCrash(),
     );
   }
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) async =>
-      // It is getting converted in bindSocketSearchStream
-      HashMap()
-        ..addEntries([MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity)]);
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async {
+    DeviceEntityBase? entityTemp = entity;
+    if (fromDb) {
+      entityTemp = SwitcherHelpers.entityToType(entity);
+      if (entityTemp == null) {
+        return HashMap();
+      }
+    }
+    // It is getting converted in bindSocketSearchStream
+    return HashMap()
+      ..addEntries(
+        [MapEntry(entityTemp.entitiyCbjUniqueId.getOrCrash(), entityTemp)],
+      );
+  }
 }

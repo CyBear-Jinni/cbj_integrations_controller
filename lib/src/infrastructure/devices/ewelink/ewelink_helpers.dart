@@ -14,40 +14,41 @@ class EwelinkHelpers {
     final HashMap<String, DeviceEntityBase> addEntities = HashMap();
 
     DeviceEntityBase? tempDevice;
-    String? deviceCbjUniqueId;
+    String? entitiyCbjUniqueId;
 
     if (ewelinkDevice.type == 'a9') {
-      deviceCbjUniqueId = '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}';
+      entitiyCbjUniqueId =
+          '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}';
 
       tempDevice = EwelinkSwitchEntity(
         uniqueId: CoreUniqueId(),
         entityUniqueId: EntityUniqueId(ewelinkDevice.deviceid),
-        cbjEntityName: CbjEntityName(ewelinkDevice.name),
+        cbjEntityName: CbjEntityName(value: ewelinkDevice.name),
         entityOriginalName: EntityOriginalName(ewelinkDevice.name),
-        deviceOriginalName: DeviceOriginalName(ewelinkDevice.name),
-        stateMassage: DeviceStateMassage('ok'),
+        deviceOriginalName: DeviceOriginalName(value: ewelinkDevice.name),
+        stateMassage: DeviceStateMassage(value: 'ok'),
         senderDeviceOs: DeviceSenderDeviceOs('EweLink'),
-        deviceVendor: DeviceVendor(null),
-        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+        deviceVendor: DeviceVendor(),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
         senderDeviceModel: DeviceSenderDeviceModel(ewelinkDevice.type),
         senderId: DeviceSenderId(),
         deviceUniqueId: DeviceUniqueId(ewelinkDevice.deviceid),
-        devicePort: DevicePort(''),
-        deviceLastKnownIp: DeviceLastKnownIp(''),
-        deviceHostName: DeviceHostName('0'),
-        deviceMdns: DeviceMdns('0'),
+        devicePort: DevicePort(value: ''),
+        deviceLastKnownIp: DeviceLastKnownIp(value: ''),
+        deviceHostName: DeviceHostName(value: '0'),
+        deviceMdns: DeviceMdns(value: '0'),
         srvResourceRecord: DeviceSrvResourceRecord(),
         mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid('empty'),
         powerConsumption: DevicePowerConsumption('0'),
-        devicesMacAddress: DevicesMacAddress('0'),
+        devicesMacAddress: DevicesMacAddress(value: '0'),
         // TODO: Fix because we can't use the outlet number from entityUniqueId
         entityKey: EntityKey('1'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+        entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
         switchState: GenericSwitchSwitchState('off'),
         entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
       );
@@ -78,7 +79,7 @@ class EwelinkHelpers {
         // else {
         //   // Devices without tags at all are legit and will be added only once
         // }
-        deviceCbjUniqueId =
+        entitiyCbjUniqueId =
             '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}-$outletNumber';
 
         tempDevice = EwelinkSwitchEntity(
@@ -90,36 +91,36 @@ class EwelinkHelpers {
           entityUniqueId:
               EntityUniqueId('${ewelinkDevice.deviceid}-$outletNumber'),
           cbjEntityName: CbjEntityName(
-            tagName,
+            value: tagName,
           ),
           entityOriginalName: EntityOriginalName(
             tagName,
           ),
-          deviceOriginalName: DeviceOriginalName(ewelinkDevice.name),
-          stateMassage: DeviceStateMassage('ok'),
+          deviceOriginalName: DeviceOriginalName(value: ewelinkDevice.name),
+          stateMassage: DeviceStateMassage(value: 'ok'),
           senderDeviceOs: DeviceSenderDeviceOs('EweLink'),
 
-          deviceVendor: DeviceVendor(null),
-          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+          deviceVendor: DeviceVendor(),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
           senderDeviceModel: DeviceSenderDeviceModel(ewelinkDevice.type),
           senderId: DeviceSenderId(),
           deviceUniqueId: DeviceUniqueId(ewelinkDevice.deviceid),
-          devicePort: DevicePort(''),
-          deviceLastKnownIp: DeviceLastKnownIp(''),
-          deviceHostName: DeviceHostName('0'),
-          deviceMdns: DeviceMdns('0'),
+          devicePort: DevicePort(value: ''),
+          deviceLastKnownIp: DeviceLastKnownIp(value: ''),
+          deviceHostName: DeviceHostName(value: '0'),
+          deviceMdns: DeviceMdns(value: '0'),
           srvResourceRecord: DeviceSrvResourceRecord(),
           mdnsServiceType: DevicemdnsServiceType(),
           ptrResourceRecord: DevicePtrResourceRecord(),
           srvTarget: DeviceSrvTarget(),
           compUuid: DeviceCompUuid('empty'),
           powerConsumption: DevicePowerConsumption('0'),
-          devicesMacAddress: DevicesMacAddress('0'),
+          devicesMacAddress: DevicesMacAddress(value: '0'),
           // TODO: Fix because we can't use the outlet number from entityUniqueId
           entityKey: EntityKey(outletNumber),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
           switchState:
               GenericSwitchSwitchState(switchParam['switch'] as String),
           entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
@@ -130,8 +131,8 @@ class EwelinkHelpers {
       }
     }
 
-    if (tempDevice != null && deviceCbjUniqueId != null) {
-      addEntities.addEntries([MapEntry(deviceCbjUniqueId, tempDevice)]);
+    if (tempDevice != null && entitiyCbjUniqueId != null) {
+      addEntities.addEntries([MapEntry(entitiyCbjUniqueId, tempDevice)]);
     }
     return addEntities;
   }

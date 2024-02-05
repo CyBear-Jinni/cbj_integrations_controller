@@ -2,7 +2,6 @@ import 'package:cbj_integrations_controller/src/domain/core/request_action_types
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_errors.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_validators.dart';
-import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_type_utils.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:uuid/uuid.dart';
@@ -73,9 +72,9 @@ class EntityUniqueId extends ValueObjectCore<String> {
 }
 
 class CbjEntityName extends ValueObjectCore<String?> {
-  factory CbjEntityName(String? input) {
+  factory CbjEntityName({String? value}) {
     return CbjEntityName._(
-      input == null ? right(input) : validateMaxNameLength(input, maxLength),
+      value == null ? right(value) : validateMaxNameLength(value, maxLength),
     );
   }
 
@@ -101,9 +100,9 @@ class EntityOriginalName extends ValueObjectCore<String> {
 }
 
 class DeviceOriginalName extends ValueObjectCore<String?> {
-  factory DeviceOriginalName(String? input) {
+  factory DeviceOriginalName({String? value}) {
     return DeviceOriginalName._(
-      input == null ? right(input) : validateMaxNameLength(input, maxLength),
+      value == null ? right(value) : validateMaxNameLength(value, maxLength),
     );
   }
 
@@ -197,9 +196,9 @@ class DeviceSenderDeviceOs extends ValueObjectCore<String> {
 }
 
 class DeviceStateMassage extends ValueObjectCore<String> {
-  factory DeviceStateMassage(String? input) {
-    input ??= '';
-    return DeviceStateMassage._(right(input));
+  factory DeviceStateMassage({String? value}) {
+    value ??= '';
+    return DeviceStateMassage._(right(value));
   }
 
   const DeviceStateMassage._(this.value);
@@ -273,21 +272,10 @@ class EntityType extends ValueObjectCore<String> {
 }
 
 class CbjDeviceVendor extends ValueObjectCore<String> {
-  factory CbjDeviceVendor(String? input) {
-    assert(input != null);
-
-    final VendorsAndServices vendorsAndServices =
-        EntityUtils.stringToDeviceVendor(input!);
+  factory CbjDeviceVendor(VendorsAndServices value) {
     return CbjDeviceVendor._(
-      validateDeviceVendorExist(vendorsAndServices),
-      vendorsAndServices,
-    );
-  }
-
-  factory CbjDeviceVendor.vendor(VendorsAndServices input) {
-    return CbjDeviceVendor._(
-      validateDeviceVendorExist(input),
-      input,
+      right(value.name),
+      value,
     );
   }
 
@@ -302,8 +290,8 @@ class CbjDeviceVendor extends ValueObjectCore<String> {
 }
 
 class DeviceVendor extends ValueObjectCore<String?> {
-  factory DeviceVendor(String? input) {
-    return DeviceVendor._(right(input));
+  factory DeviceVendor({String? value}) {
+    return DeviceVendor._(right(value));
   }
 
   const DeviceVendor._(this.value);
@@ -313,8 +301,8 @@ class DeviceVendor extends ValueObjectCore<String?> {
 }
 
 class DeviceNetworkLastUpdate extends ValueObjectCore<String?> {
-  factory DeviceNetworkLastUpdate(String? input) {
-    return DeviceNetworkLastUpdate._(right(input));
+  factory DeviceNetworkLastUpdate({String? value}) {
+    return DeviceNetworkLastUpdate._(right(value));
   }
 
   const DeviceNetworkLastUpdate._(this.value);
@@ -336,8 +324,8 @@ class DeviceCompUuid extends ValueObjectCore<String> {
 }
 
 class DeviceLastKnownIp extends ValueObjectCore<String?> {
-  factory DeviceLastKnownIp(String? input) {
-    return DeviceLastKnownIp._(right(input));
+  factory DeviceLastKnownIp({String? value}) {
+    return DeviceLastKnownIp._(right(value));
   }
 
   const DeviceLastKnownIp._(this.value);
@@ -362,24 +350,20 @@ class DevicePowerConsumption extends ValueObjectCore<String> {
 }
 
 class DeviceMdns extends ValueObjectCore<String?> {
-  factory DeviceMdns(String? input) {
-    return DeviceMdns._(right(input));
+  factory DeviceMdns({String? value}) {
+    return DeviceMdns._(right(value));
   }
 
   const DeviceMdns._(this.value);
-
-  String? get shortForm => value.isLeft()
-      ? null
-      : '${value.getOrElse(() => '')!.split('.').first}.local';
 
   @override
   final Either<CoreFailure<String?>, String?> value;
 }
 
 class DevicePort extends ValueObjectCore<String?> {
-  factory DevicePort(String? input) {
+  factory DevicePort({String? value}) {
     return DevicePort._(
-      validatePortNotEmpty(input),
+      validatePortNotEmpty(value),
     );
   }
 
@@ -418,9 +402,9 @@ class DeviceUniqueId extends ValueObjectCore<String> {
 }
 
 class DeviceHostName extends ValueObjectCore<String?> {
-  factory DeviceHostName(String? input) {
+  factory DeviceHostName({String? value}) {
     return DeviceHostName._(
-      right(input),
+      right(value),
     );
   }
 
@@ -455,8 +439,8 @@ class LastResponseFromDeviceTimeStamp extends ValueObjectCore<String> {
 }
 
 class DevicesMacAddress extends ValueObjectCore<String?> {
-  factory DevicesMacAddress(String? input) {
-    return DevicesMacAddress._(right(input));
+  factory DevicesMacAddress({String? value}) {
+    return DevicesMacAddress._(right(value));
   }
 
   const DevicesMacAddress._(this.value);

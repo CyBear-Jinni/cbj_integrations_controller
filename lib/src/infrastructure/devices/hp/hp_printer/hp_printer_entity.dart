@@ -33,10 +33,10 @@ class HpPrinterEntity extends GenericPrinterDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.printerSwitchState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.hp),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.hp),
         );
 
   factory HpPrinterEntity.fromGeneric(GenericPrinterDE entity) {
@@ -67,9 +67,8 @@ class HpPrinterEntity extends GenericPrinterDE {
       devicesMacAddress: entity.devicesMacAddress,
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          entity.lastResponseFromDeviceTimeStamp,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
       printerSwitchState: entity.printerSwitchState,
     );
   }

@@ -29,7 +29,7 @@ class TasmotaIpHelpers {
       );
       if (deviceEntity != null) {
         entityToAdd.addEntries([
-          MapEntry(deviceEntity.deviceCbjUniqueId.getOrCrash(), deviceEntity),
+          MapEntry(deviceEntity.entitiyCbjUniqueId.getOrCrash(), deviceEntity),
         ]);
       }
     }
@@ -59,7 +59,7 @@ class TasmotaIpHelpers {
     }
     final List<String>? componentInDeviceUiLabelAndComment =
         gpioOverviewTasmota[componentInDeviceNumberLabelAsInt];
-    final String deviceCbjUniqueId =
+    final String entitiyCbjUniqueId =
         '$deviceHostName-$componentInDeviceNumberLabel}';
     if (componentInDeviceNumberLabelAsInt == 0) {
       // UI Label: None
@@ -82,13 +82,13 @@ class TasmotaIpHelpers {
           '$deviceHostName-$componentInDeviceNumberLabel}',
         ),
         cbjEntityName: CbjEntityName(
-          '$deviceHostName-${componentInDeviceUiLabelAndComment![0]}',
+          value: '$deviceHostName-${componentInDeviceUiLabelAndComment![0]}',
         ),
         entityOriginalName: EntityOriginalName(
           '$deviceHostName-${componentInDeviceUiLabelAndComment[0]}',
         ),
         deviceOriginalName: DeviceOriginalName(
-          '$deviceHostName-${componentInDeviceUiLabelAndComment[0]}',
+          value: '$deviceHostName-${componentInDeviceUiLabelAndComment[0]}',
         ),
         entityStateGRPC: entity.entityStateGRPC,
         senderDeviceOs: entity.senderDeviceOs,
@@ -100,7 +100,7 @@ class TasmotaIpHelpers {
         stateMassage: entity.stateMassage,
         powerConsumption: entity.powerConsumption,
         switchState: GenericSwitchSwitchState(EntityActions.off.toString()),
-        deviceHostName: DeviceHostName(deviceHostName),
+        deviceHostName: DeviceHostName(value: deviceHostName),
         deviceLastKnownIp: entity.deviceLastKnownIp,
         deviceUniqueId: entity.deviceUniqueId,
         devicePort: entity.devicePort,
@@ -113,7 +113,7 @@ class TasmotaIpHelpers {
         entityKey: entity.entityKey,
         requestTimeStamp: entity.requestTimeStamp,
         lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-        deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+        entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
       );
     } else if (componentInDeviceNumberLabelAsInt >= 256 &&
         componentInDeviceNumberLabelAsInt <= 283) {

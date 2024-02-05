@@ -38,10 +38,10 @@ class ShellyRelaySwitchEntity extends GenericSwitchDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.shelly),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.shelly),
         ) {
     shellyRelaySwitch = ShellyApiRelaySwitch(
       lastKnownIp: deviceLastKnownIp.getOrCrash()!,

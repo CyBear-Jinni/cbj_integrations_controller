@@ -38,10 +38,10 @@ class SonoffDiyRelaySwitchEntity extends GenericSwitchDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.sonoffDiy),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.sonoffDiy),
         ) {
     sonoffDiyRelaySwitch = SonoffDiyApiWallSwitch(
       ipAddress: deviceLastKnownIp.getOrCrash()!,

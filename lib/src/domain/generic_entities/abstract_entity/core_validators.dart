@@ -1,4 +1,3 @@
-import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_type_utils.dart';
 import 'package:dartz/dartz.dart';
@@ -71,15 +70,6 @@ Either<CoreFailure<String>, String> validateDeviceActionExist(String input) {
 Either<CoreFailure<String>, String> validateDeviceTypeExist(String input) {
   if (EntityUtils.stringToDt(input) != null) {
     return right(input);
-  }
-  return left(const CoreFailure.deviceTypeDoesNotExist());
-}
-
-Either<CoreFailure<String>, String> validateDeviceVendorExist(
-  VendorsAndServices? input,
-) {
-  if (input != null) {
-    return right(input.name);
   }
   return left(const CoreFailure.deviceTypeDoesNotExist());
 }

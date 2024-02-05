@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/vendor_connector_conjecture_service.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/devices/yeelight/yeelight_helpers.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector_conjecture.dart';
 import 'package:yeedart/yeedart.dart';
 
 class YeelightConnectorConjecture extends VendorConnectorConjectureService {
@@ -21,18 +23,56 @@ class YeelightConnectorConjecture extends VendorConnectorConjectureService {
           uniqueIdentifierNameInMdns: ['YL'],
           mdnsList: ['_hap._tcp'],
           deviceHostNameLowerCaseList: ['yeelink'],
-        );
+        ) {
+    if (Platform.isAndroid) {
+      searchDevices();
+    }
+  }
 
   static final YeelightConnectorConjecture _instance =
       YeelightConnectorConjecture._singletonContractor();
 
-  /// Make sure that it will activate discoverNewDevices only once
-  bool searchStarted = false;
+  Future searchDevices() async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    while (true) {
+      final List<DiscoveryResponse> responses = await Yeelight.discover();
+      for (final DiscoveryResponse response in responses) {
+        await sendNewDeviceToVendorConnectorConjecture(response);
+      }
+      await Future.delayed(const Duration(seconds: 10));
+    }
+  }
+
+  Future sendNewDeviceToVendorConnectorConjecture(
+    DiscoveryResponse response,
+  ) async {
+    final HashMap<String, DeviceEntityBase> enitityList =
+        YeelightHelpers.addDiscoveredDeviceByYeelightResponse(response);
+
+    if (enitityList.isEmpty) {
+      return;
+    }
+
+    for (final MapEntry<String, DeviceEntityBase> entery
+        in enitityList.entries) {
+      await VendorsConnectorConjecture().foundEntityOfVendor(
+        vendorConnectorConjectureService: this,
+        entity: entery.value,
+        entitiyCbjUniqueId: entery.value.entitiyCbjUniqueId.getOrCrash(),
+      );
+    }
+  }
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) async {
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async {
+    if (Platform.isAndroid && fromDb == false) {
+      return HashMap.fromEntries([MapEntry(entity.getCbjEntityId, entity)]);
+    }
+
     final responses = await Yeelight.discover();
     if (responses.isEmpty) {
       return HashMap();

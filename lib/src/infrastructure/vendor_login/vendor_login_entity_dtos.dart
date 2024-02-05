@@ -46,7 +46,7 @@ abstract class VendorLoginEntityDtos implements _$VendorLoginEntityDtos {
 
   VendorLoginEntity toDomain() {
     return VendorLoginEntity(
-      EntityUtils.stringToDeviceVendor(vendor),
+      EntityUtils.stringToDeviceVendor( vendor),
       apiKey: credentials['apiKey'] as String?,
       authToken: credentials['authToken'] as String?,
       email: credentials['email'] as String?,

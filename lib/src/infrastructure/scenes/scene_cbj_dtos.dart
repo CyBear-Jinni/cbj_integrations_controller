@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/core/value_objects.dart';
 import 'package:cbj_integrations_controller/src/domain/scene/scene_cbj_entity.dart';
@@ -21,7 +23,7 @@ abstract class SceneCbjDtos implements _$SceneCbjDtos {
     required String? compUuid,
     required String? stateMassage,
     required String areaPurposeType,
-    String? automationString,
+    required List<String> entitiesWithAutomaticPurpose,
     String? nodeRedFlowId,
     String? firstNodeId,
     String? iconCodePoint,
@@ -37,7 +39,6 @@ abstract class SceneCbjDtos implements _$SceneCbjDtos {
       uniqueId: sceneCbj.uniqueId.getOrCrash(),
       name: sceneCbj.name.getOrCrash(),
       backgroundColor: sceneCbj.backgroundColor.getOrCrash(),
-      automationString: sceneCbj.automationString.getOrCrash(),
       nodeRedFlowId: sceneCbj.nodeRedFlowId.getOrCrash(),
       firstNodeId: sceneCbj.firstNodeId.getOrCrash(),
       iconCodePoint: sceneCbj.iconCodePoint.getOrCrash(),
@@ -50,6 +51,8 @@ abstract class SceneCbjDtos implements _$SceneCbjDtos {
       compUuid: sceneCbj.compUuid.getOrCrash(),
       stateMassage: sceneCbj.stateMassage.getOrCrash(),
       areaPurposeType: sceneCbj.areaPurposeType.name,
+      entitiesWithAutomaticPurpose:
+          sceneCbj.entitiesWithAutomaticPurpose.getOrCrash().toList(),
     );
   }
 
@@ -63,7 +66,6 @@ abstract class SceneCbjDtos implements _$SceneCbjDtos {
       uniqueId: UniqueId.fromUniqueString(uniqueId),
       name: SceneCbjName(name),
       backgroundColor: SceneCbjBackgroundColor(backgroundColor),
-      automationString: SceneCbjAutomationString(automationString),
       nodeRedFlowId: SceneCbjNodeRedFlowId(nodeRedFlowId),
       firstNodeId: SceneCbjFirstNodeId(firstNodeId),
       iconCodePoint: SceneCbjIconCodePoint(iconCodePoint),
@@ -77,6 +79,9 @@ abstract class SceneCbjDtos implements _$SceneCbjDtos {
       stateMassage: SceneCbjStateMassage(stateMassage),
       actions: [],
       areaPurposeType: AreaPurposesTypesExtension.fromString(areaPurposeType),
+      entitiesWithAutomaticPurpose: EntitiesWithAutomaticPurpose(
+        HashSet.from(entitiesWithAutomaticPurpose),
+      ),
     );
   }
 }

@@ -16,9 +16,6 @@ abstract class IRoutineCbjRepository {
     return _instance ??= _RoutineCbjRepository();
   }
 
-  /// Setting up all routines from db
-  Future setUpAllFromDb();
-
   Future<Set<RoutineCbjEntity>> getAllRoutinesAsList();
 
   Future<Map<String, RoutineCbjEntity>> getAllRoutinesAsMap();
@@ -27,13 +24,6 @@ abstract class IRoutineCbjRepository {
   Future<Either<RoutineCbjFailure, Unit>> addNewRoutine(
     RoutineCbjEntity routineCbj,
   );
-
-  /// Sending the new routine to the hub to get added, and saves it to local db
-  Future<Either<RoutineCbjFailure, Unit>> addNewRoutineAndSaveItToLocalDb(
-    RoutineCbjEntity routineCbj,
-  );
-
-  Future<Either<LocalDbFailures, Unit>> saveAndActivateRoutineToDb();
 
   Future<bool> activateRoutine(RoutineCbjEntity routineCbj);
 

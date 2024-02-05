@@ -48,9 +48,9 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
               LifxHelpers.addDiscoveredDevice(lifxDevice);
           for (final DeviceEntityBase entity in addDevice.values) {
             await VendorsConnectorConjecture().foundEntityOfVendor(
-              this,
-              entity,
-              entity.deviceCbjUniqueId.getOrCrash(),
+              vendorConnectorConjectureService: this,
+              entity: entity,
+              entitiyCbjUniqueId: entity.entitiyCbjUniqueId.getOrCrash(),
             );
           }
         }
@@ -64,7 +64,8 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) async =>
-      HashMap()..addEntries([MapEntry(entity.getCbjDeviceId, entity)]);
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async =>
+      HashMap()..addEntries([MapEntry(entity.getCbjEntityId, entity)]);
 }

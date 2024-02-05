@@ -21,7 +21,7 @@ class ShellyHelpers {
     final String? hostName = entity.deviceHostName.getOrCrash();
 
     final HashMap<String, DeviceEntityBase> entitiesToAdd = HashMap();
-    final String deviceCbjUniqueId = mDnsName;
+    final String entitiyCbjUniqueId = mDnsName;
     DeviceEntityBase? tempEntity;
     try {
       // TODO: shelly duo bulb needs type that as the time of writing is
@@ -93,12 +93,12 @@ class ShellyHelpers {
           devicePort: entity.devicePort,
           deviceUniqueId: entity.deviceUniqueId,
           deviceHostName: entity.deviceHostName,
-          devicesMacAddress: DevicesMacAddress(mac),
+          devicesMacAddress: DevicesMacAddress(value: mac),
           entityKey: entity.entityKey,
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
           lightSwitchState: GenericRgbwLightSwitchState(isOn ? 'on' : 'off'),
           lightColorTemperature:
               GenericRgbwLightColorTemperature(temp.toString()),
@@ -164,12 +164,12 @@ class ShellyHelpers {
           devicePort: entity.devicePort,
           deviceUniqueId: entity.deviceUniqueId,
           deviceHostName: entity.deviceHostName,
-          devicesMacAddress: DevicesMacAddress(mac),
+          devicesMacAddress: DevicesMacAddress(value: mac),
           entityKey: entity.entityKey,
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
           lightSwitchState: GenericRgbwLightSwitchState(isOn ? 'on' : 'off'),
           lightColorTemperature:
               GenericRgbwLightColorTemperature(temp.toString()),
@@ -218,12 +218,12 @@ class ShellyHelpers {
           devicePort: entity.devicePort,
           deviceUniqueId: entity.deviceUniqueId,
           deviceHostName: entity.deviceHostName,
-          devicesMacAddress: DevicesMacAddress(mac),
+          devicesMacAddress: DevicesMacAddress(value: mac),
           entityKey: entity.entityKey,
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
           switchState: GenericSwitchSwitchState(false.toString()),
         );
       } else {
@@ -234,7 +234,7 @@ class ShellyHelpers {
     }
 
     if (tempEntity != null) {
-      entitiesToAdd.addEntries([MapEntry(deviceCbjUniqueId, tempEntity)]);
+      entitiesToAdd.addEntries([MapEntry(entitiyCbjUniqueId, tempEntity)]);
     }
 
     return entitiesToAdd;

@@ -20,7 +20,7 @@ _$GenericSmartComputerDeviceDtosImpl
           senderId: json['senderId'] as String?,
           entityTypes: json['entityTypes'] as String?,
           compUuid: json['compUuid'] as String?,
-          cbjDeviceVendor: json['cbjDeviceVendor'] as String?,
+          cbjDeviceVendor: json['cbjDeviceVendor'] as String,
           deviceVendor: json['deviceVendor'] as String?,
           deviceNetworkLastUpdate: json['deviceNetworkLastUpdate'] as String?,
           powerConsumption: json['powerConsumption'] as String?,
@@ -38,7 +38,7 @@ _$GenericSmartComputerDeviceDtosImpl
           requestTimeStamp: json['requestTimeStamp'] as String?,
           lastResponseFromDeviceTimeStamp:
               json['lastResponseFromDeviceTimeStamp'] as String?,
-          deviceCbjUniqueId: json['deviceCbjUniqueId'] as String?,
+          entitiyCbjUniqueId: json['entitiyCbjUniqueId'] as String?,
           smartComputerSuspendState:
               json['smartComputerSuspendState'] as String?,
           smartComputerShutDownState:
@@ -79,7 +79,7 @@ Map<String, dynamic> _$$GenericSmartComputerDeviceDtosImplToJson(
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':
           instance.lastResponseFromDeviceTimeStamp,
-      'deviceCbjUniqueId': instance.deviceCbjUniqueId,
+      'entitiyCbjUniqueId': instance.entitiyCbjUniqueId,
       'smartComputerSuspendState': instance.smartComputerSuspendState,
       'smartComputerShutDownState': instance.smartComputerShutDownState,
       'deviceDtoClass': instance.deviceDtoClass,

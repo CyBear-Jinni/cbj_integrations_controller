@@ -34,11 +34,10 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.switchState,
   }) : super(
-          cbjDeviceVendor:
-              CbjDeviceVendor.vendor(VendorsAndServices.sonoffEweLink),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.sonoffEweLink),
         );
 
   factory EwelinkSwitchEntity.fromGeneric(GenericSwitchDE entity) {
@@ -69,9 +68,8 @@ class EwelinkSwitchEntity extends GenericSwitchDE {
       devicesMacAddress: entity.devicesMacAddress,
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          entity.lastResponseFromDeviceTimeStamp,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
       switchState: entity.switchState,
     );
   }

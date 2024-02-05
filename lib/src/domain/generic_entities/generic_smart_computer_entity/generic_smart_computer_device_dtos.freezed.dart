@@ -33,7 +33,7 @@ mixin _$GenericSmartComputerDeviceDtos {
   String? get senderId => throw _privateConstructorUsedError;
   String? get entityTypes => throw _privateConstructorUsedError;
   String? get compUuid => throw _privateConstructorUsedError;
-  String? get cbjDeviceVendor => throw _privateConstructorUsedError;
+  String get cbjDeviceVendor => throw _privateConstructorUsedError;
   String? get deviceVendor => throw _privateConstructorUsedError;
   String? get deviceNetworkLastUpdate => throw _privateConstructorUsedError;
   String? get powerConsumption => throw _privateConstructorUsedError;
@@ -51,7 +51,7 @@ mixin _$GenericSmartComputerDeviceDtos {
   String? get requestTimeStamp => throw _privateConstructorUsedError;
   String? get lastResponseFromDeviceTimeStamp =>
       throw _privateConstructorUsedError;
-  String? get deviceCbjUniqueId => throw _privateConstructorUsedError;
+  String? get entitiyCbjUniqueId => throw _privateConstructorUsedError;
   String? get smartComputerSuspendState => throw _privateConstructorUsedError;
   String? get smartComputerShutDownState => throw _privateConstructorUsedError;
   String? get deviceDtoClass => throw _privateConstructorUsedError;
@@ -83,7 +83,7 @@ abstract class $GenericSmartComputerDeviceDtosCopyWith<$Res> {
       String? senderId,
       String? entityTypes,
       String? compUuid,
-      String? cbjDeviceVendor,
+      String cbjDeviceVendor,
       String? deviceVendor,
       String? deviceNetworkLastUpdate,
       String? powerConsumption,
@@ -100,7 +100,7 @@ abstract class $GenericSmartComputerDeviceDtosCopyWith<$Res> {
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
-      String? deviceCbjUniqueId,
+      String? entitiyCbjUniqueId,
       String? smartComputerSuspendState,
       String? smartComputerShutDownState,
       String? deviceDtoClass,
@@ -132,7 +132,7 @@ class _$GenericSmartComputerDeviceDtosCopyWithImpl<$Res,
     Object? senderId = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
-    Object? cbjDeviceVendor = freezed,
+    Object? cbjDeviceVendor = null,
     Object? deviceVendor = freezed,
     Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
@@ -149,7 +149,7 @@ class _$GenericSmartComputerDeviceDtosCopyWithImpl<$Res,
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
-    Object? deviceCbjUniqueId = freezed,
+    Object? entitiyCbjUniqueId = freezed,
     Object? smartComputerSuspendState = freezed,
     Object? smartComputerShutDownState = freezed,
     Object? deviceDtoClass = freezed,
@@ -200,10 +200,10 @@ class _$GenericSmartComputerDeviceDtosCopyWithImpl<$Res,
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
-      cbjDeviceVendor: freezed == cbjDeviceVendor
+      cbjDeviceVendor: null == cbjDeviceVendor
           ? _value.cbjDeviceVendor
           : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
@@ -269,9 +269,9 @@ class _$GenericSmartComputerDeviceDtosCopyWithImpl<$Res,
           ? _value.lastResponseFromDeviceTimeStamp
           : lastResponseFromDeviceTimeStamp // ignore: cast_nullable_to_non_nullable
               as String?,
-      deviceCbjUniqueId: freezed == deviceCbjUniqueId
-          ? _value.deviceCbjUniqueId
-          : deviceCbjUniqueId // ignore: cast_nullable_to_non_nullable
+      entitiyCbjUniqueId: freezed == entitiyCbjUniqueId
+          ? _value.entitiyCbjUniqueId
+          : entitiyCbjUniqueId // ignore: cast_nullable_to_non_nullable
               as String?,
       smartComputerSuspendState: freezed == smartComputerSuspendState
           ? _value.smartComputerSuspendState
@@ -314,7 +314,7 @@ abstract class _$$GenericSmartComputerDeviceDtosImplCopyWith<$Res>
       String? senderId,
       String? entityTypes,
       String? compUuid,
-      String? cbjDeviceVendor,
+      String cbjDeviceVendor,
       String? deviceVendor,
       String? deviceNetworkLastUpdate,
       String? powerConsumption,
@@ -331,7 +331,7 @@ abstract class _$$GenericSmartComputerDeviceDtosImplCopyWith<$Res>
       String? entityKey,
       String? requestTimeStamp,
       String? lastResponseFromDeviceTimeStamp,
-      String? deviceCbjUniqueId,
+      String? entitiyCbjUniqueId,
       String? smartComputerSuspendState,
       String? smartComputerShutDownState,
       String? deviceDtoClass,
@@ -362,7 +362,7 @@ class __$$GenericSmartComputerDeviceDtosImplCopyWithImpl<$Res>
     Object? senderId = freezed,
     Object? entityTypes = freezed,
     Object? compUuid = freezed,
-    Object? cbjDeviceVendor = freezed,
+    Object? cbjDeviceVendor = null,
     Object? deviceVendor = freezed,
     Object? deviceNetworkLastUpdate = freezed,
     Object? powerConsumption = freezed,
@@ -379,7 +379,7 @@ class __$$GenericSmartComputerDeviceDtosImplCopyWithImpl<$Res>
     Object? entityKey = freezed,
     Object? requestTimeStamp = freezed,
     Object? lastResponseFromDeviceTimeStamp = freezed,
-    Object? deviceCbjUniqueId = freezed,
+    Object? entitiyCbjUniqueId = freezed,
     Object? smartComputerSuspendState = freezed,
     Object? smartComputerShutDownState = freezed,
     Object? deviceDtoClass = freezed,
@@ -430,10 +430,10 @@ class __$$GenericSmartComputerDeviceDtosImplCopyWithImpl<$Res>
           ? _value.compUuid
           : compUuid // ignore: cast_nullable_to_non_nullable
               as String?,
-      cbjDeviceVendor: freezed == cbjDeviceVendor
+      cbjDeviceVendor: null == cbjDeviceVendor
           ? _value.cbjDeviceVendor
           : cbjDeviceVendor // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       deviceVendor: freezed == deviceVendor
           ? _value.deviceVendor
           : deviceVendor // ignore: cast_nullable_to_non_nullable
@@ -499,9 +499,9 @@ class __$$GenericSmartComputerDeviceDtosImplCopyWithImpl<$Res>
           ? _value.lastResponseFromDeviceTimeStamp
           : lastResponseFromDeviceTimeStamp // ignore: cast_nullable_to_non_nullable
               as String?,
-      deviceCbjUniqueId: freezed == deviceCbjUniqueId
-          ? _value.deviceCbjUniqueId
-          : deviceCbjUniqueId // ignore: cast_nullable_to_non_nullable
+      entitiyCbjUniqueId: freezed == entitiyCbjUniqueId
+          ? _value.entitiyCbjUniqueId
+          : entitiyCbjUniqueId // ignore: cast_nullable_to_non_nullable
               as String?,
       smartComputerSuspendState: freezed == smartComputerSuspendState
           ? _value.smartComputerSuspendState
@@ -556,7 +556,7 @@ class _$GenericSmartComputerDeviceDtosImpl
       required this.entityKey,
       required this.requestTimeStamp,
       required this.lastResponseFromDeviceTimeStamp,
-      required this.deviceCbjUniqueId,
+      required this.entitiyCbjUniqueId,
       required this.smartComputerSuspendState,
       required this.smartComputerShutDownState,
       this.deviceDtoClass,
@@ -591,7 +591,7 @@ class _$GenericSmartComputerDeviceDtosImpl
   @override
   final String? compUuid;
   @override
-  final String? cbjDeviceVendor;
+  final String cbjDeviceVendor;
   @override
   final String? deviceVendor;
   @override
@@ -625,7 +625,7 @@ class _$GenericSmartComputerDeviceDtosImpl
   @override
   final String? lastResponseFromDeviceTimeStamp;
   @override
-  final String? deviceCbjUniqueId;
+  final String? entitiyCbjUniqueId;
   @override
   final String? smartComputerSuspendState;
   @override
@@ -637,7 +637,7 @@ class _$GenericSmartComputerDeviceDtosImpl
 
   @override
   String toString() {
-    return 'GenericSmartComputerDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, deviceCbjUniqueId: $deviceCbjUniqueId, smartComputerSuspendState: $smartComputerSuspendState, smartComputerShutDownState: $smartComputerShutDownState, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
+    return 'GenericSmartComputerDeviceDtos(id: $id, entityUniqueId: $entityUniqueId, cbjEntityName: $cbjEntityName, entityOriginalName: $entityOriginalName, deviceOriginalName: $deviceOriginalName, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, entityTypes: $entityTypes, compUuid: $compUuid, cbjDeviceVendor: $cbjDeviceVendor, deviceVendor: $deviceVendor, deviceNetworkLastUpdate: $deviceNetworkLastUpdate, powerConsumption: $powerConsumption, deviceUniqueId: $deviceUniqueId, devicePort: $devicePort, deviceLastKnownIp: $deviceLastKnownIp, deviceHostName: $deviceHostName, deviceMdns: $deviceMdns, devicesMacAddress: $devicesMacAddress, srvResourceRecord: $srvResourceRecord, srvTarget: $srvTarget, ptrResourceRecord: $ptrResourceRecord, mdnsServiceType: $mdnsServiceType, entityKey: $entityKey, requestTimeStamp: $requestTimeStamp, lastResponseFromDeviceTimeStamp: $lastResponseFromDeviceTimeStamp, entitiyCbjUniqueId: $entitiyCbjUniqueId, smartComputerSuspendState: $smartComputerSuspendState, smartComputerShutDownState: $smartComputerShutDownState, deviceDtoClass: $deviceDtoClass, stateMassage: $stateMassage)';
   }
 
   @override
@@ -702,8 +702,8 @@ class _$GenericSmartComputerDeviceDtosImpl
             (identical(other.lastResponseFromDeviceTimeStamp, lastResponseFromDeviceTimeStamp) ||
                 other.lastResponseFromDeviceTimeStamp ==
                     lastResponseFromDeviceTimeStamp) &&
-            (identical(other.deviceCbjUniqueId, deviceCbjUniqueId) ||
-                other.deviceCbjUniqueId == deviceCbjUniqueId) &&
+            (identical(other.entitiyCbjUniqueId, entitiyCbjUniqueId) ||
+                other.entitiyCbjUniqueId == entitiyCbjUniqueId) &&
             (identical(other.smartComputerSuspendState, smartComputerSuspendState) ||
                 other.smartComputerSuspendState == smartComputerSuspendState) &&
             (identical(other.smartComputerShutDownState, smartComputerShutDownState) ||
@@ -747,7 +747,7 @@ class _$GenericSmartComputerDeviceDtosImpl
         entityKey,
         requestTimeStamp,
         lastResponseFromDeviceTimeStamp,
-        deviceCbjUniqueId,
+        entitiyCbjUniqueId,
         smartComputerSuspendState,
         smartComputerShutDownState,
         deviceDtoClass,
@@ -784,7 +784,7 @@ abstract class _GenericSmartComputerDeviceDtos
       required final String? senderId,
       required final String? entityTypes,
       required final String? compUuid,
-      required final String? cbjDeviceVendor,
+      required final String cbjDeviceVendor,
       required final String? deviceVendor,
       required final String? deviceNetworkLastUpdate,
       required final String? powerConsumption,
@@ -801,7 +801,7 @@ abstract class _GenericSmartComputerDeviceDtos
       required final String? entityKey,
       required final String? requestTimeStamp,
       required final String? lastResponseFromDeviceTimeStamp,
-      required final String? deviceCbjUniqueId,
+      required final String? entitiyCbjUniqueId,
       required final String? smartComputerSuspendState,
       required final String? smartComputerShutDownState,
       final String? deviceDtoClass,
@@ -834,7 +834,7 @@ abstract class _GenericSmartComputerDeviceDtos
   @override
   String? get compUuid;
   @override
-  String? get cbjDeviceVendor;
+  String get cbjDeviceVendor;
   @override
   String? get deviceVendor;
   @override
@@ -868,7 +868,7 @@ abstract class _GenericSmartComputerDeviceDtos
   @override
   String? get lastResponseFromDeviceTimeStamp;
   @override
-  String? get deviceCbjUniqueId;
+  String? get entitiyCbjUniqueId;
   @override
   String? get smartComputerSuspendState;
   @override

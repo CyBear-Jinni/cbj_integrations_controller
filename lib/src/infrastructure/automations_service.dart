@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:cbj_integrations_controller/integrations_controller.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/area_type_with_device_type_preset.dart';
@@ -17,8 +18,37 @@ class AutomationService {
 
   HashMap<String, SceneCbjEntity> getScenes() => _scenes;
 
-  void addScene(SceneCbjEntity scene) =>
+  void addScene(SceneCbjEntity scene) {
+    _scenes.addEntries([MapEntry(scene.uniqueId.getOrCrash(), scene)]);
+    saveScenesToDb();
+  }
+
+  void loadFromDb(String homeId) {
+    loadScenesFromDb(homeId);
+  }
+
+  void loadScenesFromDb(String homeId) {
+    final List<String> scenesString = IDbRepository.instance.getScenes(homeId);
+    for (final String sceneString in scenesString) {
+      final SceneCbjEntity scene = SceneCbjDtos.fromJson(
+        jsonDecode(sceneString) as Map<String, dynamic>,
+      ).toDomain();
       _scenes.addEntries([MapEntry(scene.uniqueId.getOrCrash(), scene)]);
+    }
+  }
+
+  void saveScenesToDb() {
+    final List<String> automationsJsonString = [];
+
+    for (final SceneCbjEntity scene in _scenes.values) {
+      final String sceneAsJsonString =
+          jsonEncode(scene.toInfrastructure().toJson());
+      automationsJsonString.add(sceneAsJsonString);
+    }
+    final String homeBoxName = NetworksManager().currentNetwork!.uniqueId;
+
+    IDbRepository.instance.saveScenes(homeBoxName, automationsJsonString);
+  }
 
   Future activateScene(String id) async {
     final SceneCbjEntity? scene = _scenes[id];
@@ -26,11 +56,19 @@ class AutomationService {
       return;
     }
 
-    final HashSet<String> entitysId =
+    final HashSet<String> entitiesId =
         HashSet.from(scene.actions.map((e) => e.entityIds.first));
+    entitiesId.addAll(scene.entitiesWithAutomaticPurpose.getOrCrash());
+    final List<RequestActionObject> tempActions = scene.actions;
+    tempActions.addAll(
+      getPresetsForEntities(
+        scene.entitiesWithAutomaticPurpose.getOrCrash(),
+        scene.areaPurposeType,
+      ),
+    );
 
-    for (final String entityId in entitysId) {
-      final List<RequestActionObject> actionsForEntity = scene.actions
+    for (final String entityId in entitiesId) {
+      final List<RequestActionObject> actionsForEntity = tempActions
           .where((element) => element.entityIds.contains(entityId))
           .toList();
       activeAutomationsForEntity(actionsForEntity);
@@ -50,31 +88,44 @@ class AutomationService {
     }
   }
 
-  void updateAreaAutomation({
-    required HashMap<String, EntityTypes> entitiesIdAndType,
-    required Set<String> scenesId,
+  void addEntitiesToAutomaticScene({
+    required String sceneId,
+    required Set<String> entities,
   }) {
-    for (final String sceneId in scenesId) {
-      final SceneCbjEntity? scene = _scenes[sceneId];
-      if (scene == null) {
-        continue;
-      }
+    final SceneCbjEntity? sceneCopy = _scenes[sceneId];
 
-      final List<RequestActionObject> actionList = [];
-
-      for (final MapEntry<String, EntityTypes> entity
-          in entitiesIdAndType.entries) {
-        actionList.addAll(
-          AreaTypeWithEntitiesTypePreset.getPreDefineActionForEntitiesInArea(
-            entityId: entity.key,
-            areaPurposeType: scene.areaPurposeType,
-            entityType: entity.value,
-          ),
-        );
-      }
-
-      _scenes[sceneId] = scene.copyWithNewAction(actionList);
+    if (sceneCopy == null) {
+      return;
     }
+
+    final HashSet<String> allInAutomatic =
+        sceneCopy.entitiesWithAutomaticPurpose.getOrCrash();
+    allInAutomatic.addAll(entities);
+    _scenes[sceneId] = sceneCopy.copyWith(
+      entitiesWithAutomaticPurpose:
+          EntitiesWithAutomaticPurpose(allInAutomatic),
+    );
+    saveScenesToDb();
+  }
+
+  void deleteEntitiesFromAutomaticScene({
+    required String sceneId,
+    required Set<String> entities,
+  }) {
+    final SceneCbjEntity? sceneCopy = _scenes[sceneId];
+
+    if (sceneCopy == null) {
+      return;
+    }
+
+    final HashSet<String> allInAutomatic =
+        sceneCopy.entitiesWithAutomaticPurpose.getOrCrash();
+    allInAutomatic.removeAll(entities);
+    _scenes[sceneId] = sceneCopy.copyWith(
+      entitiesWithAutomaticPurpose:
+          EntitiesWithAutomaticPurpose(allInAutomatic),
+    );
+    saveScenesToDb();
   }
 
   Future<HashSet<String>> createPresetScenesForAreaPurposes(
@@ -86,7 +137,6 @@ class AutomationService {
         uniqueId: UniqueId(),
         name: SceneCbjName(purposesType.name),
         backgroundColor: SceneCbjBackgroundColor('#985dc7'),
-        automationString: SceneCbjAutomationString(''),
         nodeRedFlowId: SceneCbjNodeRedFlowId(''),
         firstNodeId: SceneCbjFirstNodeId(''),
         iconCodePoint: SceneCbjIconCodePoint(''),
@@ -100,6 +150,7 @@ class AutomationService {
         entityStateGRPC: SceneCbjDeviceStateGRPC(EntityStateGRPC.ack.name),
         actions: [],
         areaPurposeType: purposesType,
+        entitiesWithAutomaticPurpose: EntitiesWithAutomaticPurpose(HashSet()),
       );
 
       scenesId.add(scene.uniqueId.getOrCrash());
@@ -108,5 +159,24 @@ class AutomationService {
     return scenesId;
   }
 
-  // getScenesFor
+  List<RequestActionObject> getPresetsForEntities(
+    HashSet<String> entities,
+    AreaPurposesTypes areaPurposeType,
+  ) {
+    final List<RequestActionObject> presets = [];
+    final HashMap<String, EntityTypes> entitiesWithType =
+        IcSynchronizer.getTypesForEntities(entities);
+    for (final MapEntry<String, EntityTypes> entery
+        in entitiesWithType.entries) {
+      presets.addAll(
+        AreaTypeWithEntitiesTypePreset.getPreDefineActionForEntitiesInArea(
+          entityId: entery.key,
+          entityType: entery.value,
+          areaPurposeType: areaPurposeType,
+        ),
+      );
+    }
+
+    return presets;
+  }
 }

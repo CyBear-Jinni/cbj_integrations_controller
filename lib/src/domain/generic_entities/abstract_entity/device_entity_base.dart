@@ -38,7 +38,7 @@ abstract class DeviceEntityBase {
     required this.entityKey,
     required this.requestTimeStamp,
     required this.lastResponseFromDeviceTimeStamp,
-    required this.deviceCbjUniqueId,
+    required this.entitiyCbjUniqueId,
     required this.srvResourceRecord,
     required this.srvTarget,
     required this.ptrResourceRecord,
@@ -130,9 +130,9 @@ abstract class DeviceEntityBase {
   LastResponseFromDeviceTimeStamp lastResponseFromDeviceTimeStamp;
 
   /// Unique id that cbj creates for the device that the entity is stored on
-  CoreUniqueId deviceCbjUniqueId;
+  CoreUniqueId entitiyCbjUniqueId;
 
-  String get getCbjDeviceId => deviceCbjUniqueId.getOrCrash();
+  String get getCbjEntityId => entitiyCbjUniqueId.getOrCrash();
 
   /// Copy with device state to waiting or ack
   DeviceEntityBase copyWithDeviceState(EntityStateGRPC entityStateGRPC) => this;
@@ -284,41 +284,40 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
       : super(
           uniqueId: CoreUniqueId(),
           entityUniqueId: EntityUniqueId('Entity unique id is empty'),
-          cbjDeviceVendor: CbjDeviceVendor(
-            VendorsAndServices.undefined.toString(),
-          ),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.undefined),
           entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
           compUuid: DeviceCompUuid(const Uuid().v1()),
-          cbjEntityName: CbjEntityName('Cbj entity Name is empty'),
+          cbjEntityName: CbjEntityName(value: 'Cbj entity Name is empty'),
           entityOriginalName:
               EntityOriginalName('Entity original name is empty'),
           deviceOriginalName: DeviceOriginalName(
-            'Entity original name that entity is exists on is empty',
+            value: 'Entity original name that entity is exists on is empty',
           ),
           entityTypes: EntityType.type(EntityTypes.light),
           senderDeviceModel: DeviceSenderDeviceModel('a'),
           senderDeviceOs: DeviceSenderDeviceOs('b'),
           senderId: DeviceSenderId(),
-          stateMassage: DeviceStateMassage('go'),
+          stateMassage: DeviceStateMassage(value: 'go'),
           powerConsumption: DevicePowerConsumption('0'),
           deviceUniqueId: DeviceUniqueId('Entiy unique id is empty'),
-          devicePort: DevicePort('1'),
-          deviceLastKnownIp: DeviceLastKnownIp('1.1.1.1'),
-          deviceHostName: DeviceHostName('deviceHostName is empty'),
-          deviceMdns: DeviceMdns('deviceMdns is empty'),
+          devicePort: DevicePort(value: '1'),
+          deviceLastKnownIp: DeviceLastKnownIp(value: '1.1.1.1'),
+          deviceHostName: DeviceHostName(value: 'deviceHostName is empty'),
+          deviceMdns: DeviceMdns(value: 'deviceMdns is empty'),
           srvResourceRecord: DeviceSrvResourceRecord(),
           srvTarget: DeviceSrvTarget(),
           ptrResourceRecord: DevicePtrResourceRecord(),
           mdnsServiceType: DevicemdnsServiceType(),
-          devicesMacAddress: DevicesMacAddress('devicesMacAddress is empty'),
+          devicesMacAddress:
+              DevicesMacAddress(value: 'devicesMacAddress is empty'),
           entityKey: EntityKey('entityKey is empty'),
           requestTimeStamp: RequestTimeStamp('requestTimeStamp is empty'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(
             'lastResponseFromDeviceTimeStamp is empty',
           ),
-          deviceCbjUniqueId: CoreUniqueId(),
-          deviceVendor: DeviceVendor(null),
-          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+          entitiyCbjUniqueId: CoreUniqueId(),
+          deviceVendor: DeviceVendor(),
+          deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
         );
 
   @override

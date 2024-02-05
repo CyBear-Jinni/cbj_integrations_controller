@@ -17,35 +17,35 @@ class LifxHelpers {
     final LifxWhiteEntity lifxDE = LifxWhiteEntity(
       uniqueId: CoreUniqueId(),
       entityUniqueId: EntityUniqueId(lifxDevice.id),
-      cbjEntityName: CbjEntityName(deviceName),
+      cbjEntityName: CbjEntityName(value: deviceName),
       entityOriginalName: EntityOriginalName(deviceName),
-      deviceOriginalName: DeviceOriginalName(deviceName),
+      deviceOriginalName: DeviceOriginalName(value: deviceName),
       entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
       senderDeviceOs: DeviceSenderDeviceOs('Lifx'),
-      deviceVendor: DeviceVendor(null),
-      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+      deviceVendor: DeviceVendor(),
+      deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
       senderDeviceModel: DeviceSenderDeviceModel('Cloud'),
       senderId: DeviceSenderId(),
       compUuid: DeviceCompUuid(lifxDevice.uuid),
-      stateMassage: DeviceStateMassage(''),
+      stateMassage: DeviceStateMassage(value: ''),
       powerConsumption: DevicePowerConsumption(''),
       lightSwitchState: GenericDimmableLightSwitchState(
         LIFXPower.on.name,
       ),
       deviceUniqueId: DeviceUniqueId(lifxDevice.id),
-      devicePort: DevicePort(''),
-      deviceLastKnownIp: DeviceLastKnownIp(''),
-      deviceHostName: DeviceHostName(''),
-      deviceMdns: DeviceMdns(''),
+      devicePort: DevicePort(value: ''),
+      deviceLastKnownIp: DeviceLastKnownIp(value: ''),
+      deviceHostName: DeviceHostName(value: ''),
+      deviceMdns: DeviceMdns(value: ''),
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
       mdnsServiceType: DevicemdnsServiceType(),
-      devicesMacAddress: DevicesMacAddress(''),
+      devicesMacAddress: DevicesMacAddress(value: ''),
       entityKey: EntityKey(''),
       requestTimeStamp: RequestTimeStamp(''),
       lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-      deviceCbjUniqueId: CoreUniqueId(),
+      entitiyCbjUniqueId: CoreUniqueId(),
       lightBrightness:
           GenericDimmableLightBrightness.fromDouble(lifxDevice.brightness),
     );
@@ -53,7 +53,7 @@ class LifxHelpers {
     final HashMap<String, DeviceEntityBase> convertedEntites = HashMap();
 
     return convertedEntites
-      ..addEntries([MapEntry(lifxDE.getCbjDeviceId, lifxDE)]);
+      ..addEntries([MapEntry(lifxDE.getCbjEntityId, lifxDE)]);
 
     // TODO: Add if device type does not supported return null
     // logger.i(

@@ -21,7 +21,7 @@ _$GenericBlindsDeviceDtosImpl _$$GenericBlindsDeviceDtosImplFromJson(
       blindsSwitchState: json['blindsSwitchState'] as String?,
       entityTypes: json['entityTypes'] as String?,
       compUuid: json['compUuid'] as String?,
-      cbjDeviceVendor: json['cbjDeviceVendor'] as String?,
+      cbjDeviceVendor: json['cbjDeviceVendor'] as String,
       deviceVendor: json['deviceVendor'] as String?,
       deviceNetworkLastUpdate: json['deviceNetworkLastUpdate'] as String?,
       powerConsumption: json['powerConsumption'] as String?,
@@ -39,7 +39,7 @@ _$GenericBlindsDeviceDtosImpl _$$GenericBlindsDeviceDtosImplFromJson(
       requestTimeStamp: json['requestTimeStamp'] as String?,
       lastResponseFromDeviceTimeStamp:
           json['lastResponseFromDeviceTimeStamp'] as String?,
-      deviceCbjUniqueId: json['deviceCbjUniqueId'] as String?,
+      entitiyCbjUniqueId: json['entitiyCbjUniqueId'] as String?,
       deviceDtoClass: json['deviceDtoClass'] as String?,
       stateMassage: json['stateMassage'] as String?,
     );
@@ -77,7 +77,7 @@ Map<String, dynamic> _$$GenericBlindsDeviceDtosImplToJson(
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':
           instance.lastResponseFromDeviceTimeStamp,
-      'deviceCbjUniqueId': instance.deviceCbjUniqueId,
+      'entitiyCbjUniqueId': instance.entitiyCbjUniqueId,
       'deviceDtoClass': instance.deviceDtoClass,
       'stateMassage': instance.stateMassage,
     };

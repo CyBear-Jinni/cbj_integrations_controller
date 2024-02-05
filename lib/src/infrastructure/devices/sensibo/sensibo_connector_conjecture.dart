@@ -38,9 +38,9 @@ class SensiboConnectorConjecture extends VendorConnectorConjectureService {
       for (final DeviceEntityBase entity
           in (await SensiboHelpers.addDiscoveredDevice(device)).values) {
         await VendorsConnectorConjecture().foundEntityOfVendor(
-          this,
-          entity,
-          entity.deviceCbjUniqueId.getOrCrash(),
+          vendorConnectorConjectureService: this,
+          entity: entity,
+          entitiyCbjUniqueId: entity.entitiyCbjUniqueId.getOrCrash(),
         );
       }
     }
@@ -53,8 +53,11 @@ class SensiboConnectorConjecture extends VendorConnectorConjectureService {
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) async =>
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async =>
       HashMap()
-        ..addEntries([MapEntry(entity.deviceCbjUniqueId.getOrCrash(), entity)]);
+        ..addEntries(
+          [MapEntry(entity.entitiyCbjUniqueId.getOrCrash(), entity)],
+        );
 }

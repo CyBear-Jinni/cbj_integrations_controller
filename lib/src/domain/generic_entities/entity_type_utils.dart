@@ -180,7 +180,7 @@ class EntityUtils {
     return null;
   }
 
-  static VendorsAndServices stringToDeviceVendor(String deviceVendorAsString) {
+  static VendorsAndServices stringToDeviceVendor( String deviceVendorAsString) {
     String deviceTypeAsStringTemp = deviceVendorAsString;
     if (deviceTypeAsStringTemp.contains('Object')) {
       deviceTypeAsStringTemp = deviceTypeAsStringTemp.substring(

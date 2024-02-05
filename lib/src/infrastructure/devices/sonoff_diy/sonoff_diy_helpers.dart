@@ -22,15 +22,15 @@ class SonoffDiyHelpers {
 
     try {
       if (mDnsName.contains('sonoffDiy1-C45BBE78005D')) {
-        final String deviceCbjUniqueId = mDnsName;
+        final String entitiyCbjUniqueId = mDnsName;
 
         final SonoffDiyRelaySwitchEntity sonoffDiyRelaySwitchEntity =
             SonoffDiyRelaySwitchEntity(
           uniqueId: entity.uniqueId,
           entityUniqueId: EntityUniqueId(mDnsName),
-          cbjEntityName: CbjEntityName(mDnsName),
+          cbjEntityName: CbjEntityName(value: mDnsName),
           entityOriginalName: EntityOriginalName(mDnsName),
-          deviceOriginalName: DeviceOriginalName(mDnsName),
+          deviceOriginalName: DeviceOriginalName(value: mDnsName),
           entityStateGRPC: entity.entityStateGRPC,
           senderDeviceOs: entity.senderDeviceOs,
           deviceVendor: entity.deviceVendor,
@@ -40,14 +40,14 @@ class SonoffDiyHelpers {
           compUuid: entity.compUuid,
           stateMassage: entity.stateMassage,
           powerConsumption: entity.powerConsumption,
-          devicePort: DevicePort(port),
-          deviceHostName: DeviceHostName(mDnsName.toLowerCase()),
-          deviceMdns: DeviceMdns(mDnsName),
+          devicePort: DevicePort(value: port),
+          deviceHostName: DeviceHostName(value: mDnsName.toLowerCase()),
+          deviceMdns: DeviceMdns(value: mDnsName),
           srvResourceRecord: entity.srvResourceRecord,
           srvTarget: entity.srvTarget,
           ptrResourceRecord: entity.ptrResourceRecord,
           mdnsServiceType: entity.mdnsServiceType,
-          deviceLastKnownIp: DeviceLastKnownIp(ip),
+          deviceLastKnownIp: DeviceLastKnownIp(value: ip),
           switchState: GenericSwitchSwitchState(false.toString()),
           deviceUniqueId: entity.deviceUniqueId,
           devicesMacAddress: entity.devicesMacAddress,
@@ -55,10 +55,10 @@ class SonoffDiyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
         );
         entitiesToAdd.addEntries([
-          MapEntry(deviceCbjUniqueId, sonoffDiyRelaySwitchEntity),
+          MapEntry(entitiyCbjUniqueId, sonoffDiyRelaySwitchEntity),
         ]);
       } else {
         icLogger.i('SonoffDiy device types is not supported');

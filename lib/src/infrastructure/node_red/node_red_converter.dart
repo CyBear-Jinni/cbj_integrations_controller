@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:cbj_integrations_controller/src/domain/binding/binding_cbj_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/binding/value_objects_routine_cbj.dart';
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
@@ -54,7 +56,7 @@ class NodeRedConverter {
       uniqueId: UniqueId(),
       name: SceneCbjName(nodeName),
       backgroundColor: SceneCbjBackgroundColor(sceneColor),
-      automationString: SceneCbjAutomationString(nodes),
+      // automationString: SceneCbjAutomationString(nodes),
       nodeRedFlowId: SceneCbjNodeRedFlowId(null),
       firstNodeId: SceneCbjFirstNodeId(startingSceneNode.key),
       iconCodePoint: SceneCbjIconCodePoint(null),
@@ -70,6 +72,7 @@ class NodeRedConverter {
       stateMassage: SceneCbjStateMassage(null),
       actions: [],
       areaPurposeType: AreaPurposesTypes.undefined,
+      entitiesWithAutomaticPurpose: EntitiesWithAutomaticPurpose(HashSet()),
     );
   }
 

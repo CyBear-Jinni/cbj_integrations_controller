@@ -40,7 +40,7 @@ class GenericSmartTypeNotSupportedDE extends DeviceEntityBase {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.undefined),
         );
@@ -50,33 +50,33 @@ class GenericSmartTypeNotSupportedDE extends DeviceEntityBase {
       GenericSmartTypeNotSupportedDE(
         uniqueId: CoreUniqueId(),
         entityUniqueId: EntityUniqueId(''),
-        cbjEntityName: CbjEntityName(''),
+        cbjEntityName: CbjEntityName(value: ''),
         entityOriginalName: EntityOriginalName(''),
-        deviceOriginalName: DeviceOriginalName(''),
+        deviceOriginalName: DeviceOriginalName(value: ''),
         entityStateGRPC: EntityState.state(EntityStateGRPC.undefined),
         senderDeviceOs: DeviceSenderDeviceOs(''),
         senderDeviceModel: DeviceSenderDeviceModel(''),
-        stateMassage: DeviceStateMassage(''),
+        stateMassage: DeviceStateMassage(value: ''),
         senderId: DeviceSenderId(),
-        cbjDeviceVendor: CbjDeviceVendor(''),
-        deviceVendor: DeviceVendor(null),
-        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(null),
+        cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.undefined),
+        deviceVendor: DeviceVendor(),
+        deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
         deviceUniqueId: DeviceUniqueId(''),
-        devicePort: DevicePort(''),
-        deviceLastKnownIp: DeviceLastKnownIp(''),
-        deviceHostName: DeviceHostName(''),
-        deviceMdns: DeviceMdns(''),
+        devicePort: DevicePort(value: ''),
+        deviceLastKnownIp: DeviceLastKnownIp(value: ''),
+        deviceHostName: DeviceHostName(value: ''),
+        deviceMdns: DeviceMdns(value: ''),
         srvResourceRecord: DeviceSrvResourceRecord(),
         mdnsServiceType: DevicemdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid(''),
         powerConsumption: DevicePowerConsumption(''),
-        devicesMacAddress: DevicesMacAddress(''),
+        devicesMacAddress: DevicesMacAddress(value: ''),
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-        deviceCbjUniqueId: CoreUniqueId(),
+        entitiyCbjUniqueId: CoreUniqueId(),
       );
 
   //
@@ -140,7 +140,7 @@ class GenericSmartTypeNotSupportedDE extends DeviceEntityBase {
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
-      deviceCbjUniqueId: deviceCbjUniqueId.getOrCrash(),
+      entitiyCbjUniqueId: entitiyCbjUniqueId.getOrCrash(),
     );
   }
 

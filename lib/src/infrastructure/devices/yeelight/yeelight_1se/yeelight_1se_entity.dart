@@ -38,7 +38,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.lightSwitchState,
     required super.lightColorTemperature,
     required super.lightColorAlpha,
@@ -48,7 +48,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required super.lightBrightness,
     required super.colorMode,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.yeelight),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.yeelight),
         ) {
     minDurationBetweenRequsts = const Duration(milliseconds: 400);
     maxRequestsStack = 3;
@@ -56,7 +56,6 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     if (port == null) {
       return;
     }
-    // TODO: Transfer to address by host name when https://github.com/dart-lang/sdk/issues/54751 resolves
     api = Device(
       address: InternetAddress(deviceLastKnownIp.getOrCrash()!),
       port: int.parse(port),
@@ -93,7 +92,7 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       lightSwitchState: entity.lightSwitchState,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
       lightBrightness: entity.lightBrightness,
       lightColorTemperature: entity.lightColorTemperature,
       lightColorAlpha: entity.lightColorAlpha,

@@ -45,18 +45,6 @@ class VendorsConnectorConjecture {
   static final VendorsConnectorConjecture _instance =
       VendorsConnectorConjecture._singletonConstructor();
 
-  // DeviceEntityBase addDiscoveredDeviceToHub(
-  //   DeviceEntityBase deviceEntity,
-  // ) {
-  //   final DeviceEntityBase deviceEntityGotSaved =
-  //       ISavedDevicesRepo.instance.addOrUpdateDevice(deviceEntity);
-
-  //   IMqttServerRepository.instance
-  //       .postSmartDeviceToAppMqtt(entityFromTheHub: deviceEntityGotSaved);
-
-  //   return deviceEntityGotSaved;
-  // }
-
   HashMap<String, VendorsAndServices> entitiesToVendor = HashMap();
 
   List<VendorEntityInformation> getVendors() =>
@@ -145,7 +133,11 @@ class VendorsConnectorConjecture {
       return;
     }
 
-    foundEntityOfVendor(companyConnectorConjecture, entity, mdnsName);
+    foundEntityOfVendor(
+      vendorConnectorConjectureService: companyConnectorConjecture,
+      entity: entity,
+      entitiyCbjUniqueId: mdnsName,
+    );
   }
 
   Future setHostNameDeviceByCompany(GenericUnsupportedDE entity) async {
@@ -177,9 +169,9 @@ class VendorsConnectorConjecture {
     }
 
     foundEntityOfVendor(
-      companyConnectorConjecture,
-      entity,
-      deviceHostNameLowerCase,
+      vendorConnectorConjectureService: companyConnectorConjecture,
+      entity: entity,
+      entitiyCbjUniqueId: deviceHostNameLowerCase,
     );
   }
 
@@ -194,24 +186,51 @@ class VendorsConnectorConjecture {
       return;
     }
 
-    foundEntityOfVendor(vendorConnectorConjectureService, entity, port);
+    foundEntityOfVendor(
+      vendorConnectorConjectureService: vendorConnectorConjectureService,
+      entity: entity,
+      entitiyCbjUniqueId: port,
+    );
   }
 
-  Future foundEntityOfVendor(
-    VendorConnectorConjectureService vendorConnectorConjectureService,
-    DeviceEntityBase entity,
-    String deviceCbjUniqueId,
-  ) async {
+  Future loadEntitiesFromDb({
+    required VendorConnectorConjectureService vendorConnectorConjectureService,
+    required DeviceEntityBase entity,
+    required String entitiyCbjUniqueId,
+  }) async {
+    final HashMap<String, DeviceEntityBase>? handeldEntities =
+        await vendorConnectorConjectureService.loadFromDb(
+      entity,
+    );
+
+    if (handeldEntities == null || handeldEntities.isEmpty) {
+      return;
+    }
+    for (final MapEntry<String, DeviceEntityBase> entity
+        in handeldEntities.entries) {
+      entitiesToVendor.addEntries([
+        MapEntry(entity.key, entity.value.cbjDeviceVendor.vendorsAndServices),
+      ]);
+    }
+  }
+
+  Future foundEntityOfVendor({
+    required VendorConnectorConjectureService vendorConnectorConjectureService,
+    required DeviceEntityBase entity,
+    required String entitiyCbjUniqueId,
+  }) async {
     HashMap<String, DeviceEntityBase>? handeldEntities =
-        await vendorConnectorConjectureService.foundEntity(entity);
+        await vendorConnectorConjectureService.foundEntity(
+      entity,
+    );
 
     if (handeldEntities == null) {
-      icLogger.i('Found unseported device $deviceCbjUniqueId');
+      icLogger.i('Found unseported device $entitiyCbjUniqueId');
       handeldEntities = handeldEntities =
           await UnseportedVendorOrDeviceConnectorConjecture().foundEntity(
         entity
-          ..deviceCbjUniqueId =
-              CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+          ..entitiyCbjUniqueId =
+              CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
       );
     }
 
@@ -263,4 +282,27 @@ class VendorsConnectorConjecture {
       );
     }
   }
+
+  HashMap<String, DeviceEntityBase> getEntities() =>
+      VendorConnectorConjectureService.instanceMapByType.values.fold(
+        HashMap<String, DeviceEntityBase>(),
+        (previousValue, element) =>
+            previousValue..addAll(element.vendorEntities),
+      );
+
+  HashMap<String, EntityTypes> getTypesForEntities(HashSet<String> entities) =>
+      entities
+          .map(
+            (e) => MapEntry(
+              e,
+              getVendorConnectorConjecture(entitiesToVendor[e]!)!
+                  .vendorEntities[e]!
+                  .entityTypes
+                  .type,
+            ),
+          )
+          .fold(
+            HashMap<String, EntityTypes>(),
+            (previousValue, element) => previousValue..addEntries([element]),
+          );
 }

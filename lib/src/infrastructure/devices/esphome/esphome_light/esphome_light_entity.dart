@@ -36,10 +36,10 @@ class EspHomeLightEntity extends GenericLightDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.lightSwitchState,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor.vendor(VendorsAndServices.espHome),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.espHome),
         );
 
   factory EspHomeLightEntity.fromGeneric(GenericLightDE entity) {
@@ -70,10 +70,9 @@ class EspHomeLightEntity extends GenericLightDE {
       devicesMacAddress: entity.devicesMacAddress,
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          entity.lastResponseFromDeviceTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       lightSwitchState: entity.lightSwitchState,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
     );
   }
 

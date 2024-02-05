@@ -10,13 +10,13 @@ class _AreaRepository implements IAreaRepository {
   Future setNewArea(AreaEntity area) async {
     final HashSet<String> scenes = await IcSynchronizer()
         .createPresetScenesForAreaPurposes(area.purposes.types);
+    final MapEntry<String, AreaEntity> areaEnery = MapEntry(
+      area.uniqueId.getOrCrash(),
+      area..scenesId = AreaScenesId(scenes),
+    );
 
-    areas.addEntries([
-      MapEntry(
-        area.uniqueId.getOrCrash(),
-        area..scenesId = AreaScenesId(scenes),
-      ),
-    ]);
+    areas.addEntries([areaEnery]);
+    saveAreasToDb();
   }
 
   @override
@@ -33,14 +33,21 @@ class _AreaRepository implements IAreaRepository {
 
     for (final AreaEntity area in areas.values) {
       final String areaId = area.uniqueId.getOrCrash();
-      final Set<String> devicesInArea =
+      final Set<String> removedEntities =
           area.entitiesId.getOrCrash().intersection(entities);
-      if (devicesInArea.isEmpty) {
+      if (removedEntities.isEmpty) {
         continue;
       }
       areasChanged.add(areaId);
-      area.entitiesId.getOrCrash().removeAll(devicesInArea);
-      areas[areaId] = area;
+      final Set<String> entitiesToAdd =
+          area.entitiesId.getOrCrash().difference(removedEntities);
+      areas[areaId] = area.copy(entitiesId: AreaEntitiesId(entitiesToAdd));
+      for (final String sceneId in area.scenesId.getOrCrash()) {
+        IcSynchronizer().deleteEntitiesFromAutomaticScene(
+          sceneId: sceneId,
+          entitiesId: removedEntities,
+        );
+      }
     }
     areas[areaId]?.entitiesId = AreaEntitiesId(entities);
 
@@ -50,10 +57,13 @@ class _AreaRepository implements IAreaRepository {
     }
 
     final AreaEntity area = areas[areaId]!;
-    IcSynchronizer().updateAreaAutomation(
-      entitiesId: area.entitiesId.getOrCrash(),
-      scenesId: area.scenesId.getOrCrash(),
-    );
+    for (final String sceneId in area.scenesId.getOrCrash()) {
+      IcSynchronizer().addEntitiesToAutomaticScene(
+        sceneId: sceneId,
+        entitiesId: area.entitiesId.getOrCrash(),
+      );
+    }
+
     onAreasUpdated(areasChanged);
   }
 
@@ -81,9 +91,39 @@ class _AreaRepository implements IAreaRepository {
   Future onAreasUpdated(HashSet<String> areasId) async {
     final Iterable<MapEntry<String, AreaEntity>> areasTemp =
         areas.entries.where((element) => areasId.contains(element.key));
+    saveAreasToDb();
 
     for (final MapEntry<String, AreaEntity> areaChanged in areasTemp) {
       IcSynchronizer().areasChangesStream.add(areaChanged);
+    }
+  }
+
+  @override
+  bool saveAreasToDb() {
+    final List<String> areasJsonString = [];
+    for (final AreaEntity area in areas.values) {
+      final String areaAsJsonString =
+          jsonEncode(area.toInfrastructure().toJson());
+      areasJsonString.add(areaAsJsonString);
+    }
+    final String? homeBoxName = NetworksManager().currentNetwork?.uniqueId;
+    if (homeBoxName == null) {
+      return false;
+    }
+    icLogger.i('areasJsonString $areasJsonString');
+
+    IDbRepository.instance.saveAreas(homeBoxName, areasJsonString);
+    return true;
+  }
+
+  @override
+  void loadFromDb(String homeId) {
+    final List<String> areasString = IDbRepository.instance.getAreas(homeId);
+    for (final String areaString in areasString) {
+      final AreaEntity entity = AreaEntityDtos.fromJson(
+        jsonDecode(areaString) as Map<String, dynamic>,
+      ).toDomain();
+      areas.addEntries([MapEntry(entity.uniqueId.getOrCrash(), entity)]);
     }
   }
 }

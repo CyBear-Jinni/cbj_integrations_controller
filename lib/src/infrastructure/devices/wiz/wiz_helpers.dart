@@ -17,7 +17,7 @@ class WizHelpers {
     // final WizWhiteEntity wizDE = WizWhiteEntity(
     //   uniqueId: uniqueDeviceIdTemp,
     //   entityUniqueId: EntityUniqueId.fromUniqueString(wizDevice.id),
-    //   cbjEntityName: CbjEntityName(
+    //   cbjEntityName: CbjEntityName(value:
     //     wizDevice.label != '' ? wizDevice.label : 'Wiz test 2',
     //   ),
     //   entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
@@ -25,7 +25,7 @@ class WizHelpers {
     //   senderDeviceModel: DeviceSenderDeviceModel('Cloud'),
     //   senderId: DeviceSenderId(),
     //   compUuid: DeviceCompUuid(wizDevice.uuid),
-    //   stateMassage: DeviceStateMassage('Hello World'),
+    //   stateMassage: DeviceStateMassage(value: 'Hello World'),
     //   powerConsumption: DevicePowerConsumption('0'),
     //   lightSwitchState: GenericLightSwitchState(
     //     (wizDevice.power == WizPower.on).toString(),

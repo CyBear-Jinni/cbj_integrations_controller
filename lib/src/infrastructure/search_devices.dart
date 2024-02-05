@@ -7,21 +7,26 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_empty_entity/generic_empty_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/i_network_utilities.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_manager_d.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/shared_variables.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/system_commands/system_commands_base_class_d.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector_conjecture.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class SendToIsolate {
-  SendToIsolate(
-    this.sendPort,
-    this.projectPath,
-    this.networkUtilitiesType, {
+  SendToIsolate({
+    required this.sendPort,
+    required this.projectPath,
+    required this.networkUtilitiesType,
+    required this.isSnap,
     this.portByVendor,
+    this.systemCommands,
   });
+  bool isSnap;
   SendPort sendPort;
   String projectPath;
   HashMap<VendorsAndServices, List<int>>? portByVendor;
   INetworkUtilities? networkUtilitiesType;
+  SystemCommandsBaseClassD? systemCommands;
 }
 
 class BackFromIsolate {
@@ -39,17 +44,29 @@ class SearchDevices {
 
   List<Isolate> isolates = [];
 
-  Future startSearchIsolate(
+  Future startSearchIsolate({
     INetworkUtilities? networkUtilitiesType,
-  ) async {
-    final String projectPath = await SystemCommandsManager().getLocalDbPath();
+    SystemCommandsBaseClassD? systemCommands,
+  }) async {
+    final INetworkUtilities networkUtilitiesTypeTemp =
+        networkUtilitiesType ?? NetworkUtilities();
+    final SystemCommandsBaseClassD? systemCommandsTemp =
+        systemCommands ?? await setInstanceForDartNative();
+
+    final String projectPath =
+        await SystemCommandsBaseClassD.instance.getLocalDbPath();
+    final bool isSnap =
+        SharedVariables().getProjectRootDirectoryPath()?.contains('snap') ??
+            false;
 
     /// For mdns search
     final mdnsReceivePort = ReceivePort();
     SendToIsolate searchDevices = SendToIsolate(
-      mdnsReceivePort.sendPort,
-      projectPath,
-      networkUtilitiesType,
+      sendPort: mdnsReceivePort.sendPort,
+      projectPath: projectPath,
+      networkUtilitiesType: networkUtilitiesTypeTemp,
+      isSnap: isSnap,
+      systemCommands: systemCommandsTemp,
     );
     final Isolate mdnsIsolate = await Isolate.spawn(
       _searchAllMdnsDevicesAndSetThemUp,
@@ -67,14 +84,16 @@ class SearchDevices {
     });
     isolates.add(mdnsIsolate);
 
-    // TODO: Does not work on Android https://github.com/osociety/network_tools_flutter/issues/31
+    // TODO: Host name from ip does not work on Android https://github.com/dart-lang/sdk/issues/54435
     if (!Platform.isAndroid) {
       /// For ping search
       final ReceivePort pingReceivePort = ReceivePort();
       searchDevices = SendToIsolate(
-        pingReceivePort.sendPort,
-        projectPath,
-        networkUtilitiesType,
+        sendPort: pingReceivePort.sendPort,
+        projectPath: projectPath,
+        networkUtilitiesType: networkUtilitiesTypeTemp,
+        isSnap: isSnap,
+        systemCommands: systemCommandsTemp,
       );
 
       final Isolate pingIsolate = await Isolate.spawn(
@@ -98,10 +117,12 @@ class SearchDevices {
         VendorsConnectorConjecture().portsToScen();
     final ReceivePort portReceivePort = ReceivePort();
     searchDevices = SendToIsolate(
-      portReceivePort.sendPort,
-      projectPath,
-      networkUtilitiesType,
+      sendPort: portReceivePort.sendPort,
+      projectPath: projectPath,
+      networkUtilitiesType: networkUtilitiesTypeTemp,
+      isSnap: isSnap,
       portByVendor: ports,
+      systemCommands: systemCommandsTemp,
     );
 
     final Isolate portIsolate = await Isolate.spawn(
@@ -127,7 +148,10 @@ class SearchDevices {
     SendToIsolate sendToIsolate,
   ) async {
     INetworkUtilities.instance = sendToIsolate.networkUtilitiesType;
-
+    if (sendToIsolate.systemCommands == null) {
+      return;
+    }
+    SystemCommandsBaseClassD.instance = sendToIsolate.systemCommands!;
     await INetworkUtilities.instance
         .configureNetworkTools(sendToIsolate.projectPath);
 
@@ -174,19 +198,28 @@ class SearchDevices {
     while (true) {
       await searchForAdress((subnet) async {
         try {
-          final Stream<DeviceEntityBase> pingStream1 = INetworkUtilities
-              .instance
-              .getAllPingableDevicesAsync(subnet, lastHostId: 126);
-          await for (final DeviceEntityBase entity in pingStream1) {
-            sendPort.send(entity);
-          }
+          if (sendToIsolate.isSnap) {
+            // Spits to 2 requests for snap to fix error https://github.com/CyBear-Jinni-user/CBJ_Hub_Snap/issues/2
 
-          // Spits to 2 requests to fix error in snap https://github.com/CyBear-Jinni-user/CBJ_Hub_Snap/issues/2
-          final Stream<DeviceEntityBase> pingStream2 = INetworkUtilities
-              .instance
-              .getAllPingableDevicesAsync(subnet, firstHostId: 127);
-          await for (final DeviceEntityBase entity in pingStream2) {
-            sendPort.send(entity);
+            final Stream<DeviceEntityBase> pingStream1 = INetworkUtilities
+                .instance
+                .getAllPingableDevicesAsync(subnet, lastHostId: 126);
+            await for (final DeviceEntityBase entity in pingStream1) {
+              sendPort.send(entity);
+            }
+
+            final Stream<DeviceEntityBase> pingStream2 = INetworkUtilities
+                .instance
+                .getAllPingableDevicesAsync(subnet, firstHostId: 127);
+            await for (final DeviceEntityBase entity in pingStream2) {
+              sendPort.send(entity);
+            }
+          } else {
+            final Stream<DeviceEntityBase> pingStream1 =
+                INetworkUtilities.instance.getAllPingableDevicesAsync(subnet);
+            await for (final DeviceEntityBase entity in pingStream1) {
+              sendPort.send(entity);
+            }
           }
         } catch (e) {
           icLogger.i('Ping search Error $e');
@@ -230,15 +263,16 @@ class SearchDevices {
             in sendToIsolate.portByVendor!.entries) {
           final VendorsAndServices vendor = vendorPorts.key;
           for (final int port in vendorPorts.value) {
-            INetworkUtilities.instance
-                .scanDevicesForSinglePort(subnet, port)
-                .listen((event) {
+            final Stream<DeviceEntityBase> entityStream = INetworkUtilities
+                .instance
+                .scanDevicesForSinglePort(subnet, port);
+            await for (final DeviceEntityBase entity in entityStream) {
               final BackFromIsolate backFromIsolate = BackFromIsolate(
                 vendor,
-                event,
+                entity,
               );
               sendPort.send(backFromIsolate);
-            });
+            }
           }
         }
         await Future.delayed(const Duration(seconds: 3));

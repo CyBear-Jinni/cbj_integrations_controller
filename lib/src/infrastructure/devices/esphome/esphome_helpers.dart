@@ -25,7 +25,7 @@
 //       for (final DeviceEntityBase deviceE
 //           in EspHomeConnectorConjecture().getAllCompanyDevices.values) {
 //         if (deviceE.deviceMdns.getOrCrash() == mDnsName) {
-//           return deviceE.deviceCbjUniqueId.getOrCrash();
+//           return deviceE.entitiyCbjUniqueId.getOrCrash();
 //         }
 //       }
 //     }
@@ -127,16 +127,16 @@
 //         // final List supportedColorModList = espHomeDeviceEntityObject
 //         //     .config['supportedColorModesList'] as Set<dynamic>;
 //         // if (supportedColorModList.first == 1) {}
-//         final String deviceCbjUniqueId =
+//         final String entitiyCbjUniqueId =
 //             espHomeDeviceEntityObject.config['uniqueId'] as String;
 //         final DeviceEntityBase entityTemp = EspHomeLightEntity(
 //           uniqueId: entity.uniqueId,
-//           entityUniqueId: EntityUniqueId(deviceCbjUniqueId),
-//           cbjEntityName: CbjEntityName(espHomeDeviceEntityObject.name),
+//           entityUniqueId: EntityUniqueId(entitiyCbjUniqueId),
+//           cbjEntityName: CbjEntityName(value: espHomeDeviceEntityObject.name),
 //           entityOriginalName:
 //               EntityOriginalName(espHomeDeviceEntityObject.name),
 //           deviceOriginalName:
-//               DeviceOriginalName(espHomeDeviceEntityObject.name),
+//               DeviceOriginalName(value: espHomeDeviceEntityObject.name),
 //           entityStateGRPC: entity.entityStateGRPC,
 //           senderDeviceOs: entity.senderDeviceOs,
 //           deviceVendor: entity.deviceVendor,
@@ -158,24 +158,24 @@
 //           requestTimeStamp: entity.requestTimeStamp,
 //           lastResponseFromDeviceTimeStamp:
 //               entity.lastResponseFromDeviceTimeStamp,
-//           deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+//           entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
 //           lightSwitchState: GenericLightSwitchState('on'),
 //         );
-//         addEntities.addEntries([MapEntry(deviceCbjUniqueId, entityTemp)]);
+//         addEntities.addEntries([MapEntry(entitiyCbjUniqueId, entityTemp)]);
 //       } else if (espHomeDeviceEntityObject.type == 'Switch' ||
 //           espHomeDeviceEntityObject.type == 'Fan' ||
 //           espHomeDeviceEntityObject.type == 'Siren') {
-//         final String deviceCbjUniqueId =
+//         final String entitiyCbjUniqueId =
 //             espHomeDeviceEntityObject.config['uniqueId'] as String;
 
 //         final DeviceEntityBase entityTemp = EspHomeSwitchEntity(
 //           uniqueId: entity.uniqueId,
-//           entityUniqueId: EntityUniqueId(deviceCbjUniqueId),
-//           cbjEntityName: CbjEntityName(espHomeDeviceEntityObject.name),
+//           entityUniqueId: EntityUniqueId(entitiyCbjUniqueId),
+//           cbjEntityName: CbjEntityName(value: espHomeDeviceEntityObject.name),
 //           entityOriginalName:
 //               EntityOriginalName(espHomeDeviceEntityObject.name),
 //           deviceOriginalName:
-//               DeviceOriginalName(espHomeDeviceEntityObject.name),
+//               DeviceOriginalName(value: espHomeDeviceEntityObject.name),
 //           entityStateGRPC: entity.entityStateGRPC,
 //           senderDeviceOs: entity.senderDeviceOs,
 //           deviceVendor: entity.deviceVendor,
@@ -197,10 +197,10 @@
 //           requestTimeStamp: entity.requestTimeStamp,
 //           lastResponseFromDeviceTimeStamp:
 //               entity.lastResponseFromDeviceTimeStamp,
-//           deviceCbjUniqueId: CoreUniqueId.fromUniqueString(deviceCbjUniqueId),
+//           entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
 //           switchState: GenericSwitchSwitchState('on'),
 //         );
-//         addEntities.addEntries([MapEntry(deviceCbjUniqueId, entityTemp)]);
+//         addEntities.addEntries([MapEntry(entitiyCbjUniqueId, entityTemp)]);
 //       }
 //     }
 

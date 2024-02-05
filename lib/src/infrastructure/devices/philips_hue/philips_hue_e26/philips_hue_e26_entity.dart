@@ -36,14 +36,12 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.deviceCbjUniqueId,
+    required super.entitiyCbjUniqueId,
     required super.lightSwitchState,
     required super.lightBrightness,
     required this.philipsHueApiLight,
   }) : super(
-          cbjDeviceVendor: CbjDeviceVendor(
-            VendorsAndServices.philipsHue.toString(),
-          ),
+          cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.philipsHue),
         );
 
   factory PhilipsHueE26Entity.fromGeneric(
@@ -76,10 +74,9 @@ class PhilipsHueE26Entity extends GenericDimmableLightDE {
       devicesMacAddress: entity.devicesMacAddress,
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
-      lastResponseFromDeviceTimeStamp:
-          entity.lastResponseFromDeviceTimeStamp,
+      lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
       lightSwitchState: entity.lightSwitchState,
-      deviceCbjUniqueId: entity.deviceCbjUniqueId,
+      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
       lightBrightness: entity.lightBrightness,
 
       /// TODO: Save and pull philips hub generated user name

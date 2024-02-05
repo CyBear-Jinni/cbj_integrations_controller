@@ -31,7 +31,8 @@ mixin _$SceneCbjDtos {
   String? get compUuid => throw _privateConstructorUsedError;
   String? get stateMassage => throw _privateConstructorUsedError;
   String get areaPurposeType => throw _privateConstructorUsedError;
-  String? get automationString => throw _privateConstructorUsedError;
+  List<String> get entitiesWithAutomaticPurpose =>
+      throw _privateConstructorUsedError;
   String? get nodeRedFlowId => throw _privateConstructorUsedError;
   String? get firstNodeId => throw _privateConstructorUsedError;
   String? get iconCodePoint => throw _privateConstructorUsedError;
@@ -61,7 +62,7 @@ abstract class $SceneCbjDtosCopyWith<$Res> {
       String? compUuid,
       String? stateMassage,
       String areaPurposeType,
-      String? automationString,
+      List<String> entitiesWithAutomaticPurpose,
       String? nodeRedFlowId,
       String? firstNodeId,
       String? iconCodePoint,
@@ -92,7 +93,7 @@ class _$SceneCbjDtosCopyWithImpl<$Res, $Val extends SceneCbjDtos>
     Object? compUuid = freezed,
     Object? stateMassage = freezed,
     Object? areaPurposeType = null,
-    Object? automationString = freezed,
+    Object? entitiesWithAutomaticPurpose = null,
     Object? nodeRedFlowId = freezed,
     Object? firstNodeId = freezed,
     Object? iconCodePoint = freezed,
@@ -140,10 +141,10 @@ class _$SceneCbjDtosCopyWithImpl<$Res, $Val extends SceneCbjDtos>
           ? _value.areaPurposeType
           : areaPurposeType // ignore: cast_nullable_to_non_nullable
               as String,
-      automationString: freezed == automationString
-          ? _value.automationString
-          : automationString // ignore: cast_nullable_to_non_nullable
-              as String?,
+      entitiesWithAutomaticPurpose: null == entitiesWithAutomaticPurpose
+          ? _value.entitiesWithAutomaticPurpose
+          : entitiesWithAutomaticPurpose // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       nodeRedFlowId: freezed == nodeRedFlowId
           ? _value.nodeRedFlowId
           : nodeRedFlowId // ignore: cast_nullable_to_non_nullable
@@ -187,7 +188,7 @@ abstract class _$$SceneCbjDtosImplCopyWith<$Res>
       String? compUuid,
       String? stateMassage,
       String areaPurposeType,
-      String? automationString,
+      List<String> entitiesWithAutomaticPurpose,
       String? nodeRedFlowId,
       String? firstNodeId,
       String? iconCodePoint,
@@ -216,7 +217,7 @@ class __$$SceneCbjDtosImplCopyWithImpl<$Res>
     Object? compUuid = freezed,
     Object? stateMassage = freezed,
     Object? areaPurposeType = null,
-    Object? automationString = freezed,
+    Object? entitiesWithAutomaticPurpose = null,
     Object? nodeRedFlowId = freezed,
     Object? firstNodeId = freezed,
     Object? iconCodePoint = freezed,
@@ -264,10 +265,10 @@ class __$$SceneCbjDtosImplCopyWithImpl<$Res>
           ? _value.areaPurposeType
           : areaPurposeType // ignore: cast_nullable_to_non_nullable
               as String,
-      automationString: freezed == automationString
-          ? _value.automationString
-          : automationString // ignore: cast_nullable_to_non_nullable
-              as String?,
+      entitiesWithAutomaticPurpose: null == entitiesWithAutomaticPurpose
+          ? _value._entitiesWithAutomaticPurpose
+          : entitiesWithAutomaticPurpose // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       nodeRedFlowId: freezed == nodeRedFlowId
           ? _value.nodeRedFlowId
           : nodeRedFlowId // ignore: cast_nullable_to_non_nullable
@@ -306,13 +307,14 @@ class _$SceneCbjDtosImpl extends _SceneCbjDtos {
       required this.compUuid,
       required this.stateMassage,
       required this.areaPurposeType,
-      this.automationString,
+      required final List<String> entitiesWithAutomaticPurpose,
       this.nodeRedFlowId,
       this.firstNodeId,
       this.iconCodePoint,
       this.image,
       this.lastDateOfExecute})
-      : super._();
+      : _entitiesWithAutomaticPurpose = entitiesWithAutomaticPurpose,
+        super._();
 
   factory _$SceneCbjDtosImpl.fromJson(Map<String, dynamic> json) =>
       _$$SceneCbjDtosImplFromJson(json);
@@ -338,8 +340,15 @@ class _$SceneCbjDtosImpl extends _SceneCbjDtos {
   final String? stateMassage;
   @override
   final String areaPurposeType;
+  final List<String> _entitiesWithAutomaticPurpose;
   @override
-  final String? automationString;
+  List<String> get entitiesWithAutomaticPurpose {
+    if (_entitiesWithAutomaticPurpose is EqualUnmodifiableListView)
+      return _entitiesWithAutomaticPurpose;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_entitiesWithAutomaticPurpose);
+  }
+
   @override
   final String? nodeRedFlowId;
   @override
@@ -353,7 +362,7 @@ class _$SceneCbjDtosImpl extends _SceneCbjDtos {
 
   @override
   String toString() {
-    return 'SceneCbjDtos(uniqueId: $uniqueId, name: $name, backgroundColor: $backgroundColor, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, compUuid: $compUuid, stateMassage: $stateMassage, areaPurposeType: $areaPurposeType, automationString: $automationString, nodeRedFlowId: $nodeRedFlowId, firstNodeId: $firstNodeId, iconCodePoint: $iconCodePoint, image: $image, lastDateOfExecute: $lastDateOfExecute)';
+    return 'SceneCbjDtos(uniqueId: $uniqueId, name: $name, backgroundColor: $backgroundColor, entityStateGRPC: $entityStateGRPC, senderDeviceOs: $senderDeviceOs, senderDeviceModel: $senderDeviceModel, senderId: $senderId, compUuid: $compUuid, stateMassage: $stateMassage, areaPurposeType: $areaPurposeType, entitiesWithAutomaticPurpose: $entitiesWithAutomaticPurpose, nodeRedFlowId: $nodeRedFlowId, firstNodeId: $firstNodeId, iconCodePoint: $iconCodePoint, image: $image, lastDateOfExecute: $lastDateOfExecute)';
   }
 
   @override
@@ -380,8 +389,9 @@ class _$SceneCbjDtosImpl extends _SceneCbjDtos {
                 other.stateMassage == stateMassage) &&
             (identical(other.areaPurposeType, areaPurposeType) ||
                 other.areaPurposeType == areaPurposeType) &&
-            (identical(other.automationString, automationString) ||
-                other.automationString == automationString) &&
+            const DeepCollectionEquality().equals(
+                other._entitiesWithAutomaticPurpose,
+                _entitiesWithAutomaticPurpose) &&
             (identical(other.nodeRedFlowId, nodeRedFlowId) ||
                 other.nodeRedFlowId == nodeRedFlowId) &&
             (identical(other.firstNodeId, firstNodeId) ||
@@ -407,7 +417,7 @@ class _$SceneCbjDtosImpl extends _SceneCbjDtos {
       compUuid,
       stateMassage,
       areaPurposeType,
-      automationString,
+      const DeepCollectionEquality().hash(_entitiesWithAutomaticPurpose),
       nodeRedFlowId,
       firstNodeId,
       iconCodePoint,
@@ -440,7 +450,7 @@ abstract class _SceneCbjDtos extends SceneCbjDtos {
       required final String? compUuid,
       required final String? stateMassage,
       required final String areaPurposeType,
-      final String? automationString,
+      required final List<String> entitiesWithAutomaticPurpose,
       final String? nodeRedFlowId,
       final String? firstNodeId,
       final String? iconCodePoint,
@@ -472,7 +482,7 @@ abstract class _SceneCbjDtos extends SceneCbjDtos {
   @override
   String get areaPurposeType;
   @override
-  String? get automationString;
+  List<String> get entitiesWithAutomaticPurpose;
   @override
   String? get nodeRedFlowId;
   @override

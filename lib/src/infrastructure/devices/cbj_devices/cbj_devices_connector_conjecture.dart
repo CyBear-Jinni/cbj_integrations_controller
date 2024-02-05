@@ -60,7 +60,7 @@ class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
 
     for (final DeviceEntityBase entityAsDevice in devicesList) {
       final MapEntry<String, DeviceEntityBase> deviceAsEntry = MapEntry(
-        entityAsDevice.deviceCbjUniqueId.getOrCrash(),
+        entityAsDevice.entitiyCbjUniqueId.getOrCrash(),
         entityAsDevice,
       );
 
@@ -84,7 +84,8 @@ class CbjDevicesConnectorConjecture extends VendorConnectorConjectureService {
 
   @override
   Future<HashMap<String, DeviceEntityBase>> newEntityToVendorDevice(
-    DeviceEntityBase entity,
-  ) async =>
+    DeviceEntityBase entity, {
+    bool fromDb = false,
+  }) async =>
       HashMap();
 }
