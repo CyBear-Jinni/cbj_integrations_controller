@@ -5,8 +5,6 @@ import 'package:cbj_integrations_controller/src/domain/core/request_action_types
 import 'package:cbj_integrations_controller/src/domain/generic_entities/entity_type_utils.dart';
 
 class CommonDevicesScenesPresetsForDevices {
-  /// TODO: add TypeNotSupported preset
-
   /// Light preset
 
   static List<RequestActionObject> lightOnPreset(String entityId) => [
@@ -28,9 +26,11 @@ class CommonDevicesScenesPresetsForDevices {
   static List<RequestActionObject> lightOffGradualyPreset(String entityId) {
     int brightness = 40;
     const int brightnessReduction = 2;
-    const int totalActionDuration = 600000; // 10 minutes
-    final int delayDuration =
-        totalActionDuration ~/ (brightness ~/ brightnessReduction);
+    const Duration totalActionDuration = Duration(minutes: 10);
+    final Duration delayDuration = Duration(
+      milliseconds: totalActionDuration.inMilliseconds ~/
+          (brightness ~/ brightnessReduction),
+    );
 
     final List<RequestActionObject> requestList = [];
 
@@ -43,14 +43,7 @@ class CommonDevicesScenesPresetsForDevices {
           value: HashMap.from({ActionValues.brightness: brightness}),
         ),
       );
-      requestList.add(
-        RequestActionObject(
-          entityIds: HashSet.from([entityId]),
-          property: EntityProperties.delay,
-          actionType: EntityActions.useValue,
-          value: HashMap.from({ActionValues.duration: delayDuration}),
-        ),
-      );
+      requestList.addAll(customDelay(entityId, delayDuration));
       brightness -= brightnessReduction;
     }
     requestList.add(
@@ -108,13 +101,6 @@ class CommonDevicesScenesPresetsForDevices {
         ),
       ];
 
-  /// TODO: Add Button preset
-  /// TODO: Add ButtonWithLight preset
-  /// TODO: Add Hub preset
-  /// TODO: Add PhoneApp preset
-  /// TODO: Add ComputerApp preset
-  /// TODO: Add BrowserApp preset
-
   /// Switch_ preset
 
   static List<RequestActionObject> switchOnPreset(String entityId) => [
@@ -132,10 +118,6 @@ class CommonDevicesScenesPresetsForDevices {
           actionType: EntityActions.off,
         ),
       ];
-
-  /// TODO: Add DimmableLight preset
-  /// TODO: Add CctLight preset
-  /// TODO: Add RgbLights preset
 
   /// RgbwLights preset
 
@@ -157,6 +139,19 @@ class CommonDevicesScenesPresetsForDevices {
         ),
       ];
 
+  static List<RequestActionObject> rgbLightCustomTempraturePreset(
+    String entityId,
+    int temperature,
+  ) =>
+      [
+        RequestActionObject(
+          entityIds: HashSet.from([entityId]),
+          property: EntityProperties.lightColorTemperature,
+          actionType: EntityActions.changeTemperature,
+          value: HashMap.from({ActionValues.colorTemperature: temperature}),
+        ),
+      ];
+
   static List<RequestActionObject> rgbLightBluePreset(String entityId) => [
         RequestActionObject(
           entityIds: HashSet.from([entityId]),
@@ -166,7 +161,33 @@ class CommonDevicesScenesPresetsForDevices {
         ),
       ];
 
-  static List<RequestActionObject> rgbLightMaxBrightnessPreset(
+  static List<RequestActionObject> rgbCustomColorPreset(
+    String entityId, {
+    /// Between 0-360
+    required double hue,
+
+    /// Between 0.0-1.0
+    required double saturation,
+    double alpha = 1,
+    double colorValue = 1,
+    Duration? transitionDuration,
+  }) =>
+      [
+        RequestActionObject(
+          entityIds: HashSet.from([entityId]),
+          property: EntityProperties.lightColorHsvColor,
+          actionType: EntityActions.hsvColor,
+          value: HashMap.from({
+            ActionValues.saturation: saturation,
+            ActionValues.hue: hue,
+            ActionValues.alpha: alpha,
+            ActionValues.colorValue: colorValue,
+            ActionValues.transitionDuration: transitionDuration,
+          }),
+        ),
+      ];
+
+  static List<RequestActionObject> lightMaxBrightnessPreset(
     String entityId,
   ) =>
       [
@@ -178,9 +199,30 @@ class CommonDevicesScenesPresetsForDevices {
         ),
       ];
 
-  /// TODO: Add RgbcctLights preset
+  static List<RequestActionObject> lightHalfBrightnessPreset(
+    String entityId,
+  ) =>
+      [
+        RequestActionObject(
+          entityIds: HashSet.from([entityId]),
+          property: EntityProperties.lightBrightness,
+          actionType: EntityActions.useValue,
+          value: HashMap.from({ActionValues.brightness: 50}),
+        ),
+      ];
 
-  /// TODO: Add SmartTV preset
+  static List<RequestActionObject> lightCustomBrightnessPreset(
+    String entityId,
+    int brightness,
+  ) =>
+      [
+        RequestActionObject(
+          entityIds: HashSet.from([entityId]),
+          property: EntityProperties.lightBrightness,
+          actionType: EntityActions.useValue,
+          value: HashMap.from({ActionValues.brightness: brightness}),
+        ),
+      ];
 
   static List<RequestActionObject> smartTvOffPreset(String entityId) => [
         RequestActionObject(
@@ -200,32 +242,6 @@ class CommonDevicesScenesPresetsForDevices {
           actionType: EntityActions.on,
         ),
       ];
-
-  /// TODO: Add SmartSpeakers preset
-  /// TODO: Add CoffeeMachine preset
-  /// TODO: Add Kettle preset
-  /// TODO: Add Teapot preset
-  /// TODO: Add WashingMachine preset
-  /// TODO: Add Dishwasher preset
-  /// TODO: Add Toaster preset
-  /// TODO: Add VacuumCleaner preset
-  /// TODO: Add Refrigerator preset
-  /// TODO: Add Bed preset
-  /// TODO: Add Oven preset
-  /// TODO: Add AirConditioner preset
-  /// TODO: Add SmartWatch preset
-  /// TODO: Add SmartWaterBottle preset
-  /// TODO: Add Microphone preset
-  /// TODO: Add SecurityCamera preset
-  /// TODO: Add BabyMonitor preset
-  /// TODO: Add MotionSensor preset
-  /// TODO: Add TemperatureSensor preset
-  /// TODO: Add HumiditySensor preset
-  /// TODO: Add LightSensor preset
-  /// TODO: Add SoundSensor preset
-  /// TODO: Add SmokeSensor preset
-  /// TODO: Add SmokeDetector preset
-  /// TODO: Add OxygenSensor preset
 
   /// SmartPlug preset
 
@@ -256,7 +272,18 @@ class CommonDevicesScenesPresetsForDevices {
         ),
       ];
 
-  /// TODO: Add Printer preset
-  /// TODO: Add Scanner preset
-  /// TODO: Add Printer with scanner preset
+  /// Else preset
+
+  static List<RequestActionObject> customDelay(
+    String entityId,
+    Duration delay,
+  ) =>
+      [
+        RequestActionObject(
+          entityIds: HashSet.from([entityId]),
+          property: EntityProperties.delay,
+          actionType: EntityActions.useValue,
+          value: HashMap.from({ActionValues.duration: delay}),
+        ),
+      ];
 }

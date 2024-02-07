@@ -170,15 +170,28 @@ enum ActionValues {
   undefined,
   text,
   url,
+
+  /// Int 0%-100%
   brightness,
+
+  /// Double 0.0-1.0 (not 0%-100% or 0-255)
   alpha,
+
+  /// Double 0.0°-360.0°,  120° is green, and 240° is blue
   hue,
+
+  /// Double 0.0-1.0 (not 0%-100%)
   saturation,
+
+  /// double 0.0-1.0 (not 0%-100%)
   colorValue,
   colorTemperature,
 
-  /// in milliseconds
+  /// In Duration data type
   duration,
+
+  /// In Duration data type
+  transitionDuration,
 }
 
 extension ActionValuesExtension on ActionValues {
@@ -268,33 +281,35 @@ extension SendingTypeExtension on SendingType {
 /// List of purposes that each area in the home can have
 enum AreaPurposesTypes {
   undefined,
-  bedarea,
-  studyArea,
-  workArea,
-  tvArea,
+  sleep,
+  study,
+  work,
+  watchTv,
   videoGames,
-  livingArea,
-  diningArea,
-  kitchen,
-  outside,
-  outsidePrimary,
-  outsideNotPrimary,
-  toiletArea,
-  shower,
-  trainingArea,
-  meditation,
-  romantic,
-  stairsInside,
-  stairsOutside,
-  childrenArea,
-  cinemaArea,
-  boardGames,
-  bathtub,
-  laundryArea,
-  protectedSpace,
-  safeArea,
-  attic,
-  holidayCabin,
+  rest,
+  // livingRoom,
+  dining,
+  // kitchen,
+  // outside,
+  // outsidePrimary,
+  // outsideNotPrimary,
+  // toiletArea,
+  // shower,
+  // trainingArea,
+  // meditation,
+  dateNight,
+  romance,
+  // stairsInside,
+  // stairsOutside,
+  // childrenArea,
+  movie,
+  // boardGames,
+  // bathtub,
+  // laundryArea,
+  // protectedSpace,
+  // safeArea,
+  // attic,
+  // holidayCabin,
 }
 
 extension AreaPurposesTypesExtension on AreaPurposesTypes {

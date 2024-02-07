@@ -105,10 +105,14 @@ class ShellyHelpers {
           lightBrightness:
               GenericRgbwLightBrightness(currentBrightness.toString()),
           lightColorAlpha: GenericRgbwLightColorAlpha('1.0'),
-          lightColorHue: GenericRgbwLightColorHue(hsvColor.h.toString()),
-          lightColorSaturation:
-              GenericRgbwLightColorSaturation(hsvColor.s.toString()),
-          lightColorValue: GenericRgbwLightColorValue(hsvColor.v.toString()),
+          lightColorHue:
+              GenericRgbwLightColorHue(hsvColor.h.toInt().toString()),
+          lightColorSaturation: GenericRgbwLightColorSaturation(
+            decimalToPercentage(percentageToDecimal(hsvColor.s.toInt()))
+                .toString(),
+          ),
+          lightColorValue:
+              GenericRgbwLightColorValue(hsvColor.v.toInt().toString()),
           colorMode: GenericLightModeState(ColorMode.white),
         );
       } else if (mDnsName.contains('BulbDuo')) {

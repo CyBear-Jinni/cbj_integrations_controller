@@ -79,8 +79,8 @@ class AutomationService {
     for (final RequestActionObject action in actions) {
       if (action.property == EntityProperties.delay) {
         final dynamic duration = action.value[ActionValues.duration];
-        if (duration != null && duration is int) {
-          await Future.delayed(Duration(milliseconds: duration));
+        if (duration != null && duration is Duration) {
+          await Future.delayed(duration);
         }
         continue;
       }

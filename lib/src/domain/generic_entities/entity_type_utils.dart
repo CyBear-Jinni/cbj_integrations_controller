@@ -8,10 +8,7 @@ enum EntityProperties {
   boilerSwitchState,
   lightSwitchState,
   lightColorTemperature,
-  lightColorAlpha,
-  lightColorHue,
-  lightColorSaturation,
-  lightColorValue,
+  lightColorHsvColor,
   lightBrightness,
   pingSwitchState,
   printerSwitchState,
@@ -87,20 +84,8 @@ enum EntityProperties {
       HashSet.from([EntityActions.changeTemperature]),
     ),
     MapEntry(
-      EntityProperties.lightColorAlpha.index,
-      HashSet.from([EntityActions.changeTemperature]),
-    ),
-    MapEntry(
-      EntityProperties.lightColorHue.index,
-      HashSet.from([EntityActions.changeTemperature]),
-    ),
-    MapEntry(
-      EntityProperties.lightColorSaturation.index,
-      HashSet.from([EntityActions.changeTemperature]),
-    ),
-    MapEntry(
-      EntityProperties.lightColorValue.index,
-      HashSet.from([EntityActions.changeTemperature]),
+      EntityProperties.lightColorHsvColor.index,
+      HashSet.from([EntityActions.hsvColor]),
     ),
     MapEntry(
       EntityProperties.lightBrightness.index,
@@ -180,7 +165,7 @@ class EntityUtils {
     return null;
   }
 
-  static VendorsAndServices stringToDeviceVendor( String deviceVendorAsString) {
+  static VendorsAndServices stringToDeviceVendor(String deviceVendorAsString) {
     String deviceTypeAsStringTemp = deviceVendorAsString;
     if (deviceTypeAsStringTemp.contains('Object')) {
       deviceTypeAsStringTemp = deviceTypeAsStringTemp.substring(

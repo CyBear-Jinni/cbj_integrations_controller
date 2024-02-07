@@ -128,25 +128,8 @@ class GenericRgbwLightDE extends DeviceEntityBase {
   int sendNewBrightnessEachMilliseconds = 200;
   bool doesWaitingToSendBrightnessRequest = false;
 
-  // /// Will return failure if any of the fields failed or return unit if fields
-  // /// have legit values
   Option<CoreFailure<dynamic>> get failureOption =>
       cbjEntityName.value.fold((f) => some(f), (_) => none());
-
-  // return body.failureOrUnit
-  //     .andThen(todos.failureOrUnit)
-  //     .andThen(
-  //       todos
-  //           .getOrCrash()
-  //           // Getting the failureOption from the TodoItem ENTITY - NOT a failureOrUnit from a VALUE OBJECT
-  //           .map((todoItem) => todoItem.failureOption)
-  //           .filter((o) => o.isSome())
-  //           // If we can't get the 0th element, the list is empty. In such a case, it's valid.
-  //           .getOrElse(0, (_) => none())
-  //           .fold(() => right(unit), (f) => left(f)),
-  //     )
-  //     .fold((f) => some(f), (_) => none());
-  // }
 
   /// Return a list of all valid actions for this device
   @override
@@ -234,11 +217,13 @@ class GenericRgbwLightDE extends DeviceEntityBase {
         final dynamic hue = request.values?[ActionValues.hue];
         final dynamic saturation = request.values?[ActionValues.saturation];
         final dynamic value = request.values?[ActionValues.colorValue];
-
+        final dynamic transitionDuration =
+            request.values?[ActionValues.transitionDuration];
         if (alpha is! double ||
             hue is! double ||
             saturation is! double ||
-            value is! double) {
+            value is! double ||
+            transitionDuration is! Duration?) {
           return const Left(CoreFailure.unexpected());
         }
         return changeColorHsv(
@@ -246,15 +231,8 @@ class GenericRgbwLightDE extends DeviceEntityBase {
           hue: hue,
           saturation: saturation,
           value: value,
+          transitionDuration: transitionDuration,
         );
-      // TODO: add support for json values
-      // return await changeColorHsv(
-      //       lightColorAlphaNewValue: newEntity.lightColorAlpha.getOrCrash(),
-      //       lightColorHueNewValue: newEntity.lightColorHue.getOrCrash(),
-      //       lightColorSaturationNewValue:
-      //           newEntity.lightColorSaturation.getOrCrash(),
-      //       lightColorValueNewValue: newEntity.lightColorValue.getOrCrash(),
-      //     );
       default:
         break;
     }
@@ -282,10 +260,20 @@ class GenericRgbwLightDE extends DeviceEntityBase {
 
   /// Please override the following methods
   Future<Either<CoreFailure, Unit>> changeColorHsv({
-    required double value,
+    /// 0° to 360°,  120° is green, and 240° is blue
     required double hue,
+
+    /// 0.0 to 1.0 (not 0% to 100%)
+    required double value,
+
+    /// Ours is 0.0 to 1.0 (not 0% to 100%)
     required double saturation,
+
+    /// 0.0 to 1.0 (not 0% to 100% or 0 to 255)
     required double alpha,
+
+    /// From old color to the new one
+    Duration? transitionDuration,
   }) async =>
       pleaseOverrideMessage();
 
@@ -303,10 +291,10 @@ class GenericRgbwLightDE extends DeviceEntityBase {
     return [
       EntityProperties.lightSwitchState,
       EntityProperties.lightColorTemperature,
-      EntityProperties.lightColorAlpha,
-      EntityProperties.lightColorHue,
-      EntityProperties.lightColorSaturation,
-      EntityProperties.lightColorValue,
+      // EntityProperties.lightColorAlpha,
+      // EntityProperties.lightColorHue,
+      // EntityProperties.lightColorSaturation,
+      // EntityProperties.lightColorValue,
       EntityProperties.lightBrightness,
     ];
   }

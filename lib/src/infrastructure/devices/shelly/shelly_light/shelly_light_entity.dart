@@ -1,5 +1,6 @@
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
+import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_value_objects.dart';
@@ -164,12 +165,13 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
     required double hue,
     required double saturation,
     required double alpha,
+    Duration? transitionDuration,
   }) async {
     try {
       final HsvColor hsvColor = HsvColor(
         hue,
-        convertDecimalPresentagetToIntegerPercentage(saturation),
-        convertDecimalPresentagetToIntegerPercentage(value),
+        decimalToPercentage(saturation),
+        decimalToPercentage(value),
       );
 
       final RgbColor rgbColor = hsvColor.toRgbColor();
@@ -184,25 +186,5 @@ class ShellyColorLightEntity extends GenericRgbwLightDE {
     } catch (e) {
       return left(const CoreFailure.unexpected());
     }
-  }
-
-  // Convert percentage 0-1 numbers to 0-100 with the same percentage
-  int convertDecimalPresentagetToIntegerPercentage(double number) {
-    if (number == 1.0) {
-      return 100;
-    } else if (number == 0.0) {
-      return 0;
-    }
-
-    if (number.toString().length <= 8) {
-      throw 'Error converting to integer percentage';
-    }
-    // 0.3455545372845
-    final String inString = number.toStringAsFixed(6); //  0.34555
-    final int numberTemp = int.parse(inString.substring(2)); //   34555
-
-    final int percentage = (100 * numberTemp) ~/ 1000000;
-
-    return percentage;
   }
 }

@@ -2,8 +2,8 @@ import 'package:cbj_integrations_controller/src/domain/core/request_action_objec
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/common_devices_scenes_presets_for_devices.dart';
 
-class VideoGamesAreaActions {
-  List<RequestActionObject> videoGamesRgbModEntityActions(
+class DiningAreaActions {
+  List<RequestActionObject> diningAreaEntityActions(
     String entityId,
     EntityTypes entityType,
   ) {
@@ -11,21 +11,16 @@ class VideoGamesAreaActions {
       case EntityTypes.blinds:
         return CommonDevicesScenesPresetsForDevices.blindsUpPreset(entityId);
       case EntityTypes.light:
-        return CommonDevicesScenesPresetsForDevices.lightOffPreset(entityId);
+        return CommonDevicesScenesPresetsForDevices.lightOnPreset(entityId);
       case EntityTypes.dimmableLight:
-        return CommonDevicesScenesPresetsForDevices.lightCustomBrightnessPreset(
+        return CommonDevicesScenesPresetsForDevices.lightMaxBrightnessPreset(
           entityId,
-          15,
         );
       case EntityTypes.rgbwLights:
         final List<RequestActionObject> actionsList = [];
 
         actionsList.addAll(
-          CommonDevicesScenesPresetsForDevices.rgbCustomColorPreset(
-            entityId,
-            hue: 0,
-            saturation: 1.0,
-          ),
+          CommonDevicesScenesPresetsForDevices.rgbLightOrangePreset(entityId),
         );
         actionsList.addAll(
           CommonDevicesScenesPresetsForDevices.lightMaxBrightnessPreset(
