@@ -129,6 +129,7 @@ class XiaomiIoGpx4021GlEntity extends GenericRgbwLightDE {
     required double hue,
     required double saturation,
     required double alpha,
+    Duration? transitionDuration,
   }) async =>
       pleaseOverrideMessage();
 }

@@ -2,29 +2,23 @@ import 'package:cbj_integrations_controller/src/domain/core/request_action_objec
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/common_devices_scenes_presets_for_devices.dart';
 
-class VideoGamesAreaActions {
-  List<RequestActionObject> videoGamesEntityActions(
+class AttractMosquitoesAreaActions {
+  List<RequestActionObject> attractMosquitoesEntityActions(
     String entityId,
     EntityTypes entityType,
   ) {
     switch (entityType) {
-      case EntityTypes.blinds:
-        return CommonDevicesScenesPresetsForDevices.blindsUpPreset(entityId);
       case EntityTypes.light:
-        return CommonDevicesScenesPresetsForDevices.lightOffPreset(entityId);
       case EntityTypes.dimmableLight:
-        return CommonDevicesScenesPresetsForDevices.lightCustomBrightnessPreset(
-          entityId,
-          15,
-        );
+        return CommonDevicesScenesPresetsForDevices.lightOffPreset(entityId);
       case EntityTypes.rgbwLights:
         final List<RequestActionObject> actionsList = [];
 
         actionsList.addAll(
           CommonDevicesScenesPresetsForDevices.rgbCustomColorPreset(
             entityId,
-            hue: 0,
-            saturation: 1.0,
+            hue: 240,
+            saturation: 0.6,
           ),
         );
         actionsList.addAll(
@@ -33,19 +27,26 @@ class VideoGamesAreaActions {
           ),
         );
         return actionsList;
+      case EntityTypes.smartPlug:
+        return CommonDevicesScenesPresetsForDevices.smartPlugOffPreset(
+          entityId,
+        );
       case EntityTypes.smartTV:
         return CommonDevicesScenesPresetsForDevices.smartTvOffPreset(entityId);
       case EntityTypes.switch_:
-        return CommonDevicesScenesPresetsForDevices.switchOnPreset(entityId);
-      case EntityTypes.smartPlug:
+        return CommonDevicesScenesPresetsForDevices.switchOffPreset(entityId);
+      case EntityTypes.smartComputer:
+        return CommonDevicesScenesPresetsForDevices.smartComputerSuspend(
+          entityId,
+        );
+      case EntityTypes.blinds:
+      case EntityTypes.ac:
       case EntityTypes.pingEntity:
       case EntityTypes.emptyEntity:
       case EntityTypes.undefined:
       case EntityTypes.securityCamera:
       case EntityTypes.boiler:
       case EntityTypes.printer:
-      case EntityTypes.smartComputer:
-      case EntityTypes.ac:
         return [];
     }
   }

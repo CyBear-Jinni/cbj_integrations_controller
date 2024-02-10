@@ -77,7 +77,9 @@ class YeelightHelpers {
         lightColorAlpha: GenericRgbwLightColorAlpha('1.0'),
         lightColorHue: GenericRgbwLightColorHue(yeelightDevice.hue.toString()),
         lightColorSaturation: GenericRgbwLightColorSaturation(
-          yeelightDevice.sat.toString(),
+          yeelightDevice.sat == null
+              ? '1'
+              : percentageToDecimal(yeelightDevice.sat!).toString(),
         ),
         lightColorValue: GenericRgbwLightColorValue('1.0'),
         colorMode: GenericLightModeState(

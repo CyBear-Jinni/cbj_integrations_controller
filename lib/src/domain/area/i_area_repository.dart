@@ -27,4 +27,6 @@ abstract class IAreaRepository {
   bool saveAreasToDb();
 
   void loadFromDb(String homeId);
+
+  void addSceneToDiscover(String id);
 }

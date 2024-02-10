@@ -279,6 +279,10 @@ abstract class DeviceEntityBase {
   }
 }
 
+int decimalToPercentage(double value) => (value * 100).toInt();
+
+double percentageToDecimal(int value) => value / 100;
+
 class DeviceEntityNotAbstract extends DeviceEntityBase {
   DeviceEntityNotAbstract()
       : super(

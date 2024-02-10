@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/core_failures.dart';
+import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/device_entity_base.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract_entity/value_objects_core.dart';
 import 'package:cbj_integrations_controller/src/domain/generic_entities/generic_rgbw_light_entity/generic_rgbw_light_entity.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
@@ -195,21 +196,13 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
     required double hue,
     required double saturation,
     required double alpha,
+    Duration? transitionDuration,
   }) async {
     try {
-      int saturationValue;
-      if (saturation.toString().length <= 3 && saturation.toString() == '0.0') {
-        saturationValue = 0;
-      } else if (saturation.toString().length <= 3) {
-        saturationValue = 100;
-      } else {
-        saturationValue = int.parse(saturation.toString().substring(2, 4));
-      }
-
       await api.setHSV(
         hue: hue.toInt(),
-        saturation: saturationValue,
-        duration: effectDuration,
+        saturation: decimalToPercentage(saturation),
+        duration: transitionDuration ?? effectDuration,
       );
       return right(unit);
     } catch (e) {
@@ -218,9 +211,4 @@ class Yeelight1SeEntity extends GenericRgbwLightDE {
       return left(const CoreFailure.unexpected());
     }
   }
-
-  /// Yeelight connections are rate-limited to 60 per minute.
-  /// This method will take care that commends will be sent in 1 second
-  /// between each one
-  Future executeCurrentStatusWithConstDelay() async {}
 }

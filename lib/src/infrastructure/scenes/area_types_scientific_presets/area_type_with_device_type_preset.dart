@@ -1,7 +1,13 @@
 import 'package:cbj_integrations_controller/integrations_controller.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/colors.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/bed_area_actions.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/outside_area_actions.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/attract_mosquitoes_area_actions.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/date_area_actions.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/dining_area_actions.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/movie_area_actions.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/repel_mosquitoes_area_actions.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/rest_area_actions.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/romance_area_actions.dart';
+import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/sleep_area_actions.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/study_area_actions.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/video_games_area_actions.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/actions_for_area_types/work_area_actions.dart';
@@ -14,89 +20,39 @@ class AreaTypeWithEntitiesTypePreset {
     required AreaPurposesTypes areaPurposeType,
   }) {
     switch (areaPurposeType) {
-      case AreaPurposesTypes.attic:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.bathtub:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.bedarea:
-        return BedAreaAreaAction().bedAreaSleepDeviceAction(
+      case AreaPurposesTypes.sleep:
+        return SleepAreaActions().sleepAreaEntityActions(
           entityId,
           entityType,
         );
-      case AreaPurposesTypes.boardGames:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.childrenArea:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.cinemaArea:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.diningArea:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.holidayCabin:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.kitchen:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.laundryArea:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.livingArea:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.meditation:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.outside:
-        return OutsideAreaAction().outsideOffDeviceAction(entityId, entityType);
-      case AreaPurposesTypes.outsideNotPrimary:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.outsidePrimary:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.protectedSpace:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.romantic:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.safeArea:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.shower:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.stairsInside:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.stairsOutside:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.studyArea:
-        return StudyAreaAreaAction()
-            .studyAreaDeviceAction(entityId, entityType);
-      case AreaPurposesTypes.toiletArea:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.trainingArea:
-        // TODO: Handle this case.
-        break;
-      case AreaPurposesTypes.tvArea:
-        // TODO: Handle this case.
-        break;
+      case AreaPurposesTypes.movie:
+        return MovieAreaActions().movieEntityActions(entityId, entityType);
+      case AreaPurposesTypes.dining:
+        return DiningAreaActions()
+            .diningAreaEntityActions(entityId, entityType);
+      case AreaPurposesTypes.dateNight:
+        return DateAreaActions().dateEntityActions(entityId, entityType);
+      case AreaPurposesTypes.romance:
+        return RomanceAreaActions().romanceEntityActions(entityId, entityType);
+      case AreaPurposesTypes.study:
+        return StudyAreaActions().studyAreaEntityActions(entityId, entityType);
+      case AreaPurposesTypes.watchTv:
+        return MovieAreaActions().movieEntityActions(entityId, entityType);
       case AreaPurposesTypes.videoGames:
-        return VideoGamesAreaAction()
-            .videoGamesRgbModDeviceAction(entityId, entityType);
-      case AreaPurposesTypes.workArea:
-        return WorkAreaAreaAction().workAreaEntityAction(entityId, entityType);
+        return VideoGamesAreaActions()
+            .videoGamesEntityActions(entityId, entityType);
+      case AreaPurposesTypes.work:
+        return WorkAreaActions().workAreaEntityActions(entityId, entityType);
+      case AreaPurposesTypes.rest:
+        return RestAreaActions().restEntityActions(entityId, entityType);
+      case AreaPurposesTypes.attractMosquitoes:
+        return AttractMosquitoesAreaActions()
+            .attractMosquitoesEntityActions(entityId, entityType);
+      case AreaPurposesTypes.repelMosquitoes:
+        return RepelMosquitoesAreaActions()
+            .repelMosquitoesEntityActions(entityId, entityType);
       case AreaPurposesTypes.undefined:
-      // TODO: Handle this case.
+        break;
     }
     return [];
   }
@@ -105,62 +61,31 @@ class AreaTypeWithEntitiesTypePreset {
     Colors color = Colors.orange;
 
     switch (areaPurposeType) {
-      case AreaPurposesTypes.attic:
-        color = Colors.amberAccent;
-      case AreaPurposesTypes.bathtub:
-        color = Colors.lightBlue;
-      case AreaPurposesTypes.bedarea:
+      case AreaPurposesTypes.sleep:
         color = Colors.cyan;
-      case AreaPurposesTypes.boardGames:
-        color = Colors.brown;
-      case AreaPurposesTypes.childrenArea:
-        color = Colors.lightBlueAccent;
-      case AreaPurposesTypes.cinemaArea:
+      case AreaPurposesTypes.movie:
         color = Colors.pink;
-      case AreaPurposesTypes.diningArea:
+      case AreaPurposesTypes.dining:
         color = Colors.amber;
-      case AreaPurposesTypes.holidayCabin:
-        color = Colors.lightGreen;
-      case AreaPurposesTypes.kitchen:
-        color = Colors.redAccent;
-      case AreaPurposesTypes.laundryArea:
-        color = Colors.white12;
-      case AreaPurposesTypes.livingArea:
-        color = Colors.orangeAccent;
-      case AreaPurposesTypes.meditation:
-        color = Colors.purple;
-      case AreaPurposesTypes.outside:
-        color = Colors.green;
-      case AreaPurposesTypes.outsideNotPrimary:
-        color = Colors.greenAccent;
-      case AreaPurposesTypes.outsidePrimary:
-        color = Colors.lightGreenAccent;
-      case AreaPurposesTypes.protectedSpace:
-        color = Colors.blueGrey;
-      case AreaPurposesTypes.romantic:
+      case AreaPurposesTypes.dateNight:
+        color = Colors.purpleAccent;
+      case AreaPurposesTypes.romance:
         color = Colors.pinkAccent;
-      case AreaPurposesTypes.safeArea:
-        color = Colors.indigo;
-      case AreaPurposesTypes.shower:
-        color = Colors.blueAccent;
-      case AreaPurposesTypes.stairsInside:
-        color = Colors.brown;
-      case AreaPurposesTypes.stairsOutside:
-        color = Colors.brown;
-      case AreaPurposesTypes.studyArea:
+      case AreaPurposesTypes.study:
         color = Colors.deepPurpleAccent;
-      case AreaPurposesTypes.toiletArea:
-        color = Colors.green;
-      case AreaPurposesTypes.trainingArea:
-        color = Colors.redAccent;
-      case AreaPurposesTypes.tvArea:
+      case AreaPurposesTypes.watchTv:
         color = Colors.deepPurple;
       case AreaPurposesTypes.videoGames:
         color = Colors.tealAccent;
-      case AreaPurposesTypes.workArea:
+      case AreaPurposesTypes.work:
         color = Colors.blue;
+      case AreaPurposesTypes.rest:
+        color = Colors.lightBlue;
+      case AreaPurposesTypes.attractMosquitoes:
+        color = Colors.blue;
+      case AreaPurposesTypes.repelMosquitoes:
+        color = Colors.red;
       case AreaPurposesTypes.undefined:
-      // TODO: Handle this case.
     }
     return color.value;
   }
