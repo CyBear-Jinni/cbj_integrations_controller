@@ -2,21 +2,19 @@ import 'package:cbj_integrations_controller/src/domain/core/request_action_objec
 import 'package:cbj_integrations_controller/src/domain/core/request_action_types.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/common_devices_scenes_presets_for_devices.dart';
 
-class VideoGamesAreaActions {
-  List<RequestActionObject> videoGamesEntityActions(
+class RepelMosquitoesAreaActions {
+  List<RequestActionObject> repelMosquitoesEntityActions(
     String entityId,
     EntityTypes entityType,
   ) {
     switch (entityType) {
       case EntityTypes.blinds:
         return CommonDevicesScenesPresetsForDevices.blindsUpPreset(entityId);
+
+      /// Yello and whie repel but we don't have a way to know the light bulbe color
       case EntityTypes.light:
-        return CommonDevicesScenesPresetsForDevices.lightOffPreset(entityId);
       case EntityTypes.dimmableLight:
-        return CommonDevicesScenesPresetsForDevices.lightCustomBrightnessPreset(
-          entityId,
-          15,
-        );
+        return CommonDevicesScenesPresetsForDevices.lightOffPreset(entityId);
       case EntityTypes.rgbwLights:
         final List<RequestActionObject> actionsList = [];
 

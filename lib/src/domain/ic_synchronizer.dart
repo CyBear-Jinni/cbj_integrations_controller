@@ -97,8 +97,10 @@ class IcSynchronizer {
   HashMap<String, SceneCbjEntity> getScenes() =>
       AutomationService().getScenes();
 
-  Future addScene(SceneCbjEntity scene) async =>
-      AutomationService().addScene(scene);
+  Future addScene(SceneCbjEntity scene) async {
+    IAreaRepository.instance.addSceneToDiscover(scene.uniqueId.getOrCrash());
+    AutomationService().addScene(scene);
+  }
 
   void _loadAutomationsFromDb(String homeId) =>
       AutomationService().loadFromDb(homeId);

@@ -126,4 +126,11 @@ class _AreaRepository implements IAreaRepository {
       areas.addEntries([MapEntry(entity.uniqueId.getOrCrash(), entity)]);
     }
   }
+
+  @override
+  void addSceneToDiscover(String id) {
+    const String discoverId = AreaUniqueId.discovereId;
+    areas[discoverId]?.addSceneId(id);
+    onAreasUpdated(HashSet.from([discoverId]));
+  }
 }

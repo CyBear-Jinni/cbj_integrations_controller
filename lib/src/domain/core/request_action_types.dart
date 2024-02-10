@@ -310,6 +310,8 @@ enum AreaPurposesTypes {
   // safeArea,
   // attic,
   // holidayCabin,
+  attractMosquitoes,
+  repelMosquitoes
 }
 
 extension AreaPurposesTypesExtension on AreaPurposesTypes {
