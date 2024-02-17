@@ -40,8 +40,9 @@ dependencies:
   http: ^1.1.0
   # Philips Hue API
   hue_dart:
-    git:
-      url: "https://github.com/guyluz11/hue_dart.git"
+    path: "../../hue_dart"
+    # git:
+    #   url: "https://github.com/guyluz11/hue_dart.git"
   # Convenient code generator for get_it
   injectable: ^2.3.2
   # Utility library that checks for an Active Internet connection
@@ -66,10 +67,15 @@ dependencies:
   # Service discovery over multicast DNS (mDNS), Bonjour, and Avahi.
   multicast_dns: ^0.3.2+5
   # Helps you discover open ports, devices on subnet and more.
-  network_tools: ^4.0.2
+  network_tools: 
+    path: "../../network_tools"
+    # git:
+    #   url: "https://github.com/guyluz11/network_tools.git"
+    #   ref: "adding_ios_support"
   # Interact directly with NodeRED API
   nodered:
-    git: "https://github.com/guyluz11/nodered.git"
+    # git: "https://github.com/guyluz11/nodered.git"
+    path: "../../nodered"
   # Provides runtime support for a Dart implementation of protobufs.
   protobuf: ^3.1.0
   # Extends the capabilities of Dart Streams and StreamControllers.
@@ -86,7 +92,7 @@ dependencies:
   # Control Switcher smart home accessories
   switcher_dart: ^1.0.0
   # Simple, fast generation of RFC4122 UUIDs.
-  uuid: ^4.2.1
+  uuid: ^3.0.7
   wake_on_lan: ^4.1.1+3
   # Dart library for controlling Yeelight products over LAN.
   yeedart: ^0.3.2
