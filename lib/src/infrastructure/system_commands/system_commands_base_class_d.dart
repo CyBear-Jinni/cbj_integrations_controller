@@ -84,10 +84,10 @@ abstract class SystemCommandsBaseClassD {
 Future<SystemCommandsBaseClassD?> setInstanceForDartNative() async {
   if (Platform.isLinux) {
     icLogger.t('Linux platform detected in SystemCommandsManager');
-    SystemCommandsBaseClassD.instance = CommonBashCommandsD();
+    return SystemCommandsBaseClassD.instance = CommonBashCommandsD();
   } else if (Platform.isWindows) {
     icLogger.t('Windows platform detected in SystemCommandsManager');
-    SystemCommandsBaseClassD.instance = CommonBatchCommandsD();
+    return SystemCommandsBaseClassD.instance = CommonBatchCommandsD();
   } else if (Platform.isMacOS) {
     icLogger.w('Mac os is currently not supported in SystemCommandsManager');
     throw 'Mac os is currently not supported';
@@ -97,5 +97,4 @@ Future<SystemCommandsBaseClassD?> setInstanceForDartNative() async {
     );
     throw '${Platform.operatingSystem} os is not supported';
   }
-  return null;
 }

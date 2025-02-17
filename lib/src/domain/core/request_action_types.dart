@@ -70,6 +70,7 @@ enum VendorsAndServices {
   securityBear,
   jinniAssistant,
   apple,
+  matter, // TODO: Add to grpc
 }
 
 extension VendorsAndServicesExtension on VendorsAndServices {

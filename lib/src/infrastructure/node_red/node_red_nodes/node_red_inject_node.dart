@@ -1,6 +1,5 @@
-import 'package:cbj_integrations_controller/src/domain/routine/value_objects_routine_cbj.dart';
+import 'package:cbj_integrations_controller/integrations_controller.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
-import 'package:cbj_integrations_controller/src/infrastructure/node_red/node_red_nodes/node_red_visual_node_abstract.dart';
 
 class NodeRedInjectAtASpecificTimeNode extends NodeRedVisualNodeAbstract {
   NodeRedInjectAtASpecificTimeNode({
