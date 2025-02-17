@@ -130,6 +130,7 @@ class VendorsConnectorConjecture {
     }
 
     if (companyConnectorConjecture == null) {
+      icLogger.i('${entity.deviceMdns.value}');
       return;
     }
 

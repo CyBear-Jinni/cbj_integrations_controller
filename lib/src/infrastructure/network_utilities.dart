@@ -24,7 +24,7 @@ class NetworkUtilities implements INetworkUtilities {
     required int port,
     required Duration timeout,
   }) =>
-      network.PortScanner.connectToPort(
+      network.PortScannerService.instance.connectToPort(
         address: address,
         port: port,
         timeout: timeout,
@@ -107,7 +107,7 @@ class NetworkUtilities implements INetworkUtilities {
     final List<network.ActiveHost> activeHostList = [];
 
     for (network.ActiveHost activeHost
-        in await network.MdnsScanner.searchMdnsDevices(
+        in await network.MdnsScannerService.instance.searchMdnsDevices(
       forceUseOfSavedSrvRecordList: true,
     )) {
       // In some cases for some reason we get empty result when trying to
@@ -150,7 +150,7 @@ class NetworkUtilities implements INetworkUtilities {
     int port,
   ) async* {
     final Stream<network.ActiveHost> stream2 =
-        network.HostScanner.scanDevicesForSinglePort(
+        network.HostScannerService.instance.scanDevicesForSinglePort(
       subnet,
       port,
     );
@@ -181,9 +181,10 @@ class NetworkUtilities implements INetworkUtilities {
     int? firstHostId,
     int? lastHostId,
   }) =>
-      network.HostScanner.getAllPingableDevicesAsync(
+      network.HostScannerService.instance.getAllPingableDevicesAsync(
         subnet,
-        firstHostId: firstHostId ?? network.HostScanner.defaultFirstHostId,
-        lastHostId: lastHostId ?? network.HostScanner.defaultLastHostId,
+        firstHostId:
+            firstHostId ?? network.HostScannerService.defaultFirstHostId,
+        lastHostId: lastHostId ?? network.HostScannerService.defaultLastHostId,
       );
 }
