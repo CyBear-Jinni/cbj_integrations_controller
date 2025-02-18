@@ -4,9 +4,7 @@ import 'package:cbj_integrations_controller/src/domain/i_local_db_repository.dar
 import 'package:cbj_integrations_controller/src/domain/network_object.dart';
 
 class NetworksManager {
-  factory NetworksManager() {
-    return _instance;
-  }
+  factory NetworksManager() => _instance;
 
   NetworksManager._singletonConstractor();
 

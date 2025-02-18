@@ -79,8 +79,6 @@ export 'src/infrastructure/gen/security_bear_server_d/proto_gen_date.dart';
 export 'src/infrastructure/gen/security_bear_server_d/protoc_as_dart/security_bear_connections.pbgrpc.dart';
 export 'src/infrastructure/hub_client/hub_client.dart';
 export 'src/infrastructure/hub_client/hub_dtos.dart';
-export 'src/infrastructure/node_red/node_red_nodes/node_red_node_abstract.dart';
-export 'src/infrastructure/node_red/node_red_nodes/node_red_visual_node_abstract.dart';
 export 'src/infrastructure/node_red/node_red_repository.dart';
 export 'src/infrastructure/routines/routine_cbj_dtos.dart';
 export 'src/infrastructure/scenes/scene_cbj_dtos.dart';

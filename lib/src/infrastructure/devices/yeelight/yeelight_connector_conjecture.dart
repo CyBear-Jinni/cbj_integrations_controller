@@ -10,9 +10,7 @@ import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector
 import 'package:yeedart/yeedart.dart';
 
 class YeelightConnectorConjecture extends VendorConnectorConjectureService {
-  factory YeelightConnectorConjecture() {
-    return _instance;
-  }
+  factory YeelightConnectorConjecture() => _instance;
 
   YeelightConnectorConjecture._singletonContractor()
       : super(

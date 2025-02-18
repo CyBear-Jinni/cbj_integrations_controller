@@ -7,9 +7,7 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/infrastructure/devices/tasmota/tasmota_ip/tasmota_ip_helpers.dart';
 
 class TasmotaIpConnectorConjecture extends VendorConnectorConjectureService {
-  factory TasmotaIpConnectorConjecture() {
-    return _instance;
-  }
+  factory TasmotaIpConnectorConjecture() => _instance;
 
   TasmotaIpConnectorConjecture._singletonContractor()
       : super(

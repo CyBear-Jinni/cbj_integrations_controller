@@ -10,7 +10,7 @@ abstract class IDbRepository {
     return _instance ??= _HiveRepository();
   }
 
-  Future asyncConstactor();
+  Future asyncConstructor();
 
   void createNewHome(String homeBoxName, String networksJsonString);
 

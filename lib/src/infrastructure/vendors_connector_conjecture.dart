@@ -24,9 +24,7 @@ import 'package:cbj_integrations_controller/src/infrastructure/devices/yeelight/
 import 'package:cbj_integrations_controller/src/infrastructure/entities_service.dart';
 
 class VendorsConnectorConjecture {
-  factory VendorsConnectorConjecture() {
-    return _instance;
-  }
+  factory VendorsConnectorConjecture() => _instance;
 
   VendorsConnectorConjecture._singletonConstructor() {
     UnseportedVendorOrDeviceConnectorConjecture();
@@ -128,9 +126,7 @@ class VendorsConnectorConjecture {
         break;
       }
     }
-
     if (companyConnectorConjecture == null) {
-      icLogger.i('${entity.deviceMdns.value}');
       return;
     }
 

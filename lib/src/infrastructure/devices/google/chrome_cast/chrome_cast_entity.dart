@@ -44,7 +44,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
   }) : super(
           cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.google),
         ) {
-    asyncConstactor();
+    asyncConstructor();
   }
 
   factory ChromeCastEntity.fromGeneric(GenericSmartTvDE entity) {
@@ -80,7 +80,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
       smartTvSwitchState: entity.smartTvSwitchState,
     );
   }
-  Future asyncConstactor() async {
+  Future asyncConstructor() async {
     final String? srvTargetTemp = srvTarget.getOrCrash();
 
     if (srvTargetTemp != null && srvTargetTemp.isNotEmpty) {
@@ -115,7 +115,7 @@ class ChromeCastEntity extends GenericSmartTvDE {
   Future<Either<CoreFailure, Unit>> sendUrlToDevice(String url) async {
     await castDevice?.openMedia(
       url: url,
-      title: 'Opend from CBJ App',
+      title: 'Opened from CBJ App',
       coverImage: coverImage,
     );
     return right(unit);

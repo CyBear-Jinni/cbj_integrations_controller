@@ -6,9 +6,7 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 
 class UnseportedVendorOrDeviceConnectorConjecture
     extends VendorConnectorConjectureService {
-  factory UnseportedVendorOrDeviceConnectorConjecture() {
-    return _instance;
-  }
+  factory UnseportedVendorOrDeviceConnectorConjecture() => _instance;
 
   UnseportedVendorOrDeviceConnectorConjecture._singletonContractor()
       : super(

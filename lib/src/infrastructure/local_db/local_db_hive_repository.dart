@@ -5,7 +5,7 @@ class _HiveRepository extends IDbRepository {
     Hive.registerAdapter(HomeHiveModelAdapter());
   }
   @override
-  Future asyncConstactor() async {
+  Future asyncConstructor() async {
     homeBox = await Hive.openBox(homesBoxName);
   }
 

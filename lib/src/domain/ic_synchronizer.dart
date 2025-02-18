@@ -15,18 +15,16 @@ import 'package:cbj_integrations_controller/src/infrastructure/entities_service.
 import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector_conjecture.dart';
 
 /// Creating a common front out side of integrations controller.
-/// Also makes sure to notefy the services for changes that relaye to each other
+/// Also makes sure to notify the services for changes that relayed to each other
 class IcSynchronizer {
-  factory IcSynchronizer() {
-    return _instance;
-  }
+  factory IcSynchronizer() => _instance;
 
   IcSynchronizer._singletonConstractor();
 
   static final IcSynchronizer _instance =
       IcSynchronizer._singletonConstractor();
 
-  // Networks are beiseparatelyng loaded separately befor caling this function
+  // Networks are beiseparatelyng loaded separately before calling this function
   Future loadAllFromDb() async {
     final String? homeId = NetworksManager().currentNetwork?.uniqueId;
     if (homeId == null) {

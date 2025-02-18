@@ -9,9 +9,7 @@ import 'package:nodered/nodered.dart';
 
 /// Control Node-RED, create scenes and more
 class NodeRedRepository {
-  factory NodeRedRepository() {
-    return _instance;
-  }
+  factory NodeRedRepository() => _instance;
 
   NodeRedRepository._singletonConstractor() {
     nodeRedRepositoryService = NodeRedService();
@@ -20,7 +18,7 @@ class NodeRedRepository {
   static final NodeRedRepository _instance =
       NodeRedRepository._singletonConstractor();
 
-  late NodeRedService nodeRedRepositoryService;
+  static late NodeRedService nodeRedRepositoryService;
 
   // /// List of all the scenes JSONs in Node-RED
   // List<String> scenesList = [];

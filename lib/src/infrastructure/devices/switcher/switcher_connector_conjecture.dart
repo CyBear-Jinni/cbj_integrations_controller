@@ -9,9 +9,7 @@ import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector
 import 'package:switcher_dart/switcher_dart.dart';
 
 class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
-  factory SwitcherConnectorConjecture() {
-    return _instance;
-  }
+  factory SwitcherConnectorConjecture() => _instance;
 
   SwitcherConnectorConjecture._singletonContractor()
       : super(

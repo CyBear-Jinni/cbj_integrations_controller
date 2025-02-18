@@ -9,9 +9,7 @@ import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector
 import 'package:sensibo/sensibo.dart';
 
 class SensiboConnectorConjecture extends VendorConnectorConjectureService {
-  factory SensiboConnectorConjecture() {
-    return _instance;
-  }
+  factory SensiboConnectorConjecture() => _instance;
 
   SensiboConnectorConjecture._singletonContractor()
       : super(

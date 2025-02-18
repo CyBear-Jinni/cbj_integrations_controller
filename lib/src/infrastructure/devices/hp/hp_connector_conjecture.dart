@@ -7,9 +7,7 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/infrastructure/devices/hp/hp_helpers.dart';
 
 class HpConnectorConjecture extends VendorConnectorConjectureService {
-  factory HpConnectorConjecture() {
-    return _instance;
-  }
+  factory HpConnectorConjecture() => _instance;
 
   HpConnectorConjecture._singletonContractor()
       : super(

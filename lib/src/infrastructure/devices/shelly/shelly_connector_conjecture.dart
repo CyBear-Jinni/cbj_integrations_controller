@@ -7,9 +7,7 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/infrastructure/devices/shelly/shelly_helpers.dart';
 
 class ShellyConnectorConjecture extends VendorConnectorConjectureService {
-  factory ShellyConnectorConjecture() {
-    return _instance;
-  }
+  factory ShellyConnectorConjecture() => _instance;
 
   ShellyConnectorConjecture._singletonContractor()
       : super(

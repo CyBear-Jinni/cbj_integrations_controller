@@ -47,7 +47,7 @@ abstract class IMqttServerRepository {
   Stream<List<MqttReceivedMessage<MqttMessage?>>>
       streamOfAllDeviceAppSubscriptions();
 
-  /// Stream of chosen topic, example tasmota discover new devices topic
+  /// Stream of chosen topic, example Tasmota discover new devices topic
   Stream<List<MqttReceivedMessage<MqttMessage?>>> streamOfChosenSubscription(
     String topicPath,
   );

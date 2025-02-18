@@ -5,9 +5,8 @@ import 'package:cbj_integrations_controller/integrations_controller.dart';
 import 'package:cbj_integrations_controller/src/infrastructure/scenes/area_types_scientific_presets/area_type_with_device_type_preset.dart';
 
 class AutomationService {
-  factory AutomationService() {
-    return _instance;
-  }
+  factory AutomationService() => _instance;
+
   AutomationService._singletonConstructor();
 
   static final AutomationService _instance =

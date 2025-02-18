@@ -107,9 +107,7 @@ class NetworkUtilities implements INetworkUtilities {
     final List<network.ActiveHost> activeHostList = [];
 
     for (network.ActiveHost activeHost
-        in await network.MdnsScannerService.instance.searchMdnsDevices(
-      forceUseOfSavedSrvRecordList: true,
-    )) {
+        in await network.MdnsScannerService.instance.searchMdnsDevices()) {
       // In some cases for some reason we get empty result when trying to
       // resolve mdns name to ip, the only way we found to fix that is to
       // use resolve it using avahi-resolve-host-name

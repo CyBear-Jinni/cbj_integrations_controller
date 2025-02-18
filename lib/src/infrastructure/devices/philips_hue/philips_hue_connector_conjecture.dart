@@ -7,9 +7,7 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/infrastructure/devices/philips_hue/philips_hue_helpers.dart';
 
 class PhilipsHueConnectorConjecture extends VendorConnectorConjectureService {
-  factory PhilipsHueConnectorConjecture() {
-    return _instance;
-  }
+  factory PhilipsHueConnectorConjecture() => _instance;
 
   PhilipsHueConnectorConjecture._singletonContractor()
       : super(

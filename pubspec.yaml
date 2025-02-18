@@ -31,7 +31,7 @@ dependencies:
   # Annotations for freezed
   freezed_annotation: ^2.4.1
   # For the injection, allow accessing an object from anywhere in an App
-  get_it: ^7.6.4
+  get_it: ^8.0.3
   # High performance, open-source universal RPC framework
   grpc: ^3.2.4
   # Lightweight and blazing fast key-value database
@@ -62,7 +62,7 @@ dependencies:
   # A server and browser based MQTT client for Dart.
   mi_iot_token: ^1.1.0
   # Server and browser based MQTT client
-  mqtt_client: ^10.7.0
+  mqtt_client: ^10.5.1
   # Service discovery over multicast DNS (mDNS), Bonjour, and Avahi.
   multicast_dns: ^0.3.2+8
   # Helps you discover open ports, devices on subnet and more.

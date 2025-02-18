@@ -4,9 +4,7 @@ import 'package:cbj_integrations_controller/src/infrastructure/core/utils.dart';
 
 // TODO: maybe can get merged into SystemCommandsBaseClassD
 class SharedVariables {
-  factory SharedVariables() {
-    return _instance;
-  }
+  factory SharedVariables() => _instance;
 
   SharedVariables._singletonConstructor() {
     icLogger.i('PATH: $_projectRootDirectoryPath');

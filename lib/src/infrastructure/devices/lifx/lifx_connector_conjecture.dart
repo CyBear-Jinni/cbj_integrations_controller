@@ -10,9 +10,7 @@ import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector
 import 'package:lifx_http_api/lifx_http_api.dart';
 
 class LifxConnectorConjecture extends VendorConnectorConjectureService {
-  factory LifxConnectorConjecture() {
-    return _instance;
-  }
+  factory LifxConnectorConjecture() => _instance;
 
   LifxConnectorConjecture._singletonContractor()
       : super(

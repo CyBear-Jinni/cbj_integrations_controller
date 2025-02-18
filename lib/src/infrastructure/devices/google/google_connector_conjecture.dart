@@ -7,9 +7,7 @@ import 'package:cbj_integrations_controller/src/domain/generic_entities/abstract
 import 'package:cbj_integrations_controller/src/infrastructure/devices/google/google_helpers.dart';
 
 class GoogleConnectorConjecture extends VendorConnectorConjectureService {
-  factory GoogleConnectorConjecture() {
-    return _instance;
-  }
+  factory GoogleConnectorConjecture() => _instance;
 
   GoogleConnectorConjecture._singletonContractor()
       : super(

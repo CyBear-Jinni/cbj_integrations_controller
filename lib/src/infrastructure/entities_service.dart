@@ -11,9 +11,7 @@ import 'package:cbj_integrations_controller/src/infrastructure/devices/device_he
 import 'package:cbj_integrations_controller/src/infrastructure/vendors_connector_conjecture.dart';
 
 class EntitiesService {
-  factory EntitiesService() {
-    return _instance;
-  }
+  factory EntitiesService() => _instance;
 
   EntitiesService._singletonConstractor();
 
