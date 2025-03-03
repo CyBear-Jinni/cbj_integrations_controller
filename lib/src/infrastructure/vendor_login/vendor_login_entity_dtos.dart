@@ -24,11 +24,21 @@ abstract class VendorLoginEntityDtos implements _$VendorLoginEntityDtos {
     if (loginEntity.authToken != null) {
       credentials.addEntries([MapEntry('authToken', loginEntity.authToken)]);
     }
+    if (loginEntity.pairingCode != null) {
+      credentials
+          .addEntries([MapEntry('pairingCode', loginEntity.pairingCode)]);
+    }
     if (loginEntity.email != null) {
       credentials.addEntries([MapEntry('email', loginEntity.email)]);
     }
     if (loginEntity.password != null) {
       credentials.addEntries([MapEntry('password', loginEntity.email)]);
+    }
+    if (loginEntity.ip != null) {
+      credentials.addEntries([MapEntry('ip', loginEntity.ip)]);
+    }
+    if (loginEntity.port != null) {
+      credentials.addEntries([MapEntry('port', loginEntity.port)]);
     }
 
     return VendorLoginEntityDtos(
@@ -46,11 +56,14 @@ abstract class VendorLoginEntityDtos implements _$VendorLoginEntityDtos {
 
   VendorLoginEntity toDomain() {
     return VendorLoginEntity(
-      EntityUtils.stringToDeviceVendor( vendor),
+      EntityUtils.stringToDeviceVendor(vendor),
       apiKey: credentials['apiKey'] as String?,
       authToken: credentials['authToken'] as String?,
+      pairingCode: credentials['pairingCode'] as String?,
       email: credentials['email'] as String?,
       password: credentials['password'] as String?,
+      ip: credentials['ip'] as String?,
+      port: credentials['port'] as String?,
     );
   }
 }

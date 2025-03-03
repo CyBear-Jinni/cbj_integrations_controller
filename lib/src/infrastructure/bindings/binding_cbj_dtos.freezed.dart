@@ -12,7 +12,7 @@ part of 'binding_cbj_dtos.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 BindingCbjDtos _$BindingCbjDtosFromJson(Map<String, dynamic> json) {
   return _BindingCbjDtos.fromJson(json);
@@ -37,8 +37,12 @@ mixin _$BindingCbjDtos {
   String? get image => throw _privateConstructorUsedError;
   String? get lastDateOfExecute => throw _privateConstructorUsedError;
 
+  /// Serializes this BindingCbjDtos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of BindingCbjDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BindingCbjDtosCopyWith<BindingCbjDtos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -77,6 +81,8 @@ class _$BindingCbjDtosCopyWithImpl<$Res, $Val extends BindingCbjDtos>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BindingCbjDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -195,6 +201,8 @@ class __$$BindingCbjDtosImplCopyWithImpl<$Res>
       _$BindingCbjDtosImpl _value, $Res Function(_$BindingCbjDtosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BindingCbjDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -375,7 +383,7 @@ class _$BindingCbjDtosImpl extends _BindingCbjDtos {
                 other.lastDateOfExecute == lastDateOfExecute));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -395,7 +403,9 @@ class _$BindingCbjDtosImpl extends _BindingCbjDtos {
       image,
       lastDateOfExecute);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BindingCbjDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BindingCbjDtosImplCopyWith<_$BindingCbjDtosImpl> get copyWith =>
@@ -432,7 +442,8 @@ abstract class _BindingCbjDtos extends BindingCbjDtos {
   factory _BindingCbjDtos.fromJson(Map<String, dynamic> json) =
       _$BindingCbjDtosImpl.fromJson;
 
-  @override // @JsonKey(ignore: true)
+// @JsonKey(ignore: true)
+  @override
   String get uniqueId;
   @override
   String get name;
@@ -462,8 +473,11 @@ abstract class _BindingCbjDtos extends BindingCbjDtos {
   String? get image;
   @override
   String? get lastDateOfExecute;
+
+  /// Create a copy of BindingCbjDtos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BindingCbjDtosImplCopyWith<_$BindingCbjDtosImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

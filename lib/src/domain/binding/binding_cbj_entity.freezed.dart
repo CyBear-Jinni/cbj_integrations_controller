@@ -12,7 +12,7 @@ part of 'binding_cbj_entity.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$BindingCbjEntity {
@@ -52,7 +52,9 @@ mixin _$BindingCbjEntity {
   BindingCbjDeviceStateGRPC get entityStateGRPC =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BindingCbjEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $BindingCbjEntityCopyWith<BindingCbjEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -91,6 +93,8 @@ class _$BindingCbjEntityCopyWithImpl<$Res, $Val extends BindingCbjEntity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of BindingCbjEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -209,6 +213,8 @@ class __$$BindingCbjEntityImplCopyWithImpl<$Res>
       $Res Function(_$BindingCbjEntityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of BindingCbjEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -416,7 +422,9 @@ class _$BindingCbjEntityImpl extends _BindingCbjEntity {
       compUuid,
       entityStateGRPC);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of BindingCbjEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$BindingCbjEntityImplCopyWith<_$BindingCbjEntityImpl> get copyWith =>
@@ -444,32 +452,31 @@ abstract class _BindingCbjEntity extends BindingCbjEntity {
       _$BindingCbjEntityImpl;
   const _BindingCbjEntity._() : super._();
 
-  @override
-
   /// The unique id of the binding, will alsow be used as the flow/tab id.
-  UniqueId get uniqueId;
   @override
+  UniqueId get uniqueId;
 
   /// Name of the automation, will be shown to the user.
+  @override
   BindingCbjName get name;
   @override
   BindingCbjBackgroundColor get backgroundColor;
-  @override
 
   /// All the automation as string.
-  BindingCbjAutomationString get automationString;
   @override
+  BindingCbjAutomationString get automationString;
 
   /// Node-Red flow id of the scene
-  BindingCbjNodeRedFlowId get nodeRedFlowId;
   @override
+  BindingCbjNodeRedFlowId get nodeRedFlowId;
 
   /// The actual id of the first node, most of the time will be the same as
   /// uniqueId variable.
-  BindingCbjFirstNodeId get firstNodeId;
   @override
+  BindingCbjFirstNodeId get firstNodeId;
 
   /// The Unicode code point at which this icon is stored in the icon font.
+  @override
   BindingCbjIconCodePoint get iconCodePoint;
   @override
   BindingCbjBackgroundImage get image;
@@ -487,8 +494,11 @@ abstract class _BindingCbjEntity extends BindingCbjEntity {
   BindingCbjCompUuid get compUuid;
   @override
   BindingCbjDeviceStateGRPC get entityStateGRPC;
+
+  /// Create a copy of BindingCbjEntity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BindingCbjEntityImplCopyWith<_$BindingCbjEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

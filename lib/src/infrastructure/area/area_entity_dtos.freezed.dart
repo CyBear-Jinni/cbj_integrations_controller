@@ -12,7 +12,7 @@ part of 'area_entity_dtos.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 AreaEntityDtos _$AreaEntityDtosFromJson(Map<String, dynamic> json) {
   return _AreaEntityDtos.fromJson(json);
@@ -35,8 +35,12 @@ mixin _$AreaEntityDtos {
   /// Area permissions by users id
   Set<String> get areaPermissions => throw _privateConstructorUsedError;
 
+  /// Serializes this AreaEntityDtos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of AreaEntityDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AreaEntityDtosCopyWith<AreaEntityDtos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -70,6 +74,8 @@ class _$AreaEntityDtosCopyWithImpl<$Res, $Val extends AreaEntityDtos>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AreaEntityDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -158,6 +164,8 @@ class __$$AreaEntityDtosImplCopyWithImpl<$Res>
       _$AreaEntityDtosImpl _value, $Res Function(_$AreaEntityDtosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AreaEntityDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -343,7 +351,7 @@ class _$AreaEntityDtosImpl extends _AreaEntityDtos {
                 .equals(other._areaPermissions, _areaPermissions));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -358,7 +366,9 @@ class _$AreaEntityDtosImpl extends _AreaEntityDtos {
       const DeepCollectionEquality().hash(_areaMostUsedBy),
       const DeepCollectionEquality().hash(_areaPermissions));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AreaEntityDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$AreaEntityDtosImplCopyWith<_$AreaEntityDtosImpl> get copyWith =>
@@ -406,16 +416,19 @@ abstract class _AreaEntityDtos extends AreaEntityDtos {
   Set<String> get areaRoutinesId;
   @override
   Set<String> get areaBindingsId;
-  @override
 
   /// Who is using this area
-  Set<String> get areaMostUsedBy;
   @override
+  Set<String> get areaMostUsedBy;
 
   /// Area permissions by users id
-  Set<String> get areaPermissions;
   @override
-  @JsonKey(ignore: true)
+  Set<String> get areaPermissions;
+
+  /// Create a copy of AreaEntityDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AreaEntityDtosImplCopyWith<_$AreaEntityDtosImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

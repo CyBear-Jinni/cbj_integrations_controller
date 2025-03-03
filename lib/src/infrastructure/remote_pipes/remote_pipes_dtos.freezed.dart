@@ -12,7 +12,7 @@ part of 'remote_pipes_dtos.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 RemotePipesDtos _$RemotePipesDtosFromJson(Map<String, dynamic> json) {
   return _RemotePipesDtos.fromJson(json);
@@ -23,8 +23,12 @@ mixin _$RemotePipesDtos {
 // @JsonKey(ignore: true)
   String get domainName => throw _privateConstructorUsedError;
 
+  /// Serializes this RemotePipesDtos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RemotePipesDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RemotePipesDtosCopyWith<RemotePipesDtos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$RemotePipesDtosCopyWithImpl<$Res, $Val extends RemotePipesDtos>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RemotePipesDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +87,8 @@ class __$$RemotePipesDtosImplCopyWithImpl<$Res>
       _$RemotePipesDtosImpl _value, $Res Function(_$RemotePipesDtosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RemotePipesDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -121,11 +129,13 @@ class _$RemotePipesDtosImpl extends _RemotePipesDtos {
                 other.domainName == domainName));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, domainName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RemotePipesDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RemotePipesDtosImplCopyWith<_$RemotePipesDtosImpl> get copyWith =>
@@ -148,10 +158,14 @@ abstract class _RemotePipesDtos extends RemotePipesDtos {
   factory _RemotePipesDtos.fromJson(Map<String, dynamic> json) =
       _$RemotePipesDtosImpl.fromJson;
 
-  @override // @JsonKey(ignore: true)
-  String get domainName;
+// @JsonKey(ignore: true)
   @override
-  @JsonKey(ignore: true)
+  String get domainName;
+
+  /// Create a copy of RemotePipesDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RemotePipesDtosImplCopyWith<_$RemotePipesDtosImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

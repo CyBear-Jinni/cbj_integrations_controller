@@ -12,7 +12,7 @@ part of 'hub_failures.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$HubFailures<T> {
@@ -134,6 +134,9 @@ class _$HubFailuresCopyWithImpl<T, $Res, $Val extends HubFailures<T>>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -153,6 +156,8 @@ class __$$EmptyImplCopyWithImpl<T, $Res>
       _$EmptyImpl<T> _value, $Res Function(_$EmptyImpl<T>) _then)
       : super(_value, _then);
 
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -193,7 +198,9 @@ class _$EmptyImpl<T> implements _Empty<T> {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(failedValue));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EmptyImplCopyWith<T, _$EmptyImpl<T>> get copyWith =>
@@ -328,7 +335,10 @@ abstract class _Empty<T> implements HubFailures<T> {
   const factory _Empty({required final T failedValue}) = _$EmptyImpl<T>;
 
   T get failedValue;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EmptyImplCopyWith<T, _$EmptyImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -347,6 +357,9 @@ class __$$UnexpectedImplCopyWithImpl<T, $Res>
   __$$UnexpectedImplCopyWithImpl(
       _$UnexpectedImpl<T> _value, $Res Function(_$UnexpectedImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -513,6 +526,9 @@ class __$$ValidateEmailNotEmptyImplCopyWithImpl<T, $Res>
       _$ValidateEmailNotEmptyImpl<T> _value,
       $Res Function(_$ValidateEmailNotEmptyImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -680,6 +696,9 @@ class __$$InsufficientPermissionImplCopyWithImpl<T, $Res>
       _$InsufficientPermissionImpl<T> _value,
       $Res Function(_$InsufficientPermissionImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -845,6 +864,9 @@ class __$$WifiIsClosedImplCopyWithImpl<T, $Res>
   __$$WifiIsClosedImplCopyWithImpl(
       _$WifiIsClosedImpl<T> _value, $Res Function(_$WifiIsClosedImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1021,6 +1043,9 @@ class __$$FindingHubWhenConnectedToEthernetCableIsNotSupportedImplCopyWithImpl<
               _$FindingHubWhenConnectedToEthernetCableIsNotSupportedImpl<T>)
           _then)
       : super(_value, _then);
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1190,6 +1215,9 @@ class __$$UnableToUpdateImplCopyWithImpl<T, $Res>
   __$$UnableToUpdateImplCopyWithImpl(_$UnableToUpdateImpl<T> _value,
       $Res Function(_$UnableToUpdateImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1355,6 +1383,9 @@ class __$$CantFindHubInNetworkImplCopyWithImpl<T, $Res>
   __$$CantFindHubInNetworkImplCopyWithImpl(_$CantFindHubInNetworkImpl<T> _value,
       $Res Function(_$CantFindHubInNetworkImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1522,6 +1553,9 @@ class __$$HubFoundButNotRunningImplCopyWithImpl<T, $Res>
       _$HubFoundButNotRunningImpl<T> _value,
       $Res Function(_$HubFoundButNotRunningImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1690,6 +1724,9 @@ class __$$AutomaticHubSearchNotSupportedOnWebImplCopyWithImpl<T, $Res>
       _$AutomaticHubSearchNotSupportedOnWebImpl<T> _value,
       $Res Function(_$AutomaticHubSearchNotSupportedOnWebImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of HubFailures
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

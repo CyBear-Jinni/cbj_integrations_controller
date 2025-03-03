@@ -12,7 +12,7 @@ part of 'hub_entity.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$HubEntity {
@@ -21,7 +21,9 @@ mixin _$HubEntity {
   HubNetworkIp get lastKnownIp => throw _privateConstructorUsedError;
   HubMdnsName? get mdnsName => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of HubEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $HubEntityCopyWith<HubEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +50,8 @@ class _$HubEntityCopyWithImpl<$Res, $Val extends HubEntity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of HubEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -100,6 +104,8 @@ class __$$HubEntityImplCopyWithImpl<$Res>
       _$HubEntityImpl _value, $Res Function(_$HubEntityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of HubEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -172,7 +178,9 @@ class _$HubEntityImpl extends _HubEntity {
   int get hashCode => Object.hash(
       runtimeType, hubNetworkBssid, networkName, lastKnownIp, mdnsName);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of HubEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HubEntityImplCopyWith<_$HubEntityImpl> get copyWith =>
@@ -195,8 +203,11 @@ abstract class _HubEntity extends HubEntity {
   HubNetworkIp get lastKnownIp;
   @override
   HubMdnsName? get mdnsName;
+
+  /// Create a copy of HubEntity
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HubEntityImplCopyWith<_$HubEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

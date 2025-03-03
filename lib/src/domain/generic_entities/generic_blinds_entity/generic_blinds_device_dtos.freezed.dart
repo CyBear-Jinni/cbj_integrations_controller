@@ -12,7 +12,7 @@ part of 'generic_blinds_device_dtos.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 GenericBlindsDeviceDtos _$GenericBlindsDeviceDtosFromJson(
     Map<String, dynamic> json) {
@@ -56,8 +56,12 @@ mixin _$GenericBlindsDeviceDtos {
   String? get deviceDtoClass => throw _privateConstructorUsedError;
   String? get stateMassage => throw _privateConstructorUsedError;
 
+  /// Serializes this GenericBlindsDeviceDtos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GenericBlindsDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GenericBlindsDeviceDtosCopyWith<GenericBlindsDeviceDtos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -114,6 +118,8 @@ class _$GenericBlindsDeviceDtosCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GenericBlindsDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -338,6 +344,8 @@ class __$$GenericBlindsDeviceDtosImplCopyWithImpl<$Res>
       $Res Function(_$GenericBlindsDeviceDtosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GenericBlindsDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -693,7 +701,7 @@ class _$GenericBlindsDeviceDtosImpl extends _GenericBlindsDeviceDtos {
                 other.stateMassage == stateMassage));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -731,7 +739,9 @@ class _$GenericBlindsDeviceDtosImpl extends _GenericBlindsDeviceDtos {
         stateMassage
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GenericBlindsDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GenericBlindsDeviceDtosImplCopyWith<_$GenericBlindsDeviceDtosImpl>
@@ -785,7 +795,8 @@ abstract class _GenericBlindsDeviceDtos extends GenericBlindsDeviceDtos {
   factory _GenericBlindsDeviceDtos.fromJson(Map<String, dynamic> json) =
       _$GenericBlindsDeviceDtosImpl.fromJson;
 
-  @override // @JsonKey(ignore: true)
+// @JsonKey(ignore: true)
+  @override
   String get id;
   @override
   String get entityUniqueId;
@@ -849,8 +860,11 @@ abstract class _GenericBlindsDeviceDtos extends GenericBlindsDeviceDtos {
   String? get deviceDtoClass;
   @override
   String? get stateMassage;
+
+  /// Create a copy of GenericBlindsDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GenericBlindsDeviceDtosImplCopyWith<_$GenericBlindsDeviceDtosImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

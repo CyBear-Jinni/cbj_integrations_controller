@@ -12,7 +12,7 @@ part of 'core_failures.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$CoreFailure<T> {
@@ -122,6 +122,9 @@ class _$CoreFailureCopyWithImpl<T, $Res, $Val extends CoreFailure<T>>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -141,6 +144,8 @@ class __$$EmptyImplCopyWithImpl<T, $Res>
       _$EmptyImpl<T> _value, $Res Function(_$EmptyImpl<T>) _then)
       : super(_value, _then);
 
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -181,7 +186,9 @@ class _$EmptyImpl<T> implements _Empty<T> {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(failedValue));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EmptyImplCopyWith<T, _$EmptyImpl<T>> get copyWith =>
@@ -304,7 +311,10 @@ abstract class _Empty<T> implements CoreFailure<T> {
   const factory _Empty({required final T failedValue}) = _$EmptyImpl<T>;
 
   T get failedValue;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EmptyImplCopyWith<T, _$EmptyImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -326,6 +336,8 @@ class __$$ActionExcecuterImplCopyWithImpl<T, $Res>
       $Res Function(_$ActionExcecuterImpl<T>) _then)
       : super(_value, _then);
 
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -366,7 +378,9 @@ class _$ActionExcecuterImpl<T> implements _ActionExcecuter<T> {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(failedValue));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ActionExcecuterImplCopyWith<T, _$ActionExcecuterImpl<T>> get copyWith =>
@@ -491,7 +505,10 @@ abstract class _ActionExcecuter<T> implements CoreFailure<T> {
       _$ActionExcecuterImpl<T>;
 
   T get failedValue;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ActionExcecuterImplCopyWith<T, _$ActionExcecuterImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -513,6 +530,8 @@ class __$$ExceedingLengthImplCopyWithImpl<T, $Res>
       $Res Function(_$ExceedingLengthImpl<T>) _then)
       : super(_value, _then);
 
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -561,7 +580,9 @@ class _$ExceedingLengthImpl<T> implements _ExceedingLength<T> {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(failedValue), max);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ExceedingLengthImplCopyWith<T, _$ExceedingLengthImpl<T>> get copyWith =>
@@ -688,7 +709,10 @@ abstract class _ExceedingLength<T> implements CoreFailure<T> {
 
   T get failedValue;
   int get max;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ExceedingLengthImplCopyWith<T, _$ExceedingLengthImpl<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -707,6 +731,9 @@ class __$$UnexpectedImplCopyWithImpl<T, $Res>
   __$$UnexpectedImplCopyWithImpl(
       _$UnexpectedImpl<T> _value, $Res Function(_$UnexpectedImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -861,6 +888,9 @@ class __$$InsufficientPermissionImplCopyWithImpl<T, $Res>
       _$InsufficientPermissionImpl<T> _value,
       $Res Function(_$InsufficientPermissionImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1014,6 +1044,9 @@ class __$$UnableToUpdateImplCopyWithImpl<T, $Res>
   __$$UnableToUpdateImplCopyWithImpl(_$UnableToUpdateImpl<T> _value,
       $Res Function(_$UnableToUpdateImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1169,6 +1202,9 @@ class __$$PowerConsumptionIsNotNumberImplCopyWithImpl<T, $Res>
       _$PowerConsumptionIsNotNumberImpl<T> _value,
       $Res Function(_$PowerConsumptionIsNotNumberImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1327,6 +1363,9 @@ class __$$DeviceActionDoesNotExistImplCopyWithImpl<T, $Res>
       _$DeviceActionDoesNotExistImpl<T> _value,
       $Res Function(_$DeviceActionDoesNotExistImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -1483,6 +1522,9 @@ class __$$DeviceTypeDoesNotExistImplCopyWithImpl<T, $Res>
       _$DeviceTypeDoesNotExistImpl<T> _value,
       $Res Function(_$DeviceTypeDoesNotExistImpl<T>) _then)
       : super(_value, _then);
+
+  /// Create a copy of CoreFailure
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

@@ -12,7 +12,7 @@ part of 'generic_security_camera_device_dtos.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 GenericSecurityCameraDeviceDtos _$GenericSecurityCameraDeviceDtosFromJson(
     Map<String, dynamic> json) {
@@ -56,8 +56,12 @@ mixin _$GenericSecurityCameraDeviceDtos {
   String? get deviceDtoClass => throw _privateConstructorUsedError;
   String? get stateMassage => throw _privateConstructorUsedError;
 
+  /// Serializes this GenericSecurityCameraDeviceDtos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GenericSecurityCameraDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GenericSecurityCameraDeviceDtosCopyWith<GenericSecurityCameraDeviceDtos>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -116,6 +120,8 @@ class _$GenericSecurityCameraDeviceDtosCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GenericSecurityCameraDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -340,6 +346,8 @@ class __$$GenericSecurityCameraDeviceDtosImplCopyWithImpl<$Res>
       $Res Function(_$GenericSecurityCameraDeviceDtosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GenericSecurityCameraDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -697,7 +705,7 @@ class _$GenericSecurityCameraDeviceDtosImpl
                 other.stateMassage == stateMassage));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -735,7 +743,9 @@ class _$GenericSecurityCameraDeviceDtosImpl
         stateMassage
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GenericSecurityCameraDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GenericSecurityCameraDeviceDtosImplCopyWith<
@@ -791,7 +801,8 @@ abstract class _GenericSecurityCameraDeviceDtos
   factory _GenericSecurityCameraDeviceDtos.fromJson(Map<String, dynamic> json) =
       _$GenericSecurityCameraDeviceDtosImpl.fromJson;
 
-  @override // @JsonKey(ignore: true)
+// @JsonKey(ignore: true)
+  @override
   String get id;
   @override
   String get entityUniqueId;
@@ -855,8 +866,11 @@ abstract class _GenericSecurityCameraDeviceDtos
   String? get deviceDtoClass;
   @override
   String? get stateMassage;
+
+  /// Create a copy of GenericSecurityCameraDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GenericSecurityCameraDeviceDtosImplCopyWith<
           _$GenericSecurityCameraDeviceDtosImpl>
       get copyWith => throw _privateConstructorUsedError;

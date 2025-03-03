@@ -12,7 +12,7 @@ part of 'generic_ac_device_dtos.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 GenericAcDeviceDtos _$GenericAcDeviceDtosFromJson(Map<String, dynamic> json) {
   return _GenericAcDeviceDtos.fromJson(json);
@@ -58,8 +58,12 @@ mixin _$GenericAcDeviceDtos {
   String? get fanLevel => throw _privateConstructorUsedError;
   String? get light => throw _privateConstructorUsedError;
 
+  /// Serializes this GenericAcDeviceDtos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of GenericAcDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $GenericAcDeviceDtosCopyWith<GenericAcDeviceDtos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -118,6 +122,8 @@ class _$GenericAcDeviceDtosCopyWithImpl<$Res, $Val extends GenericAcDeviceDtos>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of GenericAcDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -357,6 +363,8 @@ class __$$GenericAcDeviceDtosImplCopyWithImpl<$Res>
       $Res Function(_$GenericAcDeviceDtosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of GenericAcDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -740,7 +748,7 @@ class _$GenericAcDeviceDtosImpl extends _GenericAcDeviceDtos {
             (identical(other.light, light) || other.light == light));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -781,7 +789,9 @@ class _$GenericAcDeviceDtosImpl extends _GenericAcDeviceDtos {
         light
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of GenericAcDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$GenericAcDeviceDtosImplCopyWith<_$GenericAcDeviceDtosImpl> get copyWith =>
@@ -838,7 +848,8 @@ abstract class _GenericAcDeviceDtos extends GenericAcDeviceDtos {
   factory _GenericAcDeviceDtos.fromJson(Map<String, dynamic> json) =
       _$GenericAcDeviceDtosImpl.fromJson;
 
-  @override // @JsonKey(ignore: true)
+// @JsonKey(ignore: true)
+  @override
   String get id;
   @override
   String get entityUniqueId;
@@ -908,8 +919,11 @@ abstract class _GenericAcDeviceDtos extends GenericAcDeviceDtos {
   String? get fanLevel;
   @override
   String? get light;
+
+  /// Create a copy of GenericAcDeviceDtos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GenericAcDeviceDtosImplCopyWith<_$GenericAcDeviceDtosImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -12,7 +12,7 @@ part of 'routine_cbj_dtos.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 RoutineCbjDtos _$RoutineCbjDtosFromJson(Map<String, dynamic> json) {
   return _RoutineCbjDtos.fromJson(json);
@@ -41,8 +41,12 @@ mixin _$RoutineCbjDtos {
   String? get image => throw _privateConstructorUsedError;
   String? get lastDateOfExecute => throw _privateConstructorUsedError;
 
+  /// Serializes this RoutineCbjDtos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of RoutineCbjDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RoutineCbjDtosCopyWith<RoutineCbjDtos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -85,6 +89,8 @@ class _$RoutineCbjDtosCopyWithImpl<$Res, $Val extends RoutineCbjDtos>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RoutineCbjDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -227,6 +233,8 @@ class __$$RoutineCbjDtosImplCopyWithImpl<$Res>
       _$RoutineCbjDtosImpl _value, $Res Function(_$RoutineCbjDtosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RoutineCbjDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -456,7 +464,7 @@ class _$RoutineCbjDtosImpl extends _RoutineCbjDtos {
                 other.lastDateOfExecute == lastDateOfExecute));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
@@ -481,7 +489,9 @@ class _$RoutineCbjDtosImpl extends _RoutineCbjDtos {
         lastDateOfExecute
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RoutineCbjDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RoutineCbjDtosImplCopyWith<_$RoutineCbjDtosImpl> get copyWith =>
@@ -522,7 +532,8 @@ abstract class _RoutineCbjDtos extends RoutineCbjDtos {
   factory _RoutineCbjDtos.fromJson(Map<String, dynamic> json) =
       _$RoutineCbjDtosImpl.fromJson;
 
-  @override // @JsonKey(ignore: true)
+// @JsonKey(ignore: true)
+  @override
   String get uniqueId;
   @override
   String get name;
@@ -560,8 +571,11 @@ abstract class _RoutineCbjDtos extends RoutineCbjDtos {
   String? get image;
   @override
   String? get lastDateOfExecute;
+
+  /// Create a copy of RoutineCbjDtos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RoutineCbjDtosImplCopyWith<_$RoutineCbjDtosImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

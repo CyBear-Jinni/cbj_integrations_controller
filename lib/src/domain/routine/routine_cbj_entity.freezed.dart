@@ -12,7 +12,7 @@ part of 'routine_cbj_entity.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$RoutineCbjEntity {
@@ -67,7 +67,9 @@ mixin _$RoutineCbjEntity {
   RoutineCbjRepeatDateMinute get repeateDateMinute =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RoutineCbjEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $RoutineCbjEntityCopyWith<RoutineCbjEntity> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -110,6 +112,8 @@ class _$RoutineCbjEntityCopyWithImpl<$Res, $Val extends RoutineCbjEntity>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of RoutineCbjEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -252,6 +256,8 @@ class __$$RoutineCbjEntityImplCopyWithImpl<$Res>
       $Res Function(_$RoutineCbjEntityImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of RoutineCbjEntity
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -512,7 +518,9 @@ class _$RoutineCbjEntityImpl extends _RoutineCbjEntity {
         repeateDateMinute
       ]);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of RoutineCbjEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$RoutineCbjEntityImplCopyWith<_$RoutineCbjEntityImpl> get copyWith =>
@@ -544,32 +552,31 @@ abstract class _RoutineCbjEntity extends RoutineCbjEntity {
       _$RoutineCbjEntityImpl;
   const _RoutineCbjEntity._() : super._();
 
-  @override
-
   /// The unique id of the routine, will alsow be used as the flow/tab id.
-  UniqueId get uniqueId;
   @override
+  UniqueId get uniqueId;
 
   /// Name of the automation, will be shown to the user.
+  @override
   RoutineCbjName get name;
   @override
   RoutineCbjBackgroundColor get backgroundColor;
-  @override
 
   /// All the automation as string.
-  RoutineCbjAutomationString get automationString;
   @override
+  RoutineCbjAutomationString get automationString;
 
   /// Node-Red flow id of the scene
-  RoutineCbjNodeRedFlowId get nodeRedFlowId;
   @override
+  RoutineCbjNodeRedFlowId get nodeRedFlowId;
 
   /// The actual id of the first node, most of the time will be the same as
   /// uniqueId variable.
-  RoutineCbjFirstNodeId get firstNodeId;
   @override
+  RoutineCbjFirstNodeId get firstNodeId;
 
   /// The Unicode code point at which this icon is stored in the icon font.
+  @override
   RoutineCbjIconCodePoint get iconCodePoint;
   @override
   RoutineCbjBackgroundImage get image;
@@ -587,24 +594,27 @@ abstract class _RoutineCbjEntity extends RoutineCbjEntity {
   RoutineCbjCompUuid get compUuid;
   @override
   RoutineCbjDeviceStateGRPC get entityStateGRPC;
-  @override
 
   /// Repeat type, at a specific time/ interval/ iterval between times
-  RoutineCbjRepeatType get repeateType;
   @override
+  RoutineCbjRepeatType get repeateType;
 
   /// In what days to repeat in
-  RoutineCbjRepeatDateDays get repeateDateDays;
   @override
+  RoutineCbjRepeatDateDays get repeateDateDays;
 
   /// In what hour to repeat in
-  RoutineCbjRepeatDateHour get repeateDateHour;
   @override
+  RoutineCbjRepeatDateHour get repeateDateHour;
 
   /// In what minute to repeat in
-  RoutineCbjRepeatDateMinute get repeateDateMinute;
   @override
-  @JsonKey(ignore: true)
+  RoutineCbjRepeatDateMinute get repeateDateMinute;
+
+  /// Create a copy of RoutineCbjEntity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RoutineCbjEntityImplCopyWith<_$RoutineCbjEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

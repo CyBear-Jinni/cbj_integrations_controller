@@ -12,7 +12,7 @@ part of 'vendor_login_entity_dtos.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 VendorLoginEntityDtos _$VendorLoginEntityDtosFromJson(
     Map<String, dynamic> json) {
@@ -25,8 +25,12 @@ mixin _$VendorLoginEntityDtos {
   String get vendor => throw _privateConstructorUsedError;
   Map<String, dynamic> get credentials => throw _privateConstructorUsedError;
 
+  /// Serializes this VendorLoginEntityDtos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of VendorLoginEntityDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $VendorLoginEntityDtosCopyWith<VendorLoginEntityDtos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -51,6 +55,8 @@ class _$VendorLoginEntityDtosCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of VendorLoginEntityDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -91,6 +97,8 @@ class __$$VendorLoginEntityDtosImplCopyWithImpl<$Res>
       $Res Function(_$VendorLoginEntityDtosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of VendorLoginEntityDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -147,12 +155,14 @@ class _$VendorLoginEntityDtosImpl extends _VendorLoginEntityDtos {
                 .equals(other._credentials, _credentials));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, vendor, const DeepCollectionEquality().hash(_credentials));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of VendorLoginEntityDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$VendorLoginEntityDtosImplCopyWith<_$VendorLoginEntityDtosImpl>
@@ -177,12 +187,16 @@ abstract class _VendorLoginEntityDtos extends VendorLoginEntityDtos {
   factory _VendorLoginEntityDtos.fromJson(Map<String, dynamic> json) =
       _$VendorLoginEntityDtosImpl.fromJson;
 
-  @override // @JsonKey(ignore: true)
+// @JsonKey(ignore: true)
+  @override
   String get vendor;
   @override
   Map<String, dynamic> get credentials;
+
+  /// Create a copy of VendorLoginEntityDtos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VendorLoginEntityDtosImplCopyWith<_$VendorLoginEntityDtosImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

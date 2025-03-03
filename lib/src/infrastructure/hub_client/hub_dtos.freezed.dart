@@ -12,7 +12,7 @@ part of 'hub_dtos.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 HubDtos _$HubDtosFromJson(Map<String, dynamic> json) {
   return _HubDtos.fromJson(json);
@@ -25,8 +25,12 @@ mixin _$HubDtos {
   String get networkName => throw _privateConstructorUsedError;
   String get lastKnownIp => throw _privateConstructorUsedError;
 
+  /// Serializes this HubDtos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of HubDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $HubDtosCopyWith<HubDtos> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -48,6 +52,8 @@ class _$HubDtosCopyWithImpl<$Res, $Val extends HubDtos>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of HubDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -90,6 +96,8 @@ class __$$HubDtosImplCopyWithImpl<$Res>
       _$HubDtosImpl _value, $Res Function(_$HubDtosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of HubDtos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -152,12 +160,14 @@ class _$HubDtosImpl extends _HubDtos {
                 other.lastKnownIp == lastKnownIp));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, hubNetworkBssid, networkName, lastKnownIp);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of HubDtos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$HubDtosImplCopyWith<_$HubDtosImpl> get copyWith =>
@@ -180,14 +190,18 @@ abstract class _HubDtos extends HubDtos {
 
   factory _HubDtos.fromJson(Map<String, dynamic> json) = _$HubDtosImpl.fromJson;
 
-  @override // @JsonKey(includeFromJson: true)
+// @JsonKey(includeFromJson: true)
+  @override
   String get hubNetworkBssid;
   @override
   String get networkName;
   @override
   String get lastKnownIp;
+
+  /// Create a copy of HubDtos
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$HubDtosImplCopyWith<_$HubDtosImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
