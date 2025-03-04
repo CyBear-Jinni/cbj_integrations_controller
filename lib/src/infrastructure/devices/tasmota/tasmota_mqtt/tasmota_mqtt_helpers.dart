@@ -73,14 +73,14 @@ class TasmotaMqttHelpers {
         deviceHostName: DeviceHostName(value: '0'),
         deviceMdns: DeviceMdns(value: '0'),
         srvResourceRecord: DeviceSrvResourceRecord(),
-        mdnsServiceType: DevicemdnsServiceType(),
+        mdnsServiceType: DeviceMdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         devicesMacAddress: DevicesMacAddress(value: '0'),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        entitiyCbjUniqueId: CoreUniqueId(),
+        entityCbjUniqueId: CoreUniqueId(),
       );
     }
 

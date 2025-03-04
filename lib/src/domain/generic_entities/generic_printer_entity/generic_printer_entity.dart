@@ -41,7 +41,7 @@ class GenericPrinterDE extends DeviceEntityBase {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.entitiyCbjUniqueId,
+    required super.entityCbjUniqueId,
     required this.printerSwitchState,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.printer),
@@ -68,7 +68,7 @@ class GenericPrinterDE extends DeviceEntityBase {
         deviceHostName: DeviceHostName(value: ''),
         deviceMdns: DeviceMdns(value: ''),
         srvResourceRecord: DeviceSrvResourceRecord(),
-        mdnsServiceType: DevicemdnsServiceType(),
+        mdnsServiceType: DeviceMdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid(''),
@@ -77,7 +77,7 @@ class GenericPrinterDE extends DeviceEntityBase {
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-        entitiyCbjUniqueId: CoreUniqueId(),
+        entityCbjUniqueId: CoreUniqueId(),
         printerSwitchState:
             GenericPrinterSwitchState(EntityActions.off.toString()),
       );
@@ -161,7 +161,7 @@ class GenericPrinterDE extends DeviceEntityBase {
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
-      entitiyCbjUniqueId: entitiyCbjUniqueId.getOrCrash(),
+      entityCbjUniqueId: entityCbjUniqueId.getOrCrash(),
       printerSwitchState: printerSwitchState!.getOrCrash(),
       lastKnownIp: deviceLastKnownIp.getOrCrash(),
     );

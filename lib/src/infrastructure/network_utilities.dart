@@ -81,13 +81,13 @@ class NetworkUtilities implements INetworkUtilities {
           DeviceSrvResourceRecord(input: srvResourceRecord?.name),
       srvTarget: DeviceSrvTarget(input: srvTarget),
       ptrResourceRecord: DevicePtrResourceRecord(input: ptrResourceRecord),
-      mdnsServiceType: DevicemdnsServiceType(input: mdnsServiceType),
+      mdnsServiceType: DeviceMdnsServiceType(input: mdnsServiceType),
       devicesMacAddress:
           DevicesMacAddress(value: arpData?.macAddress ?? vendor?.macPrefix),
       entityKey: EntityKey(''),
       requestTimeStamp: RequestTimeStamp(''),
       lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-      entitiyCbjUniqueId: CoreUniqueId(),
+      entityCbjUniqueId: CoreUniqueId(),
     );
   }
 

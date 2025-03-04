@@ -41,7 +41,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.entitiyCbjUniqueId,
+    required super.entityCbjUniqueId,
     required this.smartTvSwitchState,
     this.pausePlayState,
     this.volume,
@@ -70,7 +70,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
         deviceHostName: DeviceHostName(value: ''),
         deviceMdns: DeviceMdns(value: ''),
         srvResourceRecord: DeviceSrvResourceRecord(),
-        mdnsServiceType: DevicemdnsServiceType(),
+        mdnsServiceType: DeviceMdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid(''),
@@ -79,7 +79,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-        entitiyCbjUniqueId: CoreUniqueId(),
+        entityCbjUniqueId: CoreUniqueId(),
         smartTvSwitchState:
             GenericSmartTvSwitchState(EntityActions.off.toString()),
       );
@@ -135,7 +135,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
-      entitiyCbjUniqueId: entitiyCbjUniqueId.getOrCrash(),
+      entityCbjUniqueId: entityCbjUniqueId.getOrCrash(),
       smartTvSwitchState: smartTvSwitchState!.getOrCrash(),
       cbjDeviceVendor: cbjDeviceVendor.getOrCrash(),
       deviceVendor: deviceVendor.getOrCrash(),
@@ -170,7 +170,7 @@ class GenericSmartTvDE extends DeviceEntityBase {
         }
         return openUrl(url);
 
-      case EntityActions.speek:
+      case EntityActions.speak:
         final dynamic text = request.values?[ActionValues.text];
         if (text is! String) {
           return const Left(CoreFailure.unexpected());

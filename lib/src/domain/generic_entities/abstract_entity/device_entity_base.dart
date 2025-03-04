@@ -38,7 +38,7 @@ abstract class DeviceEntityBase {
     required this.entityKey,
     required this.requestTimeStamp,
     required this.lastResponseFromDeviceTimeStamp,
-    required this.entitiyCbjUniqueId,
+    required this.entityCbjUniqueId,
     required this.srvResourceRecord,
     required this.srvTarget,
     required this.ptrResourceRecord,
@@ -115,7 +115,7 @@ abstract class DeviceEntityBase {
   DeviceSrvTarget srvTarget;
   DevicePtrResourceRecord ptrResourceRecord;
 
-  DevicemdnsServiceType mdnsServiceType;
+  DeviceMdnsServiceType mdnsServiceType;
 
   /// Mac address of the device
   DevicesMacAddress devicesMacAddress;
@@ -130,9 +130,9 @@ abstract class DeviceEntityBase {
   LastResponseFromDeviceTimeStamp lastResponseFromDeviceTimeStamp;
 
   /// Unique id that cbj creates for the device that the entity is stored on
-  CoreUniqueId entitiyCbjUniqueId;
+  CoreUniqueId entityCbjUniqueId;
 
-  String get getCbjEntityId => entitiyCbjUniqueId.getOrCrash();
+  String get getCbjEntityId => entityCbjUniqueId.getOrCrash();
 
   /// Copy with device state to waiting or ack
   DeviceEntityBase copyWithDeviceState(EntityStateGRPC entityStateGRPC) => this;
@@ -303,7 +303,7 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           senderId: DeviceSenderId(),
           stateMassage: DeviceStateMassage(value: 'go'),
           powerConsumption: DevicePowerConsumption('0'),
-          deviceUniqueId: DeviceUniqueId('Entiy unique id is empty'),
+          deviceUniqueId: DeviceUniqueId('Entity unique id is empty'),
           devicePort: DevicePort(value: '1'),
           deviceLastKnownIp: DeviceLastKnownIp(value: '1.1.1.1'),
           deviceHostName: DeviceHostName(value: 'deviceHostName is empty'),
@@ -311,7 +311,7 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           srvResourceRecord: DeviceSrvResourceRecord(),
           srvTarget: DeviceSrvTarget(),
           ptrResourceRecord: DevicePtrResourceRecord(),
-          mdnsServiceType: DevicemdnsServiceType(),
+          mdnsServiceType: DeviceMdnsServiceType(),
           devicesMacAddress:
               DevicesMacAddress(value: 'devicesMacAddress is empty'),
           entityKey: EntityKey('entityKey is empty'),
@@ -319,7 +319,7 @@ class DeviceEntityNotAbstract extends DeviceEntityBase {
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(
             'lastResponseFromDeviceTimeStamp is empty',
           ),
-          entitiyCbjUniqueId: CoreUniqueId(),
+          entityCbjUniqueId: CoreUniqueId(),
           deviceVendor: DeviceVendor(),
           deviceNetworkLastUpdate: DeviceNetworkLastUpdate(),
         );

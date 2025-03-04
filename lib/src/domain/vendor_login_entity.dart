@@ -21,6 +21,7 @@ class VendorLoginEntity {
   final String? password;
   final String? ip;
   final String? port;
+   static String event = 'setEntityState';
 
   VendorLoginEntityDtos toInfrastructure() {
     final Map<String, dynamic> credentials = {};

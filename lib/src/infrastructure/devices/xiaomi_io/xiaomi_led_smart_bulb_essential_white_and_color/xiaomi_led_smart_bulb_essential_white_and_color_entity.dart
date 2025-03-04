@@ -31,7 +31,7 @@ class XiaomiLedSmartBulbEssentialWhiteAndColorEntity
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.entitiyCbjUniqueId,
+    required super.entityCbjUniqueId,
     required super.lightSwitchState,
     required super.lightColorTemperature,
     required super.lightColorAlpha,

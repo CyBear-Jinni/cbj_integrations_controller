@@ -29,7 +29,7 @@ class SensiboSkyEntity extends GenericAcDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.entitiyCbjUniqueId,
+    required super.entityCbjUniqueId,
     required super.srvResourceRecord,
     required super.srvTarget,
     required super.ptrResourceRecord,

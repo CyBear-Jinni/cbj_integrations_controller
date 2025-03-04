@@ -21,7 +21,7 @@ class ShellyHelpers {
     final String? hostName = entity.deviceHostName.getOrCrash();
 
     final HashMap<String, DeviceEntityBase> entitiesToAdd = HashMap();
-    final String entitiyCbjUniqueId = mDnsName;
+    final String entityCbjUniqueId = mDnsName;
     DeviceEntityBase? tempEntity;
     try {
       // TODO: shelly duo bulb needs type that as the time of writing is
@@ -98,7 +98,7 @@ class ShellyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+          entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId),
           lightSwitchState: GenericRgbwLightSwitchState(isOn ? 'on' : 'off'),
           lightColorTemperature:
               GenericRgbwLightColorTemperature(temp.toString()),
@@ -173,7 +173,7 @@ class ShellyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+          entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId),
           lightSwitchState: GenericRgbwLightSwitchState(isOn ? 'on' : 'off'),
           lightColorTemperature:
               GenericRgbwLightColorTemperature(temp.toString()),
@@ -227,7 +227,7 @@ class ShellyHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+          entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId),
           switchState: GenericSwitchSwitchState(false.toString()),
         );
       } else {
@@ -238,7 +238,7 @@ class ShellyHelpers {
     }
 
     if (tempEntity != null) {
-      entitiesToAdd.addEntries([MapEntry(entitiyCbjUniqueId, tempEntity)]);
+      entitiesToAdd.addEntries([MapEntry(entityCbjUniqueId, tempEntity)]);
     }
 
     return entitiesToAdd;

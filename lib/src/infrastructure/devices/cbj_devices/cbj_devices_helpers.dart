@@ -61,14 +61,14 @@ class CbjDevicesHelpers {
           deviceHostName: DeviceHostName(value: '0'),
           deviceMdns: DeviceMdns(value: '0'),
           srvResourceRecord: DeviceSrvResourceRecord(),
-          mdnsServiceType: DevicemdnsServiceType(),
+          mdnsServiceType: DeviceMdnsServiceType(),
           ptrResourceRecord: DevicePtrResourceRecord(),
           srvTarget: DeviceSrvTarget(),
           devicesMacAddress: DevicesMacAddress(value: '0'),
           entityKey: EntityKey('0'),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(deviceId),
+          entityCbjUniqueId: CoreUniqueId.fromUniqueString(deviceId),
         );
       } else if (deviceType == CbjDeviceTypes.smart_camera) {
         entityAbstract = CbjSecurityCameraEntity(
@@ -97,14 +97,14 @@ class CbjDevicesHelpers {
           deviceHostName: DeviceHostName(value: '0'),
           deviceMdns: DeviceMdns(value: '0'),
           srvResourceRecord: DeviceSrvResourceRecord(),
-          mdnsServiceType: DevicemdnsServiceType(),
+          mdnsServiceType: DeviceMdnsServiceType(),
           ptrResourceRecord: DevicePtrResourceRecord(),
           srvTarget: DeviceSrvTarget(),
           devicesMacAddress: DevicesMacAddress(value: '0'),
           entityKey: EntityKey('0'),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(deviceId),
+          entityCbjUniqueId: CoreUniqueId.fromUniqueString(deviceId),
         );
       } else {
         icLogger.w('Cbj Smart Device type is not supported ${deviceType.name}');

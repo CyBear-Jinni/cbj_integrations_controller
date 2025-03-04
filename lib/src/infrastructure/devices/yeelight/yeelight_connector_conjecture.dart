@@ -57,7 +57,7 @@ class YeelightConnectorConjecture extends VendorConnectorConjectureService {
       await VendorsConnectorConjecture().foundEntityOfVendor(
         vendorConnectorConjectureService: this,
         entity: entery.value,
-        entitiyCbjUniqueId: entery.value.entitiyCbjUniqueId.getOrCrash(),
+        entityCbjUniqueId: entery.value.entityCbjUniqueId.getOrCrash(),
       );
     }
   }

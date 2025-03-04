@@ -52,8 +52,6 @@ abstract class VendorLoginEntityDtos implements _$VendorLoginEntityDtos {
   ) =>
       _$VendorLoginEntityDtosFromJson(json);
 
-  final String loginDtoClassInstance = (VendorLoginEntityDtos).toString();
-
   VendorLoginEntity toDomain() {
     return VendorLoginEntity(
       EntityUtils.stringToDeviceVendor(vendor),

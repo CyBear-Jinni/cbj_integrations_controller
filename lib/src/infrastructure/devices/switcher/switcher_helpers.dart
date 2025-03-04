@@ -59,13 +59,13 @@ class SwitcherHelpers {
         deviceHostName: DeviceHostName(value: '0'),
         deviceMdns: DeviceMdns(),
         srvResourceRecord: DeviceSrvResourceRecord(),
-        mdnsServiceType: DevicemdnsServiceType(),
+        mdnsServiceType: DeviceMdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        entitiyCbjUniqueId:
+        entityCbjUniqueId:
             CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 
@@ -107,13 +107,13 @@ class SwitcherHelpers {
         deviceHostName: DeviceHostName(value: '0'),
         deviceMdns: DeviceMdns(),
         srvResourceRecord: DeviceSrvResourceRecord(),
-        mdnsServiceType: DevicemdnsServiceType(),
+        mdnsServiceType: DeviceMdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        entitiyCbjUniqueId:
+        entityCbjUniqueId:
             CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 
@@ -152,14 +152,14 @@ class SwitcherHelpers {
         deviceHostName: DeviceHostName(value: '0'),
         deviceMdns: DeviceMdns(),
         srvResourceRecord: DeviceSrvResourceRecord(),
-        mdnsServiceType: DevicemdnsServiceType(),
+        mdnsServiceType: DeviceMdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         devicesMacAddress: DevicesMacAddress(value: switcherDevice.macAddress),
         entityKey: EntityKey('0'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        entitiyCbjUniqueId:
+        entityCbjUniqueId:
             CoreUniqueId.fromUniqueString(switcherDevice.deviceId),
       );
 

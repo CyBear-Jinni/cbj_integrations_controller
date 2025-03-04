@@ -38,7 +38,7 @@ _$GenericUnsupportedDeviceDtosImpl _$$GenericUnsupportedDeviceDtosImplFromJson(
       requestTimeStamp: json['requestTimeStamp'] as String?,
       lastResponseFromDeviceTimeStamp:
           json['lastResponseFromDeviceTimeStamp'] as String?,
-      entitiyCbjUniqueId: json['entitiyCbjUniqueId'] as String?,
+      entityCbjUniqueId: json['entityCbjUniqueId'] as String?,
       deviceDtoClass: json['deviceDtoClass'] as String?,
       stateMassage: json['stateMassage'] as String?,
     );
@@ -75,7 +75,7 @@ Map<String, dynamic> _$$GenericUnsupportedDeviceDtosImplToJson(
       'requestTimeStamp': instance.requestTimeStamp,
       'lastResponseFromDeviceTimeStamp':
           instance.lastResponseFromDeviceTimeStamp,
-      'entitiyCbjUniqueId': instance.entitiyCbjUniqueId,
+      'entityCbjUniqueId': instance.entityCbjUniqueId,
       'deviceDtoClass': instance.deviceDtoClass,
       'stateMassage': instance.stateMassage,
     };

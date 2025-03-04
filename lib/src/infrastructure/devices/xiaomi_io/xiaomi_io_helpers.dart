@@ -39,14 +39,14 @@ class XiaomiIoHelpers {
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       deviceLastKnownIp:
           DeviceLastKnownIp(value: xiaomiIoDevice.address.address),
       stateMassage: DeviceStateMassage(value: 'Hello World'),
       powerConsumption: DevicePowerConsumption('0'),
       deviceUniqueId: DeviceUniqueId(xiaomiIoDevice.id.toString()),
       devicePort: DevicePort(value: xiaomiIoDevice.port.toString()),
-      entitiyCbjUniqueId: CoreUniqueId(),
+      entityCbjUniqueId: CoreUniqueId(),
       lightSwitchState:
           GenericRgbwLightSwitchState(xiaomiIoDevice.powered.toString()),
       lightColorTemperature: GenericRgbwLightColorTemperature(

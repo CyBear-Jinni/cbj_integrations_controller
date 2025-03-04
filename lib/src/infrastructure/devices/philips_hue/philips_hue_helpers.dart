@@ -30,8 +30,8 @@ class PhilipsHueHelpers {
 
     for (final Light light in lights) {
       final LightState? lightState = light.state;
-      final String? entitiyCbjUniqueId = light.uniqueId;
-      if (entitiyCbjUniqueId == null) {
+      final String? entityCbjUniqueId = light.uniqueId;
+      if (entityCbjUniqueId == null) {
         icLogger.e('Philips id is null');
         continue;
       }
@@ -70,7 +70,7 @@ class PhilipsHueHelpers {
           requestTimeStamp: entity.requestTimeStamp,
           lastResponseFromDeviceTimeStamp:
               entity.lastResponseFromDeviceTimeStamp,
-          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+          entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId),
           lightSwitchState: GenericDimmableLightSwitchState(
             lightState != null && lightState.on != null && lightState.on!
                 ? EntityActions.on.toString()
@@ -85,7 +85,7 @@ class PhilipsHueHelpers {
           ),
         );
         entitiesToAdd.addEntries([
-          MapEntry(entitiyCbjUniqueId, philipsHueDE),
+          MapEntry(entityCbjUniqueId, philipsHueDE),
         ]);
       } else {
         icLogger.w('Un supported Philips Hue light type');

@@ -10,7 +10,7 @@ class GoogleHelpers {
   static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
     DeviceEntityBase entity,
   ) async {
-    final String entitiyCbjUniqueId = entity.devicesMacAddress.getOrCrash() ??
+    final String entityCbjUniqueId = entity.devicesMacAddress.getOrCrash() ??
         entity.deviceMdns.getOrCrash()!;
     String name;
     final String? deviceMdns = entity.deviceMdns.getOrCrash();
@@ -51,7 +51,7 @@ class GoogleHelpers {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+      entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId),
       smartTvSwitchState: GenericSmartTvSwitchState(
         EntityActions.undefined.toString(),
       ),
@@ -59,7 +59,7 @@ class GoogleHelpers {
 
     return HashMap()
       ..addEntries([
-        MapEntry(entitiyCbjUniqueId, googleDE),
+        MapEntry(entityCbjUniqueId, googleDE),
       ]);
   }
 }

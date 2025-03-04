@@ -54,13 +54,13 @@ class DemoConnectionController {
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      entitiyCbjUniqueId:
+      entityCbjUniqueId:
           CoreUniqueId.fromUniqueString('n5sdf1sf-df53-v2sd-ge46-hhjlywawq166'),
     );
 
@@ -103,13 +103,13 @@ class DemoConnectionController {
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      entitiyCbjUniqueId:
+      entityCbjUniqueId:
           CoreUniqueId.fromUniqueString('b0gaseh2-u7f4-1g42-vdf2-dfnertaku3fs'),
     );
 
@@ -152,13 +152,13 @@ class DemoConnectionController {
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      entitiyCbjUniqueId:
+      entityCbjUniqueId:
           CoreUniqueId.fromUniqueString('654wdf2u-rge2-ffh2-gn22-rthweru521rs'),
     );
 
@@ -204,13 +204,13 @@ class DemoConnectionController {
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      entitiyCbjUniqueId:
+      entityCbjUniqueId:
           CoreUniqueId.fromUniqueString('id2erfdd-g34a-uhj5-fdfa-sdf5y3wsdfhs'),
     );
 
@@ -260,13 +260,13 @@ class DemoConnectionController {
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      entitiyCbjUniqueId:
+      entityCbjUniqueId:
           CoreUniqueId.fromUniqueString('sd3fgbns-64as-1gd2-gfdw-dgghks325as6'),
       colorMode: GenericLightModeState(ColorMode.white),
     );
@@ -313,13 +313,13 @@ class DemoConnectionController {
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      entitiyCbjUniqueId:
+      entityCbjUniqueId:
           CoreUniqueId.fromUniqueString('dgh4nsdg-fd2d-df32-vn4g-dfgw2dvvnrrg'),
     );
 
@@ -363,13 +363,13 @@ class DemoConnectionController {
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      entitiyCbjUniqueId:
+      entityCbjUniqueId:
           CoreUniqueId.fromUniqueString('nbfsgsdf-34f3-631w-125f-324f23567731'),
     );
 
@@ -412,13 +412,13 @@ class DemoConnectionController {
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       devicesMacAddress: DevicesMacAddress(value: 'devicesMacAddress'),
       entityKey: EntityKey('entityKey'),
       requestTimeStamp: RequestTimeStamp('requestTimeStamp'),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp('lastResponseFromDeviceTimeStamp'),
-      entitiyCbjUniqueId:
+      entityCbjUniqueId:
           CoreUniqueId.fromUniqueString('sgeryjmn-gfn3-bf3v-et24-fvd22445jng3'),
     );
 

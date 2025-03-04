@@ -35,7 +35,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.entitiyCbjUniqueId,
+    required super.entityCbjUniqueId,
     required super.securityCameraSuspendState,
   }) : super(
           cbjDeviceVendor:
@@ -73,7 +73,7 @@ class CbjSecurityCameraEntity extends GenericSecurityCameraDE {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
+      entityCbjUniqueId: entity.entityCbjUniqueId,
       securityCameraSuspendState: entity.securityCameraSuspendState,
     );
   }

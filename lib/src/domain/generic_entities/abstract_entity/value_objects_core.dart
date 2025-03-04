@@ -147,12 +147,12 @@ class DevicePtrResourceRecord extends ValueObjectCore<String?> {
   final Either<CoreFailure<String?>, String?> value;
 }
 
-class DevicemdnsServiceType extends ValueObjectCore<String?> {
-  factory DevicemdnsServiceType({String? input}) {
-    return DevicemdnsServiceType._(right(input));
+class DeviceMdnsServiceType extends ValueObjectCore<String?> {
+  factory DeviceMdnsServiceType({String? input}) {
+    return DeviceMdnsServiceType._(right(input));
   }
 
-  const DevicemdnsServiceType._(this.value);
+  const DeviceMdnsServiceType._(this.value);
 
   @override
   final Either<CoreFailure<String?>, String?> value;

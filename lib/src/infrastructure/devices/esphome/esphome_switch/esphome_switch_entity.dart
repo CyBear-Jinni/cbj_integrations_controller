@@ -36,7 +36,7 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.entitiyCbjUniqueId,
+    required super.entityCbjUniqueId,
     required super.switchState,
   }) : super(
           cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.espHome),
@@ -71,7 +71,7 @@ class EspHomeSwitchEntity extends GenericSwitchDE {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
+      entityCbjUniqueId: entity.entityCbjUniqueId,
       switchState: entity.switchState,
     );
   }

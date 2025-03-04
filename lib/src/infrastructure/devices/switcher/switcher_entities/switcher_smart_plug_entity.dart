@@ -37,7 +37,7 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.entitiyCbjUniqueId,
+    required super.entityCbjUniqueId,
     required super.smartPlugState,
   }) : super(
           cbjDeviceVendor:
@@ -84,7 +84,7 @@ class SwitcherSmartPlugEntity extends GenericSmartPlugDE {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      entitiyCbjUniqueId: entity.entitiyCbjUniqueId,
+      entityCbjUniqueId: entity.entityCbjUniqueId,
       smartPlugState: entity.smartPlugState,
     );
   }

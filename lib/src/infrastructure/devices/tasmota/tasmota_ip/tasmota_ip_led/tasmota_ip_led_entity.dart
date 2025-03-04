@@ -44,7 +44,7 @@
 //     required super.entityKey,
 //     required super.requestTimeStamp,
 //     required super.lastResponseFromDeviceTimeStamp,
-//     required super.entitiyCbjUniqueId,
+//     required super.entityCbjUniqueId,
 //     required super.lightSwitchState,
 //   }) : super(
 //           cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.tasmota),
@@ -79,7 +79,7 @@
 //       lastResponseFromDeviceTimeStamp:
 //           genericDevice.lastResponseFromDeviceTimeStamp,
 //       lightSwitchState: genericDevice.lightSwitchState,
-//       entitiyCbjUniqueId: genericDevice.entitiyCbjUniqueId,
+//       entityCbjUniqueId: genericDevice.entityCbjUniqueId,
 //     );
 //   }
 

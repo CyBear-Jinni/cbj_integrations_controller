@@ -35,6 +35,9 @@ enum EntityStateGRPC {
 
   /// Update hub entity object properties from the real entity
   updateHubEntityPropertiesFromRealEntity,
+
+  /// Request to add the new entity from the javascript hub
+  addNewEntityFromJavascriptHub
 }
 
 extension EntityStateGRPCExtension on EntityStateGRPC {
@@ -137,9 +140,10 @@ enum EntityActions {
   close,
   changeTemperature,
   changeMod,
-  speek,
+  speak,
   hsvColor,
   useValue,
+  addEntity,
 }
 
 extension EntityActionsExtension on EntityActions {

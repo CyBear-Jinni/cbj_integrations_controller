@@ -22,7 +22,7 @@ enum EntityProperties {
   skip,
   volume,
   switchState,
-  speekers,
+  speakers,
   color,
   acSwitchState,
   delay,

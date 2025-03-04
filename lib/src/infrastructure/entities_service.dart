@@ -72,7 +72,7 @@ class EntitiesService {
       VendorsConnectorConjecture().loadEntitiesFromDb(
         vendorConnectorConjectureService: vendor,
         entity: entity,
-        entitiyCbjUniqueId: entity.getCbjEntityId,
+        entityCbjUniqueId: entity.getCbjEntityId,
       );
     }
   }

@@ -41,7 +41,7 @@ class GenericSwitchDE extends DeviceEntityBase {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.entitiyCbjUniqueId,
+    required super.entityCbjUniqueId,
     required this.switchState,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.switch_),
@@ -68,7 +68,7 @@ class GenericSwitchDE extends DeviceEntityBase {
         deviceHostName: DeviceHostName(value: ''),
         deviceMdns: DeviceMdns(value: ''),
         srvResourceRecord: DeviceSrvResourceRecord(),
-        mdnsServiceType: DevicemdnsServiceType(),
+        mdnsServiceType: DeviceMdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid(''),
@@ -77,7 +77,7 @@ class GenericSwitchDE extends DeviceEntityBase {
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-        entitiyCbjUniqueId: CoreUniqueId(),
+        entityCbjUniqueId: CoreUniqueId(),
         switchState: GenericSwitchSwitchState(EntityActions.off.toString()),
       );
 
@@ -145,7 +145,7 @@ class GenericSwitchDE extends DeviceEntityBase {
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
-      entitiyCbjUniqueId: entitiyCbjUniqueId.getOrCrash(),
+      entityCbjUniqueId: entityCbjUniqueId.getOrCrash(),
       switchState: switchState.getOrCrash(),
     );
   }

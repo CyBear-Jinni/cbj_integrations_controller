@@ -40,12 +40,12 @@ class LifxHelpers {
       srvResourceRecord: DeviceSrvResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       ptrResourceRecord: DevicePtrResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       devicesMacAddress: DevicesMacAddress(value: ''),
       entityKey: EntityKey(''),
       requestTimeStamp: RequestTimeStamp(''),
       lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-      entitiyCbjUniqueId: CoreUniqueId(),
+      entityCbjUniqueId: CoreUniqueId(),
       lightBrightness:
           GenericDimmableLightBrightness.fromDouble(lifxDevice.brightness),
     );

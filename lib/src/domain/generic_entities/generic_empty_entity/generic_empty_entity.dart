@@ -40,7 +40,7 @@ class GenericUnsupportedDE extends DeviceEntityBase {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.entitiyCbjUniqueId,
+    required super.entityCbjUniqueId,
   }) : super(
           entityTypes: EntityType.type(EntityTypes.emptyEntity),
         );
@@ -69,14 +69,14 @@ class GenericUnsupportedDE extends DeviceEntityBase {
         deviceHostName: DeviceHostName(value: ''),
         deviceMdns: DeviceMdns(value: ''),
         srvResourceRecord: DeviceSrvResourceRecord(),
-        mdnsServiceType: DevicemdnsServiceType(),
+        mdnsServiceType: DeviceMdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         devicesMacAddress: DevicesMacAddress(value: ''),
         entityKey: EntityKey(''),
         requestTimeStamp: RequestTimeStamp(''),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp(''),
-        entitiyCbjUniqueId: CoreUniqueId(),
+        entityCbjUniqueId: CoreUniqueId(),
       );
 
   //
@@ -140,7 +140,7 @@ class GenericUnsupportedDE extends DeviceEntityBase {
       requestTimeStamp: requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           lastResponseFromDeviceTimeStamp.getOrCrash(),
-      entitiyCbjUniqueId: entitiyCbjUniqueId.getOrCrash(),
+      entityCbjUniqueId: entityCbjUniqueId.getOrCrash(),
     );
   }
 

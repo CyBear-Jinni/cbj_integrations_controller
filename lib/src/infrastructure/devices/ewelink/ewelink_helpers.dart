@@ -14,11 +14,10 @@ class EwelinkHelpers {
     final HashMap<String, DeviceEntityBase> addEntities = HashMap();
 
     DeviceEntityBase? tempDevice;
-    String? entitiyCbjUniqueId;
+    String? entityCbjUniqueId;
 
     if (ewelinkDevice.type == 'a9') {
-      entitiyCbjUniqueId =
-          '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}';
+      entityCbjUniqueId = '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}';
 
       tempDevice = EwelinkSwitchEntity(
         uniqueId: CoreUniqueId(),
@@ -38,7 +37,7 @@ class EwelinkHelpers {
         deviceHostName: DeviceHostName(value: '0'),
         deviceMdns: DeviceMdns(value: '0'),
         srvResourceRecord: DeviceSrvResourceRecord(),
-        mdnsServiceType: DevicemdnsServiceType(),
+        mdnsServiceType: DeviceMdnsServiceType(),
         ptrResourceRecord: DevicePtrResourceRecord(),
         srvTarget: DeviceSrvTarget(),
         compUuid: DeviceCompUuid('empty'),
@@ -48,7 +47,7 @@ class EwelinkHelpers {
         entityKey: EntityKey('1'),
         requestTimeStamp: RequestTimeStamp('0'),
         lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-        entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+        entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId),
         switchState: GenericSwitchSwitchState('off'),
         entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
       );
@@ -79,7 +78,7 @@ class EwelinkHelpers {
         // else {
         //   // Devices without tags at all are legit and will be added only once
         // }
-        entitiyCbjUniqueId =
+        entityCbjUniqueId =
             '${ewelinkDevice.deviceid}-${ewelinkDevice.deviceid}-$outletNumber';
 
         tempDevice = EwelinkSwitchEntity(
@@ -110,7 +109,7 @@ class EwelinkHelpers {
           deviceHostName: DeviceHostName(value: '0'),
           deviceMdns: DeviceMdns(value: '0'),
           srvResourceRecord: DeviceSrvResourceRecord(),
-          mdnsServiceType: DevicemdnsServiceType(),
+          mdnsServiceType: DeviceMdnsServiceType(),
           ptrResourceRecord: DevicePtrResourceRecord(),
           srvTarget: DeviceSrvTarget(),
           compUuid: DeviceCompUuid('empty'),
@@ -120,7 +119,7 @@ class EwelinkHelpers {
           entityKey: EntityKey(outletNumber),
           requestTimeStamp: RequestTimeStamp('0'),
           lastResponseFromDeviceTimeStamp: LastResponseFromDeviceTimeStamp('0'),
-          entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+          entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId),
           switchState:
               GenericSwitchSwitchState(switchParam['switch'] as String),
           entityStateGRPC: EntityState.state(EntityStateGRPC.ack),
@@ -131,8 +130,8 @@ class EwelinkHelpers {
       }
     }
 
-    if (tempDevice != null && entitiyCbjUniqueId != null) {
-      addEntities.addEntries([MapEntry(entitiyCbjUniqueId, tempDevice)]);
+    if (tempDevice != null && entityCbjUniqueId != null) {
+      addEntities.addEntries([MapEntry(entityCbjUniqueId, tempDevice)]);
     }
     return addEntities;
   }

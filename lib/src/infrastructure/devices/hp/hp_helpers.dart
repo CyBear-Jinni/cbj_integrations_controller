@@ -10,7 +10,7 @@ class HpHelpers {
   static Future<HashMap<String, DeviceEntityBase>> addDiscoveredDevice(
     DeviceEntityBase entity,
   ) async {
-    final String entitiyCbjUniqueId = entity.entityUniqueId.getOrCrash();
+    final String entityCbjUniqueId = entity.entityUniqueId.getOrCrash();
 
     final HpPrinterEntity lgDE = HpPrinterEntity(
       uniqueId: entity.uniqueId,
@@ -42,7 +42,7 @@ class HpHelpers {
       entityKey: entity.entityKey,
       requestTimeStamp: entity.requestTimeStamp,
       lastResponseFromDeviceTimeStamp: entity.lastResponseFromDeviceTimeStamp,
-      entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+      entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId),
       printerSwitchState: GenericPrinterSwitchState(
         EntityActions.undefined.toString(),
       ),
@@ -50,7 +50,7 @@ class HpHelpers {
 
     return HashMap()
       ..addEntries([
-        MapEntry(entitiyCbjUniqueId, lgDE),
+        MapEntry(entityCbjUniqueId, lgDE),
       ]);
   }
 }

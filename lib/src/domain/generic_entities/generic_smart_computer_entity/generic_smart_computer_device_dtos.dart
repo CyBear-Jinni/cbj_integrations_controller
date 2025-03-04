@@ -42,7 +42,7 @@ abstract class GenericSmartComputerDeviceDtos
     required String? entityKey,
     required String? requestTimeStamp,
     required String? lastResponseFromDeviceTimeStamp,
-    required String? entitiyCbjUniqueId,
+    required String? entityCbjUniqueId,
     required String? smartComputerSuspendState,
     required String? smartComputerShutDownState,
     String? deviceDtoClass,
@@ -92,7 +92,7 @@ abstract class GenericSmartComputerDeviceDtos
       requestTimeStamp: deviceDe.requestTimeStamp.getOrCrash(),
       lastResponseFromDeviceTimeStamp:
           deviceDe.lastResponseFromDeviceTimeStamp.getOrCrash(),
-      entitiyCbjUniqueId: deviceDe.entitiyCbjUniqueId.getOrCrash(),
+      entityCbjUniqueId: deviceDe.entityCbjUniqueId.getOrCrash(),
     );
   }
 
@@ -138,7 +138,7 @@ abstract class GenericSmartComputerDeviceDtos
       deviceHostName: DeviceHostName(value: deviceHostName),
       deviceMdns: DeviceMdns(value: deviceMdns),
       srvResourceRecord: DeviceSrvResourceRecord(),
-      mdnsServiceType: DevicemdnsServiceType(),
+      mdnsServiceType: DeviceMdnsServiceType(),
       ptrResourceRecord: DevicePtrResourceRecord(),
       srvTarget: DeviceSrvTarget(),
       devicesMacAddress: DevicesMacAddress(value: devicesMacAddress),
@@ -146,7 +146,7 @@ abstract class GenericSmartComputerDeviceDtos
       requestTimeStamp: RequestTimeStamp(requestTimeStamp),
       lastResponseFromDeviceTimeStamp:
           LastResponseFromDeviceTimeStamp(lastResponseFromDeviceTimeStamp),
-      entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId!),
+      entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId!),
     );
   }
 }

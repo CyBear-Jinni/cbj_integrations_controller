@@ -9,12 +9,14 @@ class RequestActionObjectDtos {
     required this.property,
     required this.actionType,
     required this.value,
+    this.vendors = const [],
   });
 
   factory RequestActionObjectDtos.fromDomain(RequestActionObject routineCbj) {
     return RequestActionObjectDtos(
       entitiesId: routineCbj.entityIds.toList(),
       property: routineCbj.property.name,
+      vendors: routineCbj.vendors?.map((e) => e.name).toList() ?? [],
       actionType: routineCbj.actionType.name,
       value: HashMap<String, dynamic>.from(
         routineCbj.value.map(
@@ -33,6 +35,7 @@ class RequestActionObjectDtos {
     return RequestActionObjectDtos(
       entitiesId: jsonDecode(json['entitiesId'] as String) as List<String>,
       property: json['property'] as String,
+      vendors: jsonDecode(json['vendors'] as String) as List<String>,
       actionType: json['actionType'] as String,
       value: HashMap<String, dynamic>.from(
         jsonDecode(json['value'] as String) as Map<String, dynamic>,
@@ -42,6 +45,7 @@ class RequestActionObjectDtos {
 
   List<String> entitiesId;
   String property;
+  List<String> vendors;
   String actionType;
   HashMap<String, dynamic> value;
 
@@ -49,6 +53,7 @@ class RequestActionObjectDtos {
     return {
       'uniqueIdByVendor': jsonEncode(entitiesId),
       'property': property,
+      'vendors': vendors,
       'actionType': actionType,
       'value': jsonEncode(value),
     };
@@ -58,17 +63,18 @@ class RequestActionObjectDtos {
 
   final String deviceDtoClassInstance = (RequestActionObjectDtos).toString();
 
-  RequestActionObject toDomain() =>
-     RequestActionObject(
-      entityIds: HashSet.from(entitiesId),
-      property: EntityPropertiesExtension.fromString(property),
-      actionType: EntityActionsExtension.fromString(actionType),
-      value: HashMap<ActionValues, dynamic>.from(
-        value.map(
-          (key, value) =>
-              MapEntry(ActionValuesExtension.fromString(key), value),
+  RequestActionObject toDomain() => RequestActionObject(
+        entityIds: HashSet.from(entitiesId),
+        property: EntityPropertiesExtension.fromString(property),
+        vendors: HashSet.from(
+          vendors.map((v) => VendorsAndServicesExtension.fromString(v)),
         ),
-      ),
-    );
-  
+        actionType: EntityActionsExtension.fromString(actionType),
+        value: HashMap<ActionValues, dynamic>.from(
+          value.map(
+            (key, value) =>
+                MapEntry(ActionValuesExtension.fromString(key), value),
+          ),
+        ),
+      );
 }

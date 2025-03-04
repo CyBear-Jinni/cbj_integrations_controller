@@ -25,7 +25,7 @@
 //       for (final DeviceEntityBase deviceE
 //           in EspHomeConnectorConjecture().getAllCompanyDevices.values) {
 //         if (deviceE.deviceMdns.getOrCrash() == mDnsName) {
-//           return deviceE.entitiyCbjUniqueId.getOrCrash();
+//           return deviceE.entityCbjUniqueId.getOrCrash();
 //         }
 //       }
 //     }
@@ -127,11 +127,11 @@
 //         // final List supportedColorModList = espHomeDeviceEntityObject
 //         //     .config['supportedColorModesList'] as Set<dynamic>;
 //         // if (supportedColorModList.first == 1) {}
-//         final String entitiyCbjUniqueId =
+//         final String entityCbjUniqueId =
 //             espHomeDeviceEntityObject.config['uniqueId'] as String;
 //         final DeviceEntityBase entityTemp = EspHomeLightEntity(
 //           uniqueId: entity.uniqueId,
-//           entityUniqueId: EntityUniqueId(entitiyCbjUniqueId),
+//           entityUniqueId: EntityUniqueId(entityCbjUniqueId),
 //           cbjEntityName: CbjEntityName(value: espHomeDeviceEntityObject.name),
 //           entityOriginalName:
 //               EntityOriginalName(espHomeDeviceEntityObject.name),
@@ -158,19 +158,19 @@
 //           requestTimeStamp: entity.requestTimeStamp,
 //           lastResponseFromDeviceTimeStamp:
 //               entity.lastResponseFromDeviceTimeStamp,
-//           entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+//           entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId),
 //           lightSwitchState: GenericLightSwitchState('on'),
 //         );
-//         addEntities.addEntries([MapEntry(entitiyCbjUniqueId, entityTemp)]);
+//         addEntities.addEntries([MapEntry(entityCbjUniqueId, entityTemp)]);
 //       } else if (espHomeDeviceEntityObject.type == 'Switch' ||
 //           espHomeDeviceEntityObject.type == 'Fan' ||
 //           espHomeDeviceEntityObject.type == 'Siren') {
-//         final String entitiyCbjUniqueId =
+//         final String entityCbjUniqueId =
 //             espHomeDeviceEntityObject.config['uniqueId'] as String;
 
 //         final DeviceEntityBase entityTemp = EspHomeSwitchEntity(
 //           uniqueId: entity.uniqueId,
-//           entityUniqueId: EntityUniqueId(entitiyCbjUniqueId),
+//           entityUniqueId: EntityUniqueId(entityCbjUniqueId),
 //           cbjEntityName: CbjEntityName(value: espHomeDeviceEntityObject.name),
 //           entityOriginalName:
 //               EntityOriginalName(espHomeDeviceEntityObject.name),
@@ -197,10 +197,10 @@
 //           requestTimeStamp: entity.requestTimeStamp,
 //           lastResponseFromDeviceTimeStamp:
 //               entity.lastResponseFromDeviceTimeStamp,
-//           entitiyCbjUniqueId: CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+//           entityCbjUniqueId: CoreUniqueId.fromUniqueString(entityCbjUniqueId),
 //           switchState: GenericSwitchSwitchState('on'),
 //         );
-//         addEntities.addEntries([MapEntry(entitiyCbjUniqueId, entityTemp)]);
+//         addEntities.addEntries([MapEntry(entityCbjUniqueId, entityTemp)]);
 //       }
 //     }
 

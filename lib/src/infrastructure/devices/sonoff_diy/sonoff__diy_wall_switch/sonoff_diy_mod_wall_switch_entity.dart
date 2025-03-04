@@ -38,7 +38,7 @@ class SonoffDiyRelaySwitchEntity extends GenericSwitchDE {
     required super.entityKey,
     required super.requestTimeStamp,
     required super.lastResponseFromDeviceTimeStamp,
-    required super.entitiyCbjUniqueId,
+    required super.entityCbjUniqueId,
     required super.switchState,
   }) : super(
           cbjDeviceVendor: CbjDeviceVendor(VendorsAndServices.sonoffDiy),

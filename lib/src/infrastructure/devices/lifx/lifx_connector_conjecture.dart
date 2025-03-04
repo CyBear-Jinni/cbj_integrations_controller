@@ -48,7 +48,7 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
             await VendorsConnectorConjecture().foundEntityOfVendor(
               vendorConnectorConjectureService: this,
               entity: entity,
-              entitiyCbjUniqueId: entity.entitiyCbjUniqueId.getOrCrash(),
+              entityCbjUniqueId: entity.entityCbjUniqueId.getOrCrash(),
             );
           }
         }

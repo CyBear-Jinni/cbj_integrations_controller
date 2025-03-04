@@ -38,7 +38,7 @@ class SensiboConnectorConjecture extends VendorConnectorConjectureService {
         await VendorsConnectorConjecture().foundEntityOfVendor(
           vendorConnectorConjectureService: this,
           entity: entity,
-          entitiyCbjUniqueId: entity.entitiyCbjUniqueId.getOrCrash(),
+          entityCbjUniqueId: entity.entityCbjUniqueId.getOrCrash(),
         );
       }
     }
@@ -56,6 +56,6 @@ class SensiboConnectorConjecture extends VendorConnectorConjectureService {
   }) async =>
       HashMap()
         ..addEntries(
-          [MapEntry(entity.entitiyCbjUniqueId.getOrCrash(), entity)],
+          [MapEntry(entity.entityCbjUniqueId.getOrCrash(), entity)],
         );
 }

@@ -44,7 +44,7 @@ class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
     VendorsConnectorConjecture().foundEntityOfVendor(
       vendorConnectorConjectureService: this,
       entity: entity,
-      entitiyCbjUniqueId: entity.entitiyCbjUniqueId.getOrCrash(),
+      entityCbjUniqueId: entity.entityCbjUniqueId.getOrCrash(),
     );
   }
 
@@ -63,7 +63,7 @@ class SwitcherConnectorConjecture extends VendorConnectorConjectureService {
     // It is getting converted in bindSocketSearchStream
     return HashMap()
       ..addEntries(
-        [MapEntry(entityTemp.entitiyCbjUniqueId.getOrCrash(), entityTemp)],
+        [MapEntry(entityTemp.entityCbjUniqueId.getOrCrash(), entityTemp)],
       );
   }
 }

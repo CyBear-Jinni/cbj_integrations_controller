@@ -133,7 +133,7 @@ class VendorsConnectorConjecture {
     foundEntityOfVendor(
       vendorConnectorConjectureService: companyConnectorConjecture,
       entity: entity,
-      entitiyCbjUniqueId: mdnsName,
+      entityCbjUniqueId: mdnsName,
     );
   }
 
@@ -168,7 +168,7 @@ class VendorsConnectorConjecture {
     foundEntityOfVendor(
       vendorConnectorConjectureService: companyConnectorConjecture,
       entity: entity,
-      entitiyCbjUniqueId: deviceHostNameLowerCase,
+      entityCbjUniqueId: deviceHostNameLowerCase,
     );
   }
 
@@ -186,14 +186,14 @@ class VendorsConnectorConjecture {
     foundEntityOfVendor(
       vendorConnectorConjectureService: vendorConnectorConjectureService,
       entity: entity,
-      entitiyCbjUniqueId: port,
+      entityCbjUniqueId: port,
     );
   }
 
   Future loadEntitiesFromDb({
     required VendorConnectorConjectureService vendorConnectorConjectureService,
     required DeviceEntityBase entity,
-    required String entitiyCbjUniqueId,
+    required String entityCbjUniqueId,
   }) async {
     final HashMap<String, DeviceEntityBase>? handeldEntities =
         await vendorConnectorConjectureService.loadFromDb(
@@ -214,7 +214,7 @@ class VendorsConnectorConjecture {
   Future foundEntityOfVendor({
     required VendorConnectorConjectureService vendorConnectorConjectureService,
     required DeviceEntityBase entity,
-    required String entitiyCbjUniqueId,
+    required String entityCbjUniqueId,
   }) async {
     HashMap<String, DeviceEntityBase>? handeldEntities =
         await vendorConnectorConjectureService.foundEntity(
@@ -222,12 +222,12 @@ class VendorsConnectorConjecture {
     );
 
     if (handeldEntities == null) {
-      icLogger.i('Found unseported device $entitiyCbjUniqueId');
+      icLogger.i('Found unseported device $entityCbjUniqueId');
       handeldEntities = handeldEntities =
           await UnseportedVendorOrDeviceConnectorConjecture().foundEntity(
         entity
-          ..entitiyCbjUniqueId =
-              CoreUniqueId.fromUniqueString(entitiyCbjUniqueId),
+          ..entityCbjUniqueId =
+              CoreUniqueId.fromUniqueString(entityCbjUniqueId),
       );
     }
 
