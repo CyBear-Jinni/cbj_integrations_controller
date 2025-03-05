@@ -52,6 +52,7 @@ class RequestActionObjectDtos {
   Map<String, dynamic> toJson() {
     return {
       'uniqueIdByVendor': jsonEncode(entitiesId),
+      'entitiesId': jsonEncode(entitiesId),
       'property': property,
       'vendors': vendors,
       'actionType': actionType,

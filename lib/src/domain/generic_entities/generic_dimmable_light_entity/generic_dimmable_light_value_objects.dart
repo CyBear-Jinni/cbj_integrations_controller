@@ -7,13 +7,12 @@ import 'package:dartz/dartz.dart';
 
 class GenericDimmableLightSwitchState extends ValueObjectCore<String> {
   factory GenericDimmableLightSwitchState(String? input) {
-    assert(input != null);
-
-    final EntityActions action =
-        EntityUtils.stringToDeviceAction(input!) ?? EntityActions.undefined;
+    final EntityActions action = input == null
+        ? EntityActions.undefined
+        : EntityUtils.stringToDeviceAction(input) ?? EntityActions.undefined;
 
     return GenericDimmableLightSwitchState._(
-      validateGenericDimmableLightStateNotEmpty(input),
+      validateGenericDimmableLightStateNotEmpty(input ?? action.name),
       action,
     );
   }
@@ -34,8 +33,7 @@ class GenericDimmableLightSwitchState extends ValueObjectCore<String> {
 
 class GenericDimmableLightBrightness extends ValueObjectCore<String> {
   factory GenericDimmableLightBrightness(String? input) {
-    assert(input != null);
-    final String tempInput = input!;
+    final String tempInput = input ?? '100';
 
     return GenericDimmableLightBrightness._(
       validateGenericDimmableLightNotEmpty(tempInput),
@@ -45,7 +43,7 @@ class GenericDimmableLightBrightness extends ValueObjectCore<String> {
   factory GenericDimmableLightBrightness.fromDouble(double input) {
     return GenericDimmableLightBrightness._(
       validateGenericDimmableLightNotEmpty(
-        convertDecimalPresentagetToIntegerPercentage(input).toString(),
+        convertDecimalPercentageToIntegerPercentage(input).toString(),
       ),
     );
   }
@@ -56,7 +54,7 @@ class GenericDimmableLightBrightness extends ValueObjectCore<String> {
   final Either<CoreFailure<String>, String> value;
 
   // Convert percentage 0.0-1.0 numbers to 0-100 with the same percentage
-  static int convertDecimalPresentagetToIntegerPercentage(double number) {
+  static int convertDecimalPercentageToIntegerPercentage(double number) {
     const double oldMax = 1.0;
     const double oldMin = 0;
     const double oldRange = oldMax - oldMin;

@@ -11,15 +11,15 @@ class NetworkObject {
     required this.remotePipe,
     String? uniqueId,
   }) {
-    this.uniqueId = uniqueId ?? bssid;
+    this.uniqueId = uniqueId ?? bssid ?? 'home';
   }
 
   factory NetworkObject.fromJson(Map<String, dynamic> json) {
     return NetworkObject(
       uniqueId: json['uniqueId'] as String,
-      ssid: json['ssid'] as String,
-      bssid: json['bssid'] as String,
-      subNet: json['subNet'] as String,
+      ssid: json['ssid'] as String?,
+      bssid: json['bssid'] as String?,
+      subNet: json['subNet'] as String?,
       longitude: json['longitude'] as double?,
       latitude: json['latitude'] as double?,
       type: json['type'] as String?,
@@ -34,11 +34,11 @@ class NetworkObject {
   late String uniqueId;
 
   /// Network name
-  String ssid;
+  String? ssid;
 
-  /// Uniqe identifyer
-  String bssid;
-  String subNet;
+  /// Unique identifier
+  String? bssid;
+  String? subNet;
   double? longitude;
   double? latitude;
 

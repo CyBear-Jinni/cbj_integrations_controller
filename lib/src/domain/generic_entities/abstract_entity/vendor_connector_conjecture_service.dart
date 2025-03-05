@@ -153,6 +153,7 @@ abstract class VendorConnectorConjectureService {
   void loginApiKey(String value) {}
   void loginAuthToken(String value) {}
   void loginEmailAndPassword(String email, String password) {}
+  void addDevice(VendorLoginEntity loginEntity) {}
 
   void login(VendorLoginEntity vendorLoginService) {
     switch (vendorEntityInformation.loginType) {
@@ -177,6 +178,11 @@ abstract class VendorConnectorConjectureService {
           vendorLoginService.email!,
           vendorLoginService.password!,
         );
+      case VendorLoginTypes.addDeviceByPairingCode:
+        if (vendorLoginService.pairingCode == null) {
+          return;
+        }
+        addDevice(vendorLoginService);
     }
   }
 }

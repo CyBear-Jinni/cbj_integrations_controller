@@ -108,6 +108,15 @@ enum EntityTypes {
   ac,
 }
 
+extension EntityTypesExtension on EntityTypes {
+  static EntityTypes fromString(String typeAsString) {
+    return EntityTypes.values.firstWhere(
+      (element) => element.toString().split('.').last == typeAsString,
+      orElse: () => EntityTypes.undefined,
+    );
+  }
+}
+
 enum EntityActions {
   undefined,
   on,
@@ -213,6 +222,7 @@ enum VendorLoginTypes {
   authToken,
   apiKey,
   emailAndPassword,
+  addDeviceByPairingCode
 }
 
 /// Being added to send data for explain the type that was sent
