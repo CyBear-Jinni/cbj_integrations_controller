@@ -165,7 +165,7 @@ class NetworkUtilities implements INetworkUtilities {
     int? lastHostId,
   }) async* {
     await for (final network.ActiveHost activeHost
-        in getAllPingableDevicesAsyncImplementaion(
+        in getAllPingableDevicesAsyncImplementation(
       subnet,
       firstHostId: firstHostId,
       lastHostId: lastHostId,
@@ -174,7 +174,7 @@ class NetworkUtilities implements INetworkUtilities {
     }
   }
 
-  Stream<network.ActiveHost> getAllPingableDevicesAsyncImplementaion(
+  Stream<network.ActiveHost> getAllPingableDevicesAsyncImplementation(
     String subnet, {
     int? firstHostId,
     int? lastHostId,

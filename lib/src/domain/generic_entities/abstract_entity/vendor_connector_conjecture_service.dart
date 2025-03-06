@@ -14,7 +14,7 @@ abstract class VendorConnectorConjectureService {
     required String displayName,
     required String imageUrl,
     VendorLoginTypes loginType = VendorLoginTypes.notNeeded,
-    String? urlToLoginCredantials,
+    String? urlToLoginCredentials,
     this.ports = const [],
     this.uniqeMdnsList = const [],
     this.mdnsList = const [],
@@ -26,7 +26,7 @@ abstract class VendorConnectorConjectureService {
       loginType: loginType,
       displayName: displayName,
       imageUrl: imageUrl,
-      urlToLoginCredantials: urlToLoginCredantials,
+      urlToLoginCredentials: urlToLoginCredentials,
     );
     instanceMapByType.addEntries([MapEntry(vendorsAndServices, this)]);
     addToPortByVendor(vendorsAndServices, ports);

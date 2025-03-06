@@ -280,6 +280,7 @@ enum SendingType {
   allEntities,
   allAreas,
   allScenes,
+  getAllSupportedVendors,
   setEntitiesAction,
   ;
 }

@@ -18,7 +18,7 @@ class LifxConnectorConjecture extends VendorConnectorConjectureService {
           displayName: 'Lifx',
           imageUrl:
               'https://play-lh.googleusercontent.com/k61DT9oYt_BPdzjAFokLY5e-He-YSl7-eZHeieaVO45XDAwQ6ebegsS_ZsQytca2zWM=s180',
-          urlToLoginCredantials: 'https://cloud.lifx.com/',
+          urlToLoginCredentials: 'https://cloud.lifx.com/',
           loginType: VendorLoginTypes.apiKey,
         );
 

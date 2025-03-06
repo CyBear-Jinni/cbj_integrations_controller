@@ -17,7 +17,7 @@ class SensiboConnectorConjecture extends VendorConnectorConjectureService {
           displayName: 'Sensibo',
           imageUrl:
               'https://play-lh.googleusercontent.com/COcX-itAruFvtOY3_jioXKsWtwOq4sl1RCUgwmTkU7XeJatybFZnV3Zl3ldTelUEGQ71=s180',
-          urlToLoginCredantials: 'https://home.sensibo.com/me/api',
+          urlToLoginCredentials: 'https://home.sensibo.com/me/api',
           loginType: VendorLoginTypes.apiKey,
         );
 

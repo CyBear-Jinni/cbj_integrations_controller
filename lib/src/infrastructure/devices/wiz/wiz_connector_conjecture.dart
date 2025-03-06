@@ -16,7 +16,7 @@
 //           displayName: 'Wiz',
 //           imageUrl:
 //               'https://play-lh.googleusercontent.com/jhmzIodqBLQQUD2sJF_O6oawa04ocDFfQIgoH0rPOXQY3V1uVz0-FJvEieFjVO-kcJ8=s180',
-//           urlToLoginCredantials:
+//           urlToLoginCredentials:
 //               'https://pro.wizconnected.com/dashboard/#/oauth/authorize?client_id=clientId&code_challenge=codeChallenge&code_challenge_method=S256',
 //           loginType: VendorLoginTypes.apiKey,
 //           deviceHostNameLowerCase: ['wiz'],

@@ -245,8 +245,7 @@ class NodeRedConverter {
     required RoutineCbjRepeatDateMinute minutesToRepeat,
   }) {
     final String injectNodeId = const Uuid().v1();
-    final NodeRedInjectAtASpecificTimeNode nodeRedInjectNode =
-        NodeRedInjectAtASpecificTimeNode(
+    final NodeRedInjectNode nodeRedInjectNode = NodeRedInjectNode(
       name: nodeName,
       wires: {wires},
       tempId: injectNodeId,
